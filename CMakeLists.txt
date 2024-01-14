@@ -33,6 +33,7 @@ if(IPADDRESS_BUILD_TESTS)
     file(GLOB_RECURSE IPADDRESS_TESTS_SOURCES "tests/*.hpp" "tests/*.cpp")
     source_group(TREE "${CMAKE_CURRENT_SOURCE_DIR}" FILES ${IPADDRESS_TESTS_SOURCES})
     
+    enable_testing()
     add_executable(ipaddress-tests ${IPADDRESS_TESTS_SOURCES})
     target_link_libraries(ipaddress-tests ipaddress GTest::gtest GTest::gtest_main)
     
