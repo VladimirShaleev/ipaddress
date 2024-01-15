@@ -10,7 +10,7 @@ protected:
     typedef uint32_t BaseType;
 
     template <typename FixedString>
-    static constexpr BaseType ip_from_string(const FixedString& address) {
+    static constexpr BaseType ip_from_string(const FixedString& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         auto octets = parse_octets(address.begin(), address.end());
         return is_little_endian() ? swap(octets) : octets;
     }
@@ -21,7 +21,7 @@ protected:
 
 private:
     template <typename Iter>
-    static constexpr BaseType parse_octets(Iter begin, Iter end) {
+    static constexpr BaseType parse_octets(Iter begin, Iter end) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         BaseType octets = 0;
         size_t index = 0;
         int octet = 0;
@@ -29,7 +29,7 @@ private:
         for (auto it = begin; it != end; ++it) {
             auto c = *it;
             if (index >= 4) {
-                throw std::invalid_argument("expected 4 octets in [address]");
+                return is_throw() ? throw std::invalid_argument("expected 4 octets in [address]") : 0;
             }
             if (c >= '0' && c <= '9') {
                 auto d = c - '0';
@@ -53,7 +53,7 @@ private:
             }
         }
         if (index != 3) {
-            throw std::invalid_argument("expected 4 octets in address");
+            return is_throw() ? throw std::invalid_argument("expected 4 octets in [address]") : 0;
         }
         if (digits == 0) {
             throw std::invalid_argument("empty octet [index] in address [address]");
@@ -65,8 +65,10 @@ private:
     static constexpr bool is_little_endian() noexcept {
     #if IPADDRESS_CPP_VERSION >= 20
         return std::endian::native == std::endian::little;
+    #elif defined(IPADDRESS_BIG_ENDIAN)
+        return !IPADDRESS_BIG_ENDIAN;
     #else
-        return true;
+    #   error "Define IPADDRESS_BIG_ENDIAN with 0 is little-endian and 1 is big-endian"
     #endif
     }
     
@@ -75,10 +77,26 @@ private:
         value = (value << 16) | (value >> 16);
         return value;
     }
+
+    static constexpr bool is_consteval() noexcept {
+    #ifdef IPADDRESS_HAS_CONSTANT_EVALUATED
+        return std::is_constant_evaluated();
+    #else
+        return false;
+    #endif
+    }
+
+    static constexpr bool is_throw() noexcept {
+    #ifdef IPADDRESS_NO_EXCEPTIONS
+        return false;
+    #else
+        return true;
+    #endif
+    }
 };
 
 using ipv4_address = ip_address_base<base_v4>;
-    
+
 }
 
 #endif
