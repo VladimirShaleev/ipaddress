@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <stddef.h>
 
-#include <array>
+#include <sstream>
 #include <iterator>
 #include <stdexcept>
 

@@ -293,7 +293,7 @@ private:
 
 template <size_t N>
 constexpr fixed_string<N - 1> make_fixed_string(const char(&data)[N]) noexcept {
-    return fixed_string<N -1>(data);
+    return fixed_string<N - 1>(data);
 }
 
 #if IPADDRESS_CPP_VERSION >= 17

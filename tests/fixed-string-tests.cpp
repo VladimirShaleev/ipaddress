@@ -5,23 +5,23 @@
 using namespace ipaddress;
 
 #if IPADDRESS_CPP_VERSION >= 20
-# define TEST_FIXED_STRING          fixed_string_20
-# define TEST_FIXED_STRING_ITERATOR fixed_string_iterator_20
+#  define TEST_FIXED_STRING          fixed_string_20
+#  define TEST_FIXED_STRING_ITERATOR fixed_string_iterator_20
 #elif IPADDRESS_CPP_VERSION >= 17
-# define TEST_FIXED_STRING          fixed_string_17
-# define TEST_FIXED_STRING_ITERATOR fixed_string_iterator_17
+#  define TEST_FIXED_STRING          fixed_string_17
+#  define TEST_FIXED_STRING_ITERATOR fixed_string_iterator_17
 #elif IPADDRESS_CPP_VERSION >= 14
-# define TEST_FIXED_STRING          fixed_string_14
-# define TEST_FIXED_STRING_ITERATOR fixed_string_iterator_14
+#  define TEST_FIXED_STRING          fixed_string_14
+#  define TEST_FIXED_STRING_ITERATOR fixed_string_iterator_14
 #elif IPADDRESS_CPP_VERSION >= 11
-# define TEST_FIXED_STRING          fixed_string_11
-# define TEST_FIXED_STRING_ITERATOR fixed_string_iterator_11
+#  define TEST_FIXED_STRING          fixed_string_11
+#  define TEST_FIXED_STRING_ITERATOR fixed_string_iterator_11
 #endif
 
 #if IPADDRESS_CPP_VERSION >= 17
-# define VAL_FIXED_STRING(name, str) fixed_string name = str
+#  define VAL_FIXED_STRING(name, str) fixed_string name = str
 #else
-# define VAL_FIXED_STRING(name, str) auto name = make_fixed_string(str)
+#  define VAL_FIXED_STRING(name, str) auto name = make_fixed_string(str)
 #endif
 
 TEST(TEST_FIXED_STRING, ConstexprCtor)

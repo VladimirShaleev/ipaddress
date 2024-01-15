@@ -10,11 +10,7 @@ include(TestBigEndian)
 include(CTest)
 
 test_big_endian(IPADDRESS_BIG_ENDIAN)
-if(IPADDRESS_BIG_ENDIAN)
- message(STATUS "BIG_ENDIAN ${IPADDRESS_BIG_ENDIAN}")
-else()
- message(STATUS "LITTLE_ENDIAN ${IPADDRESS_BIG_ENDIAN}")
-endif()
+
 add_library(${PROJECT_NAME} INTERFACE)
 add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 

@@ -28,35 +28,63 @@ private:
         int digits = 0;
         for (auto it = begin; it != end; ++it) {
             auto c = *it;
-            if (index >= 4) {
-                return is_throw() ? throw std::invalid_argument("expected 4 octets in [address]") : 0;
+            if (index >= 4) {    
+            #ifdef IPADDRESS_NO_EXCEPTIONS
+                return 0;
+            #else
+                throw parse_error("expected 4 octets in", std::string(begin, end));
+            #endif
             }
             if (c >= '0' && c <= '9') {
                 auto d = c - '0';
                 octet = octet * 10 + d;
                 ++digits;
                 if (digits > 3) {
-                    throw std::invalid_argument("in octet [index] of address [address] more 3 characters");
+                #ifdef IPADDRESS_NO_EXCEPTIONS
+                    return 0;
+                #else
+                    throw parse_error("in octet", index, "of address" + std::string(begin, end), "more 3 characters");
+                #endif
                 }
             } else if (c == '.' && digits > 0) {
                 if (octet > 255) {
-                    throw std::invalid_argument("octet [index] of address [address] exceeded 255");
+                #ifdef IPADDRESS_NO_EXCEPTIONS
+                    return 0;
+                #else
+                    throw parse_error("octet", index, "of address", std::string(begin, end), "exceeded 255");
+                #endif
                 }
                 digits = 0;
                 octets |= (octet & 0xFF) << (index * 8);
                 octet = 0;
                 ++index;
             } else if (c == '.') {
-                throw std::invalid_argument("empty octet [index] in address [address]");
+                #ifdef IPADDRESS_NO_EXCEPTIONS
+                    return 0;
+                #else
+                    throw parse_error("empty octet", index, "in address", std::string(begin, end));
+                #endif
             } else {
-                throw std::invalid_argument("in octet [index] of address [address] has invalid symbol");
+                #ifdef IPADDRESS_NO_EXCEPTIONS
+                    return 0;
+                #else
+                    throw parse_error("in octet", index, "of address", std::string(begin, end), "has invalid symbol");
+                #endif
             }
         }
         if (index != 3) {
-            return is_throw() ? throw std::invalid_argument("expected 4 octets in [address]") : 0;
+        #ifdef IPADDRESS_NO_EXCEPTIONS
+            return 0;
+        #else
+            throw parse_error("expected 4 octets in", std::string(begin, end));
+        #endif
         }
         if (digits == 0) {
-            throw std::invalid_argument("empty octet [index] in address [address]");
+        #ifdef IPADDRESS_NO_EXCEPTIONS
+            return 0;
+        #else
+            throw parse_error("empty octet", index, "in address", std::string(begin, end));
+        #endif
         }
         octets |= (octet & 0xFF) << (index * 8);
         return octets;
@@ -76,22 +104,6 @@ private:
         value = ((value << 8) & 0xFF00FF00) | ((value >> 8) & 0x00FF00FF);
         value = (value << 16) | (value >> 16);
         return value;
-    }
-
-    static constexpr bool is_consteval() noexcept {
-    #ifdef IPADDRESS_HAS_CONSTANT_EVALUATED
-        return std::is_constant_evaluated();
-    #else
-        return false;
-    #endif
-    }
-
-    static constexpr bool is_throw() noexcept {
-    #ifdef IPADDRESS_NO_EXCEPTIONS
-        return false;
-    #else
-        return true;
-    #endif
     }
 };
 
