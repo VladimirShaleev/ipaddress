@@ -27,7 +27,7 @@
 #elif 199711L < IPADDRESS_CPLUSPLUS
 #  define IPADDRESS_CPP_VERSION 11
 #else
-#  error "ipaddress needs at least C++ standard version 11"
+#  error ipaddress needs at least C++ standard version 11
 #endif
 
 #ifdef __cpp_constexpr
@@ -46,6 +46,14 @@
 #  define IPADDRESS_CONSTEXPR
 #  define IPADDRESS_CONSTEXPR_14
 #  define IPADDRESS_CONSTEXPR_17
+#endif
+
+#ifdef __cpp_consteval
+#  if __cpp_consteval >= 201811L
+#    define IPADDRESS_CONSTEVAL consteval
+#  else
+#    define IPADDRESS_CONSTEVAL IPADDRESS_CONSTEXPR
+#  endif
 #endif
 
 #if defined(_MSC_VER) && (_MSC_VER <= 1800)
@@ -75,12 +83,6 @@
 #  if (__cpp_lib_three_way_comparison >= 201907) && __has_include(<compare>)
 #    define IPADDRESS_HAS_SPACESHIP_OPERATOR
 #    include <compare>
-#  endif
-#endif
-
-#ifdef __has_include
-#  if __has_include(<bit>)
-#    include <bit>
 #  endif
 #endif
 

@@ -17,15 +17,16 @@ using namespace ipaddress;
 TEST(TEST_IPV4_ADDRESS, Test)
 {
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
-    constexpr auto ipv4 = ipv4_address::parse<"127.0.0.1">();
+    auto ipv4 = ipv4_address::parse<"127.0.0.1">();
     auto ipv4_ = ipv4_address::parse<"127.0.0.1">();
 #endif
 
     constexpr auto ipv4_2 = ipv4_address::parse("127.0.0.1");
     auto ipv4_2_ = ipv4_address::parse("127.0.0.1");
+    auto b = ipv4_2_;
     //constexpr auto d = ipv4;
 
-    // constexpr auto ipv4 = parse<"127.0.0.1">();
+    //constexpr auto ipv4 = parse<"127.0.0.1">();
 
     // ipv4_address::ip_from_string()
 }

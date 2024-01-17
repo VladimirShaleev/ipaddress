@@ -2,6 +2,7 @@
 #define IPADDRESS_IPV4_ADDRESS_HPP
 
 #include "ip-address-base.hpp"
+#include "endian.hpp"
 
 namespace IPADDRESS_NAMESPACE {
 
@@ -12,7 +13,7 @@ protected:
     template <typename FixedString>
     static constexpr BaseType ip_from_string(const FixedString& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         auto octets = parse_octets(address.begin(), address.end());
-        return is_little_endian() ? swap(octets) : octets;
+        return is_little_endian() ? swap_bytes(octets) : octets;
     }
 
     // static BaseType ip_from_bytes() {
@@ -88,22 +89,6 @@ private:
         }
         octets |= (octet & 0xFF) << (index * 8);
         return octets;
-    }
-
-    static constexpr bool is_little_endian() noexcept {
-    #if IPADDRESS_CPP_VERSION >= 20
-        return std::endian::native == std::endian::little;
-    #elif defined(IPADDRESS_BIG_ENDIAN)
-        return !IPADDRESS_BIG_ENDIAN;
-    #else
-    #   error "Define IPADDRESS_BIG_ENDIAN with 0 is little-endian and 1 is big-endian"
-    #endif
-    }
-    
-    static constexpr BaseType swap(BaseType value) noexcept {
-        value = ((value << 8) & 0xFF00FF00) | ((value >> 8) & 0x00FF00FF);
-        value = (value << 16) | (value >> 16);
-        return value;
     }
 };
 

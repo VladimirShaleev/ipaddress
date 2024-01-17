@@ -17,7 +17,7 @@ public:
 
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
     template <fixed_string FixedString>
-    static constexpr ip_address_base<Base> parse() noexcept {
+    static consteval ip_address_base<Base> parse() noexcept {
         constexpr auto str = FixedString;
         return ip_address_base(Base::ip_from_string(str));
     }
