@@ -11,8 +11,8 @@ protected:
     typedef uint32_t BaseType;
 
     template <typename FixedString>
-    static constexpr BaseType ip_from_string(const FixedString& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        auto octets = parse_octets(address.begin(), address.end());
+    static constexpr BaseType ip_from_string(const FixedString& address, error_code& code, int& octet) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        auto octets = parse_octets(address.begin(), address.end(), code, octet);
         return is_little_endian() ? swap_bytes(octets) : octets;
     }
 
@@ -22,70 +22,54 @@ protected:
 
 private:
     template <typename Iter>
-    static constexpr BaseType parse_octets(Iter begin, Iter end) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    static constexpr BaseType parse_octets(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         BaseType octets = 0;
-        size_t index = 0;
-        int octet = 0;
         int digits = 0;
+        int octet = 0;
+        index = 0;
+        code = error_code::NO_ERROR;
         for (auto it = begin; it != end; ++it) {
             auto c = *it;
-            if (index >= 4) {    
-            #ifdef IPADDRESS_NO_EXCEPTIONS
+            if (index >= 4) {
+                code = error_code::EXPECTED_4_OCTETS;
                 return 0;
-            #else
-                throw parse_error("expected 4 octets in", std::string(begin, end));
-            #endif
             }
             if (c >= '0' && c <= '9') {
                 auto d = c - '0';
                 octet = octet * 10 + d;
                 ++digits;
                 if (digits > 3) {
-                #ifdef IPADDRESS_NO_EXCEPTIONS
+                    code = error_code::OCTET_MORE_3_CHARACTERS;
                     return 0;
-                #else
-                    throw parse_error("in octet", index, "of address" + std::string(begin, end), "more 3 characters");
-                #endif
                 }
             } else if (c == '.' && digits > 0) {
                 if (octet > 255) {
-                #ifdef IPADDRESS_NO_EXCEPTIONS
+                    code = error_code::OUT_OF_RANGE_OCTET;
                     return 0;
-                #else
-                    throw parse_error("octet", index, "of address", std::string(begin, end), "exceeded 255");
-                #endif
                 }
                 digits = 0;
                 octets |= (octet & 0xFF) << (index * 8);
                 octet = 0;
                 ++index;
             } else if (c == '.') {
-                #ifdef IPADDRESS_NO_EXCEPTIONS
-                    return 0;
-                #else
-                    throw parse_error("empty octet", index, "in address", std::string(begin, end));
-                #endif
+                code = error_code::EMPTY_OCTET;
+                return 0;
             } else {
-                #ifdef IPADDRESS_NO_EXCEPTIONS
-                    return 0;
-                #else
-                    throw parse_error("in octet", index, "of address", std::string(begin, end), "has invalid symbol");
-                #endif
+                code = error_code::INVALID_OCTET_SYMBOL;
+                return 0;
             }
         }
         if (index != 3) {
-        #ifdef IPADDRESS_NO_EXCEPTIONS
+            code = error_code::EXPECTED_4_OCTETS;
             return 0;
-        #else
-            throw parse_error("expected 4 octets in", std::string(begin, end));
-        #endif
         }
         if (digits == 0) {
-        #ifdef IPADDRESS_NO_EXCEPTIONS
+            code = error_code::EMPTY_OCTET;
             return 0;
-        #else
-            throw parse_error("empty octet", index, "in address", std::string(begin, end));
-        #endif
+        }
+        if (octet > 255) {
+            code = error_code::OUT_OF_RANGE_OCTET;
+            return 0;
         }
         octets |= (octet & 0xFF) << (index * 8);
         return octets;

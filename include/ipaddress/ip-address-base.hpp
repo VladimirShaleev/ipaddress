@@ -19,13 +19,33 @@ public:
     template <fixed_string FixedString>
     static consteval ip_address_base<Base> parse() noexcept {
         constexpr auto str = FixedString;
-        return ip_address_base(Base::ip_from_string(str));
+        auto code = error_code::NO_ERROR;
+        auto octet = 0;
+        auto result = Base::ip_from_string(str, code, octet);
+        if (code != error_code::NO_ERROR) {
+            raise_error(code, octet, str);
+        }
+        return ip_address_base(result);
     }
 #endif
 
     template <size_t N>
     static constexpr ip_address_base<Base> parse(const char(&address)[N]) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        return ip_address_base(Base::ip_from_string(make_fixed_string(address)));
+        auto code = error_code::NO_ERROR;
+        auto octet = 0;
+        auto str = make_fixed_string(address);
+        auto result = Base::ip_from_string(str, code, octet);
+        if (code != error_code::NO_ERROR) {
+            raise_error(code, octet, str);
+        }
+        return ip_address_base(result);
+    }
+
+    template <size_t N>
+    static constexpr ip_address_base<Base> parse(const char(&address)[N], error_code& code) noexcept {
+        code = error_code::NO_ERROR;
+        auto octet = 0;
+        return ip_address_base(Base::ip_from_string(make_fixed_string(address), code, octet));
     }
 
 private:
