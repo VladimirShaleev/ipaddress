@@ -21,7 +21,7 @@ TEST(TEST_IPV4_ADDRESS, Test)
     auto ipv4_ = ipv4_address::parse<"127.0.0.1">();
 #endif
     try {
-    constexpr auto ipv4_2 = ipv4_address::parse("127.0.0.1");
+    auto ipv4_2 = ipv4_address::parse("127.0.0.255");
     error_code err;
     auto ipv4_2_ = ipv4_address::parse("127.0.0.256", err);
     auto b = ipv4_2_;

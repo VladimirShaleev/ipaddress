@@ -193,7 +193,7 @@ struct fixed_string {
         if (n >= 0 && n < N) {
             return _data[n];
         }
-    #ifdef GALAXY_HPP_NO_EXCEPTIONS
+    #ifdef IPADDRESS_NO_EXCEPTIONS
         return *_data;
     #else
         throw std::out_of_range("index out of array");

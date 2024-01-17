@@ -1,8 +1,6 @@
 #ifndef IPADDRESS_ERRORS_HPP
 #define IPADDRESS_ERRORS_HPP
 
-#ifndef IPADDRESS_NO_EXCEPTIONS
-
 #include "config.hpp"
 
 namespace IPADDRESS_NAMESPACE {
@@ -85,7 +83,5 @@ template <typename FixedString>
 }
 
 }
-
-#endif
 
 #endif

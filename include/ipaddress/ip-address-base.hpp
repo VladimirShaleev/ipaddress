@@ -36,7 +36,9 @@ public:
         auto str = make_fixed_string(address);
         auto result = Base::ip_from_string(str, code, octet);
         if (code != error_code::NO_ERROR) {
+        #ifndef IPADDRESS_NO_EXCEPTIONS
             raise_error(code, octet, str);
+        #endif
         }
         return ip_address_base(result);
     }
