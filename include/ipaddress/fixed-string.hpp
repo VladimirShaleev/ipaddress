@@ -12,14 +12,14 @@ struct fixed_string_iterator {
     using pointer           = const value_type*;
     using reference         = const value_type&;
 
-    IPADDRESS_CONSTEXPR fixed_string_iterator() noexcept = default;
-    IPADDRESS_CONSTEXPR fixed_string_iterator(const fixed_string_iterator&) noexcept = default;
-    IPADDRESS_CONSTEXPR fixed_string_iterator(fixed_string_iterator&&) noexcept = default;
+    IPADDRESS_CONSTEXPR fixed_string_iterator() IPADDRESS_NOEXCEPT = default;
+    IPADDRESS_CONSTEXPR fixed_string_iterator(const fixed_string_iterator&) IPADDRESS_NOEXCEPT = default;
+    IPADDRESS_CONSTEXPR fixed_string_iterator(fixed_string_iterator&&) IPADDRESS_NOEXCEPT = default;
 
-    IPADDRESS_CONSTEXPR_14 fixed_string_iterator& operator=(const fixed_string_iterator&) noexcept = default;
-    IPADDRESS_CONSTEXPR_14 fixed_string_iterator& operator=(fixed_string_iterator&&) noexcept = default;
+    IPADDRESS_CONSTEXPR_14 fixed_string_iterator& operator=(const fixed_string_iterator&) IPADDRESS_NOEXCEPT = default;
+    IPADDRESS_CONSTEXPR_14 fixed_string_iterator& operator=(fixed_string_iterator&&) IPADDRESS_NOEXCEPT = default;
 
-    IPADDRESS_CONSTEXPR fixed_string_iterator(pointer ptr, std::size_t count) noexcept
+    IPADDRESS_CONSTEXPR fixed_string_iterator(pointer ptr, std::size_t count) IPADDRESS_NOEXCEPT
         :
         _begin(ptr),
         _end(ptr + count),
@@ -139,7 +139,7 @@ struct fixed_string {
 
     char _data[N] = {};
 
-    constexpr fixed_string(const char (&data)[N + 1]) noexcept {
+    constexpr fixed_string(const char (&data)[N + 1]) IPADDRESS_NOEXCEPT {
         for (size_t i = 0; i < N; ++i) {
             _data[i] = data[i];
         }
@@ -292,7 +292,7 @@ private:
 };
 
 template <size_t N>
-constexpr fixed_string<N - 1> make_fixed_string(const char(&data)[N]) noexcept {
+constexpr fixed_string<N - 1> make_fixed_string(const char(&data)[N]) IPADDRESS_NOEXCEPT {
     return fixed_string<N - 1>(data);
 }
 

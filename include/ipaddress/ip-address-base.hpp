@@ -12,12 +12,12 @@ class ip_address_base : public Base {
 public:
     using BaseType = typename Base::BaseType;
 
-    constexpr explicit ip_address_base(const BaseType& ip) noexcept : _ip(ip) {
+    constexpr explicit ip_address_base(const BaseType& ip) IPADDRESS_NOEXCEPT : _ip(ip) {
     }
 
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
     template <fixed_string FixedString>
-    static consteval ip_address_base<Base> parse() noexcept {
+    static consteval ip_address_base<Base> parse() IPADDRESS_NOEXCEPT {
         constexpr auto str = FixedString;
         auto code = error_code::NO_ERROR;
         auto octet = 0;
@@ -44,7 +44,7 @@ public:
     }
 
     template <size_t N>
-    static constexpr ip_address_base<Base> parse(const char(&address)[N], error_code& code) noexcept {
+    static constexpr ip_address_base<Base> parse(const char(&address)[N], error_code& code) IPADDRESS_NOEXCEPT {
         code = error_code::NO_ERROR;
         auto octet = 0;
         return ip_address_base(Base::ip_from_string(make_fixed_string(address), code, octet));
