@@ -20,7 +20,6 @@ target_include_directories(${PROJECT_NAME} INTERFACE
   $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
-  message("dfdsf ${IPADDRESS_NO_EXCEPTIONS}")
 if(IPADDRESS_NO_EXCEPTIONS)
   target_compile_definitions(${PROJECT_NAME} INTERFACE IPADDRESS_NO_EXCEPTIONS)
 endif()
