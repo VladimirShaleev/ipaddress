@@ -135,11 +135,11 @@ struct fixed_string {
     using const_iterator         = fixed_string_iterator;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
-    static constexpr size_t length = N;
+    static IPADDRESS_CONSTEXPR size_t length = N;
 
     char _data[N] = {};
 
-    constexpr fixed_string(const char (&data)[N + 1]) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR fixed_string(const char (&data)[N + 1]) IPADDRESS_NOEXCEPT {
         for (size_t i = 0; i < N; ++i) {
             _data[i] = data[i];
         }
@@ -220,7 +220,7 @@ struct fixed_string<0> {
     using const_iterator         = fixed_string_iterator;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
-    static constexpr size_t length = 0;
+    static IPADDRESS_CONSTEXPR size_t length = 0;
 
     IPADDRESS_CONSTEXPR fixed_string() IPADDRESS_NOEXCEPT = default;
 
@@ -292,7 +292,7 @@ private:
 };
 
 template <size_t N>
-constexpr fixed_string<N - 1> make_fixed_string(const char(&data)[N]) IPADDRESS_NOEXCEPT {
+IPADDRESS_CONSTEXPR fixed_string<N - 1> make_fixed_string(const char(&data)[N]) IPADDRESS_NOEXCEPT {
     return fixed_string<N - 1>(data);
 }
 

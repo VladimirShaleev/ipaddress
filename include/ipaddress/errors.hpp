@@ -7,6 +7,7 @@ namespace IPADDRESS_NAMESPACE {
 
 enum class error_code {
     NO_ERROR = 0,
+    EMPTY_ADDRESS,
     EMPTY_OCTET,
     EXPECTED_4_OCTETS,
     OCTET_MORE_3_CHARACTERS,
@@ -60,7 +61,7 @@ public:
 };
 
 template <typename FixedString>
-[[noreturn]] constexpr void raise_error(error_code code, int octet, const FixedString& address) {
+[[noreturn]] IPADDRESS_CONSTEXPR void raise_error(error_code code, int octet, const FixedString& address) {
     char str[FixedString::length + 1];
     for (size_t i = 0; i < FixedString::length; ++i) {
         str[i] = address[i];

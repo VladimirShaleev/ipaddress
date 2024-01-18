@@ -72,7 +72,7 @@
 
 namespace IPADDRESS_NAMESPACE {
 
-constexpr bool is_little_endian() IPADDRESS_NOEXCEPT {
+IPADDRESS_CONSTEXPR bool is_little_endian() IPADDRESS_NOEXCEPT {
 #if IPADDRESS_CPP_VERSION >= 20
     return std::endian::native == std::endian::little;
 #elif defined(IPADDRESS_ENDIAN)
@@ -82,7 +82,7 @@ constexpr bool is_little_endian() IPADDRESS_NOEXCEPT {
 #endif
 }
 
-constexpr uint32_t swap_bytes(uint32_t value) IPADDRESS_NOEXCEPT {
+IPADDRESS_CONSTEXPR uint32_t swap_bytes(uint32_t value) IPADDRESS_NOEXCEPT {
     value = ((value << 8) & 0xFF00FF00) | ((value >> 8) & 0x00FF00FF);
     value = (value << 16) | (value >> 16);
     return value;

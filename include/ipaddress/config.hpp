@@ -4,6 +4,8 @@
 #include <stdint.h>
 #include <stddef.h>
 
+#include <array>
+#include <tuple>
 #include <sstream>
 #include <iterator>
 #include <stdexcept>
@@ -46,14 +48,6 @@
 #  define IPADDRESS_CONSTEXPR
 #  define IPADDRESS_CONSTEXPR_14
 #  define IPADDRESS_CONSTEXPR_17
-#endif
-
-#ifdef __cpp_consteval
-#  if __cpp_consteval >= 201811L
-#    define IPADDRESS_CONSTEVAL consteval
-#  else
-#    define IPADDRESS_CONSTEVAL IPADDRESS_CONSTEXPR
-#  endif
 #endif
 
 #if defined(_MSC_VER) && (_MSC_VER <= 1800)

@@ -11,7 +11,7 @@ protected:
     typedef uint32_t BaseType;
 
     template <typename FixedString>
-    static constexpr BaseType ip_from_string(const FixedString& address, error_code& code, int& octet) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    static IPADDRESS_CONSTEXPR BaseType ip_from_string(const FixedString& address, error_code& code, int& octet) IPADDRESS_NOEXCEPT {
         auto octets = parse_octets(address.begin(), address.end(), code, octet);
         return is_little_endian() ? swap_bytes(octets) : octets;
     }
@@ -22,7 +22,11 @@ protected:
 
 private:
     template <typename Iter>
-    static constexpr BaseType parse_octets(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    static IPADDRESS_CONSTEXPR BaseType parse_octets(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT {
+        if (begin == end) {
+            code = error_code::EMPTY_ADDRESS;
+            return 0;
+        }
         BaseType octets = 0;
         int digits = 0;
         int octet = 0;
@@ -30,6 +34,9 @@ private:
         code = error_code::NO_ERROR;
         for (auto it = begin; it != end; ++it) {
             auto c = *it;
+            if (c == '\0') {
+                break;
+            }
             if (index >= 4) {
                 code = error_code::EXPECTED_4_OCTETS;
                 return 0;
