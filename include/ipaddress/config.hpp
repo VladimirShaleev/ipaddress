@@ -97,4 +97,8 @@
 #  endif
 #endif
 
+#if IPADDRESS_CPP_VERSION >= 17
+#  include <string_view>
+#endif
+
 #endif

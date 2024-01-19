@@ -25,10 +25,18 @@ TEST(TEST_IPV4_ADDRESS, Test)
     auto ipv6_2 = ipv6_address::parse("::ffff:0:0:127.0.0.255");
 #endif
     try {
-    auto ipv4_2 = ipv4_address::parse("127.0.0.255");
-    error_code err;
-    auto ipv4_2_ = ipv4_address::parse("127.0.0.256", err);
-    auto b = ipv4_2_;
+        error_code err;
+        std::string addr = "127.0.0.255";
+        const char* addr2 = "127.0.0.255";
+        constexpr std::string_view addr3 = "127.0.0.255";
+        auto ss = ipv4_address::parse(addr, err);
+        auto ss2 = ipv4_address::parse(addr2, err);
+        constexpr auto ss3 = ipv4_address::parse(addr3);
+
+        auto ipv4_2 = ipv4_address::parse("127.0.0.255");
+    
+        auto ipv4_2_ = ipv4_address::parse("127.0.0.256", err);
+        auto b = ipv4_2_;
     }
     catch (const std::exception& exc) {
         auto b = exc;

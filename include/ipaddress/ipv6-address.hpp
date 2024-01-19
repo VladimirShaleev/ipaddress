@@ -13,14 +13,14 @@ protected:
 
     using base_type = std::array<uint8_t, size>;
 
-    template <typename FixedString>
-    static IPADDRESS_CONSTEXPR base_type ip_from_string(const FixedString& address, error_code& code, int& parts_count) IPADDRESS_NOEXCEPT {
-        if (address.empty()) {
+    template <typename Iter>
+    static IPADDRESS_CONSTEXPR base_type ip_from_string(Iter begin, Iter end, error_code& code, int& parts_count) IPADDRESS_NOEXCEPT {
+        if (begin == end) {
             code = error_code::EMPTY_ADDRESS;
             return {};
         }
 
-        const auto parts = split_parts(address.begin(), address.end(), parts_count, code);
+        const auto parts = split_parts(begin, end, parts_count, code);
 
         if (code != error_code::NO_ERROR) {
             return {};

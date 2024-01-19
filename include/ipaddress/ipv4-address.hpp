@@ -7,7 +7,7 @@ namespace IPADDRESS_NAMESPACE {
 
 class base_v4 {
 public:
-    IPADDRESS_CONSTEXPR uint32_t to_uint32() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR uint32_t to_uint32() const IPADDRESS_NOEXCEPT {
         const auto& ipv4 = *static_cast<const ip_address_base<base_v4>*>(this);
         const auto& bytes = ipv4.bytes();
         const auto ip = 
@@ -27,23 +27,20 @@ protected:
 
     using base_type = std::array<uint8_t, size>;
 
-    template <typename FixedString>
-    static IPADDRESS_CONSTEXPR base_type ip_from_string(const FixedString& address, error_code& code, int& octet) IPADDRESS_NOEXCEPT {
-        return parse_octets(address.begin(), address.end(), code, octet);
-    }
-
-private:
     template <typename Iter>
-    static IPADDRESS_CONSTEXPR base_type parse_octets(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR base_type ip_from_string(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT {
         if (begin == end) {
             code = error_code::EMPTY_ADDRESS;
             return {};
         }
+
         base_type octets = {};
         int digits = 0;
         int octet = 0;
+        
         index = 0;
         code = error_code::NO_ERROR;
+    
         for (auto it = begin; it != end; ++it) {
             auto c = *it;
             if (index >= 4) {
