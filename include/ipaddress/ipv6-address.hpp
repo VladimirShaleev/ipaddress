@@ -37,7 +37,7 @@ protected:
 
 private:
     template <typename Iter>
-    static IPADDRESS_CONSTEXPR std::array<fixed_string<4>, max_parts> split_parts(Iter begin, Iter end, int& parts_count, error_code& code) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR std::array<fixed_string<4>, max_parts> split_parts(Iter begin, Iter end, int& parts_count, error_code& error) IPADDRESS_NOEXCEPT {
         std::array<char[5], max_parts> parts = {};
         char last_part[16] = {};
 
@@ -47,21 +47,20 @@ private:
         for (auto it = begin; it != end; ++it) {
             auto c = *it;
             if (index >= max_parts) {
-                // error
-                // return 
+                error = error_code::MOST_8_COLONS_PERMITTED;
+                return empty_parts;
             }
             if (c != ':') {
                 if (symbol > 15) {
-                    // error
+                    error = error_code::PART_IS_MORE_4_CHARS;
+                    return empty_parts;
                 }
                 last_part[symbol++] = c;
                 last_part[symbol] = '\0';
-
-                // parts[index][symbol++] = c;
-                // parts[index][symbol] = '\0';
             } else {
                 if (symbol > 4) {
-                    // error
+                    error = error_code::PART_IS_MORE_4_CHARS;
+                    return empty_parts;
                 }
 
                 auto& current_part = parts[index++];
@@ -75,20 +74,15 @@ private:
         }
     
         if (index < min_parts) {
-            // error
+            error = error_code::LEAST_3_PARTS;
+            return empty_parts;
         }
 
         if (index >= max_parts) {
-            // error
-            // return 
+            error = error_code::MOST_8_COLONS_PERMITTED;
+            return empty_parts;
         }
         
-        // if (symbol > 45) {
-        //     // error
-        // }
-
-        // parts[index][symbol] = '\0';
-
         auto has_ipv4 = false;
 
         for (auto i = 0; i < symbol; ++i) {
@@ -100,21 +94,22 @@ private:
 
         if (has_ipv4) {
             if (index + 1 >= max_parts) {
-                // error
-                // return 
+                error = error_code::MOST_8_COLONS_PERMITTED;
+                return empty_parts;
             }
 
-            auto ipv4 = ipv4_address::parse(last_part, code).ip();
+            auto ipv4 = ipv4_address::parse(last_part, error).ip();
 
-            if (code != error_code::NO_ERROR) {
-                // error
+            if (error != error_code::NO_ERROR) {
+                return empty_parts;
             }
 
             to_hex(uint16_t((ipv4 >> 16) & 0xFFFF), parts[index++]);
             to_hex(uint16_t(ipv4 & 0xFFFF), parts[index++]);
         } else {
             if (symbol > 4) {
-                // error
+                error = error_code::PART_IS_MORE_4_CHARS;
+                return empty_parts;
             }
             
             auto& current_part = parts[index++];
@@ -136,12 +131,13 @@ private:
             make_fixed_string(parts[7])};
     }
 
-    static IPADDRESS_CONSTEXPR std::tuple<size_t, size_t, size_t> get_parts_bound(const std::array<fixed_string<4>, max_parts>& parts, int parts_count, error_code& code) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR std::tuple<size_t, size_t, size_t> get_parts_bound(const std::array<fixed_string<4>, max_parts>& parts, int parts_count, error_code& error) IPADDRESS_NOEXCEPT {
         int skip = 0;
         for (auto i = 0; i < parts_count - 1; ++i) {
             if (parts[i].empty()) {
                 if (skip) {
-                    // error
+                    error = error_code::MOST_ONE_DOUBLE_COLON_PERMITTED;
+                    return { 0, 0, 0 };
                 }
                 skip = i;
             }
@@ -153,48 +149,54 @@ private:
 
             if (parts[0].empty()) {
                 if (--parts_hi) {
-                    // error
+                    error = error_code::LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON;
+                    return { 0, 0, 0 };
                 }
             }
 
             if (parts[parts_count - 1].empty()) {
                 if (--parts_lo) {
-                    // error
+                    error = error_code::TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON;
+                    return { 0, 0, 0 };
                 }
             }
 
             const auto parts_skipped = max_parts - (parts_hi + parts_lo);
             
             if (parts_skipped < 0) {
-                // error
+                error = error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON;
+                return { 0, 0, 0 };
             }
 
             return { parts_hi, parts_lo, parts_skipped };
         } else {
             if (parts_count != max_parts) {
-                // error
+                error = error_code::EXACTLY_8_PARTS_EXPECTED_WITHOUT_DOUBLE_COLON;
+                return { 0, 0, 0 };
             }
 
             if (parts[0].empty()) {
-                // error
+                error = error_code::LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON;
+                return { 0, 0, 0 };
             }
 
             if (parts.back().empty()) {
-                // error
+                error = error_code::TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON;
+                return { 0, 0, 0 };
             }
 
             return { parts.size(), 0, 0 };
         }
     }
 
-    static IPADDRESS_CONSTEXPR BaseType parse_parts(const std::array<fixed_string<4>, max_parts>& parts, int parts_count, size_t hi, size_t lo, size_t skipped, error_code& code) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR BaseType parse_parts(const std::array<fixed_string<4>, max_parts>& parts, int parts_count, size_t hi, size_t lo, size_t skipped, error_code& error) IPADDRESS_NOEXCEPT {
         // BaseType ip(0);
 
         for (size_t i = 0; i < hi; ++i) {
             //ip <<= 16;
-            /*ip |=*/ parse_part(parts[i], code);
+            /*ip |=*/ parse_part(parts[i], error);
 
-            if (code != error_code::NO_ERROR) {
+            if (error != error_code::NO_ERROR) {
                 return {};
             }
         }
@@ -202,16 +204,16 @@ private:
 
         for (size_t i = lo; i > 0; --i) {
             //ip <<= 16;
-            /*ip |=*/ parse_part(parts[i], code);
+            /*ip |=*/ parse_part(parts[i], error);
 
-            if (code != error_code::NO_ERROR) {
+            if (error != error_code::NO_ERROR) {
                 return {};
             }
         }
         return {}; // ip
     }
 
-    static IPADDRESS_CONSTEXPR uint16_t parse_part(const fixed_string<4>& part, error_code& code) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR uint16_t parse_part(const fixed_string<4>& part, error_code& error) IPADDRESS_NOEXCEPT {
         uint16_t value = 0;
         for (size_t i = 0; i < part.size(); ++i) {
             const auto c = part[i];
@@ -223,7 +225,8 @@ private:
             } else if (c >= 'a' && c <= 'f') {
                 value += (c - 87) * power;
             } else {
-                // error
+                error = error_code::PART_HAS_INVALID_SYMBOL;
+                return 0;
             }
         }
         return value;
@@ -248,6 +251,16 @@ private:
             result[i + 1] = '\0';
         }
     }
+
+    static IPADDRESS_CONSTEXPR std::array<fixed_string<4>, max_parts> empty_parts = {
+            make_fixed_string("\0\0\0\0"),
+            make_fixed_string("\0\0\0\0"),
+            make_fixed_string("\0\0\0\0"),
+            make_fixed_string("\0\0\0\0"),
+            make_fixed_string("\0\0\0\0"),
+            make_fixed_string("\0\0\0\0"),
+            make_fixed_string("\0\0\0\0"),
+            make_fixed_string("\0\0\0\0")};
 };
 
 using ipv6_address = ip_address_base<base_v6>;
