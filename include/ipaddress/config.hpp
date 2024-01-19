@@ -6,6 +6,7 @@
 
 #include <array>
 #include <tuple>
+#include <cassert>
 #include <sstream>
 #include <iterator>
 #include <stdexcept>

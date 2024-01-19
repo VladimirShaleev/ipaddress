@@ -7,10 +7,10 @@ namespace IPADDRESS_NAMESPACE {
 
 class base_v6 {
 protected:
-
     static IPADDRESS_CONSTEXPR size_t min_parts = 3;
     static IPADDRESS_CONSTEXPR size_t max_parts = 8;
     static IPADDRESS_CONSTEXPR size_t size = 16;
+
     using base_type = std::array<uint8_t, size>;
 
     template <typename FixedString>
@@ -241,7 +241,7 @@ private:
             case 2: return 16 * 16;
             case 3: return 16 * 16 * 16;
             default:
-                std::exit(1);
+                assert(!"Unreachable code");
                 return 0;
         }
     }
