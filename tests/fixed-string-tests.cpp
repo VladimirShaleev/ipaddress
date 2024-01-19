@@ -22,10 +22,12 @@ using namespace ipaddress;
 
 TEST(TEST_FIXED_STRING, ConstexprCtor)
 {
-    constexpr VAL_FIXED_STRING(str_11, "test string");
+    constexpr VAL_FIXED_STRING(str_11, "test string\0\0\0");
+    constexpr auto str_11_max_length = str_11.max_length;
     constexpr auto str_11_length = str_11.length;
     constexpr auto str_11_size = str_11.size();
     constexpr auto str_11_empty = str_11.empty();
+    EXPECT_EQ(str_11_max_length, 14);
     EXPECT_EQ(str_11_length, 11);
     EXPECT_EQ(str_11_size, 11);
     EXPECT_EQ(str_11_empty, false);
