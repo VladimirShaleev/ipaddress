@@ -7,13 +7,14 @@ namespace IPADDRESS_NAMESPACE {
 
 class base_v6 {
 protected:
-    typedef std::array<uint8_t, 16> BaseType;
 
     static IPADDRESS_CONSTEXPR size_t min_parts = 3;
     static IPADDRESS_CONSTEXPR size_t max_parts = 8;
+    static IPADDRESS_CONSTEXPR size_t size = 16;
+    using base_type = std::array<uint8_t, size>;
 
     template <typename FixedString>
-    static IPADDRESS_CONSTEXPR BaseType ip_from_string(const FixedString& address, error_code& code, int& parts_count) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR base_type ip_from_string(const FixedString& address, error_code& code, int& parts_count) IPADDRESS_NOEXCEPT {
         if (address.empty()) {
             code = error_code::EMPTY_ADDRESS;
             return {};
@@ -31,7 +32,7 @@ protected:
             return {};
         }
 
-        return parse_parts(parts, parts_count, std::get<0>(result), std::get<1>(result), std::get<2>(result), code);
+        return parse_parts(parts, std::get<0>(result), std::get<1>(result), std::get<2>(result), code);
     }
 
 private:
@@ -97,7 +98,7 @@ private:
                 return empty_parts;
             }
 
-            auto ipv4 = ipv4_address::parse(last_part, error).ip();
+            auto ipv4 = ipv4_address::parse(last_part, error).to_uint32();
 
             if (error != error_code::NO_ERROR) {
                 return empty_parts;
@@ -187,28 +188,31 @@ private:
         }
     }
 
-    static IPADDRESS_CONSTEXPR BaseType parse_parts(const std::array<fixed_string<4>, max_parts>& parts, int parts_count, size_t hi, size_t lo, size_t skipped, error_code& error) IPADDRESS_NOEXCEPT {
-        // BaseType ip(0);
+    static IPADDRESS_CONSTEXPR base_type parse_parts(const std::array<fixed_string<4>, max_parts>& parts, size_t hi, size_t lo, size_t skipped, error_code& error) IPADDRESS_NOEXCEPT {
+        base_type result = {};
+        int index = 0;
 
         for (size_t i = 0; i < hi; ++i) {
-            //ip <<= 16;
-            /*ip |=*/ parse_part(parts[i], error);
+            const auto part = parse_part(parts[i], error);
+            result[index++] = uint8_t(part >> 8);
+            result[index++] = uint8_t(part & 0xFF);
 
             if (error != error_code::NO_ERROR) {
                 return {};
             }
         }
-        // ip <<= 16 * skipped;
+        index += skipped;
 
         for (size_t i = lo; i > 0; --i) {
-            //ip <<= 16;
-            /*ip |=*/ parse_part(parts[i], error);
+            const auto part = parse_part(parts[i], error);
+            result[index++] = uint8_t(part >> 8);
+            result[index++] = uint8_t(part & 0xFF);
 
             if (error != error_code::NO_ERROR) {
                 return {};
             }
         }
-        return {}; // ip
+        return result;
     }
 
     static IPADDRESS_CONSTEXPR uint16_t parse_part(const fixed_string<4>& part, error_code& error) IPADDRESS_NOEXCEPT {
@@ -230,7 +234,7 @@ private:
         return value;
     }
 
-    static IPADDRESS_CONSTEXPR uint16_t pow16(int power) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR uint16_t pow16(size_t power) IPADDRESS_NOEXCEPT {
         switch (power) {
             case 0: return 1;
             case 1: return 16;
@@ -242,7 +246,7 @@ private:
         }
     }
 
-    static IPADDRESS_CONSTEXPR void to_hex(uint16_t value, char(&result)[5]) {
+    static IPADDRESS_CONSTEXPR void to_hex(uint16_t value, char(&result)[5]) IPADDRESS_NOEXCEPT {
         char digits[] = "0123456789abcdef";
         for (auto i = 0, j = (4 - 1) * 4; i < 4; ++i, j -= 4) {
             result[i] = digits[(value >> j) & 0x0f];

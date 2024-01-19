@@ -2,32 +2,44 @@
 #define IPADDRESS_IPV4_ADDRESS_HPP
 
 #include "ip-address-base.hpp"
-#include "endian.hpp"
 
 namespace IPADDRESS_NAMESPACE {
 
 class base_v4 {
-protected:
-    typedef uint32_t BaseType;
-
-    template <typename FixedString>
-    static IPADDRESS_CONSTEXPR BaseType ip_from_string(const FixedString& address, error_code& code, int& octet) IPADDRESS_NOEXCEPT {
-        auto octets = parse_octets(address.begin(), address.end(), code, octet);
-        return is_little_endian() ? swap_bytes(octets) : octets;
+public:
+    IPADDRESS_CONSTEXPR uint32_t to_uint32() const IPADDRESS_NOEXCEPT {
+        const auto& ipv4 = *static_cast<const ip_address_base<base_v4>*>(this);
+        const auto& bytes = ipv4.bytes();
+        const auto ip = 
+            (uint32_t(bytes[3]) << 24) | 
+            (uint32_t(bytes[2]) << 16) | 
+            (uint32_t(bytes[1]) << 8) | 
+            (uint32_t(bytes[0]));
+        return is_little_endian() ? swap_bytes(ip) : ip;
     }
 
-    // static BaseType ip_from_bytes() {
+    explicit IPADDRESS_CONSTEXPR operator uint32_t() const IPADDRESS_NOEXCEPT {
+        return to_uint32();
+    }
 
-    // }
+protected:
+    static IPADDRESS_CONSTEXPR size_t size = 4;
+
+    using base_type = std::array<uint8_t, size>;
+
+    template <typename FixedString>
+    static IPADDRESS_CONSTEXPR base_type ip_from_string(const FixedString& address, error_code& code, int& octet) IPADDRESS_NOEXCEPT {
+        return parse_octets(address.begin(), address.end(), code, octet);
+    }
 
 private:
     template <typename Iter>
-    static IPADDRESS_CONSTEXPR BaseType parse_octets(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR base_type parse_octets(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT {
         if (begin == end) {
             code = error_code::EMPTY_ADDRESS;
-            return 0;
+            return {};
         }
-        BaseType octets = 0;
+        base_type octets = {};
         int digits = 0;
         int octet = 0;
         index = 0;
@@ -36,7 +48,7 @@ private:
             auto c = *it;
             if (index >= 4) {
                 code = error_code::EXPECTED_4_OCTETS;
-                return 0;
+                return {};
             }
             if (c >= '0' && c <= '9') {
                 auto d = c - '0';
@@ -44,38 +56,37 @@ private:
                 ++digits;
                 if (digits > 3) {
                     code = error_code::OCTET_MORE_3_CHARACTERS;
-                    return 0;
+                    return {};
                 }
             } else if (c == '.' && digits > 0) {
                 if (octet > 255) {
                     code = error_code::OCTET_EXCEEDED_255;
-                    return 0;
+                    return {};
                 }
+                octets[index++] = uint8_t(octet & 0xFF);
                 digits = 0;
-                octets |= (octet & 0xFF) << (index * 8);
                 octet = 0;
-                ++index;
             } else if (c == '.') {
                 code = error_code::EMPTY_OCTET;
-                return 0;
+                return {};
             } else {
                 code = error_code::OCTET_HAS_INVALID_SYMBOL;
-                return 0;
+                return {};
             }
         }
         if (index != 3) {
             code = error_code::EXPECTED_4_OCTETS;
-            return 0;
+            return {};
         }
         if (digits == 0) {
             code = error_code::EMPTY_OCTET;
-            return 0;
+            return {};
         }
         if (octet > 255) {
             code = error_code::OCTET_EXCEEDED_255;
-            return 0;
+            return {};
         }
-        octets |= (octet & 0xFF) << (index * 8);
+        octets[index] = uint8_t(octet & 0xFF);
         return octets;
     }
 };

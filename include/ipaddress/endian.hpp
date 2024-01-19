@@ -88,6 +88,10 @@ IPADDRESS_CONSTEXPR uint32_t swap_bytes(uint32_t value) IPADDRESS_NOEXCEPT {
     return value;
 }
 
+IPADDRESS_CONSTEXPR uint16_t swap_bytes(uint16_t value) IPADDRESS_NOEXCEPT {
+    return (value << 8) | (value >> 8);
+}
+
 }
 
 #endif

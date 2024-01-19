@@ -18,7 +18,8 @@ TEST(TEST_IPV4_ADDRESS, Test)
 {
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
     auto ipv4 = ipv4_address::parse<"127.0.0.255">();
-    auto ipv4_ = ipv4_address::parse<"127.0.0.1">();
+    constexpr auto ipv4_ = ipv4_address::parse<"127.0.0.1">();
+    constexpr auto u = ipv4_.to_uint32();
 
     auto ipv6 = ipv6_address::parse<"::ffff:0:0">();
     auto ipv6_2 = ipv6_address::parse("::ffff:0:0:127.0.0.255");

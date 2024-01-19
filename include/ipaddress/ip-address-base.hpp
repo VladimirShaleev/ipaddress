@@ -3,6 +3,7 @@
 
 #include "config.hpp"
 #include "errors.hpp"
+#include "endian.hpp"
 #include "fixed-string.hpp"
 
 namespace IPADDRESS_NAMESPACE {
@@ -10,9 +11,9 @@ namespace IPADDRESS_NAMESPACE {
 template <typename Base>
 class ip_address_base : public Base {
 public:
-    using BaseType = typename Base::BaseType;
+    using base_type = typename Base::base_type;
 
-    IPADDRESS_CONSTEXPR explicit ip_address_base(const BaseType& ip) IPADDRESS_NOEXCEPT : _ip(ip) {
+    IPADDRESS_CONSTEXPR explicit ip_address_base(const base_type& bytes) IPADDRESS_NOEXCEPT : _bytes(bytes) {
     }
 
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
@@ -50,12 +51,12 @@ public:
         return ip_address_base(Base::ip_from_string(make_fixed_string(address), code, index));
     }
 
-    IPADDRESS_CONSTEXPR BaseType ip() const IPADDRESS_NOEXCEPT {
-        return _ip;
+    IPADDRESS_CONSTEXPR const base_type& bytes() const IPADDRESS_NOEXCEPT {
+        return _bytes;
     }
 
 private:
-    BaseType _ip;
+    base_type _bytes;
 };
 
 }
