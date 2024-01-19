@@ -5,128 +5,11 @@
 
 namespace IPADDRESS_NAMESPACE {
 
-struct fixed_string_iterator {
-    using iterator_category = std::random_access_iterator_tag;
-    using value_type        = char;
-    using difference_type   = std::ptrdiff_t;
-    using pointer           = const value_type*;
-    using reference         = const value_type&;
-
-    IPADDRESS_CONSTEXPR fixed_string_iterator() IPADDRESS_NOEXCEPT = default;
-    IPADDRESS_CONSTEXPR fixed_string_iterator(const fixed_string_iterator&) IPADDRESS_NOEXCEPT = default;
-    IPADDRESS_CONSTEXPR fixed_string_iterator(fixed_string_iterator&&) IPADDRESS_NOEXCEPT = default;
-
-    IPADDRESS_CONSTEXPR_14 fixed_string_iterator& operator=(const fixed_string_iterator&) IPADDRESS_NOEXCEPT = default;
-    IPADDRESS_CONSTEXPR_14 fixed_string_iterator& operator=(fixed_string_iterator&&) IPADDRESS_NOEXCEPT = default;
-
-    IPADDRESS_CONSTEXPR fixed_string_iterator(pointer ptr) IPADDRESS_NOEXCEPT : _ptr(ptr) {
-    }
-
-    IPADDRESS_CONSTEXPR reference operator*() const IPADDRESS_NOEXCEPT {
-        return *_ptr;
-    }
-
-    IPADDRESS_CONSTEXPR pointer operator->() const IPADDRESS_NOEXCEPT {
-        return _ptr;
-    }
-
-    IPADDRESS_CONSTEXPR reference operator[](difference_type n) const IPADDRESS_NOEXCEPT {
-        return *(_ptr + n);
-    }
-
-    IPADDRESS_CONSTEXPR_14 fixed_string_iterator& operator++() IPADDRESS_NOEXCEPT {
-        ++_ptr;
-        return *this;
-    }
-
-    IPADDRESS_CONSTEXPR_14 fixed_string_iterator operator++(int) IPADDRESS_NOEXCEPT {
-        auto tmp = *this;
-        ++(*this);
-        return tmp;
-    }
-
-    IPADDRESS_CONSTEXPR_14 fixed_string_iterator& operator--() IPADDRESS_NOEXCEPT {
-        --_ptr;
-        return *this;
-    }
-
-    IPADDRESS_CONSTEXPR_14 fixed_string_iterator operator--(int) IPADDRESS_NOEXCEPT {
-        auto tmp = *this;
-        --(*this);
-        return tmp;
-    }
-
-    IPADDRESS_CONSTEXPR_14 fixed_string_iterator& operator+=(difference_type n) IPADDRESS_NOEXCEPT {
-        _ptr += n;
-        return *this;
-    }
-
-    IPADDRESS_CONSTEXPR_14 fixed_string_iterator& operator-=(difference_type n) IPADDRESS_NOEXCEPT {
-        _ptr -= n;
-        return *this;
-    }
-
-    IPADDRESS_CONSTEXPR fixed_string_iterator operator+(difference_type n) const IPADDRESS_NOEXCEPT {
-        auto tmp = *this;
-        tmp += n;
-        return tmp;
-    }
-
-    IPADDRESS_CONSTEXPR fixed_string_iterator operator-(difference_type n) const IPADDRESS_NOEXCEPT {
-        auto tmp = *this;
-        tmp -= n;
-        return tmp;
-    }
-
-    IPADDRESS_CONSTEXPR difference_type operator-(const fixed_string_iterator& rhs) const IPADDRESS_NOEXCEPT {
-        return _ptr - rhs._ptr;
-    }
-
-    IPADDRESS_CONSTEXPR bool operator==(const fixed_string_iterator& rhs) const IPADDRESS_NOEXCEPT {
-        return _ptr == rhs._ptr;
-    }
-
-    IPADDRESS_CONSTEXPR bool operator!=(const fixed_string_iterator& rhs) const IPADDRESS_NOEXCEPT {
-        return !(*this == rhs);
-    }
-
-#ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR std::strong_ordering operator<=>(const fixed_string_iterator& rhs) const IPADDRESS_NOEXCEPT {
-        return _ptr <=> rhs._ptr;
-    }
-#else
-    IPADDRESS_CONSTEXPR bool operator<(const fixed_string_iterator& rhs) const IPADDRESS_NOEXCEPT {
-        return _ptr < rhs._ptr;
-    }
-
-    IPADDRESS_CONSTEXPR bool operator<=(const fixed_string_iterator& rhs) const IPADDRESS_NOEXCEPT {
-        return !(rhs < *this);
-    }
-
-    IPADDRESS_CONSTEXPR bool operator>(const fixed_string_iterator& rhs) const IPADDRESS_NOEXCEPT {
-        return rhs < *this;
-    }
-
-    IPADDRESS_CONSTEXPR bool operator>=(const fixed_string_iterator& rhs) const IPADDRESS_NOEXCEPT {
-        return !(*this < rhs);
-    }
-#endif
-
-    friend IPADDRESS_CONSTEXPR fixed_string_iterator operator+(difference_type n, const fixed_string_iterator& it) IPADDRESS_NOEXCEPT {
-        auto tmp = it;
-        tmp += n;
-        return tmp;
-    }
-
-private:
-    pointer _ptr = nullptr;
-};
-
 template <size_t N>
 struct fixed_string {
     using const_pointer          = const char*;
     using const_reference        = const char&;
-    using const_iterator         = fixed_string_iterator;
+    using const_iterator         = const_pointer;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
     static IPADDRESS_CONSTEXPR size_t max_length = N;
@@ -224,7 +107,7 @@ template <>
 struct fixed_string<0> {
     using const_pointer          = const char*;
     using const_reference        = const char&;
-    using const_iterator         = fixed_string_iterator;
+    using const_iterator         = const_pointer;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
     static IPADDRESS_CONSTEXPR size_t max_length = 0;

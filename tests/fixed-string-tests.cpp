@@ -5,17 +5,13 @@
 using namespace ipaddress;
 
 #if IPADDRESS_CPP_VERSION >= 20
-#  define TEST_FIXED_STRING          fixed_string_20
-#  define TEST_FIXED_STRING_ITERATOR fixed_string_iterator_20
+#  define TEST_FIXED_STRING fixed_string_20
 #elif IPADDRESS_CPP_VERSION >= 17
-#  define TEST_FIXED_STRING          fixed_string_17
-#  define TEST_FIXED_STRING_ITERATOR fixed_string_iterator_17
+#  define TEST_FIXED_STRING fixed_string_17
 #elif IPADDRESS_CPP_VERSION >= 14
-#  define TEST_FIXED_STRING          fixed_string_14
-#  define TEST_FIXED_STRING_ITERATOR fixed_string_iterator_14
+#  define TEST_FIXED_STRING fixed_string_14
 #elif IPADDRESS_CPP_VERSION >= 11
-#  define TEST_FIXED_STRING          fixed_string_11
-#  define TEST_FIXED_STRING_ITERATOR fixed_string_iterator_11
+#  define TEST_FIXED_STRING fixed_string_11
 #endif
 
 #if IPADDRESS_CPP_VERSION >= 17
@@ -199,99 +195,4 @@ TEST(TEST_FIXED_STRING, ConstexprFrontBack)
     constexpr auto back_1 = str_1.back();
     EXPECT_EQ(front_1, 's');
     EXPECT_EQ(back_1, 's');
-}
-
-TEST(TEST_FIXED_STRING_ITERATOR, ConstexprCategory)
-{
-#if IPADDRESS_CPP_VERSION >= 20
-    EXPECT_TRUE(std::random_access_iterator<fixed_string_iterator>);
-#else
-    using category = std::iterator_traits<fixed_string_iterator>::iterator_category;
-    
-    constexpr auto actual = std::is_same<std::random_access_iterator_tag, category>::value;
-
-    EXPECT_TRUE(actual);
-#endif
-}
-
-TEST(TEST_FIXED_STRING_ITERATOR, ConstexprArithmetic)
-{
-    constexpr fixed_string_iterator iter("string");
-    constexpr auto c0 = *iter;
-    EXPECT_EQ(c0, 's');
-
-    constexpr auto at = iter[3];
-    EXPECT_EQ(at, 'i');
-    
-    constexpr auto iter_pre_increment = ++fixed_string_iterator("string");
-    constexpr auto pre_increment = *iter_pre_increment;
-    EXPECT_EQ(pre_increment, 't');
-    
-    constexpr auto iter_post_increment = fixed_string_iterator("string")++;
-    EXPECT_EQ(*iter_post_increment, 's');
-    
-    constexpr auto iter_pre_decrement = --(fixed_string_iterator("string") + 5);
-    constexpr auto pre_decrement = *iter_pre_decrement;
-    EXPECT_EQ(pre_decrement, 'n');
-    
-    constexpr auto iter_post_decrement = (fixed_string_iterator("string") + 5)--;
-    EXPECT_EQ(*iter_post_decrement, 'g');
-
-    constexpr auto iter_assign_plus = fixed_string_iterator("string") += 2;
-    EXPECT_EQ(*iter_assign_plus, 'r');
-    
-    constexpr auto iter_assign_minus = (fixed_string_iterator("string") + 3) -= 1;
-    EXPECT_EQ(*iter_assign_minus, 'r');
-
-    constexpr auto iter_addition = iter + 4;
-    EXPECT_EQ(*iter_addition, 'n');
-
-    constexpr auto iter_subtraction = iter_pre_increment - 1;
-    EXPECT_EQ(*iter_subtraction, 's');
-
-    constexpr auto iter_outside_addition = 3 + iter;
-    EXPECT_EQ(*iter_outside_addition, 'i');
-
-    auto diff = iter_assign_plus - iter_pre_increment;
-    EXPECT_EQ(diff, 1);
-
-#if IPADDRESS_CPP_VERSION >= 20
-    auto addr_diff = std::to_address(iter_assign_plus) - std::to_address(iter);
-    EXPECT_EQ(addr_diff, 2);
-#endif
-}
-
-TEST(TEST_FIXED_STRING_ITERATOR, ConstexprCompare) 
-{
-    constexpr fixed_string_iterator iter1("string");
-
-    constexpr fixed_string_iterator iter2 = iter1;
-    constexpr auto iter1_2_eq = iter1 == iter2;
-    constexpr auto iter1_2_not_eq = iter1 != iter2;
-    constexpr auto iter1_2_less = iter1 < iter2;
-    constexpr auto iter1_2_less_or_eq = iter1 <= iter2;
-    constexpr auto iter1_2_great_or_eq = iter1 >= iter2;
-    constexpr auto iter1_2_great = iter1 > iter2;
-    
-    EXPECT_TRUE(iter1_2_eq);
-    EXPECT_FALSE(iter1_2_not_eq);
-    EXPECT_FALSE(iter1_2_less);
-    EXPECT_TRUE(iter1_2_less_or_eq);
-    EXPECT_TRUE(iter1_2_great_or_eq);
-    EXPECT_FALSE(iter1_2_great);
-    
-    constexpr fixed_string_iterator iter3 = iter1 + 3;
-    constexpr auto iter1_3_eq = iter1 == iter3;
-    constexpr auto iter1_3_not_eq = iter1 != iter3;
-    constexpr auto iter1_3_less = iter1 < iter3;
-    constexpr auto iter1_3_less_or_eq = iter1 <= iter3;
-    constexpr auto iter1_3_great_or_eq = iter1 >= iter3;
-    constexpr auto iter1_3_great = iter1 > iter3;
-    
-    EXPECT_FALSE(iter1_3_eq);
-    EXPECT_TRUE(iter1_3_not_eq);
-    EXPECT_TRUE(iter1_3_less);
-    EXPECT_TRUE(iter1_3_less_or_eq);
-    EXPECT_FALSE(iter1_3_great_or_eq);
-    EXPECT_FALSE(iter1_3_great);
 }
