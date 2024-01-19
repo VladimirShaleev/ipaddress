@@ -19,11 +19,7 @@ struct fixed_string_iterator {
     IPADDRESS_CONSTEXPR_14 fixed_string_iterator& operator=(const fixed_string_iterator&) IPADDRESS_NOEXCEPT = default;
     IPADDRESS_CONSTEXPR_14 fixed_string_iterator& operator=(fixed_string_iterator&&) IPADDRESS_NOEXCEPT = default;
 
-    IPADDRESS_CONSTEXPR fixed_string_iterator(pointer ptr, std::size_t count) IPADDRESS_NOEXCEPT
-        :
-        _begin(ptr),
-        _end(ptr + count),
-        _ptr(ptr) {
+    IPADDRESS_CONSTEXPR fixed_string_iterator(pointer ptr) IPADDRESS_NOEXCEPT : _ptr(ptr) {
     }
 
     IPADDRESS_CONSTEXPR reference operator*() const IPADDRESS_NOEXCEPT {
@@ -123,8 +119,6 @@ struct fixed_string_iterator {
     }
 
 private:
-    pointer _begin = nullptr;
-    pointer _end = nullptr;
     pointer _ptr = nullptr;
 };
 
@@ -135,22 +129,31 @@ struct fixed_string {
     using const_iterator         = fixed_string_iterator;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
-    static IPADDRESS_CONSTEXPR size_t length = N;
+    static IPADDRESS_CONSTEXPR size_t max_length = N;
+
+    size_t length = 0;
 
     char _data[N] = {};
 
     IPADDRESS_CONSTEXPR fixed_string(const char (&data)[N + 1]) IPADDRESS_NOEXCEPT {
+        auto ended = false;
         for (size_t i = 0; i < N; ++i) {
             _data[i] = data[i];
+            if (data[i] == '\0') {
+                ended = true;
+            }
+            if (!ended) {
+                ++length;
+            }
         }
     }
 
     IPADDRESS_CONSTEXPR const_iterator begin() const IPADDRESS_NOEXCEPT {
-        return const_iterator(_data, length);
+        return const_iterator(_data);
     }
     
     IPADDRESS_CONSTEXPR const_iterator end() const IPADDRESS_NOEXCEPT {
-        return const_iterator(_data, length) + length;
+        return const_iterator(_data) + length;
     }
     
     IPADDRESS_CONSTEXPR_17 const_reverse_iterator rbegin() const IPADDRESS_NOEXCEPT {
@@ -183,6 +186,10 @@ struct fixed_string {
     
     IPADDRESS_CONSTEXPR size_t size() const IPADDRESS_NOEXCEPT {
         return length;
+    }
+
+    IPADDRESS_CONSTEXPR size_t capacity() const IPADDRESS_NOEXCEPT {
+        return max_length;
     }
 
     IPADDRESS_CONSTEXPR const_reference operator[](size_t n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
@@ -220,6 +227,8 @@ struct fixed_string<0> {
     using const_iterator         = fixed_string_iterator;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
+    static IPADDRESS_CONSTEXPR size_t max_length = 0;
+
     static IPADDRESS_CONSTEXPR size_t length = 0;
 
     IPADDRESS_CONSTEXPR fixed_string() IPADDRESS_NOEXCEPT = default;
@@ -228,11 +237,11 @@ struct fixed_string<0> {
     }
 
     IPADDRESS_CONSTEXPR const_iterator begin() const IPADDRESS_NOEXCEPT {
-        return const_iterator(_data, length);
+        return const_iterator(_data);
     }
     
     IPADDRESS_CONSTEXPR const_iterator end() const IPADDRESS_NOEXCEPT {
-        return const_iterator(_data, length) + length;
+        return const_iterator(_data) + length;
     }
     
     IPADDRESS_CONSTEXPR_17 const_reverse_iterator rbegin() const IPADDRESS_NOEXCEPT {
@@ -264,6 +273,10 @@ struct fixed_string<0> {
     }
     
     IPADDRESS_CONSTEXPR size_t size() const IPADDRESS_NOEXCEPT {
+        return 0;
+    }
+
+    IPADDRESS_CONSTEXPR size_t capacity() const IPADDRESS_NOEXCEPT {
         return 0;
     }
 

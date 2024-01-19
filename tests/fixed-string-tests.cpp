@@ -216,31 +216,31 @@ TEST(TEST_FIXED_STRING_ITERATOR, ConstexprCategory)
 
 TEST(TEST_FIXED_STRING_ITERATOR, ConstexprArithmetic)
 {
-    constexpr fixed_string_iterator iter("string", 6);
+    constexpr fixed_string_iterator iter("string");
     constexpr auto c0 = *iter;
     EXPECT_EQ(c0, 's');
 
     constexpr auto at = iter[3];
     EXPECT_EQ(at, 'i');
     
-    constexpr auto iter_pre_increment = ++fixed_string_iterator("string", 6);
+    constexpr auto iter_pre_increment = ++fixed_string_iterator("string");
     constexpr auto pre_increment = *iter_pre_increment;
     EXPECT_EQ(pre_increment, 't');
     
-    constexpr auto iter_post_increment = fixed_string_iterator("string", 6)++;
+    constexpr auto iter_post_increment = fixed_string_iterator("string")++;
     EXPECT_EQ(*iter_post_increment, 's');
     
-    constexpr auto iter_pre_decrement = --(fixed_string_iterator("string", 6) + 5);
+    constexpr auto iter_pre_decrement = --(fixed_string_iterator("string") + 5);
     constexpr auto pre_decrement = *iter_pre_decrement;
     EXPECT_EQ(pre_decrement, 'n');
     
-    constexpr auto iter_post_decrement = (fixed_string_iterator("string", 6) + 5)--;
+    constexpr auto iter_post_decrement = (fixed_string_iterator("string") + 5)--;
     EXPECT_EQ(*iter_post_decrement, 'g');
 
-    constexpr auto iter_assign_plus = fixed_string_iterator("string", 6) += 2;
+    constexpr auto iter_assign_plus = fixed_string_iterator("string") += 2;
     EXPECT_EQ(*iter_assign_plus, 'r');
     
-    constexpr auto iter_assign_minus = (fixed_string_iterator("string", 6) + 3) -= 1;
+    constexpr auto iter_assign_minus = (fixed_string_iterator("string") + 3) -= 1;
     EXPECT_EQ(*iter_assign_minus, 'r');
 
     constexpr auto iter_addition = iter + 4;
@@ -263,7 +263,7 @@ TEST(TEST_FIXED_STRING_ITERATOR, ConstexprArithmetic)
 
 TEST(TEST_FIXED_STRING_ITERATOR, ConstexprCompare) 
 {
-    constexpr fixed_string_iterator iter1("string", 6);
+    constexpr fixed_string_iterator iter1("string");
 
     constexpr fixed_string_iterator iter2 = iter1;
     constexpr auto iter1_2_eq = iter1 == iter2;

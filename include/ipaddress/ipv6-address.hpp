@@ -37,39 +37,40 @@ protected:
 
 private:
     template <typename Iter>
-    static IPADDRESS_CONSTEXPR std::array<fixed_string<45>, max_parts> split_parts(Iter begin, Iter end, int& parts_count, error_code& code) IPADDRESS_NOEXCEPT {
-        std::array<fixed_string<45>, max_parts> parts = {
-            make_fixed_string("\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"),
-            make_fixed_string("\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"),
-            make_fixed_string("\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"),
-            make_fixed_string("\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"),
-            make_fixed_string("\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"),
-            make_fixed_string("\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"),
-            make_fixed_string("\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"),
-            make_fixed_string("\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0")};
+    static IPADDRESS_CONSTEXPR std::array<fixed_string<4>, max_parts> split_parts(Iter begin, Iter end, int& parts_count, error_code& code) IPADDRESS_NOEXCEPT {
+        std::array<char[5], max_parts> parts = {};
+        char last_part[16] = {};
 
         int index = 0;
         int symbol = 0;
-        char str[46] = {};
 
         for (auto it = begin; it != end; ++it) {
             auto c = *it;
-            if (c == '\0') {
-                break;
-            }
             if (index >= max_parts) {
                 // error
                 // return 
             }
             if (c != ':') {
-                if (symbol > 45) {
+                if (symbol > 15) {
                     // error
                 }
-                str[symbol++] = c;
-                str[symbol] = '\0';
+                last_part[symbol++] = c;
+                last_part[symbol] = '\0';
+
+                // parts[index][symbol++] = c;
+                // parts[index][symbol] = '\0';
             } else {
-                parts[index++] = make_fixed_string(str);
+                if (symbol > 4) {
+                    // error
+                }
+
+                auto& current_part = parts[index++];
                 symbol = 0;
+
+                current_part[0] = last_part[0];
+                current_part[1] = last_part[1];
+                current_part[2] = last_part[2];
+                current_part[3] = last_part[3];
             }
         }
     
@@ -82,20 +83,16 @@ private:
             // return 
         }
         
-        if (symbol > 45) {
-            // error
-        }
+        // if (symbol > 45) {
+        //     // error
+        // }
 
-        parts[index] = make_fixed_string(str);
+        // parts[index][symbol] = '\0';
 
-        auto& last_part = parts[index];
         auto has_ipv4 = false;
 
-        for (auto it = last_part.begin(); it != last_part.end(); ++it) {
-            if (*it == '\0') {
-                break;
-            }
-            if (*it == '.') {
+        for (auto i = 0; i < symbol; ++i) {
+            if (last_part[i] == '.') {
                 has_ipv4 = true;
                 break;
             }
@@ -107,28 +104,42 @@ private:
                 // return 
             }
 
-            char address[46]={};
-            for (auto it = last_part.begin(); it != last_part.end(); ++it) {
-                address[it - last_part.begin()] = *it;
-            }
-            auto ipv4 = ipv4_address::parse(address, code).ip();
+            auto ipv4 = ipv4_address::parse(last_part, code).ip();
 
             if (code != error_code::NO_ERROR) {
                 // error
             }
 
-            parts[index++] = to_hex(uint16_t((ipv4 >> 16) & 0xFFFF));
-            parts[index] = to_hex(uint16_t(ipv4 & 0xFFFF));
+            to_hex(uint16_t((ipv4 >> 16) & 0xFFFF), parts[index++]);
+            to_hex(uint16_t(ipv4 & 0xFFFF), parts[index++]);
+        } else {
+            if (symbol > 4) {
+                // error
+            }
+            
+            auto& current_part = parts[index++];
+            current_part[0] = last_part[0];
+            current_part[1] = last_part[1];
+            current_part[2] = last_part[2];
+            current_part[3] = last_part[3];
         }
 
         parts_count = index;
-        return parts;
+        return {
+            make_fixed_string(parts[0]),
+            make_fixed_string(parts[1]),
+            make_fixed_string(parts[2]),
+            make_fixed_string(parts[3]),
+            make_fixed_string(parts[4]),
+            make_fixed_string(parts[5]),
+            make_fixed_string(parts[6]),
+            make_fixed_string(parts[7])};
     }
 
-    static IPADDRESS_CONSTEXPR std::tuple<size_t, size_t, size_t> get_parts_bound(const std::array<fixed_string<45>, max_parts>& parts, int parts_count, error_code& code) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR std::tuple<size_t, size_t, size_t> get_parts_bound(const std::array<fixed_string<4>, max_parts>& parts, int parts_count, error_code& code) IPADDRESS_NOEXCEPT {
         int skip = 0;
         for (auto i = 0; i < parts_count - 1; ++i) {
-            if (parts[i].at(0) == '\0') {
+            if (parts[i].empty()) {
                 if (skip) {
                     // error
                 }
@@ -140,13 +151,13 @@ private:
             auto parts_hi = skip;
             auto parts_lo = parts_count - skip - 1;
 
-            if (parts[0].at(0) == '\0') {
+            if (parts[0].empty()) {
                 if (--parts_hi) {
                     // error
                 }
             }
 
-            if (parts[parts_count - 1].at(0) == '\0') {
+            if (parts[parts_count - 1].empty()) {
                 if (--parts_lo) {
                     // error
                 }
@@ -164,11 +175,11 @@ private:
                 // error
             }
 
-            if (parts[0].at(0) == '\0') {
+            if (parts[0].empty()) {
                 // error
             }
 
-            if (parts.back().at(0) == '\0') {
+            if (parts.back().empty()) {
                 // error
             }
 
@@ -176,17 +187,66 @@ private:
         }
     }
 
-    static IPADDRESS_CONSTEXPR BaseType parse_parts(const std::array<fixed_string<45>, max_parts>& parts, int parts_count, size_t hi, size_t lo, size_t skipped, error_code& code) IPADDRESS_NOEXCEPT {
-        return {};        
+    static IPADDRESS_CONSTEXPR BaseType parse_parts(const std::array<fixed_string<4>, max_parts>& parts, int parts_count, size_t hi, size_t lo, size_t skipped, error_code& code) IPADDRESS_NOEXCEPT {
+        // BaseType ip(0);
+
+        for (size_t i = 0; i < hi; ++i) {
+            //ip <<= 16;
+            /*ip |=*/ parse_part(parts[i], code);
+
+            if (code != error_code::NO_ERROR) {
+                return {};
+            }
+        }
+        // ip <<= 16 * skipped;
+
+        for (size_t i = lo; i > 0; --i) {
+            //ip <<= 16;
+            /*ip |=*/ parse_part(parts[i], code);
+
+            if (code != error_code::NO_ERROR) {
+                return {};
+            }
+        }
+        return {}; // ip
     }
 
-    static IPADDRESS_CONSTEXPR fixed_string<45> to_hex(uint16_t value) {
+    static IPADDRESS_CONSTEXPR uint16_t parse_part(const fixed_string<4>& part, error_code& code) IPADDRESS_NOEXCEPT {
+        uint16_t value = 0;
+        for (size_t i = 0; i < part.size(); ++i) {
+            const auto c = part[i];
+            const auto power = pow16(part.size() - i - 1);
+            if (c >= '0' && c <= '9') {
+                value += (c - '0') * power;
+            } else if(c >= 'A' && c <= 'F') {
+                value += (c - 55) * power;
+            } else if (c >= 'a' && c <= 'f') {
+                value += (c - 87) * power;
+            } else {
+                // error
+            }
+        }
+        return value;
+    }
+
+    static IPADDRESS_CONSTEXPR uint16_t pow16(int power) IPADDRESS_NOEXCEPT {
+        switch (power) {
+            case 0: return 1;
+            case 1: return 16;
+            case 2: return 16 * 16;
+            case 3: return 16 * 16 * 16;
+            default:
+                std::exit(1);
+                return 0;
+        }
+    }
+
+    static IPADDRESS_CONSTEXPR void to_hex(uint16_t value, char(&result)[5]) {
         char digits[] = "0123456789abcdef";
-        char result[46] = {};
         for (auto i = 0, j = (4 - 1) * 4; i < 4; ++i, j -= 4) {
             result[i] = digits[(value >> j) & 0x0f];
+            result[i + 1] = '\0';
         }
-        return make_fixed_string(result);
     }
 };
 

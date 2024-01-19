@@ -34,9 +34,6 @@ private:
         code = error_code::NO_ERROR;
         for (auto it = begin; it != end; ++it) {
             auto c = *it;
-            if (c == '\0') {
-                break;
-            }
             if (index >= 4) {
                 code = error_code::EXPECTED_4_OCTETS;
                 return 0;

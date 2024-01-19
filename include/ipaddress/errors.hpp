@@ -8,11 +8,18 @@ namespace IPADDRESS_NAMESPACE {
 enum class error_code {
     NO_ERROR = 0,
     EMPTY_ADDRESS,
+
+    // ipv4 errors
     EMPTY_OCTET,
     EXPECTED_4_OCTETS,
     OCTET_MORE_3_CHARACTERS,
     INVALID_OCTET_SYMBOL,
-    OUT_OF_RANGE_OCTET
+    OUT_OF_RANGE_OCTET,
+
+    // ipv6 errors
+    MIN_PARTS,
+    MAX_PARTS,
+    REPEATED_USE_DOUBLE_COLON
 };
 
 class error : public std::runtime_error {
@@ -62,11 +69,11 @@ public:
 
 template <typename FixedString>
 [[noreturn]] IPADDRESS_CONSTEXPR void raise_error(error_code code, int octet, const FixedString& address) {
-    char str[FixedString::length + 1];
-    for (size_t i = 0; i < FixedString::length; ++i) {
+    char str[FixedString::max_length + 1];
+    for (size_t i = 0; i < address.size(); ++i) {
         str[i] = address[i];
     }
-    str[FixedString::length] = '\0';
+    str[address.size()] = '\0';
     switch (code) {
         case error_code::EMPTY_OCTET:
             throw parse_error("empty octet", octet, "in address", str);
