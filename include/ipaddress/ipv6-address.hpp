@@ -13,13 +13,12 @@ protected:
     static IPADDRESS_CONSTEXPR size_t max_parts = 8;
 
     template <typename FixedString>
-    static IPADDRESS_CONSTEXPR BaseType ip_from_string(const FixedString& address, error_code& code, int& octet) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR BaseType ip_from_string(const FixedString& address, error_code& code, int& parts_count) IPADDRESS_NOEXCEPT {
         if (address.empty()) {
             code = error_code::EMPTY_ADDRESS;
             return {};
         }
 
-        auto parts_count = 0;
         const auto parts = split_parts(address.begin(), address.end(), parts_count, code);
 
         if (code != error_code::NO_ERROR) {
@@ -41,12 +40,12 @@ private:
         std::array<char[5], max_parts> parts = {};
         char last_part[16] = {};
 
-        int index = 0;
+        parts_count = 0;
         int symbol = 0;
 
         for (auto it = begin; it != end; ++it) {
             auto c = *it;
-            if (index >= max_parts) {
+            if (parts_count >= max_parts) {
                 error = error_code::MOST_8_COLONS_PERMITTED;
                 return empty_parts;
             }
@@ -63,7 +62,7 @@ private:
                     return empty_parts;
                 }
 
-                auto& current_part = parts[index++];
+                auto& current_part = parts[parts_count++];
                 symbol = 0;
 
                 current_part[0] = last_part[0];
@@ -73,12 +72,12 @@ private:
             }
         }
     
-        if (index < min_parts) {
+        if (parts_count < min_parts) {
             error = error_code::LEAST_3_PARTS;
             return empty_parts;
         }
 
-        if (index >= max_parts) {
+        if (parts_count >= max_parts) {
             error = error_code::MOST_8_COLONS_PERMITTED;
             return empty_parts;
         }
@@ -93,7 +92,7 @@ private:
         }
 
         if (has_ipv4) {
-            if (index + 1 >= max_parts) {
+            if (parts_count + 1 >= max_parts) {
                 error = error_code::MOST_8_COLONS_PERMITTED;
                 return empty_parts;
             }
@@ -104,22 +103,21 @@ private:
                 return empty_parts;
             }
 
-            to_hex(uint16_t((ipv4 >> 16) & 0xFFFF), parts[index++]);
-            to_hex(uint16_t(ipv4 & 0xFFFF), parts[index++]);
+            to_hex(uint16_t((ipv4 >> 16) & 0xFFFF), parts[parts_count++]);
+            to_hex(uint16_t(ipv4 & 0xFFFF), parts[parts_count++]);
         } else {
             if (symbol > 4) {
                 error = error_code::PART_IS_MORE_4_CHARS;
                 return empty_parts;
             }
             
-            auto& current_part = parts[index++];
+            auto& current_part = parts[parts_count++];
             current_part[0] = last_part[0];
             current_part[1] = last_part[1];
             current_part[2] = last_part[2];
             current_part[3] = last_part[3];
         }
 
-        parts_count = index;
         return {
             make_fixed_string(parts[0]),
             make_fixed_string(parts[1]),

@@ -48,7 +48,7 @@ private:
                 }
             } else if (c == '.' && digits > 0) {
                 if (octet > 255) {
-                    code = error_code::OUT_OF_RANGE_OCTET;
+                    code = error_code::OCTET_EXCEEDED_255;
                     return 0;
                 }
                 digits = 0;
@@ -59,7 +59,7 @@ private:
                 code = error_code::EMPTY_OCTET;
                 return 0;
             } else {
-                code = error_code::INVALID_OCTET_SYMBOL;
+                code = error_code::OCTET_HAS_INVALID_SYMBOL;
                 return 0;
             }
         }
@@ -72,7 +72,7 @@ private:
             return 0;
         }
         if (octet > 255) {
-            code = error_code::OUT_OF_RANGE_OCTET;
+            code = error_code::OCTET_EXCEEDED_255;
             return 0;
         }
         octets |= (octet & 0xFF) << (index * 8);
