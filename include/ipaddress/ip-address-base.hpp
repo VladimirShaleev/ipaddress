@@ -31,31 +31,31 @@ public:
 #endif
 
 #if IPADDRESS_CPP_VERSION >= 17
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR ip_address_base<Base> parse(std::string_view address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR ip_address_base<Base> parse(std::string_view address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return parse_string(address);
     }
 
-    IPADDRESS_NODISCARD static ip_address_base<Base> parse(std::string_view address, error_code& code) IPADDRESS_NOEXCEPT {
+    static ip_address_base<Base> parse(std::string_view address, error_code& code) IPADDRESS_NOEXCEPT {
         return parse_string(address, code);
     }
 #else
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR ip_address_base<Base> parse(const std::string& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR ip_address_base<Base> parse(const std::string& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return parse_string(address);
     }
 
-    IPADDRESS_NODISCARD static ip_address_base<Base> parse(const std::string& address, error_code& code) IPADDRESS_NOEXCEPT {
+    static ip_address_base<Base> parse(const std::string& address, error_code& code) IPADDRESS_NOEXCEPT {
         return parse_string(address, code);
     }
 #endif
 
     template <size_t N>
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR ip_address_base<Base> parse(const char(&address)[N]) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR ip_address_base<Base> parse(const char(&address)[N]) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         auto str = make_fixed_string(address);
         return parse_string(str);
     }
 
     template <size_t N>
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR ip_address_base<Base> parse(const char(&address)[N], error_code& code) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR ip_address_base<Base> parse(const char(&address)[N], error_code& code) IPADDRESS_NOEXCEPT {
         auto str = make_fixed_string(address);
         return parse_string(str, code);
     }
