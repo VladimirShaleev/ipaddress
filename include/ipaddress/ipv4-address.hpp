@@ -35,6 +35,7 @@ protected:
         }
 
         base_type octets = {};
+        char first_symbol = '\0';
         int digits = 0;
         int octet = 0;
         
@@ -48,6 +49,12 @@ protected:
                 return {};
             }
             if (c >= '0' && c <= '9') {
+                if (digits > 0 && first_symbol == '0') {
+                    code = error_code::LEADING_0_ARE_NOT_PERMITTED;
+                    return {};
+                } else if (digits == 0) {
+                    first_symbol = c;
+                }
                 auto d = c - '0';
                 octet = octet * 10 + d;
                 ++digits;

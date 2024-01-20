@@ -13,6 +13,9 @@ class ip_address_base : public Base {
 public:
     using base_type = typename Base::base_type;
 
+    IPADDRESS_CONSTEXPR ip_address_base() IPADDRESS_NOEXCEPT : _bytes({}) {
+    }
+
     IPADDRESS_CONSTEXPR explicit ip_address_base(const base_type& bytes) IPADDRESS_NOEXCEPT : _bytes(bytes) {
     }
 

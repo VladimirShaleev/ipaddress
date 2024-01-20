@@ -12,6 +12,7 @@ enum class error_code {
     // ipv4 errors
     EMPTY_OCTET,
     EXPECTED_4_OCTETS,
+    LEADING_0_ARE_NOT_PERMITTED,
     OCTET_MORE_3_CHARACTERS,
     OCTET_HAS_INVALID_SYMBOL,
     OCTET_EXCEEDED_255,
@@ -89,6 +90,8 @@ public:
             throw parse_error("empty octet", index, "in address", str);
         case error_code::EXPECTED_4_OCTETS:
             throw parse_error("expected 4 octets in", str);
+        case error_code::LEADING_0_ARE_NOT_PERMITTED:
+            throw parse_error("leading zeros are not permitted in octet", index, "of address", str);
         case error_code::OCTET_MORE_3_CHARACTERS:
             throw parse_error("in octet", index, "of address", str, "more 3 characters");
         case error_code::OCTET_HAS_INVALID_SYMBOL:
