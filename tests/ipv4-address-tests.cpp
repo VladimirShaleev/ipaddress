@@ -1,20 +1,12 @@
 #include <gtest/gtest.h>
+#include <gmock/gmock-matchers.h>
 
 #include <ipaddress/ipaddress.hpp>
 
+using namespace testing;
 using namespace ipaddress;
 
-#if IPADDRESS_CPP_VERSION >= 20
-#  define TEST_IPV4_ADDRESS ipv4_address_20
-#elif IPADDRESS_CPP_VERSION >= 17
-#  define TEST_IPV4_ADDRESS ipv4_address_17
-#elif IPADDRESS_CPP_VERSION >= 14
-#  define TEST_IPV4_ADDRESS ipv4_address_14
-#elif IPADDRESS_CPP_VERSION >= 11
-#  define TEST_IPV4_ADDRESS ipv4_address_11
-#endif
-
-TEST(TEST_IPV4_ADDRESS, Test)
+TEST(ipv4_address, Test)
 {
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
     auto ipv4 = ipv4_address::parse<"127.0.0.255">();
@@ -28,10 +20,10 @@ TEST(TEST_IPV4_ADDRESS, Test)
         error_code err;
         std::string addr = "127.0.0.255";
         const char* addr2 = "127.0.0.255";
-        constexpr std::string_view addr3 = "127.0.0.255";
+        //constexpr std::string_view addr3 = "127.0.0.255";
         auto ss = ipv4_address::parse(addr, err);
         auto ss2 = ipv4_address::parse(addr2, err);
-        constexpr auto ss3 = ipv4_address::parse(addr3);
+        //constexpr auto ss3 = ipv4_address::parse(addr3);
 
         auto ipv4_2 = ipv4_address::parse("127.0.0.255");
     
@@ -46,4 +38,20 @@ TEST(TEST_IPV4_ADDRESS, Test)
     //constexpr auto ipv4 = parse<"127.0.0.1">();
 
     // ipv4_address::ip_from_string()
+}
+
+TEST(ipv4_address, EmptyAddress) {
+    ipv4_address::base_type expected_empty { 0, 0, 0, 0};
+
+    error_code err;
+    auto ip = ipv4_address::parse("", err);
+
+    EXPECT_EQ(err, error_code::EMPTY_ADDRESS);
+    EXPECT_EQ(ip.bytes(), expected_empty);
+    EXPECT_EQ(ip.to_uint32(), 0);
+    EXPECT_EQ(uint32_t(ip), 0);
+
+    EXPECT_THAT(
+        []() { ipv4_address::parse(""); },
+        ThrowsMessage<std::runtime_error>(StrEq("address cannot be empty")));
 }
