@@ -6,6 +6,23 @@
 namespace IPADDRESS_NAMESPACE {
 
 class base_v6 {
+public:
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool has_scope_id() const IPADDRESS_NOEXCEPT {
+        return !_scope_id_str.empty();
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool scope_id_is_value() const IPADDRESS_NOEXCEPT {
+        return has_scope_id() && _scope_id_value > 0;
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR uint32_t scope_id_value() const IPADDRESS_NOEXCEPT {
+        return _scope_id_value;
+    }
+
+    IPADDRESS_NODISCARD std::string scope_id() const {
+        return std::string(_scope_id_str.begin(), _scope_id_str.end());
+    }
+
 protected:
     static IPADDRESS_CONSTEXPR size_t min_parts = 3;
     static IPADDRESS_CONSTEXPR size_t max_parts = 8;
@@ -14,13 +31,18 @@ protected:
     using base_type = byte_array_type<size>;
 
     template <typename Iter>
-    static IPADDRESS_CONSTEXPR base_type ip_from_string(Iter begin, Iter end, error_code& code, int& parts_count) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR ip_address_base<base_v6> ip_from_string(Iter begin, Iter end, error_code& code, int& parts_count) IPADDRESS_NOEXCEPT {
         if (begin == end) {
             code = error_code::EMPTY_ADDRESS;
             return {};
         }
 
-        end = split_scope_id(begin, end);
+        auto ip_and_scope = split_scope_id(begin, end, code);
+        end = std::get<0>(ip_and_scope);
+
+        if (code != error_code::NO_ERROR) {
+            return {};
+        }
 
         const auto parts = split_parts(begin, end, parts_count, code);
 
@@ -34,7 +56,10 @@ protected:
             return {};
         }
 
-        return parse_parts(parts, parts_count, std::get<0>(result), std::get<1>(result), std::get<2>(result), code);
+        auto ip = ip_address_base<base_v6>(parse_parts(parts, parts_count, std::get<0>(result), std::get<1>(result), std::get<2>(result), code));
+        ip._scope_id_str = std::get<1>(ip_and_scope);
+        ip._scope_id_value = std::get<2>(ip_and_scope);
+        return ip;
     }
     
     static std::string ip_to_string(const base_type& bytes) {
@@ -44,18 +69,37 @@ protected:
 
 private:
     template <typename Iter>
-    static IPADDRESS_CONSTEXPR Iter split_scope_id(Iter begin, Iter end) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR std::tuple<Iter, fixed_string<20>, uint32_t> split_scope_id(Iter begin, Iter end, error_code& error) IPADDRESS_NOEXCEPT {
+        char scope_id[21] = {};
+        auto index = 0;
         Iter end_ip = begin;
         auto scope = false;
+        auto is_value = true;
+        uint32_t value = 0;
         for (auto it = begin; it != end; ++it) {
             if (!scope && *it != '%') {
                 end_ip = it + 1;
             } else if (scope) {
+                if (index > 19) {
+                    error = error_code::SCOPE_ID_IS_TOO_LONG;
+                    return std::make_tuple(end_ip, make_fixed_string("\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"), 0);
+                }
+                char c = *it;
+                scope_id[index++] = c;
+                if (c >= '0' && c <= '9') {
+                    value = value * 10 + (c - '0');
+                } else {
+                    is_value = false;
+                }
             } else {
                 scope = true;
             }
         }
-        return end_ip;
+        if (scope && scope_id[0] == '\0') {
+            error = error_code::INVALID_SCOPE_ID;
+            return std::make_tuple(end_ip, make_fixed_string("\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"), 0);
+        }
+        return std::make_tuple(end_ip, make_fixed_string(scope_id), is_value ? value : 0);
     }
 
     template <typename Iter>
@@ -286,6 +330,9 @@ private:
             make_fixed_string("\0\0\0\0"),
             make_fixed_string("\0\0\0\0"),
             make_fixed_string("\0\0\0\0")};
+
+    fixed_string<20> _scope_id_str{"\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"};
+    uint32_t _scope_id_value{};
 };
 
 using ipv6_address = ip_address_base<base_v6>;

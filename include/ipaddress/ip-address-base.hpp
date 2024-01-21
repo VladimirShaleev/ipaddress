@@ -130,14 +130,14 @@ private:
             raise_error(code, index, address.data(), address.size());
         #endif
         }
-        return ip_address_base(result);
+        return result;
     }
 
     template <typename Str>
     static IPADDRESS_CONSTEXPR ip_address_base<Base> parse_string(const Str& address, error_code& code) IPADDRESS_NOEXCEPT {
         code = error_code::NO_ERROR;
         auto index = 0;
-        return ip_address_base(Base::ip_from_string(address.begin(), address.end(), code, index));
+        return Base::ip_from_string(address.begin(), address.end(), code, index);
     }
 
     base_type _bytes;

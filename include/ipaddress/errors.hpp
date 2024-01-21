@@ -26,7 +26,9 @@ enum class error_code {
     LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON,
     TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON,
     EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON,
-    EXACTLY_8_PARTS_EXPECTED_WITHOUT_DOUBLE_COLON
+    EXACTLY_8_PARTS_EXPECTED_WITHOUT_DOUBLE_COLON,
+    SCOPE_ID_IS_TOO_LONG,
+    INVALID_SCOPE_ID
 };
 
 class error : public std::runtime_error {
@@ -116,6 +118,10 @@ public:
             throw parse_error("expected at most 7 other parts with '::' in address", str);
         case error_code::EXACTLY_8_PARTS_EXPECTED_WITHOUT_DOUBLE_COLON:
             throw parse_error("exactly 8 parts expected without '::' in address", str);
+        case error_code::SCOPE_ID_IS_TOO_LONG:
+            throw parse_error("scope id is too long in address", str);
+        case error_code::INVALID_SCOPE_ID:
+            throw parse_error("invalid scope id in address", str);
         default:
             throw error("unknown error");
     }

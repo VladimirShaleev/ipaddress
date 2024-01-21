@@ -49,7 +49,7 @@ protected:
     using base_type = byte_array_type<size>;
 
     template <typename Iter>
-    static IPADDRESS_CONSTEXPR base_type ip_from_string(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR ip_address_base<base_v4> ip_from_string(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT {
         if (begin == end) {
             code = error_code::EMPTY_ADDRESS;
             return {};
@@ -112,7 +112,7 @@ protected:
             return {};
         }
         octets[index] = uint8_t(octet & 0xFF);
-        return octets;
+        return ip_address_base<base_v4>(octets);
     }
     
     static std::string ip_to_string(const base_type& bytes) {
