@@ -1,3 +1,6 @@
+#include <map>
+#include <vector>
+#include <unordered_map>
 #include <sstream>
 #include <gtest/gtest.h>
 #include <gmock/gmock-matchers.h>
@@ -157,10 +160,21 @@ TEST_P(AddressParserParams, parse) {
     ASSERT_EQ(actual_bytes[1], excepted_bytes[1]);
     ASSERT_EQ(actual_bytes[2], excepted_bytes[2]);
     ASSERT_EQ(actual_bytes[3], excepted_bytes[3]);
+
+    std::string s1;
+    ipv4_address addr;
+    std::string s2;
+    std::istringstream ss(std::string("test: ") + get<0>(GetParam()) + " parser");
+    ss >> s1 >> addr >> s2;
+
+    ASSERT_EQ(s1, std::string("test:"));
+    ASSERT_EQ(addr.to_uint32(), excepted_uint32);
+    ASSERT_EQ(s2, std::string("parser"));
 }
 INSTANTIATE_TEST_SUITE_P(
     ipv4_address, AddressParserParams,
     testing::Values(
+        std::make_tuple("0.0.0.0",  0x00000000, std::array<uint8_t, 4>{ 0x00, 0x00, 0x00, 0x00 }),
         std::make_tuple("100.64.0.0",  0x64400000, std::array<uint8_t, 4>{ 0x64, 0x40, 0x00, 0x00 }),
         std::make_tuple("127.0.0.1",   0x7F000001, std::array<uint8_t, 4>{ 0x7F, 0x00, 0x00, 0x01 }),
         std::make_tuple("192.168.1.1", 0xC0A80101, std::array<uint8_t, 4>{ 0xC0, 0xA8, 0x01, 0x01 })
@@ -274,4 +288,72 @@ TEST(ipv4_address, Comparison) {
     ASSERT_TRUE(ip3 >= ip2);
     ASSERT_TRUE(ip3 == ip2);
     ASSERT_FALSE(ip3 != ip2);
+}
+
+using ToStringParams = TestWithParam<const char*>;
+TEST_P(ToStringParams, to_string) {
+    const auto expected = GetParam();
+
+    const auto actual = ipv4_address::parse(expected);
+
+    std::ostringstream ss;
+    ss << actual;
+
+    ASSERT_EQ(actual.to_string(), std::string(expected));
+    ASSERT_EQ(std::to_string(actual), std::string(expected));
+    ASSERT_EQ(ss.str(), std::string(expected));
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_address, ToStringParams,
+    testing::Values(
+        "0.0.0.0",
+        "127.0.0.1",
+        "255.0.42.42"
+    ));
+
+TEST(ipv4_address, Containers) {
+    auto ip1 = ipv4_address::parse("127.0.0.1");
+    auto ip2 = ipv4_address::parse("127.0.0.2");
+    auto ip3 = ipv4_address::parse("127.0.0.3");
+
+    std::vector<ipv4_address> vec;
+    vec.push_back(ip1);
+    vec.push_back(ip2);
+    vec.emplace_back(ip3);
+    vec.emplace_back(ipv4_address::base_type {127, 0, 0, 4});
+    ASSERT_EQ(vec[0], ip1);
+    ASSERT_EQ(vec[1], ip2);
+    ASSERT_EQ(vec[2], ip3);
+    ASSERT_EQ(vec[3], ipv4_address::parse("127.0.0.4"));
+
+    std::map<ipv4_address, int> map;
+    map[ip2] = 2;
+    map[ip1] = 1;
+    map[ip3] = 3;
+    auto it = map.begin();
+    ASSERT_EQ(map.size(), 3);
+    ASSERT_EQ(it++->first, ip1);
+    ASSERT_EQ(it++->first, ip2);
+    ASSERT_EQ(it++->first, ip3);
+    
+    std::unordered_map<ipv4_address, int> unordered_map;
+    unordered_map[ip2] = 2;
+    unordered_map[ip1] = 1;
+    unordered_map[ip3] = 3;
+    unordered_map[ip3] = 4;
+    auto it2 = unordered_map.begin();
+    ASSERT_EQ(unordered_map.size(), 3);
+    ASSERT_EQ(unordered_map[ip1], 1);
+    ASSERT_EQ(unordered_map[ip2], 2);
+    ASSERT_EQ(unordered_map[ip3], 4);
+}
+
+TEST(ipv4_address, Swap) {
+    auto ip1 = ipv4_address::parse("127.0.0.1");
+    auto ip2 = ipv4_address::parse("127.0.0.2");
+    
+    std::swap(ip1, ip2);
+
+    ASSERT_EQ(ip1, ipv4_address::parse("127.0.0.2"));
+    ASSERT_EQ(ip2, ipv4_address::parse("127.0.0.1"));
 }

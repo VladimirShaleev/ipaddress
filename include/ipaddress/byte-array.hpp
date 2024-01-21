@@ -120,6 +120,14 @@ struct byte_array {
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const_pointer data() const IPADDRESS_NOEXCEPT {
         return _data;
     }
+
+    IPADDRESS_CONSTEXPR void swap(byte_array& other) IPADDRESS_NOEXCEPT {
+        for (size_t i = 0; i < N; ++i) {
+            const auto tmp = _data[i];
+            _data[i] = other._data[i];
+            other._data[i] = tmp;
+        }
+    }
 };
 
 template <>
@@ -221,6 +229,9 @@ public:
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const_pointer data() const IPADDRESS_NOEXCEPT {
         return nullptr;
+    }
+
+    IPADDRESS_CONSTEXPR void swap(byte_array& other) IPADDRESS_NOEXCEPT {
     }
 };
 

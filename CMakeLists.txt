@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.8.0)
 
 option(IPADDRESS_NO_EXCEPTIONS "Disable handling cpp exception for" OFF)
+option(IPADDRESS_NO_OVERLOAD_STD "Do not overload std functions such as to_string, hash etc" OFF)
 
 project(ipaddress 
   HOMEPAGE_URL "https://github.com/VladimirShaleev/ipaddress"
@@ -22,6 +23,9 @@ target_include_directories(${PROJECT_NAME} INTERFACE
 
 if(IPADDRESS_NO_EXCEPTIONS)
   target_compile_definitions(${PROJECT_NAME} INTERFACE IPADDRESS_NO_EXCEPTIONS)
+endif()
+if(IPADDRESS_NO_OVERLOAD_STD)
+  target_compile_definitions(${PROJECT_NAME} INTERFACE IPADDRESS_NO_OVERLOAD_STD)
 endif()
 target_compile_definitions(${PROJECT_NAME} INTERFACE IPADDRESS_ENDIAN=${IPADDRESS_BIG_ENDIAN})
 

@@ -114,6 +114,15 @@ protected:
         octets[index] = uint8_t(octet & 0xFF);
         return octets;
     }
+    
+    static std::string ip_to_string(const base_type& bytes) {
+        std::ostringstream res;
+        res << size_t(bytes[0]) << '.'
+            << size_t(bytes[1]) << '.' 
+            << size_t(bytes[2]) << '.' 
+            << size_t(bytes[3]);
+        return res.str();
+    }
 };
 
 using ipv4_address = ip_address_base<base_v4>;
