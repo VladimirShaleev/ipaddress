@@ -243,11 +243,11 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator!=(const byte_array<N>& lhs
 template <std::size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR std::strong_ordering operator<=>(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
     for (std::size_t i = 0; i < N; ++i) {
-        if (const auto result = lhs[i] <=> rhs[i]; result != std::strong_ordering::equal) {
+        if (const auto result = lhs[i] <=> rhs[i]; result != std::strong_ordering::equivalent) {
             return result;
         }
     }
-    return std::strong_ordering::equal;
+    return std::strong_ordering::equivalent;
 }
 #else
 template <std::size_t N>
@@ -274,6 +274,14 @@ template <std::size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>=(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
     return !(lhs < rhs);
 }
+#endif
+
+template <std::size_t N>
+using byte_array_type = 
+#if IPADDRESS_CPP_VERSION >= 20
+    std::array<uint8_t, N>;
+#else
+    byte_array<N>;
 #endif
 
 }

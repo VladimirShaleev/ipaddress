@@ -34,12 +34,7 @@ public:
 protected:
     static IPADDRESS_CONSTEXPR size_t size = 4;
 
-    using base_type = 
-#if IPADDRESS_CPP_VERSION >= 17
-    std::array<uint8_t, size>;
-#else
-    byte_array<size>;
-#endif
+    using base_type = byte_array_type<size>;
 
     template <typename Iter>
     static IPADDRESS_CONSTEXPR base_type ip_from_string(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT {

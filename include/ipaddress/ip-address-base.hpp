@@ -69,18 +69,33 @@ public:
     }
 
     IPADDRESS_CONSTEXPR bool operator==(const ip_address_base<Base>& rhs) const IPADDRESS_NOEXCEPT {
-        for (size_t i = 0; i < Base::size; ++i) {
-            if (_bytes[i] != rhs._bytes[i]) {
-                return false;
-            }
-        }
-        return true;
+        return _bytes == rhs._bytes;
+    }
+
+    IPADDRESS_CONSTEXPR bool operator!=(const ip_address_base<Base>& rhs) const IPADDRESS_NOEXCEPT {
+        return !(*this == rhs);
     }
 
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
      IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR std::strong_ordering operator<=>(const ip_address_base<Base>& rhs) const IPADDRESS_NOEXCEPT {
          return _bytes <=> rhs._bytes;
      }
+#else
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<(const ip_address_base<Base>& rhs) const IPADDRESS_NOEXCEPT {
+        return _bytes < rhs._bytes;
+    }
+    
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>(const ip_address_base<Base>& rhs) const IPADDRESS_NOEXCEPT {
+        return rhs < lhs;
+    }
+    
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<=(const ip_address_base<Base>& rhs) const IPADDRESS_NOEXCEPT {
+        return !(rhs < lhs);
+    }
+    
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>=(const ip_address_base<Base>& rhs) const IPADDRESS_NOEXCEPT {
+        return !(lhs < rhs);
+    }
 #endif
 
 private:

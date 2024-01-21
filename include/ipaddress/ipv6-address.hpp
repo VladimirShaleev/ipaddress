@@ -11,7 +11,7 @@ protected:
     static IPADDRESS_CONSTEXPR size_t max_parts = 8;
     static IPADDRESS_CONSTEXPR size_t size = 16;
 
-    using base_type = std::array<uint8_t, size>;
+    using base_type = byte_array_type<size>;
 
     template <typename Iter>
     static IPADDRESS_CONSTEXPR base_type ip_from_string(Iter begin, Iter end, error_code& code, int& parts_count) IPADDRESS_NOEXCEPT {
