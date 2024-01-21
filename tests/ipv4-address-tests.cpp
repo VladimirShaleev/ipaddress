@@ -7,7 +7,7 @@
 using namespace testing;
 using namespace ipaddress;
 
-TEST(ipv4_address, Test)
+TEST(ipv4_address, CompileTime)
 {
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
     auto ipv4 = ipv4_address::parse<"127.0.0.255">();
@@ -201,3 +201,37 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("1.2.03.40", error_code::LEADING_0_ARE_NOT_PERMITTED, "leading zeros are not permitted in octet 2 of address 1.2.03.40"),
         std::make_tuple("1.2.3.040", error_code::LEADING_0_ARE_NOT_PERMITTED, "leading zeros are not permitted in octet 3 of address 1.2.3.040")
     ));
+
+TEST(ipv4_address, Comparison) {
+    auto ip1 = ipv4_address::parse("127.239.0.1");
+    auto ip2 = ipv4_address::parse("127.240.0.1");
+    auto ip3 = ipv4_address::parse("127.240.0.1");
+    
+    ASSERT_TRUE(ip1 < ip2);
+    ASSERT_TRUE(ip1 <= ip2);
+    ASSERT_FALSE(ip1 > ip2);
+    ASSERT_FALSE(ip1 >= ip2);
+    ASSERT_FALSE(ip1 == ip2);
+    ASSERT_TRUE(ip1 != ip2);
+    
+    ASSERT_FALSE(ip2 < ip1);
+    ASSERT_FALSE(ip2 <= ip1);
+    ASSERT_TRUE(ip2 > ip1);
+    ASSERT_TRUE(ip2 >= ip1);
+    ASSERT_FALSE(ip2 == ip1);
+    ASSERT_TRUE(ip2 != ip1);
+    
+    ASSERT_FALSE(ip2 < ip3);
+    ASSERT_TRUE(ip2 <= ip3);
+    ASSERT_FALSE(ip2 > ip3);
+    ASSERT_TRUE(ip2 >= ip3);
+    ASSERT_TRUE(ip2 == ip3);
+    ASSERT_FALSE(ip2 != ip3);
+    
+    ASSERT_FALSE(ip3 < ip2);
+    ASSERT_TRUE(ip3 <= ip2);
+    ASSERT_FALSE(ip3 > ip2);
+    ASSERT_TRUE(ip3 >= ip2);
+    ASSERT_TRUE(ip3 == ip2);
+    ASSERT_FALSE(ip3 != ip2);
+}
