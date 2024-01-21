@@ -39,7 +39,7 @@ public:
         return parse_string(address);
     }
 
-    static ip_address_base<Base> parse(std::string_view address, error_code& code) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR ip_address_base<Base> parse(std::string_view address, error_code& code) IPADDRESS_NOEXCEPT {
         return parse_string(address, code);
     }
 #else
@@ -47,7 +47,7 @@ public:
         return parse_string(address);
     }
 
-    static ip_address_base<Base> parse(const std::string& address, error_code& code) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR ip_address_base<Base> parse(const std::string& address, error_code& code) IPADDRESS_NOEXCEPT {
         return parse_string(address, code);
     }
 #endif
@@ -113,7 +113,7 @@ private:
     }
 
     template <typename Str>
-    static ip_address_base<Base> parse_string(const Str& address, error_code& code) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR ip_address_base<Base> parse_string(const Str& address, error_code& code) IPADDRESS_NOEXCEPT {
         code = error_code::NO_ERROR;
         auto index = 0;
         return ip_address_base(Base::ip_from_string(address.begin(), address.end(), code, index));

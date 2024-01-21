@@ -7,6 +7,18 @@ namespace IPADDRESS_NAMESPACE {
 
 class base_v4 {
 public:
+#ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
+    template <uint32_t Ip>
+    IPADDRESS_NODISCARD static consteval ip_address_base<base_v4> from_uint32() IPADDRESS_NOEXCEPT {
+        const auto ip = is_little_endian() ? swap_bytes(Ip) : Ip;
+        return ip_address_base<base_v4>({
+            uint8_t(ip & 0xFF),
+            uint8_t((ip >> 8) & 0xFF),
+            uint8_t((ip >> 16) & 0xFF),
+            uint8_t((ip >> 24) & 0xFF) });
+    }
+#endif
+
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR ip_address_base<base_v4> from_uint32(uint32_t ip) IPADDRESS_NOEXCEPT {
         ip = is_little_endian() ? swap_bytes(ip) : ip;
         return ip_address_base<base_v4>({

@@ -7,46 +7,86 @@
 using namespace testing;
 using namespace ipaddress;
 
+template <size_t N>
+static constexpr error_code get_parse_error(const char(&address)[N]) noexcept {
+    error_code err = error_code::NO_ERROR;
+    ipv4_address::parse(address, err);
+    return err;
+}
+
 TEST(ipv4_address, CompileTime)
 {
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
-    auto ipv4 = ipv4_address::parse<"127.0.0.255">();
-    constexpr auto ipv4_ = ipv4_address::parse<"127.0.0.1">();
-    constexpr auto u = ipv4_.to_uint32();
-
-    auto ipv6 = ipv6_address::parse<"::ffff:0:0">();
-    auto ipv6_2 = ipv6_address::parse("::ffff:0:0:127.0.0.255");
-#endif
-    try {
-        error_code err;
-        std::string addr = "127.0.0.255";
-        const char* addr2 = "127.0.0.255";
-        //constexpr std::string_view addr3 = "127.0.0.255";
-        auto ss = ipv4_address::parse(addr, err);
-        auto ss2 = ipv4_address::parse(addr2, err);
-        //constexpr auto ss3 = ipv4_address::parse(addr3);
-
-        auto ipv4_2 = ipv4_address::parse("127.0.0.255");
+    auto ip1 = ipv4_address::parse<"127.0.0.1">();
+    ASSERT_EQ(ip1.to_uint32(), 0x7F000001);
     
-        auto ipv4_2_ = ipv4_address::parse("127.0.0.256", err);
-        auto b = ipv4_2_;
-    }
-    catch (const std::exception& exc) {
-        auto b = exc;
-    }
-    //constexpr auto d = ipv4;
+    constexpr auto ip2 = ipv4_address::parse<"127.0.0.1">();
+    constexpr auto ip2_uint32 = ip2.to_uint32();
+    constexpr auto ip2_bytes = ip2.bytes();
+    constexpr auto ip2_byte_0 = ip2_bytes[0];
+    constexpr auto ip2_byte_1 = ip2_bytes.at(1);
+    constexpr auto ip2_byte_2 = *(ip2_bytes.begin() + 2);
+    constexpr auto ip2_byte_3 = ip2_bytes.back();
+    ASSERT_EQ(ip2_uint32, 0x7F000001);
+    ASSERT_EQ(ip2_byte_0, 0x7F);
+    ASSERT_EQ(ip2_byte_1, 0x00);
+    ASSERT_EQ(ip2_byte_2, 0x00);
+    ASSERT_EQ(ip2_byte_3, 0x01);
 
-    //constexpr auto ipv4 = parse<"127.0.0.1">();
+    auto ip3 = ipv4_address::from_uint32<0x7F000001>();
+    ASSERT_EQ(ip3.to_uint32(), 0x7F000001);
 
-    // ipv4_address::ip_from_string()
+    constexpr auto ip4 = ipv4_address::from_uint32<0x7F000002>();
+    constexpr auto ip4_uint32 = ip4.to_uint32();
+    ASSERT_EQ(ip4_uint32, 0x7F000002);
 
-    constexpr auto ip1 = ipv4_address::from_uint32(0x7F000001);
-    constexpr auto ip2 = ipv4_address::parse("127.0.0.1");
-    constexpr auto cmp = ip1 == ip2;
+    constexpr auto b1 = ip2 < ip4;
+    constexpr auto b2 = ip2 > ip4;
+    constexpr auto b3 = ip2 <= ip4;
+    constexpr auto b4 = ip2 >= ip4;
+    constexpr auto b5 = ip2 == ip4;
+    constexpr auto b6 = ip2 != ip4;
+    
+    ASSERT_TRUE(b1);
+    ASSERT_FALSE(b2);
+    ASSERT_TRUE(b3);
+    ASSERT_FALSE(b4);
+    ASSERT_FALSE(b5);
+    ASSERT_TRUE(b6);
+#endif
+    constexpr auto ip5 = ipv4_address::parse("127.0.0.1");
+    constexpr auto ip5_uint32 = ip5.to_uint32();
+    constexpr auto ip5_bytes = ip5.bytes();
+    constexpr auto ip5_byte_0 = ip5_bytes[0];
+    constexpr auto ip5_byte_1 = ip5_bytes.at(1);
+    constexpr auto ip5_byte_2 = *(ip5_bytes.begin() + 2);
+    constexpr auto ip5_byte_3 = ip5_bytes.back();
+    ASSERT_EQ(ip5_uint32, 0x7F000001);
+    ASSERT_EQ(ip5_byte_0, 0x7F);
+    ASSERT_EQ(ip5_byte_1, 0x00);
+    ASSERT_EQ(ip5_byte_2, 0x00);
+    ASSERT_EQ(ip5_byte_3, 0x01);
 
-    //constexpr auto bbbb = test();
+    constexpr auto err = get_parse_error("127.0.0.256");
+    ASSERT_EQ(err, error_code::OCTET_EXCEEDED_255);
 
-    auto aaa = ip1;
+    constexpr auto ip6 = ipv4_address::from_uint32(0x7F000002);
+    constexpr auto ip6_uint32 = ip6.to_uint32();
+    ASSERT_EQ(ip6_uint32, 0x7F000002);
+
+    constexpr auto b7 = ip5 < ip6;
+    constexpr auto b8 = ip5 > ip6;
+    constexpr auto b9 = ip5 <= ip6;
+    constexpr auto b10 = ip5 >= ip6;
+    constexpr auto b11 = ip5 == ip6;
+    constexpr auto b12 = ip5 != ip6;
+    
+    ASSERT_TRUE(b7);
+    ASSERT_FALSE(b8);
+    ASSERT_TRUE(b9);
+    ASSERT_FALSE(b10);
+    ASSERT_FALSE(b11);
+    ASSERT_TRUE(b12);
 }
 
 TEST(ipv4_address, DefaultCtor) {
