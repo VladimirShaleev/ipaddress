@@ -4,6 +4,7 @@
 #include "config.hpp"
 #include "errors.hpp"
 #include "endian.hpp"
+#include "byte-array.hpp"
 #include "fixed-string.hpp"
 
 namespace IPADDRESS_NAMESPACE {
@@ -66,6 +67,21 @@ public:
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const base_type& bytes() const IPADDRESS_NOEXCEPT {
         return _bytes;
     }
+
+    IPADDRESS_CONSTEXPR bool operator==(const ip_address_base<Base>& rhs) const IPADDRESS_NOEXCEPT {
+        for (size_t i = 0; i < Base::size; ++i) {
+            if (_bytes[i] != rhs._bytes[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+#ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
+     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR std::strong_ordering operator<=>(const ip_address_base<Base>& rhs) const IPADDRESS_NOEXCEPT {
+         return _bytes <=> rhs._bytes;
+     }
+#endif
 
 private:
     template <typename Str>

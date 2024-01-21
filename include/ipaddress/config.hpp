@@ -1,8 +1,8 @@
 #ifndef IPADDRESS_CONFIG_HPP
 #define IPADDRESS_CONFIG_HPP
 
-#include <stdint.h>
-#include <stddef.h>
+#include <cstdint>
+#include <cstddef>
 
 #include <array>
 #include <tuple>

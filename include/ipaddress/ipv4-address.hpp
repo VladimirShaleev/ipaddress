@@ -7,6 +7,15 @@ namespace IPADDRESS_NAMESPACE {
 
 class base_v4 {
 public:
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR ip_address_base<base_v4> from_uint32(uint32_t ip) IPADDRESS_NOEXCEPT {
+        ip = is_little_endian() ? swap_bytes(ip) : ip;
+        return ip_address_base<base_v4>({
+            uint8_t(ip & 0xFF),
+            uint8_t((ip >> 8) & 0xFF),
+            uint8_t((ip >> 16) & 0xFF),
+            uint8_t((ip >> 24) & 0xFF) });
+    }
+
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR uint32_t to_uint32() const IPADDRESS_NOEXCEPT {
         const auto& ipv4 = *static_cast<const ip_address_base<base_v4>*>(this);
         const auto& bytes = ipv4.bytes();
@@ -25,7 +34,12 @@ public:
 protected:
     static IPADDRESS_CONSTEXPR size_t size = 4;
 
-    using base_type = std::array<uint8_t, size>;
+    using base_type = 
+#if IPADDRESS_CPP_VERSION >= 17
+    std::array<uint8_t, size>;
+#else
+    byte_array<size>;
+#endif
 
     template <typename Iter>
     static IPADDRESS_CONSTEXPR base_type ip_from_string(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT {

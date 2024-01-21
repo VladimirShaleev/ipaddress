@@ -7,15 +7,21 @@
 using namespace testing;
 using namespace ipaddress;
 
-struct StringIntParam : public TestWithParam<std::tuple<const char*, int>> {
+struct StringUintParam : public TestWithParam<std::tuple<const char*, uint32_t>> {
     const char* GetString() const noexcept {
         return std::get<0>(GetParam());
     }
 
-    int GetInt() const noexcept {
+    uint32_t GetUint() const noexcept {
         return std::get<1>(GetParam());
     }
 };
+
+//constexpr bytes<5> test() {
+//    bytes<5> a{};
+//    a[1] = 2;
+//    return a;
+//}
 
 TEST(ipv4_address, Test)
 {
@@ -49,6 +55,14 @@ TEST(ipv4_address, Test)
     //constexpr auto ipv4 = parse<"127.0.0.1">();
 
     // ipv4_address::ip_from_string()
+
+    constexpr auto ip1 = ipv4_address::from_uint32(0x7F000001);
+    constexpr auto ip2 = ipv4_address::parse("127.0.0.1");
+    constexpr auto cmp = ip1 == ip2;
+
+    //constexpr auto bbbb = test();
+
+    auto aaa = ip1;
 }
 
 TEST(ipv4_address, DefaultCtor) {
@@ -110,19 +124,20 @@ TEST(ipv4_address, EmptyAddress) {
         ThrowsMessage<parse_error>(StrEq("address cannot be empty")));
 }
 
-TEST_P(StringIntParam, LeadingZeros) {
+struct LeadingZerosParams : public StringUintParam {};
+TEST_P(LeadingZerosParams, LeadingZeros) {
     auto expected_address = GetString();
-    auto expected_octet = GetInt();
+    auto expected_octet = GetUint();
 
     std::ostringstream ss;
-    ss << "leading zeros are not permitted in octet " << GetInt() << " of address " << expected_address;
+    ss << "leading zeros are not permitted in octet " << expected_octet << " of address " << expected_address;
 
     EXPECT_THAT(
-        [expected_address]() { ipv4_address::parse(expected_address); },
+        [address=expected_address]() { ipv4_address::parse(address); },
         ThrowsMessage<parse_error>(StrEq(ss.str())));
 }
 INSTANTIATE_TEST_SUITE_P(
-    ipaddress, StringIntParam,
+    ipv4_address, LeadingZerosParams,
     testing::Values(
             std::make_tuple("000.000.000.000", 0),
             std::make_tuple("192.168.000.001", 2),
@@ -132,4 +147,15 @@ INSTANTIATE_TEST_SUITE_P(
             std::make_tuple("1.02.3.40", 1),
             std::make_tuple("1.2.03.40", 2),
             std::make_tuple("1.2.3.040", 3)
+    ));
+
+struct FromUint32Params : public StringUintParam {};
+TEST_P(FromUint32Params, FromUint32) {
+    ASSERT_EQ(ipv4_address::from_uint32(GetUint()), ipv4_address::parse(GetString()));
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_address, FromUint32Params,
+    testing::Values(
+            std::make_tuple("0.0.0.0", 0),
+            std::make_tuple("192.168.0.1", 0xC0A80001)
     ));
