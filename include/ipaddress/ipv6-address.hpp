@@ -20,6 +20,8 @@ protected:
             return {};
         }
 
+        end = split_scope_id(begin, end);
+
         const auto parts = split_parts(begin, end, parts_count, code);
 
         if (code != error_code::NO_ERROR) {
@@ -34,8 +36,28 @@ protected:
 
         return parse_parts(parts, parts_count, std::get<0>(result), std::get<1>(result), std::get<2>(result), code);
     }
+    
+    static std::string ip_to_string(const base_type& bytes) {
+        std::ostringstream res;
+        return res.str();
+    }
 
 private:
+    template <typename Iter>
+    static IPADDRESS_CONSTEXPR Iter split_scope_id(Iter begin, Iter end) IPADDRESS_NOEXCEPT {
+        Iter end_ip = begin;
+        auto scope = false;
+        for (auto it = begin; it != end; ++it) {
+            if (!scope && *it != '%') {
+                end_ip = it + 1;
+            } else if (scope) {
+            } else {
+                scope = true;
+            }
+        }
+        return end_ip;
+    }
+
     template <typename Iter>
     static IPADDRESS_CONSTEXPR std::array<fixed_string<4>, max_parts> split_parts(Iter begin, Iter end, int& parts_count, error_code& error) IPADDRESS_NOEXCEPT {
         std::array<char[5], max_parts> parts = {};
@@ -64,20 +86,16 @@ private:
                 }
 
                 auto& current_part = parts[parts_count++];
-                symbol = 0;
-
                 current_part[0] = last_part[0];
                 current_part[1] = last_part[1];
                 current_part[2] = last_part[2];
                 current_part[3] = last_part[3];
+
+                symbol = 0;
+                last_part[0] = '\0';
             }
         }
     
-        if (parts_count < min_parts) {
-            error = error_code::LEAST_3_PARTS;
-            return empty_parts;
-        }
-
         if (parts_count >= max_parts) {
             error = error_code::MOST_8_COLONS_PERMITTED;
             return empty_parts;
@@ -117,6 +135,11 @@ private:
             current_part[1] = last_part[1];
             current_part[2] = last_part[2];
             current_part[3] = last_part[3];
+        }
+
+        if (parts_count < min_parts) {
+            error = error_code::LEAST_3_PARTS;
+            return empty_parts;
         }
 
         return {
