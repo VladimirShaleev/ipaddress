@@ -7,22 +7,6 @@
 using namespace testing;
 using namespace ipaddress;
 
-struct StringParam : public TestWithParam<const char*> {
-    const char* GetString() const noexcept {
-        return GetParam();
-    }
-};
-
-struct StringUintParam : public TestWithParam<std::tuple<const char*, uint32_t>> {
-    const char* GetString() const noexcept {
-        return std::get<0>(GetParam());
-    }
-
-    uint32_t GetUint() const noexcept {
-        return std::get<1>(GetParam());
-    }
-};
-
 TEST(ipv4_address, Test)
 {
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
@@ -108,240 +92,19 @@ TEST(ipv4_address, CopyOperator) {
     EXPECT_EQ(uint32_t(ip_copy), 0x7F000001);
 }
 
-TEST(ipv4_address, EmptyAddress) {
-    ipv4_address::base_type expected_empty { 0, 0, 0, 0};
-
-    error_code err;
-    auto ip = ipv4_address::parse("", err);
-
-    EXPECT_EQ(err, error_code::EMPTY_ADDRESS);
-    EXPECT_EQ(ip.bytes(), expected_empty);
-    EXPECT_EQ(ip.to_uint32(), 0);
-    EXPECT_EQ(uint32_t(ip), 0);
-
-#ifdef IPADDRESS_NO_EXCEPTIONS
-    auto error_ip = ipv4_address::parse("");
-    ASSERT_EQ(error_ip.to_uint32(), 0);
-    EXPECT_EQ(error_ip.bytes(), expected_empty);
-    EXPECT_EQ(error_ip.to_uint32(), 0);
-    EXPECT_EQ(uint32_t(error_ip), 0);
-#else
-    EXPECT_THAT(
-        []() { ipv4_address::parse(""); },
-        ThrowsMessage<parse_error>(StrEq("address cannot be empty")));
-#endif
-}
-
-struct FromUint32Params : public StringUintParam {};
+using FromUint32Params = TestWithParam<std::tuple<uint32_t, const char*>>;
 TEST_P(FromUint32Params, FromUint32) {
-    ASSERT_EQ(ipv4_address::from_uint32(GetUint()), ipv4_address::parse(GetString()));
+    ASSERT_EQ(ipv4_address::from_uint32(get<0>(GetParam())), ipv4_address::parse(get<1>(GetParam())));
 }
 INSTANTIATE_TEST_SUITE_P(
     ipv4_address, FromUint32Params,
     testing::Values(
-            std::make_tuple("0.0.0.0", 0),
-            std::make_tuple("192.168.0.1", 0xC0A80001)
+            std::make_tuple(0, "0.0.0.0"),
+            std::make_tuple(0xC0A80001, "192.168.0.1")
     ));
 
-struct Expected4OctetsParams : public StringParam {};
-TEST_P(Expected4OctetsParams, parse) {
-    const auto address = GetString();
-
-    error_code err;
-    ipv4_address::parse(address, err);
-    ASSERT_EQ(err, error_code::EXPECTED_4_OCTETS);
-
-#ifdef IPADDRESS_NO_EXCEPTIONS
-    auto error_ip = ipv4_address::parse(address).to_uint32();
-    ASSERT_EQ(error_ip, 0);
-#else
-    std::ostringstream ss;
-    ss << "expected 4 octets in " << address;
-
-    EXPECT_THAT(
-        [address]() { ipv4_address::parse(address); },
-        ThrowsMessage<parse_error>(StrEq(ss.str())));
-#endif
-}
-INSTANTIATE_TEST_SUITE_P(
-    ipv4_address, Expected4OctetsParams,
-    testing::Values(
-        "127",
-        "127.0",
-        "127.0.0",
-        "42.42.42.42.42",
-        "192.168.0.1.com",
-        "42.42.42.42..."
-    ));
-
-struct EmptyOctentParams : public StringUintParam {};
-TEST_P(EmptyOctentParams, parse) {
-    auto expected_address = GetString();
-    auto expected_octet = GetUint();
-
-    error_code err;
-    ipv4_address::parse(expected_address, err);
-    ASSERT_EQ(err, error_code::EMPTY_OCTET);
-
-#ifdef IPADDRESS_NO_EXCEPTIONS
-    auto error_ip = ipv4_address::parse(expected_address).to_uint32();
-    ASSERT_EQ(error_ip, 0);
-#else
-    std::ostringstream ss;
-    ss << "empty octet " << expected_octet << " in address " << expected_address;
-
-    EXPECT_THAT(
-        [address=expected_address]() { ipv4_address::parse(address); },
-        ThrowsMessage<parse_error>(StrEq(ss.str())));
-#endif
-}
-INSTANTIATE_TEST_SUITE_P(
-    ipv4_address, EmptyOctentParams,
-    testing::Values(
-        std::make_tuple("...42.42.42.42", 0),
-        std::make_tuple("42..42.42.42", 1),
-        std::make_tuple("42.42..42.42", 2),
-        std::make_tuple("42.42.42..42", 3),
-        std::make_tuple("42.42..42", 2),
-        std::make_tuple(".42.42.42.42", 0),
-        std::make_tuple(".", 0),
-        std::make_tuple("42..42.42", 1),
-        std::make_tuple("...", 0),
-        std::make_tuple("127.0.0.", 3)
-    ));
-
-struct InvalidSymbolParams : public StringUintParam {};
-TEST_P(InvalidSymbolParams, parse) {
-    auto expected_address = GetString();
-    auto expected_octet = GetUint();
-
-    error_code err;
-    ipv4_address::parse(expected_address, err);
-    ASSERT_EQ(err, error_code::OCTET_HAS_INVALID_SYMBOL);
-
-#ifdef IPADDRESS_NO_EXCEPTIONS
-    auto error_ip = ipv4_address::parse(expected_address).to_uint32();
-    ASSERT_EQ(error_ip, 0);
-#else
-    std::ostringstream ss;
-    ss << "in octet " << expected_octet << " of address " << expected_address << " has invalid symbol";
-
-    EXPECT_THAT(
-        [address=expected_address]() { ipv4_address::parse(address); },
-        ThrowsMessage<parse_error>(StrEq(ss.str())));
-#endif
-}
-INSTANTIATE_TEST_SUITE_P(
-    ipv4_address, InvalidSymbolParams,
-    testing::Values(
-        std::make_tuple("0x0a.0x0a.0x0a.0x0a", 0),
-        std::make_tuple("0xa.0x0a.0x0a.0x0a", 0),
-        std::make_tuple("42.42.42.-0", 3),
-        std::make_tuple("42.42.42.+0", 3),
-        std::make_tuple("42.42.42.-42", 3),
-        std::make_tuple("+1.+2.+3.4", 0),
-        std::make_tuple("1.2.3.4e0", 3),
-        std::make_tuple("1.2.3.4::", 3),
-        std::make_tuple("1.a.2.3", 1),
-        std::make_tuple("127.0.0.1/24", 3)
-    ));
-
-struct More3CharsParams : public StringUintParam {};
-TEST_P(More3CharsParams, parse) {
-    auto expected_address = GetString();
-    auto expected_octet = GetUint();
-
-    error_code err;
-    ipv4_address::parse(expected_address, err);
-    ASSERT_EQ(err, error_code::OCTET_MORE_3_CHARACTERS);
-
-#ifdef IPADDRESS_NO_EXCEPTIONS
-    auto error_ip = ipv4_address::parse(expected_address).to_uint32();
-    ASSERT_EQ(error_ip, 0);
-#else
-    std::ostringstream ss;
-    ss << "in octet " << expected_octet << " of address " << expected_address << " more 3 characters";
-
-    EXPECT_THAT(
-        [address=expected_address]() { ipv4_address::parse(address); },
-        ThrowsMessage<parse_error>(StrEq(ss.str())));
-#endif
-}
-INSTANTIATE_TEST_SUITE_P(
-    ipv4_address, More3CharsParams,
-    testing::Values(
-        std::make_tuple("1271.0.0.1", 0),
-        std::make_tuple("127.1271.0.1", 1),
-        std::make_tuple("127.0.1271.1", 2),
-        std::make_tuple("127.0.0.1271", 3)
-    ));
-
-struct Exceeded255Params : public StringUintParam {};
-TEST_P(Exceeded255Params, parse) {
-    auto expected_address = GetString();
-    auto expected_octet = GetUint();
-
-    error_code err;
-    ipv4_address::parse(expected_address, err);
-    ASSERT_EQ(err, error_code::OCTET_EXCEEDED_255);
-
-#ifdef IPADDRESS_NO_EXCEPTIONS
-    auto error_ip = ipv4_address::parse(expected_address).to_uint32();
-    ASSERT_EQ(error_ip, 0);
-#else
-    std::ostringstream ss;
-    ss << "octet " << expected_octet << " of address " << expected_address << " exceeded 255";
-
-    EXPECT_THAT(
-        [address=expected_address]() { ipv4_address::parse(address); },
-        ThrowsMessage<parse_error>(StrEq(ss.str())));
-#endif
-}
-INSTANTIATE_TEST_SUITE_P(
-    ipv4_address, Exceeded255Params,
-    testing::Values(
-        std::make_tuple("257.0.0.0", 0),
-        std::make_tuple("127.258.0.1", 1),
-        std::make_tuple("127.0.700.1", 2),
-        std::make_tuple("192.168.0.999", 3)
-    ));
-
-struct LeadingZerosParams : public StringUintParam {};
-TEST_P(LeadingZerosParams, parse) {
-    auto expected_address = GetString();
-    auto expected_octet = GetUint();
-
-    error_code err;
-    ipv4_address::parse(expected_address, err);
-    ASSERT_EQ(err, error_code::LEADING_0_ARE_NOT_PERMITTED);
-
-#ifdef IPADDRESS_NO_EXCEPTIONS
-    auto error_ip = ipv4_address::parse(expected_address).to_uint32();
-    ASSERT_EQ(error_ip, 0);
-#else
-    std::ostringstream ss;
-    ss << "leading zeros are not permitted in octet " << expected_octet << " of address " << expected_address;
-
-    EXPECT_THAT(
-        [address=expected_address]() { ipv4_address::parse(address); },
-        ThrowsMessage<parse_error>(StrEq(ss.str())));
-#endif
-}
-INSTANTIATE_TEST_SUITE_P(
-    ipv4_address, LeadingZerosParams,
-    testing::Values(
-            std::make_tuple("000.000.000.000", 0),
-            std::make_tuple("192.168.000.001", 2),
-            std::make_tuple("016.016.016.016", 0),
-            std::make_tuple("001.000.008.016", 0),
-            std::make_tuple("01.2.3.40", 0),
-            std::make_tuple("1.02.3.40", 1),
-            std::make_tuple("1.2.03.40", 2),
-            std::make_tuple("1.2.3.040", 3)
-    ));
-
-using AddressParams = TestWithParam<std::tuple<const char*, uint32_t, std::array<uint8_t, 4>>>;
-TEST_P(AddressParams, parse) {
+using AddressParserParams = TestWithParam<std::tuple<const char*, uint32_t, std::array<uint8_t, 4>>>;
+TEST_P(AddressParserParams, parse) {
     auto excepted_uint32 = get<1>(GetParam());
     auto excepted_bytes = get<2>(GetParam());
 
@@ -356,9 +119,85 @@ TEST_P(AddressParams, parse) {
     ASSERT_EQ(actual_bytes[3], excepted_bytes[3]);
 }
 INSTANTIATE_TEST_SUITE_P(
-    ipv4_address, AddressParams,
+    ipv4_address, AddressParserParams,
     testing::Values(
         std::make_tuple("100.64.0.0",  0x64400000, std::array<uint8_t, 4>{ 0x64, 0x40, 0x00, 0x00 }),
         std::make_tuple("127.0.0.1",   0x7F000001, std::array<uint8_t, 4>{ 0x7F, 0x00, 0x00, 0x01 }),
         std::make_tuple("192.168.1.1", 0xC0A80101, std::array<uint8_t, 4>{ 0xC0, 0xA8, 0x01, 0x01 })
+    ));
+
+using InvalidAddressParserParams = TestWithParam<std::tuple<const char*, error_code, const char*>>;
+TEST_P(InvalidAddressParserParams, parse) {
+    auto expected_address = get<0>(GetParam());
+    auto expected_error_code = get<1>(GetParam());
+
+    error_code err;
+    ipv4_address::parse(expected_address, err);
+    ASSERT_EQ(err, expected_error_code);
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    ipv4_address::base_type expected_empty { 0, 0, 0, 0};
+    auto error_ip = ipv4_address::parse(expected_address);
+
+    EXPECT_EQ(error_ip.bytes(), expected_empty);
+    ASSERT_EQ(error_ip.to_uint32(), 0);
+    EXPECT_EQ(uint32_t(error_ip), 0);
+#else
+    EXPECT_THAT(
+        [address=expected_address]() { ipv4_address::parse(address); },
+        ThrowsMessage<parse_error>(StrEq(get<2>(GetParam()))));
+#endif
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_address, InvalidAddressParserParams,
+    testing::Values(
+        std::make_tuple("", error_code::EMPTY_ADDRESS, "address cannot be empty"),
+
+        std::make_tuple("127", error_code::EXPECTED_4_OCTETS, "expected 4 octets in 127"),
+        std::make_tuple("127.0", error_code::EXPECTED_4_OCTETS, "expected 4 octets in 127.0"),
+        std::make_tuple("127.0.0", error_code::EXPECTED_4_OCTETS, "expected 4 octets in 127.0.0"),
+        std::make_tuple("42.42.42.42.42", error_code::EXPECTED_4_OCTETS, "expected 4 octets in 42.42.42.42.42"),
+        std::make_tuple("192.168.0.1.com", error_code::EXPECTED_4_OCTETS, "expected 4 octets in 192.168.0.1.com"),
+        std::make_tuple("42.42.42.42...", error_code::EXPECTED_4_OCTETS, "expected 4 octets in 42.42.42.42..."),
+
+        std::make_tuple("...42.42.42.42", error_code::EMPTY_OCTET, "empty octet 0 in address ...42.42.42.42"),
+        std::make_tuple("42..42.42.42", error_code::EMPTY_OCTET, "empty octet 1 in address 42..42.42.42"),
+        std::make_tuple("42.42..42.42", error_code::EMPTY_OCTET, "empty octet 2 in address 42.42..42.42"),
+        std::make_tuple("42.42.42..42", error_code::EMPTY_OCTET, "empty octet 3 in address 42.42.42..42"),
+        std::make_tuple("42.42..42", error_code::EMPTY_OCTET, "empty octet 2 in address 42.42..42"),
+        std::make_tuple(".42.42.42.42", error_code::EMPTY_OCTET, "empty octet 0 in address .42.42.42.42"),
+        std::make_tuple(".", error_code::EMPTY_OCTET, "empty octet 0 in address ."),
+        std::make_tuple("42..42.42", error_code::EMPTY_OCTET, "empty octet 1 in address 42..42.42"),
+        std::make_tuple("...", error_code::EMPTY_OCTET, "empty octet 0 in address ..."),
+        std::make_tuple("127.0.0.", error_code::EMPTY_OCTET, "empty octet 3 in address 127.0.0."),
+
+        std::make_tuple("0x0a.0x0a.0x0a.0x0a", error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 0 of address 0x0a.0x0a.0x0a.0x0a has invalid symbol"),
+        std::make_tuple("0xa.0x0a.0x0a.0x0a", error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 0 of address 0xa.0x0a.0x0a.0x0a has invalid symbol"),
+        std::make_tuple("42.42.42.-0", error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 3 of address 42.42.42.-0 has invalid symbol"),
+        std::make_tuple("42.42.42.+0", error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 3 of address 42.42.42.+0 has invalid symbol"),
+        std::make_tuple("42.42.42.-42", error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 3 of address 42.42.42.-42 has invalid symbol"),
+        std::make_tuple("+1.+2.+3.4", error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 0 of address +1.+2.+3.4 has invalid symbol"),
+        std::make_tuple("1.2.3.4e0", error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 3 of address 1.2.3.4e0 has invalid symbol"),
+        std::make_tuple("1.2.3.4::", error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 3 of address 1.2.3.4:: has invalid symbol"),
+        std::make_tuple("1.a.2.3", error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 1 of address 1.a.2.3 has invalid symbol"),
+        std::make_tuple("127.0.0.1/24", error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 3 of address 127.0.0.1/24 has invalid symbol"),
+        
+        std::make_tuple("1271.0.0.1", error_code::OCTET_MORE_3_CHARACTERS, "in octet 0 of address 1271.0.0.1 more 3 characters"),
+        std::make_tuple("127.1271.0.1", error_code::OCTET_MORE_3_CHARACTERS, "in octet 1 of address 127.1271.0.1 more 3 characters"),
+        std::make_tuple("127.0.1271.1", error_code::OCTET_MORE_3_CHARACTERS, "in octet 2 of address 127.0.1271.1 more 3 characters"),
+        std::make_tuple("127.0.0.1271", error_code::OCTET_MORE_3_CHARACTERS, "in octet 3 of address 127.0.0.1271 more 3 characters"),
+
+        std::make_tuple("257.0.0.0", error_code::OCTET_EXCEEDED_255, "octet 0 of address 257.0.0.0 exceeded 255"),
+        std::make_tuple("127.258.0.1", error_code::OCTET_EXCEEDED_255, "octet 1 of address 127.258.0.1 exceeded 255"),
+        std::make_tuple("127.0.700.1", error_code::OCTET_EXCEEDED_255, "octet 2 of address 127.0.700.1 exceeded 255"),
+        std::make_tuple("192.168.0.999", error_code::OCTET_EXCEEDED_255, "octet 3 of address 192.168.0.999 exceeded 255"),
+
+        std::make_tuple("000.000.000.000", error_code::LEADING_0_ARE_NOT_PERMITTED, "leading zeros are not permitted in octet 0 of address 000.000.000.000"),
+        std::make_tuple("192.168.000.001", error_code::LEADING_0_ARE_NOT_PERMITTED, "leading zeros are not permitted in octet 2 of address 192.168.000.001"),
+        std::make_tuple("016.016.016.016", error_code::LEADING_0_ARE_NOT_PERMITTED, "leading zeros are not permitted in octet 0 of address 016.016.016.016"),
+        std::make_tuple("001.000.008.016", error_code::LEADING_0_ARE_NOT_PERMITTED, "leading zeros are not permitted in octet 0 of address 001.000.008.016"),
+        std::make_tuple("01.2.3.40", error_code::LEADING_0_ARE_NOT_PERMITTED, "leading zeros are not permitted in octet 0 of address 01.2.3.40"),
+        std::make_tuple("1.02.3.40", error_code::LEADING_0_ARE_NOT_PERMITTED, "leading zeros are not permitted in octet 1 of address 1.02.3.40"),
+        std::make_tuple("1.2.03.40", error_code::LEADING_0_ARE_NOT_PERMITTED, "leading zeros are not permitted in octet 2 of address 1.2.03.40"),
+        std::make_tuple("1.2.3.040", error_code::LEADING_0_ARE_NOT_PERMITTED, "leading zeros are not permitted in octet 3 of address 1.2.3.040")
     ));
