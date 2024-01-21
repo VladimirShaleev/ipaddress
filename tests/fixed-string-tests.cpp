@@ -165,8 +165,10 @@ TEST(TEST_FIXED_STRING, ConstexprAt)
     constexpr auto at1 = str.at(1);
     constexpr auto at2 = str.at(2);
     constexpr auto at3 = str.at(3);
+#ifndef IPADDRESS_NO_EXCEPTIONS
     EXPECT_THROW(str.at(4), std::out_of_range);
-    
+#endif
+
     EXPECT_EQ(at0, 't');
     EXPECT_EQ(at1, 'e');
     EXPECT_EQ(at2, 's');
@@ -176,7 +178,9 @@ TEST(TEST_FIXED_STRING, ConstexprAt)
     constexpr auto c1 = str[1];
     constexpr auto c2 = str[2];
     constexpr auto c3 = str[3];
+#ifndef IPADDRESS_NO_EXCEPTIONS
     EXPECT_THROW(str[4], std::out_of_range);
+#endif
     
     EXPECT_EQ(c0, 't');
     EXPECT_EQ(c1, 'e');

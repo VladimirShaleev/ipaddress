@@ -119,9 +119,17 @@ TEST(ipv4_address, EmptyAddress) {
     EXPECT_EQ(ip.to_uint32(), 0);
     EXPECT_EQ(uint32_t(ip), 0);
 
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    auto error_ip = ipv4_address::parse("");
+    ASSERT_EQ(error_ip.to_uint32(), 0);
+    EXPECT_EQ(error_ip.bytes(), expected_empty);
+    EXPECT_EQ(error_ip.to_uint32(), 0);
+    EXPECT_EQ(uint32_t(error_ip), 0);
+#else
     EXPECT_THAT(
         []() { ipv4_address::parse(""); },
         ThrowsMessage<parse_error>(StrEq("address cannot be empty")));
+#endif
 }
 
 struct FromUint32Params : public StringUintParam {};
@@ -135,21 +143,25 @@ INSTANTIATE_TEST_SUITE_P(
             std::make_tuple("192.168.0.1", 0xC0A80001)
     ));
 
-TEST(ipv4_address, NetworkAddress) {
-    EXPECT_THAT(
-        []() { ipv4_address::parse("127.0.0.1/24"); },
-        ThrowsMessage<parse_error>(StrEq("in octet 3 of address 127.0.0.1/24 has invalid symbol")));
-}
-
 struct Expected4OctetsParams : public StringParam {};
 TEST_P(Expected4OctetsParams, parse) {
-    const auto expected_address = GetString();
+    const auto address = GetString();
+
+    error_code err;
+    ipv4_address::parse(address, err);
+    ASSERT_EQ(err, error_code::EXPECTED_4_OCTETS);
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    auto error_ip = ipv4_address::parse(address).to_uint32();
+    ASSERT_EQ(error_ip, 0);
+#else
     std::ostringstream ss;
-    ss << "expected 4 octets in " << expected_address;
+    ss << "expected 4 octets in " << address;
 
     EXPECT_THAT(
-        [address=expected_address]() { ipv4_address::parse(address); },
+        [address]() { ipv4_address::parse(address); },
         ThrowsMessage<parse_error>(StrEq(ss.str())));
+#endif
 }
 INSTANTIATE_TEST_SUITE_P(
     ipv4_address, Expected4OctetsParams,
@@ -167,12 +179,21 @@ TEST_P(EmptyOctentParams, parse) {
     auto expected_address = GetString();
     auto expected_octet = GetUint();
 
+    error_code err;
+    ipv4_address::parse(expected_address, err);
+    ASSERT_EQ(err, error_code::EMPTY_OCTET);
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    auto error_ip = ipv4_address::parse(expected_address).to_uint32();
+    ASSERT_EQ(error_ip, 0);
+#else
     std::ostringstream ss;
     ss << "empty octet " << expected_octet << " in address " << expected_address;
 
     EXPECT_THAT(
         [address=expected_address]() { ipv4_address::parse(address); },
         ThrowsMessage<parse_error>(StrEq(ss.str())));
+#endif
 }
 INSTANTIATE_TEST_SUITE_P(
     ipv4_address, EmptyOctentParams,
@@ -194,12 +215,21 @@ TEST_P(InvalidSymbolParams, parse) {
     auto expected_address = GetString();
     auto expected_octet = GetUint();
 
+    error_code err;
+    ipv4_address::parse(expected_address, err);
+    ASSERT_EQ(err, error_code::OCTET_HAS_INVALID_SYMBOL);
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    auto error_ip = ipv4_address::parse(expected_address).to_uint32();
+    ASSERT_EQ(error_ip, 0);
+#else
     std::ostringstream ss;
     ss << "in octet " << expected_octet << " of address " << expected_address << " has invalid symbol";
 
     EXPECT_THAT(
         [address=expected_address]() { ipv4_address::parse(address); },
         ThrowsMessage<parse_error>(StrEq(ss.str())));
+#endif
 }
 INSTANTIATE_TEST_SUITE_P(
     ipv4_address, InvalidSymbolParams,
@@ -212,7 +242,8 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("+1.+2.+3.4", 0),
         std::make_tuple("1.2.3.4e0", 3),
         std::make_tuple("1.2.3.4::", 3),
-        std::make_tuple("1.a.2.3", 1)
+        std::make_tuple("1.a.2.3", 1),
+        std::make_tuple("127.0.0.1/24", 3)
     ));
 
 struct More3CharsParams : public StringUintParam {};
@@ -220,12 +251,21 @@ TEST_P(More3CharsParams, parse) {
     auto expected_address = GetString();
     auto expected_octet = GetUint();
 
+    error_code err;
+    ipv4_address::parse(expected_address, err);
+    ASSERT_EQ(err, error_code::OCTET_MORE_3_CHARACTERS);
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    auto error_ip = ipv4_address::parse(expected_address).to_uint32();
+    ASSERT_EQ(error_ip, 0);
+#else
     std::ostringstream ss;
     ss << "in octet " << expected_octet << " of address " << expected_address << " more 3 characters";
 
     EXPECT_THAT(
         [address=expected_address]() { ipv4_address::parse(address); },
         ThrowsMessage<parse_error>(StrEq(ss.str())));
+#endif
 }
 INSTANTIATE_TEST_SUITE_P(
     ipv4_address, More3CharsParams,
@@ -241,12 +281,21 @@ TEST_P(Exceeded255Params, parse) {
     auto expected_address = GetString();
     auto expected_octet = GetUint();
 
+    error_code err;
+    ipv4_address::parse(expected_address, err);
+    ASSERT_EQ(err, error_code::OCTET_EXCEEDED_255);
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    auto error_ip = ipv4_address::parse(expected_address).to_uint32();
+    ASSERT_EQ(error_ip, 0);
+#else
     std::ostringstream ss;
     ss << "octet " << expected_octet << " of address " << expected_address << " exceeded 255";
 
     EXPECT_THAT(
         [address=expected_address]() { ipv4_address::parse(address); },
         ThrowsMessage<parse_error>(StrEq(ss.str())));
+#endif
 }
 INSTANTIATE_TEST_SUITE_P(
     ipv4_address, Exceeded255Params,
@@ -262,12 +311,21 @@ TEST_P(LeadingZerosParams, parse) {
     auto expected_address = GetString();
     auto expected_octet = GetUint();
 
+    error_code err;
+    ipv4_address::parse(expected_address, err);
+    ASSERT_EQ(err, error_code::LEADING_0_ARE_NOT_PERMITTED);
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    auto error_ip = ipv4_address::parse(expected_address).to_uint32();
+    ASSERT_EQ(error_ip, 0);
+#else
     std::ostringstream ss;
     ss << "leading zeros are not permitted in octet " << expected_octet << " of address " << expected_address;
 
     EXPECT_THAT(
         [address=expected_address]() { ipv4_address::parse(address); },
         ThrowsMessage<parse_error>(StrEq(ss.str())));
+#endif
 }
 INSTANTIATE_TEST_SUITE_P(
     ipv4_address, LeadingZerosParams,
