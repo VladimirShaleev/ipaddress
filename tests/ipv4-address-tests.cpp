@@ -7,6 +7,12 @@
 using namespace testing;
 using namespace ipaddress;
 
+struct StringParam : public TestWithParam<const char*> {
+    const char* GetString() const noexcept {
+        return GetParam();
+    }
+};
+
 struct StringUintParam : public TestWithParam<std::tuple<const char*, uint32_t>> {
     const char* GetString() const noexcept {
         return std::get<0>(GetParam());
@@ -16,12 +22,6 @@ struct StringUintParam : public TestWithParam<std::tuple<const char*, uint32_t>>
         return std::get<1>(GetParam());
     }
 };
-
-//constexpr bytes<5> test() {
-//    bytes<5> a{};
-//    a[1] = 2;
-//    return a;
-//}
 
 TEST(ipv4_address, Test)
 {
@@ -124,8 +124,141 @@ TEST(ipv4_address, EmptyAddress) {
         ThrowsMessage<parse_error>(StrEq("address cannot be empty")));
 }
 
+struct FromUint32Params : public StringUintParam {};
+TEST_P(FromUint32Params, FromUint32) {
+    ASSERT_EQ(ipv4_address::from_uint32(GetUint()), ipv4_address::parse(GetString()));
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_address, FromUint32Params,
+    testing::Values(
+            std::make_tuple("0.0.0.0", 0),
+            std::make_tuple("192.168.0.1", 0xC0A80001)
+    ));
+
+TEST(ipv4_address, NetworkAddress) {
+    EXPECT_THAT(
+        []() { ipv4_address::parse("127.0.0.1/24"); },
+        ThrowsMessage<parse_error>(StrEq("in octet 3 of address 127.0.0.1/24 has invalid symbol")));
+}
+
+struct Expected4OctetsParams : public StringParam {};
+TEST_P(Expected4OctetsParams, parse) {
+    const auto expected_address = GetString();
+    std::ostringstream ss;
+    ss << "expected 4 octets in " << expected_address;
+
+    EXPECT_THAT(
+        [address=expected_address]() { ipv4_address::parse(address); },
+        ThrowsMessage<parse_error>(StrEq(ss.str())));
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_address, Expected4OctetsParams,
+    testing::Values(
+        "127",
+        "127.0",
+        "127.0.0",
+        "42.42.42.42.42",
+        "192.168.0.1.com",
+        "42.42.42.42..."
+    ));
+
+struct EmptyOctentParams : public StringUintParam {};
+TEST_P(EmptyOctentParams, parse) {
+    auto expected_address = GetString();
+    auto expected_octet = GetUint();
+
+    std::ostringstream ss;
+    ss << "empty octet " << expected_octet << " in address " << expected_address;
+
+    EXPECT_THAT(
+        [address=expected_address]() { ipv4_address::parse(address); },
+        ThrowsMessage<parse_error>(StrEq(ss.str())));
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_address, EmptyOctentParams,
+    testing::Values(
+        std::make_tuple("...42.42.42.42", 0),
+        std::make_tuple("42..42.42.42", 1),
+        std::make_tuple("42.42..42.42", 2),
+        std::make_tuple("42.42.42..42", 3),
+        std::make_tuple("42.42..42", 2),
+        std::make_tuple(".42.42.42.42", 0),
+        std::make_tuple(".", 0),
+        std::make_tuple("42..42.42", 1),
+        std::make_tuple("...", 0),
+        std::make_tuple("127.0.0.", 3)
+    ));
+
+struct InvalidSymbolParams : public StringUintParam {};
+TEST_P(InvalidSymbolParams, parse) {
+    auto expected_address = GetString();
+    auto expected_octet = GetUint();
+
+    std::ostringstream ss;
+    ss << "in octet " << expected_octet << " of address " << expected_address << " has invalid symbol";
+
+    EXPECT_THAT(
+        [address=expected_address]() { ipv4_address::parse(address); },
+        ThrowsMessage<parse_error>(StrEq(ss.str())));
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_address, InvalidSymbolParams,
+    testing::Values(
+        std::make_tuple("0x0a.0x0a.0x0a.0x0a", 0),
+        std::make_tuple("0xa.0x0a.0x0a.0x0a", 0),
+        std::make_tuple("42.42.42.-0", 3),
+        std::make_tuple("42.42.42.+0", 3),
+        std::make_tuple("42.42.42.-42", 3),
+        std::make_tuple("+1.+2.+3.4", 0),
+        std::make_tuple("1.2.3.4e0", 3),
+        std::make_tuple("1.2.3.4::", 3),
+        std::make_tuple("1.a.2.3", 1)
+    ));
+
+struct More3CharsParams : public StringUintParam {};
+TEST_P(More3CharsParams, parse) {
+    auto expected_address = GetString();
+    auto expected_octet = GetUint();
+
+    std::ostringstream ss;
+    ss << "in octet " << expected_octet << " of address " << expected_address << " more 3 characters";
+
+    EXPECT_THAT(
+        [address=expected_address]() { ipv4_address::parse(address); },
+        ThrowsMessage<parse_error>(StrEq(ss.str())));
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_address, More3CharsParams,
+    testing::Values(
+        std::make_tuple("1271.0.0.1", 0),
+        std::make_tuple("127.1271.0.1", 1),
+        std::make_tuple("127.0.1271.1", 2),
+        std::make_tuple("127.0.0.1271", 3)
+    ));
+
+struct Exceeded255Params : public StringUintParam {};
+TEST_P(Exceeded255Params, parse) {
+    auto expected_address = GetString();
+    auto expected_octet = GetUint();
+
+    std::ostringstream ss;
+    ss << "octet " << expected_octet << " of address " << expected_address << " exceeded 255";
+
+    EXPECT_THAT(
+        [address=expected_address]() { ipv4_address::parse(address); },
+        ThrowsMessage<parse_error>(StrEq(ss.str())));
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_address, Exceeded255Params,
+    testing::Values(
+        std::make_tuple("257.0.0.0", 0),
+        std::make_tuple("127.258.0.1", 1),
+        std::make_tuple("127.0.700.1", 2),
+        std::make_tuple("192.168.0.999", 3)
+    ));
+
 struct LeadingZerosParams : public StringUintParam {};
-TEST_P(LeadingZerosParams, LeadingZeros) {
+TEST_P(LeadingZerosParams, parse) {
     auto expected_address = GetString();
     auto expected_octet = GetUint();
 
@@ -147,15 +280,4 @@ INSTANTIATE_TEST_SUITE_P(
             std::make_tuple("1.02.3.40", 1),
             std::make_tuple("1.2.03.40", 2),
             std::make_tuple("1.2.3.040", 3)
-    ));
-
-struct FromUint32Params : public StringUintParam {};
-TEST_P(FromUint32Params, FromUint32) {
-    ASSERT_EQ(ipv4_address::from_uint32(GetUint()), ipv4_address::parse(GetString()));
-}
-INSTANTIATE_TEST_SUITE_P(
-    ipv4_address, FromUint32Params,
-    testing::Values(
-            std::make_tuple("0.0.0.0", 0),
-            std::make_tuple("192.168.0.1", 0xC0A80001)
     ));
