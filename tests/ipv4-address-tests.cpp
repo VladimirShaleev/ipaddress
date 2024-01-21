@@ -281,3 +281,26 @@ INSTANTIATE_TEST_SUITE_P(
             std::make_tuple("1.2.03.40", 2),
             std::make_tuple("1.2.3.040", 3)
     ));
+
+using AddressParams = TestWithParam<std::tuple<const char*, uint32_t, std::array<uint8_t, 4>>>;
+TEST_P(AddressParams, parse) {
+    auto excepted_uint32 = get<1>(GetParam());
+    auto excepted_bytes = get<2>(GetParam());
+
+    auto ip = ipv4_address::parse(get<0>(GetParam()));
+    auto actual_uint32 = ip.to_uint32();
+    auto actual_bytes = ip.bytes();
+
+    ASSERT_EQ(actual_uint32, excepted_uint32);
+    ASSERT_EQ(actual_bytes[0], excepted_bytes[0]);
+    ASSERT_EQ(actual_bytes[1], excepted_bytes[1]);
+    ASSERT_EQ(actual_bytes[2], excepted_bytes[2]);
+    ASSERT_EQ(actual_bytes[3], excepted_bytes[3]);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_address, AddressParams,
+    testing::Values(
+        std::make_tuple("100.64.0.0",  0x64400000, std::array<uint8_t, 4>{ 0x64, 0x40, 0x00, 0x00 }),
+        std::make_tuple("127.0.0.1",   0x7F000001, std::array<uint8_t, 4>{ 0x7F, 0x00, 0x00, 0x01 }),
+        std::make_tuple("192.168.1.1", 0xC0A80101, std::array<uint8_t, 4>{ 0xC0, 0xA8, 0x01, 0x01 })
+    ));
