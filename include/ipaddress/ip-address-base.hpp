@@ -86,15 +86,15 @@ public:
     }
     
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>(const ip_address_base<Base>& rhs) const IPADDRESS_NOEXCEPT {
-        return rhs < lhs;
+        return rhs < *this;
     }
     
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<=(const ip_address_base<Base>& rhs) const IPADDRESS_NOEXCEPT {
-        return !(rhs < lhs);
+        return !(rhs < *this);
     }
     
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>=(const ip_address_base<Base>& rhs) const IPADDRESS_NOEXCEPT {
-        return !(lhs < rhs);
+        return !(*this < rhs);
     }
 #endif
 
