@@ -59,27 +59,32 @@ TEST(ipv6_address, CopyOperator) {
 using AddressParserParams = TestWithParam<std::tuple<const char*, ipv6_address::base_type, bool, bool, const char*, uint32_t>>;
 TEST_P(AddressParserParams, parse) {
     auto excepted_bytes = get<1>(GetParam());
-    auto excepted_has_scope_id = get<2>(GetParam());
-    auto excepted_scope_id_is_value = get<3>(GetParam());
-    auto excepted_scope_id = get<4>(GetParam());
-    auto excepted_scope_id_value = get<5>(GetParam());
+    auto excepted_scope_has_str = get<2>(GetParam());
+    auto excepted_scope_has_int = get<3>(GetParam());
+    auto excepted_scope_str = get<4>(GetParam());
+    auto excepted_scope_int = get<5>(GetParam());
 
     auto ip = ipv6_address::parse(get<0>(GetParam()));
     auto actual_bytes = ip.bytes();
-    auto actual_has_scope_id = ip.has_scope_id();
-    auto actual_scope_id_is_value = ip.scope_id_is_value();
     auto actual_scope_id = ip.scope_id();
-    auto actual_scope_id_value = ip.scope_id_value();
+
+    auto actual_scope_has = (bool) actual_scope_id;
+    auto actual_scope_has_str = actual_scope_id.has_string();
+    auto actual_scope_has_int = actual_scope_id.has_uint32();
+    auto actual_scope_str = actual_scope_id.get_string();
+    auto actual_scope_int = actual_scope_id.get_uint32();
+    std::string actual_scope_str_2 = actual_scope_id;
+    uint32_t actual_scope_int_2 = actual_scope_id;
 
     ASSERT_EQ(actual_bytes, excepted_bytes);
-    ASSERT_EQ(excepted_has_scope_id, actual_has_scope_id);
-    ASSERT_EQ(excepted_scope_id_is_value, actual_scope_id_is_value);
-    ASSERT_EQ(excepted_scope_id, actual_scope_id);
-    ASSERT_EQ(excepted_scope_id_value, actual_scope_id_value);
-
-    auto b = sizeof(ip);
-    auto c = b;
-
+    ASSERT_EQ(excepted_scope_has_str, actual_scope_has);
+    ASSERT_EQ(excepted_scope_has_str, actual_scope_has_str);
+    ASSERT_EQ(excepted_scope_has_int, actual_scope_has_int);
+    ASSERT_EQ(excepted_scope_str, actual_scope_str);
+    ASSERT_EQ(excepted_scope_int, actual_scope_int);
+    ASSERT_EQ(excepted_scope_str, actual_scope_str_2);
+    ASSERT_EQ(excepted_scope_int, actual_scope_int_2);
+    
     // std::string s1;
     // ipv4_address addr;
     // std::string s2;
@@ -107,7 +112,7 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("100::", ipv6_address::base_type{ 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, false, false, "", 0),
         std::make_tuple("ff02::1:3", ipv6_address::base_type{ 0xff, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x03 }, false, false, "", 0),
         std::make_tuple("fe80::1ff:fe23:4567:890a%eth2", ipv6_address::base_type{ 0xfe, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x0ff, 0x0fe, 0x023, 0x045, 0x067, 0x089, 0x00a }, true, false, "eth2", 0),
-        std::make_tuple("fe80::1ff:fe23:4567:890a%%25et%h012345678912%", ipv6_address::base_type{ 0xfe, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x0ff, 0x0fe, 0x023, 0x045, 0x067, 0x089, 0x00a }, true, false, "%25et%h012345678912%", 0),
+        std::make_tuple("fe80::1ff:fe23:4567:890a%%25et%h01234567%", ipv6_address::base_type{ 0xfe, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x0ff, 0x0fe, 0x023, 0x045, 0x067, 0x089, 0x00a }, true, false, "%25et%h01234567%", 0),
         std::make_tuple("fe80::1ff:fe23:4567:890a%3", ipv6_address::base_type{ 0xfe, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x0ff, 0x0fe, 0x023, 0x045, 0x067, 0x089, 0x00a }, true, true, "3", 3),
         std::make_tuple("fe80::1ff:fe23:4567:890a%31", ipv6_address::base_type{ 0xfe, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x0ff, 0x0fe, 0x023, 0x045, 0x067, 0x089, 0x00a }, true, true, "31", 31)
     ));
