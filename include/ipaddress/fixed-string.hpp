@@ -101,6 +101,26 @@ struct fixed_string {
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const_pointer data() const IPADDRESS_NOEXCEPT {
         return _data;
     }
+    
+    template <size_t N2>
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR int compare(const fixed_string<N2>& rhs) const IPADDRESS_NOEXCEPT {
+        size_t i = 0;
+        for (; i < size() && i < rhs.size(); ++i) {
+            const auto c1 = at(i);
+            const auto c2 = rhs.at(i);
+            if (c1 != c2) {
+                return int(c1) - int(c2);
+            }
+        }
+
+        if (i == size() && i == rhs.size()) {
+            return 0;
+        } else if (i == size() && i < rhs.size()) {
+            return -1;
+        } else {
+            return 1;
+        }
+    }
 };
 
 template <>
@@ -113,6 +133,8 @@ struct fixed_string<0> {
     static IPADDRESS_CONSTEXPR size_t max_length = 0;
 
     static IPADDRESS_CONSTEXPR size_t length = 0;
+
+    static IPADDRESS_CONSTEXPR char _data[1] = {};
 
     IPADDRESS_CONSTEXPR fixed_string() IPADDRESS_NOEXCEPT = default;
 
@@ -183,58 +205,51 @@ struct fixed_string<0> {
         return _data;
     }
 
-private:
-    static IPADDRESS_CONSTEXPR char _data[1] = {};
+    template <size_t N2>
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR int compare(const fixed_string<N2>& rhs) const IPADDRESS_NOEXCEPT {
+        return rhs.empty() ? 0 : -1;
+    }
 };
 
-template <size_t N>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator==(const fixed_string<N>& lhs, const fixed_string<N>& rhs) IPADDRESS_NOEXCEPT {
-    for (std::size_t i = 0; i < N; ++i) {
-        if (lhs[i] != rhs[i]) {
-            return false;
-        }
-    }
-    return true;
+template <size_t N1, size_t N2>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator==(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
+    return lhs.compare(rhs) == 0;
 }
 
-template <size_t N>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator!=(const fixed_string<N>& lhs, const fixed_string<N>& rhs) IPADDRESS_NOEXCEPT {
+template <size_t N1, size_t N2>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator!=(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
     return !(lhs == rhs);
 }
 
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
-template <size_t N>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR std::strong_ordering operator<=>(const fixed_string<N>& lhs, const fixed_string<N>& rhs) IPADDRESS_NOEXCEPT {
-    for (std::size_t i = 0; i < N; ++i) {
-        if (const auto result = lhs[i] <=> rhs[i]; result != std::strong_ordering::equivalent) {
-            return result;
-        }
+template <size_t N1, size_t N2>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR std::strong_ordering operator<=>(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
+    if (const auto result = lhs.compare(rhs); result == 0) {
+        return std::strong_ordering::equivalent;
+    } else if (result < 0) {
+        return std::strong_ordering::less;
+    } else {
+        return std::strong_ordering::greater;
     }
-    return std::strong_ordering::equivalent;
 }
 #else
-template <size_t N>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<(const fixed_string<N>& lhs, const fixed_string<N>& rhs) IPADDRESS_NOEXCEPT {
-    for (std::size_t i = 0; i < N; ++i) {
-        if (lhs._data[i] < rhs._data[i]) {
-            return true;
-        }
-    }
-    return false;
+template <size_t N1, size_t N2>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
+    return lhs.compare(rhs) < 0;
 }
 
-template <size_t N>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>(const fixed_string<N>& lhs, const fixed_string<N>& rhs) IPADDRESS_NOEXCEPT {
+template <size_t N1, size_t N2>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
     return rhs < lhs;
 }
 
-template <size_t N>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<=(const fixed_string<N>& lhs, const fixed_string<N>& rhs) IPADDRESS_NOEXCEPT {
+template <size_t N1, size_t N2>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<=(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
     return !(rhs < lhs);
 }
 
-template <size_t N>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>=(const fixed_string<N>& lhs, const fixed_string<N>& rhs) IPADDRESS_NOEXCEPT {
+template <size_t N1, size_t N2>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>=(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
     return !(lhs < rhs);
 }
 #endif

@@ -192,3 +192,128 @@ TEST(fixed_string, ConstexprFrontBack)
     EXPECT_EQ(front_1, 's');
     EXPECT_EQ(back_1, 's');
 }
+
+TEST(fixed_string, ConstexprCompare)
+{
+    constexpr VAL_FIXED_STRING(str_1, "12345\0\0\0");
+    constexpr VAL_FIXED_STRING(str_2, "12346");
+    constexpr VAL_FIXED_STRING(str_3, "");
+    constexpr VAL_FIXED_STRING(str_4, "\0\0\0");
+
+    constexpr auto b_1 = str_1 == str_2;
+    constexpr auto b_2 = str_1 != str_2;
+    constexpr auto b_3 = str_1 < str_2;
+    constexpr auto b_4 = str_1 > str_2;
+    constexpr auto b_5 = str_1 <= str_2;
+    constexpr auto b_6 = str_1 >= str_2;
+    ASSERT_FALSE(b_1);
+    ASSERT_TRUE(b_2);
+    ASSERT_TRUE(b_3);
+    ASSERT_FALSE(b_4);
+    ASSERT_TRUE(b_5);
+    ASSERT_FALSE(b_6);
+    
+    constexpr auto b_7 = str_2 == str_1;
+    constexpr auto b_8 = str_2 != str_1;
+    constexpr auto b_9 = str_2 < str_1;
+    constexpr auto b_10 = str_2 > str_1;
+    constexpr auto b_11 = str_2 <= str_1;
+    constexpr auto b_12 = str_2 >= str_1;
+    ASSERT_FALSE(b_7);
+    ASSERT_TRUE(b_8);
+    ASSERT_FALSE(b_9);
+    ASSERT_TRUE(b_10);
+    ASSERT_FALSE(b_11);
+    ASSERT_TRUE(b_12);
+    
+    constexpr auto b_13 = str_2 == str_3;
+    constexpr auto b_14 = str_2 != str_3;
+    constexpr auto b_15 = str_2 < str_3;
+    constexpr auto b_16 = str_2 > str_3;
+    constexpr auto b_17 = str_2 <= str_3;
+    constexpr auto b_18 = str_2 >= str_3;
+    ASSERT_FALSE(b_13);
+    ASSERT_TRUE(b_14);
+    ASSERT_FALSE(b_15);
+    ASSERT_TRUE(b_16);
+    ASSERT_FALSE(b_17);
+    ASSERT_TRUE(b_18);
+    
+    constexpr auto b_19 = str_3 == str_2;
+    constexpr auto b_20 = str_3 != str_2;
+    constexpr auto b_21 = str_3 < str_2;
+    constexpr auto b_22 = str_3 > str_2;
+    constexpr auto b_23 = str_3 <= str_2;
+    constexpr auto b_24 = str_3 >= str_2;
+    ASSERT_FALSE(b_19);
+    ASSERT_TRUE(b_20);
+    ASSERT_TRUE(b_21);
+    ASSERT_FALSE(b_22);
+    ASSERT_TRUE(b_23);
+    ASSERT_FALSE(b_24);
+    
+    constexpr auto b_25 = str_3 == str_3;
+    constexpr auto b_26 = str_3 != str_3;
+    constexpr auto b_27 = str_3 < str_3;
+    constexpr auto b_28 = str_3 > str_3;
+    constexpr auto b_29 = str_3 <= str_3;
+    constexpr auto b_30 = str_3 >= str_3;
+    ASSERT_TRUE(b_25);
+    ASSERT_FALSE(b_26);
+    ASSERT_FALSE(b_27);
+    ASSERT_FALSE(b_28);
+    ASSERT_TRUE(b_29);
+    ASSERT_TRUE(b_30);
+    
+    constexpr auto b_31 = str_2 == str_2;
+    constexpr auto b_32 = str_2 != str_2;
+    constexpr auto b_33 = str_2 < str_2;
+    constexpr auto b_34 = str_2 > str_2;
+    constexpr auto b_35 = str_2 <= str_2;
+    constexpr auto b_36 = str_2 >= str_2;
+    ASSERT_TRUE(b_31);
+    ASSERT_FALSE(b_32);
+    ASSERT_FALSE(b_33);
+    ASSERT_FALSE(b_34);
+    ASSERT_TRUE(b_35);
+    ASSERT_TRUE(b_36);
+
+    constexpr auto b_37 = str_3 == str_4;
+    constexpr auto b_38 = str_3 != str_4;
+    constexpr auto b_39 = str_3 < str_4;
+    constexpr auto b_40 = str_3 > str_4;
+    constexpr auto b_41 = str_3 <= str_4;
+    constexpr auto b_42 = str_3 >= str_4;
+    ASSERT_TRUE(b_37);
+    ASSERT_FALSE(b_38);
+    ASSERT_FALSE(b_39);
+    ASSERT_FALSE(b_40);
+    ASSERT_TRUE(b_41);
+    ASSERT_TRUE(b_42);
+
+    constexpr auto b_43 = str_4 == str_3;
+    constexpr auto b_44 = str_4 != str_3;
+    constexpr auto b_45 = str_4 < str_3;
+    constexpr auto b_46 = str_4 > str_3;
+    constexpr auto b_47 = str_4 <= str_3;
+    constexpr auto b_48 = str_4 >= str_3;
+    ASSERT_TRUE(b_43);
+    ASSERT_FALSE(b_44);
+    ASSERT_FALSE(b_45);
+    ASSERT_FALSE(b_46);
+    ASSERT_TRUE(b_47);
+    ASSERT_TRUE(b_48);
+
+    constexpr auto b_49 = str_4 == str_4;
+    constexpr auto b_50 = str_4 != str_4;
+    constexpr auto b_51 = str_4 < str_4;
+    constexpr auto b_52 = str_4 > str_4;
+    constexpr auto b_53 = str_4 <= str_4;
+    constexpr auto b_54 = str_4 >= str_4;
+    ASSERT_TRUE(b_43);
+    ASSERT_FALSE(b_44);
+    ASSERT_FALSE(b_45);
+    ASSERT_FALSE(b_46);
+    ASSERT_TRUE(b_47);
+    ASSERT_TRUE(b_48);
+}
