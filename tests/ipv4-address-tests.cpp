@@ -81,6 +81,11 @@ TEST(ipv4_address, CompileTime)
     constexpr auto ip7_uint32 = ip7.to_uint32();
     ASSERT_EQ(ip7_uint32, 0xC0A80001);
 
+    constexpr uint8_t bytes[] = {0xC0, 0xA8, 0x00, 0x01};
+    constexpr auto ip8 = ipv4_address::from_bytes(bytes, 3);
+    constexpr auto ip8_uint32 = ip8.to_uint32();
+    ASSERT_EQ(ip8_uint32, 0xC0A80000);
+
     constexpr auto b7 = ip5 < ip6;
     constexpr auto b8 = ip5 > ip6;
     constexpr auto b9 = ip5 <= ip6;

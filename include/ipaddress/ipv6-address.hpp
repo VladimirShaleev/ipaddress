@@ -182,19 +182,9 @@ protected:
         return res.str();
     }
 
-    static IPADDRESS_CONSTEXPR bool is_equals_scope(const ip_address_base<base_v6>& lhs, const ip_address_base<base_v6>& rhs) IPADDRESS_NOEXCEPT {
-        return lhs.scope_id() == rhs.scope_id();
+    static IPADDRESS_CONSTEXPR bool compare_scope_id(const ip_address_base<base_v6>& lhs, const ip_address_base<base_v6>& rhs) IPADDRESS_NOEXCEPT {
+        return lhs._scope_id.compare(rhs._scope_id);
     }
-
-#ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
-     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR std::strong_ordering compare_scope(const ip_address_base<base_v6>& lhs, const ip_address_base<base_v6>& rhs) const IPADDRESS_NOEXCEPT {
-         return lhs.scope_id() <=> rhs.scope_id();
-     }
-#else
-    static IPADDRESS_CONSTEXPR bool is_less_scope(const ip_address_base<base_v6>& lhs, const ip_address_base<base_v6>& rhs) IPADDRESS_NOEXCEPT {
-        return lhs.scope_id() < rhs.scope_id();
-    }
-#endif
 
 private:
     template <typename Iter>

@@ -24,6 +24,14 @@ public:
         return ip_address_base(bytes);
     }
 
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR ip_address_base<Base> from_bytes(const uint8_t* bytes, size_t byte_count) IPADDRESS_NOEXCEPT {
+        base_type data = {};
+        for (size_t i = 0; i < Base::size && i < byte_count; ++i) {
+            data[i] = bytes[i];
+        }
+        return ip_address_base(data);
+    }
+
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
     template <fixed_string FixedString>
     IPADDRESS_NODISCARD static consteval ip_address_base<Base> parse() IPADDRESS_NOEXCEPT {
@@ -94,7 +102,7 @@ public:
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator==(const ip_address_base<Base>& rhs) const IPADDRESS_NOEXCEPT {
-        return _bytes == rhs._bytes && Base::is_equals_scope(*this, rhs);
+        return _bytes == rhs._bytes && Base::compare_scope_id(*this, rhs) == 0;
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator!=(const ip_address_base<Base>& rhs) const IPADDRESS_NOEXCEPT {
@@ -104,14 +112,20 @@ public:
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR std::strong_ordering operator<=>(const ip_address_base<Base>& rhs) const IPADDRESS_NOEXCEPT {
         if (auto result = _bytes <=> rhs._bytes; result == std::strong_ordering::equivalent) {
-            return Base::compare_scope(*this, rhs);
+            if (const auto scope = Base::compare_scope_id(*this, rhs); scope < 0) {
+                return std::strong_ordering::less;
+            } else if (scope == 0) {
+                return std::strong_ordering::equivalent;
+            } else {
+                return std::strong_ordering::greater;
+            }
         } else {
             return result;
         }
     }
 #else
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<(const ip_address_base<Base>& rhs) const IPADDRESS_NOEXCEPT {
-        return _bytes < rhs._bytes ? true : Base::is_less_scope(*this, rhs);
+        return _bytes < rhs._bytes ? true : Base::compare_scope_id(*this, rhs) < 0;
     }
     
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>(const ip_address_base<Base>& rhs) const IPADDRESS_NOEXCEPT {
