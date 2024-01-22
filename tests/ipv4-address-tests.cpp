@@ -77,6 +77,10 @@ TEST(ipv4_address, CompileTime)
     constexpr auto ip6_uint32 = ip6.to_uint32();
     ASSERT_EQ(ip6_uint32, 0x7F000002);
 
+    constexpr auto ip7 = ipv4_address::from_bytes({0xC0, 0xA8, 0x00, 0x01});
+    constexpr auto ip7_uint32 = ip7.to_uint32();
+    ASSERT_EQ(ip7_uint32, 0xC0A80001);
+
     constexpr auto b7 = ip5 < ip6;
     constexpr auto b8 = ip5 > ip6;
     constexpr auto b9 = ip5 <= ip6;
@@ -136,7 +140,7 @@ TEST(ipv4_address, CopyOperator) {
 }
 
 using FromUint32Params = TestWithParam<std::tuple<uint32_t, const char*>>;
-TEST_P(FromUint32Params, FromUint32) {
+TEST_P(FromUint32Params, from_uint32) {
     ASSERT_EQ(ipv4_address::from_uint32(get<0>(GetParam())), ipv4_address::parse(get<1>(GetParam())));
 }
 INSTANTIATE_TEST_SUITE_P(
@@ -144,6 +148,17 @@ INSTANTIATE_TEST_SUITE_P(
     testing::Values(
             std::make_tuple(0, "0.0.0.0"),
             std::make_tuple(0xC0A80001, "192.168.0.1")
+    ));
+
+using FromBytesParams = TestWithParam<ipv4_address::base_type>;
+TEST_P(FromBytesParams, from_bytes) {
+    ASSERT_EQ(ipv4_address::from_bytes(GetParam()).bytes(), GetParam());
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_address, FromBytesParams,
+    testing::Values(
+        ipv4_address::base_type{0x00, 0x08, 0x00, 0x00},
+        ipv4_address::base_type{0xC0, 0xA8, 0x00, 0x01}
     ));
 
 using AddressParserParams = TestWithParam<std::tuple<const char*, uint32_t, std::array<uint8_t, 4>>>;
