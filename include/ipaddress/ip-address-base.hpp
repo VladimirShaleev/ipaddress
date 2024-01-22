@@ -20,6 +20,10 @@ public:
     IPADDRESS_CONSTEXPR explicit ip_address_base(const base_type& bytes) IPADDRESS_NOEXCEPT : _bytes(bytes) {
     }
 
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR ip_address_base<Base> from_bytes(const base_type& bytes) IPADDRESS_NOEXCEPT {
+        return ip_address_base(bytes);
+    }
+
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
     template <fixed_string FixedString>
     IPADDRESS_NODISCARD static consteval ip_address_base<Base> parse() IPADDRESS_NOEXCEPT {
