@@ -44,6 +44,36 @@ public:
         return get_uint32();
     }
 
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator==(const scope& rhs) const IPADDRESS_NOEXCEPT {
+        return _scope_id == rhs._scope_id;
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator!=(const scope& rhs) const IPADDRESS_NOEXCEPT {
+        return !(*this == rhs);
+    }
+
+#ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
+     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR std::strong_ordering operator<=>(const scope& rhs) const IPADDRESS_NOEXCEPT {
+         return _scope_id <=> rhs._scope_id;
+     }
+#else
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<(const scope& rhs) const IPADDRESS_NOEXCEPT {
+        return _scope_id < rhs._scope_id;
+    }
+    
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>(const scope& rhs) const IPADDRESS_NOEXCEPT {
+        return rhs < *this;
+    }
+    
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<=(const scope& rhs) const IPADDRESS_NOEXCEPT {
+        return !(rhs < *this);
+    }
+    
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>=(const scope& rhs) const IPADDRESS_NOEXCEPT {
+        return !(*this < rhs);
+    }
+#endif
+
 private:
     IPADDRESS_CONSTEXPR void parse_value() const IPADDRESS_NOEXCEPT {
         if (_parse_result == parse_result::UNDEFINED) {
@@ -97,7 +127,7 @@ protected:
         }
 
         auto ip_and_scope = split_scope_id(begin, end, code);
-        end = std::get<0>(ip_and_scope);
+        end = ip_and_scope.first;
 
         if (code != error_code::NO_ERROR) {
             return {};
@@ -116,8 +146,8 @@ protected:
         }
 
         auto ip = ip_address_base<base_v6>(parse_parts(parts, parts_count, std::get<0>(result), std::get<1>(result), std::get<2>(result), code));
-        ip._scope_id = std::get<1>(ip_and_scope);
-        //ip._scope_id_value = std::get<2>(ip_and_scope);
+        ip._scope_id = ip_and_scope.second;
+
         return ip;
     }
     
@@ -126,39 +156,45 @@ protected:
         return res.str();
     }
 
+    static IPADDRESS_CONSTEXPR bool is_equals_scope(const ip_address_base<base_v6>& lhs, const ip_address_base<base_v6>& rhs) IPADDRESS_NOEXCEPT {
+        return lhs.scope_id() == rhs.scope_id();
+    }
+
+#ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
+     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR std::strong_ordering compare_scope(const ip_address_base<base_v6>& lhs, const ip_address_base<base_v6>& rhs) const IPADDRESS_NOEXCEPT {
+         return lhs.scope_id() <=> rhs.scope_id();
+     }
+#else
+    static IPADDRESS_CONSTEXPR bool is_less_scope(const ip_address_base<base_v6>& lhs, const ip_address_base<base_v6>& rhs) IPADDRESS_NOEXCEPT {
+        return lhs.scope_id() < rhs.scope_id();
+    }
+#endif
+
 private:
     template <typename Iter>
-    static IPADDRESS_CONSTEXPR std::tuple<Iter, fixed_string<16>, uint32_t> split_scope_id(Iter begin, Iter end, error_code& error) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR std::pair<Iter, fixed_string<16>> split_scope_id(Iter begin, Iter end, error_code& error) IPADDRESS_NOEXCEPT {
         char scope_id[17] = {};
         auto index = 0;
         Iter end_ip = begin;
         auto scope = false;
-        auto is_value = true;
-        uint32_t value = 0;
         for (auto it = begin; it != end; ++it) {
             if (!scope && *it != '%') {
                 end_ip = it + 1;
             } else if (scope) {
                 if (index > 15) {
                     error = error_code::SCOPE_ID_IS_TOO_LONG;
-                    return std::make_tuple(end_ip, make_fixed_string("\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"), 0);
+                    return std::make_pair(end_ip, make_fixed_string("\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"));
                 }
-                char c = *it;
-                scope_id[index++] = c;
-                if (c >= '0' && c <= '9') {
-                    value = value * 10 + (c - '0');
-                } else {
-                    is_value = false;
-                }
+                scope_id[index++] = *it;
             } else {
                 scope = true;
             }
         }
         if (scope && scope_id[0] == '\0') {
             error = error_code::INVALID_SCOPE_ID;
-            return std::make_tuple(end_ip, make_fixed_string("\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"), 0);
+            return std::make_pair(end_ip, make_fixed_string("\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"));
         }
-        return std::make_tuple(end_ip, make_fixed_string(scope_id), is_value ? value : 0);
+        return std::make_pair(end_ip, make_fixed_string(scope_id));
     }
 
     template <typename Iter>

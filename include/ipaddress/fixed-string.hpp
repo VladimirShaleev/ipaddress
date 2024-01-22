@@ -188,6 +188,58 @@ private:
 };
 
 template <size_t N>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator==(const fixed_string<N>& lhs, const fixed_string<N>& rhs) IPADDRESS_NOEXCEPT {
+    for (std::size_t i = 0; i < N; ++i) {
+        if (lhs[i] != rhs[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+template <size_t N>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator!=(const fixed_string<N>& lhs, const fixed_string<N>& rhs) IPADDRESS_NOEXCEPT {
+    return !(lhs == rhs);
+}
+
+#ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
+template <size_t N>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR std::strong_ordering operator<=>(const fixed_string<N>& lhs, const fixed_string<N>& rhs) IPADDRESS_NOEXCEPT {
+    for (std::size_t i = 0; i < N; ++i) {
+        if (const auto result = lhs[i] <=> rhs[i]; result != std::strong_ordering::equivalent) {
+            return result;
+        }
+    }
+    return std::strong_ordering::equivalent;
+}
+#else
+template <size_t N>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<(const fixed_string<N>& lhs, const fixed_string<N>& rhs) IPADDRESS_NOEXCEPT {
+    for (std::size_t i = 0; i < N; ++i) {
+        if (lhs._data[i] < rhs._data[i]) {
+            return true;
+        }
+    }
+    return false;
+}
+
+template <size_t N>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>(const fixed_string<N>& lhs, const fixed_string<N>& rhs) IPADDRESS_NOEXCEPT {
+    return rhs < lhs;
+}
+
+template <size_t N>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<=(const fixed_string<N>& lhs, const fixed_string<N>& rhs) IPADDRESS_NOEXCEPT {
+    return !(rhs < lhs);
+}
+
+template <size_t N>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>=(const fixed_string<N>& lhs, const fixed_string<N>& rhs) IPADDRESS_NOEXCEPT {
+    return !(lhs < rhs);
+}
+#endif
+
+template <size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR fixed_string<N - 1> make_fixed_string(const char(&data)[N]) IPADDRESS_NOEXCEPT {
     return fixed_string<N - 1>(data);
 }

@@ -84,16 +84,16 @@ TEST_P(AddressParserParams, parse) {
     ASSERT_EQ(excepted_scope_int, actual_scope_int);
     ASSERT_EQ(excepted_scope_str, actual_scope_str_2);
     ASSERT_EQ(excepted_scope_int, actual_scope_int_2);
-    
-    // std::string s1;
-    // ipv4_address addr;
-    // std::string s2;
-    // std::istringstream ss(std::string("test: ") + get<0>(GetParam()) + " parser");
-    // ss >> s1 >> addr >> s2;
 
-    // ASSERT_EQ(s1, std::string("test:"));
-    // ASSERT_EQ(addr.to_uint32(), excepted_uint32);
-    // ASSERT_EQ(s2, std::string("parser"));
+    std::string s1;
+    ipv6_address addr;
+    std::string s2;
+    std::istringstream ss(std::string("test: ") + get<0>(GetParam()) + " parser");
+    ss >> s1 >> addr >> s2;
+
+    ASSERT_EQ(s1, std::string("test:"));
+    ASSERT_EQ(addr, ip);
+    ASSERT_EQ(s2, std::string("parser"));
 }
 INSTANTIATE_TEST_SUITE_P(
     ipv6_address, AddressParserParams,

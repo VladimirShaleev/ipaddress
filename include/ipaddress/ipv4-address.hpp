@@ -123,6 +123,20 @@ protected:
             << size_t(bytes[3]);
         return res.str();
     }
+    
+    static IPADDRESS_CONSTEXPR bool is_equals_scope(const ip_address_base<base_v4>&, const ip_address_base<base_v4>&) IPADDRESS_NOEXCEPT {
+        return true;
+    }
+
+#ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
+     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR std::strong_ordering compare_scope(const ip_address_base<base_v4>& lhs, const ip_address_base<base_v4>& rhs) const IPADDRESS_NOEXCEPT {
+         return std::strong_ordering::equivalent;
+     }
+#else
+    static IPADDRESS_CONSTEXPR bool is_less_scope(const ip_address_base<base_v4>&, const ip_address_base<base_v4>&) IPADDRESS_NOEXCEPT {
+        return false;
+    }
+#endif
 };
 
 using ipv4_address = ip_address_base<base_v4>;

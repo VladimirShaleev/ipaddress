@@ -89,21 +89,25 @@ public:
         return seed;
     }
 
-    IPADDRESS_CONSTEXPR bool operator==(const ip_address_base<Base>& rhs) const IPADDRESS_NOEXCEPT {
-        return _bytes == rhs._bytes;
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator==(const ip_address_base<Base>& rhs) const IPADDRESS_NOEXCEPT {
+        return _bytes == rhs._bytes && Base::is_equals_scope(*this, rhs);
     }
 
-    IPADDRESS_CONSTEXPR bool operator!=(const ip_address_base<Base>& rhs) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator!=(const ip_address_base<Base>& rhs) const IPADDRESS_NOEXCEPT {
         return !(*this == rhs);
     }
 
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
-     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR std::strong_ordering operator<=>(const ip_address_base<Base>& rhs) const IPADDRESS_NOEXCEPT {
-         return _bytes <=> rhs._bytes;
-     }
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR std::strong_ordering operator<=>(const ip_address_base<Base>& rhs) const IPADDRESS_NOEXCEPT {
+        if (auto result = _bytes <=> rhs._bytes; result == std::strong_ordering::equivalent) {
+            return Base::compare_scope(*this, rhs);
+        } else {
+            return result;
+        }
+    }
 #else
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<(const ip_address_base<Base>& rhs) const IPADDRESS_NOEXCEPT {
-        return _bytes < rhs._bytes;
+        return _bytes < rhs._bytes ? true : Base::is_less_scope(*this, rhs);
     }
     
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>(const ip_address_base<Base>& rhs) const IPADDRESS_NOEXCEPT {
