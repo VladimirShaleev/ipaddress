@@ -9,6 +9,11 @@
 
 namespace IPADDRESS_NAMESPACE {
 
+enum class version {
+    V4 = 4,
+    V6 = 6
+};
+
 template <typename Base>
 class ip_address_base : public Base {
 public:

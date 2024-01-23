@@ -16,6 +16,8 @@ TEST(ipv6_address, DefaultCtor) {
     ipv6_address ip;
 
     EXPECT_EQ(ip.bytes(), expected_empty);
+    EXPECT_EQ(ip.size, 16);
+    EXPECT_EQ(ip.version, version::V6);
 }
 
 TEST(ipv6_address, CopyCtor) {
@@ -56,6 +58,36 @@ TEST(ipv6_address, CopyOperator) {
     EXPECT_EQ(ip_copy.bytes(), expected_ip);
 }
 
+using FromBytesParams = TestWithParam<std::tuple<ipv6_address::base_type, const char*>>;
+TEST_P(FromBytesParams, from_bytes) {
+    auto bytes = std::get<0>(GetParam());
+    auto scope = std::get<1>(GetParam());
+
+    auto ip1 = ipv6_address::from_bytes(bytes);
+    auto ip2 = ipv6_address::from_bytes(bytes.data(), bytes.size());
+
+    EXPECT_EQ(ip1.bytes(), bytes);
+    EXPECT_FALSE(ip1.get_scope_id());
+
+    EXPECT_EQ(ip2.bytes(), bytes);
+    EXPECT_FALSE(ip2.get_scope_id());
+
+    ip1.set_scope_id(scope);
+    ip2.set_scope_id("test");
+
+    EXPECT_EQ(ip1.bytes(), bytes);
+    EXPECT_EQ(std::string(ip1.get_scope_id()), scope);
+
+    EXPECT_EQ(ip2.bytes(), bytes);
+    EXPECT_EQ(std::string(ip2.get_scope_id()), "test");
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_address, FromBytesParams,
+    testing::Values(
+        std::make_tuple(ipv6_address::base_type{ 0xfe, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0xff, 0xfe, 0x23, 0x45, 0x67, 0x89, 0x0a }, ""),
+        std::make_tuple(ipv6_address::base_type{ 0xfe, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0xff, 0xfe, 0x23, 0x45, 0x67, 0x89, 0x0a }, "eth2")
+    ));
+
 using AddressParserParams = TestWithParam<std::tuple<const char*, ipv6_address::base_type, bool, bool, const char*, uint32_t>>;
 TEST_P(AddressParserParams, parse) {
     auto excepted_bytes = get<1>(GetParam());
@@ -66,7 +98,7 @@ TEST_P(AddressParserParams, parse) {
 
     auto ip = ipv6_address::parse(get<0>(GetParam()));
     auto actual_bytes = ip.bytes();
-    auto actual_scope_id = ip.scope_id();
+    auto actual_scope_id = ip.get_scope_id();
 
     auto actual_scope_has = (bool) actual_scope_id;
     auto actual_scope_has_str = actual_scope_id.has_string();
@@ -111,8 +143,8 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("64:ff9b:1::", ipv6_address::base_type{ 0x00, 0x64, 0xff, 0x9b, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, false, false, "", 0),
         std::make_tuple("100::", ipv6_address::base_type{ 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, false, false, "", 0),
         std::make_tuple("ff02::1:3", ipv6_address::base_type{ 0xff, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x03 }, false, false, "", 0),
-        std::make_tuple("fe80::1ff:fe23:4567:890a%eth2", ipv6_address::base_type{ 0xfe, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x0ff, 0x0fe, 0x023, 0x045, 0x067, 0x089, 0x00a }, true, false, "eth2", 0),
-        std::make_tuple("fe80::1ff:fe23:4567:890a%%25et%h01234567%", ipv6_address::base_type{ 0xfe, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x0ff, 0x0fe, 0x023, 0x045, 0x067, 0x089, 0x00a }, true, false, "%25et%h01234567%", 0),
-        std::make_tuple("fe80::1ff:fe23:4567:890a%3", ipv6_address::base_type{ 0xfe, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x0ff, 0x0fe, 0x023, 0x045, 0x067, 0x089, 0x00a }, true, true, "3", 3),
-        std::make_tuple("fe80::1ff:fe23:4567:890a%31", ipv6_address::base_type{ 0xfe, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x0ff, 0x0fe, 0x023, 0x045, 0x067, 0x089, 0x00a }, true, true, "31", 31)
+        std::make_tuple("fe80::1ff:fe23:4567:890a%eth2", ipv6_address::base_type{ 0xfe, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0xff, 0xfe, 0x23, 0x45, 0x67, 0x89, 0x0a }, true, false, "eth2", 0),
+        std::make_tuple("fe80::1ff:fe23:4567:890a%%25et%h01234567%", ipv6_address::base_type{ 0xfe, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0xff, 0xfe, 0x23, 0x45, 0x67, 0x89, 0x0a }, true, false, "%25et%h01234567%", 0),
+        std::make_tuple("fe80::1ff:fe23:4567:890a%3", ipv6_address::base_type{ 0xfe, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0xff, 0xfe, 0x23, 0x45, 0x67, 0x89, 0x0a }, true, true, "3", 3),
+        std::make_tuple("fe80::1ff:fe23:4567:890a%31", ipv6_address::base_type{ 0xfe, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0xff, 0xfe, 0x23, 0x45, 0x67, 0x89, 0x0a }, true, true, "31", 31)
     ));

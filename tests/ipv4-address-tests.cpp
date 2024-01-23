@@ -105,10 +105,12 @@ TEST(ipv4_address, DefaultCtor) {
     ipv4_address::base_type expected_empty { 0, 0, 0, 0};
 
     ipv4_address ip;
-
+    
     EXPECT_EQ(ip.bytes(), expected_empty);
     EXPECT_EQ(ip.to_uint32(), 0);
     EXPECT_EQ(uint32_t(ip), 0);
+    EXPECT_EQ(ip.size, 4);
+    EXPECT_EQ(ip.version, version::V4);
 }
 
 TEST(ipv4_address, CopyCtor) {

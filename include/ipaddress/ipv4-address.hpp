@@ -7,6 +7,12 @@ namespace IPADDRESS_NAMESPACE {
 
 class base_v4 {
 public:
+    static IPADDRESS_CONSTEXPR version version = version::V4;
+
+    static IPADDRESS_CONSTEXPR size_t size = 4;
+
+    using base_type = byte_array_type<size>;
+
     template <uint32_t Ip>
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR ip_address_base<base_v4> from_uint32() IPADDRESS_NOEXCEPT {
         return from_uint32(Ip);
@@ -37,10 +43,6 @@ public:
     }
 
 protected:
-    static IPADDRESS_CONSTEXPR size_t size = 4;
-
-    using base_type = byte_array_type<size>;
-
     template <typename Iter>
     static IPADDRESS_CONSTEXPR ip_address_base<base_v4> ip_from_string(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT {
         if (begin == end) {

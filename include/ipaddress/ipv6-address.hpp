@@ -108,42 +108,47 @@ private:
 
 class base_v6 {
 public:
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR scope scope_id() const IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR version version = version::V6;
+
+    static IPADDRESS_CONSTEXPR size_t size = 16;
+
+    using base_type = byte_array_type<size>;
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR scope get_scope_id() const IPADDRESS_NOEXCEPT {
         return scope(_scope_id);
     }
 
     template <size_t N>
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR ip_address_base<base_v6> from_bytes(const byte_array_type<16>& bytes, const char(&scope_id)[N]) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR void set_scope_id(const char(&scope_id)[N]) IPADDRESS_NOEXCEPT {
         static_assert(N <= 16, "scope id is too long");
-        auto ip = ip_address_base<base_v6>(bytes);
-        ip._scope_id = make_fixed_string(scope_id);
-        return ip;
+        char str[17] = {};
+        for (size_t i = 0; i < N; ++i) {
+            str[i] = scope_id[i];
+        }
+        _scope_id = make_fixed_string(str);
     }
 
 #if IPADDRESS_CPP_VERSION >= 17
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR ip_address_base<base_v6> from_bytes(const byte_array_type<16>& bytes, std::string_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        return create_from_bytes_and_scope(bytes, scope_id);
+    IPADDRESS_CONSTEXPR void set_scope_id(std::string_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        change_scope_id(scope_id);
     }
 
-    static IPADDRESS_CONSTEXPR ip_address_base<base_v6> from_bytes(const byte_array_type<16>& bytes, std::string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
-        return create_from_bytes_and_scope(bytes, scope_id, code);
+    IPADDRESS_CONSTEXPR void set_scope_id(std::string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
+        change_scope_id(scope_id, code);
     }
 #else
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static ip_address_base<base_v6> from_bytes(const byte_array_type<16>& bytes, const std::string& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        return create_from_bytes_and_scope(bytes, scope_id);
+    void set_scope_id(const std::string& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        change_scope_id(scope_id);
     }
 
-    static ip_address_base<base_v6> from_bytes(const byte_array_type<16>& bytes, const std::string& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
-        return create_from_bytes_and_scope(bytes, scope_id, code);
+    void set_scope_id(const std::string& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
+        change_scope_id(scope_id, code);
     }
 #endif
 
 protected:
     static IPADDRESS_CONSTEXPR size_t min_parts = 3;
     static IPADDRESS_CONSTEXPR size_t max_parts = 8;
-    static IPADDRESS_CONSTEXPR size_t size = 16;
-
-    using base_type = byte_array_type<size>;
 
     template <typename Iter>
     static IPADDRESS_CONSTEXPR ip_address_base<base_v6> ip_from_string(Iter begin, Iter end, error_code& code, int& parts_count) IPADDRESS_NOEXCEPT {
@@ -433,30 +438,27 @@ private:
     }
 
     template <typename Str>
-    static ip_address_base<base_v6> create_from_bytes_and_scope(const byte_array_type<16>& bytes, const Str& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_CONSTEXPR void change_scope_id(const Str& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         error_code err = error_code::NO_ERROR;
-        auto result = create_from_bytes_and_scope(bytes, scope_id, err);
+        change_scope_id(scope_id, err);
     #ifndef IPADDRESS_NO_EXCEPTIONS
         if (err != error_code::NO_ERROR) {
             raise_error(err, 0, "<bytes>", 7);
         }
     #endif
-        return result;
     }
 
     template <typename Str>
-    static IPADDRESS_CONSTEXPR ip_address_base<base_v6> create_from_bytes_and_scope(const base_type& bytes, const Str& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR void change_scope_id(const Str& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
         if (scope_id.size() > 16) {
             code = error_code::SCOPE_ID_IS_TOO_LONG;
-            return {};
+            return;
         }
         char scope[17] = {};
         for (size_t i = 0; i < scope_id.size(); ++i) {
             scope[i] = scope_id[i];
         }
-        auto ip = ip_address_base<base_v6>(bytes);
-        ip._scope_id = make_fixed_string(scope);
-        return ip;
+        _scope_id = make_fixed_string(scope);
     }
 
     static IPADDRESS_CONSTEXPR std::array<fixed_string<4>, max_parts> empty_parts = {
