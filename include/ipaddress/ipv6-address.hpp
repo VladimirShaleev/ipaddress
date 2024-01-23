@@ -206,7 +206,7 @@ private:
                     error = error_code::SCOPE_ID_IS_TOO_LONG;
                     return std::make_pair(end_ip, make_fixed_string("\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"));
                 }
-                if (*it == '%') {
+                if (*it == '%' || *it == '/') {
                     error = error_code::INVALID_SCOPE_ID;
                     return std::make_pair(end_ip, make_fixed_string("\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"));
                 }
@@ -269,9 +269,13 @@ private:
         }
     
         if (parts_count >= max_parts) {
-            error = parts[0][0] == '\0' 
-                ? error_code::LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON 
-                : error_code::MOST_8_COLONS_PERMITTED;
+            if (parts[0][0] == '\0' && parts[1][0] != '\0') {
+                error = error_code::LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON;
+            } else if (last_part[0] == '\0') {
+                error = error_code::TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON;
+            } else {
+                error = error_code::MOST_8_COLONS_PERMITTED;
+            }
             return empty_parts;
         }
         

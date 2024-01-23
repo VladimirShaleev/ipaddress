@@ -154,18 +154,6 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("1:2:3:4:5:6:42.42.42.1", ipv6_address::base_type{ 0x00, 0x01, 0x00, 0x02, 0x00, 0x03, 0x00, 0x04, 0x00, 0x05, 0x00, 0x06, 0x2A, 0x2A, 0x2A, 0x01 }, false, false, "", 0)
     ));
 
-
-
-
-
-
-
-
-
-
-
-
-
 using InvalidAddressParserParams = TestWithParam<std::tuple<const char*, error_code, const char*>>;
 TEST_P(InvalidAddressParserParams, parse) {
     auto expected_address = get<0>(GetParam());
@@ -189,90 +177,125 @@ TEST_P(InvalidAddressParserParams, parse) {
 INSTANTIATE_TEST_SUITE_P(
     ipv6_address, InvalidAddressParserParams,
     testing::Values(
-        // std::make_tuple("", error_code::EMPTY_ADDRESS, "address cannot be empty"),
+        std::make_tuple("", error_code::EMPTY_ADDRESS, "address cannot be empty"),
 
-        // std::make_tuple(":", error_code::LEAST_3_PARTS, "least 3 parts in address :"),
-        // std::make_tuple(":1", error_code::LEAST_3_PARTS, "least 3 parts in address :1"),
-        // std::make_tuple("FEDC:9878", error_code::LEAST_3_PARTS, "least 3 parts in address FEDC:9878"),
-        // std::make_tuple(":%scope", error_code::LEAST_3_PARTS, "least 3 parts in address :%scope"),
-        // std::make_tuple(":1%scope", error_code::LEAST_3_PARTS, "least 3 parts in address :1%scope"),
-        // std::make_tuple("FEDC:9878%scope", error_code::LEAST_3_PARTS, "least 3 parts in address FEDC:9878%scope"),
+        std::make_tuple(":", error_code::LEAST_3_PARTS, "least 3 parts in address :"),
+        std::make_tuple(":1", error_code::LEAST_3_PARTS, "least 3 parts in address :1"),
+        std::make_tuple("FEDC:9878", error_code::LEAST_3_PARTS, "least 3 parts in address FEDC:9878"),
+        std::make_tuple(":%scope", error_code::LEAST_3_PARTS, "least 3 parts in address :%scope"),
+        std::make_tuple(":1%scope", error_code::LEAST_3_PARTS, "least 3 parts in address :1%scope"),
+        std::make_tuple("FEDC:9878%scope", error_code::LEAST_3_PARTS, "least 3 parts in address FEDC:9878%scope"),
 
-        // std::make_tuple("1:2:3:4:5:6:7:8:", error_code::MOST_8_COLONS_PERMITTED, "most 8 colons permitted in address 1:2:3:4:5:6:7:8:"),
-        // std::make_tuple("10:9:8:7:6:5:4:3:2:1", error_code::MOST_8_COLONS_PERMITTED, "most 8 colons permitted in address 10:9:8:7:6:5:4:3:2:1"),
-        // std::make_tuple("10:9:8:7:6:5:4:3:42.42.42.42", error_code::MOST_8_COLONS_PERMITTED, "most 8 colons permitted in address 10:9:8:7:6:5:4:3:42.42.42.42"),
-        // std::make_tuple("1:2:3:4:5:6:7:42.42.42.42", error_code::MOST_8_COLONS_PERMITTED, "most 8 colons permitted in address 1:2:3:4:5:6:7:42.42.42.42"),
-        // std::make_tuple("10:9:8:7:6:5:4:3:2:1%scope", error_code::MOST_8_COLONS_PERMITTED, "most 8 colons permitted in address 10:9:8:7:6:5:4:3:2:1%scope"),
-        // std::make_tuple("10:9:8:7:6:5:4:3:42.42.42.42%scope", error_code::MOST_8_COLONS_PERMITTED, "most 8 colons permitted in address 10:9:8:7:6:5:4:3:42.42.42.42%scope"),
+        std::make_tuple("10:9:8:7:6:5:4:3:2:1", error_code::MOST_8_COLONS_PERMITTED, "most 8 colons permitted in address 10:9:8:7:6:5:4:3:2:1"),
+        std::make_tuple("10:9:8:7:6:5:4:3:42.42.42.42", error_code::MOST_8_COLONS_PERMITTED, "most 8 colons permitted in address 10:9:8:7:6:5:4:3:42.42.42.42"),
+        std::make_tuple("1:2:3:4:5:6:7:42.42.42.42", error_code::MOST_8_COLONS_PERMITTED, "most 8 colons permitted in address 1:2:3:4:5:6:7:42.42.42.42"),
+        std::make_tuple("10:9:8:7:6:5:4:3:2:1%scope", error_code::MOST_8_COLONS_PERMITTED, "most 8 colons permitted in address 10:9:8:7:6:5:4:3:2:1%scope"),
+        std::make_tuple("10:9:8:7:6:5:4:3:42.42.42.42%scope", error_code::MOST_8_COLONS_PERMITTED, "most 8 colons permitted in address 10:9:8:7:6:5:4:3:42.42.42.42%scope"),
 
-        // std::make_tuple("3ffe::1::1", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 3ffe::1::1"),
-        // std::make_tuple("1::2::3::4:5", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 1::2::3::4:5"),
-        // std::make_tuple("2001::db:::1", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 2001::db:::1"),
-        // std::make_tuple("3ffe::1::", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 3ffe::1::"),
-        // std::make_tuple("::3ffe::1", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address ::3ffe::1"),
-        // std::make_tuple(":3ffe::1::1", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address :3ffe::1::1"),
-        // std::make_tuple("3ffe::1::1:", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 3ffe::1::1:"),
-        // std::make_tuple(":3ffe::1::1:", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address :3ffe::1::1:"),
-        // std::make_tuple(":::", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address :::"),
-        // std::make_tuple("2001:db8:::1", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 2001:db8:::1"),
-        // std::make_tuple("3ffe::1::1%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 3ffe::1::1%scope"),
-        // std::make_tuple("1::2::3::4:5%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 1::2::3::4:5%scope"),
-        // std::make_tuple("2001::db:::1%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 2001::db:::1%scope"),
-        // std::make_tuple("3ffe::1::%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 3ffe::1::%scope"),
-        // std::make_tuple("::3ffe::1%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address ::3ffe::1%scope"),
-        // std::make_tuple(":3ffe::1::1%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address :3ffe::1::1%scope"),
-        // std::make_tuple("3ffe::1::1:%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 3ffe::1::1:%scope"),
-        // std::make_tuple(":3ffe::1::1:%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address :3ffe::1::1:%scope"),
-        // std::make_tuple(":::%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address :::%scope"),
-        // std::make_tuple("2001:db8:::1%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 2001:db8:::1%scope"),
+        std::make_tuple("3ffe::1::1", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 3ffe::1::1"),
+        std::make_tuple("1::2::3::4:5", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 1::2::3::4:5"),
+        std::make_tuple("2001::db:::1", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 2001::db:::1"),
+        std::make_tuple("3ffe::1::", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 3ffe::1::"),
+        std::make_tuple("::3ffe::1", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address ::3ffe::1"),
+        std::make_tuple(":3ffe::1::1", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address :3ffe::1::1"),
+        std::make_tuple("3ffe::1::1:", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 3ffe::1::1:"),
+        std::make_tuple(":3ffe::1::1:", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address :3ffe::1::1:"),
+        std::make_tuple(":::", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address :::"),
+        std::make_tuple("2001:db8:::1", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 2001:db8:::1"),
+        std::make_tuple("3ffe::1::1%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 3ffe::1::1%scope"),
+        std::make_tuple("1::2::3::4:5%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 1::2::3::4:5%scope"),
+        std::make_tuple("2001::db:::1%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 2001::db:::1%scope"),
+        std::make_tuple("3ffe::1::%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 3ffe::1::%scope"),
+        std::make_tuple("::3ffe::1%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address ::3ffe::1%scope"),
+        std::make_tuple(":3ffe::1::1%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address :3ffe::1::1%scope"),
+        std::make_tuple("3ffe::1::1:%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 3ffe::1::1:%scope"),
+        std::make_tuple(":3ffe::1::1:%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address :3ffe::1::1:%scope"),
+        std::make_tuple(":::%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address :::%scope"),
+        std::make_tuple("2001:db8:::1%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 2001:db8:::1%scope"),
 
-        // std::make_tuple(":2001:db8::1", error_code::LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at leading ':' only permitted as part of '::' in address :2001:db8::1"),
-        // std::make_tuple(":1:2:3:4:5:6:7", error_code::LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at leading ':' only permitted as part of '::' in address :1:2:3:4:5:6:7"),
-        // std::make_tuple(":1:2:3:4:5:6:", error_code::LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at leading ':' only permitted as part of '::' in address :1:2:3:4:5:6:"),
-        // std::make_tuple(":6:5:4:3:2:1::", error_code::LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at leading ':' only permitted as part of '::' in address :6:5:4:3:2:1::"),
-        // std::make_tuple(":2001:db8::1%scope", error_code::LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at leading ':' only permitted as part of '::' in address :2001:db8::1%scope"),
-        // std::make_tuple(":1:2:3:4:5:6:7%scope", error_code::LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at leading ':' only permitted as part of '::' in address :1:2:3:4:5:6:7%scope"),
-        // std::make_tuple(":1:2:3:4:5:6:%scope", error_code::LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at leading ':' only permitted as part of '::' in address :1:2:3:4:5:6:%scope"),
-        // std::make_tuple(":6:5:4:3:2:1::%scope", error_code::LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at leading ':' only permitted as part of '::' in address :6:5:4:3:2:1::%scope"),
+        std::make_tuple("::00000", error_code::PART_IS_MORE_4_CHARS, "in part 2 of address ::00000 more 4 characters"),
+        std::make_tuple("3ffe::10000", error_code::PART_IS_MORE_4_CHARS, "in part 2 of address 3ffe::10000 more 4 characters"),
+        std::make_tuple("02001:db8::", error_code::PART_IS_MORE_4_CHARS, "in part 0 of address 02001:db8:: more 4 characters"),
+        std::make_tuple("2001:888888::1", error_code::PART_IS_MORE_4_CHARS, "in part 1 of address 2001:888888::1 more 4 characters"),
+        std::make_tuple("::00000%scope", error_code::PART_IS_MORE_4_CHARS, "in part 2 of address ::00000%scope more 4 characters"),
+        std::make_tuple("3ffe::10000%scope", error_code::PART_IS_MORE_4_CHARS, "in part 2 of address 3ffe::10000%scope more 4 characters"),
+        std::make_tuple("02001:db8::%scope", error_code::PART_IS_MORE_4_CHARS, "in part 0 of address 02001:db8::%scope more 4 characters"),
+        std::make_tuple("2001:888888::1%scope", error_code::PART_IS_MORE_4_CHARS, "in part 1 of address 2001:888888::1%scope more 4 characters"),
+        std::make_tuple("1.2.3.4::%scope", error_code::PART_IS_MORE_4_CHARS, "in part 0 of address 1.2.3.4::%scope more 4 characters"),
+        std::make_tuple("1.2.3.4::", error_code::PART_IS_MORE_4_CHARS, "in part 0 of address 1.2.3.4:: more 4 characters"),
+        std::make_tuple("::1.2.3.4:%scope", error_code::PART_IS_MORE_4_CHARS, "in part 2 of address ::1.2.3.4:%scope more 4 characters"),
+        std::make_tuple("::1.2.3.4.5.6.7.8.9", error_code::PART_IS_MORE_4_CHARS, "in part 2 of address ::1.2.3.4.5.6.7.8.9 more 4 characters"),
+        std::make_tuple("123456789abcfeh::", error_code::PART_IS_MORE_4_CHARS, "in part 0 of address 123456789abcfeh:: more 4 characters"),
+        std::make_tuple("123456789abcfe::", error_code::PART_IS_MORE_4_CHARS, "in part 0 of address 123456789abcfe:: more 4 characters"),
 
-        // std::make_tuple("2001:db8::1:", error_code::TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at trailing ':' only permitted as part of '::' in address 2001:db8::1:"),
-        // std::make_tuple("1:2:3:4:5:6:7:", error_code::TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at trailing ':' only permitted as part of '::' in address 1:2:3:4:5:6:7:"),
-        std::make_tuple("::1.2.3.4:", error_code::TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at trailing ':' only permitted as part of '::' in address ::1.2.3.4:"),
-        //std::make_tuple("::7:6:5:4:3:2:", error_code::TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at trailing ':' only permitted as part of '::' in address ::7:6:5:4:3:2:"),
-        //std::make_tuple("2001:db8::1:%scope", error_code::TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at trailing ':' only permitted as part of '::' in address 2001:db8::1:%scope"),
-        //std::make_tuple("1:2:3:4:5:6:7:%scope", error_code::TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at trailing ':' only permitted as part of '::' in address 1:2:3:4:5:6:7:%scope"),
-        std::make_tuple("::1.2.3.4:%scope", error_code::TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at trailing ':' only permitted as part of '::' in address ::1.2.3.4:%scope"),
-        //std::make_tuple("::7:6:5:4:3:2:%scope", error_code::TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at trailing ':' only permitted as part of '::' in address ::7:6:5:4:3:2:%scope"),
+        std::make_tuple("3ffe::1.1.1.net", error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 2 of address 3ffe::1.1.1.net has invalid symbol"),
+        std::make_tuple("3ffe::1.1.1.net%scope", error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 2 of address 3ffe::1.1.1.net%scope has invalid symbol"),
+        std::make_tuple("3ffe::goog", error_code::PART_HAS_INVALID_SYMBOL, "in part 3 of address 3ffe::goog has invalid symbols"),
+        std::make_tuple("3ffe::-0", error_code::PART_HAS_INVALID_SYMBOL, "in part 3 of address 3ffe::-0 has invalid symbols"),
+        std::make_tuple("3ffe::+0", error_code::PART_HAS_INVALID_SYMBOL, "in part 3 of address 3ffe::+0 has invalid symbols"),
+        std::make_tuple("3ffe::-1", error_code::PART_HAS_INVALID_SYMBOL, "in part 3 of address 3ffe::-1 has invalid symbols"),
+        std::make_tuple("1234:axy::b", error_code::PART_HAS_INVALID_SYMBOL, "in part 4 of address 1234:axy::b has invalid symbols"),
+        std::make_tuple("3ffe::goog%scope", error_code::PART_HAS_INVALID_SYMBOL, "in part 3 of address 3ffe::goog%scope has invalid symbols"),
+        std::make_tuple("3ffe::-0%scope", error_code::PART_HAS_INVALID_SYMBOL, "in part 3 of address 3ffe::-0%scope has invalid symbols"),
+        std::make_tuple("3ffe::+0%scope", error_code::PART_HAS_INVALID_SYMBOL, "in part 3 of address 3ffe::+0%scope has invalid symbols"),
+        std::make_tuple("3ffe::-1%scope", error_code::PART_HAS_INVALID_SYMBOL, "in part 3 of address 3ffe::-1%scope has invalid symbols"),
+        std::make_tuple("1234:axy::b%scope", error_code::PART_HAS_INVALID_SYMBOL, "in part 4 of address 1234:axy::b%scope has invalid symbols"),
+        std::make_tuple("::1/24", error_code::PART_HAS_INVALID_SYMBOL, "in part 3 of address ::1/24 has invalid symbols"),
 
-        // std::make_tuple("9:8:7:6:5:4:3::2:1", error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, "expected at most 7 other parts with '::' in address 9:8:7:6:5:4:3::2:1"),
-        // std::make_tuple("::8:7:6:5:4:3:2:1", error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, "expected at most 7 other parts with '::' in address ::8:7:6:5:4:3:2:1"),
-        // std::make_tuple("8:7:6:5:4:3:2:1::", error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, "expected at most 7 other parts with '::' in address 8:7:6:5:4:3:2:1::"),
-        // std::make_tuple("8:7:6:5:4:3::2:1", error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, "expected at most 7 other parts with '::' in address 8:7:6:5:4:3::2:1"),
-        // std::make_tuple("9:8:7:6:5:4:3::2:1%scope", error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, "expected at most 7 other parts with '::' in address 9:8:7:6:5:4:3::2:1%scope"),
-        // std::make_tuple("8:7:6:5:4:3:2:1::%scope", error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, "expected at most 7 other parts with '::' in address 8:7:6:5:4:3:2:1::%scope"),
-        // std::make_tuple("::8:7:6:5:4:3:2:1%scope", error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, "expected at most 7 other parts with '::' in address ::8:7:6:5:4:3:2:1%scope"),
-        // std::make_tuple("1:2:3:4:5::6:7:8", error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, "expected at most 7 other parts with '::' in address 1:2:3:4:5::6:7:8"),
-        // std::make_tuple("1:2:3:4:5::6:7:8%scope", error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, "expected at most 7 other parts with '::' in address 1:2:3:4:5::6:7:8%scope"),
+        std::make_tuple("3ffe::1::1", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 3ffe::1::1"),
+        std::make_tuple("1::2::3::4:5", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 1::2::3::4:5"),
+        std::make_tuple("2001::db:::1", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 2001::db:::1"),
+        std::make_tuple("3ffe::1::", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 3ffe::1::"),
+        std::make_tuple("::3ffe::1", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address ::3ffe::1"),
+        std::make_tuple(":3ffe::1::1", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address :3ffe::1::1"),
+        std::make_tuple("3ffe::1::1:", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 3ffe::1::1:"),
+        std::make_tuple(":3ffe::1::1:", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address :3ffe::1::1:"),
+        std::make_tuple(":::", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address :::"),
+        std::make_tuple("2001:db8:::1", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 2001:db8:::1"),
+        std::make_tuple("3ffe::1::1%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 3ffe::1::1%scope"),
+        std::make_tuple("1::2::3::4:5%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 1::2::3::4:5%scope"),
+        std::make_tuple("2001::db:::1%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 2001::db:::1%scope"),
+        std::make_tuple("3ffe::1::%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 3ffe::1::%scope"),
+        std::make_tuple("::3ffe::1%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address ::3ffe::1%scope"),
+        std::make_tuple(":3ffe::1::1%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address :3ffe::1::1%scope"),
+        std::make_tuple("3ffe::1::1:%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 3ffe::1::1:%scope"),
+        std::make_tuple(":3ffe::1::1:%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address :3ffe::1::1:%scope"),
+        std::make_tuple(":::%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address :::%scope"),
+        std::make_tuple("2001:db8:::1%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 2001:db8:::1%scope"),
 
-        // std::make_tuple("7:6:5:4:3:2:1", error_code::EXACTLY_8_PARTS_EXPECTED_WITHOUT_DOUBLE_COLON, "exactly 8 parts expected without '::' in address 7:6:5:4:3:2:1"),
-        // std::make_tuple("7:6:5:4:3:2:1%scope", error_code::EXACTLY_8_PARTS_EXPECTED_WITHOUT_DOUBLE_COLON, "exactly 8 parts expected without '::' in address 7:6:5:4:3:2:1%scope"),
+        std::make_tuple(":2001:db8::1", error_code::LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at leading ':' only permitted as part of '::' in address :2001:db8::1"),
+        std::make_tuple(":1:2:3:4:5:6:7", error_code::LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at leading ':' only permitted as part of '::' in address :1:2:3:4:5:6:7"),
+        std::make_tuple(":1:2:3:4:5:6:", error_code::LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at leading ':' only permitted as part of '::' in address :1:2:3:4:5:6:"),
+        std::make_tuple(":6:5:4:3:2:1::", error_code::LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at leading ':' only permitted as part of '::' in address :6:5:4:3:2:1::"),
+        std::make_tuple(":2001:db8::1%scope", error_code::LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at leading ':' only permitted as part of '::' in address :2001:db8::1%scope"),
+        std::make_tuple(":1:2:3:4:5:6:7%scope", error_code::LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at leading ':' only permitted as part of '::' in address :1:2:3:4:5:6:7%scope"),
+        std::make_tuple(":1:2:3:4:5:6:%scope", error_code::LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at leading ':' only permitted as part of '::' in address :1:2:3:4:5:6:%scope"),
+        std::make_tuple(":6:5:4:3:2:1::%scope", error_code::LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at leading ':' only permitted as part of '::' in address :6:5:4:3:2:1::%scope"),
+
+        std::make_tuple("2001:db8::1:", error_code::TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at trailing ':' only permitted as part of '::' in address 2001:db8::1:"),
+        std::make_tuple("1:2:3:4:5:6:7:", error_code::TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at trailing ':' only permitted as part of '::' in address 1:2:3:4:5:6:7:"),
+        std::make_tuple("::7:6:5:4:3:2:", error_code::TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at trailing ':' only permitted as part of '::' in address ::7:6:5:4:3:2:"),
+        std::make_tuple("2001:db8::1:%scope", error_code::TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at trailing ':' only permitted as part of '::' in address 2001:db8::1:%scope"),
+        std::make_tuple("1:2:3:4:5:6:7:%scope", error_code::TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at trailing ':' only permitted as part of '::' in address 1:2:3:4:5:6:7:%scope"),
+        std::make_tuple("::7:6:5:4:3:2:%scope", error_code::TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at trailing ':' only permitted as part of '::' in address ::7:6:5:4:3:2:%scope"),
+        std::make_tuple("1:2:3:4:5:6:7:8:", error_code::TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at trailing ':' only permitted as part of '::' in address 1:2:3:4:5:6:7:8:"),
+
+        std::make_tuple("9:8:7:6:5:4:3::2:1", error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, "expected at most 7 other parts with '::' in address 9:8:7:6:5:4:3::2:1"),
+        std::make_tuple("::8:7:6:5:4:3:2:1", error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, "expected at most 7 other parts with '::' in address ::8:7:6:5:4:3:2:1"),
+        std::make_tuple("8:7:6:5:4:3:2:1::", error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, "expected at most 7 other parts with '::' in address 8:7:6:5:4:3:2:1::"),
+        std::make_tuple("8:7:6:5:4:3::2:1", error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, "expected at most 7 other parts with '::' in address 8:7:6:5:4:3::2:1"),
+        std::make_tuple("9:8:7:6:5:4:3::2:1%scope", error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, "expected at most 7 other parts with '::' in address 9:8:7:6:5:4:3::2:1%scope"),
+        std::make_tuple("8:7:6:5:4:3:2:1::%scope", error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, "expected at most 7 other parts with '::' in address 8:7:6:5:4:3:2:1::%scope"),
+        std::make_tuple("::8:7:6:5:4:3:2:1%scope", error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, "expected at most 7 other parts with '::' in address ::8:7:6:5:4:3:2:1%scope"),
+        std::make_tuple("1:2:3:4:5::6:7:8", error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, "expected at most 7 other parts with '::' in address 1:2:3:4:5::6:7:8"),
+        std::make_tuple("1:2:3:4:5::6:7:8%scope", error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, "expected at most 7 other parts with '::' in address 1:2:3:4:5::6:7:8%scope"),
+
+        std::make_tuple("7:6:5:4:3:2:1", error_code::EXACTLY_8_PARTS_EXPECTED_WITHOUT_DOUBLE_COLON, "exactly 8 parts expected without '::' in address 7:6:5:4:3:2:1"),
+        std::make_tuple("7:6:5:4:3:2:1%scope", error_code::EXACTLY_8_PARTS_EXPECTED_WITHOUT_DOUBLE_COLON, "exactly 8 parts expected without '::' in address 7:6:5:4:3:2:1%scope"),
         
-        // assertBadSplit("::1/24")
-        // assertBadSplit("::1%scope_id/24")
-/*
-
-
-
-    PART_IS_MORE_4_CHARS,
-    PART_HAS_INVALID_SYMBOL,
-    MOST_ONE_DOUBLE_COLON_PERMITTED,
-    LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON,
-    TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON,
-    ,
-    ,
-
-*/
-        std::make_tuple("::1%", error_code::INVALID_SCOPE_ID, "invalid scope id in address ::1%"),
         std::make_tuple("::%123456789abcdefgh", error_code::SCOPE_ID_IS_TOO_LONG, "scope id is too long in address ::%123456789abcdefgh"),
-        std::make_tuple("::1%scope%", error_code::INVALID_SCOPE_ID, "invalid scope id in address ::1%scope%")
+
+        std::make_tuple("::1%", error_code::INVALID_SCOPE_ID, "invalid scope id in address ::1%"),
+        std::make_tuple("::1%scope%", error_code::INVALID_SCOPE_ID, "invalid scope id in address ::1%scope%"),
+        std::make_tuple("::1%scope_id/24", error_code::INVALID_SCOPE_ID, "invalid scope id in address ::1%scope_id/24") 
     ));
