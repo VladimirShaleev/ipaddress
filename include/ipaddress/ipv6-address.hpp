@@ -206,6 +206,10 @@ private:
                     error = error_code::SCOPE_ID_IS_TOO_LONG;
                     return std::make_pair(end_ip, make_fixed_string("\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"));
                 }
+                if (*it == '%') {
+                    error = error_code::INVALID_SCOPE_ID;
+                    return std::make_pair(end_ip, make_fixed_string("\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"));
+                }
                 scope_id[index++] = *it;
             } else {
                 scope = true;
