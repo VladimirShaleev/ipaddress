@@ -229,11 +229,18 @@ private:
 
         parts_count = 0;
         int symbol = 0;
+        char prev_c = '\0';
+        bool has_double_colon = false;
 
         for (auto it = begin; it != end; ++it) {
             auto c = *it;
+            if (!has_double_colon && c == ':' && prev_c == ':') {
+                has_double_colon = true;
+            }
             if (parts_count >= max_parts) {
-                error = error_code::MOST_8_COLONS_PERMITTED;
+                error = has_double_colon
+                    ? error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON 
+                    : error_code::MOST_8_COLONS_PERMITTED;
                 return empty_parts;
             }
             if (c != ':') {
@@ -258,6 +265,7 @@ private:
                 symbol = 0;
                 last_part[0] = '\0';
             }
+            prev_c = c;
         }
     
         if (parts_count >= max_parts) {
@@ -349,11 +357,6 @@ private:
 
             const auto parts_skipped = max_parts - (parts_hi + parts_lo);
             
-            if (parts_skipped < 1) {
-                error = error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON;
-                return { 0, 0, 0 };
-            }
-
             return { parts_hi, parts_lo, parts_skipped };
         } else {
             if (parts_count != max_parts) {

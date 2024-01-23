@@ -109,7 +109,7 @@ public:
         case error_code::PART_HAS_INVALID_SYMBOL:
             throw parse_error("in part", index, "of address", str, "has invalid symbols");
         case error_code::MOST_ONE_DOUBLE_COLON_PERMITTED:
-            throw parse_error("address cannot be empty");
+            throw parse_error("at most one '::' permitted in address", str);
         case error_code::LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON:
             throw parse_error("at leading ':' only permitted as part of '::' in address", str);
         case error_code::TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON:
