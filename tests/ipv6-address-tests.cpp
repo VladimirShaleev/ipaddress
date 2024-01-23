@@ -299,3 +299,82 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("::1%scope%", error_code::INVALID_SCOPE_ID, "invalid scope id in address ::1%scope%"),
         std::make_tuple("::1%scope_id/24", error_code::INVALID_SCOPE_ID, "invalid scope id in address ::1%scope_id/24") 
     ));
+
+TEST(ipv6_address, Comparison) {
+    auto ip1 = ipv6_address::parse("2001:db8::1");
+    auto ip2 = ipv6_address::parse("2001:db8::2");
+    auto ip3 = ipv6_address::parse("2001:db8::2");
+    auto ip4 = ipv6_address::parse("2001:db8::2%abc");
+    auto ip5 = ipv6_address::parse("2001:db8::2%abc");
+    auto ip6 = ipv6_address::parse("2001:db8::2%acc");
+
+    ASSERT_TRUE(ip1 < ip2);
+    ASSERT_TRUE(ip1 <= ip2);
+    ASSERT_FALSE(ip1 > ip2);
+    ASSERT_FALSE(ip1 >= ip2);
+    ASSERT_FALSE(ip1 == ip2);
+    ASSERT_TRUE(ip1 != ip2);
+    
+    ASSERT_FALSE(ip2 < ip1);
+    ASSERT_FALSE(ip2 <= ip1);
+    ASSERT_TRUE(ip2 > ip1);
+    ASSERT_TRUE(ip2 >= ip1);
+    ASSERT_FALSE(ip2 == ip1);
+    ASSERT_TRUE(ip2 != ip1);
+    
+    ASSERT_FALSE(ip2 < ip3);
+    ASSERT_TRUE(ip2 <= ip3);
+    ASSERT_FALSE(ip2 > ip3);
+    ASSERT_TRUE(ip2 >= ip3);
+    ASSERT_TRUE(ip2 == ip3);
+    ASSERT_FALSE(ip2 != ip3);
+    
+    ASSERT_FALSE(ip3 < ip2);
+    ASSERT_TRUE(ip3 <= ip2);
+    ASSERT_FALSE(ip3 > ip2);
+    ASSERT_TRUE(ip3 >= ip2);
+    ASSERT_TRUE(ip3 == ip2);
+    ASSERT_FALSE(ip3 != ip2);
+
+    ASSERT_TRUE(ip3 < ip4);
+    ASSERT_TRUE(ip3 <= ip4);
+    ASSERT_FALSE(ip3 > ip4);
+    ASSERT_FALSE(ip3 >= ip4);
+    ASSERT_FALSE(ip3 == ip4);
+    ASSERT_TRUE(ip3 != ip4);
+    
+    ASSERT_FALSE(ip4 < ip3);
+    ASSERT_FALSE(ip4 <= ip3);
+    ASSERT_TRUE(ip4 > ip3);
+    ASSERT_TRUE(ip4 >= ip3);
+    ASSERT_FALSE(ip4 == ip3);
+    ASSERT_TRUE(ip4 != ip3);
+
+    ASSERT_FALSE(ip4 < ip5);
+    ASSERT_TRUE(ip4 <= ip5);
+    ASSERT_FALSE(ip4 > ip5);
+    ASSERT_TRUE(ip4 >= ip5);
+    ASSERT_TRUE(ip4 == ip5);
+    ASSERT_FALSE(ip4 != ip5);
+    
+    ASSERT_FALSE(ip5 < ip4);
+    ASSERT_TRUE(ip5 <= ip4);
+    ASSERT_FALSE(ip5 > ip4);
+    ASSERT_TRUE(ip5 >= ip4);
+    ASSERT_TRUE(ip5 == ip4);
+    ASSERT_FALSE(ip5 != ip4);
+
+    ASSERT_TRUE(ip5 < ip6);
+    ASSERT_TRUE(ip5 <= ip6);
+    ASSERT_FALSE(ip5 > ip6);
+    ASSERT_FALSE(ip5 >= ip6);
+    ASSERT_FALSE(ip5 == ip6);
+    ASSERT_TRUE(ip5 != ip6);
+    
+    ASSERT_FALSE(ip6 < ip5);
+    ASSERT_FALSE(ip6 <= ip5);
+    ASSERT_TRUE(ip6 > ip5);
+    ASSERT_TRUE(ip6 >= ip5);
+    ASSERT_FALSE(ip6 == ip5);
+    ASSERT_TRUE(ip6 != ip5);
+}
