@@ -269,7 +269,9 @@ private:
         }
     
         if (parts_count >= max_parts) {
-            error = error_code::MOST_8_COLONS_PERMITTED;
+            error = parts[0][0] == '\0' 
+                ? error_code::LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON 
+                : error_code::MOST_8_COLONS_PERMITTED;
             return empty_parts;
         }
         
