@@ -100,7 +100,7 @@ public:
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR size_t hash() const IPADDRESS_NOEXCEPT {
-        size_t seed = 0;
+        size_t seed = Base::hash_scope_id();
         for (size_t i = 0; i < Base::size; i += 4) {
             const auto bytes_hash = 
                 size_t(_bytes[i + 0]) << 24 | 

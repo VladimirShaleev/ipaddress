@@ -276,6 +276,10 @@ protected:
         return res.str();
     }
 
+    IPADDRESS_CONSTEXPR size_t hash_scope_id() const IPADDRESS_NOEXCEPT {
+        return _scope_id.hash();
+    }
+
     static IPADDRESS_CONSTEXPR int compare_scope_id(const ip_address_base<base_v6>& lhs, const ip_address_base<base_v6>& rhs) IPADDRESS_NOEXCEPT {
         return lhs._scope_id.compare(rhs._scope_id);
     }

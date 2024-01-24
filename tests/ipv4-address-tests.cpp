@@ -333,6 +333,21 @@ INSTANTIATE_TEST_SUITE_P(
         "255.0.42.42"
     ));
 
+TEST(ipv4_address, Hash) {
+    auto ip1 = ipv4_address::parse("127.0.0.1");
+    auto ip2 = ipv4_address::parse("127.0.0.2");
+    auto ip3 = ipv4_address::parse("127.0.0.3");
+    auto hash_functor = std::hash<ipv4_address>{};
+
+    ASSERT_EQ(ip1.hash(), 4785142202);
+    ASSERT_EQ(ip2.hash(), 4785142203);
+    ASSERT_EQ(ip3.hash(), 4785142204);
+
+    ASSERT_EQ(hash_functor(ip1), 4785142202);
+    ASSERT_EQ(hash_functor(ip2), 4785142203);
+    ASSERT_EQ(hash_functor(ip3), 4785142204);
+}
+
 TEST(ipv4_address, Containers) {
     auto ip1 = ipv4_address::parse("127.0.0.1");
     auto ip2 = ipv4_address::parse("127.0.0.2");

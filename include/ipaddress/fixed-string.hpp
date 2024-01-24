@@ -121,6 +121,25 @@ struct fixed_string {
             return 1;
         }
     }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR size_t hash() const IPADDRESS_NOEXCEPT {
+        size_t value{};
+        size_t prime{};
+
+        if (sizeof(size_t) == 8) {
+            value = 14695981039346656037ULL;
+            prime = 1099511628211ULL;
+        } else {
+            value = 2166136261U;
+            prime = 16777619U;
+        }
+
+        for (size_t i = 0; i < size(); ++i) {
+            value ^= static_cast<size_t>(_data[i]);
+            value *= prime;
+        }
+        return value;
+    }
 };
 
 template <>
