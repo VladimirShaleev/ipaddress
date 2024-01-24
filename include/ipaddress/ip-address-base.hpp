@@ -112,6 +112,10 @@ public:
         return seed;
     }
 
+    IPADDRESS_NODISCARD explicit operator std::string() const {
+        return to_string();
+    }
+
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator==(const ip_address_base<Base>& rhs) const IPADDRESS_NOEXCEPT {
         return _bytes == rhs._bytes && Base::compare_scope_id(*this, rhs) == 0;
     }
@@ -176,6 +180,30 @@ private:
     base_type _bytes;
 };
 
+#ifndef IPADDRESS_NO_OVERLOAD_STD
+
+inline int stream_index() { 
+    static int i = std::ios_base::xalloc();
+    return i;
+}
+
+inline std::ostream& full(std::ostream& stream) {
+    stream.iword(stream_index()) = long(format::full) + 1;
+    return stream;
+}
+
+inline std::ostream& compact(std::ostream& stream) {
+    stream.iword(stream_index()) = long(format::compact) + 1;
+    return stream;
+}
+
+inline std::ostream& compressed(std::ostream& stream) {
+    stream.iword(stream_index()) = long(format::compressed) + 1;
+    return stream;
+}
+
+#endif
+
 }
 
 #ifndef IPADDRESS_NO_OVERLOAD_STD
@@ -201,7 +229,12 @@ inline std::string to_string(const IPADDRESS_NAMESPACE::ip_address_base<Base>& i
 
 template <typename Base>
 inline std::ostream& operator<<(std::ostream& stream, const IPADDRESS_NAMESPACE::ip_address_base<Base>& ip) {
-    return stream << to_string(ip);
+    auto& iword = stream.iword(IPADDRESS_NAMESPACE::stream_index());
+    auto fmt = iword
+        ? (IPADDRESS_NAMESPACE::format) (stream.iword(stream_index()) - 1) 
+        : IPADDRESS_NAMESPACE::format::compressed;
+    iword = 0;
+    return stream << ip.to_string(fmt);
 }
 
 template <typename Base>

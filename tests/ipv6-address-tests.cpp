@@ -381,21 +381,28 @@ TEST(ipv6_address, Comparison) {
 
 using ToStringParams = TestWithParam<std::tuple<const char*, const char*, const char*, const char*>>;
 TEST_P(ToStringParams, to_string) {
-    const auto address = std::get<0>(GetParam());
-    const auto full = std::get<1>(GetParam());
-    const auto compact = std::get<2>(GetParam());
-    const auto compressed = std::get<3>(GetParam());
+    const auto expected_address = std::get<0>(GetParam());
+    const auto expected_full = std::get<1>(GetParam());
+    const auto expected_compact = std::get<2>(GetParam());
+    const auto expected_compressed = std::get<3>(GetParam());
 
-    const auto actual = ipv6_address::parse(address);
+    const auto actual = ipv6_address::parse(expected_address);
 
-    std::ostringstream ss;
-    ss << actual;
-
-    ASSERT_EQ(actual.to_string(format::full), std::string(full));
-    ASSERT_EQ(actual.to_string(format::compact), std::string(compact));
-    ASSERT_EQ(actual.to_string(format::compressed), std::string(compressed));
-    ASSERT_EQ(std::to_string(actual), std::string(compressed));
-    ASSERT_EQ(ss.str(), std::string(compressed));
+    std::ostringstream ss_full; ss_full << full << actual;
+    std::ostringstream ss_default; ss_default << actual;
+    std::ostringstream ss_compact; ss_compact << compact << actual;
+    std::ostringstream ss_compressed; ss_compressed << compressed << actual;
+    
+    ASSERT_EQ(actual.to_string(format::full), std::string(expected_full));
+    ASSERT_EQ(actual.to_string(format::compact), std::string(expected_compact));
+    ASSERT_EQ(actual.to_string(format::compressed), std::string(expected_compressed));
+    ASSERT_EQ(actual.to_string(), std::string(expected_compressed));
+    ASSERT_EQ((std::string) actual, std::string(expected_compressed));
+    ASSERT_EQ(std::to_string(actual), std::string(expected_compressed));
+    ASSERT_EQ(ss_full.str(), std::string(expected_full));
+    ASSERT_EQ(ss_default.str(), std::string(expected_compressed));
+    ASSERT_EQ(ss_compact.str(), std::string(expected_compact));
+    ASSERT_EQ(ss_compressed.str(), std::string(expected_compressed));
 }
 INSTANTIATE_TEST_SUITE_P(
     ipv6_address, ToStringParams,
