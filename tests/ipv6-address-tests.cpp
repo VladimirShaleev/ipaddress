@@ -378,3 +378,45 @@ TEST(ipv6_address, Comparison) {
     ASSERT_FALSE(ip6 == ip5);
     ASSERT_TRUE(ip6 != ip5);
 }
+
+using ToStringParams = TestWithParam<std::tuple<const char*, const char*>>;
+TEST_P(ToStringParams, to_string) {
+    const auto address = std::get<0>(GetParam());
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv6_address::parse(address);
+
+    std::ostringstream ss;
+    ss << actual;
+
+    ASSERT_EQ(actual.to_string(), std::string(expected));
+    ASSERT_EQ(std::to_string(actual), std::string(expected));
+    ASSERT_EQ(ss.str(), std::string(expected));
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_address, ToStringParams,
+    testing::Values(
+        std::make_tuple("2001:db8:0:0:1:0:0:1", "2001:db8::1:0:0:1"),
+        std::make_tuple("2001:DB8::1", "2001:db8::1"),
+        std::make_tuple("2001:db8::1", "2001:db8::1"),
+        std::make_tuple("2001:0db8:85a3:0000:0000:8a2e:0370:7334", "2001:db8:85a3::8a2e:370:7334"),
+        std::make_tuple("fe80::1ff:fe23:4567:890a", "fe80::1ff:fe23:4567:890a"),
+        std::make_tuple("::", "::"),
+        std::make_tuple("::127.0.0.1", "::7f00:1"),
+        std::make_tuple("0000::0000", "::"),
+        std::make_tuple("::c0a8:1", "::c0a8:1"),
+        std::make_tuple("000::c0a8:0001", "::c0a8:1"),
+        std::make_tuple("::1", "::1"),
+        std::make_tuple("::ffff:0:0", "::ffff:0:0"),
+        std::make_tuple("::ffff:0:0:0", "::ffff:0:0:0"),
+        std::make_tuple("64:ff9b::", "64:ff9b::"),
+        std::make_tuple("64:ff9b:1::", "64:ff9b:1::"),
+        std::make_tuple("100::", "100::"),
+        std::make_tuple("ff02::1:3", "ff02::1:3"),
+        std::make_tuple("fe80::1ff:fe23:4567:890a%eth2", "fe80::1ff:fe23:4567:890a%eth2"),
+        std::make_tuple("fe80::1ff:fe23:4567:890a%25eth01234567", "fe80::1ff:fe23:4567:890a%25eth01234567"),
+        std::make_tuple("fe80::1ff:fe23:4567:890a%3", "fe80::1ff:fe23:4567:890a%3"),
+        std::make_tuple("fe80::1ff:fe23:4567:890a%31", "fe80::1ff:fe23:4567:890a%31"),
+        std::make_tuple("1:2:3:4:5:6:42.42.42.1", "1:2:3:4:5:6:2a2a:2a01"),
+        std::make_tuple("0:0:0:4:5:6:42.42.42.1%test", "::4:5:6:2a2a:2a01%test")
+    ));

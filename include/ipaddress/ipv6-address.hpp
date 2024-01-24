@@ -182,8 +182,95 @@ protected:
         return ip;
     }
     
-    static std::string ip_to_string(const base_type& bytes) {
+    std::string ip_to_string(const base_type& bytes, bool compress = true) const {
+        char hextets[size >> 1][5] = {};
+        const size_t max_hextets = size >> 1;
+        for (size_t i = 0; i < max_hextets; ++i) {
+            uint16_t value = (uint16_t(bytes[i * 2]) << 8) | uint16_t(bytes[i * 2 + 1]);
+            to_hex(value, hextets[i]);
+        }
+
+        auto count = max_hextets;
+        auto has_doublecolon_start = false;
+        auto has_doublecolon_end = false;
+
+        if (compress) {
+            for (size_t i = 0; i < max_hextets; ++i) {
+                auto& hextet = hextets[i];
+
+                for (size_t h = 0; h < 3; ++h) {
+                    if (hextet[0] != '0') {
+                        break;
+                    }
+                    hextet[0] = hextet[1];
+                    hextet[1] = hextet[2];
+                    hextet[2] = hextet[3];
+                    hextet[3] = hextet[4];
+                }
+            }
+
+            int best_doublecolon_len = 0;
+            int best_doublecolon_start = -1;
+            int doublecolon_len = 0;
+            int doublecolon_start = -1;
+
+            for (size_t i = 0; i < max_hextets; ++i) {
+                const auto& hextet = hextets[i];
+                if (hextet[0] == '0') {
+                    doublecolon_len += 1;
+
+                    if (doublecolon_start == -1) {
+                        doublecolon_start = i;
+                    }
+                    if (doublecolon_len > best_doublecolon_len) {
+                        best_doublecolon_len = doublecolon_len;
+                        best_doublecolon_start = doublecolon_start;
+                    }
+                } else {
+                    doublecolon_len = 0;
+                    doublecolon_start = -1;
+                }
+            }
+
+            if (best_doublecolon_len > 1) {
+                int best_doublecolon_end = best_doublecolon_start + best_doublecolon_len;
+                if (best_doublecolon_end == max_hextets) {
+                    has_doublecolon_end = true;
+                }
+                hextets[best_doublecolon_start][0] = '\0';
+                for (int h = best_doublecolon_start; h < max_hextets - 1; ++h) {
+                    const auto lindex = h + 1;
+                    const auto rindex = h + best_doublecolon_len;
+                    if (rindex >= max_hextets) {
+                        break;
+                    }
+                    hextets[lindex][0] = hextets[rindex][0];
+                    hextets[lindex][1] = hextets[rindex][1];
+                    hextets[lindex][2] = hextets[rindex][2];
+                    hextets[lindex][3] = hextets[rindex][3];
+                }
+                count -= best_doublecolon_len - 1;
+                
+                if (best_doublecolon_start == 0) {
+                    has_doublecolon_start = true;
+                }
+            }
+        }
+
         std::ostringstream res;
+        if (has_doublecolon_start) {
+            res << ':';
+        }
+        for (size_t i = 0; i < count - 1; ++i) {
+            res << hextets[i] << ':';
+        }
+        res << hextets[count - 1];
+        if (has_doublecolon_end) {
+            res << ':';
+        }
+        if (!_scope_id.empty()) {
+            res << '%' << _scope_id.data();
+        }
         return res.str();
     }
 
