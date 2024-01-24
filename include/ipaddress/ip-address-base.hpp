@@ -14,6 +14,12 @@ enum class version {
     V6 = 6
 };
 
+enum class format {
+    full = 0,
+    compact,
+    compressed
+};
+
 template <typename Base>
 class ip_address_base : public Base {
 public:
@@ -81,8 +87,8 @@ public:
         return parse_string(str, code);
     }
 
-    IPADDRESS_NODISCARD std::string to_string() const {
-        return Base::ip_to_string(_bytes);
+    IPADDRESS_NODISCARD std::string to_string(format fmt = format::compressed) const {
+        return Base::ip_to_string(_bytes, fmt);
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const base_type& bytes() const IPADDRESS_NOEXCEPT {

@@ -182,7 +182,7 @@ protected:
         return ip;
     }
     
-    std::string ip_to_string(const base_type& bytes, bool compress = true) const {
+    std::string ip_to_string(const base_type& bytes, format fmt) const {
         char hextets[size >> 1][5] = {};
         const size_t max_hextets = size >> 1;
         for (size_t i = 0; i < max_hextets; ++i) {
@@ -194,7 +194,7 @@ protected:
         auto has_doublecolon_start = false;
         auto has_doublecolon_end = false;
 
-        if (compress) {
+        if (fmt == format::compact || fmt == format::compressed) {
             for (size_t i = 0; i < max_hextets; ++i) {
                 auto& hextet = hextets[i];
 
@@ -209,50 +209,52 @@ protected:
                 }
             }
 
-            int best_doublecolon_len = 0;
-            int best_doublecolon_start = -1;
-            int doublecolon_len = 0;
-            int doublecolon_start = -1;
+            if (fmt == format::compressed) {
+                int best_doublecolon_len = 0;
+                int best_doublecolon_start = -1;
+                int doublecolon_len = 0;
+                int doublecolon_start = -1;
 
-            for (size_t i = 0; i < max_hextets; ++i) {
-                const auto& hextet = hextets[i];
-                if (hextet[0] == '0') {
-                    doublecolon_len += 1;
+                for (size_t i = 0; i < max_hextets; ++i) {
+                    const auto& hextet = hextets[i];
+                    if (hextet[0] == '0') {
+                        doublecolon_len += 1;
 
-                    if (doublecolon_start == -1) {
-                        doublecolon_start = i;
+                        if (doublecolon_start == -1) {
+                            doublecolon_start = i;
+                        }
+                        if (doublecolon_len > best_doublecolon_len) {
+                            best_doublecolon_len = doublecolon_len;
+                            best_doublecolon_start = doublecolon_start;
+                        }
+                    } else {
+                        doublecolon_len = 0;
+                        doublecolon_start = -1;
                     }
-                    if (doublecolon_len > best_doublecolon_len) {
-                        best_doublecolon_len = doublecolon_len;
-                        best_doublecolon_start = doublecolon_start;
-                    }
-                } else {
-                    doublecolon_len = 0;
-                    doublecolon_start = -1;
                 }
-            }
 
-            if (best_doublecolon_len > 1) {
-                int best_doublecolon_end = best_doublecolon_start + best_doublecolon_len;
-                if (best_doublecolon_end == max_hextets) {
-                    has_doublecolon_end = true;
-                }
-                hextets[best_doublecolon_start][0] = '\0';
-                for (int h = best_doublecolon_start; h < max_hextets - 1; ++h) {
-                    const auto lindex = h + 1;
-                    const auto rindex = h + best_doublecolon_len;
-                    if (rindex >= max_hextets) {
-                        break;
+                if (best_doublecolon_len > 1) {
+                    int best_doublecolon_end = best_doublecolon_start + best_doublecolon_len;
+                    if (best_doublecolon_end == max_hextets) {
+                        has_doublecolon_end = true;
                     }
-                    hextets[lindex][0] = hextets[rindex][0];
-                    hextets[lindex][1] = hextets[rindex][1];
-                    hextets[lindex][2] = hextets[rindex][2];
-                    hextets[lindex][3] = hextets[rindex][3];
-                }
-                count -= best_doublecolon_len - 1;
-                
-                if (best_doublecolon_start == 0) {
-                    has_doublecolon_start = true;
+                    hextets[best_doublecolon_start][0] = '\0';
+                    for (int h = best_doublecolon_start; h < max_hextets - 1; ++h) {
+                        const auto lindex = h + 1;
+                        const auto rindex = h + best_doublecolon_len;
+                        if (rindex >= max_hextets) {
+                            break;
+                        }
+                        hextets[lindex][0] = hextets[rindex][0];
+                        hextets[lindex][1] = hextets[rindex][1];
+                        hextets[lindex][2] = hextets[rindex][2];
+                        hextets[lindex][3] = hextets[rindex][3];
+                    }
+                    count -= best_doublecolon_len - 1;
+                    
+                    if (best_doublecolon_start == 0) {
+                        has_doublecolon_start = true;
+                    }
                 }
             }
         }

@@ -110,7 +110,7 @@ protected:
         return ip_address_base<base_v4>(octets);
     }
     
-    static std::string ip_to_string(const base_type& bytes) {
+    static std::string ip_to_string(const base_type& bytes, format fmt) {
         std::ostringstream res;
         res << size_t(bytes[0]) << '.'
             << size_t(bytes[1]) << '.' 
