@@ -363,7 +363,6 @@ TEST(ipv4_address, Containers) {
     unordered_map[ip1] = 1;
     unordered_map[ip3] = 3;
     unordered_map[ip3] = 4;
-    auto it2 = unordered_map.begin();
     ASSERT_EQ(unordered_map.size(), 3);
     ASSERT_EQ(unordered_map[ip1], 1);
     ASSERT_EQ(unordered_map[ip2], 2);

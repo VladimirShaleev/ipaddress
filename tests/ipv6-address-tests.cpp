@@ -1,3 +1,7 @@
+#include <map>
+#include <vector>
+#include <unordered_map>
+#include <sstream>
 #include <gtest/gtest.h>
 #include <gmock/gmock-matchers.h>
 
@@ -164,7 +168,7 @@ TEST_P(InvalidAddressParserParams, parse) {
     ASSERT_EQ(err, expected_error_code);
 
 #ifdef IPADDRESS_NO_EXCEPTIONS
-    ipv4_address::base_type expected_empty { 0 };
+    ipv6_address::base_type expected_empty { 0 };
     auto error_ip = ipv6_address::parse(expected_address);
 
     EXPECT_EQ(error_ip.bytes(), expected_empty);
@@ -431,3 +435,52 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("1:2:3:4:5:6:42.42.42.1", "0001:0002:0003:0004:0005:0006:2a2a:2a01", "1:2:3:4:5:6:2a2a:2a01", "1:2:3:4:5:6:2a2a:2a01"),
         std::make_tuple("0:0:0:4:5:6:42.42.42.1%test", "0000:0000:0000:0004:0005:0006:2a2a:2a01%test", "0:0:0:4:5:6:2a2a:2a01%test", "::4:5:6:2a2a:2a01%test")
     ));
+
+TEST(ipv6_address, Containers) {
+    auto ip1 = ipv6_address::parse("2001:db8::1");
+    auto ip2 = ipv6_address::parse("2001:db8::2");
+    auto ip3 = ipv6_address::parse("2001:db8::3");
+
+    std::vector<ipv6_address> vec;
+    vec.push_back(ip1);
+    vec.push_back(ip2);
+    vec.emplace_back(ip3);
+    vec.emplace_back(ipv6_address::base_type {0x20, 0x01, 0x0d, 0xb8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x04 });
+    ASSERT_EQ(vec[0], ip1);
+    ASSERT_EQ(vec[1], ip2);
+    ASSERT_EQ(vec[2], ip3);
+    ASSERT_EQ(vec[3], ipv6_address::parse("2001:db8::4"));
+
+    std::map<ipv6_address, int> map;
+    map[ip2] = 2;
+    map[ip1] = 1;
+    map[ip3] = 3;
+    auto it = map.begin();
+    ASSERT_EQ(map.size(), 3);
+    ASSERT_EQ(it++->first, ip1);
+    ASSERT_EQ(it++->first, ip2);
+    ASSERT_EQ(it++->first, ip3);
+    
+    auto ip3_with_scope = ipv6_address::parse("2001:db8::3%scope");
+    std::unordered_map<ipv6_address, int> unordered_map;
+    unordered_map[ip2] = 2;
+    unordered_map[ip1] = 1;
+    unordered_map[ip3] = 3;
+    unordered_map[ip3] = 4;
+    unordered_map[ip3_with_scope] = 0;
+    ASSERT_EQ(unordered_map.size(), 4);
+    ASSERT_EQ(unordered_map[ip1], 1);
+    ASSERT_EQ(unordered_map[ip2], 2);
+    ASSERT_EQ(unordered_map[ip3], 4);
+    ASSERT_EQ(unordered_map[ip3_with_scope], 0);
+}
+
+TEST(ipv6_address, Swap) {
+    auto ip1 = ipv6_address::parse("2001:db8::1");
+    auto ip2 = ipv6_address::parse("2001:db8::2");
+    
+    std::swap(ip1, ip2);
+
+    ASSERT_EQ(ip1, ipv6_address::parse("2001:db8::2"));
+    ASSERT_EQ(ip2, ipv6_address::parse("2001:db8::1"));
+}
