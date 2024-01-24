@@ -11,7 +11,8 @@ public:
         : 
         _scope_id(scope_id),
         _scope_id_value(0),
-        _parse_result(parse_result::UNDEFINED) {
+        _has_value(false) {
+        parse_value();
     }
 
     IPADDRESS_NODISCARD std::string get_string() const {
@@ -19,7 +20,6 @@ public:
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR uint32_t get_uint32() const IPADDRESS_NOEXCEPT {
-        parse_value();
         return _scope_id_value;
     }
 
@@ -28,8 +28,7 @@ public:
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool has_uint32() const IPADDRESS_NOEXCEPT {
-        parse_value();
-        return _parse_result == parse_result::HAS_VALUE;
+        return _has_value;
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR explicit operator bool() const IPADDRESS_NOEXCEPT {
@@ -75,35 +74,25 @@ public:
 #endif
 
 private:
-    IPADDRESS_CONSTEXPR void parse_value() const IPADDRESS_NOEXCEPT {
-        if (_parse_result == parse_result::UNDEFINED) {
-            if (_scope_id.empty()) {
-                _parse_result = parse_result::NO_VALUE;
-            } else {
-                _parse_result = parse_result::HAS_VALUE;
-                uint32_t value = 0;
-                for (auto c : _scope_id) {
-                    if (c >= '0' && c <= '9') {
-                        value = value * 10 + (c - '0');
-                    } else {
-                        _parse_result = parse_result::NO_VALUE;
-                        break;
-                    }
+    IPADDRESS_CONSTEXPR void parse_value() IPADDRESS_NOEXCEPT {
+        if (!_scope_id.empty()) {
+            _has_value = true;
+            uint32_t value = 0;
+            for (auto c : _scope_id) {
+                if (c >= '0' && c <= '9') {
+                    value = value * 10 + (c - '0');
+                } else {
+                    _has_value = false;
+                    break;
                 }
-                _scope_id_value = _parse_result == parse_result::HAS_VALUE ? value : 0;
             }
+            _scope_id_value = _has_value ? value : 0;
         }
     }
 
-    enum class parse_result {
-        UNDEFINED = 0,
-        NO_VALUE,
-        HAS_VALUE,
-    };
-
     fixed_string<16> _scope_id;
-    mutable uint32_t _scope_id_value;
-    mutable parse_result _parse_result;
+    uint32_t _scope_id_value;
+    bool _has_value;
 };
 
 class base_v6 {
@@ -317,9 +306,9 @@ private:
 
     template <typename Iter>
     static IPADDRESS_CONSTEXPR std::array<fixed_string<4>, max_parts> split_parts(Iter begin, Iter end, int& parts_count, error_code& error) IPADDRESS_NOEXCEPT {
-        std::array<char[5], max_parts> parts = {};
+        char parts[max_parts][5] = {};
         char last_part[16] = {};
-
+        
         parts_count = 0;
         int symbol = 0;
         char prev_c = '\0';

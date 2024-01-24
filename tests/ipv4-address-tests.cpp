@@ -36,9 +36,6 @@ TEST(ipv4_address, CompileTime)
     ASSERT_EQ(ip2_byte_2, 0x00);
     ASSERT_EQ(ip2_byte_3, 0x01);
 
-    auto ip3 = ipv4_address::from_uint32<0x7F000001>();
-    ASSERT_EQ(ip3.to_uint32(), 0x7F000001);
-
     constexpr auto ip4 = ipv4_address::from_uint32<0x7F000002>();
     constexpr auto ip4_uint32 = ip4.to_uint32();
     ASSERT_EQ(ip4_uint32, 0x7F000002);
@@ -57,6 +54,9 @@ TEST(ipv4_address, CompileTime)
     ASSERT_FALSE(b5);
     ASSERT_TRUE(b6);
 #endif
+    auto ip3 = ipv4_address::from_uint32<0x7F000001>();
+    ASSERT_EQ(ip3.to_uint32(), 0x7F000001);
+
     constexpr auto ip5 = ipv4_address::parse("127.0.0.1");
     constexpr auto ip5_uint32 = ip5.to_uint32();
     constexpr auto ip5_bytes = ip5.bytes();

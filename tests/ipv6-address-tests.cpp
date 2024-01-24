@@ -10,6 +10,151 @@
 using namespace testing;
 using namespace ipaddress;
 
+template <size_t N>
+static constexpr error_code get_parse_error(const char(&address)[N]) noexcept {
+    error_code err = error_code::NO_ERROR;
+    ipv6_address::parse(address, err);
+    return err;
+}
+
+template <size_t N1, size_t N2>
+static constexpr ipv6_address set_scope_id(const char(&address)[N1], const char(&scope)[N2]) noexcept {
+    auto ip = ipv6_address::parse(address);
+    ip.set_scope_id(scope);
+    return ip;
+}
+
+TEST(ipv6_address, CompileTime)
+{
+    constexpr ipv6_address::base_type ip_bytes { 0x20, 0x01, 0x0D, 0xB8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 };
+
+#ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
+    auto ip1 = ipv6_address::parse<"2001:db8::1">();
+    ASSERT_EQ(ip1.bytes(), ip_bytes);
+    
+    constexpr auto ip2 = ipv6_address::parse<"2001:db8::1%1">();
+    constexpr auto ip2_bytes = ip2.bytes();
+    constexpr auto ip2_byte_0 = ip2_bytes[0];
+    constexpr auto ip2_byte_1 = ip2_bytes.at(1);
+    constexpr auto ip2_byte_2 = *(ip2_bytes.begin() + 2);
+    constexpr auto ip2_byte_3 = ip2_bytes.back();
+    ASSERT_EQ(ip2_byte_0, 0x20);
+    ASSERT_EQ(ip2_byte_1, 0x01);
+    ASSERT_EQ(ip2_byte_2, 0x0D);
+    ASSERT_EQ(ip2_byte_3, 0x01);
+
+    constexpr auto ip3 = ip2;
+
+    constexpr auto ip4 = ipv6_address::parse<"2001:db8::1%2">();
+
+    constexpr auto b1 = ip2 < ip4;
+    constexpr auto b2 = ip2 > ip4;
+    constexpr auto b3 = ip2 <= ip4;
+    constexpr auto b4 = ip2 >= ip4;
+    constexpr auto b5 = ip2 == ip4;
+    constexpr auto b6 = ip2 != ip4;
+    
+    ASSERT_TRUE(b1);
+    ASSERT_FALSE(b2);
+    ASSERT_TRUE(b3);
+    ASSERT_FALSE(b4);
+    ASSERT_FALSE(b5);
+    ASSERT_TRUE(b6);
+#endif
+    constexpr auto ip5 = ipv6_address::parse("2001:db8::1");
+    constexpr auto ip5_bytes = ip5.bytes();
+    constexpr auto ip5_byte_0 = ip5_bytes[0];
+    constexpr auto ip5_byte_1 = ip5_bytes.at(1);
+    constexpr auto ip5_byte_2 = *(ip5_bytes.begin() + 2);
+    constexpr auto ip5_byte_3 = ip5_bytes.back();
+    ASSERT_EQ(ip5_byte_0, 0x20);
+    ASSERT_EQ(ip5_byte_1, 0x01);
+    ASSERT_EQ(ip5_byte_2, 0x0D);
+    ASSERT_EQ(ip5_byte_3, 0x01);
+
+    constexpr auto err = get_parse_error("2001:db8::11111");
+    ASSERT_EQ(err, error_code::PART_IS_MORE_4_CHARS);
+
+    constexpr auto ip6 = ipv6_address::parse("2001:db8::1%test");
+
+    constexpr auto ip7 = ipv6_address::from_bytes({ 0x20, 0x01, 0x0D, 0xB8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 });
+    constexpr auto ip7_bytes = ip7.bytes();
+    ASSERT_EQ(ip7_bytes, ip_bytes);
+
+    constexpr uint8_t bytes[] = { 0x20, 0x01, 0x0D, 0xB8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 };
+    constexpr auto ip8 = ipv6_address::from_bytes(bytes, 16);
+    constexpr auto ip8_bytes = ip8.bytes();
+    ASSERT_EQ(ip8_bytes, ip_bytes);
+
+    constexpr auto b7 = ip5 < ip6;
+    constexpr auto b8 = ip5 > ip6;
+    constexpr auto b9 = ip5 <= ip6;
+    constexpr auto b10 = ip5 >= ip6;
+    constexpr auto b11 = ip5 == ip6;
+    constexpr auto b12 = ip5 != ip6;
+    
+    ASSERT_TRUE(b7);
+    ASSERT_FALSE(b8);
+    ASSERT_TRUE(b9);
+    ASSERT_FALSE(b10);
+    ASSERT_FALSE(b11);
+    ASSERT_TRUE(b12);
+
+    constexpr auto ip9 = ipv6_address::parse("2001:db8::1%123");
+
+    constexpr auto ip5_scope_id = ip5.get_scope_id();
+    constexpr auto ip6_scope_id = ip6.get_scope_id();
+    constexpr auto ip9_scope_id = ip9.get_scope_id();
+    constexpr auto ip5_has_scope_id = (bool) ip5_scope_id;
+    constexpr auto ip6_has_scope_id = (bool) ip6_scope_id;
+    constexpr auto ip9_has_scope_id = (bool) ip9_scope_id;
+    constexpr auto ip5_has_string = ip5_scope_id.has_string();
+    constexpr auto ip6_has_string = ip6_scope_id.has_string();
+    constexpr auto ip9_has_string = ip9_scope_id.has_string();
+    constexpr auto ip5_has_uint32 = ip5_scope_id.has_uint32();
+    constexpr auto ip6_has_uint32 = ip6_scope_id.has_uint32();
+    constexpr auto ip9_has_uint32 = ip9_scope_id.has_uint32();
+    constexpr auto ip5_get_uint32 = ip5_scope_id.get_uint32();
+    constexpr auto ip6_get_uint32 = ip6_scope_id.get_uint32();
+    constexpr auto ip9_get_uint32 = ip9_scope_id.get_uint32();
+    constexpr auto ip5_uint32 = (uint32_t) ip5_scope_id;
+    constexpr auto ip6_uint32 = (uint32_t) ip6_scope_id;
+    constexpr auto ip9_uint32 = (uint32_t) ip9_scope_id;
+    constexpr auto eq = ip6_scope_id == ip9_scope_id;
+    constexpr auto ne = ip6_scope_id != ip9_scope_id;
+    constexpr auto less = ip6_scope_id < ip9_scope_id;
+    constexpr auto great = ip6_scope_id > ip9_scope_id;
+    constexpr auto less_eq = ip6_scope_id <= ip9_scope_id;
+    constexpr auto great_eq = ip6_scope_id >= ip9_scope_id;
+
+    ASSERT_FALSE(ip5_has_scope_id);
+    ASSERT_TRUE(ip6_has_scope_id);
+    ASSERT_TRUE(ip9_has_scope_id);
+    ASSERT_FALSE(ip5_has_string);
+    ASSERT_TRUE(ip6_has_string);
+    ASSERT_TRUE(ip9_has_string);
+    ASSERT_FALSE(ip5_has_uint32);
+    ASSERT_FALSE(ip6_has_uint32);
+    ASSERT_TRUE(ip9_has_uint32);
+    ASSERT_EQ(ip5_get_uint32, 0);
+    ASSERT_EQ(ip6_get_uint32, 0);
+    ASSERT_EQ(ip9_get_uint32, 123);
+    ASSERT_EQ(ip5_uint32, 0);
+    ASSERT_EQ(ip6_uint32, 0);
+    ASSERT_EQ(ip9_uint32, 123);
+    ASSERT_FALSE(eq);
+    ASSERT_TRUE(ne);
+    ASSERT_FALSE(less);
+    ASSERT_TRUE(great);
+    ASSERT_FALSE(less_eq);
+    ASSERT_TRUE(great_eq);
+
+    constexpr auto ip10 = set_scope_id("2001:db8::1", "5");
+    constexpr auto ip10_scope = ip10.get_scope_id().get_uint32();
+    
+    ASSERT_EQ(ip10_scope, 5);
+}
+
 TEST(ipv6_address, DefaultCtor) {
     ipv6_address::base_type expected_empty {
          0, 0, 0, 0, 
