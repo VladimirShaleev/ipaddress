@@ -8,7 +8,9 @@
 #include <tuple>
 #include <cassert>
 #include <sstream>
+#include <numeric>
 #include <iterator>
+#include <algorithm>
 #include <stdexcept>
 
 #ifndef IPADDRESS_NAMESPACE

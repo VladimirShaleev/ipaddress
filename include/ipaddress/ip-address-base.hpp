@@ -112,6 +112,10 @@ public:
         return seed;
     }
 
+    IPADDRESS_NODISCARD std::string reverse_pointer() const {
+       return Base::reverse_pointer(_bytes);
+    }
+
     IPADDRESS_NODISCARD explicit operator std::string() const {
         return to_string();
     }

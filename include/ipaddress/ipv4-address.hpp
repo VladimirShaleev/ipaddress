@@ -119,6 +119,10 @@ protected:
         return res.str();
     }
 
+    std::string reverse_pointer(const base_type& bytes) const {
+        return from_uint32(swap_bytes(to_uint32())).to_string() + ".in-addr.arpa";
+    }
+
     IPADDRESS_CONSTEXPR size_t hash_scope_id() const IPADDRESS_NOEXCEPT {
         return 0;
     }

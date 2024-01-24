@@ -647,3 +647,11 @@ TEST(ipv6_address, Swap) {
     ASSERT_EQ(ip1, ipv6_address::parse("2001:db8::2"));
     ASSERT_EQ(ip2, ipv6_address::parse("2001:db8::1"));
 }
+
+TEST(ipv6_address, reverse_pointer) {
+    auto ip = ipv6_address::parse("2001:db8::1");
+    
+    const auto actual = ip.reverse_pointer();
+
+    ASSERT_EQ(actual, "1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.b.d.0.1.0.0.2.ip6.arpa");
+}

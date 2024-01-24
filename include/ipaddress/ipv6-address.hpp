@@ -265,6 +265,15 @@ protected:
         return res.str();
     }
 
+    std::string reverse_pointer(const base_type& bytes) const {
+        auto ip = ip_to_string(bytes, format::full);
+        ip.erase(std::remove(ip.begin(), ip.end(), ':'), ip.end());
+        auto res = std::accumulate(std::next(ip.rbegin()), ip.rend(), std::string{ip.back()}, [](auto a, auto b) {
+            return std::move(a) + '.' + b;
+        });
+        return res + ".ip6.arpa";
+    }
+
     IPADDRESS_CONSTEXPR size_t hash_scope_id() const IPADDRESS_NOEXCEPT {
         return _scope_id.hash();
     }

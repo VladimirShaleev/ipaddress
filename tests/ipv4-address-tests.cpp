@@ -157,19 +157,19 @@ INSTANTIATE_TEST_SUITE_P(
             std::make_tuple(0xC0A80001, "192.168.0.1")
     ));
 
-using FromBytesParams = TestWithParam<ipv4_address::base_type>;
-TEST_P(FromBytesParams, from_bytes) {
+using FromBytesIpv4Params = TestWithParam<ipv4_address::base_type>;
+TEST_P(FromBytesIpv4Params, from_bytes) {
     ASSERT_EQ(ipv4_address::from_bytes(GetParam()).bytes(), GetParam());
 }
 INSTANTIATE_TEST_SUITE_P(
-    ipv4_address, FromBytesParams,
+    ipv4_address, FromBytesIpv4Params,
     testing::Values(
         ipv4_address::base_type{0x00, 0x08, 0x00, 0x00},
         ipv4_address::base_type{0xC0, 0xA8, 0x00, 0x01}
     ));
 
-using AddressParserParams = TestWithParam<std::tuple<const char*, uint32_t, std::array<uint8_t, 4>>>;
-TEST_P(AddressParserParams, parse) {
+using AddressParserIpv4Params = TestWithParam<std::tuple<const char*, uint32_t, std::array<uint8_t, 4>>>;
+TEST_P(AddressParserIpv4Params, parse) {
     auto excepted_uint32 = get<1>(GetParam());
     auto excepted_bytes = get<2>(GetParam());
 
@@ -194,7 +194,7 @@ TEST_P(AddressParserParams, parse) {
     ASSERT_EQ(s2, std::string("parser"));
 }
 INSTANTIATE_TEST_SUITE_P(
-    ipv4_address, AddressParserParams,
+    ipv4_address, AddressParserIpv4Params,
     testing::Values(
         std::make_tuple("0.0.0.0",     0x00000000, std::array<uint8_t, 4>{ 0x00, 0x00, 0x00, 0x00 }),
         std::make_tuple("100.64.0.0",  0x64400000, std::array<uint8_t, 4>{ 0x64, 0x40, 0x00, 0x00 }),
@@ -202,8 +202,8 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("192.168.1.1", 0xC0A80101, std::array<uint8_t, 4>{ 0xC0, 0xA8, 0x01, 0x01 })
     ));
 
-using InvalidAddressParserParams = TestWithParam<std::tuple<const char*, error_code, const char*>>;
-TEST_P(InvalidAddressParserParams, parse) {
+using InvalidAddressIpv4Params = TestWithParam<std::tuple<const char*, error_code, const char*>>;
+TEST_P(InvalidAddressIpv4Params, parse) {
     auto expected_address = get<0>(GetParam());
     auto expected_error_code = get<1>(GetParam());
 
@@ -225,7 +225,7 @@ TEST_P(InvalidAddressParserParams, parse) {
 #endif
 }
 INSTANTIATE_TEST_SUITE_P(
-    ipv4_address, InvalidAddressParserParams,
+    ipv4_address, InvalidAddressIpv4Params,
     testing::Values(
         std::make_tuple("", error_code::EMPTY_ADDRESS, "address cannot be empty"),
 
@@ -312,8 +312,8 @@ TEST(ipv4_address, Comparison) {
     ASSERT_FALSE(ip3 != ip2);
 }
 
-using ToStringParams = TestWithParam<const char*>;
-TEST_P(ToStringParams, to_string) {
+using ToStringIpv4Params = TestWithParam<const char*>;
+TEST_P(ToStringIpv4Params, to_string) {
     const auto expected = GetParam();
 
     const auto actual = ipv4_address::parse(expected);
@@ -326,7 +326,7 @@ TEST_P(ToStringParams, to_string) {
     ASSERT_EQ(ss.str(), std::string(expected));
 }
 INSTANTIATE_TEST_SUITE_P(
-    ipv4_address, ToStringParams,
+    ipv4_address, ToStringIpv4Params,
     testing::Values(
         "0.0.0.0",
         "127.0.0.1",
@@ -392,4 +392,12 @@ TEST(ipv4_address, Swap) {
 
     ASSERT_EQ(ip1, ipv4_address::parse("127.0.0.2"));
     ASSERT_EQ(ip2, ipv4_address::parse("127.0.0.1"));
+}
+
+TEST(ipv4_address, reverse_pointer) {
+    auto ip = ipv4_address::parse("127.0.0.1");
+    
+    const auto actual = ip.reverse_pointer();
+
+    ASSERT_EQ(actual, "1.0.0.127.in-addr.arpa");
 }
