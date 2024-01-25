@@ -8,6 +8,11 @@ namespace IPADDRESS_NAMESPACE {
 enum class error_code {
     NO_ERROR = 0,
     EMPTY_ADDRESS,
+    EMPTY_NETMASK,
+    INVALID_NETMASK,
+    NETMASK_PATTERN_MIXES_ZEROES_AND_ONES,
+    HAS_HOST_BITS_SET,
+    ONLY_ONE_SLASH_PERMITTED,
 
     // ipv4 errors
     EMPTY_OCTET,
@@ -88,6 +93,16 @@ public:
     switch (code) {
         case error_code::EMPTY_ADDRESS:
             throw parse_error("address cannot be empty");
+        case error_code::EMPTY_NETMASK:
+            throw parse_error("empty mask in address", str);
+        case error_code::INVALID_NETMASK:
+            throw parse_error("is not a valid netmask in address", str);
+        case error_code::NETMASK_PATTERN_MIXES_ZEROES_AND_ONES:
+            throw parse_error("netmask pattern mixes zeroes & ones in address", str);
+        case error_code::HAS_HOST_BITS_SET:
+            throw parse_error("has host bits set in address", str);
+        case error_code::ONLY_ONE_SLASH_PERMITTED:
+            throw parse_error("only one '/' permitted in address", str);
         case error_code::EMPTY_OCTET:
             throw parse_error("empty octet", index, "in address", str);
         case error_code::EXPECTED_4_OCTETS:

@@ -101,6 +101,10 @@ public:
 
     static IPADDRESS_CONSTEXPR size_t size = 16;
 
+    static IPADDRESS_CONSTEXPR size_t max_string_len = 56;
+
+    static IPADDRESS_CONSTEXPR size_t max_prefixlen = size * 8;
+
     using base_type = byte_array_type<size>;
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR scope get_scope_id() const IPADDRESS_NOEXCEPT {

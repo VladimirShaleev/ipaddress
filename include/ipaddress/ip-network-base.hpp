@@ -1,15 +1,77 @@
 #ifndef IPADDRESS_IP_NETWORK_BASE_HPP
 #define IPADDRESS_IP_NETWORK_BASE_HPP
 
+#include "ip-address-base.hpp"
+
 namespace IPADDRESS_NAMESPACE {
 
-template <typename Base, typename IpAddress>
+template <typename Base>
 class ip_network_base : public Base {
 public:
+    IPADDRESS_CONSTEXPR ip_network_base() IPADDRESS_NOEXCEPT 
+        : 
+        _network_address(),
+        _netmask(),
+        _prefixlen(0) {
+    }
+
+    template <size_t N>
+    static IPADDRESS_CONSTEXPR ip_network_base<Base> parse(const char(&address)[N], error_code& code) IPADDRESS_NOEXCEPT {
+        auto str = make_fixed_string(address);
+        parse_address_with_prefix(str, code);
+        return {};
+    }
 
 private:
-    IpAddress _network_address;
-    IpAddress _netmask;
+    template <typename Str>
+    static IPADDRESS_CONSTEXPR ip_network_base<Base> parse_address_with_prefix(const Str& str, error_code& code) IPADDRESS_NOEXCEPT {
+        auto has_slash = false;
+        auto index = str.end();
+        for (auto it = str.begin(); it != str.end(); ++it) {
+            if (*it == '/') {
+                if (has_slash) {
+                    code = error_code::ONLY_ONE_SLASH_PERMITTED;
+                    return ip_network_base<Base>();
+                }
+                index = ++it;
+                has_slash = true;
+            }
+        }
+        auto prefix = Base::max_prefixlen;
+        if (has_slash && index == str.end()) {
+            code = error_code::EMPTY_NETMASK;
+            return ip_network_base<Base>();
+        }
+
+        int aa = 0;
+        auto netmask_result = Base::parse_netmask(index, str.end(), code, aa);
+        
+        if (code != error_code::NO_ERROR) {
+            return ip_network_base<Base>();
+        }
+
+        ip_network_base<Base> result;
+        result._network_address = ipv4_address(ipv4_address::ip_from_string(str.begin(), has_slash ? --index : str.end(), code, aa));
+        result._netmask = netmask_result.first;
+        result._prefixlen = netmask_result.second;
+
+        auto pack_address = result._network_address.to_uint32();
+        auto pack_netmask = result._netmask.to_uint32();
+        if ((pack_address & pack_netmask) != pack_address) {
+            bool strict = true;
+            if (strict) {
+                code = error_code::HAS_HOST_BITS_SET;
+                return ip_network_base<Base>();
+            } else {
+                result._network_address = ipv4_address::from_uint32(pack_address & pack_netmask);
+            }
+        }
+        return result;
+    }
+
+    ip_address_base<Base> _network_address;
+    ip_address_base<Base> _netmask;
+    size_t _prefixlen;
 };
 
 }

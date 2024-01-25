@@ -10,7 +10,7 @@ class network_v4 {
 public:
 };
 
-using ipv4_network = ip_network_base<network_v4, ipv4_address>;
+using ipv4_network = ip_network_base<base_v4>;
 
 }
 

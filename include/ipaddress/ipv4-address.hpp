@@ -11,6 +11,12 @@ public:
 
     static IPADDRESS_CONSTEXPR size_t size = 4;
 
+    static IPADDRESS_CONSTEXPR uint32_t all_ones = std::numeric_limits<uint32_t>::max();
+
+    static IPADDRESS_CONSTEXPR size_t max_string_len = 15;
+
+    static IPADDRESS_CONSTEXPR size_t max_prefixlen = size * 8;
+
     using base_type = byte_array_type<size>;
 
     template <uint32_t Ip>
@@ -108,6 +114,77 @@ protected:
         }
         octets[index] = uint8_t(octet & 0xFF);
         return ip_address_base<base_v4>(octets);
+    }
+
+    static IPADDRESS_CONSTEXPR ip_address_base<base_v4> ip_from_prefix(size_t prefixlen) {
+        return ip_address_base<base_v4>::from_uint32(all_ones & (all_ones >> prefixlen));
+    }
+
+    template <typename Iter>
+    static IPADDRESS_CONSTEXPR std::pair<ip_address_base<base_v4>, size_t> parse_netmask(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT {
+        size_t prefixlen = 0;
+        auto is_value = true;
+        for (auto it = begin; it != end; ++it) {
+            if (*it >= '0' && *it <= '9') {
+                prefixlen = prefixlen * 10 + (*it - '0');
+            } else {
+                is_value = false;
+                break;
+            }
+        }
+        if (is_value) {
+            if (prefixlen > max_prefixlen) {
+                code = error_code::INVALID_NETMASK;
+                return std::make_pair(ip_address_base<base_v4>(), 0);
+            }
+        } else {
+            auto ip = ip_from_string(begin, end, code, index).to_uint32();
+            if (code != error_code::NO_ERROR) {
+                code = error_code::INVALID_NETMASK;
+                return std::make_pair(ip_address_base<base_v4>(), 0);
+            }
+
+            prefixlen = prefix_from_ip_uint32(ip, code);
+            if (code != error_code::NO_ERROR) {
+                ip = ip ^ all_ones;
+                code = error_code::NO_ERROR;
+                prefixlen = prefix_from_ip_uint32(ip, code);
+                if (code != error_code::NO_ERROR) {
+                    return std::make_pair(ip_address_base<base_v4>(), 0);
+                }
+            }
+        }
+        return std::make_pair(ip_from_prefix(prefixlen), prefixlen);
+    }
+
+    static IPADDRESS_CONSTEXPR size_t count_righthand_zero_bits(uint32_t number, uint32_t bits) IPADDRESS_NOEXCEPT {
+        if (number == 0) {
+            return bits;
+        } else {
+            number = (~number & (number - 1));
+            auto count = 0;
+            while (number != 0) {
+                count += number & 0x1;
+                number >>= 1;
+            }
+            if (bits < count) {
+                return bits;
+            } else {
+                return count;
+            }
+        }
+    }
+
+    static IPADDRESS_CONSTEXPR size_t prefix_from_ip_uint32(uint32_t ip, error_code& code) IPADDRESS_NOEXCEPT {
+        auto trailing_zeroes = count_righthand_zero_bits(ip, max_prefixlen);
+        auto prefixlen = max_prefixlen - trailing_zeroes;
+        auto leading_ones = ip >> trailing_zeroes;
+        auto all_ones = (1 << prefixlen) - 1;
+        if (leading_ones != all_ones) {
+            code = error_code::NETMASK_PATTERN_MIXES_ZEROES_AND_ONES;
+            return 0;
+        }
+        return prefixlen;
     }
     
     static std::string ip_to_string(const base_type& bytes, format fmt) {

@@ -10,7 +10,7 @@ class network_v6 {
 public:
 };
 
-using ipv6_network = ip_network_base<network_v6, ipv6_address>;
+using ipv6_network = ip_network_base<base_v6>;
 
 }
 
