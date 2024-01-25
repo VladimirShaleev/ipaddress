@@ -580,6 +580,22 @@ private:
 
 using ipv6_address = ip_address_base<base_v6>;
 
+#ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
+template <fixed_string FixedString>
+inline consteval ipv6_address operator""_ipv6() IPADDRESS_NOEXCEPT {
+    return ipv6_address::parse<FixedString>();
+}
+#endif
+
+inline IPADDRESS_CONSTEXPR ipv6_address operator""_ipv6(const char* address, std::size_t size) IPADDRESS_NOEXCEPT {
+    assert(size <= 56 && "litteral string is too long");
+    char str[57] = {};
+    for (size_t i = 0; i < size; ++i) {
+        str[i] = address[i];
+    }
+    return ipv6_address::parse(str);
+}
+
 }
 
 #endif

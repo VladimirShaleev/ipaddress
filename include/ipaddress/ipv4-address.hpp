@@ -134,6 +134,22 @@ protected:
 
 using ipv4_address = ip_address_base<base_v4>;
 
+#ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
+template <fixed_string FixedString>
+inline consteval ipv4_address operator""_ipv4() IPADDRESS_NOEXCEPT {
+    return ipv4_address::parse<FixedString>();
+}
+#endif
+
+inline IPADDRESS_CONSTEXPR ipv4_address operator""_ipv4(const char* address, std::size_t size) IPADDRESS_NOEXCEPT {
+    assert(size <= 15 && "litteral string is too long");
+    char str[16] = {};
+    for (size_t i = 0; i < size; ++i) {
+        str[i] = address[i];
+    }
+    return ipv4_address::parse(str);
+}
+
 }
 
 #endif

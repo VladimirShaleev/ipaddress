@@ -99,6 +99,12 @@ TEST(ipv4_address, CompileTime)
     ASSERT_FALSE(b10);
     ASSERT_FALSE(b11);
     ASSERT_TRUE(b12);
+
+    constexpr auto ip9 = "127.0.0.1"_ipv4;
+    constexpr auto ip10 = "127.128.128.255"_ipv4;
+    
+    ASSERT_EQ(ip9, ipv4_address::parse("127.0.0.1"));
+    ASSERT_EQ(ip10, ipv4_address::parse("127.128.128.255"));
 }
 
 TEST(ipv4_address, DefaultCtor) {
@@ -400,4 +406,12 @@ TEST(ipv4_address, reverse_pointer) {
     const auto actual = ip.reverse_pointer();
 
     ASSERT_EQ(actual, "1.0.0.127.in-addr.arpa");
+}
+
+TEST(ipv4_address, literals) {
+    auto ip1 = "127.0.0.1"_ipv4;
+    auto ip2 = "127.128.128.255"_ipv4;
+    
+    ASSERT_EQ(ip1, ipv4_address::parse("127.0.0.1"));
+    ASSERT_EQ(ip2, ipv4_address::parse("127.128.128.255"));
 }
