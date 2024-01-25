@@ -151,7 +151,6 @@ TEST(ipv6_address, CompileTime)
 
     constexpr auto ip10 = set_scope_id("2001:db8::1", "5");
     constexpr auto ip10_scope = ip10.get_scope_id().get_uint32();
-    
     ASSERT_EQ(ip10_scope, 5);
 
     constexpr auto ip11 = "2001:db8::1"_ipv6;
