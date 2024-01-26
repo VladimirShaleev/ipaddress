@@ -88,6 +88,6 @@ IPADDRESS_CONSTEXPR uint32_t swap_bytes(uint32_t value) IPADDRESS_NOEXCEPT {
     return value;
 }
 
-}
+} // IPADDRESS_NAMESPACE
 
-#endif
+#endif // IPADDRESS_ENDIAN_HPP

@@ -140,7 +140,7 @@ struct fixed_string {
         }
         return value;
     }
-};
+}; // fixed_string<N>
 
 template <>
 struct fixed_string<0> {
@@ -228,7 +228,7 @@ struct fixed_string<0> {
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR int compare(const fixed_string<N2>& rhs) const IPADDRESS_NOEXCEPT {
         return rhs.empty() ? 0 : -1;
     }
-};
+}; // fixed_string<0>
 
 template <size_t N1, size_t N2>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator==(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
@@ -241,37 +241,41 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator!=(const fixed_string<N1>& 
 }
 
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
-template <size_t N1, size_t N2>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR std::strong_ordering operator<=>(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
-    if (const auto result = lhs.compare(rhs); result == 0) {
-        return std::strong_ordering::equivalent;
-    } else if (result < 0) {
-        return std::strong_ordering::less;
-    } else {
-        return std::strong_ordering::greater;
+
+    template <size_t N1, size_t N2>
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR std::strong_ordering operator<=>(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
+        if (const auto result = lhs.compare(rhs); result == 0) {
+            return std::strong_ordering::equivalent;
+        } else if (result < 0) {
+            return std::strong_ordering::less;
+        } else {
+            return std::strong_ordering::greater;
+        }
     }
-}
-#else
-template <size_t N1, size_t N2>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
-    return lhs.compare(rhs) < 0;
-}
+    
+#else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
-template <size_t N1, size_t N2>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
-    return rhs < lhs;
-}
+    template <size_t N1, size_t N2>
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
+        return lhs.compare(rhs) < 0;
+    }
 
-template <size_t N1, size_t N2>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<=(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
-    return !(rhs < lhs);
-}
+    template <size_t N1, size_t N2>
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
+        return rhs < lhs;
+    }
 
-template <size_t N1, size_t N2>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>=(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
-    return !(lhs < rhs);
-}
-#endif
+    template <size_t N1, size_t N2>
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<=(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
+        return !(rhs < lhs);
+    }
+
+    template <size_t N1, size_t N2>
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>=(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
+        return !(lhs < rhs);
+    }
+
+#endif // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
 template <size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR fixed_string<N - 1> make_fixed_string(const char(&data)[N]) IPADDRESS_NOEXCEPT {
@@ -284,6 +288,6 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR fixed_string<N - 1> make_fixed_string(co
     fixed_string() -> fixed_string<0>;
 #endif
 
-}
+} // IPADDRESS_NAMESPACE
 
-#endif
+#endif // IPADDRESS_FIXED_STRING_HPP

@@ -142,6 +142,6 @@ public:
     }
 }
 
-}
+} // IPADDRESS_NAMESPACE
 
-#endif
+#endif // IPADDRESS_ERRORS_HPP

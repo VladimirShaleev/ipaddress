@@ -128,7 +128,7 @@ struct byte_array {
             other._data[i] = tmp;
         }
     }
-};
+}; // byte_array<N>
 
 template <>
 class byte_array<0> {
@@ -233,7 +233,7 @@ public:
 
     IPADDRESS_CONSTEXPR void swap(byte_array& other) IPADDRESS_NOEXCEPT {
     }
-};
+}; // byte_array<0>
 
 template <std::size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator==(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
@@ -251,41 +251,45 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator!=(const byte_array<N>& lhs
 }
 
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
-template <std::size_t N>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR std::strong_ordering operator<=>(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
-    for (std::size_t i = 0; i < N; ++i) {
-        if (const auto result = lhs[i] <=> rhs[i]; result != std::strong_ordering::equivalent) {
-            return result;
+
+    template <std::size_t N>
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR std::strong_ordering operator<=>(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
+        for (std::size_t i = 0; i < N; ++i) {
+            if (const auto result = lhs[i] <=> rhs[i]; result != std::strong_ordering::equivalent) {
+                return result;
+            }
         }
+        return std::strong_ordering::equivalent;
     }
-    return std::strong_ordering::equivalent;
-}
-#else
-template <std::size_t N>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
-    for (std::size_t i = 0; i < N; ++i) {
-        if (lhs._data[i] < rhs._data[i]) {
-            return true;
+
+#else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
+
+    template <std::size_t N>
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
+        for (std::size_t i = 0; i < N; ++i) {
+            if (lhs._data[i] < rhs._data[i]) {
+                return true;
+            }
         }
+        return false;
     }
-    return false;
-}
 
-template <std::size_t N>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
-    return rhs < lhs;
-}
+    template <std::size_t N>
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
+        return rhs < lhs;
+    }
 
-template <std::size_t N>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<=(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
-    return !(rhs < lhs);
-}
+    template <std::size_t N>
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<=(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
+        return !(rhs < lhs);
+    }
 
-template <std::size_t N>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>=(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
-    return !(lhs < rhs);
-}
-#endif
+    template <std::size_t N>
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>=(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
+        return !(lhs < rhs);
+    }
+
+#endif // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
 template <std::size_t N>
 using byte_array_type = 
@@ -295,6 +299,6 @@ using byte_array_type =
     byte_array<N>;
 #endif
 
-}
+} // IPADDRESS_NAMESPACE
 
-#endif
+#endif // IPADDRESS_BYTE_ARRAY_HPP
