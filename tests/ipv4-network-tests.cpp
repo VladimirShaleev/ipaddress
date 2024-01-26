@@ -12,5 +12,5 @@ using namespace ipaddress;
 
 TEST(ipv4_network, Test) {
     error_code err = error_code::NO_ERROR;
-    auto result = ipv4_network::parse("192.0.2.0/255.255.255.0", err);   
+    auto result = ipv4_network::parse("192.0.2.0/255.255.255.0", err);
 }

@@ -17,16 +17,73 @@ public:
         _prefixlen(0) {
     }
 
+#ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
+    template <fixed_string FixedString, bool Strict = true>
+    IPADDRESS_NODISCARD static consteval ip_network_base parse() IPADDRESS_NOEXCEPT {
+        constexpr auto str = FixedString;
+        auto code = error_code::NO_ERROR;
+        auto index = 0;
+        auto result = parse_address_with_prefix(str, Strict, code, index);
+        if (code != error_code::NO_ERROR) {
+            raise_error(code, index, str.data(), str.size());
+        }
+        return result;
+    }
+#endif // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
+
+#if IPADDRESS_CPP_VERSION >= 17
+
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR ip_network_base parse(std::string_view address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return parse_address_with_prefix(address, strict);
+    }
+
+    static IPADDRESS_CONSTEXPR ip_network_base parse(std::string_view address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
+        auto index = 0;
+        return parse_address_with_prefix(address, strict, code, index);
+    }
+
+#else // IPADDRESS_CPP_VERSION < 17
+
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static ip_network_base parse(const std::string& address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return parse_address_with_prefix(address, strict);
+    }
+
+    static ip_network_base parse(const std::string& address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
+        auto index = 0;
+        return parse_address_with_prefix(address, strict, code, index);
+    }
+
+#endif // IPADDRESS_CPP_VERSION < 17
+
     template <size_t N>
-    static IPADDRESS_CONSTEXPR ip_network_base<Base> parse(const char(&address)[N], error_code& code) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR ip_network_base parse(const char(&address)[N], bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        auto str = make_fixed_string(address);
+        return parse_address_with_prefix(str, strict);
+    }
+
+    template <size_t N>
+    static IPADDRESS_CONSTEXPR ip_network_base parse(const char(&address)[N], error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
         auto str = make_fixed_string(address);
         auto index = 0;
-        return parse_address_with_prefix(str, code, index);
+        return parse_address_with_prefix(str, strict, code, index);
     }
 
 private:
     template <typename Str>
-    static IPADDRESS_CONSTEXPR ip_network_base<Base> parse_address_with_prefix(const Str& str, error_code& code, int& index) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR ip_network_base parse_address_with_prefix(const Str& str, bool strict) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        auto code = error_code::NO_ERROR;
+        auto index = 0;
+        auto result = parse_address_with_prefix(str, strict, code, index);
+        if (code != error_code::NO_ERROR) {
+        #ifndef IPADDRESS_NO_EXCEPTIONS
+            raise_error(code, index, str.data(), str.size());
+        #endif
+        }
+        return result;
+    }
+
+    template <typename Str>
+    static IPADDRESS_CONSTEXPR ip_network_base parse_address_with_prefix(const Str& str, bool strict, error_code& code, int& index) IPADDRESS_NOEXCEPT {
         code = error_code::NO_ERROR;
         
         auto has_slash = false;
@@ -68,7 +125,7 @@ private:
             return ip_network_base<Base>();
         }
 
-        result._address = Base::template strict_netmask<ip_address_type>(result._address, result._netmask, true, code);
+        result._address = Base::template strict_netmask<ip_address_type>(result._address, result._netmask, strict, code);
 
         if (code != error_code::NO_ERROR) {
             return ip_network_base<Base>();

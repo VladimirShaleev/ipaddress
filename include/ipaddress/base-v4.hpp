@@ -165,7 +165,6 @@ protected:
         auto pack_address = address.to_uint32();
         auto pack_netmask = netmask.to_uint32();
         if ((pack_address & pack_netmask) != pack_address) {
-            bool strict = true;
             if (strict) {
                 code = error_code::HAS_HOST_BITS_SET;
                 return Ip();
@@ -198,7 +197,7 @@ protected:
         auto trailing_zeroes = count_righthand_zero_bits(ip, max_prefixlen);
         auto prefixlen = max_prefixlen - trailing_zeroes;
         auto leading_ones = ip >> trailing_zeroes;
-        auto all_ones = (1 << prefixlen) - 1;
+        auto all_ones = (1 << (prefixlen - 1) << 1) - 1;
         if (leading_ones != all_ones) {
             code = error_code::NETMASK_PATTERN_MIXES_ZEROES_AND_ONES;
             return 0;

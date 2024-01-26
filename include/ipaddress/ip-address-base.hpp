@@ -55,9 +55,10 @@ public:
         }
         return ip_address_base(result);
     }
-#endif
+#endif // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
 #if IPADDRESS_CPP_VERSION >= 17
+
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR ip_address_base parse(std::string_view address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return parse_string(address);
     }
@@ -65,7 +66,8 @@ public:
     static IPADDRESS_CONSTEXPR ip_address_base parse(std::string_view address, error_code& code) IPADDRESS_NOEXCEPT {
         return parse_string(address, code);
     }
-#else
+#else // IPADDRESS_CPP_VERSION < 17
+
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static ip_address_base parse(const std::string& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return parse_string(address);
     }
@@ -73,7 +75,8 @@ public:
     static ip_address_base parse(const std::string& address, error_code& code) IPADDRESS_NOEXCEPT {
         return parse_string(address, code);
     }
-#endif
+
+#endif // IPADDRESS_CPP_VERSION < 17
 
     template <size_t N>
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR ip_address_base parse(const char(&address)[N]) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
