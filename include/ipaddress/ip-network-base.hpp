@@ -68,17 +68,12 @@ private:
             return ip_network_base<Base>();
         }
 
-        auto pack_address = result._network_address.to_uint32();
-        auto pack_netmask = result._netmask.to_uint32();
-        if ((pack_address & pack_netmask) != pack_address) {
-            bool strict = true;
-            if (strict) {
-                code = error_code::HAS_HOST_BITS_SET;
-                return ip_network_base<Base>();
-            } else {
-                result._network_address = ipv4_address::from_uint32(pack_address & pack_netmask);
-            }
+        result._network_address = Base::template strict_netmask<ip_address_type>(result._network_address, result._netmask, true, code);
+
+        if (code != error_code::NO_ERROR) {
+            return ip_network_base<Base>();
         }
+
         return result;
     }
 

@@ -10,7 +10,7 @@
 using namespace testing;
 using namespace ipaddress;
 
-TEST(ipv4_network, Test) {
+TEST(ipv6_network, Test) {
     error_code err = error_code::NO_ERROR;
-    auto result = ipv4_network::parse("192.0.2.0/255.255.255.0", err);   
+    auto result = ipv6_network::parse("2001:db8::/96", err);   
 }

@@ -150,6 +150,57 @@ protected:
         return res.str();
     }
 
+    static IPADDRESS_CONSTEXPR ip_address_base<Ext> ip_from_prefix(size_t prefixlen) {
+    #ifdef __SIZEOF_INT128__
+        constexpr __uint128_t all_ones = ~0;
+        __uint128_t bits = all_ones ^ (all_ones >> (prefixlen - 1) >> 1);
+        if (is_little_endian()) {
+            base_type bytes = {
+                uint8_t((bits >> 120) & 0xFF),
+                uint8_t((bits >> 112) & 0xFF),
+                uint8_t((bits >> 104) & 0xFF),
+                uint8_t((bits >> 96) & 0xFF),
+                uint8_t((bits >> 88) & 0xFF),
+                uint8_t((bits >> 80) & 0xFF),
+                uint8_t((bits >> 72) & 0xFF),
+                uint8_t((bits >> 64) & 0xFF),
+                uint8_t((bits >> 56) & 0xFF),
+                uint8_t((bits >> 48) & 0xFF),
+                uint8_t((bits >> 40) & 0xFF),
+                uint8_t((bits >> 32) & 0xFF),
+                uint8_t((bits >> 24) & 0xFF),
+                uint8_t((bits >> 16) & 0xFF),
+                uint8_t((bits >> 8) & 0xFF),
+                uint8_t((bits >> 0) & 0xFF)
+            };
+            return ip_address_base<Ext>(bytes);
+        } else {
+            base_type bytes = {
+                uint8_t((bits >> 0) & 0xFF),
+                uint8_t((bits >> 8) & 0xFF),
+                uint8_t((bits >> 16) & 0xFF),
+                uint8_t((bits >> 24) & 0xFF),
+                uint8_t((bits >> 32) & 0xFF),
+                uint8_t((bits >> 40) & 0xFF),
+                uint8_t((bits >> 48) & 0xFF),
+                uint8_t((bits >> 56) & 0xFF),
+                uint8_t((bits >> 64) & 0xFF),
+                uint8_t((bits >> 72) & 0xFF),
+                uint8_t((bits >> 80) & 0xFF),
+                uint8_t((bits >> 88) & 0xFF),
+                uint8_t((bits >> 96) & 0xFF),
+                uint8_t((bits >> 104) & 0xFF),
+                uint8_t((bits >> 112) & 0xFF),
+                uint8_t((bits >> 120) & 0xFF)
+            };
+            return ip_address_base<Ext>(bytes);
+        }
+    #else
+        assert(!"not implemented");
+        return ip_address_base<Ext>();
+    #endif
+    }
+
     std::string ip_reverse_pointer(const base_type& bytes) const {
         auto ip = ip_to_string(bytes, format::full);
         ip.erase(std::remove(ip.begin(), ip.end(), ':'), ip.end());
@@ -157,6 +208,103 @@ protected:
             return std::move(a) + '.' + b;
         });
         return res + ".ip6.arpa";
+    }
+
+    template <typename Iter>
+    static IPADDRESS_CONSTEXPR std::pair<ip_address_base<Ext>, size_t> parse_netmask(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT {
+        size_t prefixlen = 0;
+        for (auto it = begin; it != end; ++it) {
+            if (*it >= '0' && *it <= '9') {
+                prefixlen = prefixlen * 10 + (*it - '0');
+            } else {
+                code = error_code::INVALID_NETMASK;
+                return std::make_pair(ip_address_base<Ext>(), 0);
+            }
+        }
+        
+        if (prefixlen > max_prefixlen) {
+            code = error_code::INVALID_NETMASK;
+            return std::make_pair(ip_address_base<Ext>(), 0);
+        }
+        
+        return std::make_pair(ip_from_prefix(prefixlen), prefixlen);
+    }
+
+    template <typename Ip>
+    static IPADDRESS_CONSTEXPR Ip strict_netmask(const Ip& address, const Ip& netmask, bool strict, error_code& code) IPADDRESS_NOEXCEPT {
+    #ifdef __SIZEOF_INT128__
+        const auto& bytes_address = address.bytes();
+        const auto& bytes_netmask = netmask.bytes();
+        __uint128_t pack_address = 0;
+        __uint128_t pack_netmask = 0;
+
+        if (is_little_endian()) {
+            for (size_t i = 0, s = (size - 1) * 8; i < size; ++i, s -= 8) {
+                pack_address |= (__uint128_t(bytes_address[i]) << s);
+                pack_netmask |= (__uint128_t(bytes_netmask[i]) << s);
+            }
+        }
+        else {
+            for (size_t i = 0, s = 0; i < size; ++i, s += 8) {
+                pack_address |= (__uint128_t(bytes_address[i]) << s);
+                pack_netmask |= (__uint128_t(bytes_netmask[i]) << s);
+            }
+        }
+
+        if ((pack_address & pack_netmask) != pack_address) {
+            if (strict) {
+                code = error_code::HAS_HOST_BITS_SET;
+                return Ip();
+            } else {
+                const auto bits = pack_address & pack_netmask;
+                if (is_little_endian()) {
+                    base_type bytes = {
+                        uint8_t((bits >> 120) & 0xFF),
+                        uint8_t((bits >> 112) & 0xFF),
+                        uint8_t((bits >> 104) & 0xFF),
+                        uint8_t((bits >> 96) & 0xFF),
+                        uint8_t((bits >> 88) & 0xFF),
+                        uint8_t((bits >> 80) & 0xFF),
+                        uint8_t((bits >> 72) & 0xFF),
+                        uint8_t((bits >> 64) & 0xFF),
+                        uint8_t((bits >> 56) & 0xFF),
+                        uint8_t((bits >> 48) & 0xFF),
+                        uint8_t((bits >> 40) & 0xFF),
+                        uint8_t((bits >> 32) & 0xFF),
+                        uint8_t((bits >> 24) & 0xFF),
+                        uint8_t((bits >> 16) & 0xFF),
+                        uint8_t((bits >> 8) & 0xFF),
+                        uint8_t((bits >> 0) & 0xFF)
+                    };
+                    return Ip(bytes);
+                } else {
+                    base_type bytes = {
+                        uint8_t((bits >> 0) & 0xFF),
+                        uint8_t((bits >> 8) & 0xFF),
+                        uint8_t((bits >> 16) & 0xFF),
+                        uint8_t((bits >> 24) & 0xFF),
+                        uint8_t((bits >> 32) & 0xFF),
+                        uint8_t((bits >> 40) & 0xFF),
+                        uint8_t((bits >> 48) & 0xFF),
+                        uint8_t((bits >> 56) & 0xFF),
+                        uint8_t((bits >> 64) & 0xFF),
+                        uint8_t((bits >> 72) & 0xFF),
+                        uint8_t((bits >> 80) & 0xFF),
+                        uint8_t((bits >> 88) & 0xFF),
+                        uint8_t((bits >> 96) & 0xFF),
+                        uint8_t((bits >> 104) & 0xFF),
+                        uint8_t((bits >> 112) & 0xFF),
+                        uint8_t((bits >> 120) & 0xFF)
+                    };
+                    return Ip(bytes);
+                }
+            }
+        }
+        return address;
+    #else
+        assert(!"not implemented");
+        return Ip();
+    #endif
     }
 
     IPADDRESS_CONSTEXPR size_t hash_scope_id() const IPADDRESS_NOEXCEPT {
