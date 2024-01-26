@@ -6,12 +6,13 @@
 
 namespace IPADDRESS_NAMESPACE {
 
-class network_v4 {
+class ipv4_network_base : public base_v4<ipv4_network_base> {
 public:
-};
+    using ip_address_type = ipv4_address;
+}; // ipv4_network_base
 
-// using ipv4_network = ip_network_base<base_v4>;
+using ipv4_network = ip_network_base<ipv4_network_base>;
 
-}
+} // IPADDRESS_NAMESPACE
 
-#endif
+#endif // IPADDRESS_IPV4_NETWORK_HPP

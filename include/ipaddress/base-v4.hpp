@@ -98,7 +98,7 @@ protected:
     }
 
     static IPADDRESS_CONSTEXPR ip_address_base<Ext> ip_from_prefix(size_t prefixlen) {
-        return ip_address_base<Ext>::ip_from_uint32(all_ones & (all_ones >> prefixlen));
+        return ip_address_base<Ext>::ip_from_uint32(all_ones ^ (all_ones >> prefixlen));
     }
 
     static IPADDRESS_CONSTEXPR uint32_t ip_to_uint32(const base_type& bytes) IPADDRESS_NOEXCEPT {

@@ -129,6 +129,7 @@ public:
     }
 
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
+
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR std::strong_ordering operator<=>(const ip_address_base& rhs) const IPADDRESS_NOEXCEPT {
         if (auto result = _bytes <=> rhs._bytes; result == std::strong_ordering::equivalent) {
             if (const auto scope = Base::compare_scope_id(*this, rhs); scope < 0) {
@@ -142,7 +143,9 @@ public:
             return result;
         }
     }
-#else
+
+#else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
+
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<(const ip_address_base& rhs) const IPADDRESS_NOEXCEPT {
         return _bytes < rhs._bytes ? true : Base::compare_scope_id(*this, rhs) < 0;
     }
@@ -158,7 +161,8 @@ public:
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>=(const ip_address_base& rhs) const IPADDRESS_NOEXCEPT {
         return !(*this < rhs);
     }
-#endif
+
+#endif // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
 private:
     template <typename Str>
