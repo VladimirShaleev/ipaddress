@@ -12,7 +12,7 @@ public:
 
     IPADDRESS_CONSTEXPR ip_network_base() IPADDRESS_NOEXCEPT 
         : 
-        _network_address(),
+        _address(),
         _netmask(),
         _prefixlen(0) {
     }
@@ -60,7 +60,7 @@ private:
         }
 
         ip_network_base<Base> result;
-        result._network_address = ip_address_type::parse(address, code);
+        result._address = ip_address_type::parse(address, code);
         result._netmask = ip_address_type(netmask_result.first.bytes());
         result._prefixlen = netmask_result.second;
 
@@ -68,7 +68,7 @@ private:
             return ip_network_base<Base>();
         }
 
-        result._network_address = Base::template strict_netmask<ip_address_type>(result._network_address, result._netmask, true, code);
+        result._address = Base::template strict_netmask<ip_address_type>(result._address, result._netmask, true, code);
 
         if (code != error_code::NO_ERROR) {
             return ip_network_base<Base>();
@@ -77,7 +77,7 @@ private:
         return result;
     }
 
-    ip_address_type _network_address;
+    ip_address_type _address;
     ip_address_type _netmask;
     size_t _prefixlen;
 };
