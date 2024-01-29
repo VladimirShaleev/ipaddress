@@ -13,8 +13,9 @@ public:
     IPADDRESS_CONSTEXPR ip_network_base() IPADDRESS_NOEXCEPT 
         : 
         _address(),
-        _netmask(),
-        _prefixlen(0) {
+        _netmask(ip_address_type::ip_from_prefix(Base::max_prefixlen)),
+        _hostmask(),
+        _prefixlen(Base::max_prefixlen) {
     }
 
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
@@ -68,6 +69,22 @@ public:
         return parse_address_with_prefix(str, strict, code, index);
     }
 
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const ip_address_type& address() const IPADDRESS_NOEXCEPT {
+        return _address;
+    }
+    
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const ip_address_type& netmask() const IPADDRESS_NOEXCEPT {
+        return _netmask;
+    }
+    
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const ip_address_type& hostmask() const IPADDRESS_NOEXCEPT {
+        return _hostmask;
+    }
+    
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR size_t prefixlen() const IPADDRESS_NOEXCEPT {
+        return _prefixlen;
+    }
+    
 private:
     template <typename Str>
     static IPADDRESS_CONSTEXPR ip_network_base parse_address_with_prefix(const Str& str, bool strict) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
@@ -139,6 +156,7 @@ private:
 
     ip_address_type _address;
     ip_address_type _netmask;
+    ip_address_type _hostmask;
     size_t _prefixlen;
 };
 

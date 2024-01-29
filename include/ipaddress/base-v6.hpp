@@ -12,8 +12,6 @@ public:
 
     static IPADDRESS_CONSTEXPR size_t size = 16;
 
-    // static IPADDRESS_CONSTEXPR uint32_t all_ones = ...;
-
     static IPADDRESS_CONSTEXPR size_t max_string_len = 56;
 
     static IPADDRESS_CONSTEXPR size_t max_prefixlen = size * 8;

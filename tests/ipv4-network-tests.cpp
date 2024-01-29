@@ -10,7 +10,14 @@
 using namespace testing;
 using namespace ipaddress;
 
-TEST(ipv4_network, Test) {
-    error_code err = error_code::NO_ERROR;
-    auto result = ipv4_network::parse("192.0.2.0/255.255.255.0", err);
+TEST(ipv4_network, DefaultCtor) {
+    ipv4_network::base_type expected_empty { 0, 0, 0, 0};
+
+    ipv4_network net;
+    
+    EXPECT_EQ(net.address(), ipv4_address::from_uint32<0>());
+    EXPECT_EQ(net.netmask(), ipv4_address::from_uint32<0xFFFFFFFF>());
+    EXPECT_EQ(net.hostmask(), ipv4_address::from_uint32<0>());
+    EXPECT_EQ(net.prefixlen(), 32);
+    EXPECT_EQ(net.version, version::V4);
 }
