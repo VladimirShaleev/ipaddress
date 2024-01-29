@@ -180,3 +180,47 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("::1.2.3.4", error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 0 of address ::1.2.3.4 has invalid symbol"),
         std::make_tuple("1.2.3.256", error_code::OCTET_EXCEEDED_255, "octet 0 of address 1.2.3.256 exceeded 255")
     ));
+
+TEST(ipv4_network, Comparison) {
+    // TODO
+}
+
+using ToStringNetworkIpv4Params = TestWithParam<std::tuple<const char*, const char*>>;
+TEST_P(ToStringNetworkIpv4Params, to_string) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv4_network::parse(std::get<0>(GetParam()));
+
+    std::ostringstream ss;
+    ss << actual;
+
+    ASSERT_EQ(actual.to_string(), std::string(expected));
+    ASSERT_EQ(std::string(actual), std::string(expected));
+    ASSERT_EQ(std::to_string(actual), std::string(expected));
+    ASSERT_EQ(ss.str(), std::string(expected));
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_network, ToStringNetworkIpv4Params,
+    testing::Values(
+        std::make_tuple("1.2.3.4", "1.2.3.4/32"),
+        std::make_tuple("1.2.3.4/32", "1.2.3.4/32"),
+        std::make_tuple("1.2.3.4/255.255.255.255", "1.2.3.4/32")
+    ));
+
+TEST(ipv4_network, Hash) {
+    // TODO
+}
+
+TEST(ipv4_network, Containers) {
+    // TODO
+}
+
+TEST(ipv4_network, Swap) {
+    auto ip1 = ipv4_network::parse("127.0.0.1");
+    auto ip2 = ipv4_network::parse("127.0.0.0/24");
+    
+    std::swap(ip1, ip2);
+
+    ASSERT_EQ(ip1, ipv4_network::parse("127.0.0.0/255.255.255.0"));
+    ASSERT_EQ(ip2, ipv4_network::parse("127.0.0.1"));
+}

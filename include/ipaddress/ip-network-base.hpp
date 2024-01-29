@@ -69,6 +69,17 @@ public:
         return parse_address_with_prefix(str, strict, code, index);
     }
 
+    IPADDRESS_NODISCARD std::string to_string(format fmt = format::compressed) const {
+        return _address.to_string(fmt) + '/' + std::to_string(_prefixlen);
+    }
+
+    IPADDRESS_CONSTEXPR void swap(ip_network_base& network) IPADDRESS_NOEXCEPT {
+        _address.swap(network._address);
+        _netmask.swap(network._netmask);
+        _hostmask.swap(network._hostmask);
+        std::swap(_prefixlen, network._prefixlen);
+    }
+
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const ip_address_type& address() const IPADDRESS_NOEXCEPT {
         return _address;
     }
@@ -85,6 +96,53 @@ public:
         return _prefixlen;
     }
     
+    IPADDRESS_NODISCARD explicit operator std::string() const {
+        return to_string();
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator==(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
+        return _address == rhs._address && _netmask == rhs._netmask;
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator!=(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
+        return !(*this == rhs);
+    }
+
+#ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR std::strong_ordering operator<=>(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
+        if (auto result = _address <=> rhs._address; result != std::strong_ordering::equivalent) {
+            return result;
+        }
+        return _netmask <=> rhs._netmask;
+    }
+
+#else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
+        if (_address != rhs._address) {
+            return _address < rhs._address;
+        }
+        if (_netmask != rhs._netmask) {
+            return _netmask < rhs.netmask;
+        }
+        return false;
+    }
+    
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
+        return rhs < *this;
+    }
+    
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<=(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
+        return !(rhs < *this);
+    }
+    
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>=(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
+        return !(*this < rhs);
+    }
+
+#endif // !IPADDRESS_HAS_SPACESHIP_OPERATOR
+
 private:
     template <typename Str>
     static IPADDRESS_CONSTEXPR ip_network_base parse_address_with_prefix(const Str& str, bool strict) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
@@ -183,6 +241,26 @@ inline std::istream& not_strict(std::istream& stream) {
 #ifndef IPADDRESS_NO_OVERLOAD_STD
 
 namespace std {
+
+template <typename Base>
+inline IPADDRESS_CONSTEXPR void swap(IPADDRESS_NAMESPACE::ip_network_base<Base>& net1, IPADDRESS_NAMESPACE::ip_network_base<Base>& net2) IPADDRESS_NOEXCEPT {
+    return net1.swap(net2);
+}
+
+template <typename Base>
+inline std::string to_string(const IPADDRESS_NAMESPACE::ip_network_base<Base>& network) {
+    return network.to_string();
+}
+
+template <typename Base>
+inline std::ostream& operator<<(std::ostream& stream, const IPADDRESS_NAMESPACE::ip_network_base<Base>& network) {
+    auto& iword = stream.iword(IPADDRESS_NAMESPACE::network_stream_index());
+    auto fmt = iword
+        ? (IPADDRESS_NAMESPACE::format) (iword - 1) 
+        : IPADDRESS_NAMESPACE::format::compressed;
+    iword = 0;
+    return stream << network.to_string(fmt);
+}
 
 template <typename Base>
 inline std::istream& operator>>(std::istream& stream, IPADDRESS_NAMESPACE::ip_network_base<Base>& network) {

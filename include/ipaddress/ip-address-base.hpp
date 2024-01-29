@@ -248,7 +248,7 @@ template <typename Base>
 inline std::ostream& operator<<(std::ostream& stream, const IPADDRESS_NAMESPACE::ip_address_base<Base>& ip) {
     auto& iword = stream.iword(IPADDRESS_NAMESPACE::stream_index());
     auto fmt = iword
-        ? (IPADDRESS_NAMESPACE::format) (stream.iword(stream_index()) - 1) 
+        ? (IPADDRESS_NAMESPACE::format) (iword - 1) 
         : IPADDRESS_NAMESPACE::format::compressed;
     iword = 0;
     return stream << ip.to_string(fmt);
