@@ -60,15 +60,18 @@ TEST_P(NetworkParserIpv4Params, parse) {
     EXPECT_EQ(net.hostmask(), excepted_hostmask);
     EXPECT_EQ(net.prefixlen(), excepted_prefixlen);
 
-    // std::string s1;
-    // ipv4_address addr;
-    // std::string s2;
-    // std::istringstream ss(std::string("test: ") + get<0>(GetParam()) + " parser");
-    // ss >> s1 >> addr >> s2;
+    std::string s1;
+    ipv4_network net_from_stream;
+    std::string s2;
+    std::istringstream ss(std::string("test: ") + get<0>(GetParam()) + " parser");
+    ss >> s1 >> net_from_stream >> s2;
 
-    // ASSERT_EQ(s1, std::string("test:"));
-    // ASSERT_EQ(addr.to_uint32(), excepted_uint32);
-    // ASSERT_EQ(s2, std::string("parser"));
+    ASSERT_EQ(s1, std::string("test:"));
+    EXPECT_EQ(net_from_stream.address(), excepted_address);
+    EXPECT_EQ(net_from_stream.netmask(), excepted_netmask);
+    EXPECT_EQ(net_from_stream.hostmask(), excepted_hostmask);
+    EXPECT_EQ(net_from_stream.prefixlen(), excepted_prefixlen);
+    ASSERT_EQ(s2, std::string("parser"));
 }
 INSTANTIATE_TEST_SUITE_P(
     ipv4_network, NetworkParserIpv4Params,

@@ -163,4 +163,24 @@ private:
 
 } // IPADDRESS_NAMESPACE
 
+#ifndef IPADDRESS_NO_OVERLOAD_STD
+
+namespace std {
+
+template <typename Base>
+inline std::istream& operator>>(std::istream& stream, IPADDRESS_NAMESPACE::ip_network_base<Base>& network) {
+    std::string str;
+    stream >> str;
+    IPADDRESS_NAMESPACE::error_code err;
+    network = IPADDRESS_NAMESPACE::ip_network_base<Base>::parse(str, err);
+    if (err != IPADDRESS_NAMESPACE::error_code::NO_ERROR) {
+        stream.setstate(std::ios_base::failbit);
+    }
+    return stream;
+}
+
+} // std
+
+#endif // IPADDRESS_NO_OVERLOAD_STD
+
 #endif // IPADDRESS_IP_NETWORK_BASE_HPP
