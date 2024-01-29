@@ -46,12 +46,12 @@ TEST(ipv4_network, CopyOperator) {
     EXPECT_EQ(net_copy.prefixlen(), 8);
 }
 
-using NetworkParserIpv4Params = TestWithParam<std::tuple<const char*, const char*, const char*, size_t>>;
+using NetworkParserIpv4Params = TestWithParam<std::tuple<const char*, const char*, const char*, const char*, size_t>>;
 TEST_P(NetworkParserIpv4Params, parse) {
-    auto excepted_address = ipv4_address::parse(get<0>(GetParam()));
-    auto excepted_netmask = ipv4_address::parse(get<1>(GetParam()));
-    auto excepted_hostmask = ipv4_address::parse(get<2>(GetParam()));
-    auto excepted_prefixlen = get<3>(GetParam());
+    auto excepted_address = ipv4_address::parse(get<1>(GetParam()));
+    auto excepted_netmask = ipv4_address::parse(get<2>(GetParam()));
+    auto excepted_hostmask = ipv4_address::parse(get<3>(GetParam()));
+    auto excepted_prefixlen = get<4>(GetParam());
 
     auto net = ipv4_network::parse(get<0>(GetParam()));
    
@@ -76,5 +76,12 @@ TEST_P(NetworkParserIpv4Params, parse) {
 INSTANTIATE_TEST_SUITE_P(
     ipv4_network, NetworkParserIpv4Params,
     testing::Values(
-        std::make_tuple("1.2.3.4", "255.255.255.255", "0.0.0.0", 32)
+        std::make_tuple("1.2.3.4", "1.2.3.4", "255.255.255.255", "0.0.0.0", 32),
+        std::make_tuple("1.2.3.4/32", "1.2.3.4", "255.255.255.255", "0.0.0.0", 32),
+        std::make_tuple("1.2.3.4/255.255.255.255", "1.2.3.4", "255.255.255.255", "0.0.0.0", 32),
+        std::make_tuple("192.0.2.0/24", "192.0.2.0", "255.255.255.0", "0.0.0.255", 24),
+        std::make_tuple("192.0.2.0/255.255.255.0", "192.0.2.0", "255.255.255.0", "0.0.0.255", 24),
+        std::make_tuple("192.0.2.0/0.0.0.255", "192.0.2.0", "255.255.255.0", "0.0.0.255", 24),
+        std::make_tuple("192.0.2.0/27", "192.0.2.0", "255.255.255.224", "0.0.0.31", 27),
+        std::make_tuple("192.0.2.0/255.255.255.224", "192.0.2.0", "255.255.255.224", "0.0.0.31", 27)
     ));
