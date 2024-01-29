@@ -127,7 +127,9 @@ protected:
     static IPADDRESS_CONSTEXPR std::tuple<ip_address_base<Ext>, ip_address_base<Ext>, size_t> parse_netmask(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT {
         size_t prefixlen = 0;
         auto is_value = true;
+        auto has_prefixlen = false;
         for (auto it = begin; it != end; ++it) {
+            has_prefixlen = true;
             if (*it >= '0' && *it <= '9') {
                 prefixlen = prefixlen * 10 + (*it - '0');
             } else {
@@ -159,7 +161,7 @@ protected:
         }
         auto netmask = ip_from_prefix(prefixlen);
         auto hostmask = ip_from_uint32(netmask.to_uint32() ^ all_ones);
-        return std::make_tuple(netmask, hostmask, prefixlen);
+        return std::make_tuple(netmask, hostmask, has_prefixlen ? prefixlen : max_prefixlen);
     }
 
     static IPADDRESS_CONSTEXPR ip_address_base<Ext> strict_netmask(const ip_address_base<Ext>& address, const ip_address_base<Ext>& netmask, bool strict, error_code& code) IPADDRESS_NOEXCEPT {
