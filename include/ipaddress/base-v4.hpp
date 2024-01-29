@@ -2,6 +2,7 @@
 #define IPADDRESS_BASE_V4_HPP
 
 #include "ip-address-base.hpp"
+#include "hash.hpp"
 
 namespace IPADDRESS_NAMESPACE {
 
@@ -117,6 +118,10 @@ protected:
             << size_t(bytes[2]) << '.' 
             << size_t(bytes[3]);
         return res.str();
+    }
+
+    static IPADDRESS_CONSTEXPR std::size_t ip_to_hash(const base_type& bytes) IPADDRESS_NOEXCEPT {
+        return calc_hash(0, size_t(bytes[0]), size_t(bytes[1]), size_t(bytes[2]), size_t(bytes[3]));
     }
 
     static std::string ip_reverse_pointer(const base_type& bytes) {

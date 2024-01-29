@@ -106,16 +106,7 @@ public:
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR size_t hash() const IPADDRESS_NOEXCEPT {
-        size_t seed = Base::hash_scope_id();
-        for (size_t i = 0; i < Base::size; i += 4) {
-            const auto bytes_hash = 
-                size_t(_bytes[i + 0]) << 24 | 
-                size_t(_bytes[i + 1]) << 16 | 
-                size_t(_bytes[i + 2]) << 8 | 
-                size_t(_bytes[i + 3]);
-            seed ^= bytes_hash + 0x9e3779b9 + (seed << 6) + (seed >> 2);
-        }
-        return seed;
+        return Base::ip_to_hash(_bytes);
     }
 
     IPADDRESS_NODISCARD std::string reverse_pointer() const {

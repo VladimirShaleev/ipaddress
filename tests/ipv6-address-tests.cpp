@@ -596,15 +596,15 @@ TEST(ipv6_address, Hash) {
     auto ip3_with_scope = ipv6_address::parse("2001:db8::3%scope");
     auto hash_functor = std::hash<ipv6_address>{};
 
-    ASSERT_EQ(ip1.hash(), sizeof(size_t) == 8 ? 1897215514973745481ULL : 4195848015U);
-    ASSERT_EQ(ip2.hash(), sizeof(size_t) == 8 ? 1897215514973745480ULL : 4195848014U);
-    ASSERT_EQ(ip3.hash(), sizeof(size_t) == 8 ? 1897215514973745487ULL : 4195848013U);
-    ASSERT_EQ(ip3_with_scope.hash(), sizeof(size_t) == 8 ? 12735954006309442099ULL : 2595109484U);
+    ASSERT_EQ(ip1.hash(), sizeof(size_t) == 8 ? 6222153021643990098ULL : 1539407693U);
+    ASSERT_EQ(ip2.hash(), sizeof(size_t) == 8 ? 6116520725720747177ULL : 2230264075U);
+    ASSERT_EQ(ip3.hash(), sizeof(size_t) == 8 ? 16584966935191602359ULL : 4145152766U);
+    ASSERT_EQ(ip3_with_scope.hash(), sizeof(size_t) == 8 ? 460899037339188753ULL : 844563635U);
 
-    ASSERT_EQ(hash_functor(ip1), sizeof(size_t) == 8 ? 1897215514973745481ULL : 4195848015U);
-    ASSERT_EQ(hash_functor(ip2), sizeof(size_t) == 8 ? 1897215514973745480ULL : 4195848014U);
-    ASSERT_EQ(hash_functor(ip3), sizeof(size_t) == 8 ? 1897215514973745487ULL : 4195848013U);
-    ASSERT_EQ(hash_functor(ip3_with_scope), sizeof(size_t) == 8 ? 12735954006309442099ULL : 2595109484U);
+    ASSERT_EQ(hash_functor(ip1), sizeof(size_t) == 8 ? 6222153021643990098ULL : 1539407693U);
+    ASSERT_EQ(hash_functor(ip2), sizeof(size_t) == 8 ? 6116520725720747177ULL : 2230264075U);
+    ASSERT_EQ(hash_functor(ip3), sizeof(size_t) == 8 ? 16584966935191602359ULL : 4145152766U);
+    ASSERT_EQ(hash_functor(ip3_with_scope), sizeof(size_t) == 8 ? 460899037339188753ULL : 844563635U);
 }
 
 TEST(ipv6_address, Containers) {

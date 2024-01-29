@@ -310,10 +310,10 @@ TEST(fixed_string, ConstexprCompare)
     constexpr auto b_52 = str_4 > str_4;
     constexpr auto b_53 = str_4 <= str_4;
     constexpr auto b_54 = str_4 >= str_4;
-    ASSERT_TRUE(b_43);
-    ASSERT_FALSE(b_44);
-    ASSERT_FALSE(b_45);
-    ASSERT_FALSE(b_46);
-    ASSERT_TRUE(b_47);
-    ASSERT_TRUE(b_48);
+    ASSERT_TRUE(b_49);
+    ASSERT_FALSE(b_50);
+    ASSERT_FALSE(b_51);
+    ASSERT_FALSE(b_52);
+    ASSERT_TRUE(b_53);
+    ASSERT_TRUE(b_54);
 }

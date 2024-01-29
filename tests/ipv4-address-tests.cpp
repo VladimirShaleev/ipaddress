@@ -348,13 +348,13 @@ TEST(ipv4_address, Hash) {
     auto ip3 = ipv4_address::parse("127.0.0.3");
     auto hash_functor = std::hash<ipv4_address>{};
 
-    ASSERT_EQ(ip1.hash(), 4785142202);
-    ASSERT_EQ(ip2.hash(), 4785142203);
-    ASSERT_EQ(ip3.hash(), 4785142204);
+    ASSERT_EQ(ip1.hash(), sizeof(size_t) == 8 ? 2753421670903790749ULL : 4009513643U);
+    ASSERT_EQ(ip2.hash(), sizeof(size_t) == 8 ? 9476900596348728241ULL : 1628829895U);
+    ASSERT_EQ(ip3.hash(), sizeof(size_t) == 8 ? 5977026382871150005ULL : 778481730U);
 
-    ASSERT_EQ(hash_functor(ip1), 4785142202);
-    ASSERT_EQ(hash_functor(ip2), 4785142203);
-    ASSERT_EQ(hash_functor(ip3), 4785142204);
+    ASSERT_EQ(hash_functor(ip1), sizeof(size_t) == 8 ? 2753421670903790749ULL : 4009513643U);
+    ASSERT_EQ(hash_functor(ip2), sizeof(size_t) == 8 ? 9476900596348728241ULL : 1628829895U);
+    ASSERT_EQ(hash_functor(ip3), sizeof(size_t) == 8 ? 5977026382871150005ULL : 778481730U);
 }
 
 TEST(ipv4_address, Containers) {

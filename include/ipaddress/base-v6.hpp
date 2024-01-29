@@ -148,6 +148,14 @@ protected:
         return res.str();
     }
 
+    IPADDRESS_CONSTEXPR std::size_t ip_to_hash(const base_type& bytes) const IPADDRESS_NOEXCEPT {
+        return calc_hash(hash_scope_id(),
+            size_t(bytes[0]), size_t(bytes[1]), size_t(bytes[2]), size_t(bytes[3]), 
+            size_t(bytes[4]), size_t(bytes[5]), size_t(bytes[6]), size_t(bytes[7]), 
+            size_t(bytes[8]), size_t(bytes[9]), size_t(bytes[10]), size_t(bytes[11]), 
+            size_t(bytes[12]), size_t(bytes[13]), size_t(bytes[14]), size_t(bytes[15]));
+    }
+
     static IPADDRESS_CONSTEXPR ip_address_base<Ext> ip_from_prefix(size_t prefixlen) {
         base_type bytes {};
         for (auto i = 0; i < (prefixlen >> 3); ++i) {
