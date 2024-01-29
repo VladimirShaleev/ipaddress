@@ -138,8 +138,9 @@ private:
 
         ip_network_base<Base> result;
         result._address = ip_address_type::parse(address, code);
-        result._netmask = netmask_result.first;
-        result._prefixlen = netmask_result.second;
+        result._netmask = std::get<0>(netmask_result);
+        result._hostmask = std::get<1>(netmask_result);
+        result._prefixlen = std::get<2>(netmask_result);
 
         if (code != error_code::NO_ERROR) {
             return ip_network_base<Base>();

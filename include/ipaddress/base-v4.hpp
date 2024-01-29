@@ -124,7 +124,7 @@ protected:
     }
 
     template <typename Iter>
-    static IPADDRESS_CONSTEXPR std::pair<ip_address_base<Ext>, size_t> parse_netmask(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR std::tuple<ip_address_base<Ext>, ip_address_base<Ext>, size_t> parse_netmask(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT {
         size_t prefixlen = 0;
         auto is_value = true;
         for (auto it = begin; it != end; ++it) {
@@ -138,13 +138,13 @@ protected:
         if (is_value) {
             if (prefixlen > max_prefixlen) {
                 code = error_code::INVALID_NETMASK;
-                return std::make_pair(ip_address_base<Ext>(), 0);
+                return std::make_tuple(ip_address_base<Ext>(), ip_address_base<Ext>(), 0);
             }
         } else {
             auto ip = ip_to_uint32(ip_from_string(begin, end, code, index).bytes());
             if (code != error_code::NO_ERROR) {
                 code = error_code::INVALID_NETMASK;
-                return std::make_pair(ip_address_base<Ext>(), 0);
+                return std::make_tuple(ip_address_base<Ext>(), ip_address_base<Ext>(), 0);
             }
 
             prefixlen = prefix_from_ip_uint32(ip, code);
@@ -153,11 +153,13 @@ protected:
                 code = error_code::NO_ERROR;
                 prefixlen = prefix_from_ip_uint32(ip, code);
                 if (code != error_code::NO_ERROR) {
-                    return std::make_pair(ip_address_base<Ext>(), 0);
+                    return std::make_tuple(ip_address_base<Ext>(), ip_address_base<Ext>(), 0);
                 }
             }
         }
-        return std::make_pair(ip_from_prefix(prefixlen), prefixlen);
+        auto netmask = ip_from_prefix(prefixlen);
+        auto hostmask = ip_from_uint32(netmask.to_uint32() ^ all_ones);
+        return std::make_tuple(netmask, hostmask, prefixlen);
     }
 
     static IPADDRESS_CONSTEXPR ip_address_base<Ext> strict_netmask(const ip_address_base<Ext>& address, const ip_address_base<Ext>& netmask, bool strict, error_code& code) IPADDRESS_NOEXCEPT {

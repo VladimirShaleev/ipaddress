@@ -154,8 +154,10 @@ protected:
             bytes[i] = 0xFF;
         }
         auto shift = (prefixlen - ((prefixlen >> 3) << 3));
-        auto byte = 0xFF ^ uint8_t(uint8_t(0xFF) >> shift);
-        bytes[prefixlen >> 3] = byte;
+        if (shift > 0) {
+            auto byte = 0xFF ^ uint8_t(uint8_t(0xFF) >> shift);
+            bytes[prefixlen >> 3] = byte;
+        }
         return ip_address_base<Ext>(bytes);
     }
 
@@ -169,23 +171,43 @@ protected:
     }
 
     template <typename Iter>
-    static IPADDRESS_CONSTEXPR std::pair<ip_address_base<Ext>, size_t> parse_netmask(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR std::tuple<ip_address_base<Ext>, ip_address_base<Ext>, size_t> parse_netmask(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT {
         size_t prefixlen = 0;
         for (auto it = begin; it != end; ++it) {
             if (*it >= '0' && *it <= '9') {
                 prefixlen = prefixlen * 10 + (*it - '0');
             } else {
                 code = error_code::INVALID_NETMASK;
-                return std::make_pair(ip_address_base<Ext>(), 0);
+                return std::make_tuple(ip_address_base<Ext>(), ip_address_base<Ext>(), 0);
             }
         }
         
         if (prefixlen > max_prefixlen) {
             code = error_code::INVALID_NETMASK;
-            return std::make_pair(ip_address_base<Ext>(), 0);
+            return std::make_tuple(ip_address_base<Ext>(), ip_address_base<Ext>(), 0);
         }
         
-        return std::make_pair(ip_from_prefix(prefixlen), prefixlen);
+        auto netmask = ip_from_prefix(prefixlen);
+        const auto& netmask_bytes = netmask.bytes();
+        auto hostmask = ip_address_base<Ext>(base_type {
+            uint8_t(netmask_bytes[0] ^ 0xFF),
+            uint8_t(netmask_bytes[1] ^ 0xFF),
+            uint8_t(netmask_bytes[2] ^ 0xFF),
+            uint8_t(netmask_bytes[3] ^ 0xFF),
+            uint8_t(netmask_bytes[4] ^ 0xFF),
+            uint8_t(netmask_bytes[5] ^ 0xFF),
+            uint8_t(netmask_bytes[6] ^ 0xFF),
+            uint8_t(netmask_bytes[7] ^ 0xFF),
+            uint8_t(netmask_bytes[8] ^ 0xFF),
+            uint8_t(netmask_bytes[9] ^ 0xFF),
+            uint8_t(netmask_bytes[10] ^ 0xFF),
+            uint8_t(netmask_bytes[11] ^ 0xFF),
+            uint8_t(netmask_bytes[12] ^ 0xFF),
+            uint8_t(netmask_bytes[13] ^ 0xFF),
+            uint8_t(netmask_bytes[14] ^ 0xFF),
+            uint8_t(netmask_bytes[15] ^ 0xFF),
+        });
+        return std::make_tuple(netmask, hostmask, prefixlen);
     }
 
     static IPADDRESS_CONSTEXPR ip_address_base<Ext> strict_netmask(const ip_address_base<Ext>& address, const ip_address_base<Ext>& netmask, bool strict, error_code& code) IPADDRESS_NOEXCEPT {
