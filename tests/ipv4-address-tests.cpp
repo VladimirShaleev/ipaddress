@@ -228,6 +228,9 @@ TEST_P(InvalidAddressIpv4Params, parse) {
     EXPECT_THAT(
         [address=expected_address]() { ipv4_address::parse(address); },
         ThrowsMessage<parse_error>(StrEq(get<2>(GetParam()))));
+    EXPECT_THAT(
+        [address=expected_address]() { ipv4_address::parse(address); },
+        Throws<parse_error>(Property(&parse_error::code, Eq(expected_error_code))));
 #endif
 }
 INSTANTIATE_TEST_SUITE_P(

@@ -212,8 +212,8 @@ TEST(ipv6_address, CopyOperator) {
     EXPECT_EQ(ip_copy.bytes(), expected_ip);
 }
 
-using FromBytesParams = TestWithParam<std::tuple<ipv6_address::base_type, const char*>>;
-TEST_P(FromBytesParams, from_bytes) {
+using FromBytesIpv6Params = TestWithParam<std::tuple<ipv6_address::base_type, const char*>>;
+TEST_P(FromBytesIpv6Params, from_bytes) {
     auto bytes = std::get<0>(GetParam());
     auto scope = std::get<1>(GetParam());
 
@@ -236,14 +236,14 @@ TEST_P(FromBytesParams, from_bytes) {
     EXPECT_EQ(std::string(ip2.get_scope_id()), "test");
 }
 INSTANTIATE_TEST_SUITE_P(
-    ipv6_address, FromBytesParams,
+    ipv6_address, FromBytesIpv6Params,
     testing::Values(
         std::make_tuple(ipv6_address::base_type{ 0xfe, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0xff, 0xfe, 0x23, 0x45, 0x67, 0x89, 0x0a }, ""),
         std::make_tuple(ipv6_address::base_type{ 0xfe, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0xff, 0xfe, 0x23, 0x45, 0x67, 0x89, 0x0a }, "eth2")
     ));
 
-using AddressParserParams = TestWithParam<std::tuple<const char*, ipv6_address::base_type, bool, bool, const char*, uint32_t>>;
-TEST_P(AddressParserParams, parse) {
+using AddressParserIpv6Params = TestWithParam<std::tuple<const char*, ipv6_address::base_type, bool, bool, const char*, uint32_t>>;
+TEST_P(AddressParserIpv6Params, parse) {
     auto excepted_bytes = get<1>(GetParam());
     auto excepted_scope_has_str = get<2>(GetParam());
     auto excepted_scope_has_int = get<3>(GetParam());
@@ -282,7 +282,7 @@ TEST_P(AddressParserParams, parse) {
     ASSERT_EQ(s2, std::string("parser"));
 }
 INSTANTIATE_TEST_SUITE_P(
-    ipv6_address, AddressParserParams,
+    ipv6_address, AddressParserIpv6Params,
     testing::Values(
         std::make_tuple("2001:db8:0:0:1:0:0:1", ipv6_address::base_type{ 0x20, 0x01, 0x0D, 0xB8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 }, false, false, "", 0),
         std::make_tuple("2001:DB8::1", ipv6_address::base_type{ 0x20, 0x01, 0x0D, 0xB8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 }, false, false, "", 0),
@@ -308,8 +308,8 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("1:2:3:4:5:6:42.42.42.1", ipv6_address::base_type{ 0x00, 0x01, 0x00, 0x02, 0x00, 0x03, 0x00, 0x04, 0x00, 0x05, 0x00, 0x06, 0x2A, 0x2A, 0x2A, 0x01 }, false, false, "", 0)
     ));
 
-using InvalidAddressParserParams = TestWithParam<std::tuple<const char*, error_code, const char*>>;
-TEST_P(InvalidAddressParserParams, parse) {
+using InvalidAddressIpv6Params = TestWithParam<std::tuple<const char*, error_code, const char*>>;
+TEST_P(InvalidAddressIpv6Params, parse) {
     auto expected_address = get<0>(GetParam());
     auto expected_error_code = get<1>(GetParam());
 
@@ -326,10 +326,13 @@ TEST_P(InvalidAddressParserParams, parse) {
     EXPECT_THAT(
         [address=expected_address]() { ipv6_address::parse(address); },
         ThrowsMessage<parse_error>(StrEq(get<2>(GetParam()))));
+    EXPECT_THAT(
+        [address=expected_address]() { ipv6_address::parse(address); },
+        Throws<parse_error>(Property(&parse_error::code, Eq(expected_error_code))));
 #endif
 }
 INSTANTIATE_TEST_SUITE_P(
-    ipv6_address, InvalidAddressParserParams,
+    ipv6_address, InvalidAddressIpv6Params,
     testing::Values(
         std::make_tuple("", error_code::EMPTY_ADDRESS, "address cannot be empty"),
 
@@ -533,8 +536,8 @@ TEST(ipv6_address, Comparison) {
     ASSERT_TRUE(ip6 != ip5);
 }
 
-using ToStringParams = TestWithParam<std::tuple<const char*, const char*, const char*, const char*>>;
-TEST_P(ToStringParams, to_string) {
+using ToStringIpv6Params = TestWithParam<std::tuple<const char*, const char*, const char*, const char*>>;
+TEST_P(ToStringIpv6Params, to_string) {
     const auto expected_address = std::get<0>(GetParam());
     const auto expected_full = std::get<1>(GetParam());
     const auto expected_compact = std::get<2>(GetParam());
@@ -559,7 +562,7 @@ TEST_P(ToStringParams, to_string) {
     ASSERT_EQ(ss_compressed.str(), std::string(expected_compressed));
 }
 INSTANTIATE_TEST_SUITE_P(
-    ipv6_address, ToStringParams,
+    ipv6_address, ToStringIpv6Params,
     testing::Values(
         std::make_tuple("2001:db8:0:0:1:0:0:1", "2001:0db8:0000:0000:0001:0000:0000:0001", "2001:db8:0:0:1:0:0:1", "2001:db8::1:0:0:1"),
         std::make_tuple("2001:DB8::1", "2001:0db8:0000:0000:0000:0000:0000:0001", "2001:db8:0:0:0:0:0:1", "2001:db8::1"),

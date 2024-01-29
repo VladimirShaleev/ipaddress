@@ -39,15 +39,19 @@ enum class error_code {
 class error : public std::runtime_error {
 public:
     template <typename FirstArg, typename... Args>
-    explicit error(const FirstArg& arg, const Args&... args) : std::runtime_error(concatenate(arg, args...)) {
+    explicit error(error_code code, const FirstArg& arg, const Args&... args) : std::runtime_error(concatenate(arg, args...)), _code(code) {
     }
 
-    explicit error(const std::string& message) : std::runtime_error(message) {
+    explicit error(error_code code, const std::string& message) : std::runtime_error(message), _code(code) {
     }
 
-    explicit error(const char* message) : std::runtime_error(message) {
+    explicit error(error_code code, const char* message) : std::runtime_error(message), _code(code) {
     }
     
+    IPADDRESS_NODISCARD error_code code() const IPADDRESS_NOEXCEPT {
+        return _code;
+    }
+
 private:
     template <typename... Args>
     static std::string concatenate(const Args&... args) {
@@ -66,18 +70,20 @@ private:
     static void print(std::ostringstream& out, const FirstArg& arg) {
         out << arg;
     }
+
+    error_code _code;
 };
 
 class parse_error : public error {
 public:
     template <typename FirstArg, typename... Args>
-    explicit parse_error(const FirstArg& arg, const Args&... args) : error(arg, args...) {
+    explicit parse_error(error_code code, const FirstArg& arg, const Args&... args) : error(code, arg, args...) {
     }
 
-    explicit parse_error(const std::string& message) : error(message) {
+    explicit parse_error(error_code code, const std::string& message) : error(code, message) {
     }
 
-    explicit parse_error(const char* message) : error(message) {
+    explicit parse_error(error_code code, const char* message) : error(code, message) {
     }
 };
 
@@ -92,53 +98,53 @@ public:
     }
     switch (code) {
         case error_code::EMPTY_ADDRESS:
-            throw parse_error("address cannot be empty");
+            throw parse_error(code, "address cannot be empty");
         case error_code::EMPTY_NETMASK:
-            throw parse_error("empty mask in address", str);
+            throw parse_error(code, "empty mask in address", str);
         case error_code::INVALID_NETMASK:
-            throw parse_error("is not a valid netmask in address", str);
+            throw parse_error(code, "is not a valid netmask in address", str);
         case error_code::NETMASK_PATTERN_MIXES_ZEROES_AND_ONES:
-            throw parse_error("netmask pattern mixes zeroes & ones in address", str);
+            throw parse_error(code, "netmask pattern mixes zeroes & ones in address", str);
         case error_code::HAS_HOST_BITS_SET:
-            throw parse_error("has host bits set in address", str);
+            throw parse_error(code, "has host bits set in address", str);
         case error_code::ONLY_ONE_SLASH_PERMITTED:
-            throw parse_error("only one '/' permitted in address", str);
+            throw parse_error(code, "only one '/' permitted in address", str);
         case error_code::EMPTY_OCTET:
-            throw parse_error("empty octet", index, "in address", str);
+            throw parse_error(code, "empty octet", index, "in address", str);
         case error_code::EXPECTED_4_OCTETS:
-            throw parse_error("expected 4 octets in", str);
+            throw parse_error(code, "expected 4 octets in", str);
         case error_code::LEADING_0_ARE_NOT_PERMITTED:
-            throw parse_error("leading zeros are not permitted in octet", index, "of address", str);
+            throw parse_error(code, "leading zeros are not permitted in octet", index, "of address", str);
         case error_code::OCTET_MORE_3_CHARACTERS:
-            throw parse_error("in octet", index, "of address", str, "more 3 characters");
+            throw parse_error(code, "in octet", index, "of address", str, "more 3 characters");
         case error_code::OCTET_HAS_INVALID_SYMBOL:
-            throw parse_error("in octet", index, "of address", str, "has invalid symbol");
+            throw parse_error(code, "in octet", index, "of address", str, "has invalid symbol");
         case error_code::OCTET_EXCEEDED_255:
-            throw parse_error("octet", index, "of address", str, "exceeded 255");
+            throw parse_error(code, "octet", index, "of address", str, "exceeded 255");
         case error_code::LEAST_3_PARTS:
-            throw parse_error("least 3 parts in address", str);
+            throw parse_error(code, "least 3 parts in address", str);
         case error_code::MOST_8_COLONS_PERMITTED:
-            throw parse_error("most 8 colons permitted in address", str);
+            throw parse_error(code, "most 8 colons permitted in address", str);
         case error_code::PART_IS_MORE_4_CHARS:
-            throw parse_error("in part", index, "of address", str, "more 4 characters");
+            throw parse_error(code, "in part", index, "of address", str, "more 4 characters");
         case error_code::PART_HAS_INVALID_SYMBOL:
-            throw parse_error("in part", index, "of address", str, "has invalid symbols");
+            throw parse_error(code, "in part", index, "of address", str, "has invalid symbols");
         case error_code::MOST_ONE_DOUBLE_COLON_PERMITTED:
-            throw parse_error("at most one '::' permitted in address", str);
+            throw parse_error(code, "at most one '::' permitted in address", str);
         case error_code::LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON:
-            throw parse_error("at leading ':' only permitted as part of '::' in address", str);
+            throw parse_error(code, "at leading ':' only permitted as part of '::' in address", str);
         case error_code::TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON:
-            throw parse_error("at trailing ':' only permitted as part of '::' in address", str);
+            throw parse_error(code, "at trailing ':' only permitted as part of '::' in address", str);
         case error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON:
-            throw parse_error("expected at most 7 other parts with '::' in address", str);
+            throw parse_error(code, "expected at most 7 other parts with '::' in address", str);
         case error_code::EXACTLY_8_PARTS_EXPECTED_WITHOUT_DOUBLE_COLON:
-            throw parse_error("exactly 8 parts expected without '::' in address", str);
+            throw parse_error(code, "exactly 8 parts expected without '::' in address", str);
         case error_code::SCOPE_ID_IS_TOO_LONG:
-            throw parse_error("scope id is too long in address", str);
+            throw parse_error(code, "scope id is too long in address", str);
         case error_code::INVALID_SCOPE_ID:
-            throw parse_error("invalid scope id in address", str);
+            throw parse_error(code, "invalid scope id in address", str);
         default:
-            throw error("unknown error");
+            throw error(code, "unknown error");
     }
 }
 
