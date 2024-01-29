@@ -160,16 +160,15 @@ protected:
         return std::make_pair(ip_from_prefix(prefixlen), prefixlen);
     }
 
-    template <typename Ip>
-    static IPADDRESS_CONSTEXPR Ip strict_netmask(const Ip& address, const Ip& netmask, bool strict, error_code& code) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR ip_address_base<Ext> strict_netmask(const ip_address_base<Ext>& address, const ip_address_base<Ext>& netmask, bool strict, error_code& code) IPADDRESS_NOEXCEPT {
         auto pack_address = address.to_uint32();
         auto pack_netmask = netmask.to_uint32();
         if ((pack_address & pack_netmask) != pack_address) {
             if (strict) {
                 code = error_code::HAS_HOST_BITS_SET;
-                return Ip();
+                return ip_address_base<Ext>();
             } else {
-                return Ip::from_uint32(pack_address & pack_netmask);
+                return ip_from_uint32(pack_address & pack_netmask);
             }
         }
         return address;

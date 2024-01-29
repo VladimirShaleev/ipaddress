@@ -23,6 +23,9 @@ enum class format {
 template <typename Base>
 class ip_address_base : public Base {
 public:
+    template <typename>
+    friend class ip_network_base;
+
     using base_type = typename Base::base_type;
 
     IPADDRESS_CONSTEXPR ip_address_base() IPADDRESS_NOEXCEPT : _bytes({}) {

@@ -75,6 +75,9 @@ private:
         auto index = 0;
         auto result = parse_address_with_prefix(str, strict, code, index);
         if (code != error_code::NO_ERROR) {
+            if (IPADDRESS_IS_CONST_EVALUATED(code)) {
+                raise_error(code, index, str.data(), str.size());
+            }
         #ifndef IPADDRESS_NO_EXCEPTIONS
             raise_error(code, index, str.data(), str.size());
         #endif
@@ -110,7 +113,7 @@ private:
             return ip_network_base<Base>();
         }
 
-        auto netmask_result = Base::parse_netmask(netmask, str.end(), code, index);
+        auto netmask_result = ip_address_type::parse_netmask(netmask, str.end(), code, index);
         
         if (code != error_code::NO_ERROR) {
             return ip_network_base<Base>();
@@ -118,14 +121,14 @@ private:
 
         ip_network_base<Base> result;
         result._address = ip_address_type::parse(address, code);
-        result._netmask = ip_address_type(netmask_result.first.bytes());
+        result._netmask = netmask_result.first;
         result._prefixlen = netmask_result.second;
 
         if (code != error_code::NO_ERROR) {
             return ip_network_base<Base>();
         }
 
-        result._address = Base::template strict_netmask<ip_address_type>(result._address, result._netmask, strict, code);
+        result._address = ip_address_type::strict_netmask(result._address, result._netmask, strict, code);
 
         if (code != error_code::NO_ERROR) {
             return ip_network_base<Base>();
