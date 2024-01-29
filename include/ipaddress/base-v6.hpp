@@ -155,10 +155,15 @@ protected:
         constexpr __uint128_t all_ones = ~0;
         __uint128_t bits = all_ones ^ (all_ones >> (prefixlen - 1) >> 1);
         return ip_from_bits(bits);
-    
     #else
-        assert(!"not implemented");
-        return ip_address_base<Ext>();
+        base_type bytes {};
+        for (auto i = 0; i < (prefixlen >> 3); ++i) {
+            bytes[i] = 0xFF;
+        }
+        auto shift = (prefixlen - ((prefixlen >> 3) << 3));
+        auto byte = 0xFF ^ uint8_t(uint8_t(0xFF) >> shift);
+        bytes[prefixlen >> 3] = byte;
+        return ip_address_base<Ext>(bytes);
     #endif
     }
 
