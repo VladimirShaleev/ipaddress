@@ -151,11 +151,6 @@ protected:
     }
 
     static IPADDRESS_CONSTEXPR ip_address_base<Ext> ip_from_prefix(size_t prefixlen) {
-    #ifdef __SIZEOF_INT128__
-        constexpr __uint128_t all_ones = ~0;
-        __uint128_t bits = all_ones ^ (all_ones >> (prefixlen - 1) >> 1);
-        return ip_from_bits(bits);
-    #else
         base_type bytes {};
         for (auto i = 0; i < (prefixlen >> 3); ++i) {
             bytes[i] = 0xFF;
@@ -164,52 +159,6 @@ protected:
         auto byte = 0xFF ^ uint8_t(uint8_t(0xFF) >> shift);
         bytes[prefixlen >> 3] = byte;
         return ip_address_base<Ext>(bytes);
-    #endif
-    }
-
-    template <typename Bits>
-    static IPADDRESS_CONSTEXPR ip_address_base<Ext> ip_from_bits(const Bits& bits) IPADDRESS_NOEXCEPT {
-        if (is_little_endian()) {
-            base_type bytes = {
-                uint8_t((bits >> 120) & 0xFF),
-                uint8_t((bits >> 112) & 0xFF),
-                uint8_t((bits >> 104) & 0xFF),
-                uint8_t((bits >> 96) & 0xFF),
-                uint8_t((bits >> 88) & 0xFF),
-                uint8_t((bits >> 80) & 0xFF),
-                uint8_t((bits >> 72) & 0xFF),
-                uint8_t((bits >> 64) & 0xFF),
-                uint8_t((bits >> 56) & 0xFF),
-                uint8_t((bits >> 48) & 0xFF),
-                uint8_t((bits >> 40) & 0xFF),
-                uint8_t((bits >> 32) & 0xFF),
-                uint8_t((bits >> 24) & 0xFF),
-                uint8_t((bits >> 16) & 0xFF),
-                uint8_t((bits >> 8) & 0xFF),
-                uint8_t((bits >> 0) & 0xFF)
-            };
-            return ip_address_base<Ext>(bytes);
-        } else {
-            base_type bytes = {
-                uint8_t((bits >> 0) & 0xFF),
-                uint8_t((bits >> 8) & 0xFF),
-                uint8_t((bits >> 16) & 0xFF),
-                uint8_t((bits >> 24) & 0xFF),
-                uint8_t((bits >> 32) & 0xFF),
-                uint8_t((bits >> 40) & 0xFF),
-                uint8_t((bits >> 48) & 0xFF),
-                uint8_t((bits >> 56) & 0xFF),
-                uint8_t((bits >> 64) & 0xFF),
-                uint8_t((bits >> 72) & 0xFF),
-                uint8_t((bits >> 80) & 0xFF),
-                uint8_t((bits >> 88) & 0xFF),
-                uint8_t((bits >> 96) & 0xFF),
-                uint8_t((bits >> 104) & 0xFF),
-                uint8_t((bits >> 112) & 0xFF),
-                uint8_t((bits >> 120) & 0xFF)
-            };
-            return ip_address_base<Ext>(bytes);
-        }
     }
 
     std::string ip_reverse_pointer(const base_type& bytes) const {
@@ -242,34 +191,23 @@ protected:
     }
 
     static IPADDRESS_CONSTEXPR ip_address_base<Ext> strict_netmask(const ip_address_base<Ext>& address, const ip_address_base<Ext>& netmask, bool strict, error_code& code) IPADDRESS_NOEXCEPT {
-    #ifdef __SIZEOF_INT128__
         const auto& bytes_address = address.bytes();
         const auto& bytes_netmask = netmask.bytes();
-        __uint128_t pack_address = 0;
-        __uint128_t pack_netmask = 0;
+        base_type bytes{};
 
-        const auto start = is_little_endian() ? (size - 1) * 8 : 0;
-        const auto step = is_little_endian() ? -8 : 8;
-
-        for (size_t i = 0, s = start; i < size; ++i, s += step) {
-            pack_address |= (__uint128_t(bytes_address[i]) << s);
-            pack_netmask |= (__uint128_t(bytes_netmask[i]) << s);
+        for (auto i = 0; i < size; ++i) {
+            bytes[i] = bytes_address[i] & bytes_netmask[i];
         }
 
-        if ((pack_address & pack_netmask) != pack_address) {
+        if (bytes != bytes_address) {
             if (strict) {
                 code = error_code::HAS_HOST_BITS_SET;
                 return ip_address_base<Ext>();
             } else {
-                const auto bits = pack_address & pack_netmask;
-                return ip_from_bits(bits);
+                return ip_address_base<Ext>(bytes);
             }
         }
         return address;
-    #else
-        assert(!"not implemented");
-        return ip_address_base<Ext>();
-    #endif
     }
 
     IPADDRESS_CONSTEXPR size_t hash_scope_id() const IPADDRESS_NOEXCEPT {
