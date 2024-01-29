@@ -12,6 +12,7 @@
 #include <iterator>
 #include <algorithm>
 #include <stdexcept>
+#include <type_traits>
 
 #ifndef IPADDRESS_NAMESPACE
 #define IPADDRESS_NAMESPACE ipaddress
@@ -97,6 +98,16 @@
 #      define IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 #    endif
 #  endif
+#endif
+
+#if __cpp_lib_is_constant_evaluated >= 201811L
+#  define IPADDRESS_IS_CONST_EVALUATED(x) std::is_constant_evaluated()
+#elif __GNUC__ >= 9
+#  define IPADDRESS_IS_CONST_EVALUATED(x) __builtin_is_constant_evaluated()
+#elif __GNUC__ >= 6
+#  define IPADDRESS_IS_CONST_EVALUATED(x) __builtin_constant_p(x)
+#else
+#  define IPADDRESS_IS_CONST_EVALUATED(x) false
 #endif
 
 #if IPADDRESS_CPP_VERSION >= 17

@@ -174,6 +174,9 @@ private:
         auto index = 0;
         auto result = Base::ip_from_string(address.begin(), address.end(), code, index);
         if (code != error_code::NO_ERROR) {
+            if (IPADDRESS_IS_CONST_EVALUATED(code)) {
+                raise_error(code, index, address.data(), address.size());
+            }
         #ifndef IPADDRESS_NO_EXCEPTIONS
             raise_error(code, index, address.data(), address.size());
         #endif
