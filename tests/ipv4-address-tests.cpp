@@ -414,7 +414,9 @@ TEST(ipv4_address, reverse_pointer) {
 TEST(ipv4_address, literals) {
     auto ip1 = "127.0.0.1"_ipv4;
     auto ip2 = "127.128.128.255"_ipv4;
+    auto ip3 = 0x7F000001_ipv4;
     
     ASSERT_EQ(ip1, ipv4_address::parse("127.0.0.1"));
     ASSERT_EQ(ip2, ipv4_address::parse("127.128.128.255"));
+    ASSERT_EQ(ip3, ipv4_address::parse("127.0.0.1"));
 }

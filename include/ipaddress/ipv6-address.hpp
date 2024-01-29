@@ -53,10 +53,13 @@ public:
     }
 
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
+
      IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR std::strong_ordering operator<=>(const scope& rhs) const IPADDRESS_NOEXCEPT {
          return _scope_id <=> rhs._scope_id;
      }
-#else
+
+#else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
+
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<(const scope& rhs) const IPADDRESS_NOEXCEPT {
         return _scope_id < rhs._scope_id;
     }
@@ -72,7 +75,8 @@ public:
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>=(const scope& rhs) const IPADDRESS_NOEXCEPT {
         return !(*this < rhs);
     }
-#endif
+
+#endif // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
 private:
     IPADDRESS_CONSTEXPR void parse_value() IPADDRESS_NOEXCEPT {
@@ -113,6 +117,7 @@ public:
     }
 
 #if IPADDRESS_CPP_VERSION >= 17
+
     IPADDRESS_CONSTEXPR void set_scope_id(std::string_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         change_scope_id(scope_id);
     }
@@ -120,7 +125,9 @@ public:
     IPADDRESS_CONSTEXPR void set_scope_id(std::string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
         change_scope_id(scope_id, code);
     }
-#else
+
+#else // IPADDRESS_CPP_VERSION < 17
+
     void set_scope_id(const std::string& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         change_scope_id(scope_id);
     }
@@ -128,7 +135,8 @@ public:
     void set_scope_id(const std::string& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
         change_scope_id(scope_id, code);
     }
-#endif
+
+#endif // IPADDRESS_CPP_VERSION < 17
 }; // ipv6_address_base
 
 using ipv6_address = ip_address_base<ipv6_address_base>;
@@ -140,16 +148,18 @@ using ipv6_address = ip_address_base<ipv6_address_base>;
         return ipv6_address::parse<FixedString>();
     }
 
-#endif // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
+#else // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
-inline IPADDRESS_CONSTEXPR ipv6_address operator""_ipv6(const char* address, std::size_t size) IPADDRESS_NOEXCEPT {
-    assert(size <= 56 && "litteral string is too long");
-    char str[57] = {};
-    for (size_t i = 0; i < size; ++i) {
-        str[i] = address[i];
+    inline IPADDRESS_CONSTEXPR ipv6_address operator""_ipv6(const char* address, std::size_t size) IPADDRESS_NOEXCEPT {
+        assert(size <= ipv6_address::max_string_len && "litteral string is too long");
+        char str[ipv6_address::max_string_len + 1] = {};
+        for (size_t i = 0; i < size; ++i) {
+            str[i] = address[i];
+        }
+        return ipv6_address::parse(str);
     }
-    return ipv6_address::parse(str);
-}
+
+#endif // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
 } // IPADDRESS_NAMESPACE
 
