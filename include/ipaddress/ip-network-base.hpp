@@ -116,18 +116,16 @@ private:
                     code = error_code::ONLY_ONE_SLASH_PERMITTED;
                     return ip_network_base<Base>();
                 }
-                netmask = ++it;
+                if (it + 1 == str.end()) {
+                    code = error_code::EMPTY_NETMASK;
+                    return ip_network_base<Base>();
+                }
+                netmask = it + 1;
                 has_slash = true;
-
             }
             if (!has_slash) {
                 address[symbol++] = *it;
             }
-        }
-        auto prefix = Base::max_prefixlen;
-        if (has_slash && netmask == str.end()) {
-            code = error_code::EMPTY_NETMASK;
-            return ip_network_base<Base>();
         }
 
         auto netmask_result = ip_address_type::parse_netmask(netmask, str.end(), code, index);
@@ -161,6 +159,25 @@ private:
     size_t _prefixlen;
 };
 
+#ifndef IPADDRESS_NO_OVERLOAD_STD
+
+inline int network_stream_index() { 
+    static int i = std::ios_base::xalloc();
+    return i;
+}
+
+inline std::istream& strict(std::istream& stream) {
+    stream.iword(network_stream_index()) = 0;
+    return stream;
+}
+
+inline std::istream& not_strict(std::istream& stream) {
+    stream.iword(network_stream_index()) = 1;
+    return stream;
+}
+
+#endif // IPADDRESS_NO_OVERLOAD_STD
+
 } // IPADDRESS_NAMESPACE
 
 #ifndef IPADDRESS_NO_OVERLOAD_STD
@@ -169,10 +186,14 @@ namespace std {
 
 template <typename Base>
 inline std::istream& operator>>(std::istream& stream, IPADDRESS_NAMESPACE::ip_network_base<Base>& network) {
+    auto& iword = stream.iword(IPADDRESS_NAMESPACE::network_stream_index());
+    auto strict = iword == 0;
+    iword = 0;
+
     std::string str;
     stream >> str;
     IPADDRESS_NAMESPACE::error_code err;
-    network = IPADDRESS_NAMESPACE::ip_network_base<Base>::parse(str, err);
+    network = IPADDRESS_NAMESPACE::ip_network_base<Base>::parse(str, err, strict);
     if (err != IPADDRESS_NAMESPACE::error_code::NO_ERROR) {
         stream.setstate(std::ios_base::failbit);
     }
