@@ -208,7 +208,21 @@ INSTANTIATE_TEST_SUITE_P(
     ));
 
 TEST(ipv4_network, Hash) {
-    // TODO
+    auto net1 = ipv4_network::parse("127.0.0.1");
+    auto net2 = ipv4_network::parse("127.0.0.1/32");
+    auto net3 = ipv4_network::parse("127.0.0.0/24");
+    auto net4 = ipv4_network::parse("127.0.0.0/16");
+    auto hash_functor = std::hash<ipv4_network>{};
+
+    ASSERT_EQ(net1.hash(), sizeof(size_t) == 8 ? 605929542755200525ULL : 2256296057U);
+    ASSERT_EQ(net2.hash(), sizeof(size_t) == 8 ? 605929542755200525ULL : 2256296057U);
+    ASSERT_EQ(net3.hash(), sizeof(size_t) == 8 ? 7623195473821216247ULL : 546525844U);
+    ASSERT_EQ(net4.hash(), sizeof(size_t) == 8 ? 5503161050249481481ULL : 2858631644U);
+
+    ASSERT_EQ(hash_functor(net1), sizeof(size_t) == 8 ? 605929542755200525ULL : 2256296057U);
+    ASSERT_EQ(hash_functor(net2), sizeof(size_t) == 8 ? 605929542755200525ULL : 2256296057U);
+    ASSERT_EQ(hash_functor(net3), sizeof(size_t) == 8 ? 7623195473821216247ULL : 546525844U);
+    ASSERT_EQ(hash_functor(net4), sizeof(size_t) == 8 ? 5503161050249481481ULL : 2858631644U);
 }
 
 TEST(ipv4_network, Containers) {
@@ -216,11 +230,11 @@ TEST(ipv4_network, Containers) {
 }
 
 TEST(ipv4_network, Swap) {
-    auto ip1 = ipv4_network::parse("127.0.0.1");
-    auto ip2 = ipv4_network::parse("127.0.0.0/24");
+    auto net1 = ipv4_network::parse("127.0.0.1");
+    auto net2 = ipv4_network::parse("127.0.0.0/24");
     
-    std::swap(ip1, ip2);
+    std::swap(net1, net2);
 
-    ASSERT_EQ(ip1, ipv4_network::parse("127.0.0.0/255.255.255.0"));
-    ASSERT_EQ(ip2, ipv4_network::parse("127.0.0.1"));
+    ASSERT_EQ(net1, ipv4_network::parse("127.0.0.0/255.255.255.0"));
+    ASSERT_EQ(net2, ipv4_network::parse("127.0.0.1"));
 }

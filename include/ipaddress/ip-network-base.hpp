@@ -80,6 +80,10 @@ public:
         std::swap(_prefixlen, network._prefixlen);
     }
 
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR size_t hash() const IPADDRESS_NOEXCEPT {
+        return calc_hash(_address.hash(), _netmask.hash());
+    }
+
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const ip_address_type& address() const IPADDRESS_NOEXCEPT {
         return _address;
     }
@@ -241,6 +245,13 @@ inline std::istream& not_strict(std::istream& stream) {
 #ifndef IPADDRESS_NO_OVERLOAD_STD
 
 namespace std {
+
+template <typename Base>
+struct hash<IPADDRESS_NAMESPACE::ip_network_base<Base>> {
+    IPADDRESS_CONSTEXPR std::size_t operator()(const IPADDRESS_NAMESPACE::ip_network_base<Base>& network) const IPADDRESS_NOEXCEPT {
+        return network.hash();
+    }
+};
 
 template <typename Base>
 inline IPADDRESS_CONSTEXPR void swap(IPADDRESS_NAMESPACE::ip_network_base<Base>& net1, IPADDRESS_NAMESPACE::ip_network_base<Base>& net2) IPADDRESS_NOEXCEPT {

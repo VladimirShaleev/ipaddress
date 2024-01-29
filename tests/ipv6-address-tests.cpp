@@ -44,6 +44,15 @@ TEST(ipv6_address, CompileTime)
     ASSERT_EQ(ip2_byte_3, 0x01);
 
     constexpr auto ip3 = ip2;
+    constexpr auto ip3_bytes = ip3.bytes();
+    constexpr auto ip3_byte_0 = ip3_bytes[0];
+    constexpr auto ip3_byte_1 = ip3_bytes.at(1);
+    constexpr auto ip3_byte_2 = *(ip3_bytes.begin() + 2);
+    constexpr auto ip3_byte_3 = ip3_bytes.back();
+    ASSERT_EQ(ip3_byte_0, 0x20);
+    ASSERT_EQ(ip3_byte_1, 0x01);
+    ASSERT_EQ(ip3_byte_2, 0x0D);
+    ASSERT_EQ(ip3_byte_3, 0x01);
 
     constexpr auto ip4 = ipv6_address::parse<"2001:db8::1%2">();
 
