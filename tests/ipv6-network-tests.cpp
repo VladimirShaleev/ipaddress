@@ -118,3 +118,62 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("2001:db8::/16", "2001::", "ffff::", "0:ffff:ffff:ffff:ffff:ffff:ffff:ffff", 16),
         std::make_tuple("2001:db8::/24", "2001:d00::", "ffff:ff00::", "0:ff:ffff:ffff:ffff:ffff:ffff:ffff", 24)
     ));
+
+using InvalidNetworkIpv6Params = TestWithParam<std::tuple<const char*, error_code, const char*>>;
+TEST_P(InvalidNetworkIpv6Params, parse) {
+    auto expected_network = get<0>(GetParam());
+    auto expected_error_code = get<1>(GetParam());
+
+    error_code err;
+    ipv6_network::parse(expected_network, err);
+    ASSERT_EQ(err, expected_error_code);
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    auto error_network = ipv6_network::parse(expected_network);
+
+    EXPECT_EQ(error_network.address(), ipv6_address::parse("::"));
+    ASSERT_EQ(error_network.netmask(), ipv6_address::parse("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"));
+    ASSERT_EQ(error_network.hostmask(), ipv6_address::parse("::"));
+    ASSERT_EQ(error_network.prefixlen(), 128);
+#else
+    EXPECT_THAT(
+        [network=expected_network]() { ipv6_network::parse(network); },
+        ThrowsMessage<parse_error>(StrEq(get<2>(GetParam()))));
+    EXPECT_THAT(
+        [network=expected_network]() { ipv6_network::parse(network); },
+        Throws<parse_error>(Property(&parse_error::code, Eq(expected_error_code))));
+#endif
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_network, InvalidNetworkIpv6Params,
+    testing::Values(
+        std::make_tuple("/", error_code::EMPTY_NETMASK, "empty mask in address /"),
+        std::make_tuple("2001:db8::/", error_code::EMPTY_NETMASK, "empty mask in address 2001:db8::/"),
+        std::make_tuple("2001:db8::/129", error_code::INVALID_NETMASK, "is not a valid netmask in address 2001:db8::/129"),
+        std::make_tuple("2001:db8::/255.255.255.255", error_code::INVALID_NETMASK, "is not a valid netmask in address 2001:db8::/255.255.255.255"),
+        std::make_tuple("/%scope", error_code::INVALID_NETMASK, "is not a valid netmask in address /%scope"),
+        std::make_tuple("/%scope8", error_code::INVALID_NETMASK, "is not a valid netmask in address /%scope8"),
+        std::make_tuple("::1/::1", error_code::INVALID_NETMASK, "is not a valid netmask in address ::1/::1"),
+        std::make_tuple("::1/1::", error_code::INVALID_NETMASK, "is not a valid netmask in address ::1/1::"),
+        std::make_tuple("::1/-1", error_code::INVALID_NETMASK, "is not a valid netmask in address ::1/-1"),
+        std::make_tuple("::1/+1", error_code::INVALID_NETMASK, "is not a valid netmask in address ::1/+1"),
+        std::make_tuple("::1/ 1 ", error_code::INVALID_NETMASK, "is not a valid netmask in address ::1/ 1 "),
+        std::make_tuple("::1/word", error_code::INVALID_NETMASK, "is not a valid netmask in address ::1/word"),
+        std::make_tuple("::1/::", error_code::INVALID_NETMASK, "is not a valid netmask in address ::1/::"),
+        std::make_tuple("::1%scope/word", error_code::INVALID_NETMASK, "is not a valid netmask in address ::1%scope/word"),
+        
+        std::make_tuple("2001:db8::/24", error_code::HAS_HOST_BITS_SET, "has host bits set in address 2001:db8::/24"),
+        std::make_tuple("2001:db8:://", error_code::ONLY_ONE_SLASH_PERMITTED, "only one '/' permitted in address 2001:db8:://"),
+        std::make_tuple("2001:db8:://128", error_code::ONLY_ONE_SLASH_PERMITTED, "only one '/' permitted in address 2001:db8:://128"),
+        std::make_tuple("2001:db8::/128/128", error_code::ONLY_ONE_SLASH_PERMITTED, "only one '/' permitted in address 2001:db8::/128/128"),
+
+        std::make_tuple("/8", error_code::EMPTY_ADDRESS, "address cannot be empty"),
+        std::make_tuple("google.com", error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 0 of address google.com has invalid symbol"),
+        std::make_tuple("1.2.3.4", error_code::LEAST_3_PARTS, "least 3 parts in address 1.2.3.4"),
+        std::make_tuple("10/8", error_code::LEAST_3_PARTS, "least 3 parts in address 10/8"),
+        std::make_tuple("1234:axy::b", error_code::PART_HAS_INVALID_SYMBOL, "in part 0 of address 1234:axy::b has invalid symbols"),
+        std::make_tuple("google.com%scope", error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 0 of address google.com%scope has invalid symbol"),
+        std::make_tuple("1.2.3.4%scope", error_code::LEAST_3_PARTS, "least 3 parts in address 1.2.3.4%scope"),
+        std::make_tuple("10%scope/8", error_code::LEAST_3_PARTS, "least 3 parts in address 10%scope/8"),
+        std::make_tuple("1234:axy::b%scope", error_code::PART_HAS_INVALID_SYMBOL, "in part 0 of address 1234:axy::b%scope has invalid symbols")
+    ));
