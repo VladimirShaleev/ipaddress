@@ -86,9 +86,13 @@ TEST(ipv6_network, CompileTime) {
 
     constexpr auto net6 = "2001:db8::/32"_ipv6_net;
     constexpr auto net7 = "2001:db8::"_ipv6_net;
-    
     ASSERT_EQ(net6, ipv6_network::parse("2001:db8::/32"));
     ASSERT_EQ(net7, ipv6_network::parse("2001:db8::/128"));
+
+    constexpr auto net8 = ipv6_network::from_address(ipv6_address::parse("2001:db8::"), 32);
+    constexpr auto net9 = ipv6_network::from_address(ipv6_address::parse("2001:db8::"), 32, false);
+    ASSERT_EQ(net8, ipv6_network::parse("2001:db8::/32"));
+    ASSERT_EQ(net9, ipv6_network::parse("2001:db8::/32"));
 }
 
 TEST(ipv6_network, DefaultCtor) {
@@ -198,6 +202,36 @@ INSTANTIATE_TEST_SUITE_P(
     testing::Values(
         std::make_tuple("2001:db8::/16", "2001::", "ffff::", "0:ffff:ffff:ffff:ffff:ffff:ffff:ffff", 16),
         std::make_tuple("2001:db8::/24", "2001:d00::", "ffff:ff00::", "0:ff:ffff:ffff:ffff:ffff:ffff:ffff", 24)
+    ));
+
+using NetworkFromAddressIpv6Params = TestWithParam<std::tuple<const char*, const char*, size_t, bool>>;
+TEST_P(NetworkFromAddressIpv6Params, from_address) {
+    auto address = ipv6_address::parse(get<1>(GetParam()));
+    auto prefixlen = get<2>(GetParam());
+    auto strict = get<3>(GetParam());
+
+    auto expected = ipv6_network::parse(get<0>(GetParam()), strict);
+
+    error_code err = error_code::NO_ERROR;
+    auto actual = ipv6_network::from_address(address, err, prefixlen, strict);
+    ASSERT_EQ(actual, expected);
+    ASSERT_EQ(actual.address(), expected.address());
+    ASSERT_EQ(actual.netmask(), expected.netmask());
+    ASSERT_EQ(actual.hostmask(), expected.hostmask());
+    ASSERT_EQ(actual.prefixlen(), expected.prefixlen());
+
+    auto actual2 = ipv6_network::from_address(address, prefixlen, strict);
+    ASSERT_EQ(actual2, expected);
+    ASSERT_EQ(actual2.address(), expected.address());
+    ASSERT_EQ(actual2.netmask(), expected.netmask());
+    ASSERT_EQ(actual2.hostmask(), expected.hostmask());
+    ASSERT_EQ(actual2.prefixlen(), expected.prefixlen());
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_network, NetworkFromAddressIpv6Params,
+    testing::Values(
+        std::make_tuple("2001:db8::/16", "2001:db8::", 16, false),
+        std::make_tuple("2001:db8::/32", "2001:db8::", 32, true)
     ));
 
 using InvalidNetworkIpv6Params = TestWithParam<std::tuple<const char*, error_code, const char*>>;

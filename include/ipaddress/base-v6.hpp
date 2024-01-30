@@ -201,7 +201,12 @@ protected:
 
         auto netmask = ip_from_prefix(prefixlen);
         const auto& netmask_bytes = netmask.bytes();
-        auto hostmask = ip_address_base<Ext>(base_type {
+        return std::make_tuple(netmask, get_hostmask(netmask), prefixlen);
+    }
+
+    static IPADDRESS_CONSTEXPR ip_address_base<Ext> get_hostmask(const ip_address_base<Ext>& netmask) IPADDRESS_NOEXCEPT {
+        const auto& netmask_bytes = netmask.bytes();
+        return ip_address_base<Ext>(base_type {
             uint8_t(netmask_bytes[0] ^ 0xFF),
             uint8_t(netmask_bytes[1] ^ 0xFF),
             uint8_t(netmask_bytes[2] ^ 0xFF),
@@ -219,7 +224,6 @@ protected:
             uint8_t(netmask_bytes[14] ^ 0xFF),
             uint8_t(netmask_bytes[15] ^ 0xFF),
         });
-        return std::make_tuple(netmask, hostmask, prefixlen);
     }
 
     static IPADDRESS_CONSTEXPR ip_address_base<Ext> strict_netmask(const ip_address_base<Ext>& address, const ip_address_base<Ext>& netmask, bool strict, error_code& code) IPADDRESS_NOEXCEPT {

@@ -86,9 +86,13 @@ TEST(ipv4_network, CompileTime) {
 
     constexpr auto net6 = "127.0.0.0/16"_ipv4_net;
     constexpr auto net7 = "127.128.128.255"_ipv4_net;
-    
     ASSERT_EQ(net6, ipv4_network::parse("127.0.0.0/16"));
     ASSERT_EQ(net7, ipv4_network::parse("127.128.128.255/32"));
+
+    constexpr auto net8 = ipv4_network::from_address(ipv4_address::parse("127.0.0.0"), 16);
+    constexpr auto net9 = ipv4_network::from_address(ipv4_address::parse("127.0.0.0"), 16, false);
+    ASSERT_EQ(net8, ipv4_network::parse("127.0.0.0/16"));
+    ASSERT_EQ(net9, ipv4_network::parse("127.0.0.0/16"));
 }
 
 TEST(ipv4_network, DefaultCtor) {
@@ -199,6 +203,36 @@ INSTANTIATE_TEST_SUITE_P(
     testing::Values(
         std::make_tuple("1.2.3.4/24", "1.2.3.0", "255.255.255.0", "0.0.0.255", 24),
         std::make_tuple("192.0.2.0/255.255.0.0", "192.0.0.0", "255.255.0.0", "0.0.255.255", 16)
+    ));
+
+using NetworkFromAddressIpv4Params = TestWithParam<std::tuple<const char*, const char*, size_t, bool>>;
+TEST_P(NetworkFromAddressIpv4Params, from_address) {
+    auto address = ipv4_address::parse(get<1>(GetParam()));
+    auto prefixlen = get<2>(GetParam());
+    auto strict = get<3>(GetParam());
+
+    auto expected = ipv4_network::parse(get<0>(GetParam()), strict);
+
+    error_code err = error_code::NO_ERROR;
+    auto actual = ipv4_network::from_address(address, err, prefixlen, strict);
+    ASSERT_EQ(actual, expected);
+    ASSERT_EQ(actual.address(), expected.address());
+    ASSERT_EQ(actual.netmask(), expected.netmask());
+    ASSERT_EQ(actual.hostmask(), expected.hostmask());
+    ASSERT_EQ(actual.prefixlen(), expected.prefixlen());
+
+    auto actual2 = ipv4_network::from_address(address, prefixlen, strict);
+    ASSERT_EQ(actual2, expected);
+    ASSERT_EQ(actual2.address(), expected.address());
+    ASSERT_EQ(actual2.netmask(), expected.netmask());
+    ASSERT_EQ(actual2.hostmask(), expected.hostmask());
+    ASSERT_EQ(actual2.prefixlen(), expected.prefixlen());
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_network, NetworkFromAddressIpv4Params,
+    testing::Values(
+        std::make_tuple("1.2.3.4/24", "1.2.3.4", 24, false),
+        std::make_tuple("192.0.2.0/255.255.255.0", "192.0.2.0", 24, true)
     ));
 
 using InvalidNetworkIpv4Params = TestWithParam<std::tuple<const char*, error_code, const char*>>;

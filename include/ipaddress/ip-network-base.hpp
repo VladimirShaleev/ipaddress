@@ -69,6 +69,50 @@ public:
         return parse_address_with_prefix(str, strict, code, index);
     }
 
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR ip_network_base from_address(
+        const ip_address_type& address, 
+        size_t prefixlen = ip_address_type::max_prefixlen, 
+        bool strict = true
+    ) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        auto code = error_code::NO_ERROR;
+        auto index = 0;
+        auto result = from_address(address, code, prefixlen, strict);
+        if (code != error_code::NO_ERROR) {
+            if (IPADDRESS_IS_CONST_EVALUATED(code)) {
+                auto str = address.to_string();
+                raise_error(code, 0, str.data(), str.size());
+            }
+        #ifndef IPADDRESS_NO_EXCEPTIONS
+            auto str = address.to_string();
+            raise_error(code, 0, str.data(), str.size());
+        #endif
+        }
+        return result;
+    }
+
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR ip_network_base from_address(
+        const ip_address_type& address, 
+        error_code& code, 
+        size_t prefixlen = ip_address_type::max_prefixlen, 
+        bool strict = true
+    ) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        code = error_code::NO_ERROR;
+
+        const auto netmask = ip_address_type::ip_from_prefix(prefixlen); 
+
+        ip_network_base result;
+        result._address = ip_address_type::strict_netmask(address, netmask, strict, code);
+
+        if (code != error_code::NO_ERROR) {
+            return result;
+        }
+
+        result._netmask = netmask;
+        result._hostmask = ip_address_type::get_hostmask(netmask);
+        result._prefixlen = prefixlen;
+        return result;
+    }
+
     IPADDRESS_NODISCARD std::string to_string(format fmt = format::compressed) const {
         return _address.to_string(fmt) + '/' + std::to_string(_prefixlen);
     }

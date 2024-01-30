@@ -166,8 +166,12 @@ protected:
         }
         prefixlen  = has_prefixlen ? prefixlen : max_prefixlen;
         auto netmask = ip_from_prefix(prefixlen);
-        auto hostmask = ip_from_uint32(netmask.to_uint32() ^ all_ones);
+        auto hostmask = get_hostmask(netmask);
         return std::make_tuple(netmask, hostmask, prefixlen);
+    }
+
+    static IPADDRESS_CONSTEXPR ip_address_base<Ext> get_hostmask(const ip_address_base<Ext>& netmask) IPADDRESS_NOEXCEPT {
+        return ip_from_uint32(netmask.to_uint32() ^ all_ones);
     }
 
     static IPADDRESS_CONSTEXPR ip_address_base<Ext> strict_netmask(const ip_address_base<Ext>& address, const ip_address_base<Ext>& netmask, bool strict, error_code& code) IPADDRESS_NOEXCEPT {
