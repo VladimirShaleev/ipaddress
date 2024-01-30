@@ -140,6 +140,14 @@ struct fixed_string {
         }
         return value;
     }
+
+    IPADDRESS_CONSTEXPR void swap(fixed_string& other) IPADDRESS_NOEXCEPT {
+        auto count = size() < other.size() ? other.size() : size();
+        for (size_t i = 0; i < count; ++i) {
+            std::swap(_data[i], other._data[i]);
+        }
+        std::swap(length, other.length);
+    }
 }; // fixed_string<N>
 
 template <>
@@ -227,6 +235,13 @@ struct fixed_string<0> {
     template <size_t N2>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR int compare(const fixed_string<N2>& rhs) const IPADDRESS_NOEXCEPT {
         return rhs.empty() ? 0 : -1;
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR size_t hash() const IPADDRESS_NOEXCEPT {
+        return 0;
+    }
+
+    IPADDRESS_CONSTEXPR void swap(fixed_string& other) IPADDRESS_NOEXCEPT {
     }
 }; // fixed_string<0>
 

@@ -218,6 +218,9 @@ protected:
         return 0;
     }
 
+    static IPADDRESS_CONSTEXPR void swap_scope(const ip_address_base<Ext>& lhs, const ip_address_base<Ext>& rhs) IPADDRESS_NOEXCEPT {
+    }
+
     static IPADDRESS_CONSTEXPR bool compare_scope_id(const ip_address_base<Ext>& lhs, const ip_address_base<Ext>& rhs) IPADDRESS_NOEXCEPT {
         return 0;
     }

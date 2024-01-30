@@ -657,11 +657,11 @@ TEST(ipv6_address, Containers) {
 
 TEST(ipv6_address, Swap) {
     auto ip1 = ipv6_address::parse("2001:db8::1");
-    auto ip2 = ipv6_address::parse("2001:db8::2");
+    auto ip2 = ipv6_address::parse("2001:db8::2%test");
     
     std::swap(ip1, ip2);
 
-    ASSERT_EQ(ip1, ipv6_address::parse("2001:db8::2"));
+    ASSERT_EQ(ip1, ipv6_address::parse("2001:db8::2%test"));
     ASSERT_EQ(ip2, ipv6_address::parse("2001:db8::1"));
 }
 

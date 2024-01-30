@@ -103,6 +103,7 @@ public:
 
     IPADDRESS_CONSTEXPR void swap(ip_address_base& ip) IPADDRESS_NOEXCEPT {
         _bytes.swap(ip._bytes);
+        Base::swap_scope(*this, ip);
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR size_t hash() const IPADDRESS_NOEXCEPT {

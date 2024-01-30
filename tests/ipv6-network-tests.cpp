@@ -213,3 +213,35 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("2001:db8::/32", "2001:0db8:0000:0000:0000:0000:0000:0000/32", "2001:db8:0:0:0:0:0:0/32", "2001:db8::/32"),
         std::make_tuple("2001:db8::%scope/32", "2001:0db8:0000:0000:0000:0000:0000:0000%scope/32", "2001:db8:0:0:0:0:0:0%scope/32", "2001:db8::%scope/32")
     ));
+
+TEST(ipv6_network, Hash) {
+    auto net1 = ipv6_network::parse("2001:db8::");
+    auto net2 = ipv6_network::parse("2001:db8::/128");
+    auto net3 = ipv6_network::parse("2001:db8::/32");
+    auto net4 = ipv6_network::parse("2001:db8::%scope/32");
+    auto hash_functor = std::hash<ipv6_network>{};
+
+    ASSERT_EQ(net1.hash(), sizeof(size_t) == 8 ? 15427398023827107304ULL : 3105424018U);
+    ASSERT_EQ(net2.hash(), sizeof(size_t) == 8 ? 15427398023827107304ULL : 3105424018U);
+    ASSERT_EQ(net3.hash(), sizeof(size_t) == 8 ? 15947883579910446492ULL : 3052474356U);
+    ASSERT_EQ(net4.hash(), sizeof(size_t) == 8 ? 1368690913789066344ULL : 589600209U);
+
+    ASSERT_EQ(hash_functor(net1), sizeof(size_t) == 8 ? 15427398023827107304ULL : 3105424018U);
+    ASSERT_EQ(hash_functor(net2), sizeof(size_t) == 8 ? 15427398023827107304ULL : 3105424018U);
+    ASSERT_EQ(hash_functor(net3), sizeof(size_t) == 8 ? 15947883579910446492ULL : 3052474356U);
+    ASSERT_EQ(hash_functor(net4), sizeof(size_t) == 8 ? 1368690913789066344ULL : 589600209U);
+}
+
+TEST(ipv6_network, Containers) {
+    // TODO
+}
+
+TEST(ipv6_network, Swap) {
+    auto net1 = ipv6_network::parse("2001:db8::");
+    auto net2 = ipv6_network::parse("2001:db8::%scope/32");
+    
+    std::swap(net1, net2);
+
+    ASSERT_EQ(net1, ipv6_network::parse("2001:db8::%scope/32"));
+    ASSERT_EQ(net2, ipv6_network::parse("2001:db8::"));
+}

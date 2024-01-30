@@ -246,6 +246,10 @@ protected:
         return _scope_id.hash();
     }
 
+    static IPADDRESS_CONSTEXPR void swap_scope(ip_address_base<Ext>& lhs, ip_address_base<Ext>& rhs) IPADDRESS_NOEXCEPT {
+        lhs._scope_id.swap(rhs._scope_id);
+    }
+
     static IPADDRESS_CONSTEXPR int compare_scope_id(const ip_address_base<Ext>& lhs, const ip_address_base<Ext>& rhs) IPADDRESS_NOEXCEPT {
         return lhs._scope_id.compare(rhs._scope_id);
     }
