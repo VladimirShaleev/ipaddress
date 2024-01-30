@@ -144,7 +144,9 @@ struct fixed_string {
     IPADDRESS_CONSTEXPR void swap(fixed_string& other) IPADDRESS_NOEXCEPT {
         auto count = size() < other.size() ? other.size() : size();
         for (size_t i = 0; i < count; ++i) {
-            std::swap(_data[i], other._data[i]);
+            auto tmp = _data[i];
+            _data[i] = other._data[i];
+            other._data[i] = tmp;
         }
         auto tmp = length;
         length = other.length;

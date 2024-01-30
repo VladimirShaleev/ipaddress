@@ -56,13 +56,13 @@ TEST(ipv6_network, CompileTime) {
     ASSERT_EQ(net3_prefixlen, 32);
     ASSERT_GT(net3_hash, 0);
 
-    constexpr auto net4 = test_swap("::/128", "2001:db8::/64");
+    constexpr auto net4 = test_swap("::/128", "2001:db8::%test/64");
     constexpr auto net4_address = net4.address();
     constexpr auto net4_netmask = net4.netmask();
     constexpr auto net4_hostmask = net4.hostmask();
     constexpr auto net4_prefixlen = net4.prefixlen();
     constexpr auto net4_hash = net4.hash();
-    ASSERT_EQ(net4_address, ipv6_address::parse("2001:db8::"));
+    ASSERT_EQ(net4_address, ipv6_address::parse("2001:db8::%test"));
     ASSERT_EQ(net4_netmask, ipv6_address::parse("ffff:ffff:ffff:ffff::"));
     ASSERT_EQ(net4_hostmask, ipv6_address::parse("::ffff:ffff:ffff:ffff"));
     ASSERT_EQ(net4_prefixlen, 64);
@@ -260,7 +260,37 @@ INSTANTIATE_TEST_SUITE_P(
     ));
 
 TEST(ipv6_network, Comparison) {
-    // TODO
+    auto net1 = ipv6_network::parse("2001:db8::/96");
+    auto net2 = ipv6_network::parse("2001:dc8::");
+    auto net3 = ipv6_network::parse("2001:dc8::/128");
+    
+    ASSERT_TRUE(net1 < net2);
+    ASSERT_TRUE(net1 <= net2);
+    ASSERT_FALSE(net1 > net2);
+    ASSERT_FALSE(net1 >= net2);
+    ASSERT_FALSE(net1 == net2);
+    ASSERT_TRUE(net1 != net2);
+    
+    ASSERT_FALSE(net2 < net1);
+    ASSERT_FALSE(net2 <= net1);
+    ASSERT_TRUE(net2 > net1);
+    ASSERT_TRUE(net2 >= net1);
+    ASSERT_FALSE(net2 == net1);
+    ASSERT_TRUE(net2 != net1);
+    
+    ASSERT_FALSE(net2 < net3);
+    ASSERT_TRUE(net2 <= net3);
+    ASSERT_FALSE(net2 > net3);
+    ASSERT_TRUE(net2 >= net3);
+    ASSERT_TRUE(net2 == net3);
+    ASSERT_FALSE(net2 != net3);
+    
+    ASSERT_FALSE(net3 < net2);
+    ASSERT_TRUE(net3 <= net2);
+    ASSERT_FALSE(net3 > net2);
+    ASSERT_TRUE(net3 >= net2);
+    ASSERT_TRUE(net3 == net2);
+    ASSERT_FALSE(net3 != net2);
 }
 
 using ToStringNetworkIpv6Params = TestWithParam<std::tuple<const char*, const char*, const char*, const char*>>;

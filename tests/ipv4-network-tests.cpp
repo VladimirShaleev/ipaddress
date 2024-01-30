@@ -263,7 +263,37 @@ INSTANTIATE_TEST_SUITE_P(
     ));
 
 TEST(ipv4_network, Comparison) {
-    // TODO
+    auto net1 = ipv4_network::parse("127.240.1.0/24");
+    auto net2 = ipv4_network::parse("127.240.1.0");
+    auto net3 = ipv4_network::parse("127.240.1.0/32");
+    
+    ASSERT_TRUE(net1 < net2);
+    ASSERT_TRUE(net1 <= net2);
+    ASSERT_FALSE(net1 > net2);
+    ASSERT_FALSE(net1 >= net2);
+    ASSERT_FALSE(net1 == net2);
+    ASSERT_TRUE(net1 != net2);
+    
+    ASSERT_FALSE(net2 < net1);
+    ASSERT_FALSE(net2 <= net1);
+    ASSERT_TRUE(net2 > net1);
+    ASSERT_TRUE(net2 >= net1);
+    ASSERT_FALSE(net2 == net1);
+    ASSERT_TRUE(net2 != net1);
+    
+    ASSERT_FALSE(net2 < net3);
+    ASSERT_TRUE(net2 <= net3);
+    ASSERT_FALSE(net2 > net3);
+    ASSERT_TRUE(net2 >= net3);
+    ASSERT_TRUE(net2 == net3);
+    ASSERT_FALSE(net2 != net3);
+    
+    ASSERT_FALSE(net3 < net2);
+    ASSERT_TRUE(net3 <= net2);
+    ASSERT_FALSE(net3 > net2);
+    ASSERT_TRUE(net3 >= net2);
+    ASSERT_TRUE(net3 == net2);
+    ASSERT_FALSE(net3 != net2);
 }
 
 using ToStringNetworkIpv4Params = TestWithParam<std::tuple<const char*, const char*>>;
