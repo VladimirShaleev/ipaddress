@@ -77,7 +77,9 @@ public:
         _address.swap(network._address);
         _netmask.swap(network._netmask);
         _hostmask.swap(network._hostmask);
-        std::swap(_prefixlen, network._prefixlen);
+        auto tmp = _prefixlen;
+        _prefixlen = network._prefixlen;
+        network._prefixlen = tmp;
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR size_t hash() const IPADDRESS_NOEXCEPT {

@@ -10,6 +10,82 @@
 using namespace testing;
 using namespace ipaddress;
 
+template <size_t N1, size_t N2>
+static constexpr ipv4_network test_swap(const char(&str1)[N1], const char(&str2)[N2]) {
+    auto net1 = ipv4_network::parse(str1);
+    auto net2 = ipv4_network::parse(str2);
+    net1.swap(net2);
+    return net1;
+}
+
+template <size_t N>
+static constexpr error_code test_error(const char(&str)[N]) noexcept {
+    error_code err = error_code::NO_ERROR;
+    ipv4_network::parse(str, err);
+    return err;
+}
+
+TEST(ipv4_network, CompileTime)
+{
+#ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
+    auto net1 = ipv4_network::parse<"127.0.0.0/8">();
+    ASSERT_EQ(net1.address().to_uint32(), 0x7F000000);
+    ASSERT_EQ(net1.netmask().to_uint32(), 0xFF000000);
+    ASSERT_EQ(net1.hostmask().to_uint32(), 0x00FFFFFF);
+    ASSERT_EQ(net1.prefixlen(), 8);
+
+    constexpr auto net2 = ipv4_network::parse<"127.0.0.1">();
+    constexpr auto net2_address = net2.address().to_uint32();
+    constexpr auto net2_netmask = net2.netmask().to_uint32();
+    constexpr auto net2_hostmask = net2.hostmask().to_uint32();
+    constexpr auto net2_prefixlen = net2.prefixlen();
+    ASSERT_EQ(net2_address, 0x7F000001);
+    ASSERT_EQ(net2_netmask, 0xFFFFFFFF);
+    ASSERT_EQ(net2_hostmask, 0x00000000);
+    ASSERT_EQ(net2_prefixlen, 32);
+#endif
+
+    constexpr auto net3 = ipv4_network::parse("127.0.0.0/8");
+    constexpr auto net3_address = net3.address().to_uint32();
+    constexpr auto net3_netmask = net3.netmask().to_uint32();
+    constexpr auto net3_hostmask = net3.hostmask().to_uint32();
+    constexpr auto net3_prefixlen = net3.prefixlen();
+    constexpr auto net3_hash = net3.hash();
+    ASSERT_EQ(net3_address, 0x7F000000);
+    ASSERT_EQ(net3_netmask, 0xFF000000);
+    ASSERT_EQ(net3_hostmask, 0x00FFFFFF);
+    ASSERT_EQ(net3_prefixlen, 8);
+    ASSERT_GT(net3_hash, 0);
+
+    constexpr auto net4 = test_swap("0.0.0.0/8", "127.0.0.0/16");
+    constexpr auto net4_address = net4.address().to_uint32();
+    constexpr auto net4_netmask = net4.netmask().to_uint32();
+    constexpr auto net4_hostmask = net4.hostmask().to_uint32();
+    constexpr auto net4_prefixlen = net4.prefixlen();
+    constexpr auto net4_hash = net4.hash();
+    ASSERT_EQ(net4_address, 0x7F000000);
+    ASSERT_EQ(net4_netmask, 0xFFFF0000);
+    ASSERT_EQ(net4_hostmask, 0x0000FFFF);
+    ASSERT_EQ(net4_prefixlen, 16);
+    ASSERT_GT(net4_hash, 0);
+
+    constexpr auto net5_error = test_error("127.0.0.1/24");
+    ASSERT_EQ(net5_error, error_code::HAS_HOST_BITS_SET);
+    
+    constexpr auto b1 = net3 < net4;
+    constexpr auto b2 = net3 > net4;
+    constexpr auto b3 = net3 <= net4;
+    constexpr auto b4 = net3 >= net4;
+    constexpr auto b5 = net3 == net4;
+    constexpr auto b6 = net3 != net4;
+    ASSERT_TRUE(b1);
+    ASSERT_FALSE(b2);
+    ASSERT_TRUE(b3);
+    ASSERT_FALSE(b4);
+    ASSERT_FALSE(b5);
+    ASSERT_TRUE(b6);
+}
+
 TEST(ipv4_network, DefaultCtor) {
     ipv4_network net;
     
