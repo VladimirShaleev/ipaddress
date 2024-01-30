@@ -146,7 +146,9 @@ struct fixed_string {
         for (size_t i = 0; i < count; ++i) {
             std::swap(_data[i], other._data[i]);
         }
-        std::swap(length, other.length);
+        auto tmp = length;
+        length = other.length;
+        other.length = tmp;
     }
 }; // fixed_string<N>
 

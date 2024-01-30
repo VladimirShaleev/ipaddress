@@ -13,6 +13,26 @@ public:
 
 using ipv4_network = ip_network_base<ipv4_network_base>;
 
+#ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
+
+    template <fixed_string FixedString>
+    inline consteval ipv4_network operator""_ipv4_net() IPADDRESS_NOEXCEPT {
+        return ipv4_network::parse<FixedString>();
+    }
+
+#else // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
+
+    inline IPADDRESS_CONSTEXPR ipv4_network operator""_ipv4_net(const char* address, std::size_t size) IPADDRESS_NOEXCEPT {
+        assert(size <= 19 && "litteral string is too long");
+        char str[20] = {};
+        for (size_t i = 0; i < size; ++i) {
+            str[i] = address[i];
+        }
+        return ipv4_network::parse(str);
+    }
+
+#endif // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
+
 } // IPADDRESS_NAMESPACE
 
 #endif // IPADDRESS_IPV4_NETWORK_HPP

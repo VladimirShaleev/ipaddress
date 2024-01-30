@@ -25,8 +25,7 @@ static constexpr error_code test_error(const char(&str)[N]) noexcept {
     return err;
 }
 
-TEST(ipv4_network, CompileTime)
-{
+TEST(ipv4_network, CompileTime) {
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
     auto net1 = ipv4_network::parse<"127.0.0.0/8">();
     ASSERT_EQ(net1.address().to_uint32(), 0x7F000000);
@@ -84,6 +83,12 @@ TEST(ipv4_network, CompileTime)
     ASSERT_FALSE(b4);
     ASSERT_FALSE(b5);
     ASSERT_TRUE(b6);
+
+    constexpr auto net6 = "127.0.0.0/16"_ipv4_net;
+    constexpr auto net7 = "127.128.128.255"_ipv4_net;
+    
+    ASSERT_EQ(net6, ipv4_network::parse("127.0.0.0/16"));
+    ASSERT_EQ(net7, ipv4_network::parse("127.128.128.255/32"));
 }
 
 TEST(ipv4_network, DefaultCtor) {
@@ -343,4 +348,12 @@ TEST(ipv4_network, Swap) {
 
     ASSERT_EQ(net1, ipv4_network::parse("127.0.0.0/255.255.255.0"));
     ASSERT_EQ(net2, ipv4_network::parse("127.0.0.1"));
+}
+
+TEST(ipv4_network, literals) {
+    auto net1 = "127.0.0.0/16"_ipv4_net;
+    auto net2 = "127.128.128.255"_ipv4_net;
+    
+    ASSERT_EQ(net1, ipv4_network::parse("127.0.0.0/16"));
+    ASSERT_EQ(net2, ipv4_network::parse("127.128.128.255/32"));
 }

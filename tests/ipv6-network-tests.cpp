@@ -10,6 +10,87 @@
 using namespace testing;
 using namespace ipaddress;
 
+template <size_t N1, size_t N2>
+static constexpr ipv6_network test_swap(const char(&str1)[N1], const char(&str2)[N2]) {
+    auto net1 = ipv6_network::parse(str1);
+    auto net2 = ipv6_network::parse(str2);
+    net1.swap(net2);
+    return net1;
+}
+
+template <size_t N>
+static constexpr error_code test_error(const char(&str)[N]) noexcept {
+    error_code err = error_code::NO_ERROR;
+    ipv6_network::parse(str, err);
+    return err;
+}
+
+TEST(ipv6_network, CompileTime) {
+#ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
+    auto net1 = ipv6_network::parse<"2001:db8::/96">();
+    ASSERT_EQ(net1.address(), ipv6_address::parse("2001:db8::"));
+    ASSERT_EQ(net1.netmask(), ipv6_address::parse("ffff:ffff:ffff:ffff:ffff:ffff::"));
+    ASSERT_EQ(net1.hostmask(), ipv6_address::parse("::ffff:ffff"));
+    ASSERT_EQ(net1.prefixlen(), 96);
+
+    constexpr auto net2 = ipv6_network::parse<"2001:db8::1/128">();
+    constexpr auto net2_address = net2.address();
+    constexpr auto net2_netmask = net2.netmask();
+    constexpr auto net2_hostmask = net2.hostmask();
+    constexpr auto net2_prefixlen = net2.prefixlen();
+    ASSERT_EQ(net2_address, ipv6_address::parse("2001:db8::1"));
+    ASSERT_EQ(net2_netmask, ipv6_address::parse("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"));
+    ASSERT_EQ(net2_hostmask, ipv6_address::parse("::"));
+    ASSERT_EQ(net2_prefixlen, 128);
+#endif
+
+    constexpr auto net3 = ipv6_network::parse("2001:db8::/32");
+    constexpr auto net3_address = net3.address();
+    constexpr auto net3_netmask = net3.netmask();
+    constexpr auto net3_hostmask = net3.hostmask();
+    constexpr auto net3_prefixlen = net3.prefixlen();
+    constexpr auto net3_hash = net3.hash();
+    ASSERT_EQ(net3_address, ipv6_address::parse("2001:db8::"));
+    ASSERT_EQ(net3_netmask, ipv6_address::parse("ffff:ffff::"));
+    ASSERT_EQ(net3_hostmask, ipv6_address::parse("::ffff:ffff:ffff:ffff:ffff:ffff"));
+    ASSERT_EQ(net3_prefixlen, 32);
+    ASSERT_GT(net3_hash, 0);
+
+    constexpr auto net4 = test_swap("::/128", "2001:db8::/64");
+    constexpr auto net4_address = net4.address();
+    constexpr auto net4_netmask = net4.netmask();
+    constexpr auto net4_hostmask = net4.hostmask();
+    constexpr auto net4_prefixlen = net4.prefixlen();
+    constexpr auto net4_hash = net4.hash();
+    ASSERT_EQ(net4_address, ipv6_address::parse("2001:db8::"));
+    ASSERT_EQ(net4_netmask, ipv6_address::parse("ffff:ffff:ffff:ffff::"));
+    ASSERT_EQ(net4_hostmask, ipv6_address::parse("::ffff:ffff:ffff:ffff"));
+    ASSERT_EQ(net4_prefixlen, 64);
+    ASSERT_GT(net4_hash, 0);
+
+    constexpr auto net5_error = test_error("2001:db8::/8");
+    ASSERT_EQ(net5_error, error_code::HAS_HOST_BITS_SET);
+    
+    constexpr auto b1 = net3 < net4;
+    constexpr auto b2 = net3 > net4;
+    constexpr auto b3 = net3 <= net4;
+    constexpr auto b4 = net3 >= net4;
+    constexpr auto b5 = net3 == net4;
+    constexpr auto b6 = net3 != net4;
+    ASSERT_TRUE(b1);
+    ASSERT_FALSE(b2);
+    ASSERT_TRUE(b3);
+    ASSERT_FALSE(b4);
+    ASSERT_FALSE(b5);
+    ASSERT_TRUE(b6);
+
+    constexpr auto net6 = "2001:db8::/32"_ipv6_net;
+    constexpr auto net7 = "2001:db8::"_ipv6_net;
+    
+    ASSERT_EQ(net6, ipv6_network::parse("2001:db8::/32"));
+    ASSERT_EQ(net7, ipv6_network::parse("2001:db8::/128"));
+}
+
 TEST(ipv6_network, DefaultCtor) {
     ipv6_network net;
     
@@ -277,4 +358,12 @@ TEST(ipv6_network, Swap) {
 
     ASSERT_EQ(net1, ipv6_network::parse("2001:db8::%scope/32"));
     ASSERT_EQ(net2, ipv6_network::parse("2001:db8::"));
+}
+
+TEST(ipv6_network, literals) {
+    auto net1 = "2001:db8::/32"_ipv6_net;
+    auto net2 = "0001:0002:0003:0004:0005:0006:0007:0008%123456789abcdefg/128"_ipv6_net;
+    
+    ASSERT_EQ(net1, ipv6_network::parse("2001:db8::/32"));
+    ASSERT_EQ(net2, ipv6_network::parse("1:2:3:4:5:6:7:8%123456789abcdefg"));
 }
