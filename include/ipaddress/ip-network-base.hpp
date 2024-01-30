@@ -223,18 +223,18 @@ private:
 
 #ifndef IPADDRESS_NO_OVERLOAD_STD
 
-inline int network_stream_index() { 
+inline int network_strict_index() { 
     static int i = std::ios_base::xalloc();
     return i;
 }
 
 inline std::istream& strict(std::istream& stream) {
-    stream.iword(network_stream_index()) = 0;
+    stream.iword(network_strict_index()) = 0;
     return stream;
 }
 
 inline std::istream& not_strict(std::istream& stream) {
-    stream.iword(network_stream_index()) = 1;
+    stream.iword(network_strict_index()) = 1;
     return stream;
 }
 
@@ -265,7 +265,7 @@ inline std::string to_string(const IPADDRESS_NAMESPACE::ip_network_base<Base>& n
 
 template <typename Base>
 inline std::ostream& operator<<(std::ostream& stream, const IPADDRESS_NAMESPACE::ip_network_base<Base>& network) {
-    auto& iword = stream.iword(IPADDRESS_NAMESPACE::network_stream_index());
+    auto& iword = stream.iword(IPADDRESS_NAMESPACE::stream_index());
     auto fmt = iword
         ? (IPADDRESS_NAMESPACE::format) (iword - 1) 
         : IPADDRESS_NAMESPACE::format::compressed;
@@ -275,7 +275,7 @@ inline std::ostream& operator<<(std::ostream& stream, const IPADDRESS_NAMESPACE:
 
 template <typename Base>
 inline std::istream& operator>>(std::istream& stream, IPADDRESS_NAMESPACE::ip_network_base<Base>& network) {
-    auto& iword = stream.iword(IPADDRESS_NAMESPACE::network_stream_index());
+    auto& iword = stream.iword(IPADDRESS_NAMESPACE::network_strict_index());
     auto strict = iword == 0;
     iword = 0;
 

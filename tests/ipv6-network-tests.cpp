@@ -177,3 +177,39 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("10%scope/8", error_code::LEAST_3_PARTS, "least 3 parts in address 10%scope/8"),
         std::make_tuple("1234:axy::b%scope", error_code::PART_HAS_INVALID_SYMBOL, "in part 0 of address 1234:axy::b%scope has invalid symbols")
     ));
+
+TEST(ipv6_network, Comparison) {
+    // TODO
+}
+
+using ToStringNetworkIpv6Params = TestWithParam<std::tuple<const char*, const char*, const char*, const char*>>;
+TEST_P(ToStringNetworkIpv6Params, to_string) {
+    const auto expected_full = std::get<1>(GetParam());
+    const auto expected_compact = std::get<2>(GetParam());
+    const auto expected_compressed = std::get<3>(GetParam());
+
+    const auto actual = ipv6_network::parse(std::get<0>(GetParam()));
+
+    std::ostringstream ss_full; ss_full << full << actual;
+    std::ostringstream ss_default; ss_default << actual;
+    std::ostringstream ss_compact; ss_compact << compact << actual;
+    std::ostringstream ss_compressed; ss_compressed << compressed << actual;
+    
+    ASSERT_EQ(actual.to_string(format::full), std::string(expected_full));
+    ASSERT_EQ(actual.to_string(format::compact), std::string(expected_compact));
+    ASSERT_EQ(actual.to_string(format::compressed), std::string(expected_compressed));
+    ASSERT_EQ(actual.to_string(), std::string(expected_compressed));
+    ASSERT_EQ((std::string) actual, std::string(expected_compressed));
+    ASSERT_EQ(std::to_string(actual), std::string(expected_compressed));
+    ASSERT_EQ(ss_full.str(), std::string(expected_full));
+    ASSERT_EQ(ss_default.str(), std::string(expected_compressed));
+    ASSERT_EQ(ss_compact.str(), std::string(expected_compact));
+    ASSERT_EQ(ss_compressed.str(), std::string(expected_compressed));
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_network, ToStringNetworkIpv6Params,
+    testing::Values(
+        std::make_tuple("2001:db8::", "2001:0db8:0000:0000:0000:0000:0000:0000/128", "2001:db8:0:0:0:0:0:0/128", "2001:db8::/128"),
+        std::make_tuple("2001:db8::/32", "2001:0db8:0000:0000:0000:0000:0000:0000/32", "2001:db8:0:0:0:0:0:0/32", "2001:db8::/32"),
+        std::make_tuple("2001:db8::%scope/32", "2001:0db8:0000:0000:0000:0000:0000:0000%scope/32", "2001:db8:0:0:0:0:0:0%scope/32", "2001:db8::%scope/32")
+    ));
