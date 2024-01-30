@@ -128,7 +128,7 @@ public:
             return _address < rhs._address;
         }
         if (_netmask != rhs._netmask) {
-            return _netmask < rhs.netmask;
+            return _netmask < rhs._netmask;
         }
         return false;
     }

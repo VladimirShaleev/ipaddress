@@ -226,7 +226,37 @@ TEST(ipv4_network, Hash) {
 }
 
 TEST(ipv4_network, Containers) {
-    // TODO
+    auto net1 = ipv4_network::parse("127.0.0.0");
+    auto net2 = ipv4_network::parse("127.0.0.0/24");
+    auto net3 = ipv4_network::parse("127.0.0.0/16");
+
+    std::vector<ipv4_network> vec;
+    vec.push_back(net1);
+    vec.push_back(net2);
+    vec.emplace_back(net3);
+    ASSERT_EQ(vec[0], net1);
+    ASSERT_EQ(vec[1], net2);
+    ASSERT_EQ(vec[2], net3);
+
+    std::map<ipv4_network, int> map;
+    map[net2] = 2;
+    map[net1] = 1;
+    map[net3] = 3;
+    auto it = map.begin();
+    ASSERT_EQ(map.size(), 3);
+    ASSERT_EQ(it++->first, net3);
+    ASSERT_EQ(it++->first, net2);
+    ASSERT_EQ(it++->first, net1);
+    
+    std::unordered_map<ipv4_network, int> unordered_map;
+    unordered_map[net2] = 2;
+    unordered_map[net1] = 1;
+    unordered_map[net3] = 3;
+    unordered_map[net3] = 4;
+    ASSERT_EQ(unordered_map.size(), 3);
+    ASSERT_EQ(unordered_map[net1], 1);
+    ASSERT_EQ(unordered_map[net2], 2);
+    ASSERT_EQ(unordered_map[net3], 4);
 }
 
 TEST(ipv4_network, Swap) {
