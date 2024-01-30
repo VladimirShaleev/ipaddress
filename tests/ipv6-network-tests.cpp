@@ -234,6 +234,28 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("2001:db8::/32", "2001:db8::", 32, true)
     ));
 
+TEST(ipv6_network, from_address_error) {
+    error_code err = error_code::NO_ERROR;
+    auto actual = ipv6_network::from_address(ipv6_address::parse("2001:db8::"), err, 16);
+    ASSERT_EQ(err, error_code::HAS_HOST_BITS_SET);
+    ASSERT_EQ(actual.address(), ipv6_address::parse("::"));
+    ASSERT_EQ(actual.netmask(), ipv6_address::parse("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"));
+    ASSERT_EQ(actual.hostmask(), ipv6_address::parse("::"));
+    ASSERT_EQ(actual.prefixlen(), 128);
+    
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    auto error_network = ipv6_network::from_address(ipv6_address::parse("2001:db8::"), 16);
+    ASSERT_EQ(error_network.address(), ipv6_address::parse("::"));
+    ASSERT_EQ(error_network.netmask(), ipv6_address::parse("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"));
+    ASSERT_EQ(error_network.hostmask(), ipv6_address::parse("::"));
+    ASSERT_EQ(error_network.prefixlen(), 128);
+#else
+    EXPECT_THAT(
+        []() { ipv6_network::from_address(ipv6_address::parse("2001:db8::"), 16); },
+        ThrowsMessage<parse_error>(StrEq("has host bits set in address 2001:db8::")));
+#endif
+}
+
 using InvalidNetworkIpv6Params = TestWithParam<std::tuple<const char*, error_code, const char*>>;
 TEST_P(InvalidNetworkIpv6Params, parse) {
     auto expected_network = get<0>(GetParam());

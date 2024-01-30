@@ -235,6 +235,28 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("192.0.2.0/255.255.255.0", "192.0.2.0", 24, true)
     ));
 
+TEST(ipv4_network, from_address_error) {
+    error_code err = error_code::NO_ERROR;
+    auto actual = ipv4_network::from_address(ipv4_address::parse("127.0.0.1"), err, 24);
+    ASSERT_EQ(err, error_code::HAS_HOST_BITS_SET);
+    ASSERT_EQ(actual.address(), ipv4_address::parse("0.0.0.0"));
+    ASSERT_EQ(actual.netmask(), ipv4_address::parse("255.255.255.255"));
+    ASSERT_EQ(actual.hostmask(), ipv4_address::parse("0.0.0.0"));
+    ASSERT_EQ(actual.prefixlen(), 32);
+    
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    auto error_network = ipv4_network::from_address(ipv4_address::parse("127.0.0.1"), 24);
+    ASSERT_EQ(error_network.address(), ipv4_address::parse("0.0.0.0"));
+    ASSERT_EQ(error_network.netmask(), ipv4_address::parse("255.255.255.255"));
+    ASSERT_EQ(error_network.hostmask(), ipv4_address::parse("0.0.0.0"));
+    ASSERT_EQ(error_network.prefixlen(), 32);
+#else
+    EXPECT_THAT(
+        []() { ipv4_network::from_address(ipv4_address::parse("127.0.0.1"), 24); },
+        ThrowsMessage<parse_error>(StrEq("has host bits set in address 127.0.0.1")));
+#endif
+}
+
 using InvalidNetworkIpv4Params = TestWithParam<std::tuple<const char*, error_code, const char*>>;
 TEST_P(InvalidNetworkIpv4Params, parse) {
     auto expected_network = get<0>(GetParam());
