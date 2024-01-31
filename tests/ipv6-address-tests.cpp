@@ -444,18 +444,18 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("2001:db8::1:%scope", error_code::TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at trailing ':' only permitted as part of '::' in address 2001:db8::1:%scope"),
         std::make_tuple("1:2:3:4:5:6:7:%scope", error_code::TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at trailing ':' only permitted as part of '::' in address 1:2:3:4:5:6:7:%scope"),
         std::make_tuple("::7:6:5:4:3:2:%scope", error_code::TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at trailing ':' only permitted as part of '::' in address ::7:6:5:4:3:2:%scope"),
-        std::make_tuple("1:2:3:4:5:6:7:8:", error_code::TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at trailing ':' only permitted as part of '::' in address 1:2:3:4:5:6:7:8:"),
+        std::make_tuple("8:7:6:5:4:3:2:1::", error_code::TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at trailing ':' only permitted as part of '::' in address 8:7:6:5:4:3:2:1::"),
+        std::make_tuple("8:7:6:5:4:3:2:1::%scope", error_code::TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at trailing ':' only permitted as part of '::' in address 8:7:6:5:4:3:2:1::%scope"),
 
         std::make_tuple("9:8:7:6:5:4:3::2:1", error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, "expected at most 7 other parts with '::' in address 9:8:7:6:5:4:3::2:1"),
         std::make_tuple("::8:7:6:5:4:3:2:1", error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, "expected at most 7 other parts with '::' in address ::8:7:6:5:4:3:2:1"),
-        std::make_tuple("8:7:6:5:4:3:2:1::", error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, "expected at most 7 other parts with '::' in address 8:7:6:5:4:3:2:1::"),
         std::make_tuple("8:7:6:5:4:3::2:1", error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, "expected at most 7 other parts with '::' in address 8:7:6:5:4:3::2:1"),
         std::make_tuple("9:8:7:6:5:4:3::2:1%scope", error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, "expected at most 7 other parts with '::' in address 9:8:7:6:5:4:3::2:1%scope"),
-        std::make_tuple("8:7:6:5:4:3:2:1::%scope", error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, "expected at most 7 other parts with '::' in address 8:7:6:5:4:3:2:1::%scope"),
         std::make_tuple("::8:7:6:5:4:3:2:1%scope", error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, "expected at most 7 other parts with '::' in address ::8:7:6:5:4:3:2:1%scope"),
         std::make_tuple("1:2:3:4:5::6:7:8", error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, "expected at most 7 other parts with '::' in address 1:2:3:4:5::6:7:8"),
         std::make_tuple("1:2:3:4:5::6:7:8%scope", error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, "expected at most 7 other parts with '::' in address 1:2:3:4:5::6:7:8%scope"),
 
+        std::make_tuple("1:2:3:4:5:6:7:8:", error_code::EXACTLY_8_PARTS_EXPECTED_WITHOUT_DOUBLE_COLON, "exactly 8 parts expected without '::' in address 1:2:3:4:5:6:7:8:"),
         std::make_tuple("7:6:5:4:3:2:1", error_code::EXACTLY_8_PARTS_EXPECTED_WITHOUT_DOUBLE_COLON, "exactly 8 parts expected without '::' in address 7:6:5:4:3:2:1"),
         std::make_tuple("7:6:5:4:3:2:1%scope", error_code::EXACTLY_8_PARTS_EXPECTED_WITHOUT_DOUBLE_COLON, "exactly 8 parts expected without '::' in address 7:6:5:4:3:2:1%scope"),
         

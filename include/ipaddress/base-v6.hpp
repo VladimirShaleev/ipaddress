@@ -316,8 +316,8 @@ private:
     }
 
     template <typename Iter>
-    static IPADDRESS_CONSTEXPR std::array<fixed_string<4>, max_parts> split_parts(Iter begin, Iter end, int& parts_count, error_code& error) IPADDRESS_NOEXCEPT {
-        char parts[max_parts][5] = {};
+    static IPADDRESS_CONSTEXPR std::array<fixed_string<4>, max_parts + 1> split_parts(Iter begin, Iter end, int& parts_count, error_code& error) IPADDRESS_NOEXCEPT {
+        char parts[max_parts + 1][5] = {};
         char last_part[16] = {};
         
         parts_count = 0;
@@ -330,7 +330,7 @@ private:
             if (!has_double_colon && c == ':' && prev_c == ':') {
                 has_double_colon = true;
             }
-            if (parts_count >= max_parts) {
+            if (parts_count > max_parts) {
                 error = has_double_colon
                     ? error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON 
                     : error_code::MOST_8_COLONS_PERMITTED;
@@ -361,7 +361,7 @@ private:
             prev_c = c;
         }
     
-        if (parts_count >= max_parts) {
+        if (parts_count > max_parts) {
             if (parts[0][0] == '\0' && parts[1][0] != '\0') {
                 error = error_code::LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON;
             } else if (last_part[0] == '\0') {
@@ -421,10 +421,11 @@ private:
             make_fixed_string(parts[4]),
             make_fixed_string(parts[5]),
             make_fixed_string(parts[6]),
-            make_fixed_string(parts[7])};
+            make_fixed_string(parts[7]),
+            make_fixed_string(parts[8])};
     }
 
-    static IPADDRESS_CONSTEXPR std::tuple<size_t, size_t, size_t> get_parts_bound(const std::array<fixed_string<4>, max_parts>& parts, int parts_count, error_code& error) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR std::tuple<size_t, size_t, size_t> get_parts_bound(const std::array<fixed_string<4>, max_parts + 1>& parts, int parts_count, error_code& error) IPADDRESS_NOEXCEPT {
         int skip = 0;
         for (auto i = 1; i < parts_count - 1; ++i) {
             if (parts[i].empty()) {
@@ -456,6 +457,11 @@ private:
 
             const auto parts_skipped = max_parts - (parts_hi + parts_lo);
             
+            if (parts_skipped < 1) {
+                error = error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON;
+                return { 0, 0, 0 };
+            }
+
             return { parts_hi, parts_lo, parts_skipped };
         } else {
             if (parts_count != max_parts) {
@@ -473,11 +479,11 @@ private:
                 return { 0, 0, 0 };
             }
 
-            return { parts.size(), 0, 0 };
+            return { parts_count, 0, 0 };
         }
     }
 
-    static IPADDRESS_CONSTEXPR base_type parse_parts(const std::array<fixed_string<4>, max_parts>& parts, int parts_count, size_t hi, size_t lo, size_t skipped, error_code& error) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR base_type parse_parts(const std::array<fixed_string<4>, max_parts + 1>& parts, int parts_count, size_t hi, size_t lo, size_t skipped, error_code& error) IPADDRESS_NOEXCEPT {
         base_type result = {};
         int index = 0;
 
@@ -543,7 +549,8 @@ private:
         }
     }
 
-    static IPADDRESS_CONSTEXPR std::array<fixed_string<4>, max_parts> empty_parts = {
+    static IPADDRESS_CONSTEXPR std::array<fixed_string<4>, max_parts + 1> empty_parts = {
+            make_fixed_string("\0\0\0\0"),
             make_fixed_string("\0\0\0\0"),
             make_fixed_string("\0\0\0\0"),
             make_fixed_string("\0\0\0\0"),

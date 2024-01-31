@@ -200,7 +200,7 @@ TEST_P(NetworkParserIpv6NotStrictParams, parse_not_strict) {
 INSTANTIATE_TEST_SUITE_P(
     ipv6_network, NetworkParserIpv6NotStrictParams,
     testing::Values(
-        std::make_tuple("2001:db8::/16", "2001::", "ffff::", "0:ffff:ffff:ffff:ffff:ffff:ffff:ffff", 16),
+        std::make_tuple("2001:db8::/16", "2001::", "ffff::", "::ffff:ffff:ffff:ffff:ffff:ffff:ffff", 16),
         std::make_tuple("2001:db8::/24", "2001:d00::", "ffff:ff00::", "0:ff:ffff:ffff:ffff:ffff:ffff:ffff", 24)
     ));
 
