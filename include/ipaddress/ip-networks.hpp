@@ -138,6 +138,18 @@ IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv6_address::is_loopback() cons
         && b[12] == 0 && b[13] == 0 && b[14] == 0 && b[15] == 1;
 }
 
+template<>
+IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv4_address::is_link_local() const IPADDRESS_NOEXCEPT {
+    constexpr auto link_local_network = ipv4_network::parse("169.254.0.0/16");
+    return link_local_network.contains(*this);
+}
+
+template<>
+IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv6_address::is_link_local() const IPADDRESS_NOEXCEPT {
+    constexpr auto link_local_network = ipv6_network::parse("fe80::/10");
+    return link_local_network.contains(*this);
+}
+
 }
 
 #endif

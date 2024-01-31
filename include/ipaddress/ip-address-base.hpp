@@ -105,6 +105,18 @@ public:
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_loopback() const IPADDRESS_NOEXCEPT;
 
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_link_local() const IPADDRESS_NOEXCEPT;
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_unspecified() const IPADDRESS_NOEXCEPT {
+        const auto& b = bytes();
+        for (size_t i = 0; i < Base::size; ++i) {
+            if (b[i] != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     IPADDRESS_NODISCARD std::string to_string(format fmt = format::compressed) const {
         return Base::ip_to_string(Base::bytes(), fmt);
     }
