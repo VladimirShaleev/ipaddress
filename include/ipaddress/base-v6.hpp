@@ -12,7 +12,7 @@ public:
 
     static IPADDRESS_CONSTEXPR size_t size = 16;
 
-    static IPADDRESS_CONSTEXPR size_t max_string_len = 56;
+    static IPADDRESS_CONSTEXPR size_t max_string_len = 41 + IPADDRESS_IPV6_SCOPE_MAX_LENGTH;
 
     static IPADDRESS_CONSTEXPR size_t max_prefixlen = size * 8;
 
@@ -50,24 +50,10 @@ protected:
 
         auto ip = ip_address_base<Ext>(parse_parts(parts, parts_count, std::get<0>(result), std::get<1>(result), std::get<2>(result), code));
 
-        char scope_id[16] = {
-            ip_and_scope.second[0],
-            ip_and_scope.second[1],
-            ip_and_scope.second[2],
-            ip_and_scope.second[3],
-            ip_and_scope.second[4],
-            ip_and_scope.second[5],
-            ip_and_scope.second[6],
-            ip_and_scope.second[7],
-            ip_and_scope.second[8],
-            ip_and_scope.second[9],
-            ip_and_scope.second[10],
-            ip_and_scope.second[11],
-            ip_and_scope.second[12],
-            ip_and_scope.second[13],
-            ip_and_scope.second[14],
-            ip_and_scope.second[15]
-        };
+        char scope_id[IPADDRESS_IPV6_SCOPE_MAX_LENGTH + 1] = {};
+        for (size_t i = 0; i < ip_and_scope.second.size(); ++i) {
+            scope_id[i] = ip_and_scope.second[i];
+        }
         ip.set_scope_id(scope_id);
 
         return ip;
@@ -86,7 +72,7 @@ protected:
         return ip_address_base<Ext>(bytes);
     }
 
-    static std::string ip_to_string(const base_type& bytes, const fixed_string<16>& scope_id, format fmt) {
+    static std::string ip_to_string(const base_type& bytes, const fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>& scope_id, format fmt) {
         char hextets[size >> 1][5] = {};
         const size_t max_hextets = size >> 1;
         for (size_t i = 0; i < max_hextets; ++i) {
@@ -180,7 +166,7 @@ protected:
         return res.str();
     }
 
-    static std::string ip_reverse_pointer(const base_type& bytes, const fixed_string<16>& scope_id) {
+    static std::string ip_reverse_pointer(const base_type& bytes, const fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>& scope_id) {
         auto ip = ip_to_string(bytes, scope_id, format::full);
         ip.erase(std::remove(ip.begin(), ip.end(), ':'), ip.end());
         auto res = std::accumulate(std::next(ip.rbegin()), ip.rend(), std::string{ip.back()}, [](auto a, auto b) {
@@ -258,8 +244,8 @@ protected:
 
 private:
     template <typename Iter>
-    static IPADDRESS_CONSTEXPR std::pair<Iter, fixed_string<16>> split_scope_id(Iter begin, Iter end, error_code& error) IPADDRESS_NOEXCEPT {
-        char scope_id[17] = {};
+    static IPADDRESS_CONSTEXPR std::pair<Iter, fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>> split_scope_id(Iter begin, Iter end, error_code& error) IPADDRESS_NOEXCEPT {
+        char scope_id[IPADDRESS_IPV6_SCOPE_MAX_LENGTH + 1] = {};
         auto index = 0;
         Iter end_ip = begin;
         auto scope = false;
@@ -267,13 +253,13 @@ private:
             if (!scope && *it != '%') {
                 end_ip = it + 1;
             } else if (scope) {
-                if (index > 15) {
+                if (index > IPADDRESS_IPV6_SCOPE_MAX_LENGTH - 1) {
                     error = error_code::SCOPE_ID_IS_TOO_LONG;
-                    return std::make_pair(end_ip, make_fixed_string("\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"));
+                    return std::make_pair(end_ip, make_fixed_string(scope_id));
                 }
                 if (*it == '%' || *it == '/') {
                     error = error_code::INVALID_SCOPE_ID;
-                    return std::make_pair(end_ip, make_fixed_string("\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"));
+                    return std::make_pair(end_ip, make_fixed_string(scope_id));
                 }
                 scope_id[index++] = *it;
             } else {
@@ -282,7 +268,7 @@ private:
         }
         if (scope && scope_id[0] == '\0') {
             error = error_code::INVALID_SCOPE_ID;
-            return std::make_pair(end_ip, make_fixed_string("\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"));
+            return std::make_pair(end_ip, make_fixed_string(scope_id));
         }
         return std::make_pair(end_ip, make_fixed_string(scope_id));
     }

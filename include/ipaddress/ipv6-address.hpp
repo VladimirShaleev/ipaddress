@@ -8,7 +8,7 @@ namespace IPADDRESS_NAMESPACE {
 
 class scope final {
 public:
-    IPADDRESS_CONSTEXPR scope(const fixed_string<16>& scope_id) IPADDRESS_NOEXCEPT
+    IPADDRESS_CONSTEXPR scope(const fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>& scope_id) IPADDRESS_NOEXCEPT
         : 
         _scope_id(scope_id),
         _scope_id_value(0),
@@ -95,7 +95,7 @@ private:
         }
     }
 
-    fixed_string<16> _scope_id;
+    fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH> _scope_id;
     uint32_t _scope_id_value;
     bool _has_value;
 }; // scope
@@ -105,17 +105,25 @@ public:
     using base_type = typename base_v6<ipv6_address_base>::base_type;
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR scope get_scope_id() const IPADDRESS_NOEXCEPT {
-        return scope(_data.scope_id);
+        return scope(
+        #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH > 0
+            _data.scope_id
+        #else
+            make_fixed_string("")
+        #endif
+        );
     }
 
     template <size_t N>
     IPADDRESS_CONSTEXPR void set_scope_id(const char(&scope_id)[N]) IPADDRESS_NOEXCEPT {
-        static_assert(N <= 16, "scope id is too long");
-        char str[17] = {};
+    #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH > 0
+        static_assert(N <= IPADDRESS_IPV6_SCOPE_MAX_LENGTH + 1, "scope id is too long");
+        char str[IPADDRESS_IPV6_SCOPE_MAX_LENGTH + 1] = {};
         for (size_t i = 0; i < N; ++i) {
             str[i] = scope_id[i];
         }
         _data.scope_id = make_fixed_string(str);
+    #endif // IPADDRESS_IPV6_SCOPE_MAX_LENGTH
     }
 
 #if IPADDRESS_CPP_VERSION >= 17
@@ -152,11 +160,18 @@ protected:
 
     static IPADDRESS_CONSTEXPR void swap(ip_address_base<ipv6_address_base>& lhs, ip_address_base<ipv6_address_base>& rhs) IPADDRESS_NOEXCEPT {
         lhs._data.bytes.swap(rhs._data.bytes);
+    #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH > 0
         lhs._data.scope_id.swap(rhs._data.scope_id);
+    #endif
     }
 
     IPADDRESS_CONSTEXPR std::size_t hash(const base_type& bytes) const IPADDRESS_NOEXCEPT {
-        return calc_hash(_data.scope_id.hash(),
+        return calc_hash(
+        #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH > 0
+            _data.scope_id.hash(),
+        #else // IPADDRESS_IPV6_SCOPE_MAX_LENGTH <= 0
+            0,
+        #endif // IPADDRESS_IPV6_SCOPE_MAX_LENGTH <= 0
             size_t(bytes[0]), size_t(bytes[1]), size_t(bytes[2]), size_t(bytes[3]), 
             size_t(bytes[4]), size_t(bytes[5]), size_t(bytes[6]), size_t(bytes[7]), 
             size_t(bytes[8]), size_t(bytes[9]), size_t(bytes[10]), size_t(bytes[11]), 
@@ -164,16 +179,27 @@ protected:
     }
 
     static IPADDRESS_CONSTEXPR bool equals(const ip_address_base<ipv6_address_base>& lhs, const ip_address_base<ipv6_address_base>& rhs) IPADDRESS_NOEXCEPT {
-        return lhs._data.bytes == rhs._data.bytes && lhs._data.scope_id.compare(rhs._data.scope_id) == 0;
+        return lhs._data.bytes == rhs._data.bytes
+        
+        #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH > 0
+            && lhs._data.scope_id.compare(rhs._data.scope_id) == 0
+        #endif
+            ;
     }
 
     static IPADDRESS_CONSTEXPR bool less(const ip_address_base<ipv6_address_base>& lhs, const ip_address_base<ipv6_address_base>& rhs) IPADDRESS_NOEXCEPT {
-        return lhs._data.bytes < rhs._data.bytes ? true : lhs._data.scope_id.compare(rhs._data.scope_id) < 0;
+        return lhs._data.bytes < rhs._data.bytes 
+        
+        #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH > 0
+            ? true : lhs._data.scope_id.compare(rhs._data.scope_id) < 0;
+        #endif
+            ;
     }
 
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
 
     static IPADDRESS_CONSTEXPR std::strong_ordering compare(const ip_address_base<ipv6_address_base>& lhs, const ip_address_base<ipv6_address_base>& rhs) IPADDRESS_NOEXCEPT {
+    #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH > 0
         if (auto result = lhs._data.bytes <=> rhs._data.bytes; result == std::strong_ordering::equivalent) {
             if (const auto scope = lhs._data.scope_id.compare(rhs._data.scope_id); scope < 0) {
                 return std::strong_ordering::less;
@@ -185,16 +211,33 @@ protected:
         } else {
             return result;
         }
+    #else
+        return lhs._data.bytes <=> rhs._data.bytes;
+    #endif
     }
 
 #endif // IPADDRESS_HAS_SPACESHIP_OPERATOR
 
     std::string ip_reverse_pointer(const base_type& bytes) const {
-        return base_v6<ipv6_address_base>::ip_reverse_pointer(bytes, _data.scope_id);
+        return base_v6<ipv6_address_base>::ip_reverse_pointer(bytes, 
+        
+        #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH > 0
+            _data.scope_id
+        #else
+            make_fixed_string("")
+        #endif
+        );
     }
 
     std::string ip_to_string(const base_type& bytes, format fmt) const {
-        return base_v6<ipv6_address_base>::ip_to_string(bytes, _data.scope_id, fmt);
+        return base_v6<ipv6_address_base>::ip_to_string(bytes, 
+        
+        #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH > 0
+            _data.scope_id,
+        #else
+            make_fixed_string(""),
+        #endif
+            fmt);
     }
 
 private:
@@ -211,20 +254,25 @@ private:
 
     template <typename Str>
     IPADDRESS_CONSTEXPR void change_scope_id(const Str& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
-        if (scope_id.size() > 16) {
+        code = error_code::NO_ERROR;
+    #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH > 0
+        if (scope_id.size() > IPADDRESS_IPV6_SCOPE_MAX_LENGTH) {
             code = error_code::SCOPE_ID_IS_TOO_LONG;
             return;
         }
-        char scope[17] = {};
+        char scope[IPADDRESS_IPV6_SCOPE_MAX_LENGTH + 1] = {};
         for (size_t i = 0; i < scope_id.size(); ++i) {
             scope[i] = scope_id[i];
         }
         _data.scope_id = make_fixed_string(scope);
+    #endif // IPADDRESS_IPV6_SCOPE_MAX_LENGTH
     }
     
     struct ipv6_data {
         base_type bytes{};
-        fixed_string<16> scope_id;
+    #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH > 0
+        fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH> scope_id;
+    #endif // IPADDRESS_IPV6_SCOPE_MAX_LENGTH
     } _data;
 
 }; // ipv6_address_base
