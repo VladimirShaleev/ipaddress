@@ -65,6 +65,17 @@ IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv6_address::is_private() const
     return false;
 }
 
+template<>
+IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv4_address::is_global() const IPADDRESS_NOEXCEPT {
+    constexpr auto public_network = ipv4_network::parse("100.64.0.0/10");
+    return !public_network.contains(*this) && !is_private();
+}
+
+template<>
+IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv6_address::is_global() const IPADDRESS_NOEXCEPT {
+    return !is_private();
+}
+
 }
 
 #endif
