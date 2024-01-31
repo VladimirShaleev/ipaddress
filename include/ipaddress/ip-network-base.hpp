@@ -75,7 +75,6 @@ public:
         bool strict = true
     ) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         auto code = error_code::NO_ERROR;
-        auto index = 0;
         auto result = from_address(address, code, prefixlen, strict);
         if (code != error_code::NO_ERROR) {
             if (IPADDRESS_IS_CONST_EVALUATED(code)) {
@@ -108,7 +107,7 @@ public:
         }
 
         result._netmask = netmask;
-        result._hostmask = ip_address_type::get_hostmask(netmask);
+        result._hostmask = ip_address_type::netmask_to_hostmask(netmask);
         result._prefixlen = prefixlen;
         return result;
     }

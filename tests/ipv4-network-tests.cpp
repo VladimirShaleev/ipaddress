@@ -54,7 +54,7 @@ TEST(ipv4_network, CompileTime) {
     ASSERT_EQ(net3_netmask, 0xFF000000);
     ASSERT_EQ(net3_hostmask, 0x00FFFFFF);
     ASSERT_EQ(net3_prefixlen, 8);
-    ASSERT_GT(net3_hash, 0);
+    ASSERT_GT(net3_hash, size_t(0));
 
     constexpr auto net4 = test_swap("0.0.0.0/8", "127.0.0.0/16");
     constexpr auto net4_address = net4.address().to_uint32();
@@ -66,7 +66,7 @@ TEST(ipv4_network, CompileTime) {
     ASSERT_EQ(net4_netmask, 0xFFFF0000);
     ASSERT_EQ(net4_hostmask, 0x0000FFFF);
     ASSERT_EQ(net4_prefixlen, 16);
-    ASSERT_GT(net4_hash, 0);
+    ASSERT_GT(net4_hash, size_t(0));
 
     constexpr auto net5_error = test_error("127.0.0.1/24");
     ASSERT_EQ(net5_error, error_code::HAS_HOST_BITS_SET);
@@ -102,7 +102,7 @@ TEST(ipv4_network, DefaultCtor) {
     EXPECT_EQ(net.netmask(), ipv4_address::from_uint32<0xFFFFFFFF>());
     EXPECT_EQ(net.hostmask(), ipv4_address::from_uint32<0>());
     EXPECT_EQ(net.prefixlen(), 32);
-    EXPECT_EQ(net.version, version::V4);
+    EXPECT_EQ(net.version, ip_version::V4);
 }
 
 TEST(ipv4_network, CopyCtor) {

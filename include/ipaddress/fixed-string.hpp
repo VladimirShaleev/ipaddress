@@ -18,6 +18,8 @@ struct fixed_string {
 
     char _data[N] = {};
 
+    IPADDRESS_CONSTEXPR fixed_string() IPADDRESS_NOEXCEPT = default;
+
     IPADDRESS_CONSTEXPR fixed_string(const char (&data)[N + 1]) IPADDRESS_NOEXCEPT {
         auto ended = false;
         for (size_t i = 0; i < N; ++i) {
@@ -127,11 +129,11 @@ struct fixed_string {
         size_t prime{};
 
         if (sizeof(size_t) == 8) {
-            value = 14695981039346656037ULL;
-            prime = 1099511628211ULL;
+            value = size_t(14695981039346656037ULL);
+            prime = size_t(1099511628211ULL);
         } else {
-            value = 2166136261U;
-            prime = 16777619U;
+            value = size_t(2166136261U);
+            prime = size_t(16777619U);
         }
 
         for (size_t i = 0; i < size(); ++i) {

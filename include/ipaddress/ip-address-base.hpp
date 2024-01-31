@@ -9,7 +9,7 @@
 
 namespace IPADDRESS_NAMESPACE {
 
-enum class version {
+enum class ip_version {
     V4 = 4,
     V6 = 6
 };
@@ -28,10 +28,10 @@ public:
 
     using base_type = typename Base::base_type;
 
-    IPADDRESS_CONSTEXPR ip_address_base() IPADDRESS_NOEXCEPT : _bytes({}) {
+    IPADDRESS_CONSTEXPR ip_address_base() IPADDRESS_NOEXCEPT : Base() {
     }
 
-    IPADDRESS_CONSTEXPR explicit ip_address_base(const base_type& bytes) IPADDRESS_NOEXCEPT : _bytes(bytes) {
+    IPADDRESS_CONSTEXPR explicit ip_address_base(const base_type& bytes) IPADDRESS_NOEXCEPT : Base(bytes) {
     }
 
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR ip_address_base from_bytes(const base_type& bytes) IPADDRESS_NOEXCEPT {
@@ -47,8 +47,9 @@ public:
     }
 
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
+
     template <fixed_string FixedString>
-    IPADDRESS_NODISCARD static consteval ip_address_base parse() IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static consteval ip_address_base<Base> parse() IPADDRESS_NOEXCEPT {
         constexpr auto str = FixedString;
         auto code = error_code::NO_ERROR;
         auto index = 0;
@@ -58,6 +59,7 @@ public:
         }
         return ip_address_base(result);
     }
+
 #endif // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
 #if IPADDRESS_CPP_VERSION >= 17
@@ -94,24 +96,19 @@ public:
     }
 
     IPADDRESS_NODISCARD std::string to_string(format fmt = format::compressed) const {
-        return Base::ip_to_string(_bytes, fmt);
-    }
-
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const base_type& bytes() const IPADDRESS_NOEXCEPT {
-        return _bytes;
+        return Base::ip_to_string(Base::bytes(), fmt);
     }
 
     IPADDRESS_CONSTEXPR void swap(ip_address_base& ip) IPADDRESS_NOEXCEPT {
-        _bytes.swap(ip._bytes);
-        Base::swap_scope(*this, ip);
+        Base::swap(*this, ip);
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR size_t hash() const IPADDRESS_NOEXCEPT {
-        return Base::ip_to_hash(_bytes);
+        return Base::hash(Base::bytes());
     }
 
     IPADDRESS_NODISCARD std::string reverse_pointer() const {
-       return Base::ip_reverse_pointer(_bytes);
+       return Base::ip_reverse_pointer(Base::bytes());
     }
 
     IPADDRESS_NODISCARD explicit operator std::string() const {
@@ -119,7 +116,7 @@ public:
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator==(const ip_address_base& rhs) const IPADDRESS_NOEXCEPT {
-        return _bytes == rhs._bytes && Base::compare_scope_id(*this, rhs) == 0;
+        return Base::equals(*this, rhs);
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator!=(const ip_address_base& rhs) const IPADDRESS_NOEXCEPT {
@@ -129,23 +126,13 @@ public:
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR std::strong_ordering operator<=>(const ip_address_base& rhs) const IPADDRESS_NOEXCEPT {
-        if (auto result = _bytes <=> rhs._bytes; result == std::strong_ordering::equivalent) {
-            if (const auto scope = Base::compare_scope_id(*this, rhs); scope < 0) {
-                return std::strong_ordering::less;
-            } else if (scope == 0) {
-                return std::strong_ordering::equivalent;
-            } else {
-                return std::strong_ordering::greater;
-            }
-        } else {
-            return result;
-        }
+        return Base::compare(*this, rhs);
     }
 
 #else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<(const ip_address_base& rhs) const IPADDRESS_NOEXCEPT {
-        return _bytes < rhs._bytes ? true : Base::compare_scope_id(*this, rhs) < 0;
+        return Base::less(*this, rhs);
     }
     
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>(const ip_address_base& rhs) const IPADDRESS_NOEXCEPT {
@@ -185,8 +172,6 @@ private:
         auto index = 0;
         return Base::ip_from_string(address.begin(), address.end(), code, index);
     }
-
-    base_type _bytes;
 };
 
 #ifndef IPADDRESS_NO_OVERLOAD_STD

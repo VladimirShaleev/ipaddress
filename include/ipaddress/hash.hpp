@@ -16,7 +16,7 @@ struct hash_combine<4> {
         value ^= value >> 15;
         value *= 0x735a2d97;
         value ^= value >> 15;
-        return value;
+        return std::size_t(value);
     }
 };
 
@@ -28,7 +28,7 @@ struct hash_combine<8> {
         value ^= value >> 32;
         value *= 0xe9846af9b1a615d;
         value ^= value >> 28;
-        return value;
+        return std::size_t(value);
     }
 };
 

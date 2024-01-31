@@ -116,7 +116,7 @@ TEST(ipv4_address, DefaultCtor) {
     EXPECT_EQ(ip.to_uint32(), 0);
     EXPECT_EQ(uint32_t(ip), 0);
     EXPECT_EQ(ip.size, 4);
-    EXPECT_EQ(ip.version, version::V4);
+    EXPECT_EQ(ip.version, ip_version::V4);
 }
 
 TEST(ipv4_address, CopyCtor) {
@@ -176,12 +176,12 @@ INSTANTIATE_TEST_SUITE_P(
 
 using AddressParserIpv4Params = TestWithParam<std::tuple<const char*, uint32_t, std::array<uint8_t, 4>>>;
 TEST_P(AddressParserIpv4Params, parse) {
-    auto excepted_uint32 = get<1>(GetParam());
-    auto excepted_bytes = get<2>(GetParam());
+    const auto& excepted_uint32 = get<1>(GetParam());
+    const auto& excepted_bytes = get<2>(GetParam());
 
     auto ip = ipv4_address::parse(get<0>(GetParam()));
     auto actual_uint32 = ip.to_uint32();
-    auto actual_bytes = ip.bytes();
+    const auto& actual_bytes = ip.bytes();
 
     ASSERT_EQ(actual_uint32, excepted_uint32);
     ASSERT_EQ(actual_bytes[0], excepted_bytes[0]);

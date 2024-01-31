@@ -9,7 +9,7 @@ namespace IPADDRESS_NAMESPACE {
 template <typename Ext>
 class base_v4 {
 public:
-    static IPADDRESS_CONSTEXPR version version = version::V4;
+    static IPADDRESS_CONSTEXPR ip_version version = ip_version::V4;
 
     static IPADDRESS_CONSTEXPR size_t size = 4;
 
@@ -120,10 +120,6 @@ protected:
         return res.str();
     }
 
-    static IPADDRESS_CONSTEXPR std::size_t ip_to_hash(const base_type& bytes) IPADDRESS_NOEXCEPT {
-        return calc_hash(0, size_t(bytes[0]), size_t(bytes[1]), size_t(bytes[2]), size_t(bytes[3]));
-    }
-
     static std::string ip_reverse_pointer(const base_type& bytes) {
         return ip_from_uint32(swap_bytes(ip_to_uint32(bytes))).to_string() + ".in-addr.arpa";
     }
@@ -164,13 +160,13 @@ protected:
                 }
             }
         }
-        prefixlen  = has_prefixlen ? prefixlen : max_prefixlen;
+        prefixlen = has_prefixlen ? prefixlen : max_prefixlen;
         auto netmask = ip_from_prefix(prefixlen);
-        auto hostmask = get_hostmask(netmask);
+        auto hostmask = netmask_to_hostmask(netmask);
         return std::make_tuple(netmask, hostmask, prefixlen);
     }
 
-    static IPADDRESS_CONSTEXPR ip_address_base<Ext> get_hostmask(const ip_address_base<Ext>& netmask) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR ip_address_base<Ext> netmask_to_hostmask(const ip_address_base<Ext>& netmask) IPADDRESS_NOEXCEPT {
         return ip_from_uint32(netmask.to_uint32() ^ all_ones);
     }
 
@@ -188,24 +184,7 @@ protected:
         return address;
     }
 
-    static IPADDRESS_CONSTEXPR size_t count_righthand_zero_bits(uint32_t number, uint32_t bits) IPADDRESS_NOEXCEPT {
-        if (number == 0) {
-            return bits;
-        } else {
-            number = (~number & (number - 1));
-            auto count = 0;
-            while (number != 0) {
-                count += number & 0x1;
-                number >>= 1;
-            }
-            if (bits < count) {
-                return bits;
-            } else {
-                return count;
-            }
-        }
-    }
-
+private:
     static IPADDRESS_CONSTEXPR size_t prefix_from_ip_uint32(uint32_t ip, error_code& code) IPADDRESS_NOEXCEPT {
         auto trailing_zeroes = count_righthand_zero_bits(ip, max_prefixlen);
         auto prefixlen = max_prefixlen - trailing_zeroes;
@@ -218,16 +197,24 @@ protected:
         return prefixlen;
     }
     
-    static IPADDRESS_CONSTEXPR size_t hash_scope_id() IPADDRESS_NOEXCEPT {
-        return 0;
+    static IPADDRESS_CONSTEXPR size_t count_righthand_zero_bits(uint32_t number, uint32_t bits) IPADDRESS_NOEXCEPT {
+        if (number == 0) {
+            return bits;
+        } else {
+            number = (~number & (number - 1));
+            size_t count = 0;
+            while (number != 0) {
+                count += number & 0x1;
+                number >>= 1;
+            }
+            if (bits < count) {
+                return bits;
+            } else {
+                return count;
+            }
+        }
     }
 
-    static IPADDRESS_CONSTEXPR void swap_scope(const ip_address_base<Ext>& lhs, const ip_address_base<Ext>& rhs) IPADDRESS_NOEXCEPT {
-    }
-
-    static IPADDRESS_CONSTEXPR bool compare_scope_id(const ip_address_base<Ext>& lhs, const ip_address_base<Ext>& rhs) IPADDRESS_NOEXCEPT {
-        return 0;
-    }
 };
 
 } // IPADDRESS_NAMESPACE

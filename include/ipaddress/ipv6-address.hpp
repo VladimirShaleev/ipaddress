@@ -102,8 +102,10 @@ private:
 
 class ipv6_address_base : public base_v6<ipv6_address_base> {
 public:
+    using base_type = typename base_v6<ipv6_address_base>::base_type;
+
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR scope get_scope_id() const IPADDRESS_NOEXCEPT {
-        return scope(_scope_id);
+        return scope(_data.scope_id);
     }
 
     template <size_t N>
@@ -113,7 +115,7 @@ public:
         for (size_t i = 0; i < N; ++i) {
             str[i] = scope_id[i];
         }
-        _scope_id = make_fixed_string(str);
+        _data.scope_id = make_fixed_string(str);
     }
 
 #if IPADDRESS_CPP_VERSION >= 17
@@ -137,6 +139,94 @@ public:
     }
 
 #endif // IPADDRESS_CPP_VERSION < 17
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const base_type bytes() const IPADDRESS_NOEXCEPT {
+        return _data.bytes;
+    }
+
+protected:
+    IPADDRESS_CONSTEXPR ipv6_address_base() IPADDRESS_NOEXCEPT = default;
+
+    IPADDRESS_CONSTEXPR explicit ipv6_address_base(const base_type& bytes) IPADDRESS_NOEXCEPT : _data({ bytes }) {
+    }
+
+    static IPADDRESS_CONSTEXPR void swap(ip_address_base<ipv6_address_base>& lhs, ip_address_base<ipv6_address_base>& rhs) IPADDRESS_NOEXCEPT {
+        lhs._data.bytes.swap(rhs._data.bytes);
+        lhs._data.scope_id.swap(rhs._data.scope_id);
+    }
+
+    IPADDRESS_CONSTEXPR std::size_t hash(const base_type& bytes) const IPADDRESS_NOEXCEPT {
+        return calc_hash(_data.scope_id.hash(),
+            size_t(bytes[0]), size_t(bytes[1]), size_t(bytes[2]), size_t(bytes[3]), 
+            size_t(bytes[4]), size_t(bytes[5]), size_t(bytes[6]), size_t(bytes[7]), 
+            size_t(bytes[8]), size_t(bytes[9]), size_t(bytes[10]), size_t(bytes[11]), 
+            size_t(bytes[12]), size_t(bytes[13]), size_t(bytes[14]), size_t(bytes[15]));
+    }
+
+    static IPADDRESS_CONSTEXPR bool equals(const ip_address_base<ipv6_address_base>& lhs, const ip_address_base<ipv6_address_base>& rhs) IPADDRESS_NOEXCEPT {
+        return lhs._data.bytes == rhs._data.bytes && lhs._data.scope_id.compare(rhs._data.scope_id) == 0;
+    }
+
+    static IPADDRESS_CONSTEXPR bool less(const ip_address_base<ipv6_address_base>& lhs, const ip_address_base<ipv6_address_base>& rhs) IPADDRESS_NOEXCEPT {
+        return lhs._data.bytes < rhs._data.bytes ? true : lhs._data.scope_id.compare(rhs._data.scope_id) < 0;
+    }
+
+#ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
+
+    static IPADDRESS_CONSTEXPR std::strong_ordering compare(const ip_address_base<ipv6_address_base>& lhs, const ip_address_base<ipv6_address_base>& rhs) IPADDRESS_NOEXCEPT {
+        if (auto result = lhs._data.bytes <=> rhs._data.bytes; result == std::strong_ordering::equivalent) {
+            if (const auto scope = lhs._data.scope_id.compare(rhs._data.scope_id); scope < 0) {
+                return std::strong_ordering::less;
+            } else if (scope == 0) {
+                return std::strong_ordering::equivalent;
+            } else {
+                return std::strong_ordering::greater;
+            }
+        } else {
+            return result;
+        }
+    }
+
+#endif // IPADDRESS_HAS_SPACESHIP_OPERATOR
+
+    std::string ip_reverse_pointer(const base_type& bytes) const {
+        return base_v6<ipv6_address_base>::ip_reverse_pointer(bytes, _data.scope_id);
+    }
+
+    std::string ip_to_string(const base_type& bytes, format fmt) const {
+        return base_v6<ipv6_address_base>::ip_to_string(bytes, _data.scope_id, fmt);
+    }
+
+private:
+    template <typename Str>
+    IPADDRESS_CONSTEXPR void change_scope_id(const Str& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        error_code err = error_code::NO_ERROR;
+        change_scope_id(scope_id, err);
+    #ifndef IPADDRESS_NO_EXCEPTIONS
+        if (err != error_code::NO_ERROR) {
+            raise_error(err, 0, "<bytes>", 7);
+        }
+    #endif
+    }
+
+    template <typename Str>
+    IPADDRESS_CONSTEXPR void change_scope_id(const Str& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
+        if (scope_id.size() > 16) {
+            code = error_code::SCOPE_ID_IS_TOO_LONG;
+            return;
+        }
+        char scope[17] = {};
+        for (size_t i = 0; i < scope_id.size(); ++i) {
+            scope[i] = scope_id[i];
+        }
+        _data.scope_id = make_fixed_string(scope);
+    }
+    
+    struct ipv6_data {
+        base_type bytes{};
+        fixed_string<16> scope_id;
+    } _data;
+
 }; // ipv6_address_base
 
 using ipv6_address = ip_address_base<ipv6_address_base>;
@@ -144,13 +234,13 @@ using ipv6_address = ip_address_base<ipv6_address_base>;
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
     template <fixed_string FixedString>
-    inline consteval ipv6_address operator""_ipv6() IPADDRESS_NOEXCEPT {
+    consteval IPADDRESS_FORCE_INLINE ipv6_address operator""_ipv6() IPADDRESS_NOEXCEPT {
         return ipv6_address::parse<FixedString>();
     }
 
 #else // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
-    inline IPADDRESS_CONSTEXPR ipv6_address operator""_ipv6(const char* address, std::size_t size) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_address operator""_ipv6(const char* address, std::size_t size) IPADDRESS_NOEXCEPT {
         assert(size <= ipv6_address::max_string_len && "litteral string is too long");
         char str[ipv6_address::max_string_len + 1] = {};
         for (size_t i = 0; i < size; ++i) {

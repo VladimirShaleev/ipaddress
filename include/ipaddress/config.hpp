@@ -77,6 +77,12 @@
 #  define IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS
 #endif
 
+#ifdef _MSC_VER
+#  define IPADDRESS_FORCE_INLINE __forceinline
+#else
+#  define IPADDRESS_FORCE_INLINE inline __attribute__((always_inline))
+#endif
+
 #if !defined(IPADDRESS_NO_SPACESHIP_OPERATOR) && defined(__has_include)
 #  if (__cpp_lib_three_way_comparison >= 201907) && __has_include(<compare>)
 #    define IPADDRESS_HAS_SPACESHIP_OPERATOR

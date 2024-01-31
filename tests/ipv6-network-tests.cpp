@@ -54,7 +54,7 @@ TEST(ipv6_network, CompileTime) {
     ASSERT_EQ(net3_netmask, ipv6_address::parse("ffff:ffff::"));
     ASSERT_EQ(net3_hostmask, ipv6_address::parse("::ffff:ffff:ffff:ffff:ffff:ffff"));
     ASSERT_EQ(net3_prefixlen, 32);
-    ASSERT_GT(net3_hash, 0);
+    ASSERT_GT(net3_hash, size_t(0));
 
     constexpr auto net4 = test_swap("::/128", "2001:db8::%test/64");
     constexpr auto net4_address = net4.address();
@@ -66,7 +66,7 @@ TEST(ipv6_network, CompileTime) {
     ASSERT_EQ(net4_netmask, ipv6_address::parse("ffff:ffff:ffff:ffff::"));
     ASSERT_EQ(net4_hostmask, ipv6_address::parse("::ffff:ffff:ffff:ffff"));
     ASSERT_EQ(net4_prefixlen, 64);
-    ASSERT_GT(net4_hash, 0);
+    ASSERT_GT(net4_hash, size_t(0));
 
     constexpr auto net5_error = test_error("2001:db8::/8");
     ASSERT_EQ(net5_error, error_code::HAS_HOST_BITS_SET);
@@ -102,7 +102,7 @@ TEST(ipv6_network, DefaultCtor) {
     EXPECT_EQ(net.netmask(), ipv6_address::parse("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"));
     EXPECT_EQ(net.hostmask(), ipv6_address::parse("::"));
     EXPECT_EQ(net.prefixlen(), 128);
-    EXPECT_EQ(net.version, version::V6);
+    EXPECT_EQ(net.version, ip_version::V6);
 }
 
 TEST(ipv6_network, CopyCtor) {
@@ -123,7 +123,7 @@ TEST(ipv6_network, CopyOperator) {
     EXPECT_EQ(net_copy.netmask(), ipv6_address::parse("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"));
     EXPECT_EQ(net_copy.hostmask(), ipv6_address::parse("::"));
     EXPECT_EQ(net_copy.prefixlen(), 128);
-    EXPECT_EQ(net_copy.version, version::V6);
+    EXPECT_EQ(net_copy.version, ip_version::V6);
     net_copy = net;
 
     EXPECT_EQ(net_copy.address(), ipv6_address::parse("2001:db8::"));

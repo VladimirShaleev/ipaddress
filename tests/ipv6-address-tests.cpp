@@ -24,14 +24,13 @@ static constexpr ipv6_address set_scope_id(const char(&address)[N1], const char(
     return ip;
 }
 
-TEST(ipv6_address, CompileTime)
-{
+TEST(ipv6_address, CompileTime) {
     constexpr ipv6_address::base_type ip_bytes { 0x20, 0x01, 0x0D, 0xB8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 };
 
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
     auto ip1 = ipv6_address::parse<"2001:db8::1">();
     ASSERT_EQ(ip1.bytes(), ip_bytes);
-    
+
     constexpr auto ip2 = ipv6_address::parse<"2001:db8::1%1">();
     constexpr auto ip2_bytes = ip2.bytes();
     constexpr auto ip2_byte_0 = ip2_bytes[0];
@@ -70,6 +69,7 @@ TEST(ipv6_address, CompileTime)
     ASSERT_FALSE(b5);
     ASSERT_TRUE(b6);
 #endif
+
     constexpr auto ip5 = ipv6_address::parse("2001:db8::1");
     constexpr auto ip5_bytes = ip5.bytes();
     constexpr auto ip5_byte_0 = ip5_bytes[0];
@@ -180,7 +180,7 @@ TEST(ipv6_address, DefaultCtor) {
 
     EXPECT_EQ(ip.bytes(), expected_empty);
     EXPECT_EQ(ip.size, 16);
-    EXPECT_EQ(ip.version, version::V6);
+    EXPECT_EQ(ip.version, ip_version::V6);
 }
 
 TEST(ipv6_address, CopyCtor) {
@@ -223,8 +223,8 @@ TEST(ipv6_address, CopyOperator) {
 
 using FromBytesIpv6Params = TestWithParam<std::tuple<ipv6_address::base_type, const char*>>;
 TEST_P(FromBytesIpv6Params, from_bytes) {
-    auto bytes = std::get<0>(GetParam());
-    auto scope = std::get<1>(GetParam());
+    const auto& bytes = std::get<0>(GetParam());
+    const auto scope = std::get<1>(GetParam());
 
     auto ip1 = ipv6_address::from_bytes(bytes);
     auto ip2 = ipv6_address::from_bytes(bytes.data(), bytes.size());
@@ -253,14 +253,14 @@ INSTANTIATE_TEST_SUITE_P(
 
 using AddressParserIpv6Params = TestWithParam<std::tuple<const char*, ipv6_address::base_type, bool, bool, const char*, uint32_t>>;
 TEST_P(AddressParserIpv6Params, parse) {
-    auto excepted_bytes = get<1>(GetParam());
-    auto excepted_scope_has_str = get<2>(GetParam());
-    auto excepted_scope_has_int = get<3>(GetParam());
-    auto excepted_scope_str = get<4>(GetParam());
-    auto excepted_scope_int = get<5>(GetParam());
+    const auto& excepted_bytes = get<1>(GetParam());
+    const auto excepted_scope_has_str = get<2>(GetParam());
+    const auto excepted_scope_has_int = get<3>(GetParam());
+    const auto excepted_scope_str = get<4>(GetParam());
+    const auto excepted_scope_int = get<5>(GetParam());
 
-    auto ip = ipv6_address::parse(get<0>(GetParam()));
-    auto actual_bytes = ip.bytes();
+    const auto ip = ipv6_address::parse(get<0>(GetParam()));
+    const auto& actual_bytes = ip.bytes();
     auto actual_scope_id = ip.get_scope_id();
 
     auto actual_scope_has = (bool) actual_scope_id;
@@ -676,7 +676,7 @@ TEST(ipv6_address, reverse_pointer) {
 TEST(ipv6_address, literals) {
     auto ip1 = "2001:db8::1"_ipv6;
     auto ip2 = "0001:0002:0003:0004:0005:0006:0007:0008%123456789abcdefg"_ipv6;
-    
+
     ASSERT_EQ(ip1, ipv6_address::parse("2001:db8::1"));
     ASSERT_EQ(ip2, ipv6_address::parse("1:2:3:4:5:6:7:8%123456789abcdefg"));
 }

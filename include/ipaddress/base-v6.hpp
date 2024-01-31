@@ -8,7 +8,7 @@ namespace IPADDRESS_NAMESPACE {
 template <typename Ext>
 class base_v6 {
 public:
-    static IPADDRESS_CONSTEXPR version version = version::V6;
+    static IPADDRESS_CONSTEXPR ip_version version = ip_version::V6;
 
     static IPADDRESS_CONSTEXPR size_t size = 16;
 
@@ -49,12 +49,44 @@ protected:
         }
 
         auto ip = ip_address_base<Ext>(parse_parts(parts, parts_count, std::get<0>(result), std::get<1>(result), std::get<2>(result), code));
-        ip._scope_id = ip_and_scope.second;
+
+        char scope_id[16] = {
+            ip_and_scope.second[0],
+            ip_and_scope.second[1],
+            ip_and_scope.second[2],
+            ip_and_scope.second[3],
+            ip_and_scope.second[4],
+            ip_and_scope.second[5],
+            ip_and_scope.second[6],
+            ip_and_scope.second[7],
+            ip_and_scope.second[8],
+            ip_and_scope.second[9],
+            ip_and_scope.second[10],
+            ip_and_scope.second[11],
+            ip_and_scope.second[12],
+            ip_and_scope.second[13],
+            ip_and_scope.second[14],
+            ip_and_scope.second[15]
+        };
+        ip.set_scope_id(scope_id);
 
         return ip;
     }
     
-    std::string ip_to_string(const base_type& bytes, format fmt) const {
+    static IPADDRESS_CONSTEXPR ip_address_base<Ext> ip_from_prefix(size_t prefixlen) {
+        base_type bytes {};
+        for (size_t i = 0; i < (prefixlen >> 3); ++i) {
+            bytes[i] = 0xFF;
+        }
+        auto shift = (prefixlen - ((prefixlen >> 3) << 3));
+        if (shift > 0) {
+            auto byte = 0xFF ^ uint8_t(uint8_t(0xFF) >> shift);
+            bytes[prefixlen >> 3] = byte;
+        }
+        return ip_address_base<Ext>(bytes);
+    }
+
+    static std::string ip_to_string(const base_type& bytes, const fixed_string<16>& scope_id, format fmt) {
         char hextets[size >> 1][5] = {};
         const size_t max_hextets = size >> 1;
         for (size_t i = 0; i < max_hextets; ++i) {
@@ -142,35 +174,14 @@ protected:
         if (has_doublecolon_end) {
             res << ':';
         }
-        if (!_scope_id.empty()) {
-            res << '%' << _scope_id.data();
+        if (!scope_id.empty()) {
+            res << '%' << scope_id.data();
         }
         return res.str();
     }
 
-    IPADDRESS_CONSTEXPR std::size_t ip_to_hash(const base_type& bytes) const IPADDRESS_NOEXCEPT {
-        return calc_hash(hash_scope_id(),
-            size_t(bytes[0]), size_t(bytes[1]), size_t(bytes[2]), size_t(bytes[3]), 
-            size_t(bytes[4]), size_t(bytes[5]), size_t(bytes[6]), size_t(bytes[7]), 
-            size_t(bytes[8]), size_t(bytes[9]), size_t(bytes[10]), size_t(bytes[11]), 
-            size_t(bytes[12]), size_t(bytes[13]), size_t(bytes[14]), size_t(bytes[15]));
-    }
-
-    static IPADDRESS_CONSTEXPR ip_address_base<Ext> ip_from_prefix(size_t prefixlen) {
-        base_type bytes {};
-        for (auto i = 0; i < (prefixlen >> 3); ++i) {
-            bytes[i] = 0xFF;
-        }
-        auto shift = (prefixlen - ((prefixlen >> 3) << 3));
-        if (shift > 0) {
-            auto byte = 0xFF ^ uint8_t(uint8_t(0xFF) >> shift);
-            bytes[prefixlen >> 3] = byte;
-        }
-        return ip_address_base<Ext>(bytes);
-    }
-
-    std::string ip_reverse_pointer(const base_type& bytes) const {
-        auto ip = ip_to_string(bytes, format::full);
+    static std::string ip_reverse_pointer(const base_type& bytes, const fixed_string<16>& scope_id) {
+        auto ip = ip_to_string(bytes, scope_id, format::full);
         ip.erase(std::remove(ip.begin(), ip.end(), ':'), ip.end());
         auto res = std::accumulate(std::next(ip.rbegin()), ip.rend(), std::string{ip.back()}, [](auto a, auto b) {
             return std::move(a) + '.' + b;
@@ -200,11 +211,10 @@ protected:
         prefixlen = has_prefixlen ? prefixlen : max_prefixlen;
 
         auto netmask = ip_from_prefix(prefixlen);
-        const auto& netmask_bytes = netmask.bytes();
-        return std::make_tuple(netmask, get_hostmask(netmask), prefixlen);
+        return std::make_tuple(netmask, netmask_to_hostmask(netmask), prefixlen);
     }
 
-    static IPADDRESS_CONSTEXPR ip_address_base<Ext> get_hostmask(const ip_address_base<Ext>& netmask) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR ip_address_base<Ext> netmask_to_hostmask(const ip_address_base<Ext>& netmask) IPADDRESS_NOEXCEPT {
         const auto& netmask_bytes = netmask.bytes();
         return ip_address_base<Ext>(base_type {
             uint8_t(netmask_bytes[0] ^ 0xFF),
@@ -246,44 +256,6 @@ protected:
         return address;
     }
 
-    IPADDRESS_CONSTEXPR size_t hash_scope_id() const IPADDRESS_NOEXCEPT {
-        return _scope_id.hash();
-    }
-
-    static IPADDRESS_CONSTEXPR void swap_scope(ip_address_base<Ext>& lhs, ip_address_base<Ext>& rhs) IPADDRESS_NOEXCEPT {
-        lhs._scope_id.swap(rhs._scope_id);
-    }
-
-    static IPADDRESS_CONSTEXPR int compare_scope_id(const ip_address_base<Ext>& lhs, const ip_address_base<Ext>& rhs) IPADDRESS_NOEXCEPT {
-        return lhs._scope_id.compare(rhs._scope_id);
-    }
-
-    template <typename Str>
-    IPADDRESS_CONSTEXPR void change_scope_id(const Str& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        error_code err = error_code::NO_ERROR;
-        change_scope_id(scope_id, err);
-    #ifndef IPADDRESS_NO_EXCEPTIONS
-        if (err != error_code::NO_ERROR) {
-            raise_error(err, 0, "<bytes>", 7);
-        }
-    #endif
-    }
-
-    template <typename Str>
-    IPADDRESS_CONSTEXPR void change_scope_id(const Str& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
-        if (scope_id.size() > 16) {
-            code = error_code::SCOPE_ID_IS_TOO_LONG;
-            return;
-        }
-        char scope[17] = {};
-        for (size_t i = 0; i < scope_id.size(); ++i) {
-            scope[i] = scope_id[i];
-        }
-        _scope_id = make_fixed_string(scope);
-    }
-
-    fixed_string<16> _scope_id{"\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"};
-
 private:
     template <typename Iter>
     static IPADDRESS_CONSTEXPR std::pair<Iter, fixed_string<16>> split_scope_id(Iter begin, Iter end, error_code& error) IPADDRESS_NOEXCEPT {
@@ -318,7 +290,7 @@ private:
     template <typename Iter>
     static IPADDRESS_CONSTEXPR std::array<fixed_string<4>, max_parts + 1> split_parts(Iter begin, Iter end, int& parts_count, error_code& error) IPADDRESS_NOEXCEPT {
         char parts[max_parts + 1][5] = {};
-        char last_part[16] = {};
+        char last_part[17] = {};
         
         parts_count = 0;
         int symbol = 0;
@@ -425,9 +397,9 @@ private:
             make_fixed_string(parts[8])};
     }
 
-    static IPADDRESS_CONSTEXPR std::tuple<size_t, size_t, size_t> get_parts_bound(const std::array<fixed_string<4>, max_parts + 1>& parts, int parts_count, error_code& error) IPADDRESS_NOEXCEPT {
-        int skip = 0;
-        for (auto i = 1; i < parts_count - 1; ++i) {
+    static IPADDRESS_CONSTEXPR std::tuple<size_t, size_t, size_t> get_parts_bound(const std::array<fixed_string<4>, max_parts + 1>& parts, size_t parts_count, error_code& error) IPADDRESS_NOEXCEPT {
+        size_t skip = 0;
+        for (size_t i = 1; i < parts_count - 1; ++i) {
             if (parts[i].empty()) {
                 if (skip) {
                     error = error_code::MOST_ONE_DOUBLE_COLON_PERMITTED;
@@ -483,7 +455,7 @@ private:
         }
     }
 
-    static IPADDRESS_CONSTEXPR base_type parse_parts(const std::array<fixed_string<4>, max_parts + 1>& parts, int parts_count, size_t hi, size_t lo, size_t skipped, error_code& error) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR base_type parse_parts(const std::array<fixed_string<4>, max_parts + 1>& parts, size_t parts_count, size_t hi, size_t lo, size_t skipped, error_code& error) IPADDRESS_NOEXCEPT {
         base_type result = {};
         int index = 0;
 
@@ -498,6 +470,7 @@ private:
         }
         index += skipped << 1;
 
+        assert(parts_count > lo);
         for (size_t i = parts_count - lo; i < parts_count; ++i) {
             const auto part = parse_part(parts[i], error);
             result[index++] = uint8_t(part >> 8);
