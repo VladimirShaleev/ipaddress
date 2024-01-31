@@ -112,6 +112,20 @@ public:
         return result;
     }
 
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE IPADDRESS_CONSTEXPR bool contains(const ip_address_type& address) const IPADDRESS_NOEXCEPT {
+        const auto& ip_bytes = address.bytes();
+        const auto& address_bytes = this->address().bytes();
+        const auto& netmask_bytes = netmask().bytes();
+        typename ip_address_type::base_type result{};
+
+        for (size_t i = 0; i < ip_address_type::size; ++i) {
+            if ((ip_bytes[i] & netmask_bytes[i]) != address_bytes[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     IPADDRESS_NODISCARD std::string to_string(format fmt = format::compressed) const {
         return _address.to_string(fmt) + '/' + std::to_string(_prefixlen);
     }

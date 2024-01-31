@@ -95,6 +95,8 @@ public:
         return parse_string(str, code);
     }
 
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_private() const IPADDRESS_NOEXCEPT;
+
     IPADDRESS_NODISCARD std::string to_string(format fmt = format::compressed) const {
         return Base::ip_to_string(Base::bytes(), fmt);
     }
