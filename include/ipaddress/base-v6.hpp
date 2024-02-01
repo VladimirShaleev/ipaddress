@@ -72,14 +72,14 @@ protected:
         return ip_address_base<Ext>(bytes);
     }
 
-    static std::string ip_to_string(const base_type& bytes, const fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>& scope_id, format fmt) {
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t ip_to_chars(const base_type& bytes, const fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>& scope_id, format fmt, char (&result)[max_string_len + 1]) IPADDRESS_NOEXCEPT {
         char hextets[size >> 1][5] = {};
         const size_t max_hextets = size >> 1;
         for (size_t i = 0; i < max_hextets; ++i) {
             uint16_t value = (uint16_t(bytes[i * 2]) << 8) | uint16_t(bytes[i * 2 + 1]);
             to_hex(value, hextets[i]);
         }
-
+        
         auto count = max_hextets;
         auto has_doublecolon_start = false;
         auto has_doublecolon_end = false;
@@ -111,7 +111,7 @@ protected:
                         doublecolon_len += 1;
 
                         if (doublecolon_start == -1) {
-                            doublecolon_start = i;
+                            doublecolon_start = int(i);
                         }
                         if (doublecolon_len > best_doublecolon_len) {
                             best_doublecolon_len = doublecolon_len;
@@ -149,25 +149,38 @@ protected:
             }
         }
 
-        std::ostringstream res;
+        size_t offset = 0;
         if (has_doublecolon_start) {
-            res << ':';
+            result[offset++] = ':';
         }
         for (size_t i = 0; i < count - 1; ++i) {
-            res << hextets[i] << ':';
+            const auto& hextet = hextets[i];
+            for (size_t c = 0; hextet[c] != '\0'; ++c) {
+                result[offset++] = hextet[c];
+            }
+            result[offset++] = ':';
         }
-        res << hextets[count - 1];
+        const auto hextet = hextets[count - 1];
+        for (size_t c = 0; hextet[c] != '\0'; ++c) {
+            result[offset++] = hextet[c];
+        }
         if (has_doublecolon_end) {
-            res << ':';
+            result[offset++] = ':';
         }
         if (!scope_id.empty()) {
-            res << '%' << scope_id.data();
+            result[offset++] = '%';
+            for (const auto c : scope_id) {
+                result[offset++] = c;
+            }
         }
-        return res.str();
+        result[offset] = '\0';
+        return offset;
     }
 
     static std::string ip_reverse_pointer(const base_type& bytes, const fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>& scope_id) {
-        auto ip = ip_to_string(bytes, scope_id, format::full);
+        char result[max_string_len + 1] {};
+        const auto len = ip_to_chars(bytes, scope_id, format::full, result);
+        auto ip = std::string(result, len);
         ip.erase(std::remove(ip.begin(), ip.end(), ':'), ip.end());
         auto res = std::accumulate(std::next(ip.rbegin()), ip.rend(), std::string{ip.back()}, [](auto a, auto b) {
             return std::move(a) + '.' + b;
@@ -443,7 +456,7 @@ private:
 
     static IPADDRESS_CONSTEXPR base_type parse_parts(const std::array<fixed_string<4>, max_parts + 1>& parts, size_t parts_count, size_t hi, size_t lo, size_t skipped, error_code& error) IPADDRESS_NOEXCEPT {
         base_type result = {};
-        int index = 0;
+        size_t index = 0;
 
         for (size_t i = 0; i < hi; ++i) {
             const auto part = parse_part(parts[i], error);

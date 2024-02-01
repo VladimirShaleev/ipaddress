@@ -111,13 +111,20 @@ protected:
         return is_little_endian() ? swap_bytes(ip) : ip;
     }
 
-    static std::string ip_to_string(const base_type& bytes, format fmt) {
-        std::ostringstream res;
-        res << size_t(bytes[0]) << '.'
-            << size_t(bytes[1]) << '.' 
-            << size_t(bytes[2]) << '.' 
-            << size_t(bytes[3]);
-        return res.str();
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t ip_to_chars(const base_type& bytes, format fmt, char (&result)[max_string_len + 1]) IPADDRESS_NOEXCEPT {
+        size_t offset = 0;
+        char buffer[4] {};
+        for (size_t b = 0; b < 4; ++b) {
+            size_t length = byte_to_string(bytes[b], buffer);
+            for (size_t i = 0; i < length; ++i) {
+                result[offset++] = buffer[i];
+            }
+            if (b < 3) {
+                result[offset++] = '.';
+            }
+        }
+        result[offset] = '\0';
+        return offset;
     }
 
     static std::string ip_reverse_pointer(const base_type& bytes) {
@@ -215,6 +222,25 @@ private:
         }
     }
 
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t byte_to_string(uint8_t byte, char (&str)[4]) IPADDRESS_NOEXCEPT {
+        size_t length = 0;
+        char* p = str;
+        do {
+            *p++ = char((byte % 10) + '0');
+            byte /= 10;
+            ++length;
+        } while (byte != 0);
+
+        *p = '\0';
+
+        for (size_t i = 0, midle = length / 2; i < midle; ++i) {
+            auto tmp = str[i];
+            str[i] = *--p;
+            *p = tmp;
+        }
+
+        return length;
+    }
 };
 
 } // IPADDRESS_NAMESPACE

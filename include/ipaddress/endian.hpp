@@ -3,7 +3,7 @@
 
 #include "config.hpp"
 
-#ifdef __has_include
+#if (IPADDRESS_CPP_VERSION >= 20) && defined(__has_include)
 #  if __has_include(<bit>)
 #    include <bit>
 #  endif

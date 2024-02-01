@@ -91,7 +91,7 @@ using ipv4_address = ip_address_base<ipv4_address_base>;
 
     inline IPADDRESS_CONSTEXPR ipv4_address operator""_ipv4(unsigned long long value) IPADDRESS_NOEXCEPT {
         assert(value <= ipv4_address::all_ones && "litteral integer is too long");
-        return ipv4_address::from_uint32(value);
+        return ipv4_address::from_uint32(uint32_t(value));
     }
 
 #endif // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER

@@ -119,7 +119,9 @@ public:
     }
 
     IPADDRESS_NODISCARD std::string to_string(format fmt = format::compressed) const {
-        return Base::ip_to_string(Base::bytes(), fmt);
+        char res[Base::max_string_len + 1]{};
+        const auto len = Base::ip_to_chars(Base::bytes(), fmt, res);
+        return std::string(res, len);
     }
 
     IPADDRESS_CONSTEXPR void swap(ip_address_base& ip) IPADDRESS_NOEXCEPT {

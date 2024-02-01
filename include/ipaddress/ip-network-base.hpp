@@ -78,12 +78,14 @@ public:
         auto result = from_address(address, code, prefixlen, strict);
         if (code != error_code::NO_ERROR) {
             if (IPADDRESS_IS_CONST_EVALUATED(code)) {
-                auto str = address.to_string();
-                raise_error(code, 0, str.data(), str.size());
+                char str[ip_address_type::max_string_len + 1]{};
+                const auto len = address.ip_to_chars(address.bytes(), format::compressed, str);
+                raise_error(code, 0, str, len);
             }
         #ifndef IPADDRESS_NO_EXCEPTIONS
-            auto str = address.to_string();
-            raise_error(code, 0, str.data(), str.size());
+            char str[ip_address_type::max_string_len + 1]{};
+            const auto len = address.ip_to_chars(address.bytes(), format::compressed, str);
+            raise_error(code, 0, str, len);
         #endif
         }
         return result;
@@ -116,7 +118,6 @@ public:
         const auto& ip_bytes = address.bytes();
         const auto& address_bytes = this->address().bytes();
         const auto& netmask_bytes = netmask().bytes();
-        typename ip_address_type::base_type result{};
 
         for (size_t i = 0; i < ip_address_type::size; ++i) {
             if ((ip_bytes[i] & netmask_bytes[i]) != address_bytes[i]) {

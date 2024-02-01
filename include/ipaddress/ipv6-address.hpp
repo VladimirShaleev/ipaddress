@@ -259,15 +259,16 @@ protected:
         );
     }
 
-    std::string ip_to_string(const base_type& bytes, format fmt) const {
-        return base_v6<ipv6_address_base>::ip_to_string(bytes, 
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t ip_to_chars(const base_type& bytes, format fmt, char (&result)[max_string_len + 1]) const IPADDRESS_NOEXCEPT {
+        return base_v6<ipv6_address_base>::ip_to_chars(bytes, 
 
         #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH > 0
             _data.scope_id,
         #else // IPADDRESS_IPV6_SCOPE_MAX_LENGTH <= 0
             make_fixed_string(""),
         #endif // IPADDRESS_IPV6_SCOPE_MAX_LENGTH <= 0
-            fmt);
+            fmt,
+            result);
     }
 
 private:
