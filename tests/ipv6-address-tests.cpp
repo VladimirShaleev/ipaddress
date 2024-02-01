@@ -804,8 +804,10 @@ TEST_P(IsSiteLocalIpv6Params, is_site_local) {
 INSTANTIATE_TEST_SUITE_P(
     ipv6_address, IsSiteLocalIpv6Params,
     testing::Values(
-        std::make_tuple("0::0", true),
-        std::make_tuple("::1", false)
+        std::make_tuple("fecf::", true),
+        std::make_tuple("feff:ffff:ffff:ffff::", true),
+        std::make_tuple("fbf:ffff::", false),
+        std::make_tuple("ff00::", false)
     ));
 
 using Ipv4MappedIpv6Params = TestWithParam<std::tuple<const char*, const char*, bool>>;
@@ -821,8 +823,9 @@ TEST_P(Ipv4MappedIpv6Params, ipv4_mapped) {
 INSTANTIATE_TEST_SUITE_P(
     ipv6_address, Ipv4MappedIpv6Params,
     testing::Values(
-        std::make_tuple("0::0", "", true),
-        std::make_tuple("::1", "", false)
+        std::make_tuple("::ffff:192.168.1.1%test", "192.168.1.1", true),
+        std::make_tuple("::c0a8:101", "0.0.0.0", false),
+        std::make_tuple("::ffff:c0a8:101", "192.168.1.1", true)
     ));
 
 using SixtofourIpv6Params = TestWithParam<std::tuple<const char*, const char*, bool>>;
@@ -838,8 +841,8 @@ TEST_P(SixtofourIpv6Params, sixtofour) {
 INSTANTIATE_TEST_SUITE_P(
     ipv6_address, SixtofourIpv6Params,
     testing::Values(
-        std::make_tuple("0::0", "", true),
-        std::make_tuple("::1", "", false)
+        std::make_tuple("2002:ac1d:2d64::1", "172.29.45.100", true),
+        std::make_tuple("2000:ac1d:2d64::1", "0.0.0.0", false)
     ));
 
 using TeredoIpv6Params = TestWithParam<std::tuple<const char*, const char*, const char*, bool>>;
@@ -857,6 +860,8 @@ TEST_P(TeredoIpv6Params, teredo) {
 INSTANTIATE_TEST_SUITE_P(
     ipv6_address, TeredoIpv6Params,
     testing::Values(
-        std::make_tuple("0::0", "", "", true),
-        std::make_tuple("::1", "", "", false)
+        std::make_tuple("2001:0000:4136:e378:8000:63bf:3fff:fdd2", "65.54.227.120", "192.0.2.45", true),
+        std::make_tuple("2000::4136:e378:8000:63bf:3fff:fdd2", "0.0.0.0", "0.0.0.0", false),
+        std::make_tuple("2001:0001:4136:e378:8000:63bf:3fff:fdd2", "0.0.0.0", "0.0.0.0", false),
+        std::make_tuple("2001:0:5ef5:79fd:0:59d:a0e5:ba1", "94.245.121.253", "95.26.244.94", true)
     ));

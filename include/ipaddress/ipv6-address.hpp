@@ -176,7 +176,7 @@ public:
             return nullptr;
         }
         ipv4_address::base_type server_bytes = { b[4], b[5], b[6], b[7] };
-        ipv4_address::base_type client_bytes = { b[12], b[13], b[14], b[15] };
+        ipv4_address::base_type client_bytes = { uint8_t(~b[12]), uint8_t(~b[13]), uint8_t(~b[14]), uint8_t(~b[15]) };
         return std::make_pair(ipv4_address(server_bytes), ipv4_address(client_bytes));
     }
 
