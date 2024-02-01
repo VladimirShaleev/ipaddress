@@ -150,6 +150,12 @@ IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv6_address::is_link_local() co
     return link_local_network.contains(*this);
 }
 
+IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv6_address_base::is_site_local() const IPADDRESS_NOEXCEPT {
+    constexpr auto site_local_network = ipv6_network::parse("fec0::/10");
+    ipv6_address address(this->bytes());
+    return site_local_network.contains(address);
+}
+
 }
 
 #endif

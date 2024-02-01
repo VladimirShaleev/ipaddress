@@ -164,6 +164,27 @@ public:
         }
     }
 
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address sixtofour() const IPADDRESS_NOEXCEPT {
+        const auto& b = bytes();
+        if (b[0] != 0x20 || b[1] != 0x02) {
+            // return nullopt;
+        }
+        ipv4_address::base_type ipv4_bytes = { b[2], b[3], b[4], b[5] };
+        return ipv4_address(ipv4_bytes);
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::pair<ipv4_address, ipv4_address> teredo() const IPADDRESS_NOEXCEPT {
+        const auto& b = bytes();
+        if (b[0] != 0x20 || b[1] != 0x01 || b[2] != 0x00 || b[3] != 0x00) {
+            // return nullopt;
+        }
+        ipv4_address::base_type server_bytes = { b[4], b[5], b[6], b[7] };
+        ipv4_address::base_type client_bytes = { b[12], b[13], b[14], b[15] };
+        return std::make_pair(ipv4_address(), ipv4_address(client_bytes));
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_site_local() const IPADDRESS_NOEXCEPT;
+
 protected:
     IPADDRESS_CONSTEXPR ipv6_address_base() IPADDRESS_NOEXCEPT = default;
 
