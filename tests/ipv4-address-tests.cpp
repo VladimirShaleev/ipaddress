@@ -102,9 +102,43 @@ TEST(ipv4_address, CompileTime)
 
     constexpr auto ip9 = "127.0.0.1"_ipv4;
     constexpr auto ip10 = "127.128.128.255"_ipv4;
-    
     ASSERT_EQ(ip9, ipv4_address::parse("127.0.0.1"));
     ASSERT_EQ(ip10, ipv4_address::parse("127.128.128.255"));
+
+    constexpr auto ip11 = ipv4_address::parse("224.1.1.1").is_multicast();
+    constexpr auto ip12 = ipv4_address::parse("240.0.0.0").is_multicast();
+    ASSERT_TRUE(ip11);
+    ASSERT_FALSE(ip12);
+
+    constexpr auto ip13 = ipv4_address::parse("192.168.1.1").is_private();
+    constexpr auto ip14 = ipv4_address::parse("192.169.0.0").is_private();
+    ASSERT_TRUE(ip13);
+    ASSERT_FALSE(ip14);
+
+    constexpr auto ip15 = ipv4_address::parse("192.0.7.1").is_global();
+    constexpr auto ip16 = ipv4_address::parse("203.0.113.1").is_global();
+    ASSERT_TRUE(ip15);
+    ASSERT_FALSE(ip16);
+
+    constexpr auto ip17 = ipv4_address::parse("240.0.0.1").is_reserved();
+    constexpr auto ip18 = ipv4_address::parse("239.255.255.255").is_reserved();
+    ASSERT_TRUE(ip17);
+    ASSERT_FALSE(ip18);
+
+    constexpr auto ip19 = ipv4_address::parse("127.100.200.254").is_loopback();
+    constexpr auto ip20 = ipv4_address::parse("128.0.0.0").is_loopback();
+    ASSERT_TRUE(ip19);
+    ASSERT_FALSE(ip20);
+
+    constexpr auto ip21 = ipv4_address::parse("169.254.100.200").is_link_local();
+    constexpr auto ip22 = ipv4_address::parse("169.255.100.200").is_link_local();
+    ASSERT_TRUE(ip21);
+    ASSERT_FALSE(ip22);
+
+    constexpr auto ip23 = ipv4_address::parse("0.0.0.0").is_unspecified();
+    constexpr auto ip24 = ipv4_address::parse("169.255.100.200").is_unspecified();
+    ASSERT_TRUE(ip23);
+    ASSERT_FALSE(ip24);
 }
 
 TEST(ipv4_address, DefaultCtor) {

@@ -164,9 +164,85 @@ TEST(ipv6_address, CompileTime) {
 
     constexpr auto ip11 = "2001:db8::1"_ipv6;
     constexpr auto ip12 = "0001:0002:0003:0004:0005:0006:0007:0008%123456789abcdefg"_ipv6;
-    
     ASSERT_EQ(ip11, ipv6_address::parse("2001:db8::1"));
     ASSERT_EQ(ip12, ipv6_address::parse("1:2:3:4:5:6:7:8%123456789abcdefg"));
+
+    constexpr auto ip13 = ipv6_address::parse("ffff::").is_multicast();
+    constexpr auto ip14 = ipv6_address::parse("fdff::").is_multicast();
+    ASSERT_TRUE(ip13);
+    ASSERT_FALSE(ip14);
+
+    constexpr auto ip15 = ipv6_address::parse("fc00::").is_private();
+    constexpr auto ip16 = ipv6_address::parse("::ffff:172.32.0.0").is_private();
+    ASSERT_TRUE(ip15);
+    ASSERT_FALSE(ip16);
+
+    constexpr auto ip17 = ipv6_address::parse("200::1").is_global();
+    constexpr auto ip18 = ipv6_address::parse("fc00::").is_global();
+    ASSERT_TRUE(ip17);
+    ASSERT_FALSE(ip18);
+
+    constexpr auto ip19 = ipv6_address::parse("100::").is_reserved();
+    constexpr auto ip20 = ipv6_address::parse("fdff::").is_reserved();
+    ASSERT_TRUE(ip19);
+    ASSERT_FALSE(ip20);
+
+    constexpr auto ip21 = ipv6_address::parse("::1").is_loopback();
+    constexpr auto ip22 = ipv6_address::parse("::2").is_loopback();
+    ASSERT_TRUE(ip21);
+    ASSERT_FALSE(ip22);
+
+    constexpr auto ip23 = ipv6_address::parse("fea0::").is_link_local();
+    constexpr auto ip24 = ipv6_address::parse("fec0::").is_link_local();
+    ASSERT_TRUE(ip23);
+    ASSERT_FALSE(ip24);
+
+    constexpr auto ip25 = ipv6_address::parse("::").is_unspecified();
+    constexpr auto ip26 = ipv6_address::parse("::1").is_unspecified();
+    ASSERT_TRUE(ip25);
+    ASSERT_FALSE(ip26);
+
+    constexpr auto ip27 = ipv6_address::parse("fecf::").is_site_local();
+    constexpr auto ip28 = ipv6_address::parse("ff00::").is_site_local();
+    ASSERT_TRUE(ip27);
+    ASSERT_FALSE(ip28);
+
+    constexpr auto ipv29 = ipv6_address::parse("::ffff:192.168.1.1").ipv4_mapped();
+    constexpr auto ipv30 = ipv6_address::parse("::c0a8:101").ipv4_mapped();
+    constexpr auto ipv29_has_value = ipv29.has_value();
+    constexpr auto ipv30_has_value = ipv30.has_value();
+    constexpr auto ipv29_value = ipv29.value();
+    constexpr auto ipv30_value = ipv30.value();
+    ASSERT_TRUE(ipv29_has_value);
+    ASSERT_FALSE(ipv30_has_value);
+    ASSERT_EQ(ipv29_value, ipv4_address::parse("192.168.1.1"));
+    ASSERT_EQ(ipv30_value, ipv4_address::parse("0.0.0.0"));
+
+    constexpr auto ipv31 = ipv6_address::parse("2002:ac1d:2d64::1").sixtofour();
+    constexpr auto ipv32 = ipv6_address::parse("2000:ac1d:2d64::1").sixtofour();
+    constexpr auto ipv31_has_value = ipv31.has_value();
+    constexpr auto ipv32_has_value = ipv32.has_value();
+    constexpr auto ipv31_value = ipv31.value();
+    constexpr auto ipv32_value = ipv32.value();
+    ASSERT_TRUE(ipv31_has_value);
+    ASSERT_FALSE(ipv32_has_value);
+    ASSERT_EQ(ipv31_value, ipv4_address::parse("172.29.45.100"));
+    ASSERT_EQ(ipv32_value, ipv4_address::parse("0.0.0.0"));
+
+    constexpr auto ipv33 = ipv6_address::parse("2001:0000:4136:e378:8000:63bf:3fff:fdd2").teredo();
+    constexpr auto ipv34 = ipv6_address::parse("2000::4136:e378:8000:63bf:3fff:fdd2").teredo();
+    constexpr auto ipv33_has_value = ipv33.has_value();
+    constexpr auto ipv34_has_value = ipv34.has_value();
+    constexpr auto ipv33_server = ipv33.value().first;
+    constexpr auto ipv33_client = ipv33.value().second;
+    constexpr auto ipv34_server = ipv34.value().first;
+    constexpr auto ipv34_client = ipv34.value().second;
+    ASSERT_TRUE(ipv33_has_value);
+    ASSERT_FALSE(ipv34_has_value);
+    ASSERT_EQ(ipv33_server, ipv4_address::parse("65.54.227.120"));
+    ASSERT_EQ(ipv33_client, ipv4_address::parse("192.0.2.45"));
+    ASSERT_EQ(ipv34_server, ipv4_address::parse("0.0.0.0"));
+    ASSERT_EQ(ipv34_client, ipv4_address::parse("0.0.0.0"));
 }
 
 TEST(ipv6_address, DefaultCtor) {
