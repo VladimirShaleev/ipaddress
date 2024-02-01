@@ -4,6 +4,7 @@
 #include "config.hpp"
 #include "errors.hpp"
 #include "endian.hpp"
+#include "optional.hpp"
 #include "byte-array.hpp"
 #include "fixed-string.hpp"
 

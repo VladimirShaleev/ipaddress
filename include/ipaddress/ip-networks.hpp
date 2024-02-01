@@ -48,11 +48,10 @@ IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv4_address::is_private() const
 
 template<>
 IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv6_address::is_private() const IPADDRESS_NOEXCEPT {
-    auto mapped = false;
-    const auto ipv4 = this->ipv4_mapped(mapped);
+    const auto ipv4 = this->ipv4_mapped();
 
-    if (mapped) {
-        return ipv4.is_private();
+    if (ipv4) {
+        return ipv4->is_private();
     }
 
     constexpr ipv6_network private_networks[] = {
@@ -156,6 +155,6 @@ IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv6_address_base::is_site_local
     return site_local_network.contains(address);
 }
 
-}
+} // IPADDRESS_NAMESPACE
 
-#endif
+#endif // IPADDRESS_IP_NETWORKS_HPP

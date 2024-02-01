@@ -152,31 +152,28 @@ public:
         return _data.bytes;
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address ipv4_mapped(bool& mapped) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<ipv4_address> ipv4_mapped() const IPADDRESS_NOEXCEPT {
         const auto& b = bytes();
         if (b[10] != 0xFF || b[11] != 0xFF) {
-            mapped = false;
-            return ipv4_address();
-        } else {
-            mapped = true;
-            ipv4_address::base_type ipv4_bytes = { b[12], b[13], b[14], b[15] };
-            return ipv4_address(ipv4_bytes);
-        }
+            return nullptr;
+        } 
+        ipv4_address::base_type ipv4_bytes = { b[12], b[13], b[14], b[15] };
+        return ipv4_address(ipv4_bytes);
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address sixtofour() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<ipv4_address> sixtofour() const IPADDRESS_NOEXCEPT {
         const auto& b = bytes();
         if (b[0] != 0x20 || b[1] != 0x02) {
-            // return nullopt;
+            return nullptr;
         }
         ipv4_address::base_type ipv4_bytes = { b[2], b[3], b[4], b[5] };
         return ipv4_address(ipv4_bytes);
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::pair<ipv4_address, ipv4_address> teredo() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<std::pair<ipv4_address, ipv4_address>> teredo() const IPADDRESS_NOEXCEPT {
         const auto& b = bytes();
         if (b[0] != 0x20 || b[1] != 0x01 || b[2] != 0x00 || b[3] != 0x00) {
-            // return nullopt;
+            return nullptr;
         }
         ipv4_address::base_type server_bytes = { b[4], b[5], b[6], b[7] };
         ipv4_address::base_type client_bytes = { b[12], b[13], b[14], b[15] };
