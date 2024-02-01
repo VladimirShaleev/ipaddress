@@ -680,3 +680,115 @@ TEST(ipv6_address, literals) {
     ASSERT_EQ(ip1, ipv6_address::parse("2001:db8::1"));
     ASSERT_EQ(ip2, ipv6_address::parse("1:2:3:4:5:6:7:8%123456789abcdefg"));
 }
+
+using IsMulticastIpv6Params = TestWithParam<std::tuple<const char*, bool>>;
+TEST_P(IsMulticastIpv6Params, is_multicast) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv6_address::parse(std::get<0>(GetParam())).is_multicast();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_address, IsMulticastIpv6Params,
+    testing::Values(
+        std::make_tuple("ffff::", true),
+        std::make_tuple("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff", true),
+        std::make_tuple("ff00::", true),
+        std::make_tuple("fdff::", false)
+    ));
+
+using IsPrivateIpv6Params = TestWithParam<std::tuple<const char*, bool>>;
+TEST_P(IsPrivateIpv6Params, is_private) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv6_address::parse(std::get<0>(GetParam())).is_private();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_address, IsPrivateIpv6Params,
+    testing::Values(
+        std::make_tuple("fc00::", true),
+        std::make_tuple("fc00:ffff:ffff:ffff::", true),
+        std::make_tuple("fbff:ffff::", false),
+        std::make_tuple("fe00::", false),
+        std::make_tuple("::ffff:192.168.1.1", true),
+        std::make_tuple("::ffff:172.32.0.0", false)
+    ));
+
+using IsGlobalIpv6Params = TestWithParam<std::tuple<const char*, bool>>;
+TEST_P(IsGlobalIpv6Params, is_global) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv6_address::parse(std::get<0>(GetParam())).is_global();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_address, IsGlobalIpv6Params,
+    testing::Values(
+        std::make_tuple("200::1", true)
+    ));
+
+using IsReservedIpv6Params = TestWithParam<std::tuple<const char*, bool>>;
+TEST_P(IsReservedIpv6Params, is_reserved) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv6_address::parse(std::get<0>(GetParam())).is_reserved();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_address, IsReservedIpv6Params,
+    testing::Values(
+        std::make_tuple("100::", true)
+    ));
+
+using IsLoopbackIpv6Params = TestWithParam<std::tuple<const char*, bool>>;
+TEST_P(IsLoopbackIpv6Params, is_loopback) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv6_address::parse(std::get<0>(GetParam())).is_loopback();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_address, IsLoopbackIpv6Params,
+    testing::Values(
+        std::make_tuple("0:0::0:01", true),
+        std::make_tuple("::1", true),
+        std::make_tuple("::2", false)
+    ));
+
+using IsLinkLocalIpv6Params = TestWithParam<std::tuple<const char*, bool>>;
+TEST_P(IsLinkLocalIpv6Params, is_link_local) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv6_address::parse(std::get<0>(GetParam())).is_link_local();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_address, IsLinkLocalIpv6Params,
+    testing::Values(
+        std::make_tuple("fea0::", true),
+        std::make_tuple("febf:ffff::", true),
+        std::make_tuple("fe7f:ffff::", false),
+        std::make_tuple("fec0::", false)
+    ));
+
+using IsUnspecifiedIpv6Params = TestWithParam<std::tuple<const char*, bool>>;
+TEST_P(IsUnspecifiedIpv6Params, is_unspecified) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv6_address::parse(std::get<0>(GetParam())).is_unspecified();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_address, IsUnspecifiedIpv6Params,
+    testing::Values(
+        std::make_tuple("0::0", true),
+        std::make_tuple("::1", false)
+    ));

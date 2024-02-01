@@ -420,3 +420,112 @@ TEST(ipv4_address, literals) {
     ASSERT_EQ(ip2, ipv4_address::parse("127.128.128.255"));
     ASSERT_EQ(ip3, ipv4_address::parse("127.0.0.1"));
 }
+
+using IsMulticastIpv4Params = TestWithParam<std::tuple<const char*, bool>>;
+TEST_P(IsMulticastIpv4Params, is_multicast) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv4_address::parse(std::get<0>(GetParam())).is_multicast();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_address, IsMulticastIpv4Params,
+    testing::Values(
+        std::make_tuple("224.1.1.1", true),
+        std::make_tuple("240.0.0.0", false)
+    ));
+
+using IsPrivateIpv4Params = TestWithParam<std::tuple<const char*, bool>>;
+TEST_P(IsPrivateIpv4Params, is_private) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv4_address::parse(std::get<0>(GetParam())).is_private();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_address, IsPrivateIpv4Params,
+    testing::Values(
+        std::make_tuple("192.168.1.1", true),
+        std::make_tuple("192.169.0.0", false),
+        std::make_tuple("10.255.255.255", true),
+        std::make_tuple("11.0.0.0", false),
+        std::make_tuple("172.31.255.255", true),
+        std::make_tuple("172.32.0.0", false)
+    ));
+
+using IsGlobalIpv4Params = TestWithParam<std::tuple<const char*, bool>>;
+TEST_P(IsGlobalIpv4Params, is_global) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv4_address::parse(std::get<0>(GetParam())).is_global();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_address, IsGlobalIpv4Params,
+    testing::Values(
+        std::make_tuple("192.0.7.1", true),
+        std::make_tuple("203.0.113.1", false)
+    ));
+
+using IsReservedIpv4Params = TestWithParam<std::tuple<const char*, bool>>;
+TEST_P(IsReservedIpv4Params, is_reserved) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv4_address::parse(std::get<0>(GetParam())).is_reserved();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_address, IsReservedIpv4Params,
+    testing::Values(
+        std::make_tuple("240.0.0.1", true),
+        std::make_tuple("239.255.255.255", false)
+    ));
+
+using IsLoopbackIpv4Params = TestWithParam<std::tuple<const char*, bool>>;
+TEST_P(IsLoopbackIpv4Params, is_loopback) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv4_address::parse(std::get<0>(GetParam())).is_loopback();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_address, IsLoopbackIpv4Params,
+    testing::Values(
+        std::make_tuple("127.100.200.254", true),
+        std::make_tuple("127.42.0.0", true),
+        std::make_tuple("128.0.0.0", false)
+    ));
+
+using IsLinkLocalIpv4Params = TestWithParam<std::tuple<const char*, bool>>;
+TEST_P(IsLinkLocalIpv4Params, is_link_local) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv4_address::parse(std::get<0>(GetParam())).is_link_local();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_address, IsLinkLocalIpv4Params,
+    testing::Values(
+        std::make_tuple("169.254.100.200", true),
+        std::make_tuple("169.255.100.200", false)
+    ));
+
+using IsUnspecifiedIpv4Params = TestWithParam<std::tuple<const char*, bool>>;
+TEST_P(IsUnspecifiedIpv4Params, is_unspecified) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv4_address::parse(std::get<0>(GetParam())).is_unspecified();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_address, IsUnspecifiedIpv4Params,
+    testing::Values(
+        std::make_tuple("0.0.0.0", true)
+    ));
