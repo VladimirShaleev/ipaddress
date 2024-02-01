@@ -177,7 +177,7 @@ public:
         }
         ipv4_address::base_type server_bytes = { b[4], b[5], b[6], b[7] };
         ipv4_address::base_type client_bytes = { b[12], b[13], b[14], b[15] };
-        return std::make_pair(ipv4_address(), ipv4_address(client_bytes));
+        return std::make_pair(ipv4_address(server_bytes), ipv4_address(client_bytes));
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_site_local() const IPADDRESS_NOEXCEPT;

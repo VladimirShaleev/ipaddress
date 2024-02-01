@@ -792,3 +792,71 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("0::0", true),
         std::make_tuple("::1", false)
     ));
+
+using IsSiteLocalIpv6Params = TestWithParam<std::tuple<const char*, bool>>;
+TEST_P(IsSiteLocalIpv6Params, is_site_local) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv6_address::parse(std::get<0>(GetParam())).is_site_local();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_address, IsSiteLocalIpv6Params,
+    testing::Values(
+        std::make_tuple("0::0", true),
+        std::make_tuple("::1", false)
+    ));
+
+using Ipv4MappedIpv6Params = TestWithParam<std::tuple<const char*, const char*, bool>>;
+TEST_P(Ipv4MappedIpv6Params, ipv4_mapped) {
+    const auto expected_ipv4 = std::get<1>(GetParam());
+    const auto expected_has_ipv4 = std::get<2>(GetParam());
+
+    const auto actual = ipv6_address::parse(std::get<0>(GetParam())).ipv4_mapped();
+
+    ASSERT_EQ(actual.has_value(), expected_has_ipv4);
+    ASSERT_EQ(actual.value(), ipv4_address::parse(expected_ipv4));
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_address, Ipv4MappedIpv6Params,
+    testing::Values(
+        std::make_tuple("0::0", "", true),
+        std::make_tuple("::1", "", false)
+    ));
+
+using SixtofourIpv6Params = TestWithParam<std::tuple<const char*, const char*, bool>>;
+TEST_P(SixtofourIpv6Params, sixtofour) {
+    const auto expected_ipv4 = std::get<1>(GetParam());
+    const auto expected_has_ipv4 = std::get<2>(GetParam());
+
+    const auto actual = ipv6_address::parse(std::get<0>(GetParam())).sixtofour();
+
+    ASSERT_EQ(actual.has_value(), expected_has_ipv4);
+    ASSERT_EQ(actual.value(), ipv4_address::parse(expected_ipv4));
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_address, SixtofourIpv6Params,
+    testing::Values(
+        std::make_tuple("0::0", "", true),
+        std::make_tuple("::1", "", false)
+    ));
+
+using TeredoIpv6Params = TestWithParam<std::tuple<const char*, const char*, const char*, bool>>;
+TEST_P(TeredoIpv6Params, teredo) {
+    const auto expected_server = std::get<1>(GetParam());
+    const auto expected_client = std::get<2>(GetParam());
+    const auto expected_has_ipv4 = std::get<3>(GetParam());
+
+    const auto actual = ipv6_address::parse(std::get<0>(GetParam())).teredo();
+
+    ASSERT_EQ(actual.has_value(), expected_has_ipv4);
+    ASSERT_EQ(actual.value().first, ipv4_address::parse(expected_server));
+    ASSERT_EQ(actual.value().second, ipv4_address::parse(expected_client));
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_address, TeredoIpv6Params,
+    testing::Values(
+        std::make_tuple("0::0", "", "", true),
+        std::make_tuple("::1", "", "", false)
+    ));
