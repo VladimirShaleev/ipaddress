@@ -222,28 +222,6 @@ protected:
         return std::make_tuple(netmask, prefixlen);
     }
 
-    static IPADDRESS_CONSTEXPR ip_address_base<Ext> netmask_to_hostmask(const ip_address_base<Ext>& netmask) IPADDRESS_NOEXCEPT {
-        const auto& netmask_bytes = netmask.bytes();
-        return ip_address_base<Ext>(base_type {
-            uint8_t(netmask_bytes[0] ^ 0xFF),
-            uint8_t(netmask_bytes[1] ^ 0xFF),
-            uint8_t(netmask_bytes[2] ^ 0xFF),
-            uint8_t(netmask_bytes[3] ^ 0xFF),
-            uint8_t(netmask_bytes[4] ^ 0xFF),
-            uint8_t(netmask_bytes[5] ^ 0xFF),
-            uint8_t(netmask_bytes[6] ^ 0xFF),
-            uint8_t(netmask_bytes[7] ^ 0xFF),
-            uint8_t(netmask_bytes[8] ^ 0xFF),
-            uint8_t(netmask_bytes[9] ^ 0xFF),
-            uint8_t(netmask_bytes[10] ^ 0xFF),
-            uint8_t(netmask_bytes[11] ^ 0xFF),
-            uint8_t(netmask_bytes[12] ^ 0xFF),
-            uint8_t(netmask_bytes[13] ^ 0xFF),
-            uint8_t(netmask_bytes[14] ^ 0xFF),
-            uint8_t(netmask_bytes[15] ^ 0xFF),
-        });
-    }
-
     static IPADDRESS_CONSTEXPR ip_address_base<Ext> strict_netmask(const ip_address_base<Ext>& address, const ip_address_base<Ext>& netmask, bool strict, error_code& code) IPADDRESS_NOEXCEPT {
         const auto& bytes_address = address.bytes();
         const auto& bytes_netmask = netmask.bytes();

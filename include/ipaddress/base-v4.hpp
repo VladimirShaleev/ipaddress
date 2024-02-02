@@ -180,10 +180,6 @@ protected:
         return std::make_tuple(netmask, prefixlen);
     }
 
-    static IPADDRESS_CONSTEXPR ip_address_base<Ext> netmask_to_hostmask(const ip_address_base<Ext>& netmask) IPADDRESS_NOEXCEPT {
-        return ip_from_uint32(netmask.to_uint32() ^ _all_ones);
-    }
-
     static IPADDRESS_CONSTEXPR ip_address_base<Ext> strict_netmask(const ip_address_base<Ext>& address, const ip_address_base<Ext>& netmask, bool strict, error_code& code) IPADDRESS_NOEXCEPT {
         auto pack_address = address.to_uint32();
         auto pack_netmask = netmask.to_uint32();

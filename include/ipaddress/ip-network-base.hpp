@@ -160,7 +160,12 @@ public:
     }
     
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR ip_address_type hostmask() const IPADDRESS_NOEXCEPT {
-        return ip_address_type::netmask_to_hostmask(_netmask);
+        const auto& netmask_bytes = netmask().bytes();
+        typename ip_address_type::base_type bytes {};
+        for (size_t i = 0; i < ip_address_type::_size; ++i) {
+            bytes[i] = uint8_t(netmask_bytes[i] ^ 0xFF);
+        }
+        return ip_address_type(bytes);
     }
     
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR size_t prefixlen() const IPADDRESS_NOEXCEPT {
@@ -172,6 +177,13 @@ public:
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_private() const IPADDRESS_NOEXCEPT {
+        const auto& address = network_address();
+        const auto broadcast = broadcast_address();
+        for (const auto& private_network : _private_networks) {
+            if (private_network.contains(address) && private_network.contains(broadcast)) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -312,6 +324,8 @@ private:
     ip_address_type _network_address;
     ip_address_type _netmask;
     size_t _prefixlen;
+
+    static ip_network_base _private_networks[];
 };
 
 #ifndef IPADDRESS_NO_OVERLOAD_STD
