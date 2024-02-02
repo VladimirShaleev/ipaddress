@@ -10,6 +10,11 @@ class ipv6_network_base : public base_v6<ipv6_network_base> {
 public:
     using ip_address_type = ipv6_address;
 
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_site_local() const IPADDRESS_NOEXCEPT {
+        const auto& network = *static_cast<const ip_network_base<ipv6_network_base>*>(this);
+        return network.network_address().is_site_local() && network.broadcast_address().is_site_local();
+    }
+
 #ifndef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
     friend IPADDRESS_CONSTEXPR ip_network_base<ipv6_network_base> operator""_ipv6_net(const char* address, std::size_t size) IPADDRESS_NOEXCEPT;
