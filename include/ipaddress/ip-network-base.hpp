@@ -176,16 +176,7 @@ public:
         return network_address().is_multicast() && broadcast_address().is_multicast();
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_private() const IPADDRESS_NOEXCEPT {
-        const auto& address = network_address();
-        const auto broadcast = broadcast_address();
-        for (const auto& private_network : _private_networks) {
-            if (private_network.contains(address) && private_network.contains(broadcast)) {
-                return true;
-            }
-        }
-        return false;
-    }
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_private() const IPADDRESS_NOEXCEPT;
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_global() const IPADDRESS_NOEXCEPT {
         return !is_private();
@@ -324,8 +315,6 @@ private:
     ip_address_type _network_address;
     ip_address_type _netmask;
     size_t _prefixlen;
-
-    static ip_network_base _private_networks[];
 };
 
 #ifndef IPADDRESS_NO_OVERLOAD_STD
