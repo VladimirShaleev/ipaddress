@@ -149,8 +149,8 @@ TEST(ipv4_address, DefaultCtor) {
     EXPECT_EQ(ip.bytes(), expected_empty);
     EXPECT_EQ(ip.to_uint32(), 0);
     EXPECT_EQ(uint32_t(ip), 0);
-    EXPECT_EQ(ip.size, 4);
-    EXPECT_EQ(ip.version, ip_version::V4);
+    EXPECT_EQ(ip.size(), 4);
+    EXPECT_EQ(ip.version(), ip_version::V4);
 }
 
 TEST(ipv4_address, CopyCtor) {

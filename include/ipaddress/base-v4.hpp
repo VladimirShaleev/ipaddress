@@ -9,19 +9,27 @@ namespace IPADDRESS_NAMESPACE {
 template <typename Ext>
 class base_v4 {
 public:
-    static IPADDRESS_CONSTEXPR ip_version version = ip_version::V4;
+    using base_type = byte_array_type<4>;
 
-    static IPADDRESS_CONSTEXPR size_t size = 4;
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_version version() const IPADDRESS_NOEXCEPT {
+        return _version;
+    }
 
-    static IPADDRESS_CONSTEXPR uint32_t all_ones = std::numeric_limits<uint32_t>::max();
-
-    static IPADDRESS_CONSTEXPR size_t max_string_len = 15;
-
-    static IPADDRESS_CONSTEXPR size_t max_prefixlen = size * 8;
-
-    using base_type = byte_array_type<size>;
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t size() const IPADDRESS_NOEXCEPT {
+        return _size;
+    }
 
 protected:
+    static constexpr ip_version _version = ip_version::V4;
+
+    static IPADDRESS_CONSTEXPR size_t _size = 4;
+
+    static IPADDRESS_CONSTEXPR uint32_t _all_ones = std::numeric_limits<uint32_t>::max();
+
+    static IPADDRESS_CONSTEXPR size_t _max_string_len = 15;
+
+    static IPADDRESS_CONSTEXPR size_t _max_prefixlen = _size * 8;
+
     template <typename Iter>
     static IPADDRESS_CONSTEXPR ip_address_base<Ext> ip_from_string(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT {
         if (begin == end) {
@@ -99,7 +107,7 @@ protected:
     }
 
     static IPADDRESS_CONSTEXPR ip_address_base<Ext> ip_from_prefix(size_t prefixlen) {
-        return ip_address_base<Ext>::ip_from_uint32(all_ones ^ (all_ones >> (prefixlen - 1) >> 1));
+        return ip_address_base<Ext>::ip_from_uint32(_all_ones ^ (_all_ones >> (prefixlen - 1) >> 1));
     }
 
     static IPADDRESS_CONSTEXPR uint32_t ip_to_uint32(const base_type& bytes) IPADDRESS_NOEXCEPT {
@@ -111,7 +119,7 @@ protected:
         return is_little_endian() ? swap_bytes(ip) : ip;
     }
 
-    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t ip_to_chars(const base_type& bytes, format fmt, char (&result)[max_string_len + 1]) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t ip_to_chars(const base_type& bytes, format fmt, char (&result)[_max_string_len + 1]) IPADDRESS_NOEXCEPT {
         size_t offset = 0;
         char buffer[4] {};
         for (size_t b = 0; b < 4; ++b) {
@@ -146,7 +154,7 @@ protected:
             }
         }
         if (is_value) {
-            if (prefixlen > max_prefixlen) {
+            if (prefixlen > _max_prefixlen) {
                 code = error_code::INVALID_NETMASK;
                 return std::make_tuple(ip_address_base<Ext>(), ip_address_base<Ext>(), 0);
             }
@@ -159,7 +167,7 @@ protected:
 
             prefixlen = prefix_from_ip_uint32(ip, code);
             if (code != error_code::NO_ERROR) {
-                ip = ip ^ all_ones;
+                ip = ip ^ _all_ones;
                 code = error_code::NO_ERROR;
                 prefixlen = prefix_from_ip_uint32(ip, code);
                 if (code != error_code::NO_ERROR) {
@@ -167,14 +175,14 @@ protected:
                 }
             }
         }
-        prefixlen = has_prefixlen ? prefixlen : max_prefixlen;
+        prefixlen = has_prefixlen ? prefixlen : _max_prefixlen;
         auto netmask = ip_from_prefix(prefixlen);
         auto hostmask = netmask_to_hostmask(netmask);
         return std::make_tuple(netmask, hostmask, prefixlen);
     }
 
     static IPADDRESS_CONSTEXPR ip_address_base<Ext> netmask_to_hostmask(const ip_address_base<Ext>& netmask) IPADDRESS_NOEXCEPT {
-        return ip_from_uint32(netmask.to_uint32() ^ all_ones);
+        return ip_from_uint32(netmask.to_uint32() ^ _all_ones);
     }
 
     static IPADDRESS_CONSTEXPR ip_address_base<Ext> strict_netmask(const ip_address_base<Ext>& address, const ip_address_base<Ext>& netmask, bool strict, error_code& code) IPADDRESS_NOEXCEPT {
@@ -193,8 +201,8 @@ protected:
 
 private:
     static IPADDRESS_CONSTEXPR size_t prefix_from_ip_uint32(uint32_t ip, error_code& code) IPADDRESS_NOEXCEPT {
-        auto trailing_zeroes = count_righthand_zero_bits(ip, max_prefixlen);
-        auto prefixlen = max_prefixlen - trailing_zeroes;
+        auto trailing_zeroes = count_righthand_zero_bits(ip, _max_prefixlen);
+        auto prefixlen = _max_prefixlen - trailing_zeroes;
         auto leading_ones = ip >> trailing_zeroes;
         auto all_ones = (1 << (prefixlen - 1) << 1) - 1;
         if (leading_ones != all_ones) {

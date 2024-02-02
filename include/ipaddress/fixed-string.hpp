@@ -167,19 +167,17 @@ struct fixed_string<0> {
 
     static IPADDRESS_CONSTEXPR size_t length = 0;
 
-    static IPADDRESS_CONSTEXPR char _data[1] = {};
-
     IPADDRESS_CONSTEXPR fixed_string() IPADDRESS_NOEXCEPT = default;
 
     IPADDRESS_CONSTEXPR fixed_string(const char*) IPADDRESS_NOEXCEPT {
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const_iterator begin() const IPADDRESS_NOEXCEPT {
-        return const_iterator(_data);
+        return const_iterator(nullptr);
     }
     
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const_iterator end() const IPADDRESS_NOEXCEPT {
-        return const_iterator(_data) + length;
+        return const_iterator(nullptr) + length;
     }
     
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 const_reverse_iterator rbegin() const IPADDRESS_NOEXCEPT {
@@ -235,7 +233,7 @@ struct fixed_string<0> {
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const_pointer data() const IPADDRESS_NOEXCEPT {
-        return _data;
+        return nullptr;
     }
 
     template <size_t N2>

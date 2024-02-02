@@ -102,7 +102,7 @@ TEST(ipv4_network, DefaultCtor) {
     EXPECT_EQ(net.netmask(), ipv4_address::from_uint32<0xFFFFFFFF>());
     EXPECT_EQ(net.hostmask(), ipv4_address::from_uint32<0>());
     EXPECT_EQ(net.prefixlen(), 32);
-    EXPECT_EQ(net.version, ip_version::V4);
+    EXPECT_EQ(net.version(), ip_version::V4);
 }
 
 TEST(ipv4_network, CopyCtor) {

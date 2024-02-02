@@ -41,7 +41,7 @@ public:
 
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR ip_address_base from_bytes(const uint8_t* bytes, size_t byte_count) IPADDRESS_NOEXCEPT {
         base_type data = {};
-        for (size_t i = 0; i < Base::size && i < byte_count; ++i) {
+        for (size_t i = 0; i < Base::_size && i < byte_count; ++i) {
             data[i] = bytes[i];
         }
         return ip_address_base(data);
@@ -110,7 +110,7 @@ public:
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_unspecified() const IPADDRESS_NOEXCEPT {
         const auto& b = Base::bytes();
-        for (size_t i = 0; i < Base::size; ++i) {
+        for (size_t i = 0; i < Base::_size; ++i) {
             if (b[i] != 0) {
                 return false;
             }
@@ -119,7 +119,7 @@ public:
     }
 
     IPADDRESS_NODISCARD std::string to_string(format fmt = format::compressed) const {
-        char res[Base::max_string_len + 1]{};
+        char res[Base::_max_string_len + 1]{};
         const auto len = Base::ip_to_chars(Base::bytes(), fmt, res);
         return std::string(res, len);
     }

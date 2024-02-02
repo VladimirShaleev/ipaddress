@@ -49,9 +49,7 @@
 #    define IPADDRESS_CONSTEXPR_17
 #  endif
 #else
-#  define IPADDRESS_CONSTEXPR
-#  define IPADDRESS_CONSTEXPR_14
-#  define IPADDRESS_CONSTEXPR_17
+#  error ipaddress needs at least C++ standard version 11
 #endif
 
 #if defined(_MSC_VER) && (_MSC_VER <= 1800)

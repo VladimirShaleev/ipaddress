@@ -102,7 +102,7 @@ TEST(ipv6_network, DefaultCtor) {
     EXPECT_EQ(net.netmask(), ipv6_address::parse("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"));
     EXPECT_EQ(net.hostmask(), ipv6_address::parse("::"));
     EXPECT_EQ(net.prefixlen(), 128);
-    EXPECT_EQ(net.version, ip_version::V6);
+    EXPECT_EQ(net.version(), ip_version::V6);
 }
 
 TEST(ipv6_network, CopyCtor) {
@@ -123,7 +123,7 @@ TEST(ipv6_network, CopyOperator) {
     EXPECT_EQ(net_copy.netmask(), ipv6_address::parse("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"));
     EXPECT_EQ(net_copy.hostmask(), ipv6_address::parse("::"));
     EXPECT_EQ(net_copy.prefixlen(), 128);
-    EXPECT_EQ(net_copy.version, ip_version::V6);
+    EXPECT_EQ(net_copy.version(), ip_version::V6);
     net_copy = net;
 
     EXPECT_EQ(net_copy.address(), ipv6_address::parse("2001:db8::"));

@@ -13,9 +13,9 @@ public:
     IPADDRESS_CONSTEXPR ip_network_base() IPADDRESS_NOEXCEPT 
         : 
         _address(),
-        _netmask(ip_address_type::ip_from_prefix(Base::max_prefixlen)),
+        _netmask(ip_address_type::ip_from_prefix(Base::_max_prefixlen)),
         _hostmask(),
-        _prefixlen(Base::max_prefixlen) {
+        _prefixlen(Base::_max_prefixlen) {
     }
 
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
@@ -78,12 +78,12 @@ public:
         auto result = from_address(address, code, prefixlen, strict);
         if (code != error_code::NO_ERROR) {
             if (IPADDRESS_IS_CONST_EVALUATED(code)) {
-                char str[ip_address_type::max_string_len + 1]{};
+                char str[ip_address_type::_max_string_len + 1]{};
                 const auto len = address.ip_to_chars(address.bytes(), format::compressed, str);
                 raise_error(code, 0, str, len);
             }
         #ifndef IPADDRESS_NO_EXCEPTIONS
-            char str[ip_address_type::max_string_len + 1]{};
+            char str[ip_address_type::_max_string_len + 1]{};
             const auto len = address.ip_to_chars(address.bytes(), format::compressed, str);
             raise_error(code, 0, str, len);
         #endif
@@ -119,7 +119,7 @@ public:
         const auto& address_bytes = this->address().bytes();
         const auto& netmask_bytes = netmask().bytes();
 
-        for (size_t i = 0; i < ip_address_type::size; ++i) {
+        for (size_t i = 0; i < ip_address_type::_size; ++i) {
             if ((ip_bytes[i] & netmask_bytes[i]) != address_bytes[i]) {
                 return false;
             }
@@ -231,7 +231,7 @@ private:
         auto has_slash = false;
         auto netmask = str.end();
         auto symbol = 0;
-        char address[ip_address_type::max_string_len + 1] = {};
+        char address[ip_address_type::_max_string_len + 1] = {};
         for (auto it = str.begin(); it != str.end(); ++it) {
             if (*it == '/') {
                 if (has_slash) {

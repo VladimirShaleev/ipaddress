@@ -255,8 +255,8 @@ TEST(ipv6_address, DefaultCtor) {
     ipv6_address ip;
 
     EXPECT_EQ(ip.bytes(), expected_empty);
-    EXPECT_EQ(ip.size, 16);
-    EXPECT_EQ(ip.version, ip_version::V6);
+    EXPECT_EQ(ip.size(), 16);
+    EXPECT_EQ(ip.version(), ip_version::V6);
 }
 
 TEST(ipv6_address, CopyCtor) {

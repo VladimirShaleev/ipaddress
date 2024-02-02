@@ -9,6 +9,12 @@ namespace IPADDRESS_NAMESPACE {
 class ipv4_network_base : public base_v4<ipv4_network_base> {
 public:
     using ip_address_type = ipv4_address;
+    
+#ifndef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
+
+    friend IPADDRESS_CONSTEXPR ip_network_base<ipv4_network_base> operator""_ipv4_net(const char* address, std::size_t size) IPADDRESS_NOEXCEPT;
+
+#endif // !IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 }; // ipv4_network_base
 
 using ipv4_network = ip_network_base<ipv4_network_base>;
@@ -23,8 +29,8 @@ using ipv4_network = ip_network_base<ipv4_network_base>;
 #else // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
     inline IPADDRESS_CONSTEXPR ipv4_network operator""_ipv4_net(const char* address, std::size_t size) IPADDRESS_NOEXCEPT {
-        assert(size <= 19 && "litteral string is too long");
-        char str[20] = {};
+        assert(size <= ipv4_network::_max_string_len * 2 + 1 && "litteral string is too long");
+        char str[ipv4_network::_max_string_len * 2 + 2] = {};
         for (size_t i = 0; i < size; ++i) {
             str[i] = address[i];
         }

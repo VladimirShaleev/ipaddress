@@ -8,19 +8,28 @@ namespace IPADDRESS_NAMESPACE {
 template <typename Ext>
 class base_v6 {
 public:
-    static IPADDRESS_CONSTEXPR ip_version version = ip_version::V6;
+    using base_type = byte_array_type<16>;
 
-    static IPADDRESS_CONSTEXPR size_t size = 16;
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_version version() const IPADDRESS_NOEXCEPT {
+        return _version;
+    }
 
-    static IPADDRESS_CONSTEXPR size_t max_string_len = 41 + IPADDRESS_IPV6_SCOPE_MAX_LENGTH;
-
-    static IPADDRESS_CONSTEXPR size_t max_prefixlen = size * 8;
-
-    using base_type = byte_array_type<size>;
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t size() const IPADDRESS_NOEXCEPT {
+        return _size;
+    }
 
 protected:
-    static IPADDRESS_CONSTEXPR size_t min_parts = 3;
-    static IPADDRESS_CONSTEXPR size_t max_parts = 8;
+    static constexpr ip_version _version = ip_version::V6;
+
+    static IPADDRESS_CONSTEXPR size_t _size = 16;
+
+    static IPADDRESS_CONSTEXPR size_t _max_string_len = 41 + IPADDRESS_IPV6_SCOPE_MAX_LENGTH;
+
+    static IPADDRESS_CONSTEXPR size_t _max_prefixlen = _size * 8;
+
+    static IPADDRESS_CONSTEXPR size_t _min_parts = 3;
+
+    static IPADDRESS_CONSTEXPR size_t _max_parts = 8;
 
     template <typename Iter>
     static IPADDRESS_CONSTEXPR ip_address_base<Ext> ip_from_string(Iter begin, Iter end, error_code& code, int& parts_count) IPADDRESS_NOEXCEPT {
@@ -72,9 +81,9 @@ protected:
         return ip_address_base<Ext>(bytes);
     }
 
-    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t ip_to_chars(const base_type& bytes, const fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>& scope_id, format fmt, char (&result)[max_string_len + 1]) IPADDRESS_NOEXCEPT {
-        char hextets[size >> 1][5] = {};
-        const size_t max_hextets = size >> 1;
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t ip_to_chars(const base_type& bytes, const fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>& scope_id, format fmt, char (&result)[_max_string_len + 1]) IPADDRESS_NOEXCEPT {
+        char hextets[_size >> 1][5] = {};
+        const size_t max_hextets = _size >> 1;
         for (size_t i = 0; i < max_hextets; ++i) {
             uint16_t value = (uint16_t(bytes[i * 2]) << 8) | uint16_t(bytes[i * 2 + 1]);
             to_hex(value, hextets[i]);
@@ -178,7 +187,7 @@ protected:
     }
 
     static std::string ip_reverse_pointer(const base_type& bytes, const fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>& scope_id) {
-        char result[max_string_len + 1] {};
+        char result[_max_string_len + 1] {};
         const auto len = ip_to_chars(bytes, scope_id, format::full, result);
         auto ip = std::string(result, len);
         ip.erase(std::remove(ip.begin(), ip.end(), ':'), ip.end());
@@ -202,12 +211,12 @@ protected:
             }
         }
         
-        if (prefixlen > max_prefixlen) {
+        if (prefixlen > _max_prefixlen) {
             code = error_code::INVALID_NETMASK;
             return std::make_tuple(ip_address_base<Ext>(), ip_address_base<Ext>(), 0);
         }
         
-        prefixlen = has_prefixlen ? prefixlen : max_prefixlen;
+        prefixlen = has_prefixlen ? prefixlen : _max_prefixlen;
 
         auto netmask = ip_from_prefix(prefixlen);
         return std::make_tuple(netmask, netmask_to_hostmask(netmask), prefixlen);
@@ -240,7 +249,7 @@ protected:
         const auto& bytes_netmask = netmask.bytes();
         base_type bytes{};
 
-        for (auto i = 0; i < size; ++i) {
+        for (auto i = 0; i < _size; ++i) {
             bytes[i] = bytes_address[i] & bytes_netmask[i];
         }
 
@@ -287,8 +296,19 @@ private:
     }
 
     template <typename Iter>
-    static IPADDRESS_CONSTEXPR std::array<fixed_string<4>, max_parts + 1> split_parts(Iter begin, Iter end, int& parts_count, error_code& error) IPADDRESS_NOEXCEPT {
-        char parts[max_parts + 1][5] = {};
+    static IPADDRESS_CONSTEXPR std::array<fixed_string<4>, _max_parts + 1> split_parts(Iter begin, Iter end, int& parts_count, error_code& error) IPADDRESS_NOEXCEPT {
+        IPADDRESS_CONSTEXPR std::array<fixed_string<4>, _max_parts + 1> empty_parts = {
+            make_fixed_string("\0\0\0\0"),
+            make_fixed_string("\0\0\0\0"),
+            make_fixed_string("\0\0\0\0"),
+            make_fixed_string("\0\0\0\0"),
+            make_fixed_string("\0\0\0\0"),
+            make_fixed_string("\0\0\0\0"),
+            make_fixed_string("\0\0\0\0"),
+            make_fixed_string("\0\0\0\0"),
+            make_fixed_string("\0\0\0\0")};
+
+        char parts[_max_parts + 1][5] = {};
         char last_part[17] = {};
         
         parts_count = 0;
@@ -301,7 +321,7 @@ private:
             if (!has_double_colon && c == ':' && prev_c == ':') {
                 has_double_colon = true;
             }
-            if (parts_count > max_parts) {
+            if (parts_count > _max_parts) {
                 error = has_double_colon
                     ? error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON 
                     : error_code::MOST_8_COLONS_PERMITTED;
@@ -332,7 +352,7 @@ private:
             prev_c = c;
         }
     
-        if (parts_count > max_parts) {
+        if (parts_count > _max_parts) {
             if (parts[0][0] == '\0' && parts[1][0] != '\0') {
                 error = error_code::LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON;
             } else if (last_part[0] == '\0') {
@@ -353,7 +373,7 @@ private:
         }
 
         if (has_ipv4) {
-            if (parts_count + 1 >= max_parts) {
+            if (parts_count + 1 >= _max_parts) {
                 error = error_code::MOST_8_COLONS_PERMITTED;
                 return empty_parts;
             }
@@ -379,7 +399,7 @@ private:
             current_part[3] = last_part[3];
         }
 
-        if (parts_count < min_parts) {
+        if (parts_count < _min_parts) {
             error = error_code::LEAST_3_PARTS;
             return empty_parts;
         }
@@ -396,7 +416,7 @@ private:
             make_fixed_string(parts[8])};
     }
 
-    static IPADDRESS_CONSTEXPR std::tuple<size_t, size_t, size_t> get_parts_bound(const std::array<fixed_string<4>, max_parts + 1>& parts, size_t parts_count, error_code& error) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR std::tuple<size_t, size_t, size_t> get_parts_bound(const std::array<fixed_string<4>, _max_parts + 1>& parts, size_t parts_count, error_code& error) IPADDRESS_NOEXCEPT {
         size_t skip = 0;
         for (size_t i = 1; i < parts_count - 1; ++i) {
             if (parts[i].empty()) {
@@ -426,7 +446,7 @@ private:
                 }
             }
 
-            const auto parts_skipped = max_parts - (parts_hi + parts_lo);
+            const auto parts_skipped = _max_parts - (parts_hi + parts_lo);
             
             if (parts_skipped < 1) {
                 error = error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON;
@@ -435,7 +455,7 @@ private:
 
             return { parts_hi, parts_lo, parts_skipped };
         } else {
-            if (parts_count != max_parts) {
+            if (parts_count != _max_parts) {
                 error = error_code::EXACTLY_8_PARTS_EXPECTED_WITHOUT_DOUBLE_COLON;
                 return { 0, 0, 0 };
             }
@@ -454,7 +474,7 @@ private:
         }
     }
 
-    static IPADDRESS_CONSTEXPR base_type parse_parts(const std::array<fixed_string<4>, max_parts + 1>& parts, size_t parts_count, size_t hi, size_t lo, size_t skipped, error_code& error) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR base_type parse_parts(const std::array<fixed_string<4>, _max_parts + 1>& parts, size_t parts_count, size_t hi, size_t lo, size_t skipped, error_code& error) IPADDRESS_NOEXCEPT {
         base_type result = {};
         size_t index = 0;
 
@@ -520,17 +540,6 @@ private:
             result[i + 1] = '\0';
         }
     }
-
-    static IPADDRESS_CONSTEXPR std::array<fixed_string<4>, max_parts + 1> empty_parts = {
-            make_fixed_string("\0\0\0\0"),
-            make_fixed_string("\0\0\0\0"),
-            make_fixed_string("\0\0\0\0"),
-            make_fixed_string("\0\0\0\0"),
-            make_fixed_string("\0\0\0\0"),
-            make_fixed_string("\0\0\0\0"),
-            make_fixed_string("\0\0\0\0"),
-            make_fixed_string("\0\0\0\0"),
-            make_fixed_string("\0\0\0\0")};
 };
 
 } // IPADDRESS_NAMESPACE
