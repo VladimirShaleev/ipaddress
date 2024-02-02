@@ -102,8 +102,10 @@ TEST(ipv4_address, CompileTime)
 
     constexpr auto ip9 = "127.0.0.1"_ipv4;
     constexpr auto ip10 = "127.128.128.255"_ipv4;
+    constexpr auto ip9_1 = 0x7F000001_ipv4;
     ASSERT_EQ(ip9, ipv4_address::parse("127.0.0.1"));
     ASSERT_EQ(ip10, ipv4_address::parse("127.128.128.255"));
+    ASSERT_EQ(ip9_1, ipv4_address::parse("127.0.0.1"));
 
     constexpr auto ip11 = ipv4_address::parse("224.1.1.1").is_multicast();
     constexpr auto ip12 = ipv4_address::parse("240.0.0.0").is_multicast();

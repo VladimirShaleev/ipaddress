@@ -140,7 +140,7 @@ protected:
     }
 
     template <typename Iter>
-    static IPADDRESS_CONSTEXPR std::tuple<ip_address_base<Ext>, ip_address_base<Ext>, size_t> parse_netmask(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR std::tuple<ip_address_base<Ext>, size_t> parse_netmask(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT {
         size_t prefixlen = 0;
         auto is_value = true;
         auto has_prefixlen = false;
@@ -156,13 +156,13 @@ protected:
         if (is_value) {
             if (prefixlen > _max_prefixlen) {
                 code = error_code::INVALID_NETMASK;
-                return std::make_tuple(ip_address_base<Ext>(), ip_address_base<Ext>(), 0);
+                return std::make_tuple(ip_address_base<Ext>(), 0);
             }
         } else {
             auto ip = ip_to_uint32(ip_from_string(begin, end, code, index).bytes());
             if (code != error_code::NO_ERROR) {
                 code = error_code::INVALID_NETMASK;
-                return std::make_tuple(ip_address_base<Ext>(), ip_address_base<Ext>(), 0);
+                return std::make_tuple(ip_address_base<Ext>(), 0);
             }
 
             prefixlen = prefix_from_ip_uint32(ip, code);
@@ -171,14 +171,13 @@ protected:
                 code = error_code::NO_ERROR;
                 prefixlen = prefix_from_ip_uint32(ip, code);
                 if (code != error_code::NO_ERROR) {
-                    return std::make_tuple(ip_address_base<Ext>(), ip_address_base<Ext>(), 0);
+                    return std::make_tuple(ip_address_base<Ext>(), 0);
                 }
             }
         }
         prefixlen = has_prefixlen ? prefixlen : _max_prefixlen;
         auto netmask = ip_from_prefix(prefixlen);
-        auto hostmask = netmask_to_hostmask(netmask);
-        return std::make_tuple(netmask, hostmask, prefixlen);
+        return std::make_tuple(netmask, prefixlen);
     }
 
     static IPADDRESS_CONSTEXPR ip_address_base<Ext> netmask_to_hostmask(const ip_address_base<Ext>& netmask) IPADDRESS_NOEXCEPT {

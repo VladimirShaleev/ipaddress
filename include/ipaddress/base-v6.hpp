@@ -198,7 +198,7 @@ protected:
     }
 
     template <typename Iter>
-    static IPADDRESS_CONSTEXPR std::tuple<ip_address_base<Ext>, ip_address_base<Ext>, size_t> parse_netmask(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR std::tuple<ip_address_base<Ext>, size_t> parse_netmask(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT {
         size_t prefixlen = 0;
         auto has_prefixlen = false;
         for (auto it = begin; it != end; ++it) {
@@ -207,19 +207,19 @@ protected:
                 prefixlen = prefixlen * 10 + (*it - '0');
             } else {
                 code = error_code::INVALID_NETMASK;
-                return std::make_tuple(ip_address_base<Ext>(), ip_address_base<Ext>(), 0);
+                return std::make_tuple(ip_address_base<Ext>(), 0);
             }
         }
         
         if (prefixlen > _max_prefixlen) {
             code = error_code::INVALID_NETMASK;
-            return std::make_tuple(ip_address_base<Ext>(), ip_address_base<Ext>(), 0);
+            return std::make_tuple(ip_address_base<Ext>(), 0);
         }
         
         prefixlen = has_prefixlen ? prefixlen : _max_prefixlen;
 
         auto netmask = ip_from_prefix(prefixlen);
-        return std::make_tuple(netmask, netmask_to_hostmask(netmask), prefixlen);
+        return std::make_tuple(netmask, prefixlen);
     }
 
     static IPADDRESS_CONSTEXPR ip_address_base<Ext> netmask_to_hostmask(const ip_address_base<Ext>& netmask) IPADDRESS_NOEXCEPT {

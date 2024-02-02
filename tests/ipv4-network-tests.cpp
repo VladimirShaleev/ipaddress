@@ -28,13 +28,13 @@ static constexpr error_code test_error(const char(&str)[N]) noexcept {
 TEST(ipv4_network, CompileTime) {
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
     auto net1 = ipv4_network::parse<"127.0.0.0/8">();
-    ASSERT_EQ(net1.address().to_uint32(), 0x7F000000);
+    ASSERT_EQ(net1.network_address().to_uint32(), 0x7F000000);
     ASSERT_EQ(net1.netmask().to_uint32(), 0xFF000000);
     ASSERT_EQ(net1.hostmask().to_uint32(), 0x00FFFFFF);
     ASSERT_EQ(net1.prefixlen(), 8);
 
     constexpr auto net2 = ipv4_network::parse<"127.0.0.1">();
-    constexpr auto net2_address = net2.address().to_uint32();
+    constexpr auto net2_address = net2.network_address().to_uint32();
     constexpr auto net2_netmask = net2.netmask().to_uint32();
     constexpr auto net2_hostmask = net2.hostmask().to_uint32();
     constexpr auto net2_prefixlen = net2.prefixlen();
@@ -45,7 +45,7 @@ TEST(ipv4_network, CompileTime) {
 #endif
 
     constexpr auto net3 = ipv4_network::parse("127.0.0.0/8");
-    constexpr auto net3_address = net3.address().to_uint32();
+    constexpr auto net3_address = net3.network_address().to_uint32();
     constexpr auto net3_netmask = net3.netmask().to_uint32();
     constexpr auto net3_hostmask = net3.hostmask().to_uint32();
     constexpr auto net3_prefixlen = net3.prefixlen();
@@ -57,7 +57,7 @@ TEST(ipv4_network, CompileTime) {
     ASSERT_GT(net3_hash, size_t(0));
 
     constexpr auto net4 = test_swap("0.0.0.0/8", "127.0.0.0/16");
-    constexpr auto net4_address = net4.address().to_uint32();
+    constexpr auto net4_address = net4.network_address().to_uint32();
     constexpr auto net4_netmask = net4.netmask().to_uint32();
     constexpr auto net4_hostmask = net4.hostmask().to_uint32();
     constexpr auto net4_prefixlen = net4.prefixlen();
@@ -98,7 +98,7 @@ TEST(ipv4_network, CompileTime) {
 TEST(ipv4_network, DefaultCtor) {
     ipv4_network net;
     
-    EXPECT_EQ(net.address(), ipv4_address::from_uint32<0>());
+    EXPECT_EQ(net.network_address(), ipv4_address::from_uint32<0>());
     EXPECT_EQ(net.netmask(), ipv4_address::from_uint32<0xFFFFFFFF>());
     EXPECT_EQ(net.hostmask(), ipv4_address::from_uint32<0>());
     EXPECT_EQ(net.prefixlen(), 32);
@@ -109,7 +109,7 @@ TEST(ipv4_network, CopyCtor) {
     auto net = ipv4_network::parse("127.0.0.0/8");
     auto net_copy = net;
     
-    EXPECT_EQ(net_copy.address(), ipv4_address::from_uint32<0x7F000000>());
+    EXPECT_EQ(net_copy.network_address(), ipv4_address::from_uint32<0x7F000000>());
     EXPECT_EQ(net_copy.netmask(), ipv4_address::from_uint32<0xFF000000>());
     EXPECT_EQ(net_copy.hostmask(), ipv4_address::from_uint32<0x00FFFFFF>());
     EXPECT_EQ(net_copy.prefixlen(), 8);
@@ -119,13 +119,13 @@ TEST(ipv4_network, CopyOperator) {
     auto net = ipv4_network::parse("127.0.0.0/8");
     ipv4_network net_copy;
     
-    EXPECT_EQ(net_copy.address(), ipv4_address::from_uint32<0>());
+    EXPECT_EQ(net_copy.network_address(), ipv4_address::from_uint32<0>());
     EXPECT_EQ(net_copy.netmask(), ipv4_address::from_uint32<0xFFFFFFFF>());
     EXPECT_EQ(net_copy.hostmask(), ipv4_address::from_uint32<0>());
     EXPECT_EQ(net_copy.prefixlen(), 32);
     net_copy = net;
     
-    EXPECT_EQ(net_copy.address(), ipv4_address::from_uint32<0x7F000000>());
+    EXPECT_EQ(net_copy.network_address(), ipv4_address::from_uint32<0x7F000000>());
     EXPECT_EQ(net_copy.netmask(), ipv4_address::from_uint32<0xFF000000>());
     EXPECT_EQ(net_copy.hostmask(), ipv4_address::from_uint32<0x00FFFFFF>());
     EXPECT_EQ(net_copy.prefixlen(), 8);
@@ -140,7 +140,7 @@ TEST_P(NetworkParserIpv4Params, parse) {
 
     auto net = ipv4_network::parse(get<0>(GetParam()));
    
-    EXPECT_EQ(net.address(), excepted_address);
+    EXPECT_EQ(net.network_address(), excepted_address);
     EXPECT_EQ(net.netmask(), excepted_netmask);
     EXPECT_EQ(net.hostmask(), excepted_hostmask);
     EXPECT_EQ(net.prefixlen(), excepted_prefixlen);
@@ -152,7 +152,7 @@ TEST_P(NetworkParserIpv4Params, parse) {
     ss >> s1 >> net_from_stream >> s2;
 
     ASSERT_EQ(s1, std::string("test:"));
-    EXPECT_EQ(net_from_stream.address(), excepted_address);
+    EXPECT_EQ(net_from_stream.network_address(), excepted_address);
     EXPECT_EQ(net_from_stream.netmask(), excepted_netmask);
     EXPECT_EQ(net_from_stream.hostmask(), excepted_hostmask);
     EXPECT_EQ(net_from_stream.prefixlen(), excepted_prefixlen);
@@ -180,7 +180,7 @@ TEST_P(NetworkParserIpv4NotStrictParams, parse_not_strict) {
 
     auto net = ipv4_network::parse(get<0>(GetParam()), false);
    
-    EXPECT_EQ(net.address(), excepted_address);
+    EXPECT_EQ(net.network_address(), excepted_address);
     EXPECT_EQ(net.netmask(), excepted_netmask);
     EXPECT_EQ(net.hostmask(), excepted_hostmask);
     EXPECT_EQ(net.prefixlen(), excepted_prefixlen);
@@ -192,7 +192,7 @@ TEST_P(NetworkParserIpv4NotStrictParams, parse_not_strict) {
     ss >> s1 >> not_strict >> net_from_stream >> s2;
 
     ASSERT_EQ(s1, std::string("test:"));
-    EXPECT_EQ(net_from_stream.address(), excepted_address);
+    EXPECT_EQ(net_from_stream.network_address(), excepted_address);
     EXPECT_EQ(net_from_stream.netmask(), excepted_netmask);
     EXPECT_EQ(net_from_stream.hostmask(), excepted_hostmask);
     EXPECT_EQ(net_from_stream.prefixlen(), excepted_prefixlen);
@@ -216,14 +216,14 @@ TEST_P(NetworkFromAddressIpv4Params, from_address) {
     error_code err = error_code::NO_ERROR;
     auto actual = ipv4_network::from_address(address, err, prefixlen, strict);
     ASSERT_EQ(actual, expected);
-    ASSERT_EQ(actual.address(), expected.address());
+    ASSERT_EQ(actual.network_address(), expected.network_address());
     ASSERT_EQ(actual.netmask(), expected.netmask());
     ASSERT_EQ(actual.hostmask(), expected.hostmask());
     ASSERT_EQ(actual.prefixlen(), expected.prefixlen());
 
     auto actual2 = ipv4_network::from_address(address, prefixlen, strict);
     ASSERT_EQ(actual2, expected);
-    ASSERT_EQ(actual2.address(), expected.address());
+    ASSERT_EQ(actual2.network_address(), expected.network_address());
     ASSERT_EQ(actual2.netmask(), expected.netmask());
     ASSERT_EQ(actual2.hostmask(), expected.hostmask());
     ASSERT_EQ(actual2.prefixlen(), expected.prefixlen());
@@ -239,7 +239,7 @@ TEST(ipv4_network, from_address_error) {
     error_code err = error_code::NO_ERROR;
     auto actual = ipv4_network::from_address(ipv4_address::parse("127.0.0.1"), err, 24);
     ASSERT_EQ(err, error_code::HAS_HOST_BITS_SET);
-    ASSERT_EQ(actual.address(), ipv4_address::parse("0.0.0.0"));
+    ASSERT_EQ(actual.network_address(), ipv4_address::parse("0.0.0.0"));
     ASSERT_EQ(actual.netmask(), ipv4_address::parse("255.255.255.255"));
     ASSERT_EQ(actual.hostmask(), ipv4_address::parse("0.0.0.0"));
     ASSERT_EQ(actual.prefixlen(), 32);

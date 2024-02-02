@@ -12,9 +12,8 @@ public:
 
     IPADDRESS_CONSTEXPR ip_network_base() IPADDRESS_NOEXCEPT 
         : 
-        _address(),
+        _network_address(),
         _netmask(ip_address_type::ip_from_prefix(Base::_max_prefixlen)),
-        _hostmask(),
         _prefixlen(Base::_max_prefixlen) {
     }
 
@@ -102,21 +101,20 @@ public:
         const auto netmask = ip_address_type::ip_from_prefix(prefixlen); 
 
         ip_network_base result;
-        result._address = ip_address_type::strict_netmask(address, netmask, strict, code);
+        result._network_address = ip_address_type::strict_netmask(address, netmask, strict, code);
 
         if (code != error_code::NO_ERROR) {
             return result;
         }
 
         result._netmask = netmask;
-        result._hostmask = ip_address_type::netmask_to_hostmask(netmask);
         result._prefixlen = prefixlen;
         return result;
     }
 
     IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE IPADDRESS_CONSTEXPR bool contains(const ip_address_type& address) const IPADDRESS_NOEXCEPT {
         const auto& ip_bytes = address.bytes();
-        const auto& address_bytes = this->address().bytes();
+        const auto& address_bytes = network_address().bytes();
         const auto& netmask_bytes = netmask().bytes();
 
         for (size_t i = 0; i < ip_address_type::_size; ++i) {
@@ -128,44 +126,81 @@ public:
     }
 
     IPADDRESS_NODISCARD std::string to_string(format fmt = format::compressed) const {
-        return _address.to_string(fmt) + '/' + std::to_string(_prefixlen);
+        return _network_address.to_string(fmt) + '/' + std::to_string(_prefixlen);
     }
 
     IPADDRESS_CONSTEXPR void swap(ip_network_base& network) IPADDRESS_NOEXCEPT {
-        _address.swap(network._address);
+        _network_address.swap(network._network_address);
         _netmask.swap(network._netmask);
-        _hostmask.swap(network._hostmask);
         auto tmp = _prefixlen;
         _prefixlen = network._prefixlen;
         network._prefixlen = tmp;
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR size_t hash() const IPADDRESS_NOEXCEPT {
-        return calc_hash(_address.hash(), _netmask.hash());
+        return calc_hash(_network_address.hash(), _netmask.hash());
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const ip_address_type& address() const IPADDRESS_NOEXCEPT {
-        return _address;
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const ip_address_type& network_address() const IPADDRESS_NOEXCEPT {
+        return _network_address;
+    }
+    
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR ip_address_type broadcast_address() const IPADDRESS_NOEXCEPT {
+        typename ip_address_type::base_type bytes {};
+        const auto& network_address_bytes = network_address().bytes();
+        const auto hostmask_bytes = hostmask().bytes();
+        for (size_t i = 0; i < ip_address_type::_size; ++i) {
+            bytes[i] = uint8_t(network_address_bytes[i] | hostmask_bytes[i]);
+        }
+        return ip_address_type(bytes);
     }
     
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const ip_address_type& netmask() const IPADDRESS_NOEXCEPT {
         return _netmask;
     }
     
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const ip_address_type& hostmask() const IPADDRESS_NOEXCEPT {
-        return _hostmask;
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR ip_address_type hostmask() const IPADDRESS_NOEXCEPT {
+        return ip_address_type::netmask_to_hostmask(_netmask);
     }
     
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR size_t prefixlen() const IPADDRESS_NOEXCEPT {
         return _prefixlen;
     }
     
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_multicast() const IPADDRESS_NOEXCEPT {
+        return network_address().is_multicast() && broadcast_address().is_multicast();
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_private() const IPADDRESS_NOEXCEPT {
+        return false;
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_global() const IPADDRESS_NOEXCEPT {
+        return !is_private();
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_reserved() const IPADDRESS_NOEXCEPT {
+        return network_address().is_reserved() && broadcast_address().is_reserved();
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_loopback() const IPADDRESS_NOEXCEPT {
+        return network_address().is_loopback() && broadcast_address().is_loopback();
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_link_local() const IPADDRESS_NOEXCEPT {
+        return network_address().is_link_local() && broadcast_address().is_link_local();
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_unspecified() const IPADDRESS_NOEXCEPT {
+        return network_address().is_unspecified() && broadcast_address().is_unspecified();
+    }
+
     IPADDRESS_NODISCARD explicit operator std::string() const {
         return to_string();
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator==(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
-        return _address == rhs._address && _netmask == rhs._netmask;
+        return _network_address == rhs._network_address && _netmask == rhs._netmask;
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator!=(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
@@ -175,7 +210,7 @@ public:
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR std::strong_ordering operator<=>(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
-        if (auto result = _address <=> rhs._address; result != std::strong_ordering::equivalent) {
+        if (auto result = _network_address <=> rhs._network_address; result != std::strong_ordering::equivalent) {
             return result;
         }
         return _netmask <=> rhs._netmask;
@@ -184,8 +219,8 @@ public:
 #else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
-        if (_address != rhs._address) {
-            return _address < rhs._address;
+        if (_network_address != rhs._network_address) {
+            return _network_address < rhs._network_address;
         }
         if (_netmask != rhs._netmask) {
             return _netmask < rhs._netmask;
@@ -257,16 +292,15 @@ private:
         }
 
         ip_network_base<Base> result;
-        result._address = ip_address_type::parse(address, code);
+        result._network_address = ip_address_type::parse(address, code);
         result._netmask = std::get<0>(netmask_result);
-        result._hostmask = std::get<1>(netmask_result);
-        result._prefixlen = std::get<2>(netmask_result);
+        result._prefixlen = std::get<1>(netmask_result);
 
         if (code != error_code::NO_ERROR) {
             return ip_network_base<Base>();
         }
 
-        result._address = ip_address_type::strict_netmask(result._address, result._netmask, strict, code);
+        result._network_address = ip_address_type::strict_netmask(result._network_address, result._netmask, strict, code);
 
         if (code != error_code::NO_ERROR) {
             return ip_network_base<Base>();
@@ -275,9 +309,8 @@ private:
         return result;
     }
 
-    ip_address_type _address;
+    ip_address_type _network_address;
     ip_address_type _netmask;
-    ip_address_type _hostmask;
     size_t _prefixlen;
 };
 
