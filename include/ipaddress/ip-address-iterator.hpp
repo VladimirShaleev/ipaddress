@@ -7,6 +7,11 @@
 
 namespace IPADDRESS_NAMESPACE {
 
+struct big_integer {
+    std::uint64_t far;
+    std::uint64_t low;
+};
+
 template <typename>
 struct ip_address_iterator;
 
@@ -84,7 +89,7 @@ struct ip_address_iterator<ip_address_base<Base>> {
         return tmp;
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE difference_type operator-(const ip_address_iterator& other) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE big_integer operator-(const ip_address_iterator& other) IPADDRESS_NOEXCEPT {
         return other.diff(*this);
     }
 
@@ -125,7 +130,7 @@ struct ip_address_iterator<ip_address_base<Base>> {
 private:
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void add(difference_type n) IPADDRESS_NOEXCEPT;
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE difference_type diff(const ip_address_iterator& other) const IPADDRESS_NOEXCEPT;
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE big_integer diff(const ip_address_iterator& other) const IPADDRESS_NOEXCEPT;
 
     value_type _current;
 };
@@ -151,7 +156,7 @@ IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void ip_address_iterator<ipv6_address
         low |= uint64_t(bytes[i + 8]) << s;
     }
 
-    far += n + low < low;
+    far += n + low < low ? 1 : 0;
     low += n;
 
     for (int i = 0, s = shift; i < 8; ++i, s += inc) {
@@ -163,13 +168,32 @@ IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void ip_address_iterator<ipv6_address
 }
 
 template <>
-IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator<ipv4_address>::difference_type ip_address_iterator<ipv4_address>::diff(const ip_address_iterator& other) const IPADDRESS_NOEXCEPT {
-    return other._current.to_uint32() - _current.to_uint32();
+IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE big_integer ip_address_iterator<ipv4_address>::diff(const ip_address_iterator& other) const IPADDRESS_NOEXCEPT {
+    return { 0, other._current.to_uint32() - _current.to_uint32() };
 }
 
 template <>
-IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator<ipv6_address>::difference_type ip_address_iterator<ipv6_address>::diff(const ip_address_iterator& other) const IPADDRESS_NOEXCEPT {
-    return 0;
+IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE big_integer ip_address_iterator<ipv6_address>::diff(const ip_address_iterator& other) const IPADDRESS_NOEXCEPT {
+    const auto& lhs_bytes = _current.bytes();
+    const auto& rhs_bytes = other._current.bytes();
+    uint64_t lhs_far = 0;
+    uint64_t lhs_low = 0;
+    uint64_t rhs_far = 0;
+    uint64_t rhs_low = 0;
+    uint64_t shift = 0;
+    uint64_t inc = 8;
+    if (is_little_endian()) {
+        shift = 56;
+        inc = -8;
+    }
+    for (int i = 0, s = shift; i < 8; ++i, s += inc) {
+        lhs_far |= uint64_t(lhs_bytes[i]) << s;
+        rhs_far |= uint64_t(rhs_bytes[i]) << s;
+        lhs_low |= uint64_t(lhs_bytes[i + 8]) << s;
+        rhs_low |= uint64_t(rhs_bytes[i + 8]) << s;
+    }
+
+    return { rhs_far - lhs_far - (lhs_low > rhs_low ? 1 : 0), rhs_low - lhs_low };
 }
 
 template <typename>
