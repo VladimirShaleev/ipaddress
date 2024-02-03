@@ -1,7 +1,7 @@
 #ifndef IPADDRESS_IP_NETWORK_BASE_HPP
 #define IPADDRESS_IP_NETWORK_BASE_HPP
 
-#include "ip-address-base.hpp"
+#include "ip-address-iterator.hpp"
 
 namespace IPADDRESS_NAMESPACE {
 
@@ -213,6 +213,10 @@ public:
     // IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t addresses_count() const IPADDRESS_NOEXCEPT {
     //     return ip_address_type::addresses_count(broadcast_address(), network_address());
     // }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_sequence<ip_address_type> hosts() const IPADDRESS_NOEXCEPT {
+        return hosts_sequence<ip_address_type>(network_address(), broadcast_address());
+    }
 
     IPADDRESS_NODISCARD explicit operator std::string() const {
         return to_string();
