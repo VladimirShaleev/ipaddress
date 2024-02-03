@@ -25,9 +25,7 @@ struct ip_address_iterator<ip_address_base<Base>> {
     IPADDRESS_CONSTEXPR_14 ip_address_iterator& operator=(const ip_address_iterator&) IPADDRESS_NOEXCEPT = default;
     IPADDRESS_CONSTEXPR_14 ip_address_iterator& operator=(ip_address_iterator&&) IPADDRESS_NOEXCEPT = default;
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator(reference ref) IPADDRESS_NOEXCEPT
-        :
-        _current(ref) {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator(reference ref) IPADDRESS_NOEXCEPT : _current(ref) {
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference operator*() const IPADDRESS_NOEXCEPT {
@@ -86,54 +84,48 @@ struct ip_address_iterator<ip_address_base<Base>> {
         return tmp;
     }
 
-    IPADDRESS_NODISCARD friend IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(const ip_address_iterator& lhs, const ip_address_iterator& rhs) IPADDRESS_NOEXCEPT {
-        return lhs._current == rhs._current;
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE difference_type operator-(const ip_address_iterator& other) IPADDRESS_NOEXCEPT {
+        return other.diff(*this);
     }
 
-    IPADDRESS_NODISCARD friend IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(const ip_address_iterator& lhs, const ip_address_iterator& rhs) IPADDRESS_NOEXCEPT {
-        return !(lhs == rhs);
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(const ip_address_iterator& other) const IPADDRESS_NOEXCEPT {
+        return _current == other._current;
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(const ip_address_iterator& other) const IPADDRESS_NOEXCEPT {
+        return !(*this == other);
     }
 
 #ifdef GALAXY_HPP_HAS_SPACESHIP_OPERATOR
-    IPADDRESS_NODISCARD friend IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const ip_address_iterator& lhs, const ip_address_iterator& rhs) IPADDRESS_NOEXCEPT {
-        return lhs._current <=> rhs._current;
-    }
-#else
-    IPADDRESS_NODISCARD friend IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(const ip_address_iterator& lhs, const ip_address_iterator& rhs) IPADDRESS_NOEXCEPT {
-        return lhs._current < rhs._current;
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const ip_address_iterator& other) const IPADDRESS_NOEXCEPT {
+        return _current <=> other._current;
     }
 
-    IPADDRESS_NODISCARD friend IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(const ip_address_iterator& lhs, const ip_address_iterator& rhs) IPADDRESS_NOEXCEPT {
-        return !(rhs < lhs);
+#else // !GALAXY_HPP_HAS_SPACESHIP_OPERATOR
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(const ip_address_iterator& other) const IPADDRESS_NOEXCEPT {
+        return _current < other._current;
     }
 
-    IPADDRESS_NODISCARD friend IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(const ip_address_iterator& lhs, const ip_address_iterator& rhs) IPADDRESS_NOEXCEPT {
-        return rhs < lhs;
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(const ip_address_iterator& other) const IPADDRESS_NOEXCEPT {
+        return !(other < *this);
     }
 
-    IPADDRESS_NODISCARD friend IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(const ip_address_iterator& lhs, const ip_address_iterator& rhs) IPADDRESS_NOEXCEPT {
-        return !(lhs < rhs);
-    }
-#endif
-
-    IPADDRESS_NODISCARD friend IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE difference_type operator-(const ip_address_iterator& lhs, const ip_address_iterator& rhs) IPADDRESS_NOEXCEPT {
-        return lhs._ptr - rhs._ptr;
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(const ip_address_iterator& other) const IPADDRESS_NOEXCEPT {
+        return other < *this;
     }
 
-    IPADDRESS_NODISCARD friend IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator operator+(ip_address_iterator n, const ip_address_iterator& it) IPADDRESS_NOEXCEPT {
-        auto tmp = it;
-        tmp += n;
-        return tmp;
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(const ip_address_iterator& other) const IPADDRESS_NOEXCEPT {
+        return !(*this < other);
     }
 
-    IPADDRESS_NODISCARD friend IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator operator-(difference_type n, const ip_address_iterator& it) IPADDRESS_NOEXCEPT {
-        auto tmp = it;
-        tmp += n;
-        return tmp;
-    }
+#endif // !GALAXY_HPP_HAS_SPACESHIP_OPERATOR
 
 private:
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void add(difference_type n) IPADDRESS_NOEXCEPT;
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE difference_type diff(const ip_address_iterator& other) const IPADDRESS_NOEXCEPT;
 
     value_type _current;
 };
@@ -168,6 +160,16 @@ IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void ip_address_iterator<ipv6_address
         fb = uint8_t(far >> s);
         lw = uint8_t(low >> s);
     }
+}
+
+template <>
+IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator<ipv4_address>::difference_type ip_address_iterator<ipv4_address>::diff(const ip_address_iterator& other) const IPADDRESS_NOEXCEPT {
+    return other._current.to_uint32() - _current.to_uint32();
+}
+
+template <>
+IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator<ipv6_address>::difference_type ip_address_iterator<ipv6_address>::diff(const ip_address_iterator& other) const IPADDRESS_NOEXCEPT {
+    return 0;
 }
 
 template <typename>

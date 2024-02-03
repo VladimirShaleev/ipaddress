@@ -210,9 +210,9 @@ public:
         return network_address().is_unspecified() && broadcast_address().is_unspecified();
     }
 
-    // IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t addresses_count() const IPADDRESS_NOEXCEPT {
-    //     return ip_address_type::addresses_count(broadcast_address(), network_address());
-    // }
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t addresses_count() const IPADDRESS_NOEXCEPT {
+        return size_t(ip_address_iterator<ip_address_type>(broadcast_address()) - ip_address_iterator<ip_address_type>(network_address()) + 1);
+    }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_sequence<ip_address_type> hosts() const IPADDRESS_NOEXCEPT {
         return hosts_sequence<ip_address_type>(network_address(), broadcast_address());
