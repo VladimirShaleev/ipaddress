@@ -29,16 +29,19 @@ TEST(ipv6_network, CompileTime) {
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
     auto net1 = ipv6_network::parse<"2001:db8::/96">();
     ASSERT_EQ(net1.network_address(), ipv6_address::parse("2001:db8::"));
+    ASSERT_EQ(net1.broadcast_address(), ipv6_address::parse("2001:db8::ffff:ffff"));
     ASSERT_EQ(net1.netmask(), ipv6_address::parse("ffff:ffff:ffff:ffff:ffff:ffff::"));
     ASSERT_EQ(net1.hostmask(), ipv6_address::parse("::ffff:ffff"));
     ASSERT_EQ(net1.prefixlen(), 96);
 
     constexpr auto net2 = ipv6_network::parse<"2001:db8::1/128">();
     constexpr auto net2_address = net2.network_address();
+    constexpr auto net2_broadcast = net2.broadcast_address();
     constexpr auto net2_netmask = net2.netmask();
     constexpr auto net2_hostmask = net2.hostmask();
     constexpr auto net2_prefixlen = net2.prefixlen();
     ASSERT_EQ(net2_address, ipv6_address::parse("2001:db8::1"));
+    ASSERT_EQ(net2_broadcast, ipv6_address::parse("2001:db8::1"));
     ASSERT_EQ(net2_netmask, ipv6_address::parse("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"));
     ASSERT_EQ(net2_hostmask, ipv6_address::parse("::"));
     ASSERT_EQ(net2_prefixlen, 128);
@@ -46,11 +49,13 @@ TEST(ipv6_network, CompileTime) {
 
     constexpr auto net3 = ipv6_network::parse("2001:db8::/32");
     constexpr auto net3_address = net3.network_address();
+    constexpr auto net3_broadcast = net3.broadcast_address();
     constexpr auto net3_netmask = net3.netmask();
     constexpr auto net3_hostmask = net3.hostmask();
     constexpr auto net3_prefixlen = net3.prefixlen();
     constexpr auto net3_hash = net3.hash();
     ASSERT_EQ(net3_address, ipv6_address::parse("2001:db8::"));
+    ASSERT_EQ(net3_broadcast, ipv6_address::parse("2001:db8:ffff:ffff:ffff:ffff:ffff:ffff"));
     ASSERT_EQ(net3_netmask, ipv6_address::parse("ffff:ffff::"));
     ASSERT_EQ(net3_hostmask, ipv6_address::parse("::ffff:ffff:ffff:ffff:ffff:ffff"));
     ASSERT_EQ(net3_prefixlen, 32);
@@ -58,11 +63,13 @@ TEST(ipv6_network, CompileTime) {
 
     constexpr auto net4 = test_swap("::/128", "2001:db8::%test/64");
     constexpr auto net4_address = net4.network_address();
+    constexpr auto net4_broadcast = net4.broadcast_address();
     constexpr auto net4_netmask = net4.netmask();
     constexpr auto net4_hostmask = net4.hostmask();
     constexpr auto net4_prefixlen = net4.prefixlen();
     constexpr auto net4_hash = net4.hash();
     ASSERT_EQ(net4_address, ipv6_address::parse("2001:db8::%test"));
+    ASSERT_EQ(net4_broadcast, ipv6_address::parse("2001:db8::ffff:ffff:ffff:ffff"));
     ASSERT_EQ(net4_netmask, ipv6_address::parse("ffff:ffff:ffff:ffff::"));
     ASSERT_EQ(net4_hostmask, ipv6_address::parse("::ffff:ffff:ffff:ffff"));
     ASSERT_EQ(net4_prefixlen, 64);
@@ -99,6 +106,7 @@ TEST(ipv6_network, DefaultCtor) {
     ipv6_network net;
     
     EXPECT_EQ(net.network_address(), ipv6_address::parse("::"));
+    EXPECT_EQ(net.broadcast_address(), ipv6_address::parse("::"));
     EXPECT_EQ(net.netmask(), ipv6_address::parse("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"));
     EXPECT_EQ(net.hostmask(), ipv6_address::parse("::"));
     EXPECT_EQ(net.prefixlen(), 128);
@@ -110,6 +118,7 @@ TEST(ipv6_network, CopyCtor) {
     auto net_copy = net;
     
     EXPECT_EQ(net_copy.network_address(), ipv6_address::parse("2001:db8::"));
+    EXPECT_EQ(net_copy.broadcast_address(), ipv6_address::parse("2001:db8::ffff:ffff"));
     EXPECT_EQ(net_copy.netmask(), ipv6_address::parse("ffff:ffff:ffff:ffff:ffff:ffff::"));
     EXPECT_EQ(net_copy.hostmask(), ipv6_address::parse("::ffff:ffff"));
     EXPECT_EQ(net_copy.prefixlen(), 96);
@@ -121,27 +130,31 @@ TEST(ipv6_network, CopyOperator) {
     
     EXPECT_EQ(net_copy.network_address(), ipv6_address::parse("::"));
     EXPECT_EQ(net_copy.netmask(), ipv6_address::parse("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"));
+    EXPECT_EQ(net_copy.broadcast_address(), ipv6_address::parse("::"));
     EXPECT_EQ(net_copy.hostmask(), ipv6_address::parse("::"));
     EXPECT_EQ(net_copy.prefixlen(), 128);
     EXPECT_EQ(net_copy.version(), ip_version::V6);
     net_copy = net;
 
     EXPECT_EQ(net_copy.network_address(), ipv6_address::parse("2001:db8::"));
+    EXPECT_EQ(net_copy.broadcast_address(), ipv6_address::parse("2001:db8::ffff:ffff"));
     EXPECT_EQ(net_copy.netmask(), ipv6_address::parse("ffff:ffff:ffff:ffff:ffff:ffff::"));
     EXPECT_EQ(net_copy.hostmask(), ipv6_address::parse("::ffff:ffff"));
     EXPECT_EQ(net_copy.prefixlen(), 96);
 }
 
-using NetworkParserIpv6Params = TestWithParam<std::tuple<const char*, const char*, const char*, const char*, size_t>>;
+using NetworkParserIpv6Params = TestWithParam<std::tuple<const char*, const char*, const char*, const char*, const char*, size_t>>;
 TEST_P(NetworkParserIpv6Params, parse) {
     auto excepted_address = ipv6_address::parse(get<1>(GetParam()));
-    auto excepted_netmask = ipv6_address::parse(get<2>(GetParam()));
-    auto excepted_hostmask = ipv6_address::parse(get<3>(GetParam()));
-    auto excepted_prefixlen = get<4>(GetParam());
+    auto excepted_broadcast = ipv6_address::parse(get<2>(GetParam()));
+    auto excepted_netmask = ipv6_address::parse(get<3>(GetParam()));
+    auto excepted_hostmask = ipv6_address::parse(get<4>(GetParam()));
+    auto excepted_prefixlen = get<5>(GetParam());
 
     auto net = ipv6_network::parse(get<0>(GetParam()));
     
     EXPECT_EQ(net.network_address(), excepted_address);
+    EXPECT_EQ(net.broadcast_address(), excepted_broadcast);
     EXPECT_EQ(net.netmask(), excepted_netmask);
     EXPECT_EQ(net.hostmask(), excepted_hostmask);
     EXPECT_EQ(net.prefixlen(), excepted_prefixlen);
@@ -154,6 +167,7 @@ TEST_P(NetworkParserIpv6Params, parse) {
 
     ASSERT_EQ(s1, std::string("test:"));
     EXPECT_EQ(net_from_stream.network_address(), excepted_address);
+    EXPECT_EQ(net_from_stream.broadcast_address(), excepted_broadcast);
     EXPECT_EQ(net_from_stream.netmask(), excepted_netmask);
     EXPECT_EQ(net_from_stream.hostmask(), excepted_hostmask);
     EXPECT_EQ(net_from_stream.prefixlen(), excepted_prefixlen);
@@ -162,24 +176,26 @@ TEST_P(NetworkParserIpv6Params, parse) {
 INSTANTIATE_TEST_SUITE_P(
     ipv6_network, NetworkParserIpv6Params,
     testing::Values(
-        std::make_tuple("::1", "::1", "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff", "::", 128),
-        std::make_tuple("::1%scope", "::1%scope", "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff", "::", 128),
-        std::make_tuple("2001:db8::/32", "2001:db8::", "ffff:ffff::", "::ffff:ffff:ffff:ffff:ffff:ffff", 32),
-        std::make_tuple("2001:db8::%scope/32", "2001:db8::%scope", "ffff:ffff::", "::ffff:ffff:ffff:ffff:ffff:ffff", 32),
-        std::make_tuple("::/0", "::", "::", "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff", 0),
-        std::make_tuple("::/128", "::", "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff", "::", 128)
+        std::make_tuple("::1", "::1", "::1", "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff", "::", 128),
+        std::make_tuple("::1%scope", "::1%scope", "::1", "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff", "::", 128),
+        std::make_tuple("2001:db8::/32", "2001:db8::", "2001:db8:ffff:ffff:ffff:ffff:ffff:ffff", "ffff:ffff::", "::ffff:ffff:ffff:ffff:ffff:ffff", 32),
+        std::make_tuple("2001:db8::%scope/32", "2001:db8::%scope", "2001:db8:ffff:ffff:ffff:ffff:ffff:ffff", "ffff:ffff::", "::ffff:ffff:ffff:ffff:ffff:ffff", 32),
+        std::make_tuple("::/0", "::", "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff", "::", "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff", 0),
+        std::make_tuple("::/128", "::", "::", "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff", "::", 128)
     ));
 
-using NetworkParserIpv6NotStrictParams = TestWithParam<std::tuple<const char*, const char*, const char*, const char*, size_t>>;
+using NetworkParserIpv6NotStrictParams = TestWithParam<std::tuple<const char*, const char*, const char*, const char*, const char*, size_t>>;
 TEST_P(NetworkParserIpv6NotStrictParams, parse_not_strict) {
     auto excepted_address = ipv6_address::parse(get<1>(GetParam()));
-    auto excepted_netmask = ipv6_address::parse(get<2>(GetParam()));
-    auto excepted_hostmask = ipv6_address::parse(get<3>(GetParam()));
-    auto excepted_prefixlen = get<4>(GetParam());
+    auto excepted_broadcast = ipv6_address::parse(get<2>(GetParam()));
+    auto excepted_netmask = ipv6_address::parse(get<3>(GetParam()));
+    auto excepted_hostmask = ipv6_address::parse(get<4>(GetParam()));
+    auto excepted_prefixlen = get<5>(GetParam());
 
     auto net = ipv6_network::parse(get<0>(GetParam()), false);
    
     EXPECT_EQ(net.network_address(), excepted_address);
+    EXPECT_EQ(net.broadcast_address(), excepted_broadcast);
     EXPECT_EQ(net.netmask(), excepted_netmask);
     EXPECT_EQ(net.hostmask(), excepted_hostmask);
     EXPECT_EQ(net.prefixlen(), excepted_prefixlen);
@@ -192,6 +208,7 @@ TEST_P(NetworkParserIpv6NotStrictParams, parse_not_strict) {
 
     ASSERT_EQ(s1, std::string("test:"));
     EXPECT_EQ(net_from_stream.network_address(), excepted_address);
+    EXPECT_EQ(net_from_stream.broadcast_address(), excepted_broadcast);
     EXPECT_EQ(net_from_stream.netmask(), excepted_netmask);
     EXPECT_EQ(net_from_stream.hostmask(), excepted_hostmask);
     EXPECT_EQ(net_from_stream.prefixlen(), excepted_prefixlen);
@@ -200,8 +217,8 @@ TEST_P(NetworkParserIpv6NotStrictParams, parse_not_strict) {
 INSTANTIATE_TEST_SUITE_P(
     ipv6_network, NetworkParserIpv6NotStrictParams,
     testing::Values(
-        std::make_tuple("2001:db8::/16", "2001::", "ffff::", "::ffff:ffff:ffff:ffff:ffff:ffff:ffff", 16),
-        std::make_tuple("2001:db8::/24", "2001:d00::", "ffff:ff00::", "0:ff:ffff:ffff:ffff:ffff:ffff:ffff", 24)
+        std::make_tuple("2001:db8::/16", "2001::", "2001:ffff:ffff:ffff:ffff:ffff:ffff:ffff", "ffff::", "::ffff:ffff:ffff:ffff:ffff:ffff:ffff", 16),
+        std::make_tuple("2001:db8::/24", "2001:d00::", "2001:dff:ffff:ffff:ffff:ffff:ffff:ffff", "ffff:ff00::", "0:ff:ffff:ffff:ffff:ffff:ffff:ffff", 24)
     ));
 
 using NetworkFromAddressIpv6Params = TestWithParam<std::tuple<const char*, const char*, size_t, bool>>;
@@ -216,6 +233,7 @@ TEST_P(NetworkFromAddressIpv6Params, from_address) {
     auto actual = ipv6_network::from_address(address, err, prefixlen, strict);
     ASSERT_EQ(actual, expected);
     ASSERT_EQ(actual.network_address(), expected.network_address());
+    ASSERT_EQ(actual.broadcast_address(), expected.broadcast_address());
     ASSERT_EQ(actual.netmask(), expected.netmask());
     ASSERT_EQ(actual.hostmask(), expected.hostmask());
     ASSERT_EQ(actual.prefixlen(), expected.prefixlen());
@@ -223,6 +241,7 @@ TEST_P(NetworkFromAddressIpv6Params, from_address) {
     auto actual2 = ipv6_network::from_address(address, prefixlen, strict);
     ASSERT_EQ(actual2, expected);
     ASSERT_EQ(actual2.network_address(), expected.network_address());
+    ASSERT_EQ(actual2.broadcast_address(), expected.broadcast_address());
     ASSERT_EQ(actual2.netmask(), expected.netmask());
     ASSERT_EQ(actual2.hostmask(), expected.hostmask());
     ASSERT_EQ(actual2.prefixlen(), expected.prefixlen());
@@ -239,6 +258,7 @@ TEST(ipv6_network, from_address_error) {
     auto actual = ipv6_network::from_address(ipv6_address::parse("2001:db8::"), err, 16);
     ASSERT_EQ(err, error_code::HAS_HOST_BITS_SET);
     ASSERT_EQ(actual.network_address(), ipv6_address::parse("::"));
+    ASSERT_EQ(actual.broadcast_address(), ipv6_address::parse("::"));
     ASSERT_EQ(actual.netmask(), ipv6_address::parse("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"));
     ASSERT_EQ(actual.hostmask(), ipv6_address::parse("::"));
     ASSERT_EQ(actual.prefixlen(), 128);
