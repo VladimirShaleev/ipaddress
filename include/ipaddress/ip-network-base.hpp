@@ -125,6 +125,18 @@ public:
         return true;
     }
 
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool overlaps(const ip_network_base& other) const IPADDRESS_NOEXCEPT {
+        return other.contains(network_address()) || other.contains(broadcast_address()) || contains(other.network_address()) || contains(other.broadcast_address());
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool subnet_of(const ip_network_base& other) const IPADDRESS_NOEXCEPT {
+        return is_subnet_of(*this, other);
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool supernet_of(const ip_network_base& other) const IPADDRESS_NOEXCEPT {
+        return is_subnet_of(other, *this);
+    }
+
     IPADDRESS_NODISCARD std::string to_string(format fmt = format::compressed) const {
         return _network_address.to_string(fmt) + '/' + std::to_string(_prefixlen);
     }
@@ -197,6 +209,10 @@ public:
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_unspecified() const IPADDRESS_NOEXCEPT {
         return network_address().is_unspecified() && broadcast_address().is_unspecified();
     }
+
+    // IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t addresses_count() const IPADDRESS_NOEXCEPT {
+    //     return ip_address_type::addresses_count(broadcast_address(), network_address());
+    // }
 
     IPADDRESS_NODISCARD explicit operator std::string() const {
         return to_string();
@@ -310,6 +326,10 @@ private:
         }
 
         return result;
+    }
+
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_subnet_of(const ip_network_base& lhs, const ip_network_base& rhs) IPADDRESS_NOEXCEPT {
+        return rhs.network_address() <= lhs.network_address() && rhs.broadcast_address() >= lhs.broadcast_address();
     }
 
     ip_address_type _network_address;
