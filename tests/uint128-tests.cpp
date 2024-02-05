@@ -23,8 +23,8 @@ TEST(uint128_t, Ctors) {
     constexpr uint128_t value6 = { 1, 2 };
     constexpr uint128_t value7 { 1 };
     constexpr uint128_t value8 = { 1 };
-    uint128_t value9 = 457.3f;
-    uint128_t value10 = 4.32e+20;
+    uint128_t value9 = (uint128_t) 457.3f;
+    uint128_t value10 = (uint128_t) 4.32e+20;
 
     ASSERT_EQ(value1.upper(), 0);
     ASSERT_EQ(value1.lower(), 0);
@@ -59,10 +59,6 @@ TEST(uint128_t, Copy) {
     ASSERT_EQ(copy_ctor.lower(), 5);
     ASSERT_EQ(copy_operator.upper(), 0);
     ASSERT_EQ(copy_operator.lower(), 5);
-
-    copy_operator = 4.32e+20f;
-    ASSERT_EQ(copy_operator.upper(), 23);
-    ASSERT_EQ(copy_operator.lower(), 0x6B34400000000000);
 }
 
 TEST(uint128_t, Move) {
@@ -400,6 +396,20 @@ TEST(uint128_t, Comparison) {
     ASSERT_FALSE(value1 > value3);
     ASSERT_TRUE(value1 <= value3);
     ASSERT_FALSE(value1 >= value3);
+
+    ASSERT_TRUE(value2 == 1);
+    ASSERT_FALSE(value2 != 1);
+    ASSERT_FALSE(value2 < 1);
+    ASSERT_FALSE(value2 > 1);
+    ASSERT_TRUE(value2 <= 1);
+    ASSERT_TRUE(value2 >= 1);
+
+    ASSERT_TRUE(1 == value2);
+    ASSERT_FALSE(1 != value2);
+    ASSERT_FALSE(1 < value2);
+    ASSERT_FALSE(1 > value2);
+    ASSERT_TRUE(1 <= value2);
+    ASSERT_TRUE(1 >= value2);
 
     ASSERT_TRUE(value3 == value3);
     ASSERT_FALSE(value3 != value3);

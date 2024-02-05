@@ -27,7 +27,7 @@ public:
     }
 
     template <typename T, typename std::enable_if<std::is_floating_point<T>::value, bool>::type = true>
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(T value) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit uint128_t(T value) IPADDRESS_NOEXCEPT {
         const auto result = from_double(double(value));
         _upper = result._upper;
         _lower = result._lower;
@@ -67,14 +67,6 @@ public:
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator=(T lower) IPADDRESS_NOEXCEPT {
         _upper = uint64_t(int64_t(lower) >> 63);
         _lower = uint64_t(lower);
-        return *this;
-    }
-
-    template <typename T, typename std::enable_if<std::is_floating_point<T>::value, bool>::type = true>
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator=(T other) IPADDRESS_NOEXCEPT {
-        const auto result = from_double(double(other));
-        _upper = result._upper;
-        _lower = result._lower;
         return *this;
     }
 
@@ -287,8 +279,18 @@ public:
         return (_upper || _lower) || (other._upper || other._lower);
     }
 
+    template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(T lower) const IPADDRESS_NOEXCEPT {
+        return *this == uint128_t(lower);
+    }
+
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return _upper == other._upper && _lower == other._lower;
+    }
+
+    template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(T lower) const IPADDRESS_NOEXCEPT {
+        return *this != uint128_t(lower);
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(const uint128_t& other) const IPADDRESS_NOEXCEPT {
@@ -296,6 +298,11 @@ public:
     }
 
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
+
+    template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(T lower) const IPADDRESS_NOEXCEPT {
+        return *this <=> uint128_t(lower);
+    }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         if (const auto result = _upper <=> other._upper; result == std::strong_ordering::equivalent) {
@@ -307,18 +314,38 @@ public:
 
 #else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
+    template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(T lower) const IPADDRESS_NOEXCEPT {
+        return *this < uint128_t(lower);
+    }
+
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return _upper < other._upper || (_upper == other._upper && _lower < other._lower);
     }
     
+    template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(T lower) const IPADDRESS_NOEXCEPT {
+        return *this > uint128_t(lower);
+    }
+
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return other < *this;
     }
     
+    template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(T lower) const IPADDRESS_NOEXCEPT {
+        return *this <= uint128_t(lower);
+    }
+
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return !(other < *this);
     }
     
+    template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(T lower) const IPADDRESS_NOEXCEPT {
+        return *this >= uint128_t(lower);
+    }
+
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return !(*this < other);
     }
@@ -591,6 +618,7 @@ private:
     uint64_t _lower{};
 
 #else // IPADDRESS_ENDIAN != IPADDRESS_BIG_ENDIAN
+
     uint64_t _lower{};
     uint64_t _upper{};
 
@@ -636,6 +664,48 @@ template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator^(T lower, const uint128_t& value) IPADDRESS_NOEXCEPT {
     return uint128_t(lower) ^ value;
 }
+
+template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(T lower, const uint128_t& other) IPADDRESS_NOEXCEPT {
+    return uint128_t(lower) == other;
+}
+
+template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(T lower, const uint128_t& other) IPADDRESS_NOEXCEPT {
+    return uint128_t(lower) != other;
+}
+
+#ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
+
+template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(T lower, const uint128_t& other) IPADDRESS_NOEXCEPT {
+    return uint128_t(lower) <=> other;
+}
+
+#else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
+
+template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(T lower, const uint128_t& other) IPADDRESS_NOEXCEPT {
+    return uint128_t(lower) < other;
+}
+
+template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(T lower, const uint128_t& other) IPADDRESS_NOEXCEPT {
+    return uint128_t(lower) > other;
+}
+
+template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(T lower, const uint128_t& other) IPADDRESS_NOEXCEPT {
+    return uint128_t(lower) <= other;
+}
+
+template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(T lower, const uint128_t& other) IPADDRESS_NOEXCEPT {
+    return uint128_t(lower) >= other;
+}
+
+#endif // !IPADDRESS_HAS_SPACESHIP_OPERATOR
+
 
 } // IPADDRESS_NAMESPACE
 
