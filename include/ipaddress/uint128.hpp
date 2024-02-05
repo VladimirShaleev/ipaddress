@@ -2,6 +2,8 @@
 #define IPADDRESS_UINT128_HPP
 
 #include "config.hpp"
+#include "hash.hpp"
+#include "optional.hpp"
 
 namespace IPADDRESS_NAMESPACE {
 
@@ -88,6 +90,17 @@ public:
                 return uint128_to_hex_str(*this, upper);
             default:
                 return uint128_to_dec_str(*this);
+        }
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_FORCE_INLINE optional<uint128_t> from_string(const std::string& str, format fmt = format::decimal) IPADDRESS_NOEXCEPT {
+        switch (fmt) {
+            case format::octal:
+                return oct_str_to_uint128(str);
+            case format::hexadecimal:
+                return hex_str_to_uint128(str);
+            default:
+                return dec_str_to_uint128(str);
         }
     }
 
@@ -717,6 +730,46 @@ private:
         return result;
     }
 
+    IPADDRESS_NODISCARD static IPADDRESS_FORCE_INLINE optional<uint128_t> dec_str_to_uint128(const std::string& str) IPADDRESS_NOEXCEPT {
+        uint128_t result = 0;
+        for (const auto c : str) {
+            if (c < '0' || c > '9') {
+                return nullptr;
+            }
+            result = result * 10 + (c - '0');
+        }
+        return result;
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_FORCE_INLINE optional<uint128_t> oct_str_to_uint128(const std::string& str) IPADDRESS_NOEXCEPT {
+        uint128_t result = 0;
+        for (const auto c : str) {
+            if (c < '0' || c > '7') {
+                return nullptr;
+            }
+            result = result * 8 + (c - '0');
+        }
+        return result;
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_FORCE_INLINE optional<uint128_t> hex_str_to_uint128(const std::string& str) IPADDRESS_NOEXCEPT {
+        uint128_t result = 0;
+        int digit = 0;
+        for (const auto c : str) {
+            if (c >= '0' && c <= '9') {
+                digit = c - '0';
+            } else if (c >= 'A' && c <= 'F') {
+                digit = c - 55;
+            } else if (c >= 'a' && c <= 'f') {
+                digit = c - 87;
+            } else {
+                return nullptr;
+            }
+            result = result * 16 + digit;
+        }
+        return result;
+    }
+
 #if IPADDRESS_ENDIAN == IPADDRESS_BIG_ENDIAN
 
     uint64_t _upper{};
@@ -845,6 +898,20 @@ IPADDRESS_FORCE_INLINE std::ostream& operator<<(std::ostream& stream, const IPAD
 }
 
 IPADDRESS_FORCE_INLINE std::istream& operator>>(std::istream& stream, IPADDRESS_NAMESPACE::uint128_t& value) {
+    auto fmt = IPADDRESS_NAMESPACE::uint128_t::format::decimal;
+    if (stream.flags() & ios_base::hex) {
+        fmt = IPADDRESS_NAMESPACE::uint128_t::format::hexadecimal;
+    } else if (stream.flags() & ios_base::oct) {
+        fmt = IPADDRESS_NAMESPACE::uint128_t::format::octal;
+    }
+    std::string str;
+    stream >> str;
+    const auto result = IPADDRESS_NAMESPACE::uint128_t::from_string(str, fmt);
+    if (result) {
+        value = result.value();
+    } else {
+        stream.setstate(std::ios_base::failbit);
+    }
     return stream;
 }
 

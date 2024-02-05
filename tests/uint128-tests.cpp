@@ -474,3 +474,34 @@ TEST(uint128_t, ToString) {
     ASSERT_EQ(ss9.str(), std::string("400000000000045bc"));
     ASSERT_EQ(ss10.str(), std::string("400000000000045BC"));
 }
+
+TEST(uint128_t, FromString) {
+    uint128_t expected1 = 17852;
+    uint128_t expected2 = { 4, 17852 };
+
+    uint128_t read1, read2, read3, read4, read5, read6, read7, read8, read9, read10, read11;
+    std::istringstream ss1("17852 test"); ss1 >> read1;
+    std::istringstream ss2("17852 test"); ss2 >> std::dec >> read2;
+    std::istringstream ss3("42674 test"); ss3 >> std::oct >> read3;
+    std::istringstream ss4("45bc test"); ss4 >> std::hex >> read4;
+    std::istringstream ss5("45BC test"); ss5 >> std::hex >> read5;
+    std::istringstream ss6("73786976294838224316 test"); ss6 >> read6;
+    std::istringstream ss7("73786976294838224316 test"); ss7 >> std::dec >> read7;
+    std::istringstream ss8("10000000000000000042674 test"); ss8 >> std::oct >> read8;
+    std::istringstream ss9("400000000000045bc test"); ss9 >> std::hex >> read9;
+    std::istringstream ss10("400000000000045BC test"); ss10 >> std::hex >> read10;
+    std::istringstream ss11("bad"); ss11 >> read11;
+
+    ASSERT_EQ(read1, expected1);
+    ASSERT_EQ(read2, expected1);
+    ASSERT_EQ(read3, expected1);
+    ASSERT_EQ(read4, expected1);
+    ASSERT_EQ(read5, expected1);
+    ASSERT_EQ(read6, expected2);
+    ASSERT_EQ(read7, expected2);
+    ASSERT_EQ(read8, expected2);
+    ASSERT_EQ(read9, expected2);
+    ASSERT_EQ(read10, expected2);
+    ASSERT_TRUE(ss11.fail());
+    ASSERT_EQ(read11, uint128_t(0));
+}
