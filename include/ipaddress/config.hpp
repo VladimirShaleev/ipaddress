@@ -15,7 +15,7 @@
 #include <type_traits>
 
 #ifndef IPADDRESS_NAMESPACE
-#define IPADDRESS_NAMESPACE ipaddress
+#  define IPADDRESS_NAMESPACE ipaddress
 #endif
 
 #if defined(_MSVC_LANG)

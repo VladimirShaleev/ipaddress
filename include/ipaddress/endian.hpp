@@ -5,6 +5,7 @@
 
 #if (IPADDRESS_CPP_VERSION >= 20) && defined(__has_include)
 #  if __has_include(<bit>)
+#    define IPADDRESS_HAS_STD_ENDIAN
 #    include <bit>
 #  endif
 #endif
@@ -73,7 +74,7 @@
 namespace IPADDRESS_NAMESPACE {
 
 IPADDRESS_CONSTEXPR bool is_little_endian() IPADDRESS_NOEXCEPT {
-#if IPADDRESS_CPP_VERSION >= 20
+#if defined(IPADDRESS_HAS_STD_ENDIAN)
     return std::endian::native == std::endian::little;
 #elif defined(IPADDRESS_ENDIAN)
     return !IPADDRESS_ENDIAN;

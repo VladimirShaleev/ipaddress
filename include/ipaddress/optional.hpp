@@ -25,25 +25,25 @@ public:
         _value(opt._value) {
     }
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional& operator=(std::nullptr_t) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE optional& operator=(std::nullptr_t) IPADDRESS_NOEXCEPT {
         _has_value = false;
         _value = value_type{};
         return *this;
     }
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional& operator=(value_type&& val) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE optional& operator=(value_type&& val) IPADDRESS_NOEXCEPT {
         _has_value = true;
         _value = val;
         return *this;
     }
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional& operator=(const optional<T>& opt) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE optional& operator=(const optional<T>& opt) IPADDRESS_NOEXCEPT {
         _has_value = opt.has_value;
         _value = opt._value;
         return *this;
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type* operator->() IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE value_type* operator->() IPADDRESS_NOEXCEPT {
         return &_value;
     }
 
@@ -51,7 +51,7 @@ public:
         return &_value;
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type& operator*() IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE value_type& operator*() IPADDRESS_NOEXCEPT {
         return _value;
     }
 
@@ -67,19 +67,19 @@ public:
         return _has_value;
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type& value() & IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE value_type& value() & IPADDRESS_NOEXCEPT {
         return _value;
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const value_type& value()const & IPADDRESS_NOEXCEPT{
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const value_type& value() const & IPADDRESS_NOEXCEPT {
         return _value;
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type&& value() && IPADDRESS_NOEXCEPT{
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE value_type&& value() && IPADDRESS_NOEXCEPT {
         return std::move(_value);
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const value_type&& value() const && IPADDRESS_NOEXCEPT{
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const value_type&& value() const && IPADDRESS_NOEXCEPT {
         return std::move(_value);
     }
 

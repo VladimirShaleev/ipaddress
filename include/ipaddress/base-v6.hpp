@@ -2,6 +2,7 @@
 #define IPADDRESS_BASE_V6_HPP
 
 #include "ipv4-address.hpp"
+#include "uint128.hpp"
 
 namespace IPADDRESS_NAMESPACE {
 
