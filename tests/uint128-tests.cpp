@@ -254,6 +254,50 @@ TEST(uint128_t, Arithmetic) {
     ASSERT_EQ(lshift1.low, 0xFFFFFFFFFFFFFFFEULL);
 }
 
+TEST(uint128_t, Assignment) {
+    uint128_t value { 4, 5 };
+
+    value += 3;
+    ASSERT_EQ(value.high, 4);
+    ASSERT_EQ(value.low, 8);
+
+    value -= 2;
+    ASSERT_EQ(value.high, 4);
+    ASSERT_EQ(value.low, 6);
+
+    value *= 2;
+    ASSERT_EQ(value.high, 8);
+    ASSERT_EQ(value.low, 12);
+
+    value /= 2;
+    ASSERT_EQ(value.high, 4);
+    ASSERT_EQ(value.low, 6);
+
+    value %= 3;
+    ASSERT_EQ(value.high, 0);
+    ASSERT_EQ(value.low, 1);
+
+    value &= 0;
+    ASSERT_EQ(value.high, 0);
+    ASSERT_EQ(value.low, 0);
+
+    value |= 1;
+    ASSERT_EQ(value.high, 0);
+    ASSERT_EQ(value.low, 1);
+
+    value ^= 3;
+    ASSERT_EQ(value.high, 0);
+    ASSERT_EQ(value.low, 2);
+
+    value <<= 1;
+    ASSERT_EQ(value.high, 0);
+    ASSERT_EQ(value.low, 4);
+    
+    value >>= 1;
+    ASSERT_EQ(value.high, 0);
+    ASSERT_EQ(value.low, 2);
+}
+
 TEST(uint128_t, IncDec) {
     uint128_t value1 { 4, 5 };
     uint128_t value2 { 4, 0xFFFFFFFFFFFFFFFFULL - 1 };
@@ -278,4 +322,70 @@ TEST(uint128_t, IncDec) {
     ASSERT_EQ(--value1, uint128_t(4, 5));
     ASSERT_EQ(--value2, uint128_t(4, 0xFFFFFFFFFFFFFFFFULL - 1));
     ASSERT_EQ(--value3, uint128_t(4, 0xFFFFFFFFFFFFFFFFULL));
+}
+
+TEST(uint128_t, Logical) {
+    uint128_t value1 { 0, 0 };
+    uint128_t value2 { 0, 1 };
+    uint128_t value3 { 1, 0 };
+    uint128_t value4 { 1, 1 };
+
+    ASSERT_FALSE((bool) value1);
+    ASSERT_TRUE((bool) value2);
+    ASSERT_TRUE((bool) value3);
+    ASSERT_TRUE((bool) value4);
+    
+    ASSERT_TRUE(!value1);
+    ASSERT_FALSE(!value2);
+    ASSERT_FALSE(!value3);
+    ASSERT_FALSE(!value4);
+    
+    ASSERT_FALSE(value1 && value1);
+    ASSERT_FALSE(value1 && value2);
+    ASSERT_TRUE(value2 && value3);
+    ASSERT_TRUE(value3 && value4);
+    ASSERT_FALSE(value4 && value1);
+    ASSERT_TRUE(value4 && value4);
+    
+    ASSERT_FALSE(value1 || value1);
+    ASSERT_TRUE(value1 || value2);
+    ASSERT_TRUE(value2 || value3);
+    ASSERT_TRUE(value3 || value4);
+    ASSERT_TRUE(value4 || value1);
+    ASSERT_TRUE(value4 || value4);
+}
+
+TEST(uint128_t, Comparison) {
+    uint128_t value1 { 0, 0 };
+    uint128_t value2 { 0, 1 };
+    uint128_t value3 { 1, 0 };
+    uint128_t value4 { 1, 1 };
+
+    ASSERT_FALSE(value1 == value2);
+    ASSERT_TRUE(value1 != value2);
+    ASSERT_TRUE(value1 < value2);
+    ASSERT_FALSE(value1 > value2);
+    ASSERT_TRUE(value1 <= value2);
+    ASSERT_FALSE(value1 >= value2);
+
+    ASSERT_FALSE(value1 == value3);
+    ASSERT_TRUE(value1 != value3);
+    ASSERT_TRUE(value1 < value3);
+    ASSERT_FALSE(value1 > value3);
+    ASSERT_TRUE(value1 <= value3);
+    ASSERT_FALSE(value1 >= value3);
+
+    ASSERT_TRUE(value3 == value3);
+    ASSERT_FALSE(value3 != value3);
+    ASSERT_FALSE(value3 < value3);
+    ASSERT_FALSE(value3 > value3);
+    ASSERT_TRUE(value3 <= value3);
+    ASSERT_TRUE(value3 >= value3);
+
+    ASSERT_FALSE(value4 == value2);
+    ASSERT_TRUE(value4 != value2);
+    ASSERT_FALSE(value4 < value2);
+    ASSERT_TRUE(value4 > value2);
+    ASSERT_FALSE(value4 <= value2);
+    ASSERT_TRUE(value4 >= value2);
 }
