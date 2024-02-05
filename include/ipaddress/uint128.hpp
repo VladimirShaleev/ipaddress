@@ -62,7 +62,7 @@ public:
         value = tmp;
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string to_string(format fmt = format::decimal, bool upper = false) const {
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string to_string(format fmt = format::decimal) const {
         if (_upper == 0) {
             std::ostringstream ss;
             switch (fmt) {
@@ -71,9 +71,6 @@ public:
                     break;
                 case format::hexadecimal:
                     ss << std::hex;
-                    if (upper) {
-                        ss << std::uppercase;
-                    }
                     break;
                 default:
                     ss << std::dec;
@@ -87,7 +84,7 @@ public:
             case format::octal:
                 return uint128_to_oct_str(*this);
             case format::hexadecimal:
-                return uint128_to_hex_str(*this, upper);
+                return uint128_to_hex_str(*this);
             default:
                 return uint128_to_dec_str(*this);
         }
@@ -709,13 +706,10 @@ private:
         return result;
     }
 
-    IPADDRESS_NODISCARD static IPADDRESS_FORCE_INLINE std::string uint128_to_hex_str(uint128_t value, bool upper) {
-        constexpr char digits_lower[] = "0123456789abcdef";
-        constexpr char digits_upper[] = "0123456789ABCDEF";
-        auto* digits = upper ? digits_upper : digits_lower;
+    IPADDRESS_NODISCARD static IPADDRESS_FORCE_INLINE std::string uint128_to_hex_str(uint128_t value) {
+        constexpr char digits[] = "0123456789abcdef";
 
         std::ostringstream ss;
-
         do {
             const auto q = value / 16;
             const auto r = value - q * 16;
@@ -894,7 +888,13 @@ IPADDRESS_FORCE_INLINE std::ostream& operator<<(std::ostream& stream, const IPAD
     } else if (stream.flags() & ios_base::oct) {
         fmt = IPADDRESS_NAMESPACE::uint128_t::format::octal;
     }
-    return stream << value.to_string(fmt, stream.flags() & ios_base::uppercase);
+    auto str = value.to_string(fmt);
+    if (stream.flags() & ios_base::uppercase) {
+        std::transform(str.cbegin(), str.cend(), str.begin(), [](auto c){
+            return std::toupper(c);
+        });
+    }
+    return stream << str;
 }
 
 IPADDRESS_FORCE_INLINE std::istream& operator>>(std::istream& stream, IPADDRESS_NAMESPACE::uint128_t& value) {

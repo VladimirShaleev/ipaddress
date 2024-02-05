@@ -29,17 +29,17 @@ public:
 
     using base_type = typename Base::base_type;
 
-    IPADDRESS_CONSTEXPR ip_address_base() IPADDRESS_NOEXCEPT : Base() {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base() IPADDRESS_NOEXCEPT : Base() {
     }
 
-    IPADDRESS_CONSTEXPR explicit ip_address_base(const base_type& bytes) IPADDRESS_NOEXCEPT : Base(bytes) {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit ip_address_base(const base_type& bytes) IPADDRESS_NOEXCEPT : Base(bytes) {
     }
 
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR ip_address_base from_bytes(const base_type& bytes) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base from_bytes(const base_type& bytes) IPADDRESS_NOEXCEPT {
         return ip_address_base(bytes);
     }
 
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR ip_address_base from_bytes(const uint8_t* bytes, size_t byte_count) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base from_bytes(const uint8_t* bytes, size_t byte_count) IPADDRESS_NOEXCEPT {
         base_type data = {};
         for (size_t i = 0; i < Base::_size && i < byte_count; ++i) {
             data[i] = bytes[i];
@@ -50,7 +50,7 @@ public:
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
     template <fixed_string FixedString>
-    IPADDRESS_NODISCARD static consteval ip_address_base<Base> parse() IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static consteval IPADDRESS_FORCE_INLINE ip_address_base<Base> parse() IPADDRESS_NOEXCEPT {
         constexpr auto str = FixedString;
         auto code = error_code::NO_ERROR;
         auto index = 0;
@@ -65,33 +65,33 @@ public:
 
 #if IPADDRESS_CPP_VERSION >= 17
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR ip_address_base parse(std::string_view address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(std::string_view address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return parse_string(address);
     }
 
-    static IPADDRESS_CONSTEXPR ip_address_base parse(std::string_view address, error_code& code) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(std::string_view address, error_code& code) IPADDRESS_NOEXCEPT {
         return parse_string(address, code);
     }
 #else // IPADDRESS_CPP_VERSION < 17
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static ip_address_base parse(const std::string& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::string& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return parse_string(address);
     }
 
-    static ip_address_base parse(const std::string& address, error_code& code) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::string& address, error_code& code) IPADDRESS_NOEXCEPT {
         return parse_string(address, code);
     }
 
 #endif // IPADDRESS_CPP_VERSION < 17
 
     template <size_t N>
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR ip_address_base parse(const char(&address)[N]) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(const char(&address)[N]) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         auto str = make_fixed_string(address);
         return parse_string(str);
     }
 
     template <size_t N>
-    static IPADDRESS_CONSTEXPR ip_address_base parse(const char(&address)[N], error_code& code) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(const char(&address)[N], error_code& code) IPADDRESS_NOEXCEPT {
         auto str = make_fixed_string(address);
         return parse_string(str, code);
     }
@@ -118,7 +118,7 @@ public:
         return true;
     }
 
-    IPADDRESS_NODISCARD std::string to_string(format fmt = format::compressed) const {
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string to_string(format fmt = format::compressed) const {
         char res[Base::_max_string_len + 1]{};
         const auto len = Base::ip_to_chars(Base::bytes(), fmt, res);
         return std::string(res, len);
@@ -238,7 +238,7 @@ struct hash<IPADDRESS_NAMESPACE::ip_address_base<Base>> {
 
 template <typename Base>
 inline IPADDRESS_CONSTEXPR void swap(IPADDRESS_NAMESPACE::ip_address_base<Base>& ip1, IPADDRESS_NAMESPACE::ip_address_base<Base>& ip2) IPADDRESS_NOEXCEPT {
-    return ip1.swap(ip2);
+    ip1.swap(ip2);
 }
 
 template <typename Base>
@@ -253,7 +253,14 @@ inline std::ostream& operator<<(std::ostream& stream, const IPADDRESS_NAMESPACE:
         ? (IPADDRESS_NAMESPACE::format) (iword - 1) 
         : IPADDRESS_NAMESPACE::format::compressed;
     iword = 0;
-    return stream << ip.to_string(fmt);
+    auto str = ip.to_string(fmt);
+    if (stream.flags() & ios_base::uppercase) {
+        auto end = std::find(str.cbegin(), str.cend(), '%');
+        std::transform(str.cbegin(), end, str.begin(), [](auto c){
+            return std::toupper(c);
+        });
+    }
+    return stream << str;
 }
 
 template <typename Base>

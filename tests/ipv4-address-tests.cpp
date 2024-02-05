@@ -17,8 +17,7 @@ static constexpr error_code get_parse_error(const char(&address)[N]) noexcept {
     return err;
 }
 
-TEST(ipv4_address, CompileTime)
-{
+TEST(ipv4_address, CompileTime) {
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
     auto ip1 = ipv4_address::parse<"127.0.0.1">();
     ASSERT_EQ(ip1.to_uint32(), 0x7F000001);
@@ -234,6 +233,10 @@ TEST_P(AddressParserIpv4Params, parse) {
     ASSERT_EQ(s1, std::string("test:"));
     ASSERT_EQ(addr.to_uint32(), excepted_uint32);
     ASSERT_EQ(s2, std::string("parser"));
+
+    ipv4_address bad_addr;
+    std::istringstream ss2("test"); ss2 >> bad_addr;
+    ASSERT_TRUE(ss2.fail());
 }
 INSTANTIATE_TEST_SUITE_P(
     ipv4_address, AddressParserIpv4Params,

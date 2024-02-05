@@ -365,6 +365,10 @@ TEST_P(AddressParserIpv6Params, parse) {
     ASSERT_EQ(s1, std::string("test:"));
     ASSERT_EQ(addr, ip);
     ASSERT_EQ(s2, std::string("parser"));
+
+    ipv6_address bad_addr;
+    std::istringstream ss2("test"); ss2 >> bad_addr;
+    ASSERT_TRUE(ss2.fail());
 }
 INSTANTIATE_TEST_SUITE_P(
     ipv6_address, AddressParserIpv6Params,
@@ -621,12 +625,13 @@ TEST(ipv6_address, Comparison) {
     ASSERT_TRUE(ip6 != ip5);
 }
 
-using ToStringIpv6Params = TestWithParam<std::tuple<const char*, const char*, const char*, const char*>>;
+using ToStringIpv6Params = TestWithParam<std::tuple<const char*, const char*, const char*, const char*, const char*>>;
 TEST_P(ToStringIpv6Params, to_string) {
     const auto expected_address = std::get<0>(GetParam());
     const auto expected_full = std::get<1>(GetParam());
     const auto expected_compact = std::get<2>(GetParam());
     const auto expected_compressed = std::get<3>(GetParam());
+    const auto expected_compressed_upper = std::get<4>(GetParam());
 
     const auto actual = ipv6_address::parse(expected_address);
 
@@ -634,6 +639,7 @@ TEST_P(ToStringIpv6Params, to_string) {
     std::ostringstream ss_default; ss_default << actual;
     std::ostringstream ss_compact; ss_compact << compact << actual;
     std::ostringstream ss_compressed; ss_compressed << compressed << actual;
+    std::ostringstream ss_compressed_upper; ss_compressed_upper << std::uppercase << compressed << actual;
     
     ASSERT_EQ(actual.to_string(format::full), std::string(expected_full));
     ASSERT_EQ(actual.to_string(format::compact), std::string(expected_compact));
@@ -645,33 +651,34 @@ TEST_P(ToStringIpv6Params, to_string) {
     ASSERT_EQ(ss_default.str(), std::string(expected_compressed));
     ASSERT_EQ(ss_compact.str(), std::string(expected_compact));
     ASSERT_EQ(ss_compressed.str(), std::string(expected_compressed));
+    ASSERT_EQ(ss_compressed_upper.str(), std::string(expected_compressed_upper));
 }
 INSTANTIATE_TEST_SUITE_P(
     ipv6_address, ToStringIpv6Params,
     testing::Values(
-        std::make_tuple("2001:db8:0:0:1:0:0:1", "2001:0db8:0000:0000:0001:0000:0000:0001", "2001:db8:0:0:1:0:0:1", "2001:db8::1:0:0:1"),
-        std::make_tuple("2001:DB8::1", "2001:0db8:0000:0000:0000:0000:0000:0001", "2001:db8:0:0:0:0:0:1", "2001:db8::1"),
-        std::make_tuple("2001:db8::1", "2001:0db8:0000:0000:0000:0000:0000:0001", "2001:db8:0:0:0:0:0:1", "2001:db8::1"),
-        std::make_tuple("2001:0db8:85a3:0000:0000:8a2e:0370:7334", "2001:0db8:85a3:0000:0000:8a2e:0370:7334", "2001:db8:85a3:0:0:8a2e:370:7334", "2001:db8:85a3::8a2e:370:7334"),
-        std::make_tuple("fe80::1ff:fe23:4567:890a", "fe80:0000:0000:0000:01ff:fe23:4567:890a", "fe80:0:0:0:1ff:fe23:4567:890a", "fe80::1ff:fe23:4567:890a"),
-        std::make_tuple("::", "0000:0000:0000:0000:0000:0000:0000:0000", "0:0:0:0:0:0:0:0", "::"),
-        std::make_tuple("::127.0.0.1", "0000:0000:0000:0000:0000:0000:7f00:0001", "0:0:0:0:0:0:7f00:1", "::7f00:1"),
-        std::make_tuple("0000::0000", "0000:0000:0000:0000:0000:0000:0000:0000", "0:0:0:0:0:0:0:0", "::"),
-        std::make_tuple("::c0a8:1", "0000:0000:0000:0000:0000:0000:c0a8:0001", "0:0:0:0:0:0:c0a8:1", "::c0a8:1"),
-        std::make_tuple("000::c0a8:0001", "0000:0000:0000:0000:0000:0000:c0a8:0001", "0:0:0:0:0:0:c0a8:1", "::c0a8:1"),
-        std::make_tuple("::1", "0000:0000:0000:0000:0000:0000:0000:0001", "0:0:0:0:0:0:0:1", "::1"),
-        std::make_tuple("::ffff:0:0", "0000:0000:0000:0000:0000:ffff:0000:0000", "0:0:0:0:0:ffff:0:0", "::ffff:0:0"),
-        std::make_tuple("::ffff:0:0:0", "0000:0000:0000:0000:ffff:0000:0000:0000", "0:0:0:0:ffff:0:0:0", "::ffff:0:0:0"),
-        std::make_tuple("64:ff9b::", "0064:ff9b:0000:0000:0000:0000:0000:0000", "64:ff9b:0:0:0:0:0:0", "64:ff9b::"),
-        std::make_tuple("64:ff9b:1::", "0064:ff9b:0001:0000:0000:0000:0000:0000", "64:ff9b:1:0:0:0:0:0", "64:ff9b:1::"),
-        std::make_tuple("100::", "0100:0000:0000:0000:0000:0000:0000:0000", "100:0:0:0:0:0:0:0", "100::"),
-        std::make_tuple("ff02::1:3", "ff02:0000:0000:0000:0000:0000:0001:0003", "ff02:0:0:0:0:0:1:3", "ff02::1:3"),
-        std::make_tuple("fe80::1ff:fe23:4567:890a%eth2", "fe80:0000:0000:0000:01ff:fe23:4567:890a%eth2", "fe80:0:0:0:1ff:fe23:4567:890a%eth2", "fe80::1ff:fe23:4567:890a%eth2"),
-        std::make_tuple("fe80::1ff:fe23:4567:890a%25eth01234567", "fe80:0000:0000:0000:01ff:fe23:4567:890a%25eth01234567", "fe80:0:0:0:1ff:fe23:4567:890a%25eth01234567", "fe80::1ff:fe23:4567:890a%25eth01234567"),
-        std::make_tuple("fe80::1ff:fe23:4567:890a%3", "fe80:0000:0000:0000:01ff:fe23:4567:890a%3", "fe80:0:0:0:1ff:fe23:4567:890a%3", "fe80::1ff:fe23:4567:890a%3"),
-        std::make_tuple("fe80::1ff:fe23:4567:890a%31", "fe80:0000:0000:0000:01ff:fe23:4567:890a%31", "fe80:0:0:0:1ff:fe23:4567:890a%31", "fe80::1ff:fe23:4567:890a%31"),
-        std::make_tuple("1:2:3:4:5:6:42.42.42.1", "0001:0002:0003:0004:0005:0006:2a2a:2a01", "1:2:3:4:5:6:2a2a:2a01", "1:2:3:4:5:6:2a2a:2a01"),
-        std::make_tuple("0:0:0:4:5:6:42.42.42.1%test", "0000:0000:0000:0004:0005:0006:2a2a:2a01%test", "0:0:0:4:5:6:2a2a:2a01%test", "::4:5:6:2a2a:2a01%test")
+        std::make_tuple("2001:db8:0:0:1:0:0:1", "2001:0db8:0000:0000:0001:0000:0000:0001", "2001:db8:0:0:1:0:0:1", "2001:db8::1:0:0:1", "2001:DB8::1:0:0:1"),
+        std::make_tuple("2001:DB8::1", "2001:0db8:0000:0000:0000:0000:0000:0001", "2001:db8:0:0:0:0:0:1", "2001:db8::1", "2001:DB8::1"),
+        std::make_tuple("2001:db8::1", "2001:0db8:0000:0000:0000:0000:0000:0001", "2001:db8:0:0:0:0:0:1", "2001:db8::1", "2001:DB8::1"),
+        std::make_tuple("2001:0db8:85a3:0000:0000:8a2e:0370:7334", "2001:0db8:85a3:0000:0000:8a2e:0370:7334", "2001:db8:85a3:0:0:8a2e:370:7334", "2001:db8:85a3::8a2e:370:7334", "2001:DB8:85A3::8A2E:370:7334"),
+        std::make_tuple("fe80::1ff:fe23:4567:890a", "fe80:0000:0000:0000:01ff:fe23:4567:890a", "fe80:0:0:0:1ff:fe23:4567:890a", "fe80::1ff:fe23:4567:890a", "FE80::1FF:FE23:4567:890A"),
+        std::make_tuple("::", "0000:0000:0000:0000:0000:0000:0000:0000", "0:0:0:0:0:0:0:0", "::", "::"),
+        std::make_tuple("::127.0.0.1", "0000:0000:0000:0000:0000:0000:7f00:0001", "0:0:0:0:0:0:7f00:1", "::7f00:1", "::7F00:1"),
+        std::make_tuple("0000::0000", "0000:0000:0000:0000:0000:0000:0000:0000", "0:0:0:0:0:0:0:0", "::", "::"),
+        std::make_tuple("::c0a8:1", "0000:0000:0000:0000:0000:0000:c0a8:0001", "0:0:0:0:0:0:c0a8:1", "::c0a8:1", "::C0A8:1"),
+        std::make_tuple("000::c0a8:0001", "0000:0000:0000:0000:0000:0000:c0a8:0001", "0:0:0:0:0:0:c0a8:1", "::c0a8:1", "::C0A8:1"),
+        std::make_tuple("::1", "0000:0000:0000:0000:0000:0000:0000:0001", "0:0:0:0:0:0:0:1", "::1", "::1"),
+        std::make_tuple("::ffff:0:0", "0000:0000:0000:0000:0000:ffff:0000:0000", "0:0:0:0:0:ffff:0:0", "::ffff:0:0", "::FFFF:0:0"),
+        std::make_tuple("::ffff:0:0:0", "0000:0000:0000:0000:ffff:0000:0000:0000", "0:0:0:0:ffff:0:0:0", "::ffff:0:0:0", "::FFFF:0:0:0"),
+        std::make_tuple("64:ff9b::", "0064:ff9b:0000:0000:0000:0000:0000:0000", "64:ff9b:0:0:0:0:0:0", "64:ff9b::", "64:FF9B::"),
+        std::make_tuple("64:ff9b:1::", "0064:ff9b:0001:0000:0000:0000:0000:0000", "64:ff9b:1:0:0:0:0:0", "64:ff9b:1::", "64:FF9B:1::"),
+        std::make_tuple("100::", "0100:0000:0000:0000:0000:0000:0000:0000", "100:0:0:0:0:0:0:0", "100::", "100::"),
+        std::make_tuple("ff02::1:3", "ff02:0000:0000:0000:0000:0000:0001:0003", "ff02:0:0:0:0:0:1:3", "ff02::1:3", "FF02::1:3"),
+        std::make_tuple("fe80::1ff:fe23:4567:890a%eth2", "fe80:0000:0000:0000:01ff:fe23:4567:890a%eth2", "fe80:0:0:0:1ff:fe23:4567:890a%eth2", "fe80::1ff:fe23:4567:890a%eth2", "FE80::1FF:FE23:4567:890A%eth2"),
+        std::make_tuple("fe80::1ff:fe23:4567:890a%25eth01234567", "fe80:0000:0000:0000:01ff:fe23:4567:890a%25eth01234567", "fe80:0:0:0:1ff:fe23:4567:890a%25eth01234567", "fe80::1ff:fe23:4567:890a%25eth01234567", "FE80::1FF:FE23:4567:890A%25eth01234567"),
+        std::make_tuple("fe80::1ff:fe23:4567:890a%3", "fe80:0000:0000:0000:01ff:fe23:4567:890a%3", "fe80:0:0:0:1ff:fe23:4567:890a%3", "fe80::1ff:fe23:4567:890a%3", "FE80::1FF:FE23:4567:890A%3"),
+        std::make_tuple("fe80::1ff:fe23:4567:890a%31", "fe80:0000:0000:0000:01ff:fe23:4567:890a%31", "fe80:0:0:0:1ff:fe23:4567:890a%31", "fe80::1ff:fe23:4567:890a%31", "FE80::1FF:FE23:4567:890A%31"),
+        std::make_tuple("1:2:3:4:5:6:42.42.42.1", "0001:0002:0003:0004:0005:0006:2a2a:2a01", "1:2:3:4:5:6:2a2a:2a01", "1:2:3:4:5:6:2a2a:2a01", "1:2:3:4:5:6:2A2A:2A01"),
+        std::make_tuple("0:0:0:4:5:6:42.42.42.1%test", "0000:0000:0000:0004:0005:0006:2a2a:2a01%test", "0:0:0:4:5:6:2a2a:2a01%test", "::4:5:6:2a2a:2a01%test", "::4:5:6:2A2A:2A01%test")
     ));
 
 TEST(ipv6_address, Hash) {
