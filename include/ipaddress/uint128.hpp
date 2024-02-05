@@ -7,6 +7,12 @@ namespace IPADDRESS_NAMESPACE {
 
 class uint128_t final {
 public:
+    enum class format {
+        decimal = 0,
+        octal,
+        hexadecimal,
+    };
+
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t() IPADDRESS_NOEXCEPT = default;
 
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(const uint128_t&) IPADDRESS_NOEXCEPT = default;
@@ -39,6 +45,50 @@ public:
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint64_t upper() const IPADDRESS_NOEXCEPT {
         return _upper;
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::size_t hash() const IPADDRESS_NOEXCEPT {
+        hash_combine<8> hasher{};
+        const auto seed = hasher(_upper);
+        const auto hash = hasher(seed + 0x9e3779b9 + _lower);
+        return hash;
+    }
+
+    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE void swap(IPADDRESS_NAMESPACE::uint128_t& value) IPADDRESS_NOEXCEPT {
+        const auto tmp = *this;
+        *this = value;
+        value = tmp;
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string to_string(format fmt = format::decimal, bool upper = false) const {
+        if (_upper == 0) {
+            std::ostringstream ss;
+            switch (fmt) {
+                case format::octal:
+                    ss << std::oct;
+                    break;
+                case format::hexadecimal:
+                    ss << std::hex;
+                    if (upper) {
+                        ss << std::uppercase;
+                    }
+                    break;
+                default:
+                    ss << std::dec;
+                    break;
+            }
+            ss << _lower;
+            return ss.str();
+        }
+
+        switch (fmt) {
+            case format::octal:
+                return uint128_to_oct_str(*this);
+            case format::hexadecimal:
+                return uint128_to_hex_str(*this, upper);
+            default:
+                return uint128_to_dec_str(*this);
+        }
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE operator bool() const IPADDRESS_NOEXCEPT {
@@ -612,6 +662,61 @@ private:
         return shift;
     }
 
+    IPADDRESS_NODISCARD static IPADDRESS_FORCE_INLINE std::string uint128_to_dec_str(uint128_t value) {
+        std::ostringstream ss;
+
+        do {
+            const auto q = value / 10;
+            const auto r = value - q * 10;
+
+            ss << r._lower;
+
+            value = q;
+        } while (value);
+
+        auto result = ss.str();
+        std::reverse(result.begin(), result.end());
+        return result;
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_FORCE_INLINE std::string uint128_to_oct_str(uint128_t value) {
+        std::ostringstream ss;
+
+        do {
+            const auto q = value / 8;
+            const auto r = value - q * 8;
+
+            ss << r._lower;
+
+            value = q;
+        } while (value);
+
+        auto result = ss.str();
+        std::reverse(result.begin(), result.end());
+        return result;
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_FORCE_INLINE std::string uint128_to_hex_str(uint128_t value, bool upper) {
+        constexpr char digits_lower[] = "0123456789abcdef";
+        constexpr char digits_upper[] = "0123456789ABCDEF";
+        auto* digits = upper ? digits_upper : digits_lower;
+
+        std::ostringstream ss;
+
+        do {
+            const auto q = value / 16;
+            const auto r = value - q * 16;
+
+            ss << digits[r._lower];
+
+            value = q;
+        } while (value);
+
+        auto result = ss.str();
+        std::reverse(result.begin(), result.end());
+        return result;
+    }
+
 #if IPADDRESS_ENDIAN == IPADDRESS_BIG_ENDIAN
 
     uint64_t _upper{};
@@ -706,7 +811,45 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(T
 
 #endif // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
-
 } // IPADDRESS_NAMESPACE
+
+#ifndef IPADDRESS_NO_OVERLOAD_STD
+
+namespace std {
+
+template <>
+struct hash<IPADDRESS_NAMESPACE::uint128_t> {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::size_t operator()(const IPADDRESS_NAMESPACE::uint128_t& value) const IPADDRESS_NOEXCEPT {
+        return value.hash();
+    }
+};
+
+IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void swap(IPADDRESS_NAMESPACE::uint128_t& value1, IPADDRESS_NAMESPACE::uint128_t& value2) IPADDRESS_NOEXCEPT {
+    const auto tmp = value1;
+    value1 = value2;
+    value2 = tmp;
+}
+
+IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string to_string(const IPADDRESS_NAMESPACE::uint128_t& value) {
+    return value.to_string();
+}
+
+IPADDRESS_FORCE_INLINE std::ostream& operator<<(std::ostream& stream, const IPADDRESS_NAMESPACE::uint128_t& value) {
+    auto fmt = IPADDRESS_NAMESPACE::uint128_t::format::decimal;
+    if (stream.flags() & ios_base::hex) {
+        fmt = IPADDRESS_NAMESPACE::uint128_t::format::hexadecimal;
+    } else if (stream.flags() & ios_base::oct) {
+        fmt = IPADDRESS_NAMESPACE::uint128_t::format::octal;
+    }
+    return stream << value.to_string(fmt, stream.flags() & ios_base::uppercase);
+}
+
+IPADDRESS_FORCE_INLINE std::istream& operator>>(std::istream& stream, IPADDRESS_NAMESPACE::uint128_t& value) {
+    return stream;
+}
+
+} // std
+
+#endif // IPADDRESS_NO_OVERLOAD_STD
 
 #endif // IPADDRESS_UINT128_HPP

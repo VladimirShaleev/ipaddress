@@ -425,3 +425,52 @@ TEST(uint128_t, Comparison) {
     ASSERT_FALSE(value4 <= value2);
     ASSERT_TRUE(value4 >= value2);
 }
+
+TEST(uint128_t, Hash) {
+    std::hash<uint128_t> hasher;
+
+    const auto hash1 = hasher(uint128_t(0, 0));
+    const auto hash2 = hasher(uint128_t(4, 5));
+
+    ASSERT_EQ(hash1, sizeof(size_t) == 8 ? 0xA55DB391E20904C2ULL : 0xE20904C2UL);
+    ASSERT_EQ(hash2, sizeof(size_t) == 8 ? 0xFD9B4C34031415A2ULL : 0xBDD51BB8UL);
+}
+
+TEST(uint128_t, Swap) {
+    uint128_t value1 = 0;
+    uint128_t value2 = { 4, 5 };
+    
+    std::swap(value1, value2);
+
+    ASSERT_EQ(value1.upper(), 4);
+    ASSERT_EQ(value1.lower(), 5);
+    ASSERT_EQ(value2.upper(), 0);
+    ASSERT_EQ(value2.lower(), 0);
+}
+
+TEST(uint128_t, ToString) {
+    uint128_t value1 = 17852;
+    uint128_t value2 = { 4, 17852 };
+
+    std::ostringstream ss1; ss1 << value1;
+    std::ostringstream ss2; ss2 << std::dec << value1;
+    std::ostringstream ss3; ss3 << std::oct << value1;
+    std::ostringstream ss4; ss4 << std::hex << value1;
+    std::ostringstream ss5; ss5 << std::hex << std::uppercase << value1;
+    std::ostringstream ss6; ss6 << value2;
+    std::ostringstream ss7; ss7 << std::dec << value2;
+    std::ostringstream ss8; ss8 << std::oct << value2;
+    std::ostringstream ss9; ss9 << std::hex << value2;
+    std::ostringstream ss10; ss10 << std::hex << std::uppercase << value2;
+    
+    ASSERT_EQ(ss1.str(), std::string("17852"));
+    ASSERT_EQ(ss2.str(), std::string("17852"));
+    ASSERT_EQ(ss3.str(), std::string("42674"));
+    ASSERT_EQ(ss4.str(), std::string("45bc"));
+    ASSERT_EQ(ss5.str(), std::string("45BC"));
+    ASSERT_EQ(ss6.str(), std::string("73786976294838224316"));
+    ASSERT_EQ(ss7.str(), std::string("73786976294838224316"));
+    ASSERT_EQ(ss8.str(), std::string("10000000000000000042674"));
+    ASSERT_EQ(ss9.str(), std::string("400000000000045bc"));
+    ASSERT_EQ(ss10.str(), std::string("400000000000045BC"));
+}
