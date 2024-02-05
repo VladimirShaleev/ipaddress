@@ -173,5 +173,109 @@ TEST(uint128_t, Arithmetic) {
     ASSERT_EQ(mul3.high, 4);
     ASSERT_EQ(mul3.low, 0xFFFFFFFFFFFFFFFFULL);
     ASSERT_EQ(mul4.high, 0xBB7);
-    ASSERT_EQ(mul4.low, 0XFFFFFFFFFFFFF448);
+    ASSERT_EQ(mul4.low, 0xFFFFFFFFFFFFF448);
+    
+    auto div1 = value1 / 25;
+    auto div2 = value2 / 2;
+    auto div3 = value3 / 1;
+    auto div4 = 1000 / uint128_t(0, 2);
+    auto div5 = 0 / uint128_t(0, 2);
+    auto div6 = 0 / uint128_t(0, 0);
+    auto div7 = 1000 / uint128_t(0, 1000);
+    auto div8 = 1000 / uint128_t(0, 2000);
+    auto div9 = uint128_t(2, 1000) / uint128_t(2, 1000);
+    auto div10 = uint128_t(2, 1000) / uint128_t(2, 2000);
+    ASSERT_EQ(div1.high, 0);
+    ASSERT_EQ(div1.low, 0x28F5C28F5C28F5C2);
+    ASSERT_EQ(div2.high, 2);
+    ASSERT_EQ(div2.low, 0x7fffffffffffffffULL);
+    ASSERT_EQ(div3.high, 4);
+    ASSERT_EQ(div3.low, 0xFFFFFFFFFFFFFFFFULL);
+    ASSERT_EQ(div4.high, 0);
+    ASSERT_EQ(div4.low, 0x1F4);
+    ASSERT_EQ(div5.high, 0);
+    ASSERT_EQ(div5.low, 0);
+    ASSERT_EQ(div6.high, 0);
+    ASSERT_EQ(div6.low, 0);
+    ASSERT_EQ(div7.high, 0);
+    ASSERT_EQ(div7.low, 1);
+    ASSERT_EQ(div8.high, 0);
+    ASSERT_EQ(div8.low, 0);
+    ASSERT_EQ(div9.high, 0);
+    ASSERT_EQ(div9.low, 1);
+    ASSERT_EQ(div10.high, 0);
+    ASSERT_EQ(div10.low, 0);
+
+    auto rem1 = value1 % 25;
+    auto rem2 = value2 % 2;
+    auto rem3 = value3 % 1;
+    auto rem4 = 15 % value1;
+    ASSERT_EQ(rem1.high, 0);
+    ASSERT_EQ(rem1.low, 19);
+    ASSERT_EQ(rem2.high, 0);
+    ASSERT_EQ(rem2.low, 0);
+    ASSERT_EQ(rem3.high, 0);
+    ASSERT_EQ(rem3.low, 0);
+    ASSERT_EQ(rem4.high, 0);
+    ASSERT_EQ(rem4.low, 15);
+
+    auto and1 = uint128_t(1, 1) & uint128_t(3, 3);
+    auto and2 = uint128_t(1, 1) & 1;
+    auto and3 = 1 & uint128_t(1, 1);
+    ASSERT_EQ(and1.high, 1);
+    ASSERT_EQ(and1.low, 1);
+    ASSERT_EQ(and2.high, 0);
+    ASSERT_EQ(and2.low, 1);
+    ASSERT_EQ(and3.high, 0);
+    ASSERT_EQ(and3.low, 1);
+
+    auto or1 = uint128_t(1, 1) | uint128_t(2, 2);
+    auto or2 = uint128_t(1, 1) | 2;
+    auto or3 = 2 | uint128_t(1, 1);
+    ASSERT_EQ(or1.high, 3);
+    ASSERT_EQ(or1.low, 3);
+    ASSERT_EQ(or2.high, 1);
+    ASSERT_EQ(or2.low, 3);
+    ASSERT_EQ(or3.high, 1);
+    ASSERT_EQ(or3.low, 3);
+
+    auto xor1 = uint128_t(1, 1) ^ uint128_t(3, 3);
+    auto xor2 = uint128_t(1, 1) ^ 3;
+    auto xor3 = 3 ^ uint128_t(1, 1);
+    ASSERT_EQ(xor1.high, 2);
+    ASSERT_EQ(xor1.low, 2);
+    ASSERT_EQ(xor2.high, 1);
+    ASSERT_EQ(xor2.low, 2);
+    ASSERT_EQ(xor3.high, 1);
+    ASSERT_EQ(xor3.low, 2);
+    
+    auto lshift1 = uint128_t(0, 0xFFFFFFFFFFFFFFFFULL) << 1;
+    ASSERT_EQ(lshift1.high, 1);
+    ASSERT_EQ(lshift1.low, 0xFFFFFFFFFFFFFFFEULL);
+}
+
+TEST(uint128_t, IncDec) {
+    uint128_t value1 { 4, 5 };
+    uint128_t value2 { 4, 0xFFFFFFFFFFFFFFFFULL - 1 };
+    uint128_t value3 { 4, 0xFFFFFFFFFFFFFFFFULL };
+
+    ASSERT_EQ(++value1, uint128_t(4, 6));
+    ASSERT_EQ(++value2, uint128_t(4, 0xFFFFFFFFFFFFFFFFULL));
+    ASSERT_EQ(++value3, uint128_t(5, 0));
+    ASSERT_EQ(value1++, uint128_t(4, 6));
+    ASSERT_EQ(value2++, uint128_t(4, 0xFFFFFFFFFFFFFFFFULL));
+    ASSERT_EQ(value3++, uint128_t(5, 0));
+    ASSERT_EQ(value1, uint128_t(4, 7));
+    ASSERT_EQ(value2, uint128_t(5, 0));
+    ASSERT_EQ(value3, uint128_t(5, 1));
+    
+    ASSERT_EQ(value1--, uint128_t(4, 7));
+    ASSERT_EQ(value2--, uint128_t(5, 0));
+    ASSERT_EQ(value3--, uint128_t(5, 1));
+    ASSERT_EQ(value1, uint128_t(4, 6));
+    ASSERT_EQ(value2, uint128_t(4, 0xFFFFFFFFFFFFFFFFULL));
+    ASSERT_EQ(value3, uint128_t(5, 0));
+    ASSERT_EQ(--value1, uint128_t(4, 5));
+    ASSERT_EQ(--value2, uint128_t(4, 0xFFFFFFFFFFFFFFFFULL - 1));
+    ASSERT_EQ(--value3, uint128_t(4, 0xFFFFFFFFFFFFFFFFULL));
 }

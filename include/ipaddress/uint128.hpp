@@ -28,15 +28,9 @@ struct uint128_t final {
         return high || low;
     }
 
-    template <typename T, typename std::enable_if<std::is_integral<T>::value, bool>::type = true>
+    template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit operator T() const IPADDRESS_NOEXCEPT {
         return T(low);
-    }
-
-    template <typename T, typename std::enable_if<!std::is_integral<T>::value, bool>::type = true>
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit operator T() const IPADDRESS_NOEXCEPT {
-        static_assert(std::is_integral<T>::value, "the operation is only supported with integers");
-        return T{};
     }
 
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
@@ -158,20 +152,46 @@ struct uint128_t final {
         return { high * value.low + low * value.high + carry_2 + carry_1, tmp_1 + part_4 };
     }
     
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator/(const uint128_t& value) const IPADDRESS_NOEXCEPT {
-        return divide(value).first;
+    template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator/(T l) const IPADDRESS_NOEXCEPT {
+        return *this / uint128_t(l);
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator%(const uint128_t& value) const IPADDRESS_NOEXCEPT {
-        return divide(value).second;
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator/(const uint128_t& other) const IPADDRESS_NOEXCEPT {
+        return divide(other);
+    }
+
+    template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator%(T l) const IPADDRESS_NOEXCEPT {
+        return *this % uint128_t(l);
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator%(const uint128_t& other) const IPADDRESS_NOEXCEPT {
+        const auto result = divide(other);
+        return *this - result * other;
+    }
+
+    template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator&(T l) const IPADDRESS_NOEXCEPT {
+        return *this & uint128_t(l);
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator&(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return { high & other.high, low & other.low };
     }
 
+    template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator|(T l) const IPADDRESS_NOEXCEPT {
+        return *this | uint128_t(l);
+    }
+
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator|(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return { high | other.high, low | other.low };
+    }
+
+    template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator^(T l) const IPADDRESS_NOEXCEPT {
+        return *this ^ uint128_t(l);
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator^(const uint128_t& other) const IPADDRESS_NOEXCEPT {
@@ -251,7 +271,7 @@ struct uint128_t final {
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const uint128_t& other) const IPADDRESS_NOEXCEPT {
-        if (const auto result = high <=> other.high; result != std::strong_ordering::equivalent) {
+        if (const auto result = high <=> other.high; result == std::strong_ordering::equivalent) {
             return low <=> other.low;
         } else {
             return result;
@@ -278,250 +298,224 @@ struct uint128_t final {
 
 #endif // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::pair<uint128_t, uint128_t> divide(const uint128_t& value) const IPADDRESS_NOEXCEPT {
-        if (*this < value) {
-            return { 0, *this };
-        }
-        if (*this == value) {
-            return { 1, 0 };
-        }
-        auto left = value.lez() - lez();
-        auto tmp_1 = value << left;
-        auto tmp_2 = *this;
-
-        uint128_t quotient = 0;
-        uint128_t zero = 0;
-
-        if (tmp_2 >= value) {
-            auto shift = tmp_2.lez() - tmp_1.lez();
-            if (shift) {
-                tmp_1 >>= shift;
-                quotient <<= shift;
-                left -= shift;
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t divide(const uint128_t& other) const IPADDRESS_NOEXCEPT {
+        if (other.high == 0) {
+            if (other.low == 0) {
+                return {};
             }
-            if (tmp_2 < tmp_1) {
-                tmp_1 >>= 1;
-                quotient <<= 1;
-                --left;
+
+            if (high == 0) {
+                return low / other.low;
             }
-            tmp_2 -= tmp_1;
-            ++quotient;
         }
 
-        if (tmp_2 >= value) {
-            auto shift = tmp_2.lez() - tmp_1.lez();
-            if (shift) {
-                tmp_1 >>= shift;
-                quotient <<= shift;
-                left -= shift;
-            }
-            if (tmp_2 < tmp_1) {
-                tmp_1 >>= 1;
-                quotient <<= 1;
-                --left;
-            }
-            tmp_2 -= tmp_1;
-            ++quotient;
+        if (other >= *this) {
+            return other == *this ? 1 : 0;
         }
-        if (tmp_2 >= value) {
-            auto shift = tmp_2.lez() - tmp_1.lez();
-            if (shift) {
-                tmp_1 >>= shift;
-                quotient <<= shift;
-                left -= shift;
+
+        auto quotient = *this;
+        auto divisor = other;
+
+        uint32_t left[4] {
+            uint32_t(quotient.low),
+            uint32_t(quotient.low >> 32),
+            uint32_t(quotient.high),
+            uint32_t(quotient.high >> 32)
+        };
+        auto a = quotient.lez();
+        int32_t left_size = 4 - int32_t(quotient.lez()) / 32;
+
+        uint32_t right[4] {
+            uint32_t(divisor.low),
+            uint32_t(divisor.low >> 32),
+            uint32_t(divisor.high),
+            uint32_t(divisor.high >> 32)
+        };
+        auto b = divisor.lez();
+        int32_t right_size = 4 - int32_t(divisor.lez()) / 32;
+
+        uint32_t bits[4]{};
+        int32_t bits_size = left_size - right_size + 1;
+
+        assert(left_size >= 1);
+        assert(right_size >= 1);
+        assert(left_size >= right_size);
+
+        uint32_t div_hi = right[right_size - 1];
+        uint32_t div_lo = right_size > 1 ? right[right_size - 2] : 0;
+
+        int32_t shift = 32;
+        if (div_hi != 0) {
+            for (shift = 0; shift < 32; ++shift) {
+                if (div_hi & (1ULL << (31 - shift))) {
+                    break;
+                }
             }
-            if (tmp_2 < tmp_1) {
-                tmp_1 >>= 1;
-                quotient <<= 1;
-                --left;
-            }
-            tmp_2 -= tmp_1;
-            ++quotient;
         }
-        if (tmp_2 >= value) {
-            auto shift = tmp_2.lez() - tmp_1.lez();
-            if (shift) {
-                tmp_1 >>= shift;
-                quotient <<= shift;
-                left -= shift;
-            }
-            if (tmp_2 < tmp_1) {
-                tmp_1 >>= 1;
-                quotient <<= 1;
-                --left;
-            }
-            tmp_2 -= tmp_1;
-            ++quotient;
+        int32_t back_shift = 32 - shift;
+
+        if (shift > 0) {
+            uint32_t div_nx = right_size > 2 ? right[right_size - 3] : 0;
+            div_hi = (div_hi << shift) | (div_lo >> back_shift);
+            div_lo = (div_lo << shift) | (div_nx >> back_shift);
         }
-        if (tmp_2 >= value) {
-            auto shift = tmp_2.lez() - tmp_1.lez();
-            if (shift) {
-                tmp_1 >>= shift;
-                quotient <<= shift;
-                left -= shift;
+
+        for (int32_t i = left_size; i >= right_size; --i) {
+            int32_t n = i - right_size;
+            uint32_t t = uint32_t(i) < uint32_t(left_size) ? left[i] : 0;
+
+            uint64_t val_hi = (uint64_t(t) << 32) | left[i - 1];
+            uint32_t val_lo = (i > 1) ? left[i - 2] : 0;
+
+            if (shift > 0) {
+                uint32_t val_nx = i > 2 ? left[i - 3] : 0;
+                val_hi = (val_hi << shift) | (val_lo >> back_shift);
+                val_lo = (val_lo << shift) | (val_nx >> back_shift);
             }
-            if (tmp_2 < tmp_1) {
-                tmp_1 >>= 1;
-                quotient <<= 1;
-                --left;
+
+            uint64_t digit = val_hi / div_hi;
+
+            if (digit > 0xFFFFFFFF) {
+                digit = 0xFFFFFFFF;
             }
-            tmp_2 -= tmp_1;
-            ++quotient;
+
+            while (divide_guess_too_big(digit, val_hi, val_lo, div_hi, div_lo)) {
+                --digit;
+            }
+            
+            if (digit > 0) {
+                uint32_t carry = subtract_divisor(left + n, left_size - n, right, right_size, digit);
+
+                if (carry != t) {
+                    assert(carry == t + 1);
+
+                    carry = add_divisor(left + n, left_size - n, right, right_size);
+
+                    --digit;
+                    assert(carry == 1);
+                }
+            }
+
+            if (uint32_t(n) < uint32_t(bits_size)) {
+                bits[n] = uint32_t(digit);
+            }
+
+            if (uint32_t(i) < uint32_t(left_size)) {
+                left[i] = 0;
+            }
         }
-        if (tmp_2 >= value) {
-            auto shift = tmp_2.lez() - tmp_1.lez();
-            if (shift) {
-                tmp_1 >>= shift;
-                quotient <<= shift;
-                left -= shift;
-            }
-            if (tmp_2 < tmp_1) {
-                tmp_1 >>= 1;
-                quotient <<= 1;
-                --left;
-            }
-            tmp_2 -= tmp_1;
-            ++quotient;
-        }
-        if (tmp_2 >= value) {
-            auto shift = tmp_2.lez() - tmp_1.lez();
-            if (shift) {
-                tmp_1 >>= shift;
-                quotient <<= shift;
-                left -= shift;
-            }
-            if (tmp_2 < tmp_1) {
-                tmp_1 >>= 1;
-                quotient <<= 1;
-                --left;
-            }
-            tmp_2 -= tmp_1;
-            ++quotient;
-        }
-        if (tmp_2 >= value) {
-            auto shift = tmp_2.lez() - tmp_1.lez();
-            if (shift) {
-                tmp_1 >>= shift;
-                quotient <<= shift;
-                left -= shift;
-            }
-            if (tmp_2 < tmp_1) {
-                tmp_1 >>= 1;
-                quotient <<= 1;
-                --left;
-            }
-            tmp_2 -= tmp_1;
-            ++quotient;
-        }
-        if (tmp_2 >= value) {
-            auto shift = tmp_2.lez() - tmp_1.lez();
-            if (shift) {
-                tmp_1 >>= shift;
-                quotient <<= shift;
-                left -= shift;
-            }
-            if (tmp_2 < tmp_1) {
-                tmp_1 >>= 1;
-                quotient <<= 1;
-                --left;
-            }
-            tmp_2 -= tmp_1;
-            ++quotient;
-        }
-        if (tmp_2 >= value) {
-            auto shift = tmp_2.lez() - tmp_1.lez();
-            if (shift) {
-                tmp_1 >>= shift;
-                quotient <<= shift;
-                left -= shift;
-            }
-            if (tmp_2 < tmp_1) {
-                tmp_1 >>= 1;
-                quotient <<= 1;
-                --left;
-            }
-            tmp_2 -= tmp_1;
-            ++quotient;
-        }
-        // while (tmp_2 >= value) {
-        //     auto shift = tmp_2.lez() - tmp_1.lez();
-        //     if (shift) {
-        //         tmp_1 >>= shift;
-        //         quotient <<= shift;
-        //         left -= shift;
-        //     }
-        //     if (tmp_2 < tmp_1) {
-        //         tmp_1 >>= 1;
-        //         quotient <<= 1;
-        //         --left;
-        //     }
-        //     tmp_2 -= tmp_1;
-        //     ++quotient;
-        // }
-        return { quotient << left, tmp_2 };
+
+        return { uint64_t(bits[3]) << 32 | bits[2], uint64_t(bits[1]) << 32 | bits[0] };
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::ptrdiff_t lez() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint32_t lez() const IPADDRESS_NOEXCEPT {
         if (high != 0) {
-            for (size_t i = 0; i < 64; ++i) {
-                if (high & (1ULL << i)) {
+            for (uint32_t i = 0; i < 64; ++i) {
+                if (high & (1ULL << (63 - i))) {
                     return i;
                 }
             }
         }
         if (low != 0) {
-            for (size_t i = 0; i < 64; ++i) {
-                if (low & (1ULL << i)) {
+            for (uint32_t i = 0; i < 64; ++i) {
+                if (low & (1ULL << (63 - i))) {
                     return 64 + i;
                 }
             }
         }
         return 128;
     }
+
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool divide_guess_too_big(uint64_t q, uint64_t val_hi, uint32_t val_lo, uint32_t div_hi, uint32_t div_lo) IPADDRESS_NOEXCEPT {
+        assert(q <= 0xFFFFFFFF);
+
+        uint64_t chk_hi = div_hi * q;
+        uint64_t chk_lo = div_lo * q;
+
+        chk_hi += chk_lo >> 32;
+        chk_lo = uint32_t(chk_lo);
+
+        return (chk_hi > val_hi) || (chk_hi == val_hi && chk_lo > val_lo);
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint32_t subtract_divisor(uint32_t* left, size_t ls, uint32_t (&right)[4], size_t rs, uint64_t q) IPADDRESS_NOEXCEPT {
+        assert(ls >= rs);
+        assert(q <= 0xFFFFFFFF);
+
+        uint64_t carry = 0;
+
+        for (int32_t i = 0; i < rs; ++i) {
+            carry += right[i] * q;
+
+            uint32_t digit = uint32_t(carry);
+            carry >>= 32;
+
+            uint32_t& left_item = left[i];
+
+            if (left_item < digit) {
+                ++carry;
+            }
+            left_item -= digit;
+        }
+
+        return uint32_t(carry);
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint32_t add_divisor(uint32_t* left, size_t ls, uint32_t (&right)[4], size_t rs) IPADDRESS_NOEXCEPT {
+        assert(ls >= rs);
+
+        uint64_t carry = 0;
+
+        for (int32_t i = 0; i < rs; ++i) {
+            uint32_t& left_element = left[i];
+            uint64_t digit = left_element + carry + right[i];
+
+            left_element = uint32_t(digit);
+            carry = digit >> 32;
+        }
+
+        return uint32_t(carry);
+    }
 };
 
-template <typename T, typename std::enable_if<std::is_integral<T>::value, bool>::type = true>
+template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator+(T l, const uint128_t& value) IPADDRESS_NOEXCEPT {
     return uint128_t(l) + value;
 }
 
-template <typename T, typename std::enable_if<!std::is_integral<T>::value, bool>::type = true>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator+(T l, const uint128_t& value) IPADDRESS_NOEXCEPT {
-    static_assert(std::is_integral<T>::value, "the operation is only supported with integers");
-    return {};
-}
-
-template <typename T, typename std::enable_if<std::is_integral<T>::value, bool>::type = true>
+template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator-(T l, const uint128_t& value) IPADDRESS_NOEXCEPT {
     return uint128_t(l) - value;
 }
 
-template <typename T, typename std::enable_if<!std::is_integral<T>::value, bool>::type = true>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator-(T l, const uint128_t& value) IPADDRESS_NOEXCEPT {
-    static_assert(std::is_integral<T>::value, "the operation is only supported with integers");
-    return {};
-}
-
-template <typename T, typename std::enable_if<std::is_integral<T>::value, bool>::type = true>
+template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator*(T l, const uint128_t& value) IPADDRESS_NOEXCEPT {
     return uint128_t(l) * value;
 }
 
-template <typename T, typename std::enable_if<!std::is_integral<T>::value, bool>::type = true>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator*(T l, const uint128_t& value) IPADDRESS_NOEXCEPT {
-    static_assert(std::is_integral<T>::value, "the operation is only supported with integers");
-    return {};
-}
-
-template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
+template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator/(T l, const uint128_t& value) IPADDRESS_NOEXCEPT {
     return uint128_t(l) / value;
 }
 
-template <typename T, typename std::enable_if<!std::is_integral<T>::value, bool>::type = true>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator/(T l, const uint128_t& value) IPADDRESS_NOEXCEPT {
-    static_assert(std::is_integral<T>::value, "the operation is only supported with integers");
-    return {};
+template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator%(T l, const uint128_t& value) IPADDRESS_NOEXCEPT {
+    return uint128_t(l) % value;
+}
+
+template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator&(T l, const uint128_t& value) IPADDRESS_NOEXCEPT {
+    return uint128_t(l) & value;
+}
+
+template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator|(T l, const uint128_t& value) IPADDRESS_NOEXCEPT {
+    return uint128_t(l) | value;
+}
+
+template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator^(T l, const uint128_t& value) IPADDRESS_NOEXCEPT {
+    return uint128_t(l) ^ value;
 }
 
 } // IPADDRESS_NAMESPACE
