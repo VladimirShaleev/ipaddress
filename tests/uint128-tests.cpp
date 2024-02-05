@@ -23,6 +23,8 @@ TEST(uint128_t, Ctors) {
     constexpr uint128_t value6 = { 1, 2 };
     constexpr uint128_t value7 { 1 };
     constexpr uint128_t value8 = { 1 };
+    uint128_t value9 = 457.3f;
+    uint128_t value10 = 4.32e+20;
 
     ASSERT_EQ(value1.upper(), 0);
     ASSERT_EQ(value1.lower(), 0);
@@ -40,6 +42,10 @@ TEST(uint128_t, Ctors) {
     ASSERT_EQ(value7.lower(), 1);
     ASSERT_EQ(value8.upper(), 0);
     ASSERT_EQ(value8.lower(), 1);
+    ASSERT_EQ(value9.upper(), 0);
+    ASSERT_EQ(value9.lower(), 457);
+    ASSERT_EQ(value10.upper(), 23);
+    ASSERT_EQ(value10.lower(), 0x6B344F2A78C00000);
 }
 
 TEST(uint128_t, Copy) {
@@ -53,6 +59,10 @@ TEST(uint128_t, Copy) {
     ASSERT_EQ(copy_ctor.lower(), 5);
     ASSERT_EQ(copy_operator.upper(), 0);
     ASSERT_EQ(copy_operator.lower(), 5);
+
+    copy_operator = 4.32e+20f;
+    ASSERT_EQ(copy_operator.upper(), 23);
+    ASSERT_EQ(copy_operator.lower(), 0x6B34400000000000);
 }
 
 TEST(uint128_t, Move) {
@@ -91,6 +101,9 @@ TEST(uint128_t, OperatorT) {
     constexpr auto actual9 = (unsigned long) value;
     constexpr auto actual10 = (long long) value;
     constexpr auto actual11 = (unsigned long long) value;
+    auto actual12 = (float) value;
+    auto actual13 = (double) value;
+    auto actual14 = (long double) value;
 
     ASSERT_EQ(actual1, (char)(0x7F7F7F7F7F7F));
     ASSERT_EQ(actual2, (signed char)(0x7F7F7F7F7F7F));
@@ -103,6 +116,9 @@ TEST(uint128_t, OperatorT) {
     ASSERT_EQ(actual9, (unsigned long)(0x7F7F7F7F7F7F));
     ASSERT_EQ(actual10, (long long)(0x7F7F7F7F7F7F));
     ASSERT_EQ(actual11, (unsigned long long)(0x7F7F7F7F7F7F));
+    ASSERT_FLOAT_EQ(actual12, 7.3787117e+19);
+    ASSERT_DOUBLE_EQ(actual13, 7.3787116480414843e+19);
+    ASSERT_DOUBLE_EQ(double(actual14), 7.3787116480414843e+19);
 }
 
 TEST(uint128_t, Arithmetic) {
