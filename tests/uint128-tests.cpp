@@ -4,6 +4,16 @@
 
 using namespace ipaddress;
 
+TEST(uint128_t, CompileTime) {
+    constexpr uint128_t value1 = { 1, 0 };
+    constexpr uint128_t value2 = value1 << 2;
+    constexpr uint128_t value3 = value2 >> 1;
+    constexpr uint128_t value4 = value3 * 4;
+    constexpr uint128_t value5 = value4 / 3;
+    ASSERT_EQ(value5.high, 2);
+    ASSERT_EQ(value5.low, 0xAAAAAAAAAAAAAAAA);
+}
+
 TEST(uint128_t, Ctors) {
     constexpr uint128_t value1;
     constexpr uint128_t value2{};
