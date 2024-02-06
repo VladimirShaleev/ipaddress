@@ -210,14 +210,48 @@ public:
         return network_address().is_unspecified() && broadcast_address().is_unspecified();
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE big_integer addresses_count() const IPADDRESS_NOEXCEPT {
-        auto result = ip_address_iterator<ip_address_type>(broadcast_address()) - ip_address_iterator<ip_address_type>(network_address());
-        return { result.far + (1 + result.low < result.low ? 1 : 0), result.low + 1 };
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE typename ip_address_type::uint_type addresses_count() const IPADDRESS_NOEXCEPT {
+        return broadcast_address().to_uint() - network_address().to_uint() + 1;
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_sequence<ip_address_type> hosts() const IPADDRESS_NOEXCEPT {
         return hosts_sequence<ip_address_type>(network_address(), broadcast_address());
     }
+
+    // IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE int address_exclude(const ip_network_base& other) const IPADDRESS_NOEXCEPT {
+    //     if (other.subnet_of(*this)) {
+    //         return 0;
+    //     }
+    //     return 0;
+    // }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_sequence<ip_address_type> subnets(size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT {
+        if (prefixlen() == ip_address_type::_max_prefixlen) {
+            //yield this;
+            return subnets_sequence<ip_address_type>(network_address());
+        }
+
+        if (new_prefixlen) {
+            if (new_prefixlen.value() < prefixlen()) {
+                // error
+            }
+            if (prefixlen_diff != 1) {
+                // error
+            }
+            prefixlen_diff = new_prefixlen.value() - prefixlen();
+        }
+
+        auto new_prefix = prefixlen() + prefixlen_diff;
+
+        if (new_prefix > ip_address_type::_max_prefixlen) {
+            // error
+        }
+
+        return subnets_sequence<ip_address_type>(network_address(), broadcast_address(), hostmask(), prefixlen_diff);
+    }
+
+    //IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void supernet(size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT {
+    //}
 
     IPADDRESS_NODISCARD explicit operator std::string() const {
         return to_string();

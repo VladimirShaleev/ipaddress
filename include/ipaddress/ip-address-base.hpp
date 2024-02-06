@@ -138,7 +138,7 @@ public:
     }
 
     IPADDRESS_NODISCARD explicit IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE operator uint_type() const IPADDRESS_NOEXCEPT {
-        return to_uint();
+        return Base::to_uint();
     }
 
     IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE explicit operator std::string() const {

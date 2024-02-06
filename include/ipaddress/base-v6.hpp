@@ -513,7 +513,7 @@ private:
         }
     }
 
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void to_hex(uint16_t value, char(&result)[5]) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void to_hex(uint16_t value, char(&result)[5]) IPADDRESS_NOEXCEPT {
         char digits[] = "0123456789abcdef";
         for (auto i = 0, j = (4 - 1) * 4; i < 4; ++i, j -= 4) {
             result[i] = digits[(value >> j) & 0x0f];
