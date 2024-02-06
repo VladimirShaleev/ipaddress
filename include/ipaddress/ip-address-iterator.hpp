@@ -19,6 +19,8 @@ public:
     using pointer           = const value_type*;
     using reference         = const value_type&;
 
+    using uint_type         = typename value_type::uint_type;
+
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator() IPADDRESS_NOEXCEPT = default;
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator(const ip_address_iterator&) IPADDRESS_NOEXCEPT = default;
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator(ip_address_iterator&&) IPADDRESS_NOEXCEPT = default;
@@ -30,7 +32,7 @@ public:
         : _current(ref), _offset(ref.to_uint()), _begin(begin.to_uint()), _end(end.to_uint()) {
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type::uint_type uint_diff(const ip_address_iterator& other) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint_type uint_diff(const ip_address_iterator& other) const IPADDRESS_NOEXCEPT {
         return _offset - other._offset;
     }
 
@@ -44,10 +46,10 @@ public:
 
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference operator[](difference_type n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         const auto& it = *this;
-        return it[value_type::uint_type(n)];
+        return it[uint_type(n)];
     }
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference operator[](const value_type::uint_type& n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference operator[](const uint_type& n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         const auto offset = _offset + n;
         if (offset < _end) {
             _at = value_type::from_uint(offset);
@@ -85,7 +87,7 @@ public:
         return *this;
     }
 
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_address_iterator& operator+=(const value_type::uint_type& n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_address_iterator& operator+=(const uint_type& n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         add(n);
         return *this;
     }
@@ -95,7 +97,7 @@ public:
         return *this;
     }
 
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_address_iterator& operator-=(const value_type::uint_type& n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_address_iterator& operator-=(const uint_type& n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         sub(n);
         return *this;
     }
@@ -106,7 +108,7 @@ public:
         return tmp;
     }
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator operator+(const value_type::uint_type& n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator operator+(const uint_type& n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         auto tmp = *this;
         tmp += n;
         return tmp;
@@ -116,7 +118,7 @@ public:
         return it + n;
     }
 
-    friend IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator operator+(const value_type::uint_type& n, const ip_address_iterator& it) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    friend IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator operator+(const uint_type& n, const ip_address_iterator& it) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return it + n;
     }
 
@@ -126,7 +128,7 @@ public:
         return tmp;
     }
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator operator-(const value_type::uint_type& n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator operator-(const uint_type& n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         auto tmp = *this;
         tmp -= n;
         return tmp;
@@ -171,7 +173,7 @@ public:
 #endif // !GALAXY_HPP_HAS_SPACESHIP_OPERATOR
 
 private:
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void add(value_type::uint_type n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void add(const uint_type& n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         if (_offset != 0) {
             _offset += n;
             if (_offset > _end) {
@@ -185,7 +187,7 @@ private:
         }
     }
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void sub(value_type::uint_type n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void sub(const uint_type& n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         if (_offset != 0) {
             const auto value = n;
             if (_offset >= value) {
@@ -210,9 +212,9 @@ private:
 
     value_type _current{};
     value_type _at{};
-    value_type::uint_type _offset{};
-    value_type::uint_type _begin{};
-    value_type::uint_type _end{};
+    uint_type _offset{};
+    uint_type _begin{};
+    uint_type _end{};
 };
 
 template <typename>

@@ -478,7 +478,7 @@ inline std::istream& not_strict(std::istream& stream) {
 
 #endif // IPADDRESS_NO_OVERLOAD_STD
 
-} // IPADDRESS_NAMESPACE
+} // namespace IPADDRESS_NAMESPACE
 
 #ifndef IPADDRESS_NO_OVERLOAD_STD
 
@@ -527,7 +527,7 @@ inline std::istream& operator>>(std::istream& stream, IPADDRESS_NAMESPACE::ip_ne
     return stream;
 }
 
-} // std
+} // namespace std
 
 #endif // IPADDRESS_NO_OVERLOAD_STD
 
