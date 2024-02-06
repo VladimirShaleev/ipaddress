@@ -2,6 +2,7 @@
 #define IPADDRESS_IP_NETWORK_BASE_HPP
 
 #include "ip-address-iterator.hpp"
+#include "ip-network-iterator.hpp"
 
 namespace IPADDRESS_NAMESPACE {
 
@@ -9,6 +10,7 @@ template <typename Base>
 class ip_network_base : public Base {
 public:
     using ip_address_type = typename Base::ip_address_type;
+    using uint_type = typename ip_address_type::uint_type;
 
     IPADDRESS_CONSTEXPR ip_network_base() IPADDRESS_NOEXCEPT 
         : 
@@ -210,7 +212,7 @@ public:
         return network_address().is_unspecified() && broadcast_address().is_unspecified();
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE typename ip_address_type::uint_type addresses_count() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint_type addresses_count() const IPADDRESS_NOEXCEPT {
         return broadcast_address().to_uint() - network_address().to_uint() + 1;
     }
 
@@ -225,10 +227,10 @@ public:
     //     return 0;
     // }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_sequence<ip_address_type> subnets(size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_sequence<ip_network_base<Base>> subnets(size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT {
         if (prefixlen() == ip_address_type::_max_prefixlen) {
             //yield this;
-            return subnets_sequence<ip_address_type>(network_address());
+            return subnets_sequence<ip_network_base<Base>>(network_address(), prefixlen());
         }
 
         if (new_prefixlen) {
@@ -247,7 +249,7 @@ public:
             // error
         }
 
-        return subnets_sequence<ip_address_type>(network_address(), broadcast_address(), hostmask(), prefixlen_diff);
+        return subnets_sequence<ip_network_base<Base>>(network_address(), broadcast_address(), hostmask(), prefixlen_diff, new_prefix);
     }
 
     //IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void supernet(size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT {

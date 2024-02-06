@@ -10,8 +10,7 @@ using namespace ipaddress;
 #  define VAL_FIXED_STRING(name, str) auto name = make_fixed_string(str)
 #endif
 
-TEST(fixed_string, ConstexprCtor)
-{
+TEST(fixed_string, ConstexprCtor) {
     constexpr VAL_FIXED_STRING(str_11, "test string\0\0\0");
     constexpr auto str_11_max_length = str_11.max_length;
     constexpr auto str_11_length = str_11.length;
@@ -31,8 +30,7 @@ TEST(fixed_string, ConstexprCtor)
     EXPECT_EQ(str_1_empty, false);
 }
 
-TEST(fixed_string, ConstexprCtorEmpty)
-{
+TEST(fixed_string, ConstexprCtorEmpty) {
     constexpr VAL_FIXED_STRING(str_0, "");
     constexpr auto str_0_length = str_0.length;
     constexpr auto str_0_size = str_0.size();
@@ -42,8 +40,7 @@ TEST(fixed_string, ConstexprCtorEmpty)
     EXPECT_EQ(str_0_empty, true);
 }
 
-TEST(fixed_string, ConstexprDefaultCtor)
-{
+TEST(fixed_string, ConstexprDefaultCtor) {
 #if IPADDRESS_CPP_VERSION >= 17
     constexpr fixed_string str_default;
 #else
@@ -57,8 +54,7 @@ TEST(fixed_string, ConstexprDefaultCtor)
     EXPECT_EQ(str_default_empty, true);
 }
 
-TEST(fixed_string, ConstexprCopyCtor)
-{
+TEST(fixed_string, ConstexprCopyCtor) {
     constexpr VAL_FIXED_STRING(str, "test string");
 #if IPADDRESS_CPP_VERSION >= 17
     constexpr fixed_string copy_str = str;
@@ -108,8 +104,7 @@ constexpr bool test_reverse_iterator(Iter begin, Iter end) {
     return true;
 }
 
-TEST(fixed_string, ConstexprIterators)
-{
+TEST(fixed_string, ConstexprIterators) {
     constexpr VAL_FIXED_STRING(str, "test iterator");
 
     constexpr auto actual = test_iterator(str.begin(), str.end());
@@ -128,8 +123,7 @@ TEST(fixed_string, ConstexprIterators)
     EXPECT_TRUE(actual_ptr);
 }
 
-TEST(fixed_string, ConstexprEmptyIterators)
-{
+TEST(fixed_string, ConstexprEmptyIterators) {
     constexpr VAL_FIXED_STRING(str, "");
 
     constexpr auto actual = str.begin() == str.end();
@@ -148,8 +142,7 @@ TEST(fixed_string, ConstexprEmptyIterators)
     EXPECT_TRUE(actual_ptr);
 }
 
-TEST(fixed_string, ConstexprAt)
-{
+TEST(fixed_string, ConstexprAt) {
     constexpr VAL_FIXED_STRING(str, "test");
     constexpr auto at0 = str.at(0);
     constexpr auto at1 = str.at(1);
@@ -178,8 +171,7 @@ TEST(fixed_string, ConstexprAt)
     EXPECT_EQ(c3, 't');
 }
 
-TEST(fixed_string, ConstexprFrontBack)
-{
+TEST(fixed_string, ConstexprFrontBack) {
     constexpr VAL_FIXED_STRING(str_3, "str");
     constexpr auto front_3 = str_3.front();
     constexpr auto back_3 = str_3.back();
@@ -193,8 +185,7 @@ TEST(fixed_string, ConstexprFrontBack)
     EXPECT_EQ(back_1, 's');
 }
 
-TEST(fixed_string, ConstexprCompare)
-{
+TEST(fixed_string, ConstexprCompare) {
     constexpr VAL_FIXED_STRING(str_1, "12345\0\0\0");
     constexpr VAL_FIXED_STRING(str_2, "12346");
     constexpr VAL_FIXED_STRING(str_3, "");
