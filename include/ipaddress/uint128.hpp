@@ -5,6 +5,44 @@
 #include "hash.hpp"
 #include "optional.hpp"
 
+#ifndef IPADDRESS_NO_OVERLOAD_STD
+
+namespace IPADDRESS_NAMESPACE {
+
+class uint128_t;
+
+} // IPADDRESS_NAMESPACE
+
+namespace std {
+
+template <>
+struct is_integral<IPADDRESS_NAMESPACE::uint128_t> : true_type {
+};
+
+template <>
+struct is_arithmetic<IPADDRESS_NAMESPACE::uint128_t> : true_type {
+};
+
+template <>
+struct is_unsigned<IPADDRESS_NAMESPACE::uint128_t> : true_type {
+};
+
+template <>
+struct is_fundamental<IPADDRESS_NAMESPACE::uint128_t> : true_type {
+};
+
+template <>
+struct is_scalar<IPADDRESS_NAMESPACE::uint128_t> : true_type {
+};
+
+template <>
+struct is_object<IPADDRESS_NAMESPACE::uint128_t> : true_type {
+};
+
+} // namespace std
+
+#endif // IPADDRESS_NO_OVERLOAD_STD
+
 namespace IPADDRESS_NAMESPACE {
 
 class uint128_t final {
@@ -101,7 +139,7 @@ public:
         }
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE operator bool() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit operator bool() const IPADDRESS_NOEXCEPT {
         return _upper || _lower;
     }
 
@@ -413,8 +451,6 @@ public:
 #endif // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
 private:
-    static constexpr size_t _size = 16;
-
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint64_t big_mul(uint64_t a, uint64_t b, uint64_t& lower) IPADDRESS_NOEXCEPT {
         uint32_t al = uint32_t(a);
         uint32_t ah = uint32_t(a >> 32);
@@ -865,6 +901,69 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(T
 namespace std {
 
 template <>
+struct numeric_limits<IPADDRESS_NAMESPACE::uint128_t> {
+    static IPADDRESS_CONSTEXPR bool is_bounded               = true;
+    static IPADDRESS_CONSTEXPR bool is_exact                 = true;
+    static IPADDRESS_CONSTEXPR bool is_integer               = true;
+    static IPADDRESS_CONSTEXPR bool is_modulo                = true;
+    static IPADDRESS_CONSTEXPR bool is_specialized           = true;
+    static IPADDRESS_CONSTEXPR bool is_iec559                = false;
+    static IPADDRESS_CONSTEXPR bool is_signed                = false;
+    static IPADDRESS_CONSTEXPR bool has_denorm_loss          = false;
+    static IPADDRESS_CONSTEXPR bool has_infinity             = false;
+    static IPADDRESS_CONSTEXPR bool has_quiet_NaN            = false;
+    static IPADDRESS_CONSTEXPR bool has_signaling_NaN        = false;
+    static IPADDRESS_CONSTEXPR bool tinyness_before          = false;
+    static IPADDRESS_CONSTEXPR bool traps                    = false;
+    static IPADDRESS_CONSTEXPR int max_digits10              = 0;
+    static IPADDRESS_CONSTEXPR int max_exponent              = 0;
+    static IPADDRESS_CONSTEXPR int max_exponent10            = 0;
+    static IPADDRESS_CONSTEXPR int min_exponent              = 0;
+    static IPADDRESS_CONSTEXPR int min_exponent10            = 0;
+    static IPADDRESS_CONSTEXPR int digits                    = 128;
+    static IPADDRESS_CONSTEXPR int digits10                  = 38;
+    static IPADDRESS_CONSTEXPR int radix                     = 2;
+    static IPADDRESS_CONSTEXPR float_denorm_style has_denorm = denorm_absent;
+    static IPADDRESS_CONSTEXPR float_round_style round_style = round_toward_zero;
+
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE IPADDRESS_NAMESPACE::uint128_t (min)() IPADDRESS_NOEXCEPT {
+        return 0;
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE IPADDRESS_NAMESPACE::uint128_t (max)() IPADDRESS_NOEXCEPT {
+        return IPADDRESS_NAMESPACE::uint128_t(0xFFFFFFFFFFFFFFFF, 0xFFFFFFFFFFFFFFFF);
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE IPADDRESS_NAMESPACE::uint128_t lowest() IPADDRESS_NOEXCEPT {
+        return (min)();
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE IPADDRESS_NAMESPACE::uint128_t epsilon() IPADDRESS_NOEXCEPT {
+        return 0;
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE IPADDRESS_NAMESPACE::uint128_t round_error() IPADDRESS_NOEXCEPT {
+        return 0;
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE IPADDRESS_NAMESPACE::uint128_t denorm_min() IPADDRESS_NOEXCEPT {
+        return 0;
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE IPADDRESS_NAMESPACE::uint128_t infinity() IPADDRESS_NOEXCEPT {
+        return 0;
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE IPADDRESS_NAMESPACE::uint128_t quiet_NaN() IPADDRESS_NOEXCEPT {
+        return 0;
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE IPADDRESS_NAMESPACE::uint128_t signaling_NaN() IPADDRESS_NOEXCEPT {
+        return 0;
+    }
+};
+
+template <>
 struct hash<IPADDRESS_NAMESPACE::uint128_t> {
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::size_t operator()(const IPADDRESS_NAMESPACE::uint128_t& value) const IPADDRESS_NOEXCEPT {
         return value.hash();
@@ -875,6 +974,10 @@ IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void swap(IPADDRESS_NAMESPACE::uint12
     const auto tmp = value1;
     value1 = value2;
     value2 = tmp;
+}
+
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE IPADDRESS_NAMESPACE::uint128_t abs(const IPADDRESS_NAMESPACE::uint128_t& value) IPADDRESS_NOEXCEPT {
+    return value;
 }
 
 IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string to_string(const IPADDRESS_NAMESPACE::uint128_t& value) {
