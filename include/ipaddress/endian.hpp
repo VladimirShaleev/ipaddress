@@ -73,7 +73,7 @@
 
 namespace IPADDRESS_NAMESPACE {
 
-IPADDRESS_CONSTEXPR bool is_little_endian() IPADDRESS_NOEXCEPT {
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_little_endian() IPADDRESS_NOEXCEPT {
 #if defined(IPADDRESS_HAS_STD_ENDIAN)
     return std::endian::native == std::endian::little;
 #elif defined(IPADDRESS_ENDIAN)
@@ -83,12 +83,12 @@ IPADDRESS_CONSTEXPR bool is_little_endian() IPADDRESS_NOEXCEPT {
 #endif
 }
 
-IPADDRESS_CONSTEXPR uint32_t swap_bytes(uint32_t value) IPADDRESS_NOEXCEPT {
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint32_t swap_bytes(uint32_t value) IPADDRESS_NOEXCEPT {
     value = ((value << 8) & 0xFF00FF00) | ((value >> 8) & 0x00FF00FF);
     value = (value << 16) | (value >> 16);
     return value;
 }
 
-} // IPADDRESS_NAMESPACE
+} // namespace IPADDRESS_NAMESPACE
 
 #endif // IPADDRESS_ENDIAN_HPP

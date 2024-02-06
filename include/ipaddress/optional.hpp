@@ -88,6 +88,6 @@ private:
     value_type _value{};
 };
 
-} // IPADDRESS_NAMESPACE
+} // namespace IPADDRESS_NAMESPACE
 
 #endif // IPADDRESS_OPTIONAL_HPP

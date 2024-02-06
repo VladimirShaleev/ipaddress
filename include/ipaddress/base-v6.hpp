@@ -20,7 +20,7 @@ public:
     }
 
 protected:
-    static constexpr ip_version _version = ip_version::V6;
+    static IPADDRESS_CONSTEXPR ip_version _version = ip_version::V6;
 
     static IPADDRESS_CONSTEXPR size_t _size = 16;
 
@@ -33,7 +33,7 @@ protected:
     static IPADDRESS_CONSTEXPR size_t _max_parts = 8;
 
     template <typename Iter>
-    static IPADDRESS_CONSTEXPR ip_address_base<Ext> ip_from_string(Iter begin, Iter end, error_code& code, int& parts_count) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<Ext> ip_from_string(Iter begin, Iter end, error_code& code, int& parts_count) IPADDRESS_NOEXCEPT {
         if (begin == end) {
             code = error_code::EMPTY_ADDRESS;
             return {};
@@ -69,7 +69,7 @@ protected:
         return ip;
     }
     
-    static IPADDRESS_CONSTEXPR ip_address_base<Ext> ip_from_prefix(size_t prefixlen) {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<Ext> ip_from_prefix(size_t prefixlen) {
         base_type bytes {};
         for (size_t i = 0; i < (prefixlen >> 3); ++i) {
             bytes[i] = 0xFF;
@@ -82,7 +82,7 @@ protected:
         return ip_address_base<Ext>(bytes);
     }
 
-    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t ip_to_chars(const base_type& bytes, const fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>& scope_id, format fmt, char (&result)[_max_string_len + 1]) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t ip_to_chars(const base_type& bytes, const fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>& scope_id, format fmt, char (&result)[_max_string_len + 1]) IPADDRESS_NOEXCEPT {
         char hextets[_size >> 1][5] = {};
         const size_t max_hextets = _size >> 1;
         for (size_t i = 0; i < max_hextets; ++i) {
@@ -187,7 +187,7 @@ protected:
         return offset;
     }
 
-    static std::string ip_reverse_pointer(const base_type& bytes, const fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>& scope_id) {
+    IPADDRESS_NODISCARD static IPADDRESS_FORCE_INLINE std::string ip_reverse_pointer(const base_type& bytes, const fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>& scope_id) {
         char result[_max_string_len + 1] {};
         const auto len = ip_to_chars(bytes, scope_id, format::full, result);
         auto ip = std::string(result, len);
@@ -199,7 +199,7 @@ protected:
     }
 
     template <typename Iter>
-    static IPADDRESS_CONSTEXPR std::tuple<ip_address_base<Ext>, size_t> parse_netmask(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::tuple<ip_address_base<Ext>, size_t> parse_netmask(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT {
         size_t prefixlen = 0;
         auto has_prefixlen = false;
         for (auto it = begin; it != end; ++it) {
@@ -223,7 +223,7 @@ protected:
         return std::make_tuple(netmask, prefixlen);
     }
 
-    static IPADDRESS_CONSTEXPR ip_address_base<Ext> strict_netmask(const ip_address_base<Ext>& address, const ip_address_base<Ext>& netmask, bool strict, error_code& code) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<Ext> strict_netmask(const ip_address_base<Ext>& address, const ip_address_base<Ext>& netmask, bool strict, error_code& code) IPADDRESS_NOEXCEPT {
         const auto& bytes_address = address.bytes();
         const auto& bytes_netmask = netmask.bytes();
         base_type bytes{};
@@ -245,7 +245,7 @@ protected:
 
 private:
     template <typename Iter>
-    static IPADDRESS_CONSTEXPR std::pair<Iter, fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>> split_scope_id(Iter begin, Iter end, error_code& error) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::pair<Iter, fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>> split_scope_id(Iter begin, Iter end, error_code& error) IPADDRESS_NOEXCEPT {
         char scope_id[IPADDRESS_IPV6_SCOPE_MAX_LENGTH + 1] = {};
         auto index = 0;
         Iter end_ip = begin;
@@ -275,7 +275,7 @@ private:
     }
 
     template <typename Iter>
-    static IPADDRESS_CONSTEXPR std::array<fixed_string<4>, _max_parts + 1> split_parts(Iter begin, Iter end, int& parts_count, error_code& error) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::array<fixed_string<4>, _max_parts + 1> split_parts(Iter begin, Iter end, int& parts_count, error_code& error) IPADDRESS_NOEXCEPT {
         IPADDRESS_CONSTEXPR std::array<fixed_string<4>, _max_parts + 1> empty_parts = {
             make_fixed_string("\0\0\0\0"),
             make_fixed_string("\0\0\0\0"),
@@ -395,7 +395,7 @@ private:
             make_fixed_string(parts[8])};
     }
 
-    static IPADDRESS_CONSTEXPR std::tuple<size_t, size_t, size_t> get_parts_bound(const std::array<fixed_string<4>, _max_parts + 1>& parts, size_t parts_count, error_code& error) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::tuple<size_t, size_t, size_t> get_parts_bound(const std::array<fixed_string<4>, _max_parts + 1>& parts, size_t parts_count, error_code& error) IPADDRESS_NOEXCEPT {
         size_t skip = 0;
         for (size_t i = 1; i < parts_count - 1; ++i) {
             if (parts[i].empty()) {
@@ -453,7 +453,7 @@ private:
         }
     }
 
-    static IPADDRESS_CONSTEXPR base_type parse_parts(const std::array<fixed_string<4>, _max_parts + 1>& parts, size_t parts_count, size_t hi, size_t lo, size_t skipped, error_code& error) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE base_type parse_parts(const std::array<fixed_string<4>, _max_parts + 1>& parts, size_t parts_count, size_t hi, size_t lo, size_t skipped, error_code& error) IPADDRESS_NOEXCEPT {
         base_type result = {};
         size_t index = 0;
 
@@ -481,7 +481,7 @@ private:
         return result;
     }
 
-    static IPADDRESS_CONSTEXPR uint16_t parse_part(const fixed_string<4>& part, error_code& error) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint16_t parse_part(const fixed_string<4>& part, error_code& error) IPADDRESS_NOEXCEPT {
         uint16_t value = 0;
         for (size_t i = 0; i < part.size(); ++i) {
             const auto c = part[i];
@@ -500,7 +500,7 @@ private:
         return value;
     }
 
-    static IPADDRESS_CONSTEXPR uint16_t pow16(size_t power) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint16_t pow16(size_t power) IPADDRESS_NOEXCEPT {
         switch (power) {
             case 0: return 1;
             case 1: return 16;
@@ -512,7 +512,7 @@ private:
         }
     }
 
-    static IPADDRESS_CONSTEXPR void to_hex(uint16_t value, char(&result)[5]) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void to_hex(uint16_t value, char(&result)[5]) IPADDRESS_NOEXCEPT {
         char digits[] = "0123456789abcdef";
         for (auto i = 0, j = (4 - 1) * 4; i < 4; ++i, j -= 4) {
             result[i] = digits[(value >> j) & 0x0f];
@@ -521,6 +521,6 @@ private:
     }
 };
 
-} // IPADDRESS_NAMESPACE
+} // namespace IPADDRESS_NAMESPACE
 
 #endif // IPADDRESS_BASE_V6_HPP

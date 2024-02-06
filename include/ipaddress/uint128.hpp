@@ -11,7 +11,7 @@ namespace IPADDRESS_NAMESPACE {
 
 class uint128_t;
 
-} // IPADDRESS_NAMESPACE
+} // namespace IPADDRESS_NAMESPACE
 
 namespace std {
 
@@ -894,7 +894,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(T
 
 #endif // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
-} // IPADDRESS_NAMESPACE
+} // namespace IPADDRESS_NAMESPACE
 
 #ifndef IPADDRESS_NO_OVERLOAD_STD
 
@@ -1018,7 +1018,7 @@ IPADDRESS_FORCE_INLINE std::istream& operator>>(std::istream& stream, IPADDRESS_
     return stream;
 }
 
-} // std
+} // namespace std
 
 #endif // IPADDRESS_NO_OVERLOAD_STD
 

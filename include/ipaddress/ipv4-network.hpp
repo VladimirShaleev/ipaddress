@@ -12,7 +12,7 @@ public:
     
 #ifndef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
-    friend IPADDRESS_CONSTEXPR ip_network_base<ipv4_network_base> operator""_ipv4_net(const char* address, std::size_t size) IPADDRESS_NOEXCEPT;
+    friend IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base<ipv4_network_base> operator""_ipv4_net(const char* address, std::size_t size) IPADDRESS_NOEXCEPT;
 
 #endif // !IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 }; // ipv4_network_base
@@ -22,13 +22,13 @@ using ipv4_network = ip_network_base<ipv4_network_base>;
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
     template <fixed_string FixedString>
-    inline consteval ipv4_network operator""_ipv4_net() IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD consteval IPADDRESS_FORCE_INLINE ipv4_network operator""_ipv4_net() IPADDRESS_NOEXCEPT {
         return ipv4_network::parse<FixedString>();
     }
 
 #else // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
-    inline IPADDRESS_CONSTEXPR ipv4_network operator""_ipv4_net(const char* address, std::size_t size) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_network operator""_ipv4_net(const char* address, std::size_t size) IPADDRESS_NOEXCEPT {
         assert(size <= ipv4_network::_max_string_len * 2 + 1 && "litteral string is too long");
         char str[ipv4_network::_max_string_len * 2 + 2] = {};
         for (size_t i = 0; i < size; ++i) {
@@ -39,6 +39,6 @@ using ipv4_network = ip_network_base<ipv4_network_base>;
 
 #endif // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
-} // IPADDRESS_NAMESPACE
+} // namespace IPADDRESS_NAMESPACE
 
 #endif // IPADDRESS_IPV4_NETWORK_HPP

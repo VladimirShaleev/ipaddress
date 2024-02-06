@@ -148,6 +148,6 @@ public:
     }
 }
 
-} // IPADDRESS_NAMESPACE
+} // namespace IPADDRESS_NAMESPACE
 
 #endif // IPADDRESS_ERRORS_HPP

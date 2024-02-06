@@ -124,51 +124,51 @@ public:
         return std::string(res, len);
     }
 
-    IPADDRESS_CONSTEXPR void swap(ip_address_base& ip) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE void swap(ip_address_base& ip) IPADDRESS_NOEXCEPT {
         Base::swap(*this, ip);
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR size_t hash() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t hash() const IPADDRESS_NOEXCEPT {
         return Base::hash(Base::bytes());
     }
 
-    IPADDRESS_NODISCARD std::string reverse_pointer() const {
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string reverse_pointer() const {
        return Base::ip_reverse_pointer(Base::bytes());
     }
 
-    IPADDRESS_NODISCARD explicit operator std::string() const {
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE explicit operator std::string() const {
         return to_string();
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator==(const ip_address_base& rhs) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(const ip_address_base& rhs) const IPADDRESS_NOEXCEPT {
         return Base::equals(*this, rhs);
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator!=(const ip_address_base& rhs) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(const ip_address_base& rhs) const IPADDRESS_NOEXCEPT {
         return !(*this == rhs);
     }
 
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR std::strong_ordering operator<=>(const ip_address_base& rhs) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const ip_address_base& rhs) const IPADDRESS_NOEXCEPT {
         return Base::compare(*this, rhs);
     }
 
 #else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<(const ip_address_base& rhs) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(const ip_address_base& rhs) const IPADDRESS_NOEXCEPT {
         return Base::less(*this, rhs);
     }
     
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>(const ip_address_base& rhs) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(const ip_address_base& rhs) const IPADDRESS_NOEXCEPT {
         return rhs < *this;
     }
     
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<=(const ip_address_base& rhs) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(const ip_address_base& rhs) const IPADDRESS_NOEXCEPT {
         return !(rhs < *this);
     }
     
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>=(const ip_address_base& rhs) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(const ip_address_base& rhs) const IPADDRESS_NOEXCEPT {
         return !(*this < rhs);
     }
 
@@ -176,7 +176,7 @@ public:
 
 private:
     template <typename Str>
-    static IPADDRESS_CONSTEXPR ip_address_base parse_string(const Str& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse_string(const Str& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         auto code = error_code::NO_ERROR;
         auto index = 0;
         auto result = Base::ip_from_string(address.begin(), address.end(), code, index);
@@ -192,7 +192,7 @@ private:
     }
 
     template <typename Str>
-    static IPADDRESS_CONSTEXPR ip_address_base parse_string(const Str& address, error_code& code) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse_string(const Str& address, error_code& code) IPADDRESS_NOEXCEPT {
         code = error_code::NO_ERROR;
         auto index = 0;
         return Base::ip_from_string(address.begin(), address.end(), code, index);
@@ -201,29 +201,29 @@ private:
 
 #ifndef IPADDRESS_NO_OVERLOAD_STD
 
-inline int stream_index() { 
+IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE int stream_index() { 
     static int i = std::ios_base::xalloc();
     return i;
 }
 
-inline std::ostream& full(std::ostream& stream) {
+IPADDRESS_FORCE_INLINE std::ostream& full(std::ostream& stream) {
     stream.iword(stream_index()) = long(format::full) + 1;
     return stream;
 }
 
-inline std::ostream& compact(std::ostream& stream) {
+IPADDRESS_FORCE_INLINE std::ostream& compact(std::ostream& stream) {
     stream.iword(stream_index()) = long(format::compact) + 1;
     return stream;
 }
 
-inline std::ostream& compressed(std::ostream& stream) {
+IPADDRESS_FORCE_INLINE std::ostream& compressed(std::ostream& stream) {
     stream.iword(stream_index()) = long(format::compressed) + 1;
     return stream;
 }
 
 #endif // IPADDRESS_NO_OVERLOAD_STD
 
-} // IPADDRESS_NAMESPACE
+} // namespace IPADDRESS_NAMESPACE
 
 #ifndef IPADDRESS_NO_OVERLOAD_STD
 
@@ -231,23 +231,23 @@ namespace std {
 
 template <typename Base>
 struct hash<IPADDRESS_NAMESPACE::ip_address_base<Base>> {
-    IPADDRESS_CONSTEXPR std::size_t operator()(const IPADDRESS_NAMESPACE::ip_address_base<Base>& ip) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::size_t operator()(const IPADDRESS_NAMESPACE::ip_address_base<Base>& ip) const IPADDRESS_NOEXCEPT {
         return ip.hash();
     }
 };
 
 template <typename Base>
-inline IPADDRESS_CONSTEXPR void swap(IPADDRESS_NAMESPACE::ip_address_base<Base>& ip1, IPADDRESS_NAMESPACE::ip_address_base<Base>& ip2) IPADDRESS_NOEXCEPT {
+IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void swap(IPADDRESS_NAMESPACE::ip_address_base<Base>& ip1, IPADDRESS_NAMESPACE::ip_address_base<Base>& ip2) IPADDRESS_NOEXCEPT {
     ip1.swap(ip2);
 }
 
 template <typename Base>
-inline std::string to_string(const IPADDRESS_NAMESPACE::ip_address_base<Base>& ip) {
+IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string to_string(const IPADDRESS_NAMESPACE::ip_address_base<Base>& ip) {
     return ip.to_string();
 }
 
 template <typename Base>
-inline std::ostream& operator<<(std::ostream& stream, const IPADDRESS_NAMESPACE::ip_address_base<Base>& ip) {
+IPADDRESS_FORCE_INLINE std::ostream& operator<<(std::ostream& stream, const IPADDRESS_NAMESPACE::ip_address_base<Base>& ip) {
     auto& iword = stream.iword(IPADDRESS_NAMESPACE::stream_index());
     auto fmt = iword
         ? (IPADDRESS_NAMESPACE::format) (iword - 1) 
@@ -264,7 +264,7 @@ inline std::ostream& operator<<(std::ostream& stream, const IPADDRESS_NAMESPACE:
 }
 
 template <typename Base>
-inline std::istream& operator>>(std::istream& stream, IPADDRESS_NAMESPACE::ip_address_base<Base>& ip) {
+IPADDRESS_FORCE_INLINE std::istream& operator>>(std::istream& stream, IPADDRESS_NAMESPACE::ip_address_base<Base>& ip) {
     std::string str;
     stream >> str;
     IPADDRESS_NAMESPACE::error_code err;
@@ -275,7 +275,7 @@ inline std::istream& operator>>(std::istream& stream, IPADDRESS_NAMESPACE::ip_ad
     return stream;
 }
 
-} // std
+} // namespace std
 
 #endif // IPADDRESS_NO_OVERLOAD_STD
 

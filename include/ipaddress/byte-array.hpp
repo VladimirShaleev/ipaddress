@@ -23,59 +23,59 @@ struct byte_array {
 
     value_type _data[N];
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const_iterator begin() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator begin() const IPADDRESS_NOEXCEPT {
         return const_iterator(_data);
     }
     
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const_iterator end() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator end() const IPADDRESS_NOEXCEPT {
         return const_iterator(_data) + N;
     }
     
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 const_reverse_iterator rbegin() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator rbegin() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(end());
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 const_reverse_iterator rend() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator rend() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(begin());
     }
     
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const_iterator cbegin() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator cbegin() const IPADDRESS_NOEXCEPT {
         return begin();
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const_iterator cend() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator cend() const IPADDRESS_NOEXCEPT {
         return end();
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 const_reverse_iterator crbegin() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator crbegin() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(cend());
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 const_reverse_iterator crend() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator crend() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(cbegin());
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool empty() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool empty() const IPADDRESS_NOEXCEPT {
         return false;
     }
     
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR size_t size() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t size() const IPADDRESS_NOEXCEPT {
         return N;
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR size_t max_size() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t max_size() const IPADDRESS_NOEXCEPT {
         return N;
     }
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR reference operator[](size_t n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference operator[](size_t n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return at(n);
     }
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR const_reference operator[](size_t n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reference operator[](size_t n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return at(n);
     }
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR reference at(size_t n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference at(size_t n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         if (n >= 0 && n < N) {
             return _data[n];
         }
@@ -86,7 +86,7 @@ struct byte_array {
     #endif
     }
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR const_reference at(size_t n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reference at(size_t n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         if (n >= 0 && n < N) {
             return _data[n];
         }
@@ -97,31 +97,31 @@ struct byte_array {
     #endif
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR reference front() IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference front() IPADDRESS_NOEXCEPT {
         return _data[0];
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const_reference front() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reference front() const IPADDRESS_NOEXCEPT {
         return _data[0];
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR reference back() IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference back() IPADDRESS_NOEXCEPT {
         return _data[N - 1];
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const_reference back() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reference back() const IPADDRESS_NOEXCEPT {
         return _data[N - 1];
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR pointer data() IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE pointer data() IPADDRESS_NOEXCEPT {
         return _data;
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const_pointer data() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_pointer data() const IPADDRESS_NOEXCEPT {
         return _data;
     }
 
-    IPADDRESS_CONSTEXPR void swap(byte_array& other) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void swap(byte_array& other) IPADDRESS_NOEXCEPT {
         for (size_t i = 0; i < N; ++i) {
             const auto tmp = _data[i];
             _data[i] = other._data[i];
@@ -147,96 +147,96 @@ public:
     using reverse_iterator       = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
     
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const_iterator begin() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator begin() const IPADDRESS_NOEXCEPT {
         return const_iterator(data());
     }
     
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const_iterator end() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator end() const IPADDRESS_NOEXCEPT {
         return const_iterator(data());
     }
     
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 const_reverse_iterator rbegin() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator rbegin() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(end());
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 const_reverse_iterator rend() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator rend() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(begin());
     }
     
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const_iterator cbegin() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator cbegin() const IPADDRESS_NOEXCEPT {
         return begin();
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const_iterator cend() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator cend() const IPADDRESS_NOEXCEPT {
         return end();
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 const_reverse_iterator crbegin() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator crbegin() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(cend());
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 const_reverse_iterator crend() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator crend() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(cbegin());
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool empty() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool empty() const IPADDRESS_NOEXCEPT {
         return true;
     }
     
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR size_t size() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t size() const IPADDRESS_NOEXCEPT {
         return 0;
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR size_t max_size() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t max_size() const IPADDRESS_NOEXCEPT {
         return 0;
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR reference operator[](size_t n) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference operator[](size_t n) IPADDRESS_NOEXCEPT {
         return at(n);
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const_reference operator[](size_t n) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reference operator[](size_t n) const IPADDRESS_NOEXCEPT {
         return at(n);
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR reference at(size_t n) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference at(size_t n) IPADDRESS_NOEXCEPT {
         return *data();
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const_reference at(size_t n) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reference at(size_t n) const IPADDRESS_NOEXCEPT {
         return *data();
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR reference front() IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference front() IPADDRESS_NOEXCEPT {
         return *data();
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const_reference front() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reference front() const IPADDRESS_NOEXCEPT {
         return *data();
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR reference back() IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference back() IPADDRESS_NOEXCEPT {
         return *data();
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const_reference back() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reference back() const IPADDRESS_NOEXCEPT {
         return *data();
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR pointer data() IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE pointer data() IPADDRESS_NOEXCEPT {
         return nullptr;
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR const_pointer data() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_pointer data() const IPADDRESS_NOEXCEPT {
         return nullptr;
     }
 
-    IPADDRESS_CONSTEXPR void swap(byte_array& other) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void swap(byte_array& other) IPADDRESS_NOEXCEPT {
     }
 }; // byte_array<0>
 
 template <std::size_t N>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator==(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
     for (std::size_t i = 0; i < N; ++i) {
         if (lhs[i] != rhs[i]) {
             return false;
@@ -246,14 +246,14 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator==(const byte_array<N>& lhs
 }
 
 template <std::size_t N>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator!=(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
     return !(lhs == rhs);
 }
 
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
 
     template <std::size_t N>
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR std::strong_ordering operator<=>(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
         for (std::size_t i = 0; i < N; ++i) {
             if (const auto result = lhs[i] <=> rhs[i]; result != std::strong_ordering::equivalent) {
                 return result;
@@ -265,7 +265,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator!=(const byte_array<N>& lhs
 #else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
     template <std::size_t N>
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
         for (std::size_t i = 0; i < N; ++i) {
             if (lhs._data[i] < rhs._data[i]) {
                 return true;
@@ -275,17 +275,17 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator!=(const byte_array<N>& lhs
     }
 
     template <std::size_t N>
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
         return rhs < lhs;
     }
 
     template <std::size_t N>
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<=(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
         return !(rhs < lhs);
     }
 
     template <std::size_t N>
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>=(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
         return !(lhs < rhs);
     }
 
@@ -299,6 +299,6 @@ using byte_array_type =
     byte_array<N>;
 #endif
 
-} // IPADDRESS_NAMESPACE
+} // namespace IPADDRESS_NAMESPACE
 
 #endif // IPADDRESS_BYTE_ARRAY_HPP
