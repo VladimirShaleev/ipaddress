@@ -220,12 +220,35 @@ public:
         return hosts_sequence<ip_address_type>(network_address(), broadcast_address());
     }
 
-    // IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE int address_exclude(const ip_network_base& other) const IPADDRESS_NOEXCEPT {
-    //     if (other.subnet_of(*this)) {
-    //         return 0;
-    //     }
-    //     return 0;
-    // }
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE exclude_network_sequence<ip_network_base<Base>> address_exclude(const ip_network_base& other) const IPADDRESS_NOEXCEPT {
+        error_code code = error_code::NO_ERROR;
+        const auto result = address_exclude(other, code);
+        if (code != error_code::NO_ERROR) {
+            if (IPADDRESS_IS_CONST_EVALUATED(code)) {
+                raise_error(code, 0, "", 0);
+            }
+        #ifndef IPADDRESS_NO_EXCEPTIONS
+            raise_error(code, 0, "", 0);
+        #endif
+        }
+        return result;
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE exclude_network_sequence<ip_network_base<Base>> address_exclude(const ip_network_base& other, error_code& code) const IPADDRESS_NOEXCEPT {
+        auto lhs = Base::remove_scope_id(*this);
+        auto rhs = Base::remove_scope_id(other);
+
+        if (!rhs.subnet_of(lhs)) {
+            code = error_code::NOT_CONTAINED_NETWORK;
+            return exclude_network_sequence<ip_network_base<Base>>();
+        }
+
+        if (lhs == rhs) {
+            return exclude_network_sequence<ip_network_base<Base>>();
+        }
+
+        return exclude_network_sequence<ip_network_base<Base>>(lhs, rhs);
+    }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_sequence<ip_network_base<Base>> subnets(size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         error_code code = error_code::NO_ERROR;
@@ -242,8 +265,10 @@ public:
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_sequence<ip_network_base<Base>> subnets(error_code& code, size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT {
+        auto address = Base::remove_scope_id(network_address());
+
         if (prefixlen() == ip_address_type::_max_prefixlen) {
-            return subnets_sequence<ip_network_base<Base>>(network_address(), prefixlen());
+            return subnets_sequence<ip_network_base<Base>>(address, prefixlen());
         }
 
         if (new_prefixlen) {
@@ -265,7 +290,7 @@ public:
             return subnets_sequence<ip_network_base<Base>>(ip_address_type(), 0);
         }
 
-        return subnets_sequence<ip_network_base<Base>>(network_address(), broadcast_address(), hostmask(), prefixlen_diff, new_prefix);
+        return subnets_sequence<ip_network_base<Base>>(address, broadcast_address(), hostmask(), prefixlen_diff, new_prefix);
     }
 
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base<Base> supernet(size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {

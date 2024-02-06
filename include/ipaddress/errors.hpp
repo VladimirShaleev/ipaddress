@@ -18,6 +18,7 @@ enum class error_code {
     NEW_PREFIX_MUST_BE_SHORTER,
     NEW_PREFIX_MUST_BE_LONGER,
     CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX,
+    NOT_CONTAINED_NETWORK,
 
     // ipv4 errors
     EMPTY_OCTET,
@@ -122,6 +123,8 @@ public:
             throw parse_error(code, "new prefix must be longer");
         case error_code::CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX:
             throw parse_error(code, "cannot set prefixlen_diff and new_prefix");
+        case error_code::NOT_CONTAINED_NETWORK:
+            throw parse_error(code, "network is not a subnet of other");
         case error_code::EMPTY_OCTET:
             throw parse_error(code, "empty octet", index, "in address", str);
         case error_code::EXPECTED_4_OCTETS:

@@ -9,6 +9,15 @@ namespace IPADDRESS_NAMESPACE {
 class ipv4_network_base : public base_v4<ipv4_network_base> {
 public:
     using ip_address_type = ipv4_address;
+
+protected:
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_type remove_scope_id(const ip_address_type& address) IPADDRESS_NOEXCEPT {
+        return address;
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base<ipv4_network_base> remove_scope_id(const ip_network_base<ipv4_network_base>& network) IPADDRESS_NOEXCEPT {
+        return network;
+    }
     
 #ifndef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 

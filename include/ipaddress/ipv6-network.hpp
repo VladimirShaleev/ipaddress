@@ -15,6 +15,17 @@ public:
         return network.network_address().is_site_local() && network.broadcast_address().is_site_local();
     }
 
+protected:
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_type remove_scope_id(const ip_address_type& address) IPADDRESS_NOEXCEPT {
+        auto result = address;
+        result.set_scope_id("");
+        return result;
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base<ipv6_network_base> remove_scope_id(const ip_network_base<ipv6_network_base>& network) IPADDRESS_NOEXCEPT {
+        return ip_network_base<ipv6_network_base>::from_address(remove_scope_id(network.network_address()), network.prefixlen());
+    }
+
 #ifndef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
     friend IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base<ipv6_network_base> operator""_ipv6_net(const char* address, std::size_t size) IPADDRESS_NOEXCEPT;
