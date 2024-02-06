@@ -20,10 +20,10 @@ static constexpr error_code get_parse_error(const char(&address)[N]) noexcept {
 TEST(ipv4_address, CompileTime) {
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
     auto ip1 = ipv4_address::parse<"127.0.0.1">();
-    ASSERT_EQ(ip1.to_uint32(), 0x7F000001);
+    ASSERT_EQ(ip1.to_uint(), 0x7F000001);
     
     constexpr auto ip2 = ipv4_address::parse<"127.0.0.1">();
-    constexpr auto ip2_uint32 = ip2.to_uint32();
+    constexpr auto ip2_uint32 = ip2.to_uint();
     constexpr auto ip2_bytes = ip2.bytes();
     constexpr auto ip2_byte_0 = ip2_bytes[0];
     constexpr auto ip2_byte_1 = ip2_bytes.at(1);
@@ -35,8 +35,8 @@ TEST(ipv4_address, CompileTime) {
     ASSERT_EQ(ip2_byte_2, 0x00);
     ASSERT_EQ(ip2_byte_3, 0x01);
 
-    constexpr auto ip4 = ipv4_address::from_uint32<0x7F000002>();
-    constexpr auto ip4_uint32 = ip4.to_uint32();
+    constexpr auto ip4 = ipv4_address::from_uint<0x7F000002>();
+    constexpr auto ip4_uint32 = ip4.to_uint();
     ASSERT_EQ(ip4_uint32, 0x7F000002);
 
     constexpr auto b1 = ip2 < ip4;
@@ -53,11 +53,11 @@ TEST(ipv4_address, CompileTime) {
     ASSERT_FALSE(b5);
     ASSERT_TRUE(b6);
 #endif
-    auto ip3 = ipv4_address::from_uint32<0x7F000001>();
-    ASSERT_EQ(ip3.to_uint32(), 0x7F000001);
+    auto ip3 = ipv4_address::from_uint<0x7F000001>();
+    ASSERT_EQ(ip3.to_uint(), 0x7F000001);
 
     constexpr auto ip5 = ipv4_address::parse("127.0.0.1");
-    constexpr auto ip5_uint32 = ip5.to_uint32();
+    constexpr auto ip5_uint32 = ip5.to_uint();
     constexpr auto ip5_bytes = ip5.bytes();
     constexpr auto ip5_byte_0 = ip5_bytes[0];
     constexpr auto ip5_byte_1 = ip5_bytes.at(1);
@@ -72,17 +72,17 @@ TEST(ipv4_address, CompileTime) {
     constexpr auto err = get_parse_error("127.0.0.256");
     ASSERT_EQ(err, error_code::OCTET_EXCEEDED_255);
 
-    constexpr auto ip6 = ipv4_address::from_uint32(0x7F000002);
-    constexpr auto ip6_uint32 = ip6.to_uint32();
+    constexpr auto ip6 = ipv4_address::from_uint(0x7F000002);
+    constexpr auto ip6_uint32 = ip6.to_uint();
     ASSERT_EQ(ip6_uint32, 0x7F000002);
 
     constexpr auto ip7 = ipv4_address::from_bytes({0xC0, 0xA8, 0x00, 0x01});
-    constexpr auto ip7_uint32 = ip7.to_uint32();
+    constexpr auto ip7_uint32 = ip7.to_uint();
     ASSERT_EQ(ip7_uint32, 0xC0A80001);
 
     constexpr uint8_t bytes[] = {0xC0, 0xA8, 0x00, 0x01};
     constexpr auto ip8 = ipv4_address::from_bytes(bytes, 3);
-    constexpr auto ip8_uint32 = ip8.to_uint32();
+    constexpr auto ip8_uint32 = ip8.to_uint();
     ASSERT_EQ(ip8_uint32, 0xC0A80000);
 
     constexpr auto b7 = ip5 < ip6;
@@ -148,7 +148,7 @@ TEST(ipv4_address, DefaultCtor) {
     ipv4_address ip;
     
     EXPECT_EQ(ip.bytes(), expected_empty);
-    EXPECT_EQ(ip.to_uint32(), 0);
+    EXPECT_EQ(ip.to_uint(), 0);
     EXPECT_EQ(uint32_t(ip), 0);
     EXPECT_EQ(ip.size(), 4);
     EXPECT_EQ(ip.version(), ip_version::V4);
@@ -161,11 +161,11 @@ TEST(ipv4_address, CopyCtor) {
     auto ip_copy = ip;
 
     EXPECT_EQ(ip.bytes(), expected_ip);
-    EXPECT_EQ(ip.to_uint32(), 0x7F000001);
+    EXPECT_EQ(ip.to_uint(), 0x7F000001);
     EXPECT_EQ(uint32_t(ip), 0x7F000001);
 
     EXPECT_EQ(ip_copy.bytes(), expected_ip);
-    EXPECT_EQ(ip_copy.to_uint32(), 0x7F000001);
+    EXPECT_EQ(ip_copy.to_uint(), 0x7F000001);
     EXPECT_EQ(uint32_t(ip_copy), 0x7F000001);
 }
 
@@ -175,21 +175,21 @@ TEST(ipv4_address, CopyOperator) {
     auto ip = ipv4_address::parse("127.0.0.1");
     ipv4_address ip_copy;
 
-    EXPECT_EQ(ip_copy.to_uint32(), 0);
+    EXPECT_EQ(ip_copy.to_uint(), 0);
     ip_copy = ip;
 
     EXPECT_EQ(ip.bytes(), expected_ip);
-    EXPECT_EQ(ip.to_uint32(), 0x7F000001);
+    EXPECT_EQ(ip.to_uint(), 0x7F000001);
     EXPECT_EQ(uint32_t(ip), 0x7F000001);
 
     EXPECT_EQ(ip_copy.bytes(), expected_ip);
-    EXPECT_EQ(ip_copy.to_uint32(), 0x7F000001);
+    EXPECT_EQ(ip_copy.to_uint(), 0x7F000001);
     EXPECT_EQ(uint32_t(ip_copy), 0x7F000001);
 }
 
 using FromUint32Params = TestWithParam<std::tuple<uint32_t, const char*>>;
-TEST_P(FromUint32Params, from_uint32) {
-    ASSERT_EQ(ipv4_address::from_uint32(get<0>(GetParam())), ipv4_address::parse(get<1>(GetParam())));
+TEST_P(FromUint32Params, from_uint) {
+    ASSERT_EQ(ipv4_address::from_uint(get<0>(GetParam())), ipv4_address::parse(get<1>(GetParam())));
 }
 INSTANTIATE_TEST_SUITE_P(
     ipv4_address, FromUint32Params,
@@ -215,7 +215,7 @@ TEST_P(AddressParserIpv4Params, parse) {
     const auto& excepted_bytes = get<2>(GetParam());
 
     auto ip = ipv4_address::parse(get<0>(GetParam()));
-    auto actual_uint32 = ip.to_uint32();
+    auto actual_uint32 = ip.to_uint();
     const auto& actual_bytes = ip.bytes();
 
     ASSERT_EQ(actual_uint32, excepted_uint32);
@@ -231,7 +231,7 @@ TEST_P(AddressParserIpv4Params, parse) {
     ss >> s1 >> addr >> s2;
 
     ASSERT_EQ(s1, std::string("test:"));
-    ASSERT_EQ(addr.to_uint32(), excepted_uint32);
+    ASSERT_EQ(addr.to_uint(), excepted_uint32);
     ASSERT_EQ(s2, std::string("parser"));
 
     ipv4_address bad_addr;
@@ -261,7 +261,7 @@ TEST_P(InvalidAddressIpv4Params, parse) {
     auto error_ip = ipv4_address::parse(expected_address);
 
     EXPECT_EQ(error_ip.bytes(), expected_empty);
-    ASSERT_EQ(error_ip.to_uint32(), 0);
+    ASSERT_EQ(error_ip.to_uint(), 0);
     EXPECT_EQ(uint32_t(error_ip), 0);
 #else
     EXPECT_THAT(

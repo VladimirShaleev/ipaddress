@@ -28,6 +28,7 @@ public:
     friend class ip_network_base;
 
     using base_type = typename Base::base_type;
+    using uint_type = typename Base::uint_type;
 
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base() IPADDRESS_NOEXCEPT : Base() {
     }
@@ -134,6 +135,10 @@ public:
 
     IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string reverse_pointer() const {
        return Base::ip_reverse_pointer(Base::bytes());
+    }
+
+    IPADDRESS_NODISCARD explicit IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE operator uint_type() const IPADDRESS_NOEXCEPT {
+        return to_uint();
     }
 
     IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE explicit operator std::string() const {

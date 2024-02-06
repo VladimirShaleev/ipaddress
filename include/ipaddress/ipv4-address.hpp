@@ -8,22 +8,19 @@ namespace IPADDRESS_NAMESPACE {
 class ipv4_address_base : public base_v4<ipv4_address_base> {
 public:
     using base_type = typename base_v4<ipv4_address_base>::base_type;
+    using uint_type = typename base_v4<ipv4_address_base>::uint_type;
 
-    template <uint32_t Ip>
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<ipv4_address_base> from_uint32() IPADDRESS_NOEXCEPT {
-        return from_uint32(Ip);
+    template <uint_type Ip>
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<ipv4_address_base> from_uint() IPADDRESS_NOEXCEPT {
+        return from_uint(Ip);
     }
 
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<ipv4_address_base> from_uint32(uint32_t ip) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<ipv4_address_base> from_uint(uint_type ip) IPADDRESS_NOEXCEPT {
         return ip_from_uint32(ip);
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint32_t to_uint32() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint_type to_uint() const IPADDRESS_NOEXCEPT {
         return ip_to_uint32(_bytes);
-    }
-
-    IPADDRESS_NODISCARD explicit IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE operator uint32_t() const IPADDRESS_NOEXCEPT {
-        return to_uint32();
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const base_type& bytes() const IPADDRESS_NOEXCEPT {
@@ -86,7 +83,7 @@ using ipv4_address = ip_address_base<ipv4_address_base>;
 
     IPADDRESS_NODISCARD consteval IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(unsigned long long value) IPADDRESS_NOEXCEPT {
         assert(value <= ipv4_address::_all_ones && "litteral integer is too long");
-        return ipv4_address::from_uint32(uint32_t(value));
+        return ipv4_address::from_uint(uint32_t(value));
     }
 
 #else // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
@@ -102,7 +99,7 @@ using ipv4_address = ip_address_base<ipv4_address_base>;
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(unsigned long long value) IPADDRESS_NOEXCEPT {
         assert(value <= ipv4_address::_all_ones && "litteral integer is too long");
-        return ipv4_address::from_uint32(uint32_t(value));
+        return ipv4_address::from_uint(uint32_t(value));
     }
 
 #endif // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER

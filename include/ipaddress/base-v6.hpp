@@ -10,6 +10,7 @@ template <typename Ext>
 class base_v6 {
 public:
     using base_type = byte_array_type<16>;
+    using uint_type = ::IPADDRESS_NAMESPACE::uint128_t;
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_version version() const IPADDRESS_NOEXCEPT {
         return _version;
@@ -357,7 +358,7 @@ private:
                 return empty_parts;
             }
 
-            auto ipv4 = ipv4_address::parse(last_part, error).to_uint32();
+            auto ipv4 = ipv4_address::parse(last_part, error).to_uint();
 
             if (error != error_code::NO_ERROR) {
                 return empty_parts;

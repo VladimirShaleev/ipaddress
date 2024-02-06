@@ -103,6 +103,7 @@ private:
 class ipv6_address_base : public base_v6<ipv6_address_base> {
 public:
     using base_type = typename base_v6<ipv6_address_base>::base_type;
+    using uint_type = typename base_v6<ipv6_address_base>::uint_type;
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE scope get_scope_id() const IPADDRESS_NOEXCEPT {
         return scope(
@@ -147,6 +148,39 @@ public:
     }
 
 #endif // IPADDRESS_CPP_VERSION < 17
+
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<ipv6_address_base> from_uint(uint_type ip) IPADDRESS_NOEXCEPT {
+        ip_address_base<ipv6_address_base> result;
+        auto& bytes = result._data.bytes;
+        uint64_t shift = 0;
+        uint64_t inc = 8;
+        if (is_little_endian()) {
+            shift = 56;
+            inc = -8;
+        }
+        for (int i = 0, s = shift; i < 8; ++i, s += inc) {
+            bytes[i] = uint8_t(ip.upper() >> s);
+            bytes[i + 8] = uint8_t(ip.lower() >> s);
+        }
+        return result;
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint_type to_uint() const IPADDRESS_NOEXCEPT {
+        const auto& bytes = _data.bytes;
+        uint64_t upper = 0;
+        uint64_t lower = 0;
+        uint64_t shift = 0;
+        uint64_t inc = 8;
+        if (is_little_endian()) {
+            shift = 56;
+            inc = -8;
+        }
+        for (int i = 0, s = shift; i < 8; ++i, s += inc) {
+            upper |= uint64_t(bytes[i]) << s;
+            lower |= uint64_t(bytes[i + 8]) << s;
+        }
+        return uint_type(upper, lower);
+    }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const base_type& bytes() const IPADDRESS_NOEXCEPT {
         return _data.bytes;

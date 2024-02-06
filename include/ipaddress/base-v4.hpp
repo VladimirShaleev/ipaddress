@@ -10,6 +10,7 @@ template <typename Ext>
 class base_v4 {
 public:
     using base_type = byte_array_type<4>;
+    using uint_type = uint32_t;
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_version version() const IPADDRESS_NOEXCEPT {
         return _version;
@@ -24,7 +25,7 @@ protected:
 
     static IPADDRESS_CONSTEXPR size_t _size = 4;
 
-    static IPADDRESS_CONSTEXPR uint32_t _all_ones = std::numeric_limits<uint32_t>::max();
+    static IPADDRESS_CONSTEXPR uint_type _all_ones = std::numeric_limits<uint_type>::max();
 
     static IPADDRESS_CONSTEXPR size_t _max_string_len = 15;
 
@@ -97,7 +98,7 @@ protected:
         return ip_address_base<Ext>(octets);
     }
 
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<Ext> ip_from_uint32(uint32_t ip) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<Ext> ip_from_uint32(uint_type ip) IPADDRESS_NOEXCEPT {
         ip = is_little_endian() ? swap_bytes(ip) : ip;
         return ip_address_base<Ext>({
             uint8_t(ip & 0xFF),
@@ -110,7 +111,7 @@ protected:
         return ip_address_base<Ext>::ip_from_uint32(_all_ones ^ (_all_ones >> (prefixlen - 1) >> 1));
     }
 
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint32_t ip_to_uint32(const base_type& bytes) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint_type ip_to_uint32(const base_type& bytes) IPADDRESS_NOEXCEPT {
         const auto ip = 
             (uint32_t(bytes[3]) << 24) | 
             (uint32_t(bytes[2]) << 16) | 
@@ -181,8 +182,8 @@ protected:
     }
 
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<Ext> strict_netmask(const ip_address_base<Ext>& address, const ip_address_base<Ext>& netmask, bool strict, error_code& code) IPADDRESS_NOEXCEPT {
-        auto pack_address = address.to_uint32();
-        auto pack_netmask = netmask.to_uint32();
+        auto pack_address = address.to_uint();
+        auto pack_netmask = netmask.to_uint();
         if ((pack_address & pack_netmask) != pack_address) {
             if (strict) {
                 code = error_code::HAS_HOST_BITS_SET;
@@ -195,7 +196,7 @@ protected:
     }
 
 private:
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t prefix_from_ip_uint32(uint32_t ip, error_code& code) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t prefix_from_ip_uint32(uint_type ip, error_code& code) IPADDRESS_NOEXCEPT {
         auto trailing_zeroes = count_righthand_zero_bits(ip, _max_prefixlen);
         auto prefixlen = _max_prefixlen - trailing_zeroes;
         auto leading_ones = ip >> trailing_zeroes;
