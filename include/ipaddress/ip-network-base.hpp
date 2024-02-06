@@ -252,8 +252,29 @@ public:
         return subnets_sequence<ip_network_base<Base>>(network_address(), broadcast_address(), hostmask(), prefixlen_diff, new_prefix);
     }
 
-    //IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void supernet(size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT {
-    //}
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base<Base> supernet(size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT {
+        if (prefixlen() == 0) {
+            return *this;
+        }
+
+        if (new_prefixlen) {
+            if (new_prefixlen.value() > prefixlen()) {
+                // error
+            }
+            if (prefixlen_diff != 1) {
+                // error
+            }
+            prefixlen_diff = prefixlen() - new_prefixlen.value();
+        }
+
+        if (prefixlen_diff > prefixlen()) {
+            // error
+        }
+
+        const auto new_prefix = prefixlen() - prefixlen_diff;
+        const auto address = ip_address_type::from_uint(network_address().to_uint() & (netmask().to_uint() << prefixlen_diff));
+        return ip_network_base<Base>::from_address(address, new_prefix);
+    }
 
     IPADDRESS_NODISCARD explicit operator std::string() const {
         return to_string();
