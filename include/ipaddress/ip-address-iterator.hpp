@@ -241,18 +241,19 @@ public:
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE hosts_sequence& operator=(const hosts_sequence&) IPADDRESS_NOEXCEPT = default;
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE hosts_sequence& operator=(hosts_sequence&&) IPADDRESS_NOEXCEPT = default;
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_sequence(const_reference network_address, const_reference broadcast_address) IPADDRESS_NOEXCEPT 
-        : 
-        _begin(value_type::from_uint(network_address.to_uint() + 1)), 
-        _end(value_type::from_uint(broadcast_address.to_uint() + (std::is_same<value_type, ipv6_address>::value ? 1 : 0))) {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_sequence(const_reference network_address, const_reference broadcast_address) IPADDRESS_NOEXCEPT  {
+        const auto begin = value_type::from_uint(network_address.to_uint() + 1);
+        const auto end = value_type::from_uint(broadcast_address.to_uint() + (std::is_same<value_type, ipv6_address>::value ? 1 : 0));
+        _begin = const_iterator(begin, end, begin);
+        _end = const_iterator(begin, end, end);
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator begin() const IPADDRESS_NOEXCEPT {
-        return const_iterator(_begin, _end, _begin);
+        return _begin;
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator end() const IPADDRESS_NOEXCEPT {
-        return const_iterator(_begin, _end, _end);
+        return _end;
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator rbegin() const IPADDRESS_NOEXCEPT {
@@ -284,7 +285,7 @@ public:
     }
     
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE difference_type size() const IPADDRESS_NOEXCEPT {
-        return difference_type(_end) - difference_type(_begin);
+        return _end.uint_diff(_begin);
     }
 
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type operator[](difference_type n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
@@ -292,28 +293,20 @@ public:
     }
 
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type at(difference_type n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        const auto result = value_type::from_uint(_begin.to_uint() + n);
-        if (result < _end) {
-            return result;
-        }
-    #ifdef IPADDRESS_NO_EXCEPTIONS
-        return result;
-    #else
-        throw std::out_of_range("index out of array");
-    #endif
+        return *(_begin + n);
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type front() const IPADDRESS_NOEXCEPT {
-        return _begin;
+        return *_begin;
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type back() const IPADDRESS_NOEXCEPT {
-        return value_type::from_uint(_end.to_uint() - 1);
+        return *(_end - 1);
     }
 
 private:
-    value_type _begin;
-    value_type _end;
+    const_iterator _begin{};
+    const_iterator _end{};
 };
 
 } // namespace IPADDRESS_NAMESPACE
