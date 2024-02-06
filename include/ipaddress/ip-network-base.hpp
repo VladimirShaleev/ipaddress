@@ -227,18 +227,33 @@ public:
     //     return 0;
     // }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_sequence<ip_network_base<Base>> subnets(size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_sequence<ip_network_base<Base>> subnets(size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        error_code code = error_code::NO_ERROR;
+        const auto result = subnets(code, prefixlen_diff, new_prefixlen);
+        if (code != error_code::NO_ERROR) {
+            if (IPADDRESS_IS_CONST_EVALUATED(code)) {
+                raise_error(code, 0, "", 0);
+            }
+        #ifndef IPADDRESS_NO_EXCEPTIONS
+            raise_error(code, 0, "", 0);
+        #endif
+        }
+        return result;
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_sequence<ip_network_base<Base>> subnets(error_code& code, size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT {
         if (prefixlen() == ip_address_type::_max_prefixlen) {
-            //yield this;
             return subnets_sequence<ip_network_base<Base>>(network_address(), prefixlen());
         }
 
         if (new_prefixlen) {
             if (new_prefixlen.value() < prefixlen()) {
-                // error
+                code = error_code::NEW_PREFIX_MUST_BE_LONGER;
+                return subnets_sequence<ip_network_base<Base>>(ip_address_type(), 0);
             }
             if (prefixlen_diff != 1) {
-                // error
+                code = error_code::CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX;
+                return subnets_sequence<ip_network_base<Base>>(ip_address_type(), 0);
             }
             prefixlen_diff = new_prefixlen.value() - prefixlen();
         }
@@ -246,29 +261,49 @@ public:
         auto new_prefix = prefixlen() + prefixlen_diff;
 
         if (new_prefix > ip_address_type::_max_prefixlen) {
-            // error
+            code = error_code::INVALID_PREFIXLEN_DIFF;
+            return subnets_sequence<ip_network_base<Base>>(ip_address_type(), 0);
         }
 
         return subnets_sequence<ip_network_base<Base>>(network_address(), broadcast_address(), hostmask(), prefixlen_diff, new_prefix);
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base<Base> supernet(size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base<Base> supernet(size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        error_code code = error_code::NO_ERROR;
+        const auto result = supernet(code, prefixlen_diff, new_prefixlen);
+        if (code != error_code::NO_ERROR) {
+            if (IPADDRESS_IS_CONST_EVALUATED(code)) {
+                raise_error(code, 0, "", 0);
+            }
+        #ifndef IPADDRESS_NO_EXCEPTIONS
+            raise_error(code, 0, "", 0);
+        #endif
+        }
+        return result;
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base<Base> supernet(error_code& code, size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT {
+        code = error_code::NO_ERROR;
+
         if (prefixlen() == 0) {
             return *this;
         }
 
         if (new_prefixlen) {
             if (new_prefixlen.value() > prefixlen()) {
-                // error
+                code = error_code::NEW_PREFIX_MUST_BE_SHORTER;
+                return ip_network_base<Base>();
             }
             if (prefixlen_diff != 1) {
-                // error
+                code = error_code::CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX;
+                return ip_network_base<Base>();
             }
             prefixlen_diff = prefixlen() - new_prefixlen.value();
         }
 
         if (prefixlen_diff > prefixlen()) {
-            // error
+            code = error_code::INVALID_PREFIXLEN_DIFF;
+            return ip_network_base<Base>();
         }
 
         const auto new_prefix = prefixlen() - prefixlen_diff;
