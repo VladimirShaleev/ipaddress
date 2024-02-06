@@ -32,11 +32,13 @@ TEST(ipv6_address, CompileTime) {
     ASSERT_EQ(ip1.bytes(), ip_bytes);
 
     constexpr auto ip2 = ipv6_address::parse<"2001:db8::1%1">();
+    constexpr auto ip2_uint128 = ip2.to_uint();
     constexpr auto ip2_bytes = ip2.bytes();
     constexpr auto ip2_byte_0 = ip2_bytes[0];
     constexpr auto ip2_byte_1 = ip2_bytes.at(1);
     constexpr auto ip2_byte_2 = *(ip2_bytes.begin() + 2);
     constexpr auto ip2_byte_3 = ip2_bytes.back();
+    ASSERT_EQ(ip2_uint128, ipv6_address::uint_type::from_string("42540766411282592856903984951653826561").value());
     ASSERT_EQ(ip2_byte_0, 0x20);
     ASSERT_EQ(ip2_byte_1, 0x01);
     ASSERT_EQ(ip2_byte_2, 0x0D);
@@ -52,6 +54,9 @@ TEST(ipv6_address, CompileTime) {
     ASSERT_EQ(ip3_byte_1, 0x01);
     ASSERT_EQ(ip3_byte_2, 0x0D);
     ASSERT_EQ(ip3_byte_3, 0x01);
+
+    constexpr auto ipv_from_uint_1 = ipv6_address::from_uint(0xFF9B0001);
+    ASSERT_EQ(ipv_from_uint_1.to_uint(), 0xFF9B0001);
 
     constexpr auto ip4 = ipv6_address::parse<"2001:db8::1%2">();
 
@@ -255,6 +260,7 @@ TEST(ipv6_address, DefaultCtor) {
     ipv6_address ip;
 
     EXPECT_EQ(ip.bytes(), expected_empty);
+    EXPECT_EQ(ip.to_uint(), 0);
     EXPECT_EQ(ip.size(), 16);
     EXPECT_EQ(ip.version(), ip_version::V6);
 }
@@ -270,8 +276,10 @@ TEST(ipv6_address, CopyCtor) {
     auto ip_copy = ip;
 
     EXPECT_EQ(ip.bytes(), expected_ip);
+    EXPECT_EQ(ip.to_uint(), 281470681743360ULL);
 
     EXPECT_EQ(ip_copy.bytes(), expected_ip);
+    EXPECT_EQ(ip_copy.to_uint(), 281470681743360ULL);
     EXPECT_EQ(ip_copy, ipv6_address(expected_ip));
 }
 
@@ -296,6 +304,17 @@ TEST(ipv6_address, CopyOperator) {
     EXPECT_EQ(ip.bytes(), expected_ip);
     EXPECT_EQ(ip_copy.bytes(), expected_ip);
 }
+
+using FromUint128Params = TestWithParam<std::tuple<uint128_t, const char*>>;
+TEST_P(FromUint128Params, from_uint) {
+    ASSERT_EQ(ipv6_address::from_uint(get<0>(GetParam())), ipv6_address::parse(get<1>(GetParam())));
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_address, FromUint128Params,
+    testing::Values(
+            std::make_tuple(0, "::"),
+            std::make_tuple(uint128_t::from_string("42549171344950636613079587071710986241").value(), "2002:ac1d:2d64::1")
+    ));
 
 using FromBytesIpv6Params = TestWithParam<std::tuple<ipv6_address::base_type, const char*>>;
 TEST_P(FromBytesIpv6Params, from_bytes) {

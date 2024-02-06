@@ -152,8 +152,8 @@ public:
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<ipv6_address_base> from_uint(uint_type ip) IPADDRESS_NOEXCEPT {
         ip_address_base<ipv6_address_base> result;
         auto& bytes = result._data.bytes;
-        uint64_t shift = 0;
-        uint64_t inc = 8;
+        int shift = 0;
+        int inc = 8;
         if (is_little_endian()) {
             shift = 56;
             inc = -8;
@@ -169,8 +169,8 @@ public:
         const auto& bytes = _data.bytes;
         uint64_t upper = 0;
         uint64_t lower = 0;
-        uint64_t shift = 0;
-        uint64_t inc = 8;
+        int shift = 0;
+        int inc = 8;
         if (is_little_endian()) {
             shift = 56;
             inc = -8;
