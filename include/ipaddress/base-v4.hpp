@@ -108,7 +108,9 @@ protected:
     }
 
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<Ext> ip_from_prefix(size_t prefixlen) {
-        return ip_address_base<Ext>::ip_from_uint32(_all_ones ^ (_all_ones >> (prefixlen - 1) >> 1));
+        return prefixlen != 0
+            ? ip_address_base<Ext>::ip_from_uint32(_all_ones ^ (_all_ones >> (prefixlen - 1) >> 1))
+            : ip_address_base<Ext>::ip_from_uint32(0);
     }
 
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint_type ip_to_uint32(const base_type& bytes) IPADDRESS_NOEXCEPT {
@@ -199,8 +201,8 @@ private:
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t prefix_from_ip_uint32(uint_type ip, error_code& code) IPADDRESS_NOEXCEPT {
         auto trailing_zeroes = count_righthand_zero_bits(ip, _max_prefixlen);
         auto prefixlen = _max_prefixlen - trailing_zeroes;
-        auto leading_ones = ip >> trailing_zeroes;
-        auto all_ones = (1 << (prefixlen - 1) << 1) - 1;
+        auto leading_ones = trailing_zeroes != 32 ? (ip >> trailing_zeroes) : 0;
+        auto all_ones = (uint_type(1) << (prefixlen - 1) << 1) - uint_type(1);
         if (leading_ones != all_ones) {
             code = error_code::NETMASK_PATTERN_MIXES_ZEROES_AND_ONES;
             return 0;

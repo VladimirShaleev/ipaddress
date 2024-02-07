@@ -77,6 +77,9 @@ TEST(ipv4_network, CompileTime) {
 
     constexpr auto net5_error = test_error("127.0.0.1/24");
     ASSERT_EQ(net5_error, error_code::HAS_HOST_BITS_SET);
+
+    constexpr auto net_prefix = ipv4_network::parse("1.2.3.4/255.255.255.255");
+    ASSERT_EQ(net_prefix, ipv4_network::parse("1.2.3.4/32"));
     
     constexpr auto b1 = net3 < net4;
     constexpr auto b2 = net3 > net4;
@@ -100,6 +103,41 @@ TEST(ipv4_network, CompileTime) {
     constexpr auto net9 = ipv4_network::from_address(ipv4_address::parse("127.0.0.0"), 16, false);
     ASSERT_EQ(net8, ipv4_network::parse("127.0.0.0/16"));
     ASSERT_EQ(net9, ipv4_network::parse("127.0.0.0/16"));
+
+    constexpr auto net10 = ipv4_network::parse("224.1.1.0/31").is_multicast();
+    constexpr auto net11 = ipv4_network::parse("240.0.0.0").is_multicast();
+    ASSERT_TRUE(net10);
+    ASSERT_FALSE(net11);
+
+    constexpr auto net12 = ipv4_network::parse("0.0.0.0/8").is_private();
+    constexpr auto net13 = ipv4_network::parse("0.0.0.0/0").is_private();
+    ASSERT_TRUE(net12);
+    ASSERT_FALSE(net13);
+
+    constexpr auto net14 = ipv4_network::parse("192.0.3.0/24").is_global();
+    constexpr auto net15 = ipv4_network::parse("100.64.0.0/10").is_global();
+    ASSERT_TRUE(net14);
+    ASSERT_FALSE(net15);
+
+    constexpr auto net16 = ipv4_network::parse("240.0.0.1").is_reserved();
+    constexpr auto net17 = ipv4_network::parse("239.255.255.255").is_reserved();
+    ASSERT_TRUE(net16);
+    ASSERT_FALSE(net17);
+
+    constexpr auto net18 = ipv4_network::parse("127.42.0.0/24").is_loopback();
+    constexpr auto net19 = ipv4_network::parse("128.0.0.0/8").is_loopback();
+    ASSERT_TRUE(net18);
+    ASSERT_FALSE(net19);
+
+    constexpr auto net20 = ipv4_network::parse("169.254.1.0/24").is_link_local();
+    constexpr auto net21 = ipv4_network::parse("169.255.100.200").is_link_local();
+    ASSERT_TRUE(net20);
+    ASSERT_FALSE(net21);
+
+    constexpr auto net22 = ipv4_network::parse("0.0.0.0/32").is_unspecified();
+    constexpr auto net23 = ipv4_network::parse("0.0.0.0/8").is_unspecified();
+    ASSERT_TRUE(net22);
+    ASSERT_FALSE(net23);
 }
 
 TEST(ipv4_network, DefaultCtor) {
@@ -492,7 +530,7 @@ INSTANTIATE_TEST_SUITE_P(
     Values(
         std::make_tuple("1.0.0.0/8", false),
         std::make_tuple("100.64.0.0/10", false),
-        std::make_tuple("0.0.0.0/0", true),
+        std::make_tuple("0.0.0.0/0", false),
         std::make_tuple("0.0.0.0/8", true),
         std::make_tuple("10.0.0.0/8", true),
         std::make_tuple("127.0.0.0/8", true),
