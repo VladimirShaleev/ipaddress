@@ -473,3 +473,144 @@ TEST(ipv6_network, literals) {
     ASSERT_EQ(net1, ipv6_network::parse("2001:db8::/32"));
     ASSERT_EQ(net2, ipv6_network::parse("1:2:3:4:5:6:7:8%123456789abcdefg"));
 }
+
+using IsMulticastIpv6NetworkParams = TestWithParam<std::tuple<const char*, bool>>;
+TEST_P(IsMulticastIpv6NetworkParams, is_multicast) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv6_network::parse(std::get<0>(GetParam())).is_multicast();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_network, IsMulticastIpv6NetworkParams,
+    Values(
+        std::make_tuple("ffff::", true),
+        std::make_tuple("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff", true),
+        std::make_tuple("ff00::", true),
+        std::make_tuple("fdff::", false)
+    ));
+
+using IsPrivateIpv6NetworkParams = TestWithParam<std::tuple<const char*, bool>>;
+TEST_P(IsPrivateIpv6NetworkParams, is_private) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv6_network::parse(std::get<0>(GetParam())).is_private();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_network, IsPrivateIpv6NetworkParams,
+    Values(
+        std::make_tuple("fbff:ffff::", false),
+        std::make_tuple("fe00::%123", false),
+        std::make_tuple("::/0", false),
+        std::make_tuple("::ff/128", false),
+        std::make_tuple("2001::1/128", true),
+        std::make_tuple("fc00::", true),
+        std::make_tuple("fc00:ffff:ffff:ffff::", true),
+        std::make_tuple("::/128", true),
+        std::make_tuple("::1/128", true),
+        std::make_tuple("::ffff:0:0/96", true),
+        std::make_tuple("100::/64", true),
+        std::make_tuple("2001::/23", true),
+        std::make_tuple("2001:10::/28", true),
+        std::make_tuple("2001:2::/48", true),
+        std::make_tuple("2001:db8::/32", true),
+        std::make_tuple("fc00::%test/7", true),
+        std::make_tuple("fe80::/10", true)
+    ));
+
+using IsGlobalIpv6NetworkParams = TestWithParam<std::tuple<const char*, bool>>;
+TEST_P(IsGlobalIpv6NetworkParams, is_global) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv6_network::parse(std::get<0>(GetParam())).is_global();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_network, IsGlobalIpv6NetworkParams,
+    Values(
+        std::make_tuple("200::1/128", true)
+    ));
+
+using IsReservedIpv6NetworkParams = TestWithParam<std::tuple<const char*, bool>>;
+TEST_P(IsReservedIpv6NetworkParams, is_reserved) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv6_network::parse(std::get<0>(GetParam())).is_reserved();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_network, IsReservedIpv6NetworkParams,
+    Values(
+        std::make_tuple("4000::1/128", true)
+    ));
+
+using IsLoopbackIpv6NetworkParams = TestWithParam<std::tuple<const char*, bool>>;
+TEST_P(IsLoopbackIpv6NetworkParams, is_loopback) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv6_network::parse(std::get<0>(GetParam())).is_loopback();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_network, IsLoopbackIpv6NetworkParams,
+    Values(
+        std::make_tuple("0:0::0:01", true),
+        std::make_tuple("::1", true),
+        std::make_tuple("::2", false)
+    ));
+
+using IsLinkLocalIpv6NetworkParams = TestWithParam<std::tuple<const char*, bool>>;
+TEST_P(IsLinkLocalIpv6NetworkParams, is_link_local) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv6_network::parse(std::get<0>(GetParam())).is_link_local();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_network, IsLinkLocalIpv6NetworkParams,
+    Values(
+        std::make_tuple("fea0::", true),
+        std::make_tuple("febf:ffff::", true),
+        std::make_tuple("fe7f:ffff::", false),
+        std::make_tuple("fec0::", false)
+    ));
+
+using IsSiteLocalIpv6NetworkParams = TestWithParam<std::tuple<const char*, bool>>;
+TEST_P(IsSiteLocalIpv6NetworkParams, is_site_local) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv6_network::parse(std::get<0>(GetParam())).is_site_local();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_network, IsSiteLocalIpv6NetworkParams,
+    Values(
+        std::make_tuple("fecf::", true),
+        std::make_tuple("feff:ffff:ffff:ffff::", true),
+        std::make_tuple("fbf:ffff::", false),
+        std::make_tuple("ff00::", false)
+    ));
+
+using IsUnspecifiedIpv6NetworkParams = TestWithParam<std::tuple<const char*, bool>>;
+TEST_P(IsUnspecifiedIpv6NetworkParams, is_unspecified) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv6_network::parse(std::get<0>(GetParam())).is_unspecified();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_network, IsUnspecifiedIpv6NetworkParams,
+    Values(
+        std::make_tuple("0::0", true),
+        std::make_tuple("::1", false),
+        std::make_tuple("::/127", false)
+    ));

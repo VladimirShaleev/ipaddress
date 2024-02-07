@@ -174,7 +174,7 @@ TEST_P(NetworkParserIpv4Params, parse) {
 }
 INSTANTIATE_TEST_SUITE_P(
     ipv4_network, NetworkParserIpv4Params,
-    testing::Values(
+    Values(
         std::make_tuple("1.2.3.4", "1.2.3.4", "1.2.3.4", "255.255.255.255", "0.0.0.0", 32),
         std::make_tuple("1.2.3.4/32", "1.2.3.4", "1.2.3.4", "255.255.255.255", "0.0.0.0", 32),
         std::make_tuple("1.2.3.4/255.255.255.255", "1.2.3.4", "1.2.3.4", "255.255.255.255", "0.0.0.0", 32),
@@ -217,7 +217,7 @@ TEST_P(NetworkParserIpv4NotStrictParams, parse_not_strict) {
 }
 INSTANTIATE_TEST_SUITE_P(
     ipv4_network, NetworkParserIpv4NotStrictParams,
-    testing::Values(
+    Values(
         std::make_tuple("1.2.3.4/24", "1.2.3.0", "1.2.3.255", "255.255.255.0", "0.0.0.255", 24),
         std::make_tuple("192.0.2.0/255.255.0.0", "192.0.0.0", "192.0.255.255", "255.255.0.0", "0.0.255.255", 16)
     ));
@@ -249,7 +249,7 @@ TEST_P(NetworkFromAddressIpv4Params, from_address) {
 }
 INSTANTIATE_TEST_SUITE_P(
     ipv4_network, NetworkFromAddressIpv4Params,
-    testing::Values(
+    Values(
         std::make_tuple("1.2.3.4/24", "1.2.3.4", 24, false),
         std::make_tuple("192.0.2.0/255.255.255.0", "192.0.2.0", 24, true)
     ));
@@ -304,7 +304,7 @@ TEST_P(InvalidNetworkIpv4Params, parse) {
 }
 INSTANTIATE_TEST_SUITE_P(
     ipv4_network, InvalidNetworkIpv4Params,
-    testing::Values(
+    Values(
         std::make_tuple("1.2.3.4/", error_code::EMPTY_NETMASK, "empty mask in address 1.2.3.4/"),
         std::make_tuple("1.2.3.4/33", error_code::INVALID_NETMASK, "is not a valid netmask in address 1.2.3.4/33"),
         std::make_tuple("1.2.3.4/255.0.0.256", error_code::INVALID_NETMASK, "is not a valid netmask in address 1.2.3.4/255.0.0.256"),
@@ -388,7 +388,7 @@ TEST_P(ToStringNetworkIpv4Params, to_string) {
 }
 INSTANTIATE_TEST_SUITE_P(
     ipv4_network, ToStringNetworkIpv4Params,
-    testing::Values(
+    Values(
         std::make_tuple("1.2.3.4", "1.2.3.4/32"),
         std::make_tuple("1.2.3.4/32", "1.2.3.4/32"),
         std::make_tuple("1.2.3.4/255.255.255.255", "1.2.3.4/32")
@@ -463,3 +463,124 @@ TEST(ipv4_network, literals) {
     ASSERT_EQ(net1, ipv4_network::parse("127.0.0.0/16"));
     ASSERT_EQ(net2, ipv4_network::parse("127.128.128.255/32"));
 }
+
+using IsMulticastIpv4NetworkParams = TestWithParam<std::tuple<const char*, bool>>;
+TEST_P(IsMulticastIpv4NetworkParams, is_multicast) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv4_network::parse(std::get<0>(GetParam())).is_multicast();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_network, IsMulticastIpv4NetworkParams,
+    Values(
+        std::make_tuple("224.1.1.0/31", true),
+        std::make_tuple("240.0.0.0", false)
+    ));
+
+using IsPrivateIpv4NetworkParams = TestWithParam<std::tuple<const char*, bool>>;
+TEST_P(IsPrivateIpv4NetworkParams, is_private) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv4_network::parse(std::get<0>(GetParam())).is_private();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_network, IsPrivateIpv4NetworkParams,
+    Values(
+        std::make_tuple("1.0.0.0/8", false),
+        std::make_tuple("100.64.0.0/10", false),
+        std::make_tuple("0.0.0.0/0", true),
+        std::make_tuple("0.0.0.0/8", true),
+        std::make_tuple("10.0.0.0/8", true),
+        std::make_tuple("127.0.0.0/8", true),
+        std::make_tuple("169.254.0.0/16", true),
+        std::make_tuple("172.16.0.0/12", true),
+        std::make_tuple("192.0.0.0/29", true),
+        std::make_tuple("192.0.0.170/31", true),
+        std::make_tuple("192.0.2.0/24", true),
+        std::make_tuple("192.168.0.0/16", true),
+        std::make_tuple("198.18.0.0/15", true),
+        std::make_tuple("198.51.100.0/24", true),
+        std::make_tuple("203.0.113.0/24", true),
+        std::make_tuple("240.0.0.0/4", true),
+        std::make_tuple("255.255.255.255/32", true)
+    ));
+
+using IsGlobalIpv4NetworkParams = TestWithParam<std::tuple<const char*, bool>>;
+TEST_P(IsGlobalIpv4NetworkParams, is_global) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv4_network::parse(std::get<0>(GetParam())).is_global();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_network, IsGlobalIpv4NetworkParams,
+    Values(
+        std::make_tuple("100.64.0.0/10", false),
+        std::make_tuple("192.0.3.0/24", true)
+    ));
+
+using IsReservedIpv4NetworkParams = TestWithParam<std::tuple<const char*, bool>>;
+TEST_P(IsReservedIpv4NetworkParams, is_reserved) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv4_network::parse(std::get<0>(GetParam())).is_reserved();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_network, IsReservedIpv4NetworkParams,
+    Values(
+        std::make_tuple("240.0.0.1", true),
+        std::make_tuple("239.255.255.255", false)
+    ));
+
+using IsLoopbackIpv4NetworkParams = TestWithParam<std::tuple<const char*, bool>>;
+TEST_P(IsLoopbackIpv4NetworkParams, is_loopback) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv4_network::parse(std::get<0>(GetParam())).is_loopback();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_network, IsLoopbackIpv4NetworkParams,
+    Values(
+        std::make_tuple("127.100.200.254", true),
+        std::make_tuple("127.42.0.0/24", true),
+        std::make_tuple("128.0.0.0/8", false)
+    ));
+
+using IsLinkLocalIpv4NetworkParams = TestWithParam<std::tuple<const char*, bool>>;
+TEST_P(IsLinkLocalIpv4NetworkParams, is_link_local) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv4_network::parse(std::get<0>(GetParam())).is_link_local();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_network, IsLinkLocalIpv4NetworkParams,
+    Values(
+        std::make_tuple("169.254.1.0/24", true),
+        std::make_tuple("169.255.100.200", false)
+    ));
+
+using IsUnspecifiedIpv4NetworkParams = TestWithParam<std::tuple<const char*, bool>>;
+TEST_P(IsUnspecifiedIpv4NetworkParams, is_unspecified) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv4_network::parse(std::get<0>(GetParam())).is_unspecified();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_network, IsUnspecifiedIpv4NetworkParams,
+    Values(
+        std::make_tuple("0.0.0.0/32", true),
+        std::make_tuple("0.0.0.0/8", false)
+    ));

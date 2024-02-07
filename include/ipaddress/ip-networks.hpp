@@ -65,6 +65,19 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv6_network
 }
 
 template<>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv4_network::is_global() const IPADDRESS_NOEXCEPT {
+    constexpr auto network = ipv4_network::parse("100.64.0.0/10");
+    const auto& address = network_address();
+    const auto broadcast = broadcast_address();
+    return !(network.contains(address) && network.contains(broadcast)) && !is_private();
+}
+
+template<>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv6_network::is_global() const IPADDRESS_NOEXCEPT {
+    return !is_private();
+}
+
+template<>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv4_address::is_multicast() const IPADDRESS_NOEXCEPT {
     constexpr auto multicast_networks = ipv4_network::parse("224.0.0.0/4");
     return multicast_networks.contains(*this);
