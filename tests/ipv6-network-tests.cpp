@@ -47,14 +47,14 @@ TEST(ipv6_network, CompileTime) {
     ASSERT_EQ(net2_prefixlen, 128);
 #endif
 
-    constexpr auto net3 = ipv6_network::parse("2001:db8::/32");
+    constexpr auto net3 = ipv6_network::parse("2001:db8::%scope/32");
     constexpr auto net3_address = net3.network_address();
     constexpr auto net3_broadcast = net3.broadcast_address();
     constexpr auto net3_netmask = net3.netmask();
     constexpr auto net3_hostmask = net3.hostmask();
     constexpr auto net3_prefixlen = net3.prefixlen();
     constexpr auto net3_hash = net3.hash();
-    ASSERT_EQ(net3_address, ipv6_address::parse("2001:db8::"));
+    ASSERT_EQ(net3_address, ipv6_address::parse("2001:db8::%scope"));
     ASSERT_EQ(net3_broadcast, ipv6_address::parse("2001:db8:ffff:ffff:ffff:ffff:ffff:ffff"));
     ASSERT_EQ(net3_netmask, ipv6_address::parse("ffff:ffff::"));
     ASSERT_EQ(net3_hostmask, ipv6_address::parse("::ffff:ffff:ffff:ffff:ffff:ffff"));
@@ -100,6 +100,46 @@ TEST(ipv6_network, CompileTime) {
     constexpr auto net9 = ipv6_network::from_address(ipv6_address::parse("2001:db8::"), 32, false);
     ASSERT_EQ(net8, ipv6_network::parse("2001:db8::/32"));
     ASSERT_EQ(net9, ipv6_network::parse("2001:db8::/32"));
+
+    constexpr auto net10 = ipv6_network::parse("ff00::").is_multicast();
+    constexpr auto net11 = ipv6_network::parse("fdff::").is_multicast();
+    ASSERT_TRUE(net10);
+    ASSERT_FALSE(net11);
+
+    constexpr auto net12 = ipv6_network::parse("2001::1/128").is_private();
+    constexpr auto net13 = ipv6_network::parse("::ff/128").is_private();
+    ASSERT_TRUE(net12);
+    ASSERT_FALSE(net13);
+    
+    constexpr auto net14 = ipv6_network::parse("200::1/128").is_global();
+    constexpr auto net15 = ipv6_network::parse("2001::1/128").is_global();
+    ASSERT_TRUE(net14);
+    ASSERT_FALSE(net15);
+
+    constexpr auto net16 = ipv6_network::parse("4000::1/128").is_reserved();
+    constexpr auto net17 = ipv6_network::parse("febf:ffff::").is_reserved();
+    ASSERT_TRUE(net16);
+    ASSERT_FALSE(net17);
+    
+    constexpr auto net18 = ipv6_network::parse("::1").is_loopback();
+    constexpr auto net19 = ipv6_network::parse("::2").is_loopback();
+    ASSERT_TRUE(net18);
+    ASSERT_FALSE(net19);
+
+    constexpr auto net20 = ipv6_network::parse("febf:ffff::").is_link_local();
+    constexpr auto net21 = ipv6_network::parse("fe7f:ffff::").is_link_local();
+    ASSERT_TRUE(net20);
+    ASSERT_FALSE(net21);
+
+    constexpr auto net22 = ipv6_network::parse("feff:ffff:ffff:ffff::").is_site_local();
+    constexpr auto net23 = ipv6_network::parse("ff00::").is_site_local();
+    ASSERT_TRUE(net22);
+    ASSERT_FALSE(net23);
+
+    constexpr auto net24 = ipv6_network::parse("::").is_unspecified();
+    constexpr auto net25 = ipv6_network::parse("::/127").is_unspecified();
+    ASSERT_TRUE(net24);
+    ASSERT_FALSE(net25);
 }
 
 TEST(ipv6_network, DefaultCtor) {
