@@ -11,6 +11,7 @@ template <typename Iterator>
 class ip_reverse_iterator {
 public:
     using iterator_category = typename Iterator::iterator_category;
+    using iterator_type	    = Iterator;
     using value_type        = typename Iterator::value_type;
     using difference_type   = typename Iterator::difference_type;
     using pointer           = typename Iterator::pointer;
@@ -31,6 +32,15 @@ public:
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint_type uint_diff(const ip_reverse_iterator& other) const IPADDRESS_NOEXCEPT {
         return other._it - _it;
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE iterator_type base() const IPADDRESS_NOEXCEPT {
+        auto result = _it;
+        ++result._offset;
+        ++result._begin;
+        ++result._end;
+        result._current = value_type::from_uint(result._offset);
+        return result;
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference operator*() const IPADDRESS_NOEXCEPT {
@@ -171,6 +181,9 @@ class ip_address_iterator;
 template <typename Base>
 class ip_address_iterator<ip_address_base<Base>> {
 public:
+    template <typename>
+    friend class ip_reverse_iterator;
+
     using iterator_category = std::random_access_iterator_tag;
     using value_type        = ip_address_base<Base>;
     using difference_type   = std::int64_t;
@@ -482,7 +495,7 @@ public:
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type back() const IPADDRESS_NOEXCEPT {
-        return *(_end - ((typename value_type::uint_type) 1));
+        return *(_end - 1U);
     }
 
 private:

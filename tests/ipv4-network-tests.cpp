@@ -728,7 +728,41 @@ TEST_P(HostsIpv4NetworkParams, hosts) {
 
     const auto actual = ipv4_network::parse(std::get<0>(GetParam())).hosts();
 
+    ASSERT_FALSE(actual.empty());
     ASSERT_EQ(actual.size(), expected.size());
+    ASSERT_EQ(actual.front(), ipv4_address::parse(expected.front()));
+    ASSERT_EQ(actual.back(), ipv4_address::parse(expected.back()));
+
+    auto expected_it = expected.begin();
+    for (const auto& address : actual) {
+        ASSERT_EQ(address, ipv4_address::parse(*expected_it++));
+    }
+
+    auto expected_const_it = expected.cbegin();
+    for (auto it = actual.cbegin(); it != actual.cend(); ++it) {
+        ASSERT_EQ(*it, ipv4_address::parse(*expected_const_it++));
+    }
+
+    auto expected_reverse_it = expected.rbegin();
+    for (auto it = actual.rbegin(); it != actual.rend(); ++it) {
+        ASSERT_EQ(*it, ipv4_address::parse(*expected_reverse_it++));
+    }
+
+    auto expected_const_reverse_it = expected.crbegin();
+    auto actual_const_reverse_it = actual.crbegin();
+    for (; actual_const_reverse_it != actual.crend(); ++actual_const_reverse_it) {
+        ASSERT_EQ(*actual_const_reverse_it, ipv4_address::parse(*expected_const_reverse_it++));
+    }
+
+    expected_const_it = expected.cbegin();
+    for (auto it = actual_const_reverse_it.base(); it != actual.cend(); ++it) {
+        ASSERT_EQ(*it, ipv4_address::parse(*expected_const_it++));
+    }
+
+    for (size_t i = 0; i < actual.size(); ++i) {
+        ASSERT_EQ(actual[i], ipv4_address::parse(expected[i]));
+        ASSERT_EQ(actual.at(i), ipv4_address::parse(expected[i]));
+    }
 }
 INSTANTIATE_TEST_SUITE_P(
     ipv4_network, HostsIpv4NetworkParams,
@@ -736,4 +770,24 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("192.0.2.0/29", std::vector<const char*>{"192.0.2.1", "192.0.2.2", "192.0.2.3", "192.0.2.4", "192.0.2.5", "192.0.2.6" }),
         std::make_tuple("192.0.2.0/31", std::vector<const char*>{"192.0.2.0", "192.0.2.1"}),
         std::make_tuple("192.0.2.1/32", std::vector<const char*>{"192.0.2.1"})
+    ));
+
+using SupernetIpv4NetworkParams = TestWithParam<std::tuple<const char*, size_t, optional<size_t>, const char*>>;
+TEST_P(SupernetIpv4NetworkParams, supernet) {
+    const auto expected = ipv4_network::parse(std::get<3>(GetParam()));
+
+    const auto network = ipv4_network::parse(std::get<0>(GetParam()));
+    const auto prefixlen_diff = std::get<1>(GetParam());
+    const auto new_prefix = std::get<2>(GetParam());
+
+    const auto actual = network.supernet(prefixlen_diff, new_prefix);
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_network, SupernetIpv4NetworkParams,
+    Values(
+        std::make_tuple("192.0.2.0/24", 1, nullptr, "192.0.2.0/23"),
+        std::make_tuple("192.0.2.0/24", 2, nullptr, "192.0.0.0/22"),
+        std::make_tuple("192.0.2.0/24", 1, 20, "192.0.0.0/20")
     ));
