@@ -215,7 +215,7 @@ public:
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_sequence<ip_address_type> hosts() const IPADDRESS_NOEXCEPT {
-        return hosts_sequence<ip_address_type>(network_address(), broadcast_address());
+        return hosts_sequence<ip_address_type>(network_address(), broadcast_address(), prefixlen(), ip_address_type::_max_prefixlen);
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE exclude_network_sequence<ip_network_base<Base>> address_exclude(const ip_network_base& other) const IPADDRESS_NOEXCEPT {

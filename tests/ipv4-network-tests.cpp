@@ -721,3 +721,19 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("0.0.0.0/32", 1),
         std::make_tuple("0.0.0.0/31", 2)
     ));
+
+using HostsIpv4NetworkParams = TestWithParam<std::tuple<const char*, std::vector<const char*>>>;
+TEST_P(HostsIpv4NetworkParams, hosts) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv4_network::parse(std::get<0>(GetParam())).hosts();
+
+    ASSERT_EQ(actual.size(), expected.size());
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_network, HostsIpv4NetworkParams,
+    Values(
+        std::make_tuple("192.0.2.0/29", std::vector<const char*>{"192.0.2.1", "192.0.2.2", "192.0.2.3", "192.0.2.4", "192.0.2.5", "192.0.2.6" }),
+        std::make_tuple("192.0.2.0/31", std::vector<const char*>{"192.0.2.0", "192.0.2.1"}),
+        std::make_tuple("192.0.2.1/32", std::vector<const char*>{"192.0.2.1"})
+    ));

@@ -243,11 +243,23 @@ public:
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE hosts_sequence& operator=(const hosts_sequence&) IPADDRESS_NOEXCEPT = default;
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE hosts_sequence& operator=(hosts_sequence&&) IPADDRESS_NOEXCEPT = default;
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_sequence(const_reference network_address, const_reference broadcast_address) IPADDRESS_NOEXCEPT  {
-        const auto begin = value_type::from_uint(network_address.to_uint() + 1);
-        const auto end = value_type::from_uint(broadcast_address.to_uint() + (std::is_same<value_type, ipv6_address>::value ? 1 : 0));
-        _begin = const_iterator(begin, end, begin);
-        _end = const_iterator(begin, end, end);
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_sequence(const_reference network_address, const_reference broadcast_address, size_t prefixlen, size_t max_prefixlen) IPADDRESS_NOEXCEPT  {
+        if (std::is_same<value_type, ipv4_address>::value && prefixlen == max_prefixlen - 1) {
+            const auto begin = value_type::from_uint(network_address.to_uint());
+            const auto end = value_type::from_uint(broadcast_address.to_uint() + 1);
+            _begin = const_iterator(begin, end, begin);
+            _end = const_iterator(begin, end, end);
+        } else if (std::is_same<value_type, ipv4_address>::value && prefixlen == max_prefixlen) {
+            const auto begin = value_type::from_uint(network_address.to_uint());
+            const auto end = value_type::from_uint(network_address.to_uint() + 1);
+            _begin = const_iterator(begin, end, begin);
+            _end = const_iterator(begin, end, end);
+        } else {
+            const auto begin = value_type::from_uint(network_address.to_uint() + 1);
+            const auto end = value_type::from_uint(broadcast_address.to_uint() + (std::is_same<value_type, ipv6_address>::value ? 1 : 0));
+            _begin = const_iterator(begin, end, begin);
+            _end = const_iterator(begin, end, end);
+        }
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator begin() const IPADDRESS_NOEXCEPT {
