@@ -305,7 +305,7 @@ TEST(ipv6_network, from_address_error) {
     
 #ifdef IPADDRESS_NO_EXCEPTIONS
     auto error_network = ipv6_network::from_address(ipv6_address::parse("2001:db8::"), 16);
-    ASSERT_EQ(error_network.address(), ipv6_address::parse("::"));
+    ASSERT_EQ(error_network.network_address(), ipv6_address::parse("::"));
     ASSERT_EQ(error_network.netmask(), ipv6_address::parse("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"));
     ASSERT_EQ(error_network.hostmask(), ipv6_address::parse("::"));
     ASSERT_EQ(error_network.prefixlen(), 128);
@@ -328,7 +328,7 @@ TEST_P(InvalidNetworkIpv6Params, parse) {
 #ifdef IPADDRESS_NO_EXCEPTIONS
     auto error_network = ipv6_network::parse(expected_network);
 
-    EXPECT_EQ(error_network.address(), ipv6_address::parse("::"));
+    EXPECT_EQ(error_network.network_address(), ipv6_address::parse("::"));
     ASSERT_EQ(error_network.netmask(), ipv6_address::parse("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"));
     ASSERT_EQ(error_network.hostmask(), ipv6_address::parse("::"));
     ASSERT_EQ(error_network.prefixlen(), 128);

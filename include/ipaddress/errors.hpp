@@ -14,12 +14,6 @@ enum class error_code {
     HAS_HOST_BITS_SET,
     ONLY_ONE_SLASH_PERMITTED,
 
-    INVALID_PREFIXLEN_DIFF,
-    NEW_PREFIX_MUST_BE_SHORTER,
-    NEW_PREFIX_MUST_BE_LONGER,
-    CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX,
-    NOT_CONTAINED_NETWORK,
-
     // ipv4 errors
     EMPTY_OCTET,
     EXPECTED_4_OCTETS,
@@ -39,7 +33,14 @@ enum class error_code {
     EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON,
     EXACTLY_8_PARTS_EXPECTED_WITHOUT_DOUBLE_COLON,
     SCOPE_ID_IS_TOO_LONG,
-    INVALID_SCOPE_ID
+    INVALID_SCOPE_ID,
+
+    // logic errors
+    INVALID_PREFIXLEN_DIFF,
+    NEW_PREFIX_MUST_BE_SHORTER,
+    NEW_PREFIX_MUST_BE_LONGER,
+    CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX,
+    NOT_CONTAINED_NETWORK
 };
 
 class error : public std::runtime_error {
@@ -93,6 +94,19 @@ public:
     }
 };
 
+class login_error : public error {
+public:
+    template <typename FirstArg, typename... Args>
+    explicit login_error(error_code code, const FirstArg& arg, const Args&... args) : error(code, arg, args...) {
+    }
+
+    explicit login_error(error_code code, const std::string& message) : error(code, message) {
+    }
+
+    explicit login_error(error_code code, const char* message) : error(code, message) {
+    }
+};
+
 [[noreturn]] IPADDRESS_CONSTEXPR void raise_error(error_code code, int index, const char* address, size_t length) {
     char str[101] = {};
     size_t max_len = length;
@@ -115,16 +129,6 @@ public:
             throw parse_error(code, "has host bits set in address", str);
         case error_code::ONLY_ONE_SLASH_PERMITTED:
             throw parse_error(code, "only one '/' permitted in address", str);
-        case error_code::INVALID_PREFIXLEN_DIFF:
-            throw parse_error(code, "invalid prefixlen_diff", str);
-        case error_code::NEW_PREFIX_MUST_BE_SHORTER:
-            throw parse_error(code, "new prefix must be shorter");
-        case error_code::NEW_PREFIX_MUST_BE_LONGER:
-            throw parse_error(code, "new prefix must be longer");
-        case error_code::CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX:
-            throw parse_error(code, "cannot set prefixlen_diff and new_prefix");
-        case error_code::NOT_CONTAINED_NETWORK:
-            throw parse_error(code, "network is not a subnet of other");
         case error_code::EMPTY_OCTET:
             throw parse_error(code, "empty octet", index, "in address", str);
         case error_code::EXPECTED_4_OCTETS:
@@ -159,6 +163,16 @@ public:
             throw parse_error(code, "scope id is too long in address", str);
         case error_code::INVALID_SCOPE_ID:
             throw parse_error(code, "invalid scope id in address", str);
+        case error_code::INVALID_PREFIXLEN_DIFF:
+            throw login_error(code, "invalid prefixlen_diff");
+        case error_code::NEW_PREFIX_MUST_BE_SHORTER:
+            throw login_error(code, "new prefix must be shorter");
+        case error_code::NEW_PREFIX_MUST_BE_LONGER:
+            throw login_error(code, "new prefix must be longer");
+        case error_code::CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX:
+            throw login_error(code, "cannot set prefixlen_diff and new_prefix");
+        case error_code::NOT_CONTAINED_NETWORK:
+            throw login_error(code, "network is not a subnet of other");
         default:
             throw error(code, "unknown error");
     }
