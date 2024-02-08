@@ -700,3 +700,24 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("10.0.0.0/30", "10.0.0.0/24", false),
         std::make_tuple("10.0.0.0/24", "10.0.0.0/30", true)
     ));
+
+using AddressesCountIpv4NetworkParams = TestWithParam<std::tuple<const char*, uint32_t>>;
+TEST_P(AddressesCountIpv4NetworkParams, addresses_count) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv4_network::parse(std::get<0>(GetParam())).addresses_count();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_network, AddressesCountIpv4NetworkParams,
+    Values(
+        std::make_tuple("192.168.1.0/24", 256),
+        std::make_tuple("192.168.1.0/32", 1),
+        std::make_tuple("1.2.3.0/24", 256),
+        std::make_tuple("10.0.0.0/30", 4),
+        std::make_tuple("0.0.0.0/0", 4294967296),
+        std::make_tuple("0.0.0.0/1", 2147483648),
+        std::make_tuple("0.0.0.0/32", 1),
+        std::make_tuple("0.0.0.0/31", 2)
+    ));
