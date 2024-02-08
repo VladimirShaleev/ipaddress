@@ -852,3 +852,31 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("192.0.2.0/24", 1, 25, std::vector<const char*>{"192.0.2.0/25", "192.0.2.128/25"}),
         std::make_tuple("192.0.2.0/32", 1, nullptr, std::vector<const char*>{"192.0.2.0/32"})
     ));
+
+using AddressExcludeIpv4NetworkParams = TestWithParam<std::tuple<const char*, const char*, std::vector<const char*>>>;
+TEST_P(AddressExcludeIpv4NetworkParams, address_exclude) {
+    std::vector<ipv4_network> expected;
+    for (const auto& addr : std::get<2>(GetParam())) {
+        expected.push_back(ipv4_network::parse(addr));
+    }
+    
+    const auto actual = ipv4_network::parse(std::get<0>(GetParam()))
+        .address_exclude(ipv4_network::parse(std::get<1>(GetParam())));
+
+    ASSERT_EQ(actual.empty(), expected.empty());
+    
+    auto expected_it = expected.begin();
+    for (const auto& address : actual) {
+        ASSERT_EQ(address, *expected_it++);
+    }
+
+    auto expected_const_it = expected.cbegin();
+    for (auto it = actual.cbegin(); it != actual.cend(); ++it) {
+        ASSERT_EQ(*it, *expected_const_it++);
+    }
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_network, AddressExcludeIpv4NetworkParams,
+    Values(
+        std::make_tuple("192.0.2.0/28", "192.0.2.1/32", std::vector<const char*>{"192.0.2.8/29", "192.0.2.4/30", "192.0.2.2/31", "192.0.2.0/32" })
+    ));
