@@ -10,12 +10,15 @@ namespace IPADDRESS_NAMESPACE {
 template <typename Iterator>
 class ip_reverse_iterator {
 public:
-    using iterator_category = typename Iterator::iterator_category;
+#ifdef IPADDRESS_HAS_CONCEPTS
+    using iterator_concept  = std::random_access_iterator_tag;
+#endif
+    using iterator_category = typename std::iterator_traits<Iterator>::iterator_category;
     using iterator_type	    = Iterator;
-    using value_type        = typename Iterator::value_type;
-    using difference_type   = typename Iterator::difference_type;
-    using pointer           = typename Iterator::pointer;
-    using reference         = typename Iterator::reference;
+    using value_type        = typename std::iterator_traits<Iterator>::value_type;
+    using difference_type   = typename std::iterator_traits<Iterator>::difference_type;
+    using pointer           = typename std::iterator_traits<Iterator>::pointer;
+    using reference         = typename std::iterator_traits<Iterator>::reference;
 
     using uint_type         = typename Iterator::uint_type;
 
@@ -176,12 +179,9 @@ class ip_address_iterator;
 template <typename Base>
 class ip_address_iterator<ip_address_base<Base>> {
 public:
-    template <typename>
-    friend class ip_reverse_iterator;
-
-    template <typename>
-    friend class ip_network_iterator;
-
+#ifdef IPADDRESS_HAS_CONCEPTS
+    using iterator_concept  = std::random_access_iterator_tag;
+#endif
     using iterator_category = std::random_access_iterator_tag;
     using value_type        = ip_address_base<Base>;
     using difference_type   = std::int64_t;
@@ -396,6 +396,12 @@ private:
             _current = value_type::from_uint(_offset);
         }
     }
+
+    template <typename>
+    friend class ip_reverse_iterator;
+
+    template <typename>
+    friend class ip_network_iterator;
 
     value_type _current{};
     value_type _at{};

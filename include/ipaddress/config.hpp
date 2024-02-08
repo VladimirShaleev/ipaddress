@@ -82,10 +82,14 @@
 #endif
 
 #if !defined(IPADDRESS_NO_SPACESHIP_OPERATOR) && defined(__has_include)
-#  if (__cpp_lib_three_way_comparison >= 201907) && __has_include(<compare>)
+#  if (__cpp_lib_three_way_comparison >= 201907L) && __has_include(<compare>)
 #    define IPADDRESS_HAS_SPACESHIP_OPERATOR
 #    include <compare>
 #  endif
+#endif
+
+#if defined(__cpp_lib_concepts) && __cpp_lib_concepts >= 202002L
+#  define IPADDRESS_HAS_CONCEPTS
 #endif
 
 #if defined(__cpp_nontype_template_parameter_class)
