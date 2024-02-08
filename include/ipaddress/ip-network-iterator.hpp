@@ -338,6 +338,7 @@ public:
         const auto step = difference_type(1);
         _begin = const_iterator(begin, end, begin, step, new_prefixlen);
         _end = const_iterator(begin, end, end, step, new_prefixlen);
+        _size = 1U;
     }
 
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_sequence(const ip_address_type& network_address, const ip_address_type& broadcast_address, const ip_address_type& hostmask, size_t prefixlen_diff, size_t new_prefixlen) IPADDRESS_NOEXCEPT {
@@ -346,6 +347,7 @@ public:
         const auto step = (hostmask.to_uint() + 1) >> prefixlen_diff;
         _begin = const_iterator(begin, end, begin, step, new_prefixlen);
         _end = const_iterator(begin, end, end, step, new_prefixlen);
+        _size = _end.uint_diff(_begin) / step;
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator begin() const IPADDRESS_NOEXCEPT {
@@ -385,7 +387,7 @@ public:
     }
     
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE difference_type size() const IPADDRESS_NOEXCEPT {
-        return _end.uint_diff(_begin);
+        return _size;
     }
 
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type operator[](difference_type n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
@@ -401,12 +403,13 @@ public:
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type back() const IPADDRESS_NOEXCEPT {
-        return *(_end - 1);
+        return *(_end - 1U);
     }
 
 private:
     const_iterator _begin{};
     const_iterator _end{};
+    difference_type _size{};
 }; // subnets_sequence
 
 template <typename T>

@@ -791,3 +791,36 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("192.0.2.0/24", 2, nullptr, "192.0.0.0/22"),
         std::make_tuple("192.0.2.0/24", 1, 20, "192.0.0.0/20")
     ));
+
+using SubnetsIpv4NetworkParams = TestWithParam<std::tuple<const char*, size_t, optional<size_t>, std::vector<const char*>>>;
+TEST_P(SubnetsIpv4NetworkParams, subnets) {
+    std::vector<ipv4_network> expected;
+    for (const auto& addr : std::get<3>(GetParam())) {
+        expected.push_back(ipv4_network::parse(addr));
+    }
+
+    const auto network = ipv4_network::parse(std::get<0>(GetParam()));
+    const auto prefixlen_diff = std::get<1>(GetParam());
+    const auto new_prefix = std::get<2>(GetParam());
+
+    const auto actual = network.subnets(prefixlen_diff, new_prefix);
+
+    ASSERT_FALSE(actual.empty());
+    ASSERT_EQ(actual.size(), expected.size());
+    ASSERT_EQ(actual.front(), expected.front());
+    ASSERT_EQ(actual.back(), expected.back());
+    
+    auto expected_it = expected.begin();
+    for (const auto& address : actual) {
+        ASSERT_EQ(address, *expected_it++);
+    }
+
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_network, SubnetsIpv4NetworkParams,
+    Values(
+        std::make_tuple("192.0.2.0/24", 1, nullptr, std::vector<const char*>{"192.0.2.0/25", "192.0.2.128/25" }),
+        std::make_tuple("192.0.2.0/24", 2, nullptr, std::vector<const char*>{"192.0.2.0/26", "192.0.2.64/26", "192.0.2.128/26", "192.0.2.192/26"}),
+        std::make_tuple("192.0.2.0/24", 1, 26, std::vector<const char*>{"192.0.2.0/26", "192.0.2.64/26", "192.0.2.128/26", "192.0.2.192/26"}),
+        std::make_tuple("192.0.2.0/24", 1, 25, std::vector<const char*>{"192.0.2.0/25", "192.0.2.128/25"})
+    ));
