@@ -622,3 +622,81 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("0.0.0.0/32", true),
         std::make_tuple("0.0.0.0/8", false)
     ));
+
+using СontainsIpv4NetworkParams = TestWithParam<std::tuple<const char*, const char*, bool>>;
+TEST_P(СontainsIpv4NetworkParams, сontains) {
+    const auto expected = std::get<2>(GetParam());
+
+    const auto network = ipv4_network::parse(std::get<0>(GetParam()));
+    const auto address = ipv4_address::parse(std::get<1>(GetParam()));
+
+    const auto actual = network.contains(address);
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_network, СontainsIpv4NetworkParams,
+    Values(
+        std::make_tuple("192.0.2.0/28", "192.0.2.6", true),
+        std::make_tuple("192.0.2.0/28", "192.0.3.6", false)
+    ));
+
+using OverlapsIpv4NetworkParams = TestWithParam<std::tuple<const char*, const char*, bool>>;
+TEST_P(OverlapsIpv4NetworkParams, overlaps) {
+    const auto expected = std::get<2>(GetParam());
+
+    const auto net1 = ipv4_network::parse(std::get<0>(GetParam()));
+    const auto net2 = ipv4_network::parse(std::get<1>(GetParam()));
+
+    const auto actual = net1.overlaps(net2);
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_network, OverlapsIpv4NetworkParams,
+    Values(
+        std::make_tuple("1.2.3.0/24", "1.2.3.0/30", true),
+        std::make_tuple("1.2.3.0/24", "1.2.2.0/24", false),
+        std::make_tuple("1.2.2.0/24", "1.2.2.64/26", true)
+    ));
+
+using SubnetOfIpv4NetworkParams = TestWithParam<std::tuple<const char*, const char*, bool>>;
+TEST_P(SubnetOfIpv4NetworkParams, subnet_of) {
+    const auto expected = std::get<2>(GetParam());
+
+    const auto net1 = ipv4_network::parse(std::get<0>(GetParam()));
+    const auto net2 = ipv4_network::parse(std::get<1>(GetParam()));
+
+    const auto actual = net1.subnet_of(net2);
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_network, SubnetOfIpv4NetworkParams,
+    Values(
+        std::make_tuple("192.168.1.0/24", "192.168.1.128/30", false),
+        std::make_tuple("10.0.0.0/30", "10.0.1.0/24", false),
+        std::make_tuple("10.0.0.0/30", "10.0.0.0/24", true),
+        std::make_tuple("10.0.0.0/30", "10.0.1.0/24", false),
+        std::make_tuple("10.0.1.0/24", "10.0.0.0/30", false)
+    ));
+
+using SupernetOfIpv4NetworkParams = TestWithParam<std::tuple<const char*, const char*, bool>>;
+TEST_P(SupernetOfIpv4NetworkParams, supernet_of) {
+    const auto expected = std::get<2>(GetParam());
+
+    const auto net1 = ipv4_network::parse(std::get<0>(GetParam()));
+    const auto net2 = ipv4_network::parse(std::get<1>(GetParam()));
+
+    const auto actual = net1.supernet_of(net2);
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_network, SupernetOfIpv4NetworkParams,
+    Values(
+        std::make_tuple("192.168.1.0/24", "192.168.1.128/30", true),
+        std::make_tuple("10.0.0.0/30", "10.0.1.0/24", false),
+        std::make_tuple("10.0.0.0/30", "10.0.0.0/24", false),
+        std::make_tuple("10.0.0.0/24", "10.0.0.0/30", true)
+    ));
