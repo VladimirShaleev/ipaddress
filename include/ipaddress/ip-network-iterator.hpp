@@ -349,13 +349,15 @@ public:
 
     using ip_address_type = typename value_type::ip_address_type;
 
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_sequence() IPADDRESS_NOEXCEPT = default;
+
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_sequence(const subnets_sequence&) IPADDRESS_NOEXCEPT = default;
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_sequence(subnets_sequence&&) IPADDRESS_NOEXCEPT = default;
 
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE subnets_sequence& operator=(const subnets_sequence&) IPADDRESS_NOEXCEPT = default;
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE subnets_sequence& operator=(subnets_sequence&&) IPADDRESS_NOEXCEPT = default;
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit subnets_sequence(const ip_address_type& network_address, size_t new_prefixlen) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_sequence(const ip_address_type& network_address, size_t new_prefixlen) IPADDRESS_NOEXCEPT {
         const auto begin = ip_address_type::from_bytes(network_address.bytes());
         const auto end = ip_address_type::from_uint(network_address.to_uint() + 1);
         const auto step = difference_type(1);

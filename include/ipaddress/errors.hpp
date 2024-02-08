@@ -94,16 +94,16 @@ public:
     }
 };
 
-class login_error : public error {
+class logic_error : public error {
 public:
     template <typename FirstArg, typename... Args>
-    explicit login_error(error_code code, const FirstArg& arg, const Args&... args) : error(code, arg, args...) {
+    explicit logic_error(error_code code, const FirstArg& arg, const Args&... args) : error(code, arg, args...) {
     }
 
-    explicit login_error(error_code code, const std::string& message) : error(code, message) {
+    explicit logic_error(error_code code, const std::string& message) : error(code, message) {
     }
 
-    explicit login_error(error_code code, const char* message) : error(code, message) {
+    explicit logic_error(error_code code, const char* message) : error(code, message) {
     }
 };
 
@@ -164,15 +164,15 @@ public:
         case error_code::INVALID_SCOPE_ID:
             throw parse_error(code, "invalid scope id in address", str);
         case error_code::INVALID_PREFIXLEN_DIFF:
-            throw login_error(code, "invalid prefixlen_diff");
+            throw logic_error(code, "invalid prefixlen_diff");
         case error_code::NEW_PREFIX_MUST_BE_SHORTER:
-            throw login_error(code, "new prefix must be shorter");
+            throw logic_error(code, "new prefix must be shorter");
         case error_code::NEW_PREFIX_MUST_BE_LONGER:
-            throw login_error(code, "new prefix must be longer");
+            throw logic_error(code, "new prefix must be longer");
         case error_code::CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX:
-            throw login_error(code, "cannot set prefixlen_diff and new_prefix");
+            throw logic_error(code, "cannot set prefixlen_diff and new_prefix");
         case error_code::NOT_CONTAINED_NETWORK:
-            throw login_error(code, "network is not a subnet of other");
+            throw logic_error(code, "network is not a subnet of other");
         default:
             throw error(code, "unknown error");
     }

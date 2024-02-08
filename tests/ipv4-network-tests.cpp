@@ -807,11 +807,15 @@ TEST_P(SupernetErrorIpv4NetworkParams, supernet) {
     const auto new_prefix = std::get<2>(GetParam());
 
     error_code err;
-    const auto actual = network.supernet(err, prefixlen_diff, new_prefix);
+    auto actural = network.supernet(err, prefixlen_diff, new_prefix);
     ASSERT_EQ(err, expected_error);
+    ASSERT_EQ(actural.network_address(), ipv4_address::parse("0.0.0.0"));
+    ASSERT_EQ(actural.netmask(), ipv4_address::parse("255.255.255.255"));
+    ASSERT_EQ(actural.hostmask(), ipv4_address::parse("0.0.0.0"));
+    ASSERT_EQ(actural.prefixlen(), 32);
 
 #ifdef IPADDRESS_NO_EXCEPTIONS
-    auto error_network = network.supernet(prefixlen_diff, new_prefix);;
+    auto error_network = network.supernet(prefixlen_diff, new_prefix);
     ASSERT_EQ(error_network.network_address(), ipv4_address::parse("0.0.0.0"));
     ASSERT_EQ(error_network.netmask(), ipv4_address::parse("255.255.255.255"));
     ASSERT_EQ(error_network.hostmask(), ipv4_address::parse("0.0.0.0"));
@@ -819,7 +823,7 @@ TEST_P(SupernetErrorIpv4NetworkParams, supernet) {
 #else
     EXPECT_THAT(
         ([&network, prefixlen_diff, new_prefix]() { network.supernet(prefixlen_diff, new_prefix); }),
-        ThrowsMessage<login_error>(StrEq(expected_error_str)));
+        ThrowsMessage<logic_error>(StrEq(expected_error_str)));
 #endif
 }
 INSTANTIATE_TEST_SUITE_P(
@@ -887,6 +891,37 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("192.0.2.0/24", 1, 26, std::vector<const char*>{"192.0.2.0/26", "192.0.2.64/26", "192.0.2.128/26", "192.0.2.192/26"}),
         std::make_tuple("192.0.2.0/24", 1, 25, std::vector<const char*>{"192.0.2.0/25", "192.0.2.128/25"}),
         std::make_tuple("192.0.2.0/32", 1, nullptr, std::vector<const char*>{"192.0.2.0/32"})
+    ));
+
+using SubnetsErrorIpv4NetworkParams = TestWithParam<std::tuple<const char*, size_t, optional<size_t>, error_code, const char*>>;
+TEST_P(SubnetsErrorIpv4NetworkParams, subnets) {
+    const auto expected_error = std::get<3>(GetParam());
+    const auto expected_error_str = std::get<4>(GetParam());
+
+    const auto network = ipv4_network::parse(std::get<0>(GetParam()));
+    const auto prefixlen_diff = std::get<1>(GetParam());
+    const auto new_prefix = std::get<2>(GetParam());
+
+    error_code err;
+    const auto actual = network.subnets(err, prefixlen_diff, new_prefix);
+    ASSERT_EQ(err, expected_error);
+    ASSERT_TRUE(actual.empty());
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    auto error_subnets = network.subnets(prefixlen_diff, new_prefix);
+    ASSERT_TRUE(error_subnets.empty());
+#else
+    EXPECT_THAT(
+        ([&network, prefixlen_diff, new_prefix]() { network.subnets(prefixlen_diff, new_prefix); }),
+        ThrowsMessage<logic_error>(StrEq(expected_error_str)));
+#endif
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_network, SubnetsErrorIpv4NetworkParams,
+    Values(
+        std::make_tuple("192.0.2.0/24", 1, 23, error_code::NEW_PREFIX_MUST_BE_LONGER, "new prefix must be longer"),
+        std::make_tuple("192.0.2.0/24", 2, 25, error_code::CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX, "cannot set prefixlen_diff and new_prefix"),
+        std::make_tuple("192.0.2.0/24", 1, 33, error_code::INVALID_PREFIXLEN_DIFF, "invalid prefixlen_diff")
     ));
 
 using AddressExcludeIpv4NetworkParams = TestWithParam<std::tuple<const char*, const char*, std::vector<const char*>>>;

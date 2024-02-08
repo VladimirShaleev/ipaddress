@@ -248,7 +248,7 @@ public:
         return exclude_network_sequence<ip_network_base<Base>>(lhs, rhs);
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_sequence<ip_network_base<Base>> subnets(size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_sequence<ip_network_base<Base>> subnets(size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         error_code code = error_code::NO_ERROR;
         const auto result = subnets(code, prefixlen_diff, new_prefixlen);
         if (code != error_code::NO_ERROR) {
@@ -272,11 +272,11 @@ public:
         if (new_prefixlen) {
             if (new_prefixlen.value() < prefixlen()) {
                 code = error_code::NEW_PREFIX_MUST_BE_LONGER;
-                return subnets_sequence<ip_network_base<Base>>(ip_address_type(), 0);
+                return subnets_sequence<ip_network_base<Base>>();
             }
             if (prefixlen_diff != 1) {
                 code = error_code::CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX;
-                return subnets_sequence<ip_network_base<Base>>(ip_address_type(), 0);
+                return subnets_sequence<ip_network_base<Base>>();
             }
             prefixlen_diff = new_prefixlen.value() - prefixlen();
         }
@@ -285,7 +285,7 @@ public:
 
         if (new_prefix > ip_address_type::_max_prefixlen) {
             code = error_code::INVALID_PREFIXLEN_DIFF;
-            return subnets_sequence<ip_network_base<Base>>(ip_address_type(), 0);
+            return subnets_sequence<ip_network_base<Base>>();
         }
 
         return subnets_sequence<ip_network_base<Base>>(address, broadcast_address(), hostmask(), prefixlen_diff, new_prefix);
