@@ -724,44 +724,46 @@ INSTANTIATE_TEST_SUITE_P(
 
 using HostsIpv4NetworkParams = TestWithParam<std::tuple<const char*, std::vector<const char*>>>;
 TEST_P(HostsIpv4NetworkParams, hosts) {
-    const auto expected = std::get<1>(GetParam());
-
+    std::vector<ipv4_address> expected;
+    for (const auto& addr : std::get<1>(GetParam())) {
+        expected.push_back(ipv4_address::parse(addr));
+    }
     const auto actual = ipv4_network::parse(std::get<0>(GetParam())).hosts();
 
     ASSERT_FALSE(actual.empty());
     ASSERT_EQ(actual.size(), expected.size());
-    ASSERT_EQ(actual.front(), ipv4_address::parse(expected.front()));
-    ASSERT_EQ(actual.back(), ipv4_address::parse(expected.back()));
+    ASSERT_EQ(actual.front(), expected.front());
+    ASSERT_EQ(actual.back(), expected.back());
 
     auto expected_it = expected.begin();
     for (const auto& address : actual) {
-        ASSERT_EQ(address, ipv4_address::parse(*expected_it++));
+        ASSERT_EQ(address, *expected_it++);
     }
 
     auto expected_const_it = expected.cbegin();
     for (auto it = actual.cbegin(); it != actual.cend(); ++it) {
-        ASSERT_EQ(*it, ipv4_address::parse(*expected_const_it++));
+        ASSERT_EQ(*it, *expected_const_it++);
     }
 
     auto expected_reverse_it = expected.rbegin();
     for (auto it = actual.rbegin(); it != actual.rend(); ++it) {
-        ASSERT_EQ(*it, ipv4_address::parse(*expected_reverse_it++));
+        ASSERT_EQ(*it, *expected_reverse_it++);
     }
 
     auto expected_const_reverse_it = expected.crbegin();
     auto actual_const_reverse_it = actual.crbegin();
     for (; actual_const_reverse_it != actual.crend(); ++actual_const_reverse_it) {
-        ASSERT_EQ(*actual_const_reverse_it, ipv4_address::parse(*expected_const_reverse_it++));
+        ASSERT_EQ(*actual_const_reverse_it, *expected_const_reverse_it++);
     }
 
     expected_const_it = expected.cbegin();
     for (auto it = actual_const_reverse_it.base(); it != actual.cend(); ++it) {
-        ASSERT_EQ(*it, ipv4_address::parse(*expected_const_it++));
+        ASSERT_EQ(*it, *expected_const_it++);
     }
 
     for (size_t i = 0; i < actual.size(); ++i) {
-        ASSERT_EQ(actual[i], ipv4_address::parse(expected[i]));
-        ASSERT_EQ(actual.at(i), ipv4_address::parse(expected[i]));
+        ASSERT_EQ(actual[i], expected[i]);
+        ASSERT_EQ(actual.at(i), expected[i]);
     }
 }
 INSTANTIATE_TEST_SUITE_P(
@@ -815,6 +817,31 @@ TEST_P(SubnetsIpv4NetworkParams, subnets) {
         ASSERT_EQ(address, *expected_it++);
     }
 
+    auto expected_const_it = expected.cbegin();
+    for (auto it = actual.cbegin(); it != actual.cend(); ++it) {
+        ASSERT_EQ(*it, *expected_const_it++);
+    }
+
+    auto expected_reverse_it = expected.rbegin();
+    for (auto it = actual.rbegin(); it != actual.rend(); ++it) {
+        ASSERT_EQ(*it, *expected_reverse_it++);
+    }
+
+    auto expected_const_reverse_it = expected.crbegin();
+    auto actual_const_reverse_it = actual.crbegin();
+    for (; actual_const_reverse_it != actual.crend(); ++actual_const_reverse_it) {
+        ASSERT_EQ(*actual_const_reverse_it, *expected_const_reverse_it++);
+    }
+
+    expected_const_it = expected.cbegin();
+    for (auto it = actual_const_reverse_it.base(); it != actual.cend(); ++it) {
+        ASSERT_EQ(*it, *expected_const_it++);
+    }
+
+    for (size_t i = 0; i < actual.size(); ++i) {
+        ASSERT_EQ(actual[i], expected[i]);
+        ASSERT_EQ(actual.at(i), expected[i]);
+    }
 }
 INSTANTIATE_TEST_SUITE_P(
     ipv4_network, SubnetsIpv4NetworkParams,

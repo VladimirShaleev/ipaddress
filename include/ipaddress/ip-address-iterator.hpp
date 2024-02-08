@@ -26,8 +26,8 @@ public:
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_reverse_iterator& operator=(const ip_reverse_iterator&) IPADDRESS_NOEXCEPT = default;
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_reverse_iterator& operator=(ip_reverse_iterator&&) IPADDRESS_NOEXCEPT = default;
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator(Iterator it) IPADDRESS_NOEXCEPT
-        : _it(it) {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit ip_reverse_iterator(Iterator it) IPADDRESS_NOEXCEPT
+        : _it(it.reverse()) {
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint_type uint_diff(const ip_reverse_iterator& other) const IPADDRESS_NOEXCEPT {
@@ -35,12 +35,7 @@ public:
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE iterator_type base() const IPADDRESS_NOEXCEPT {
-        auto result = _it;
-        ++result._offset;
-        ++result._begin;
-        ++result._end;
-        result._current = value_type::from_uint(result._offset);
-        return result;
+        return _it.base();
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference operator*() const IPADDRESS_NOEXCEPT {
@@ -184,6 +179,9 @@ public:
     template <typename>
     friend class ip_reverse_iterator;
 
+    template <typename>
+    friend class ip_network_iterator;
+
     using iterator_category = std::random_access_iterator_tag;
     using value_type        = ip_address_base<Base>;
     using difference_type   = std::int64_t;
@@ -205,15 +203,6 @@ public:
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint_type uint_diff(const ip_address_iterator& other) const IPADDRESS_NOEXCEPT {
         return _offset - other._offset;
-    }
-
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator<ip_address_iterator<ip_address_base<Base>>> reverse() const IPADDRESS_NOEXCEPT {
-        auto result = *this;
-        --result._offset;
-        --result._begin;
-        --result._end;
-        result._current = value_type::from_uint(result._offset);
-        return ip_reverse_iterator<ip_address_iterator<ip_address_base<Base>>>(result);
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference operator*() const IPADDRESS_NOEXCEPT {
@@ -353,6 +342,24 @@ public:
 #endif // !GALAXY_HPP_HAS_SPACESHIP_OPERATOR
 
 private:
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator base() const IPADDRESS_NOEXCEPT {
+        auto result = *this;
+        ++result._offset;
+        ++result._begin;
+        ++result._end;
+        result._current = value_type::from_uint(result._offset);
+        return result;
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator reverse() const IPADDRESS_NOEXCEPT {
+        auto result = *this;
+        --result._offset;
+        --result._begin;
+        --result._end;
+        result._current = value_type::from_uint(result._offset);
+        return result;
+    }
+
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void add(const uint_type& n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         if (_offset != 0) {
             _offset += n;
@@ -451,11 +458,11 @@ public:
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator rbegin() const IPADDRESS_NOEXCEPT {
-        return end().reverse();
+        return const_reverse_iterator(end());
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator rend() const IPADDRESS_NOEXCEPT {
-        return begin().reverse();
+        return const_reverse_iterator(begin());
     }
     
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator cbegin() const IPADDRESS_NOEXCEPT {
@@ -467,11 +474,11 @@ public:
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator crbegin() const IPADDRESS_NOEXCEPT {
-        return cend().reverse();
+        return const_reverse_iterator(cend());
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator crend() const IPADDRESS_NOEXCEPT {
-        return cbegin().reverse();
+        return const_reverse_iterator(cbegin());
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool empty() const IPADDRESS_NOEXCEPT {

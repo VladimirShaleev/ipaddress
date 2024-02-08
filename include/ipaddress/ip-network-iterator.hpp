@@ -9,6 +9,9 @@ namespace IPADDRESS_NAMESPACE {
 template <typename T>
 class ip_network_iterator {
 public:
+    template <typename>
+    friend class ip_reverse_iterator;
+
     using iterator_category = std::random_access_iterator_tag;
     using value_type        = T;
     using difference_type   = std::int64_t;
@@ -165,6 +168,26 @@ public:
 #endif // !GALAXY_HPP_HAS_SPACESHIP_OPERATOR
 
 private:
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator base() const IPADDRESS_NOEXCEPT {
+        auto result = *this;
+        result._it._offset += _step;
+        result._it._begin += _step;
+        result._it._end += _step;
+        result._it._current = ip_address_type::from_uint(result._it._offset);
+        result._current = value_type::from_address(*result._it, result._prefixlen);
+        return result;
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator reverse() const IPADDRESS_NOEXCEPT {
+        auto result = *this;
+        result._it._offset -= _step;
+        result._it._begin -= _step;
+        result._it._end -= _step;
+        result._it._current = ip_address_type::from_uint(result._it._offset);
+        result._current = value_type::from_address(*result._it, result._prefixlen);
+        return result;
+    }
+
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void add(const uint_type& n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         _it += _step * n;
         _current = value_type::from_address(*_it, _prefixlen);
@@ -321,8 +344,8 @@ public:
     using iterator       = ip_network_iterator<value_type>;
     using const_iterator = ip_network_iterator<value_type>;
 
-    using reverse_iterator       = std::reverse_iterator<iterator>;
-    using const_reverse_iterator = std::reverse_iterator<const_iterator>;
+    using reverse_iterator       = ip_reverse_iterator<iterator>;
+    using const_reverse_iterator = ip_reverse_iterator<const_iterator>;
 
     using ip_address_type = typename value_type::ip_address_type;
 
