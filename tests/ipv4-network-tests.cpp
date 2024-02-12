@@ -951,3 +951,31 @@ INSTANTIATE_TEST_SUITE_P(
     Values(
         std::make_tuple("192.0.2.0/28", "192.0.2.1/32", std::vector<const char*>{"192.0.2.8/29", "192.0.2.4/30", "192.0.2.2/31", "192.0.2.0/32" })
     ));
+
+using AddressExcludeErrorIpv4NetworkParams = TestWithParam<std::tuple<const char*, const char*, error_code, const char*>>;
+TEST_P(AddressExcludeErrorIpv4NetworkParams, address_exclude) {
+    const auto expected_error = std::get<2>(GetParam());
+    const auto expected_error_str = std::get<3>(GetParam());
+
+    const auto network1 = ipv4_network::parse(std::get<0>(GetParam()));
+    const auto network2 = ipv4_network::parse(std::get<1>(GetParam()));
+    
+    error_code err;
+    const auto actual = network1.address_exclude(network2, err);
+    ASSERT_EQ(err, expected_error);
+    ASSERT_TRUE(actual.empty());
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    auto error_address_exclude = network1.address_exclude(network2);
+    ASSERT_TRUE(error_address_exclude.empty());
+#else
+    EXPECT_THAT(
+        ([&network1, &network2]() { network1.address_exclude(network2); }),
+        ThrowsMessage<logic_error>(StrEq(expected_error_str)));
+#endif
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_network, AddressExcludeErrorIpv4NetworkParams,
+    Values(
+        std::make_tuple("192.168.1.128/30", "192.168.1.0/24", error_code::NOT_CONTAINED_NETWORK, "network is not a subnet of other")
+    ));

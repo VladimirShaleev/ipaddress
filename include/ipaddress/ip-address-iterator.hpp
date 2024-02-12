@@ -146,7 +146,7 @@ public:
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const ip_reverse_iterator& other) const IPADDRESS_NOEXCEPT {
-        return _current <=> other._current;
+        return _it <=> other._it;
     }
 
 #else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
