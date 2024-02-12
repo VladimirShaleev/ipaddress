@@ -654,3 +654,373 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("::1", false),
         std::make_tuple("::/127", false)
     ));
+
+using ContainsIpv6NetworkParams = TestWithParam<std::tuple<const char*, const char*, bool>>;
+TEST_P(ContainsIpv6NetworkParams, contains) {
+    const auto expected = std::get<2>(GetParam());
+
+    const auto network = ipv6_network::parse(std::get<0>(GetParam()));
+    const auto address = ipv6_address::parse(std::get<1>(GetParam()));
+
+    const auto actual = network.contains(address);
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_network, ContainsIpv6NetworkParams,
+    Values(
+        std::make_tuple("2001:db8::/32", "2001:db8::1", true),
+        std::make_tuple("2001:db8::/32", "2001:dbc::", false)
+    ));
+
+using OverlapsIpv6NetworkParams = TestWithParam<std::tuple<const char*, const char*, bool>>;
+TEST_P(OverlapsIpv6NetworkParams, overlaps) {
+    const auto expected = std::get<2>(GetParam());
+
+    const auto net1 = ipv6_network::parse(std::get<0>(GetParam()));
+    const auto net2 = ipv6_network::parse(std::get<1>(GetParam()));
+
+    const auto actual = net1.overlaps(net2);
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_network, OverlapsIpv6NetworkParams,
+    Values(
+        std::make_tuple("2001:db8::/32", "2001:db8::/128", true),
+        std::make_tuple("2001:dbc::/32", "2001:db8::/32", false),
+        std::make_tuple("2001:db8::/32", "2001:db8::/32", true)
+    ));
+
+using SubnetOfIpv6NetworkParams = TestWithParam<std::tuple<const char*, const char*, bool>>;
+TEST_P(SubnetOfIpv6NetworkParams, subnet_of) {
+    const auto expected = std::get<2>(GetParam());
+
+    const auto net1 = ipv6_network::parse(std::get<0>(GetParam()));
+    const auto net2 = ipv6_network::parse(std::get<1>(GetParam()));
+
+    const auto actual = net1.subnet_of(net2);
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_network, SubnetOfIpv6NetworkParams,
+    Values(
+        std::make_tuple("2000:999::/56", "2000:aaa::/48", false),
+        std::make_tuple("2000:aaa::/56", "2000:aaa::/48", true),
+        std::make_tuple("2000:bbb::/56", "2000:aaa::/48", false),
+        std::make_tuple("2000:aaa::/48", "2000:aaa::/56", false),
+        std::make_tuple("2000:999::%scope/56", "2000:aaa::%scope/48", false),
+        std::make_tuple("2000:aaa::%scope/56", "2000:aaa::%scope/48", true)
+    ));
+
+using SupernetOfIpv6NetworkParams = TestWithParam<std::tuple<const char*, const char*, bool>>;
+TEST_P(SupernetOfIpv6NetworkParams, supernet_of) {
+    const auto expected = std::get<2>(GetParam());
+
+    const auto net1 = ipv6_network::parse(std::get<0>(GetParam()));
+    const auto net2 = ipv6_network::parse(std::get<1>(GetParam()));
+
+    const auto actual = net1.supernet_of(net2);
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_network, SupernetOfIpv6NetworkParams,
+    Values(
+        std::make_tuple("2000:999::/56", "2000:aaa::/48", false),
+        std::make_tuple("2000:aaa::/56", "2000:aaa::/48", false),
+        std::make_tuple("2000:bbb::/56", "2000:aaa::/48", false),
+        std::make_tuple("2000:aaa::/48", "2000:aaa::/56", true)
+    ));
+
+using AddressesCountIpv6NetworkParams = TestWithParam<std::tuple<const char*, uint128_t>>;
+TEST_P(AddressesCountIpv6NetworkParams, addresses_count) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv6_network::parse(std::get<0>(GetParam())).addresses_count();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_network, AddressesCountIpv6NetworkParams,
+    Values(
+        std::make_tuple("2001:658:22a:cafe::/64", uint128_t::from_string("18446744073709551616").value()),
+        std::make_tuple("2001:658:22a:cafe::%scope/64", uint128_t::from_string("18446744073709551616").value())
+    ));
+
+using HostsIpv6NetworkParams = TestWithParam<std::tuple<const char*, std::vector<const char*>>>;
+TEST_P(HostsIpv6NetworkParams, hosts) {
+    std::vector<ipv6_address> expected;
+    for (const auto& addr : std::get<1>(GetParam())) {
+        expected.push_back(ipv6_address::parse(addr));
+    }
+    const auto actual = ipv6_network::parse(std::get<0>(GetParam())).hosts();
+
+    ASSERT_FALSE(actual.empty());
+    ASSERT_EQ(actual.size(), expected.size());
+    ASSERT_EQ(actual.front(), expected.front());
+    ASSERT_EQ(actual.back(), expected.back());
+
+    auto expected_it = expected.begin();
+    for (const auto& address : actual) {
+        ASSERT_EQ(address, *expected_it++);
+    }
+
+    auto expected_const_it = expected.cbegin();
+    for (auto it = actual.cbegin(); it != actual.cend(); ++it) {
+        ASSERT_EQ(*it, *expected_const_it++);
+    }
+
+    auto expected_reverse_it = expected.rbegin();
+    for (auto it = actual.rbegin(); it != actual.rend(); ++it) {
+        ASSERT_EQ(*it, *expected_reverse_it++);
+    }
+
+    auto expected_const_reverse_it = expected.crbegin();
+    auto actual_const_reverse_it = actual.crbegin();
+    for (; actual_const_reverse_it != actual.crend(); ++actual_const_reverse_it) {
+        ASSERT_EQ(*actual_const_reverse_it, *expected_const_reverse_it++);
+    }
+
+    expected_const_it = expected.cbegin();
+    for (auto it = actual_const_reverse_it.base(); it != actual.cend(); ++it) {
+        ASSERT_EQ(*it, *expected_const_it++);
+    }
+
+    for (size_t i = 0; i < actual.size(); ++i) {
+        ASSERT_EQ(actual[i], expected[i]);
+        ASSERT_EQ(actual.at(i), expected[i]);
+    }
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_network, HostsIpv6NetworkParams,
+    Values(
+        std::make_tuple("2001:658:22a:cafe::1/128", std::vector<const char*>{"2001:658:22a:cafe::1"}),
+        std::make_tuple("2001:658:22a:cafe::/127", std::vector<const char*>{"2001:658:22a:cafe::", "2001:658:22a:cafe::1"}),
+        std::make_tuple("2001:658:22a:cafe::/120", std::vector<const char*>{
+            "2001:658:22a:cafe::1", "2001:658:22a:cafe::2", "2001:658:22a:cafe::3", "2001:658:22a:cafe::4", "2001:658:22a:cafe::5", "2001:658:22a:cafe::6", "2001:658:22a:cafe::7", "2001:658:22a:cafe::8", "2001:658:22a:cafe::9", "2001:658:22a:cafe::a", "2001:658:22a:cafe::b", "2001:658:22a:cafe::c", "2001:658:22a:cafe::d", "2001:658:22a:cafe::e", "2001:658:22a:cafe::f", 
+            "2001:658:22a:cafe::10", "2001:658:22a:cafe::11", "2001:658:22a:cafe::12", "2001:658:22a:cafe::13", "2001:658:22a:cafe::14", "2001:658:22a:cafe::15", "2001:658:22a:cafe::16", "2001:658:22a:cafe::17", "2001:658:22a:cafe::18", "2001:658:22a:cafe::19", "2001:658:22a:cafe::1a", "2001:658:22a:cafe::1b", "2001:658:22a:cafe::1c", "2001:658:22a:cafe::1d", "2001:658:22a:cafe::1e", "2001:658:22a:cafe::1f", 
+            "2001:658:22a:cafe::20", "2001:658:22a:cafe::21", "2001:658:22a:cafe::22", "2001:658:22a:cafe::23", "2001:658:22a:cafe::24", "2001:658:22a:cafe::25", "2001:658:22a:cafe::26", "2001:658:22a:cafe::27", "2001:658:22a:cafe::28", "2001:658:22a:cafe::29", "2001:658:22a:cafe::2a", "2001:658:22a:cafe::2b", "2001:658:22a:cafe::2c", "2001:658:22a:cafe::2d", "2001:658:22a:cafe::2e", "2001:658:22a:cafe::2f", 
+            "2001:658:22a:cafe::30", "2001:658:22a:cafe::31", "2001:658:22a:cafe::32", "2001:658:22a:cafe::33", "2001:658:22a:cafe::34", "2001:658:22a:cafe::35", "2001:658:22a:cafe::36", "2001:658:22a:cafe::37", "2001:658:22a:cafe::38", "2001:658:22a:cafe::39", "2001:658:22a:cafe::3a", "2001:658:22a:cafe::3b", "2001:658:22a:cafe::3c", "2001:658:22a:cafe::3d", "2001:658:22a:cafe::3e", "2001:658:22a:cafe::3f", 
+            "2001:658:22a:cafe::40", "2001:658:22a:cafe::41", "2001:658:22a:cafe::42", "2001:658:22a:cafe::43", "2001:658:22a:cafe::44", "2001:658:22a:cafe::45", "2001:658:22a:cafe::46", "2001:658:22a:cafe::47", "2001:658:22a:cafe::48", "2001:658:22a:cafe::49", "2001:658:22a:cafe::4a", "2001:658:22a:cafe::4b", "2001:658:22a:cafe::4c", "2001:658:22a:cafe::4d", "2001:658:22a:cafe::4e", "2001:658:22a:cafe::4f", 
+            "2001:658:22a:cafe::50", "2001:658:22a:cafe::51", "2001:658:22a:cafe::52", "2001:658:22a:cafe::53", "2001:658:22a:cafe::54", "2001:658:22a:cafe::55", "2001:658:22a:cafe::56", "2001:658:22a:cafe::57", "2001:658:22a:cafe::58", "2001:658:22a:cafe::59", "2001:658:22a:cafe::5a", "2001:658:22a:cafe::5b", "2001:658:22a:cafe::5c", "2001:658:22a:cafe::5d", "2001:658:22a:cafe::5e", "2001:658:22a:cafe::5f", 
+            "2001:658:22a:cafe::60", "2001:658:22a:cafe::61", "2001:658:22a:cafe::62", "2001:658:22a:cafe::63", "2001:658:22a:cafe::64", "2001:658:22a:cafe::65", "2001:658:22a:cafe::66", "2001:658:22a:cafe::67", "2001:658:22a:cafe::68", "2001:658:22a:cafe::69", "2001:658:22a:cafe::6a", "2001:658:22a:cafe::6b", "2001:658:22a:cafe::6c", "2001:658:22a:cafe::6d", "2001:658:22a:cafe::6e", "2001:658:22a:cafe::6f", 
+            "2001:658:22a:cafe::70", "2001:658:22a:cafe::71", "2001:658:22a:cafe::72", "2001:658:22a:cafe::73", "2001:658:22a:cafe::74", "2001:658:22a:cafe::75", "2001:658:22a:cafe::76", "2001:658:22a:cafe::77", "2001:658:22a:cafe::78", "2001:658:22a:cafe::79", "2001:658:22a:cafe::7a", "2001:658:22a:cafe::7b", "2001:658:22a:cafe::7c", "2001:658:22a:cafe::7d", "2001:658:22a:cafe::7e", "2001:658:22a:cafe::7f", 
+            "2001:658:22a:cafe::80", "2001:658:22a:cafe::81", "2001:658:22a:cafe::82", "2001:658:22a:cafe::83", "2001:658:22a:cafe::84", "2001:658:22a:cafe::85", "2001:658:22a:cafe::86", "2001:658:22a:cafe::87", "2001:658:22a:cafe::88", "2001:658:22a:cafe::89", "2001:658:22a:cafe::8a", "2001:658:22a:cafe::8b", "2001:658:22a:cafe::8c", "2001:658:22a:cafe::8d", "2001:658:22a:cafe::8e", "2001:658:22a:cafe::8f", 
+            "2001:658:22a:cafe::90", "2001:658:22a:cafe::91", "2001:658:22a:cafe::92", "2001:658:22a:cafe::93", "2001:658:22a:cafe::94", "2001:658:22a:cafe::95", "2001:658:22a:cafe::96", "2001:658:22a:cafe::97", "2001:658:22a:cafe::98", "2001:658:22a:cafe::99", "2001:658:22a:cafe::9a", "2001:658:22a:cafe::9b", "2001:658:22a:cafe::9c", "2001:658:22a:cafe::9d", "2001:658:22a:cafe::9e", "2001:658:22a:cafe::9f", 
+            "2001:658:22a:cafe::a0", "2001:658:22a:cafe::a1", "2001:658:22a:cafe::a2", "2001:658:22a:cafe::a3", "2001:658:22a:cafe::a4", "2001:658:22a:cafe::a5", "2001:658:22a:cafe::a6", "2001:658:22a:cafe::a7", "2001:658:22a:cafe::a8", "2001:658:22a:cafe::a9", "2001:658:22a:cafe::aa", "2001:658:22a:cafe::ab", "2001:658:22a:cafe::ac", "2001:658:22a:cafe::ad", "2001:658:22a:cafe::ae", "2001:658:22a:cafe::af", 
+            "2001:658:22a:cafe::b0", "2001:658:22a:cafe::b1", "2001:658:22a:cafe::b2", "2001:658:22a:cafe::b3", "2001:658:22a:cafe::b4", "2001:658:22a:cafe::b5", "2001:658:22a:cafe::b6", "2001:658:22a:cafe::b7", "2001:658:22a:cafe::b8", "2001:658:22a:cafe::b9", "2001:658:22a:cafe::ba", "2001:658:22a:cafe::bb", "2001:658:22a:cafe::bc", "2001:658:22a:cafe::bd", "2001:658:22a:cafe::be", "2001:658:22a:cafe::bf", 
+            "2001:658:22a:cafe::c0", "2001:658:22a:cafe::c1", "2001:658:22a:cafe::c2", "2001:658:22a:cafe::c3", "2001:658:22a:cafe::c4", "2001:658:22a:cafe::c5", "2001:658:22a:cafe::c6", "2001:658:22a:cafe::c7", "2001:658:22a:cafe::c8", "2001:658:22a:cafe::c9", "2001:658:22a:cafe::ca", "2001:658:22a:cafe::cb", "2001:658:22a:cafe::cc", "2001:658:22a:cafe::cd", "2001:658:22a:cafe::ce", "2001:658:22a:cafe::cf", 
+            "2001:658:22a:cafe::d0", "2001:658:22a:cafe::d1", "2001:658:22a:cafe::d2", "2001:658:22a:cafe::d3", "2001:658:22a:cafe::d4", "2001:658:22a:cafe::d5", "2001:658:22a:cafe::d6", "2001:658:22a:cafe::d7", "2001:658:22a:cafe::d8", "2001:658:22a:cafe::d9", "2001:658:22a:cafe::da", "2001:658:22a:cafe::db", "2001:658:22a:cafe::dc", "2001:658:22a:cafe::dd", "2001:658:22a:cafe::de", "2001:658:22a:cafe::df", 
+            "2001:658:22a:cafe::e0", "2001:658:22a:cafe::e1", "2001:658:22a:cafe::e2", "2001:658:22a:cafe::e3", "2001:658:22a:cafe::e4", "2001:658:22a:cafe::e5", "2001:658:22a:cafe::e6", "2001:658:22a:cafe::e7", "2001:658:22a:cafe::e8", "2001:658:22a:cafe::e9", "2001:658:22a:cafe::ea", "2001:658:22a:cafe::eb", "2001:658:22a:cafe::ec", "2001:658:22a:cafe::ed", "2001:658:22a:cafe::ee", "2001:658:22a:cafe::ef", 
+            "2001:658:22a:cafe::f0", "2001:658:22a:cafe::f1", "2001:658:22a:cafe::f2", "2001:658:22a:cafe::f3", "2001:658:22a:cafe::f4", "2001:658:22a:cafe::f5", "2001:658:22a:cafe::f6", "2001:658:22a:cafe::f7", "2001:658:22a:cafe::f8", "2001:658:22a:cafe::f9", "2001:658:22a:cafe::fa", "2001:658:22a:cafe::fb", "2001:658:22a:cafe::fc", "2001:658:22a:cafe::fd", "2001:658:22a:cafe::fe", "2001:658:22a:cafe::ff"
+        })
+    ));
+/*
+using SupernetIpv6NetworkParams = TestWithParam<std::tuple<const char*, size_t, optional<size_t>, const char*>>;
+TEST_P(SupernetIpv6NetworkParams, supernet) {
+    const auto expected = ipv6_network::parse(std::get<3>(GetParam()));
+
+    const auto network = ipv6_network::parse(std::get<0>(GetParam()));
+    const auto prefixlen_diff = std::get<1>(GetParam());
+    const auto new_prefix = std::get<2>(GetParam());
+
+    const auto actual = network.supernet(prefixlen_diff, new_prefix);
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_network, SupernetIpv6NetworkParams,
+    Values(
+        std::make_tuple("192.0.2.0/24", 1, nullptr, "192.0.2.0/23"),
+        std::make_tuple("192.0.2.0/24", 2, nullptr, "192.0.0.0/22"),
+        std::make_tuple("192.0.2.0/24", 1, 20, "192.0.0.0/20"),
+        std::make_tuple("192.0.0.0/2", 1, nullptr, "128.0.0.0/1"),
+        std::make_tuple("128.0.0.0/1", 1, nullptr, "0.0.0.0/0"),
+        std::make_tuple("0.0.0.0/0", 1, nullptr, "0.0.0.0/0")
+    ));
+
+using SupernetErrorIpv6NetworkParams = TestWithParam<std::tuple<const char*, size_t, optional<size_t>, error_code, const char*>>;
+TEST_P(SupernetErrorIpv6NetworkParams, supernet) {
+    const auto expected_error = std::get<3>(GetParam());
+    const auto expected_error_str = std::get<4>(GetParam());
+
+    const auto network = ipv6_network::parse(std::get<0>(GetParam()));
+    const auto prefixlen_diff = std::get<1>(GetParam());
+    const auto new_prefix = std::get<2>(GetParam());
+
+    error_code err;
+    auto actural = network.supernet(err, prefixlen_diff, new_prefix);
+    ASSERT_EQ(err, expected_error);
+    ASSERT_EQ(actural.network_address(), ipv6_address::parse("0.0.0.0"));
+    ASSERT_EQ(actural.netmask(), ipv6_address::parse("255.255.255.255"));
+    ASSERT_EQ(actural.hostmask(), ipv6_address::parse("0.0.0.0"));
+    ASSERT_EQ(actural.prefixlen(), 32);
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    auto error_network = network.supernet(prefixlen_diff, new_prefix);
+    ASSERT_EQ(error_network.network_address(), ipv6_address::parse("0.0.0.0"));
+    ASSERT_EQ(error_network.netmask(), ipv6_address::parse("255.255.255.255"));
+    ASSERT_EQ(error_network.hostmask(), ipv6_address::parse("0.0.0.0"));
+    ASSERT_EQ(error_network.prefixlen(), 32);
+#else
+    EXPECT_THAT(
+        ([&network, prefixlen_diff, new_prefix]() { network.supernet(prefixlen_diff, new_prefix); }),
+        ThrowsMessage<logic_error>(StrEq(expected_error_str)));
+#endif
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_network, SupernetErrorIpv6NetworkParams,
+    Values(
+        std::make_tuple("192.0.2.0/24", 1, 25, error_code::NEW_PREFIX_MUST_BE_SHORTER, "new prefix must be shorter"),
+        std::make_tuple("192.0.2.0/24", 2, 23, error_code::CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX, "cannot set prefixlen_diff and new_prefix"),
+        std::make_tuple("192.0.2.0/24", 25, nullptr, error_code::INVALID_PREFIXLEN_DIFF, "invalid prefixlen_diff")
+    ));
+
+using SubnetsIpv6NetworkParams = TestWithParam<std::tuple<const char*, size_t, optional<size_t>, std::vector<const char*>>>;
+TEST_P(SubnetsIpv6NetworkParams, subnets) {
+    std::vector<ipv6_network> expected;
+    for (const auto& addr : std::get<3>(GetParam())) {
+        expected.push_back(ipv6_network::parse(addr));
+    }
+
+    const auto network = ipv6_network::parse(std::get<0>(GetParam()));
+    const auto prefixlen_diff = std::get<1>(GetParam());
+    const auto new_prefix = std::get<2>(GetParam());
+
+    const auto actual = network.subnets(prefixlen_diff, new_prefix);
+
+    ASSERT_FALSE(actual.empty());
+    ASSERT_EQ(actual.size(), expected.size());
+    ASSERT_EQ(actual.front(), expected.front());
+    ASSERT_EQ(actual.back(), expected.back());
+    
+    auto expected_it = expected.begin();
+    for (const auto& address : actual) {
+        ASSERT_EQ(address, *expected_it++);
+    }
+
+    auto expected_const_it = expected.cbegin();
+    for (auto it = actual.cbegin(); it != actual.cend(); ++it) {
+        ASSERT_EQ(*it, *expected_const_it++);
+    }
+
+    auto expected_reverse_it = expected.rbegin();
+    for (auto it = actual.rbegin(); it != actual.rend(); ++it) {
+        ASSERT_EQ(*it, *expected_reverse_it++);
+    }
+
+    auto expected_const_reverse_it = expected.crbegin();
+    auto actual_const_reverse_it = actual.crbegin();
+    for (; actual_const_reverse_it != actual.crend(); ++actual_const_reverse_it) {
+        ASSERT_EQ(*actual_const_reverse_it, *expected_const_reverse_it++);
+    }
+
+    expected_const_it = expected.cbegin();
+    for (auto it = actual_const_reverse_it.base(); it != actual.cend(); ++it) {
+        ASSERT_EQ(*it, *expected_const_it++);
+    }
+
+    for (size_t i = 0; i < actual.size(); ++i) {
+        ASSERT_EQ(actual[i], expected[i]);
+        ASSERT_EQ(actual.at(i), expected[i]);
+    }
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_network, SubnetsIpv6NetworkParams,
+    Values(
+        std::make_tuple("192.0.2.0/24", 1, nullptr, std::vector<const char*>{"192.0.2.0/25", "192.0.2.128/25" }),
+        std::make_tuple("192.0.2.0/24", 2, nullptr, std::vector<const char*>{"192.0.2.0/26", "192.0.2.64/26", "192.0.2.128/26", "192.0.2.192/26"}),
+        std::make_tuple("192.0.2.0/24", 1, 26, std::vector<const char*>{"192.0.2.0/26", "192.0.2.64/26", "192.0.2.128/26", "192.0.2.192/26"}),
+        std::make_tuple("192.0.2.0/24", 1, 25, std::vector<const char*>{"192.0.2.0/25", "192.0.2.128/25"}),
+        std::make_tuple("192.0.2.0/32", 1, nullptr, std::vector<const char*>{"192.0.2.0/32"})
+    ));
+
+using SubnetsErrorIpv6NetworkParams = TestWithParam<std::tuple<const char*, size_t, optional<size_t>, error_code, const char*>>;
+TEST_P(SubnetsErrorIpv6NetworkParams, subnets) {
+    const auto expected_error = std::get<3>(GetParam());
+    const auto expected_error_str = std::get<4>(GetParam());
+
+    const auto network = ipv6_network::parse(std::get<0>(GetParam()));
+    const auto prefixlen_diff = std::get<1>(GetParam());
+    const auto new_prefix = std::get<2>(GetParam());
+
+    error_code err;
+    const auto actual = network.subnets(err, prefixlen_diff, new_prefix);
+    ASSERT_EQ(err, expected_error);
+    ASSERT_TRUE(actual.empty());
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    auto error_subnets = network.subnets(prefixlen_diff, new_prefix);
+    ASSERT_TRUE(error_subnets.empty());
+#else
+    EXPECT_THAT(
+        ([&network, prefixlen_diff, new_prefix]() { network.subnets(prefixlen_diff, new_prefix); }),
+        ThrowsMessage<logic_error>(StrEq(expected_error_str)));
+#endif
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_network, SubnetsErrorIpv6NetworkParams,
+    Values(
+        std::make_tuple("192.0.2.0/24", 1, 23, error_code::NEW_PREFIX_MUST_BE_LONGER, "new prefix must be longer"),
+        std::make_tuple("192.0.2.0/24", 2, 25, error_code::CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX, "cannot set prefixlen_diff and new_prefix"),
+        std::make_tuple("192.0.2.0/24", 1, 33, error_code::INVALID_PREFIXLEN_DIFF, "invalid prefixlen_diff")
+    ));
+
+using AddressExcludeIpv6NetworkParams = TestWithParam<std::tuple<const char*, const char*, std::vector<const char*>>>;
+TEST_P(AddressExcludeIpv6NetworkParams, address_exclude) {
+    std::vector<ipv6_network> expected;
+    for (const auto& addr : std::get<2>(GetParam())) {
+        expected.push_back(ipv6_network::parse(addr));
+    }
+    
+    const auto actual = ipv6_network::parse(std::get<0>(GetParam()))
+        .address_exclude(ipv6_network::parse(std::get<1>(GetParam())));
+
+    ASSERT_EQ(actual.empty(), expected.empty());
+    
+    auto expected_it = expected.begin();
+    for (const auto& address : actual) {
+        ASSERT_EQ(address, *expected_it++);
+    }
+
+    auto expected_const_it = expected.cbegin();
+    for (auto it = actual.cbegin(); it != actual.cend(); ++it) {
+        ASSERT_EQ(*it, *expected_const_it++);
+    }
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_network, AddressExcludeIpv6NetworkParams,
+    Values(
+        std::make_tuple("192.0.2.0/28", "192.0.2.1/32", std::vector<const char*>{"192.0.2.8/29", "192.0.2.4/30", "192.0.2.2/31", "192.0.2.0/32" })
+    ));
+
+using AddressExcludeErrorIpv6NetworkParams = TestWithParam<std::tuple<const char*, const char*, error_code, const char*>>;
+TEST_P(AddressExcludeErrorIpv6NetworkParams, address_exclude) {
+    const auto expected_error = std::get<2>(GetParam());
+    const auto expected_error_str = std::get<3>(GetParam());
+
+    const auto network1 = ipv6_network::parse(std::get<0>(GetParam()));
+    const auto network2 = ipv6_network::parse(std::get<1>(GetParam()));
+    
+    error_code err;
+    const auto actual = network1.address_exclude(network2, err);
+    ASSERT_EQ(err, expected_error);
+    ASSERT_TRUE(actual.empty());
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    auto error_address_exclude = network1.address_exclude(network2);
+    ASSERT_TRUE(error_address_exclude.empty());
+#else
+    EXPECT_THAT(
+        ([&network1, &network2]() { network1.address_exclude(network2); }),
+        ThrowsMessage<logic_error>(StrEq(expected_error_str)));
+#endif
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_network, AddressExcludeErrorIpv6NetworkParams,
+    Values(
+        std::make_tuple("192.168.1.128/30", "192.168.1.0/24", error_code::NOT_CONTAINED_NETWORK, "network is not a subnet of other")
+    ));
+*/

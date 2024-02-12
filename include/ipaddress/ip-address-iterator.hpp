@@ -437,12 +437,12 @@ public:
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE hosts_sequence& operator=(hosts_sequence&&) IPADDRESS_NOEXCEPT = default;
 
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_sequence(const_reference network_address, const_reference broadcast_address, size_t prefixlen, size_t max_prefixlen) IPADDRESS_NOEXCEPT  {
-        if (std::is_same<value_type, ipv4_address>::value && prefixlen == max_prefixlen - 1) {
+        if (prefixlen == max_prefixlen - 1) {
             const auto begin = value_type::from_uint(network_address.to_uint());
             const auto end = value_type::from_uint(broadcast_address.to_uint() + 1);
             _begin = const_iterator(begin, end, begin);
             _end = const_iterator(begin, end, end);
-        } else if (std::is_same<value_type, ipv4_address>::value && prefixlen == max_prefixlen) {
+        } else if (prefixlen == max_prefixlen) {
             const auto begin = value_type::from_uint(network_address.to_uint());
             const auto end = value_type::from_uint(network_address.to_uint() + 1);
             _begin = const_iterator(begin, end, begin);

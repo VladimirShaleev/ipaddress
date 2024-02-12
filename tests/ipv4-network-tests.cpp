@@ -623,8 +623,8 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("0.0.0.0/8", false)
     ));
 
-using СontainsIpv4NetworkParams = TestWithParam<std::tuple<const char*, const char*, bool>>;
-TEST_P(СontainsIpv4NetworkParams, сontains) {
+using ContainsIpv4NetworkParams = TestWithParam<std::tuple<const char*, const char*, bool>>;
+TEST_P(ContainsIpv4NetworkParams, contains) {
     const auto expected = std::get<2>(GetParam());
 
     const auto network = ipv4_network::parse(std::get<0>(GetParam()));
@@ -635,7 +635,7 @@ TEST_P(СontainsIpv4NetworkParams, сontains) {
     ASSERT_EQ(actual, expected);
 }
 INSTANTIATE_TEST_SUITE_P(
-    ipv4_network, СontainsIpv4NetworkParams,
+    ipv4_network, ContainsIpv4NetworkParams,
     Values(
         std::make_tuple("192.0.2.0/28", "192.0.2.6", true),
         std::make_tuple("192.0.2.0/28", "192.0.3.6", false)

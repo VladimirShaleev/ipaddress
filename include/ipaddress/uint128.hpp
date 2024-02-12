@@ -157,7 +157,7 @@ public:
     template <typename T, typename std::enable_if<std::is_integral<T>::value && std::is_unsigned<T>::value, bool>::type = true>
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator=(T lower) IPADDRESS_NOEXCEPT {
         _upper = 0;
-        _lower(lower);
+        _lower = uint64_t(lower);
         return *this;
     }
 
