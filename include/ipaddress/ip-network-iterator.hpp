@@ -141,13 +141,13 @@ public:
         return !(*this == other);
     }
 
-#ifdef GALAXY_HPP_HAS_SPACESHIP_OPERATOR
+#ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const ip_network_iterator& other) const IPADDRESS_NOEXCEPT {
         return _current <=> other._current;
     }
 
-#else // !GALAXY_HPP_HAS_SPACESHIP_OPERATOR
+#else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(const ip_network_iterator& other) const IPADDRESS_NOEXCEPT {
         return _current < other._current;
@@ -165,7 +165,7 @@ public:
         return !(*this < other);
     }
 
-#endif // !GALAXY_HPP_HAS_SPACESHIP_OPERATOR
+#endif // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
 private:
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator base() const IPADDRESS_NOEXCEPT {
@@ -297,13 +297,13 @@ public:
         return !(*this == other);
     }
 
-#ifdef GALAXY_HPP_HAS_SPACESHIP_OPERATOR
+#ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const ip_exclude_network_iterator& other) const IPADDRESS_NOEXCEPT {
         return _current <=> other._current;
     }
 
-#else // !GALAXY_HPP_HAS_SPACESHIP_OPERATOR
+#else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(const ip_exclude_network_iterator& other) const IPADDRESS_NOEXCEPT {
         return _current < other._current;
@@ -321,7 +321,7 @@ public:
         return !(*this < other);
     }
 
-#endif // !GALAXY_HPP_HAS_SPACESHIP_OPERATOR
+#endif // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
 private:
     value_type _other{};
