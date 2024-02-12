@@ -361,7 +361,7 @@ private:
     }
 
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void add(const uint_type& n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        if (_offset != 0) {
+        if (n != 0) {
             _offset += n;
             if (_offset > _end) {
             #ifdef IPADDRESS_NO_EXCEPTIONS
@@ -375,7 +375,7 @@ private:
     }
 
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void sub(const uint_type& n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        if (_offset != 0) {
+        if (n != 0) {
             const auto value = n;
             if (_offset >= value) {
                 _offset -= value;      

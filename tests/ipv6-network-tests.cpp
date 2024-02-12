@@ -817,7 +817,7 @@ INSTANTIATE_TEST_SUITE_P(
             "2001:658:22a:cafe::f0", "2001:658:22a:cafe::f1", "2001:658:22a:cafe::f2", "2001:658:22a:cafe::f3", "2001:658:22a:cafe::f4", "2001:658:22a:cafe::f5", "2001:658:22a:cafe::f6", "2001:658:22a:cafe::f7", "2001:658:22a:cafe::f8", "2001:658:22a:cafe::f9", "2001:658:22a:cafe::fa", "2001:658:22a:cafe::fb", "2001:658:22a:cafe::fc", "2001:658:22a:cafe::fd", "2001:658:22a:cafe::fe", "2001:658:22a:cafe::ff"
         })
     ));
-/*
+
 using SupernetIpv6NetworkParams = TestWithParam<std::tuple<const char*, size_t, optional<size_t>, const char*>>;
 TEST_P(SupernetIpv6NetworkParams, supernet) {
     const auto expected = ipv6_network::parse(std::get<3>(GetParam()));
@@ -833,12 +833,12 @@ TEST_P(SupernetIpv6NetworkParams, supernet) {
 INSTANTIATE_TEST_SUITE_P(
     ipv6_network, SupernetIpv6NetworkParams,
     Values(
-        std::make_tuple("192.0.2.0/24", 1, nullptr, "192.0.2.0/23"),
-        std::make_tuple("192.0.2.0/24", 2, nullptr, "192.0.0.0/22"),
-        std::make_tuple("192.0.2.0/24", 1, 20, "192.0.0.0/20"),
-        std::make_tuple("192.0.0.0/2", 1, nullptr, "128.0.0.0/1"),
-        std::make_tuple("128.0.0.0/1", 1, nullptr, "0.0.0.0/0"),
-        std::make_tuple("0.0.0.0/0", 1, nullptr, "0.0.0.0/0")
+        std::make_tuple("2001:658:22a:cafe::/127", 1, nullptr, "2001:658:22a:cafe::/126"),
+        std::make_tuple("2001:658:22a:cafe::/127", 2, nullptr, "2001:658:22a:cafe::/125"),
+        std::make_tuple("2001:658:22a:cafe::/127", 1, 64, "2001:658:22a:cafe::/64"),
+        std::make_tuple("2001:658:22a:cafe::/64", 1, nullptr, "2001:658:22a:cafe::/63"),
+        std::make_tuple("2001:658:22a:cafe::/63", 1, nullptr, "2001:658:22a:cafc::/62"),
+        std::make_tuple("::/0", 1, nullptr, "::/0")
     ));
 
 using SupernetErrorIpv6NetworkParams = TestWithParam<std::tuple<const char*, size_t, optional<size_t>, error_code, const char*>>;
@@ -853,17 +853,17 @@ TEST_P(SupernetErrorIpv6NetworkParams, supernet) {
     error_code err;
     auto actural = network.supernet(err, prefixlen_diff, new_prefix);
     ASSERT_EQ(err, expected_error);
-    ASSERT_EQ(actural.network_address(), ipv6_address::parse("0.0.0.0"));
-    ASSERT_EQ(actural.netmask(), ipv6_address::parse("255.255.255.255"));
-    ASSERT_EQ(actural.hostmask(), ipv6_address::parse("0.0.0.0"));
-    ASSERT_EQ(actural.prefixlen(), 32);
+    ASSERT_EQ(actural.network_address(), ipv6_address::parse("::"));
+    ASSERT_EQ(actural.netmask(), ipv6_address::parse("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"));
+    ASSERT_EQ(actural.hostmask(), ipv6_address::parse("::"));
+    ASSERT_EQ(actural.prefixlen(), 128);
 
 #ifdef IPADDRESS_NO_EXCEPTIONS
     auto error_network = network.supernet(prefixlen_diff, new_prefix);
-    ASSERT_EQ(error_network.network_address(), ipv6_address::parse("0.0.0.0"));
-    ASSERT_EQ(error_network.netmask(), ipv6_address::parse("255.255.255.255"));
-    ASSERT_EQ(error_network.hostmask(), ipv6_address::parse("0.0.0.0"));
-    ASSERT_EQ(error_network.prefixlen(), 32);
+    ASSERT_EQ(error_network.network_address(), ipv6_address::parse("::"));
+    ASSERT_EQ(error_network.netmask(), ipv6_address::parse("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"));
+    ASSERT_EQ(error_network.hostmask(), ipv6_address::parse("::"));
+    ASSERT_EQ(error_network.prefixlen(), 128);
 #else
     EXPECT_THAT(
         ([&network, prefixlen_diff, new_prefix]() { network.supernet(prefixlen_diff, new_prefix); }),
@@ -873,9 +873,9 @@ TEST_P(SupernetErrorIpv6NetworkParams, supernet) {
 INSTANTIATE_TEST_SUITE_P(
     ipv6_network, SupernetErrorIpv6NetworkParams,
     Values(
-        std::make_tuple("192.0.2.0/24", 1, 25, error_code::NEW_PREFIX_MUST_BE_SHORTER, "new prefix must be shorter"),
-        std::make_tuple("192.0.2.0/24", 2, 23, error_code::CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX, "cannot set prefixlen_diff and new_prefix"),
-        std::make_tuple("192.0.2.0/24", 25, nullptr, error_code::INVALID_PREFIXLEN_DIFF, "invalid prefixlen_diff")
+        std::make_tuple("2001:658:22a:cafe::/64", 1, 65, error_code::NEW_PREFIX_MUST_BE_SHORTER, "new prefix must be shorter"),
+        std::make_tuple("2001:658:22a:cafe::/64", 2, 63, error_code::CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX, "cannot set prefixlen_diff and new_prefix"),
+        std::make_tuple("2001:658:22a:cafe::/64", 65, nullptr, error_code::INVALID_PREFIXLEN_DIFF, "invalid prefixlen_diff")
     ));
 
 using SubnetsIpv6NetworkParams = TestWithParam<std::tuple<const char*, size_t, optional<size_t>, std::vector<const char*>>>;
@@ -930,13 +930,9 @@ TEST_P(SubnetsIpv6NetworkParams, subnets) {
 INSTANTIATE_TEST_SUITE_P(
     ipv6_network, SubnetsIpv6NetworkParams,
     Values(
-        std::make_tuple("192.0.2.0/24", 1, nullptr, std::vector<const char*>{"192.0.2.0/25", "192.0.2.128/25" }),
-        std::make_tuple("192.0.2.0/24", 2, nullptr, std::vector<const char*>{"192.0.2.0/26", "192.0.2.64/26", "192.0.2.128/26", "192.0.2.192/26"}),
-        std::make_tuple("192.0.2.0/24", 1, 26, std::vector<const char*>{"192.0.2.0/26", "192.0.2.64/26", "192.0.2.128/26", "192.0.2.192/26"}),
-        std::make_tuple("192.0.2.0/24", 1, 25, std::vector<const char*>{"192.0.2.0/25", "192.0.2.128/25"}),
-        std::make_tuple("192.0.2.0/32", 1, nullptr, std::vector<const char*>{"192.0.2.0/32"})
+        std::make_tuple("::/0", 1, nullptr, std::vector<const char*>{})
     ));
-
+/*
 using SubnetsErrorIpv6NetworkParams = TestWithParam<std::tuple<const char*, size_t, optional<size_t>, error_code, const char*>>;
 TEST_P(SubnetsErrorIpv6NetworkParams, subnets) {
     const auto expected_error = std::get<3>(GetParam());
