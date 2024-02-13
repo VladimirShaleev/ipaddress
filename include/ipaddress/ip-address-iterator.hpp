@@ -197,8 +197,8 @@ public:
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_address_iterator& operator=(const ip_address_iterator&) IPADDRESS_NOEXCEPT = default;
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_address_iterator& operator=(ip_address_iterator&&) IPADDRESS_NOEXCEPT = default;
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator(reference begin, reference end, reference ref) IPADDRESS_NOEXCEPT
-        : _current(ref), _offset(ref.to_uint()), _begin(begin.to_uint()), _end(end.to_uint()) {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator(reference begin, reference end, reference ref, int carry = 0) IPADDRESS_NOEXCEPT
+        : _current(ref), _offset(ref.to_uint()), _begin(begin.to_uint()), _end(end.to_uint()), _carry(carry) {
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint_type uint_diff(const ip_address_iterator& other) const IPADDRESS_NOEXCEPT {
@@ -308,7 +308,7 @@ public:
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(const ip_address_iterator& other) const IPADDRESS_NOEXCEPT {
-        return _current == other._current;
+        return _carry == other._carry && _current == other._current;
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(const ip_address_iterator& other) const IPADDRESS_NOEXCEPT {
@@ -318,13 +318,17 @@ public:
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const ip_address_iterator& other) const IPADDRESS_NOEXCEPT {
-        return _current <=> other._current;
+        if (const auto result = _carry <=> other._carry; result == std::strong_ordering::equivalent) {
+            return _current <=> other._current;
+        } else {
+            return result;
+        }
     }
 
 #else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(const ip_address_iterator& other) const IPADDRESS_NOEXCEPT {
-        return _current < other._current;
+        return _carry < other._carry || (_carry == other._carry && _current < other._current);
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(const ip_address_iterator& other) const IPADDRESS_NOEXCEPT {
@@ -347,6 +351,7 @@ private:
         ++result._offset;
         ++result._begin;
         ++result._end;
+        result._carry = 1 - result._carry;
         result._current = value_type::from_uint(result._offset);
         return result;
     }
@@ -356,19 +361,24 @@ private:
         --result._offset;
         --result._begin;
         --result._end;
+        result._carry = 1 - result._carry;
         result._current = value_type::from_uint(result._offset);
         return result;
     }
 
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void add(const uint_type& n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         if (n != 0) {
+            const auto old = _offset;
             _offset += n;
-            if (_offset > _end) {
+            if ((_offset > _end || _offset < old) && _begin != _end) {
             #ifdef IPADDRESS_NO_EXCEPTIONS
                 _offset = _end;
             #else
                 throw std::out_of_range("index out of range");
             #endif
+            }
+            if (_offset < old) {
+                _carry = 1 - _carry;
             }
             _current = value_type::from_uint(_offset);
         }
@@ -376,22 +386,17 @@ private:
 
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void sub(const uint_type& n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         if (n != 0) {
-            const auto value = n;
-            if (_offset >= value) {
-                _offset -= value;      
-                if (_offset < _begin) {
-                #ifdef IPADDRESS_NO_EXCEPTIONS
-                    _offset = _begin;
-                #else
-                    throw std::out_of_range("index out of range");
-                #endif
-                }
-            } else {
+            const auto old = _offset;
+            _offset -= n;      
+            if ((_offset < _begin || _offset > old) && _begin != _end) {
             #ifdef IPADDRESS_NO_EXCEPTIONS
                 _offset = _begin;
             #else
                 throw std::out_of_range("index out of range");
             #endif
+            }
+            if (_offset > old) {
+                _carry = 1 - _carry;
             }
             _current = value_type::from_uint(_offset);
         }
@@ -408,6 +413,7 @@ private:
     uint_type _offset{};
     uint_type _begin{};
     uint_type _end{};
+    int _carry{};
 };
 
 template <typename>

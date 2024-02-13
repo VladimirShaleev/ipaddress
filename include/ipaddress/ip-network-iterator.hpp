@@ -28,8 +28,8 @@ public:
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_network_iterator& operator=(const ip_network_iterator&) IPADDRESS_NOEXCEPT = default;
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_network_iterator& operator=(ip_network_iterator&&) IPADDRESS_NOEXCEPT = default;
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator(const ip_address_type& begin, const ip_address_type& end, const ip_address_type& ref, const uint_type& step, size_t prefixlen) IPADDRESS_NOEXCEPT
-        : _current(value_type::from_address(ref, prefixlen)), _it(ip_address_iterator<ip_address_type>(begin, end, ref)), _step(step), _prefixlen(prefixlen) {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator(const ip_address_type& begin, const ip_address_type& end, const ip_address_type& ref, const uint_type& step, size_t prefixlen, int carry = 0) IPADDRESS_NOEXCEPT
+        : _current(value_type::from_address(ref, prefixlen)), _it(ip_address_iterator<ip_address_type>(begin, end, ref, carry)), _step(step), _prefixlen(prefixlen) {
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint_type uint_diff(const ip_network_iterator& other) const IPADDRESS_NOEXCEPT {
@@ -134,7 +134,7 @@ public:
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(const ip_network_iterator& other) const IPADDRESS_NOEXCEPT {
-        return _current == other._current;
+        return _it._carry == other._it._carry && _current == other._current;
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(const ip_network_iterator& other) const IPADDRESS_NOEXCEPT {
@@ -144,13 +144,17 @@ public:
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const ip_network_iterator& other) const IPADDRESS_NOEXCEPT {
-        return _current <=> other._current;
+        if (const auto result = _it._carry <=> other._it._carry; result == std::strong_ordering::equivalent) {
+            return _current <=> other._current;
+        } else {
+            return result;
+        }
     }
 
 #else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(const ip_network_iterator& other) const IPADDRESS_NOEXCEPT {
-        return _current < other._current;
+        return _it._carry == other._it._carry || (_it._carry == other._it._carry && _current < other._current);
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(const ip_network_iterator& other) const IPADDRESS_NOEXCEPT {
@@ -173,6 +177,7 @@ private:
         result._it._offset += _step;
         result._it._begin += _step;
         result._it._end += _step;
+        result._it._carry = 1 - result._it._carry;
         result._it._current = ip_address_type::from_uint(result._it._offset);
         result._current = value_type::from_address(*result._it, result._prefixlen);
         return result;
@@ -183,6 +188,7 @@ private:
         result._it._offset -= _step;
         result._it._begin -= _step;
         result._it._end -= _step;
+        result._it._carry = 1 - result._it._carry;
         result._it._current = ip_address_type::from_uint(result._it._offset);
         result._current = value_type::from_address(*result._it, result._prefixlen);
         return result;
@@ -367,12 +373,14 @@ public:
     }
 
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_sequence(const ip_address_type& network_address, const ip_address_type& broadcast_address, const ip_address_type& hostmask, size_t prefixlen_diff, size_t new_prefixlen) IPADDRESS_NOEXCEPT {
-        const auto begin = ip_address_type::from_bytes(network_address.bytes());
-        const auto end = ip_address_type::from_uint(broadcast_address.to_uint() + 1);
-        const auto step = (hostmask.to_uint() + 1) >> prefixlen_diff;
+        const auto begin_uint = network_address.to_uint();
+        const auto end_uint = broadcast_address.to_uint();
+        const auto begin = ip_address_type::from_uint(begin_uint);
+        const auto end = ip_address_type::from_uint(end_uint + 1);
+        const auto step = (hostmask.to_uint() >> prefixlen_diff) + 1;
         _begin = const_iterator(begin, end, begin, step, new_prefixlen);
-        _end = const_iterator(begin, end, end, step, new_prefixlen);
-        _size = _end.uint_diff(_begin) / step;
+        _end = const_iterator(begin, end, end, step, new_prefixlen, begin == end ? 1 : 0);
+        _size = (end_uint - begin_uint) / step + 1;
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator begin() const IPADDRESS_NOEXCEPT {
