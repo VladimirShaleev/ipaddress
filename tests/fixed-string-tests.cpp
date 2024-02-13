@@ -28,6 +28,56 @@ TEST(fixed_string, ConstexprCtor) {
     EXPECT_EQ(str_1_length, 1);
     EXPECT_EQ(str_1_size, 1);
     EXPECT_EQ(str_1_empty, false);
+
+    constexpr VAL_FIXED_STRING(str_2, L"wide string");
+    constexpr auto str_2_max_length = str_2.max_length;
+    constexpr auto str_2_length = str_2.length;
+    constexpr auto str_2_size = str_2.size();
+    constexpr auto str_2_empty = str_2.empty();
+    EXPECT_EQ(str_2_max_length, 11);
+    EXPECT_EQ(str_2_length, 11);
+    EXPECT_EQ(str_2_size, 11);
+    EXPECT_EQ(str_2_empty, false);
+    EXPECT_EQ(str_2[0], 'w');
+    EXPECT_EQ(str_2[10], 'g');
+
+    constexpr VAL_FIXED_STRING(str_3, u"utf16 string");
+    constexpr auto str_3_max_length = str_3.max_length;
+    constexpr auto str_3_length = str_3.length;
+    constexpr auto str_3_size = str_3.size();
+    constexpr auto str_3_empty = str_3.empty();
+    EXPECT_EQ(str_3_max_length, 12);
+    EXPECT_EQ(str_3_length, 12);
+    EXPECT_EQ(str_3_size, 12);
+    EXPECT_EQ(str_3_empty, false);
+    EXPECT_EQ(str_3[0], 'u');
+    EXPECT_EQ(str_3[11], 'g');
+
+    constexpr VAL_FIXED_STRING(str_4, U"utf32 string");
+    constexpr auto str_4_max_length = str_4.max_length;
+    constexpr auto str_4_length = str_4.length;
+    constexpr auto str_4_size = str_4.size();
+    constexpr auto str_4_empty = str_4.empty();
+    EXPECT_EQ(str_4_max_length, 12);
+    EXPECT_EQ(str_4_length, 12);
+    EXPECT_EQ(str_4_size, 12);
+    EXPECT_EQ(str_4_empty, false);
+    EXPECT_EQ(str_4[0], 'u');
+    EXPECT_EQ(str_4[11], 'g');
+
+#if IPADDRESS_CPP_VERSION >= 17
+    constexpr VAL_FIXED_STRING(str_5, u8"utf8 string");
+    constexpr auto str_5_max_length = str_5.max_length;
+    constexpr auto str_5_length = str_5.length;
+    constexpr auto str_5_size = str_5.size();
+    constexpr auto str_5_empty = str_5.empty();
+    EXPECT_EQ(str_5_max_length, 11);
+    EXPECT_EQ(str_5_length, 11);
+    EXPECT_EQ(str_5_size, 11);
+    EXPECT_EQ(str_5_empty, false);
+    EXPECT_EQ(str_5[0], 'u');
+    EXPECT_EQ(str_5[10], 'g');
+#endif
 }
 
 TEST(fixed_string, ConstexprCtorEmpty) {

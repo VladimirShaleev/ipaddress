@@ -20,10 +20,19 @@ struct fixed_string {
 
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string() IPADDRESS_NOEXCEPT = default;
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string(const char (&data)[N + 1]) IPADDRESS_NOEXCEPT {
+    template <typename T>
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string(const T (&data)[N + 1]) IPADDRESS_NOEXCEPT {
+        static_assert(std::is_same<T, char>::value || std::is_same<T, signed char>::value || std::is_same<T, unsigned char>::value || std::is_same<T, wchar_t>::value || std::is_same<T, char16_t>::value || std::is_same<T, char32_t>::value
+    #if __cpp_char8_t >= 201811L
+         || std::is_same<T, char8_t>::value
+    #endif // __cpp_char8_t
+        , "Only character literal supported");
         auto ended = false;
         for (size_t i = 0; i < N; ++i) {
-            _data[i] = data[i];
+            if (IPADDRESS_IS_CONST_EVALUATED(data) && data[i] > 127) {
+                size_t i = data[i] / (data[i] - data[i]); // invalid symbol for ip address
+            }
+            _data[i] = char(data[i]);
             if (data[i] == '\0') {
                 ended = true;
             }
@@ -301,10 +310,40 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 
     return fixed_string<N - 1>(data);
 }
 
+template <size_t N>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 1> make_fixed_string(const wchar_t(&data)[N]) IPADDRESS_NOEXCEPT {
+    return fixed_string<N - 1>(data);
+}
+
+template <size_t N>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 1> make_fixed_string(const char16_t(&data)[N]) IPADDRESS_NOEXCEPT {
+    return fixed_string<N - 1>(data);
+}
+
+template <size_t N>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 1> make_fixed_string(const char32_t(&data)[N]) IPADDRESS_NOEXCEPT {
+    return fixed_string<N - 1>(data);
+}
+
+#if __cpp_char8_t >= 201811L
+
+template <size_t N>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 1> make_fixed_string(const char8_t(&data)[N]) IPADDRESS_NOEXCEPT {
+    return fixed_string<N - 1>(data);
+}
+
+#endif // __cpp_char8_t
+
 #if IPADDRESS_CPP_VERSION >= 17
 
+#if __cpp_char8_t >= 201811L
+    template <size_t N> fixed_string(const char8_t(&)[N]) -> fixed_string<N - 1>;
+#endif // __cpp_char8_t
     template <size_t N> fixed_string(fixed_string<N>) -> fixed_string<N>;
     template <size_t N> fixed_string(const char(&)[N]) -> fixed_string<N - 1>;
+    template <size_t N> fixed_string(const wchar_t(&)[N]) -> fixed_string<N - 1>;
+    template <size_t N> fixed_string(const char16_t(&)[N]) -> fixed_string<N - 1>;
+    template <size_t N> fixed_string(const char32_t(&)[N]) -> fixed_string<N - 1>;
     fixed_string() -> fixed_string<0>;
 
 #endif
