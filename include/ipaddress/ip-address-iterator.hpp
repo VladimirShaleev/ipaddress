@@ -49,12 +49,12 @@ public:
         return &*_it;
     }
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference operator[](difference_type n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        return _it - n;
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type operator[](difference_type n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return *(_it - n);
     }
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference operator[](const uint_type& n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        return _it - n;
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type operator[](const uint_type& n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return *(_it - n);
     }
 
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_reverse_iterator& operator++() IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
@@ -101,33 +101,33 @@ public:
 
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator operator+(difference_type n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         auto tmp = *this;
-        tmp -= n;
+        tmp += n;
         return tmp;
     }
 
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator operator+(const uint_type& n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         auto tmp = *this;
-        tmp -= n;
+        tmp += n;
         return tmp;
     }
 
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS friend IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator operator+(difference_type n, const ip_reverse_iterator& it) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        return it - n;
+        return it + n;
     }
 
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS friend IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator operator+(const uint_type& n, const ip_reverse_iterator& it) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        return it - n;
+        return it + n;
     }
 
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator operator-(difference_type n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         auto tmp = *this;
-        tmp += n;
+        tmp -= n;
         return tmp;
     }
 
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator operator-(const uint_type& n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         auto tmp = *this;
-        tmp += n;
+        tmp -= n;
         return tmp;
     }
 
@@ -146,7 +146,7 @@ public:
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const ip_reverse_iterator& other) const IPADDRESS_NOEXCEPT {
-        return _it <=> other._it;
+        return other._it <=> _it;
     }
 
 #else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
@@ -213,16 +213,15 @@ public:
         return &_current;
     }
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference operator[](difference_type n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type operator[](difference_type n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         const auto& it = *this;
         return it[uint_type(n)];
     }
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference operator[](const uint_type& n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type operator[](const uint_type& n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         const auto offset = _offset + n;
         if (offset < _end) {
-            _at = value_type::from_uint(offset);
-            return _at;
+            return value_type::from_uint(offset);
         }
     #ifndef IPADDRESS_NO_EXCEPTIONS
         throw std::out_of_range("index out of range");
@@ -376,13 +375,6 @@ private:
         if (n != 0) {
             const auto old = _offset;
             _offset += n;
-            if ((_offset > _end || _offset < old) && _begin != _end && _end != 0) {
-            #ifdef IPADDRESS_NO_EXCEPTIONS
-                _offset = _end;
-            #else
-                throw std::out_of_range("index out of range");
-            #endif
-            }
             if (_offset < old) {
                 _carry = 1 - _carry;
             }
@@ -393,14 +385,7 @@ private:
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void sub(const uint_type& n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         if (n != 0) {
             const auto old = _offset;
-            _offset -= n;      
-            if ((_offset < _begin || _offset > old) && _begin != _end && _end != 0) {
-            #ifdef IPADDRESS_NO_EXCEPTIONS
-                _offset = _begin;
-            #else
-                throw std::out_of_range("index out of range");
-            #endif
-            }
+            _offset -= n;
             if (_offset > old) {
                 _carry = 1 - _carry;
             }
@@ -475,11 +460,11 @@ public:
         return _end;
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator rbegin() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reverse_iterator rbegin() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(end());
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator rend() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reverse_iterator rend() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(begin());
     }
     
@@ -491,11 +476,11 @@ public:
         return end();
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator crbegin() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reverse_iterator crbegin() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(cend());
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator crend() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reverse_iterator crend() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(cbegin());
     }
 
