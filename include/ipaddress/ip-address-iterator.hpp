@@ -49,83 +49,83 @@ public:
         return &*_it;
     }
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type operator[](difference_type n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type operator[](difference_type n) const IPADDRESS_NOEXCEPT {
         return *(_it - n);
     }
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type operator[](const uint_type& n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type operator[](const uint_type& n) const IPADDRESS_NOEXCEPT {
         return *(_it - n);
     }
 
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_reverse_iterator& operator++() IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_reverse_iterator& operator++() IPADDRESS_NOEXCEPT {
         --_it;
         return *this;
     }
 
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_reverse_iterator operator++(int) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_reverse_iterator operator++(int) IPADDRESS_NOEXCEPT {
         auto tmp = *this;
         ++(*this);
         return tmp;
     }
 
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_reverse_iterator& operator--() IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_reverse_iterator& operator--() IPADDRESS_NOEXCEPT {
         ++_it;
         return *this;
     }
 
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_reverse_iterator operator--(int) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_reverse_iterator operator--(int) IPADDRESS_NOEXCEPT {
         auto tmp = *this;
         --(*this);
         return tmp;
     }
 
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_reverse_iterator& operator+=(difference_type n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_reverse_iterator& operator+=(difference_type n) IPADDRESS_NOEXCEPT {
         _it -= n;
         return *this;
     }
 
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_reverse_iterator& operator+=(const uint_type& n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_reverse_iterator& operator+=(const uint_type& n) IPADDRESS_NOEXCEPT {
         _it -= n;
         return *this;
     }
 
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_reverse_iterator& operator-=(difference_type n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_reverse_iterator& operator-=(difference_type n) IPADDRESS_NOEXCEPT {
         _it += n;
         return *this;
     }
 
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_reverse_iterator& operator-=(const uint_type& n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_reverse_iterator& operator-=(const uint_type& n) IPADDRESS_NOEXCEPT {
         _it += n;
         return *this;
     }
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator operator+(difference_type n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator operator+(difference_type n) const IPADDRESS_NOEXCEPT {
         auto tmp = *this;
         tmp += n;
         return tmp;
     }
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator operator+(const uint_type& n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator operator+(const uint_type& n) const IPADDRESS_NOEXCEPT {
         auto tmp = *this;
         tmp += n;
         return tmp;
     }
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS friend IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator operator+(difference_type n, const ip_reverse_iterator& it) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD friend IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator operator+(difference_type n, const ip_reverse_iterator& it) IPADDRESS_NOEXCEPT {
         return it + n;
     }
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS friend IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator operator+(const uint_type& n, const ip_reverse_iterator& it) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD friend IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator operator+(const uint_type& n, const ip_reverse_iterator& it) IPADDRESS_NOEXCEPT {
         return it + n;
     }
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator operator-(difference_type n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator operator-(difference_type n) const IPADDRESS_NOEXCEPT {
         auto tmp = *this;
         tmp -= n;
         return tmp;
     }
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator operator-(const uint_type& n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator operator-(const uint_type& n) const IPADDRESS_NOEXCEPT {
         auto tmp = *this;
         tmp -= n;
         return tmp;
@@ -213,90 +213,84 @@ public:
         return &_current;
     }
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type operator[](difference_type n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type operator[](difference_type n) const IPADDRESS_NOEXCEPT {
         const auto& it = *this;
         return it[uint_type(n)];
     }
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type operator[](const uint_type& n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        const auto offset = _offset + n;
-        if (offset < _end) {
-            return value_type::from_uint(offset);
-        }
-    #ifndef IPADDRESS_NO_EXCEPTIONS
-        throw std::out_of_range("index out of range");
-    #endif
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type operator[](const uint_type& n) const IPADDRESS_NOEXCEPT {
+        return value_type::from_uint(_offset + n);
     }
 
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_address_iterator& operator++() IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_address_iterator& operator++() IPADDRESS_NOEXCEPT {
         add(1);
         return *this;
     }
 
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_address_iterator operator++(int) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_address_iterator operator++(int) IPADDRESS_NOEXCEPT {
         auto tmp = *this;
         ++(*this);
         return tmp;
     }
 
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_address_iterator& operator--() IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_address_iterator& operator--() IPADDRESS_NOEXCEPT {
         sub(1);
         return *this;
     }
 
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_address_iterator operator--(int) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_address_iterator operator--(int) IPADDRESS_NOEXCEPT {
         auto tmp = *this;
         --(*this);
         return tmp;
     }
 
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_address_iterator& operator+=(difference_type n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_address_iterator& operator+=(difference_type n) IPADDRESS_NOEXCEPT {
         add(n);
         return *this;
     }
 
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_address_iterator& operator+=(const uint_type& n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_address_iterator& operator+=(const uint_type& n) IPADDRESS_NOEXCEPT {
         add(n);
         return *this;
     }
 
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_address_iterator& operator-=(difference_type n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_address_iterator& operator-=(difference_type n) IPADDRESS_NOEXCEPT {
         sub(n);
         return *this;
     }
 
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_address_iterator& operator-=(const uint_type& n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_address_iterator& operator-=(const uint_type& n) IPADDRESS_NOEXCEPT {
         sub(n);
         return *this;
     }
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator operator+(difference_type n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator operator+(difference_type n) const IPADDRESS_NOEXCEPT {
         auto tmp = *this;
         tmp += n;
         return tmp;
     }
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator operator+(const uint_type& n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator operator+(const uint_type& n) const IPADDRESS_NOEXCEPT {
         auto tmp = *this;
         tmp += n;
         return tmp;
     }
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS friend IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator operator+(difference_type n, const ip_address_iterator& it) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD friend IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator operator+(difference_type n, const ip_address_iterator& it) IPADDRESS_NOEXCEPT {
         return it + n;
     }
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS friend IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator operator+(const uint_type& n, const ip_address_iterator& it) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD friend IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator operator+(const uint_type& n, const ip_address_iterator& it) IPADDRESS_NOEXCEPT {
         return it + n;
     }
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator operator-(difference_type n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator operator-(difference_type n) const IPADDRESS_NOEXCEPT {
         auto tmp = *this;
         tmp -= n;
         return tmp;
     }
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator operator-(const uint_type& n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator operator-(const uint_type& n) const IPADDRESS_NOEXCEPT {
         auto tmp = *this;
         tmp -= n;
         return tmp;
@@ -371,7 +365,7 @@ private:
         return result;
     }
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void add(const uint_type& n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void add(const uint_type& n) IPADDRESS_NOEXCEPT {
         if (n != 0) {
             const auto old = _offset;
             _offset += n;
@@ -382,7 +376,7 @@ private:
         }
     }
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void sub(const uint_type& n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void sub(const uint_type& n) IPADDRESS_NOEXCEPT {
         if (n != 0) {
             const auto old = _offset;
             _offset -= n;
@@ -492,11 +486,11 @@ public:
         return _end.uint_diff(_begin);
     }
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type operator[](difference_type n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type operator[](difference_type n) const IPADDRESS_NOEXCEPT {
         return at(n);
     }
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type at(difference_type n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type at(difference_type n) const IPADDRESS_NOEXCEPT {
         return *(_begin + n);
     }
 
