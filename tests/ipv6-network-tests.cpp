@@ -938,7 +938,7 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("2001:db8::1/128", 1, nullptr, std::vector<const char*>{"2001:db8::1/128"}),
         std::make_tuple("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff/128", 1, nullptr, std::vector<const char*>{"ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff/128"})
     ));
-/*
+
 using SubnetsErrorIpv6NetworkParams = TestWithParam<std::tuple<const char*, size_t, optional<size_t>, error_code, const char*>>;
 TEST_P(SubnetsErrorIpv6NetworkParams, subnets) {
     const auto expected_error = std::get<3>(GetParam());
@@ -965,9 +965,9 @@ TEST_P(SubnetsErrorIpv6NetworkParams, subnets) {
 INSTANTIATE_TEST_SUITE_P(
     ipv6_network, SubnetsErrorIpv6NetworkParams,
     Values(
-        std::make_tuple("192.0.2.0/24", 1, 23, error_code::NEW_PREFIX_MUST_BE_LONGER, "new prefix must be longer"),
-        std::make_tuple("192.0.2.0/24", 2, 25, error_code::CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX, "cannot set prefixlen_diff and new_prefix"),
-        std::make_tuple("192.0.2.0/24", 1, 33, error_code::INVALID_PREFIXLEN_DIFF, "invalid prefixlen_diff")
+        std::make_tuple("2001:658:22a:cafe::/120", 1, 119, error_code::NEW_PREFIX_MUST_BE_LONGER, "new prefix must be longer"),
+        std::make_tuple("2001:658:22a:cafe::/120", 2, 121, error_code::CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX, "cannot set prefixlen_diff and new_prefix"),
+        std::make_tuple("2001:658:22a:cafe::/120", 1, 500, error_code::INVALID_PREFIXLEN_DIFF, "invalid prefixlen_diff")
     ));
 
 using AddressExcludeIpv6NetworkParams = TestWithParam<std::tuple<const char*, const char*, std::vector<const char*>>>;
@@ -995,7 +995,7 @@ TEST_P(AddressExcludeIpv6NetworkParams, address_exclude) {
 INSTANTIATE_TEST_SUITE_P(
     ipv6_network, AddressExcludeIpv6NetworkParams,
     Values(
-        std::make_tuple("192.0.2.0/28", "192.0.2.1/32", std::vector<const char*>{"192.0.2.8/29", "192.0.2.4/30", "192.0.2.2/31", "192.0.2.0/32" })
+        std::make_tuple("2001:658:22a:cafe::/120", "2001:658:22a:cafe::/122", std::vector<const char*>{"2001:658:22a:cafe::80/121", "2001:658:22a:cafe::40/122" })
     ));
 
 using AddressExcludeErrorIpv6NetworkParams = TestWithParam<std::tuple<const char*, const char*, error_code, const char*>>;
@@ -1023,6 +1023,5 @@ TEST_P(AddressExcludeErrorIpv6NetworkParams, address_exclude) {
 INSTANTIATE_TEST_SUITE_P(
     ipv6_network, AddressExcludeErrorIpv6NetworkParams,
     Values(
-        std::make_tuple("192.168.1.128/30", "192.168.1.0/24", error_code::NOT_CONTAINED_NETWORK, "network is not a subnet of other")
+        std::make_tuple("2001:658:22a:caff::/120", "2001:658:22a:cafe::/122", error_code::NOT_CONTAINED_NETWORK, "network is not a subnet of other")
     ));
-*/
