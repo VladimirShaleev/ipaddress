@@ -181,6 +181,20 @@ struct fixed_string<0> {
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string(const char*) IPADDRESS_NOEXCEPT {
     }
 
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string(const wchar_t*) IPADDRESS_NOEXCEPT {
+    }
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string(const char16_t*) IPADDRESS_NOEXCEPT {
+    }
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string(const char32_t*) IPADDRESS_NOEXCEPT {
+    }
+
+#if __cpp_char8_t >= 201811L
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string(const char8_t*) IPADDRESS_NOEXCEPT {
+    }
+#endif // __cpp_char8_t
+
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator begin() const IPADDRESS_NOEXCEPT {
         return const_iterator(nullptr);
     }
