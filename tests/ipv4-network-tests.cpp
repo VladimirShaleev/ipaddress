@@ -891,7 +891,8 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("192.0.2.0/24", 2, nullptr, std::vector<const char*>{"192.0.2.0/26", "192.0.2.64/26", "192.0.2.128/26", "192.0.2.192/26"}),
         std::make_tuple("192.0.2.0/24", 1, 26, std::vector<const char*>{"192.0.2.0/26", "192.0.2.64/26", "192.0.2.128/26", "192.0.2.192/26"}),
         std::make_tuple("192.0.2.0/24", 1, 25, std::vector<const char*>{"192.0.2.0/25", "192.0.2.128/25"}),
-        std::make_tuple("192.0.2.0/32", 1, nullptr, std::vector<const char*>{"192.0.2.0/32"})
+        std::make_tuple("192.0.2.0/32", 1, nullptr, std::vector<const char*>{"192.0.2.0/32"}),
+        std::make_tuple("255.255.255.255/32", 1, nullptr, std::vector<const char*>{"255.255.255.255/32"})
     ));
 
 using SubnetsErrorIpv4NetworkParams = TestWithParam<std::tuple<const char*, size_t, optional<size_t>, error_code, const char*>>;

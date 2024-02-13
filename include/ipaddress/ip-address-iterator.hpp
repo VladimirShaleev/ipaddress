@@ -348,20 +348,26 @@ public:
 private:
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator base() const IPADDRESS_NOEXCEPT {
         auto result = *this;
+        const auto old = result._offset;
         ++result._offset;
         ++result._begin;
         ++result._end;
-        result._carry = 1 - result._carry;
+        if (result._offset < old) {
+            result._carry = 1 - result._carry;
+        }
         result._current = value_type::from_uint(result._offset);
         return result;
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator reverse() const IPADDRESS_NOEXCEPT {
         auto result = *this;
+        const auto old = result._offset;
         --result._offset;
         --result._begin;
         --result._end;
-        result._carry = 1 - result._carry;
+        if (result._offset > old) {
+            result._carry = 1 - result._carry;
+        }
         result._current = value_type::from_uint(result._offset);
         return result;
     }
@@ -370,7 +376,7 @@ private:
         if (n != 0) {
             const auto old = _offset;
             _offset += n;
-            if ((_offset > _end || _offset < old) && _begin != _end) {
+            if ((_offset > _end || _offset < old) && _begin != _end && _end != 0) {
             #ifdef IPADDRESS_NO_EXCEPTIONS
                 _offset = _end;
             #else
@@ -388,7 +394,7 @@ private:
         if (n != 0) {
             const auto old = _offset;
             _offset -= n;      
-            if ((_offset < _begin || _offset > old) && _begin != _end) {
+            if ((_offset < _begin || _offset > old) && _begin != _end && _end != 0) {
             #ifdef IPADDRESS_NO_EXCEPTIONS
                 _offset = _begin;
             #else
@@ -452,7 +458,7 @@ public:
             const auto begin = value_type::from_uint(network_address.to_uint());
             const auto end = value_type::from_uint(network_address.to_uint() + 1);
             _begin = const_iterator(begin, end, begin);
-            _end = const_iterator(begin, end, end);
+            _end = const_iterator(begin, end, end, end < begin ? 1 : 0);
         } else {
             const auto begin = value_type::from_uint(network_address.to_uint() + 1);
             const auto end = value_type::from_uint(broadcast_address.to_uint() + (std::is_same<value_type, ipv6_address>::value ? 1 : 0));

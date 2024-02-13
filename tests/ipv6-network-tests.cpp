@@ -796,6 +796,7 @@ TEST_P(HostsIpv6NetworkParams, hosts) {
 INSTANTIATE_TEST_SUITE_P(
     ipv6_network, HostsIpv6NetworkParams,
     Values(
+        std::make_tuple("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff/128", std::vector<const char*>{"ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"}),
         std::make_tuple("2001:658:22a:cafe::1/128", std::vector<const char*>{"2001:658:22a:cafe::1"}),
         std::make_tuple("2001:658:22a:cafe::/127", std::vector<const char*>{"2001:658:22a:cafe::", "2001:658:22a:cafe::1"}),
         std::make_tuple("2001:658:22a:cafe::/120", std::vector<const char*>{
@@ -934,7 +935,8 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("2001:658:22a:cafe::/120", 1, nullptr, std::vector<const char*>{"2001:658:22a:cafe::/121", "2001:658:22a:cafe::80/121" }),
         std::make_tuple("2001:658:22a:cafe::/120", 2, nullptr, std::vector<const char*>{"2001:658:22a:cafe::/122", "2001:658:22a:cafe::40/122", "2001:658:22a:cafe::80/122", "2001:658:22a:cafe::c0/122" }),
         std::make_tuple("2001:658:22a:cafe::/120", 1, 123, std::vector<const char*>{"2001:658:22a:cafe::/123", "2001:658:22a:cafe::20/123", "2001:658:22a:cafe::40/123", "2001:658:22a:cafe::60/123", "2001:658:22a:cafe::80/123", "2001:658:22a:cafe::a0/123", "2001:658:22a:cafe::c0/123", "2001:658:22a:cafe::e0/123" }),
-        std::make_tuple("2001:db8::1/128", 1, nullptr, std::vector<const char*>{"2001:db8::1/128"})
+        std::make_tuple("2001:db8::1/128", 1, nullptr, std::vector<const char*>{"2001:db8::1/128"}),
+        std::make_tuple("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff/128", 1, nullptr, std::vector<const char*>{"ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff/128"})
     ));
 /*
 using SubnetsErrorIpv6NetworkParams = TestWithParam<std::tuple<const char*, size_t, optional<size_t>, error_code, const char*>>;

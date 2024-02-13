@@ -174,10 +174,13 @@ public:
 private:
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator base() const IPADDRESS_NOEXCEPT {
         auto result = *this;
+        const auto old = result._it._offset;
         result._it._offset += _step;
         result._it._begin += _step;
         result._it._end += _step;
-        result._it._carry = 1 - result._it._carry;
+        if (result._it._offset < old) {
+            result._it._carry = 1 - result._it._carry;
+        }
         result._it._current = ip_address_type::from_uint(result._it._offset);
         result._current = value_type::from_address(*result._it, result._prefixlen);
         return result;
@@ -185,10 +188,13 @@ private:
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator reverse() const IPADDRESS_NOEXCEPT {
         auto result = *this;
+        const auto old = result._it._offset;
         result._it._offset -= _step;
         result._it._begin -= _step;
         result._it._end -= _step;
+        if (result._it._offset > old) {
         result._it._carry = 1 - result._it._carry;
+        }
         result._it._current = ip_address_type::from_uint(result._it._offset);
         result._current = value_type::from_address(*result._it, result._prefixlen);
         return result;
@@ -368,7 +374,7 @@ public:
         const auto end = ip_address_type::from_uint(network_address.to_uint() + 1);
         const auto step = difference_type(1);
         _begin = const_iterator(begin, end, begin, step, new_prefixlen);
-        _end = const_iterator(begin, end, end, step, new_prefixlen);
+        _end = const_iterator(begin, end, end, step, new_prefixlen, end < begin ? 1 : 0);
         _size = 1U;
     }
 
