@@ -227,6 +227,91 @@ TEST(ipv4_network, CompileTime) {
                                 | std::views::take(2)).begin());
     ASSERT_EQ(host_range_0, ipv4_address::parse("192.0.2.4"));
 #endif
+
+    constexpr auto subnets_sequence = ipv4_network::parse("192.0.2.0/24").subnets(2);
+    constexpr auto subnets_empty = subnets_sequence.empty();
+    constexpr auto subnets_size = subnets_sequence.size();
+    constexpr auto subnets_front = subnets_sequence.front();
+    constexpr auto subnets_back = subnets_sequence.back();
+    constexpr auto subnets_at_0 = subnets_sequence.at(0);
+    constexpr auto subnets_at_1 = subnets_sequence[1];
+    constexpr auto subnets_at_2 = subnets_sequence.at(2);
+    constexpr auto subnets_at_3 = subnets_sequence[3];
+    constexpr auto subnets_begin = subnets_sequence.begin();
+    constexpr auto subnets_end = subnets_sequence.end();
+    constexpr auto subnets_rbegin = subnets_sequence.rbegin();
+    constexpr auto subnets_rend = subnets_sequence.rend();
+    constexpr auto subnets_diff = subnets_end.uint_diff(subnets_begin);
+    constexpr auto subnets_begin_0 = *subnets_begin;
+    constexpr auto subnets_begin_0_uint = subnets_begin->network_address().to_uint();
+    constexpr auto subnets_begin_at_0 = subnets_begin[0U];
+    constexpr auto subnets_begin_at_1 = subnets_begin[1U];
+    constexpr auto subnets_begin_at_2 = subnets_begin[2U];
+    constexpr auto subnets_begin_at_3 = subnets_begin[3U];
+    constexpr auto subnets_it = *(--(++subnets_sequence.begin()++ + 2U) -= 1U);
+    constexpr auto subnets_it_eq = subnets_begin == subnets_end;
+    constexpr auto subnets_it_ne = subnets_begin != subnets_end;
+    constexpr auto subnets_it_ls = subnets_begin < subnets_end;
+    constexpr auto subnets_it_le = subnets_begin <= subnets_end;
+    constexpr auto subnets_it_gt = subnets_begin > subnets_end;
+    constexpr auto subnets_it_ge = subnets_begin >= subnets_end;
+    constexpr auto subnets_rdiff = subnets_rend.uint_diff(subnets_rbegin);
+    constexpr auto subnets_rbegin_0 = *subnets_rbegin;
+    constexpr auto subnets_rbegin_0_uint = subnets_rbegin->network_address().to_uint();
+    constexpr auto subnets_rbegin_at_0 = subnets_rbegin[0U];
+    constexpr auto subnets_rbegin_at_1 = subnets_rbegin[1U];
+    constexpr auto subnets_rbegin_at_2 = subnets_rbegin[2U];
+    constexpr auto subnets_rbegin_at_3 = subnets_rbegin[3U];
+    constexpr auto subnets_rit = *(--(++subnets_sequence.rbegin()++ + 2U) -= 1U);
+    constexpr auto subnets_rit_eq = subnets_rbegin == subnets_rend;
+    constexpr auto subnets_rit_ne = subnets_rbegin != subnets_rend;
+    constexpr auto subnets_rit_ls = subnets_rbegin < subnets_rend;
+    constexpr auto subnets_rit_le = subnets_rbegin <= subnets_rend;
+    constexpr auto subnets_rit_gt = subnets_rbegin > subnets_rend;
+    constexpr auto subnets_rit_ge = subnets_rbegin >= subnets_rend;
+    ASSERT_FALSE(subnets_empty);
+    ASSERT_EQ(subnets_size, 4);
+    ASSERT_EQ(subnets_front, ipv4_network::parse("192.0.2.0/26"));
+    ASSERT_EQ(subnets_back, ipv4_network::parse("192.0.2.192/26"));
+    ASSERT_EQ(subnets_at_0, ipv4_network::parse("192.0.2.0/26"));
+    ASSERT_EQ(subnets_at_1, ipv4_network::parse("192.0.2.64/26"));
+    ASSERT_EQ(subnets_at_2, ipv4_network::parse("192.0.2.128/26"));
+    ASSERT_EQ(subnets_at_3, ipv4_network::parse("192.0.2.192/26"));
+    ASSERT_EQ(subnets_diff, 4);
+    ASSERT_EQ(subnets_begin_0, ipv4_network::parse("192.0.2.0/26"));
+    ASSERT_EQ(subnets_begin_0_uint, 0xC0000200);
+    ASSERT_EQ(subnets_begin_at_0, ipv4_network::parse("192.0.2.0/26"));
+    ASSERT_EQ(subnets_begin_at_1, ipv4_network::parse("192.0.2.64/26"));
+    ASSERT_EQ(subnets_begin_at_2, ipv4_network::parse("192.0.2.128/26"));
+    ASSERT_EQ(subnets_begin_at_3, ipv4_network::parse("192.0.2.192/26"));
+    ASSERT_EQ(subnets_it, ipv4_network::parse("192.0.2.64/26"));
+    ASSERT_FALSE(subnets_it_eq);
+    ASSERT_TRUE(subnets_it_ne);
+    ASSERT_TRUE(subnets_it_ls);
+    ASSERT_TRUE(subnets_it_le);
+    ASSERT_FALSE(subnets_it_gt);
+    ASSERT_FALSE(subnets_it_ge);
+    ASSERT_EQ(subnets_rdiff, 4);
+    ASSERT_EQ(subnets_rbegin_0, ipv4_network::parse("192.0.2.192/26"));
+    ASSERT_EQ(subnets_rbegin_0_uint, 0xC00002C0);
+    ASSERT_EQ(subnets_rbegin_at_0, ipv4_network::parse("192.0.2.192/26"));
+    ASSERT_EQ(subnets_rbegin_at_1, ipv4_network::parse("192.0.2.128/26"));
+    ASSERT_EQ(subnets_rbegin_at_2, ipv4_network::parse("192.0.2.64/26"));
+    ASSERT_EQ(subnets_rbegin_at_3, ipv4_network::parse("192.0.2.0/26"));
+    ASSERT_EQ(subnets_rit, ipv4_network::parse("192.0.2.128/26"));
+    ASSERT_FALSE(subnets_rit_eq);
+    ASSERT_TRUE(subnets_rit_ne);
+    ASSERT_TRUE(subnets_rit_ls);
+    ASSERT_TRUE(subnets_rit_le);
+    ASSERT_FALSE(subnets_rit_gt);
+    ASSERT_FALSE(subnets_rit_ge);
+    
+#if IPADDRESS_CPP_VERSION >= 20
+    constexpr auto subnets_range_0 = *++((ipv4_network::parse("192.0.2.0/24").subnets(2) 
+                                   | std::views::filter([](const auto& n) { return n.network_address().to_uint() % 2 == 0; })
+                                   | std::views::take(2)).begin());
+    ASSERT_EQ(subnets_range_0, ipv4_network::parse("192.0.2.64/26"));
+#endif
 }
 
 TEST(ipv4_network, DefaultCtor) {

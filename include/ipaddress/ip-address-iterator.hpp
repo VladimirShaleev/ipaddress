@@ -34,7 +34,7 @@ public:
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint_type uint_diff(const ip_reverse_iterator& other) const IPADDRESS_NOEXCEPT {
-        return other._it - _it;
+        return other._it.uint_diff(_it);
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE iterator_type base() const IPADDRESS_NOEXCEPT {
