@@ -47,7 +47,7 @@ protected:
         code = error_code::NO_ERROR;
     
         for (auto it = begin; it != end; ++it) {
-            auto c = *it;
+            auto c = char(*it);
             if (index >= 4) {
                 code = error_code::EXPECTED_4_OCTETS;
                 return {};
@@ -149,8 +149,9 @@ protected:
         auto has_prefixlen = false;
         for (auto it = begin; it != end; ++it) {
             has_prefixlen = true;
-            if (*it >= '0' && *it <= '9') {
-                prefixlen = prefixlen * 10 + (*it - '0');
+            const auto c = char(*it);
+            if (c >= '0' && c <= '9') {
+                prefixlen = prefixlen * 10 + (c - '0');
             } else {
                 is_value = false;
                 break;

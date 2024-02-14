@@ -205,8 +205,9 @@ protected:
         auto has_prefixlen = false;
         for (auto it = begin; it != end; ++it) {
             has_prefixlen = true;
-            if (*it >= '0' && *it <= '9') {
-                prefixlen = prefixlen * 10 + (*it - '0');
+            const auto c = char(*it);
+            if (c >= '0' && c <= '9') {
+                prefixlen = prefixlen * 10 + (c - '0');
             } else {
                 code = error_code::INVALID_NETMASK;
                 return std::make_tuple(ip_address_base<Ext>(), 0);
@@ -252,18 +253,19 @@ private:
         Iter end_ip = begin;
         auto scope = false;
         for (auto it = begin; it != end; ++it) {
-            if (!scope && *it != '%') {
+            const auto c = char(*it);
+            if (!scope && c != '%') {
                 end_ip = it + 1;
             } else if (scope) {
                 if (index > IPADDRESS_IPV6_SCOPE_MAX_LENGTH - 1) {
                     error = error_code::SCOPE_ID_IS_TOO_LONG;
                     return std::make_pair(end_ip, make_fixed_string(scope_id));
                 }
-                if (*it == '%' || *it == '/') {
+                if (c == '%' || c == '/') {
                     error = error_code::INVALID_SCOPE_ID;
                     return std::make_pair(end_ip, make_fixed_string(scope_id));
                 }
-                scope_id[index++] = *it;
+                scope_id[index++] = c;
             } else {
                 scope = true;
             }
@@ -297,7 +299,7 @@ private:
         bool has_double_colon = false;
 
         for (auto it = begin; it != end; ++it) {
-            auto c = *it;
+            auto c = char(*it);
             if (!has_double_colon && c == ':' && prev_c == ':') {
                 has_double_colon = true;
             }

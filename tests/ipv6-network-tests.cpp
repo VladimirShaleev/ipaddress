@@ -49,6 +49,20 @@ TEST(ipv6_network, CompileTime) {
     ASSERT_EQ(net2_netmask, ipv6_address::parse("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"));
     ASSERT_EQ(net2_hostmask, ipv6_address::parse("::"));
     ASSERT_EQ(net2_prefixlen, 128);
+
+    constexpr auto net_wchar = ipv6_network::parse<L"2001:db8::/96">();
+    ASSERT_EQ(net_wchar.network_address(), ipv6_address::parse("2001:db8::"));
+
+    constexpr auto net_char16 = ipv6_network::parse<u"2001:db8::/96">();
+    ASSERT_EQ(net_char16.network_address(), ipv6_address::parse("2001:db8::"));
+
+    constexpr auto net_char32 = ipv6_network::parse<U"2001:db8::/96">();
+    ASSERT_EQ(net_char32.network_address(), ipv6_address::parse("2001:db8::"));
+
+#if __cpp_char8_t >= 201811L
+    constexpr auto net_char8 = ipv6_network::parse<u8"2001:db8::/96">();
+    ASSERT_EQ(net_char8.network_address(), ipv6_address::parse("2001:db8::"));
+#endif // __cpp_char8_t >= 201811L
 #endif
 
     constexpr auto net3 = ipv6_network::parse("2001:db8::%scope/32");
@@ -363,6 +377,20 @@ TEST(ipv6_network, CompileTime) {
                                    | std::views::take(2)).begin());
     ASSERT_EQ(exclude_range_0, ipv6_network::parse("2001:658:22a:cafe::40/122"));
 #endif
+
+    constexpr auto net_wchar_2 = ipv6_network::parse(L"2001:db8::/96");
+    ASSERT_EQ(net_wchar_2.network_address(), ipv6_address::parse("2001:db8::"));
+
+    constexpr auto net_char16_2 = ipv6_network::parse(u"2001:db8::/96");
+    ASSERT_EQ(net_char16_2.network_address(), ipv6_address::parse("2001:db8::"));
+
+    constexpr auto net_char32_2 = ipv6_network::parse(U"2001:db8::/96");
+    ASSERT_EQ(net_char32_2.network_address(), ipv6_address::parse("2001:db8::"));
+
+#if __cpp_char8_t >= 201811L
+    constexpr auto net_char8_2 = ipv6_network::parse(u8"2001:db8::/96");
+    ASSERT_EQ(net_char8_2.network_address(), ipv6_address::parse("2001:db8::"));
+#endif // __cpp_char8_t >= 201811L
 }
 
 TEST(ipv6_network, DefaultCtor) {
@@ -404,6 +432,30 @@ TEST(ipv6_network, CopyOperator) {
     EXPECT_EQ(net_copy.netmask(), ipv6_address::parse("ffff:ffff:ffff:ffff:ffff:ffff::"));
     EXPECT_EQ(net_copy.hostmask(), ipv6_address::parse("::ffff:ffff"));
     EXPECT_EQ(net_copy.prefixlen(), 96);
+}
+
+TEST(ipv6_network, parse_utf) {
+    auto str1 = L"2001:db8::/96";
+    auto net_wchar = ipv6_network::parse(str1);
+    ASSERT_EQ(net_wchar.network_address(), ipv6_address::parse("2001:db8::"));
+    ASSERT_EQ(net_wchar.prefixlen(), 96);
+
+    auto str2 = u"2001:db8::/96";
+    auto net_char16 = ipv6_network::parse(str2);
+    ASSERT_EQ(net_char16.network_address(), ipv6_address::parse("2001:db8::"));
+    ASSERT_EQ(net_char16.prefixlen(), 96);
+
+    auto str3 = U"2001:db8::/96";
+    auto net_char32 = ipv6_network::parse(str3);
+    ASSERT_EQ(net_char32.network_address(), ipv6_address::parse("2001:db8::"));
+    ASSERT_EQ(net_char32.prefixlen(), 96);
+
+#if __cpp_char8_t >= 201811L
+    auto str4 = u8"2001:db8::/96";
+    auto net_char8 = ipv6_network::parse(str4);
+    ASSERT_EQ(net_char8.network_address(), ipv6_address::parse("2001:db8::"));
+    ASSERT_EQ(net_char8.prefixlen(), 96);
+#endif // __cpp_char8_t >= 201811L
 }
 
 using NetworkParserIpv6Params = TestWithParam<std::tuple<const char*, const char*, const char*, const char*, const char*, size_t>>;

@@ -49,6 +49,20 @@ TEST(ipv4_network, CompileTime) {
     ASSERT_EQ(net2_netmask, 0xFFFFFFFF);
     ASSERT_EQ(net2_hostmask, 0x00000000);
     ASSERT_EQ(net2_prefixlen, 32);
+
+    constexpr auto net_wchar = ipv4_network::parse<L"127.0.0.1">();
+    ASSERT_EQ(net_wchar.network_address().to_uint(), 0x7F000001);
+
+    constexpr auto net_char16 = ipv4_network::parse<u"127.0.0.1">();
+    ASSERT_EQ(net_char16.network_address().to_uint(), 0x7F000001);
+
+    constexpr auto net_char32 = ipv4_network::parse<U"127.0.0.1">();
+    ASSERT_EQ(net_char32.network_address().to_uint(), 0x7F000001);
+
+#if __cpp_char8_t >= 201811L
+    constexpr auto net_char8 = ipv4_network::parse<u8"127.0.0.1">();
+    ASSERT_EQ(net_char8.network_address().to_uint(), 0x7F000001);
+#endif // __cpp_char8_t >= 201811L
 #endif
 
     constexpr auto net3 = ipv4_network::parse("127.0.0.0/8");
@@ -361,6 +375,20 @@ TEST(ipv4_network, CompileTime) {
                                    | std::views::take(2)).begin());
     ASSERT_EQ(exclude_range_0, ipv4_network::parse("192.0.2.4/30"));
 #endif
+
+    constexpr auto net_wchar_2 = ipv4_network::parse(L"127.0.0.1");
+    ASSERT_EQ(net_wchar_2.network_address().to_uint(), 0x7F000001);
+
+    constexpr auto net_char16_2 = ipv4_network::parse(u"127.0.0.1");
+    ASSERT_EQ(net_char16_2.network_address().to_uint(), 0x7F000001);
+
+    constexpr auto net_char32_2 = ipv4_network::parse(U"127.0.0.1");
+    ASSERT_EQ(net_char32_2.network_address().to_uint(), 0x7F000001);
+
+#if __cpp_char8_t >= 201811L
+    constexpr auto net_char8_2 = ipv4_network::parse(u8"127.0.0.1");
+    ASSERT_EQ(net_char8_2.network_address().to_uint(), 0x7F000001);
+#endif // __cpp_char8_t >= 201811L
 }
 
 TEST(ipv4_network, DefaultCtor) {
@@ -401,6 +429,30 @@ TEST(ipv4_network, CopyOperator) {
     EXPECT_EQ(net_copy.netmask(), ipv4_address::from_uint<0xFF000000>());
     EXPECT_EQ(net_copy.hostmask(), ipv4_address::from_uint<0x00FFFFFF>());
     EXPECT_EQ(net_copy.prefixlen(), 8);
+}
+
+TEST(ipv4_network, parse_utf) {
+    auto str1 = L"127.0.0.0/24";
+    auto net_wchar = ipv4_network::parse(str1);
+    ASSERT_EQ(net_wchar.network_address().to_uint(), 0x7F000000);
+    ASSERT_EQ(net_wchar.prefixlen(), 24);
+
+    auto str2 = u"127.0.0.0/24";
+    auto net_char16 = ipv4_network::parse(str2);
+    ASSERT_EQ(net_char16.network_address().to_uint(), 0x7F000000);
+    ASSERT_EQ(net_char16.prefixlen(), 24);
+
+    auto str3 = U"127.0.0.0/24";
+    auto net_char32 = ipv4_network::parse(str3);
+    ASSERT_EQ(net_char32.network_address().to_uint(), 0x7F000000);
+    ASSERT_EQ(net_char32.prefixlen(), 24);
+
+#if __cpp_char8_t >= 201811L
+    auto str4 = u8"127.0.0.0/24";
+    auto net_char8 = ipv4_network::parse(str4);
+    ASSERT_EQ(net_char8.network_address().to_uint(), 0x7F000000);
+    ASSERT_EQ(net_char8.prefixlen(), 24);
+#endif // __cpp_char8_t >= 201811L
 }
 
 using NetworkParserIpv4Params = TestWithParam<std::tuple<const char*, const char*, const char*, const char*, const char*, size_t>>;

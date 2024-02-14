@@ -39,14 +39,66 @@ public:
         return parse_address_with_prefix(address, strict);
     }
 
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR ip_network_base parse(std::wstring_view address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return parse_address_with_prefix(address, strict);
+    }
+
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR ip_network_base parse(std::u16string_view address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return parse_address_with_prefix(address, strict);
+    }
+
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR ip_network_base parse(std::u32string_view address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return parse_address_with_prefix(address, strict);
+    }
+
     static IPADDRESS_CONSTEXPR ip_network_base parse(std::string_view address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
         auto index = 0;
         return parse_address_with_prefix(address, strict, code, index);
     }
 
+    static IPADDRESS_CONSTEXPR ip_network_base parse(std::wstring_view address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
+        auto index = 0;
+        return parse_address_with_prefix(address, strict, code, index);
+    }
+
+    static IPADDRESS_CONSTEXPR ip_network_base parse(std::u16string_view address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
+        auto index = 0;
+        return parse_address_with_prefix(address, strict, code, index);
+    }
+
+    static IPADDRESS_CONSTEXPR ip_network_base parse(std::u32string_view address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
+        auto index = 0;
+        return parse_address_with_prefix(address, strict, code, index);
+    }
+
+#if __cpp_char8_t >= 201811L
+
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR ip_network_base parse(std::u8string_view address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return parse_address_with_prefix(address, strict);
+    }
+
+    static IPADDRESS_CONSTEXPR ip_network_base parse(std::u8string_view address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
+        auto index = 0;
+        return parse_address_with_prefix(address, strict, code, index);
+    }
+
+#endif // __cpp_char8_t
+
 #else // IPADDRESS_CPP_VERSION < 17
 
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static ip_network_base parse(const std::string& address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return parse_address_with_prefix(address, strict);
+    }
+
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static ip_network_base parse(const std::wstring& address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return parse_address_with_prefix(address, strict);
+    }
+
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static ip_network_base parse(const std::u16string& address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return parse_address_with_prefix(address, strict);
+    }
+
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static ip_network_base parse(const std::u32string& address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return parse_address_with_prefix(address, strict);
     }
 
@@ -55,16 +107,46 @@ public:
         return parse_address_with_prefix(address, strict, code, index);
     }
 
+    static ip_network_base parse(const std::wstring& address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
+        auto index = 0;
+        return parse_address_with_prefix(address, strict, code, index);
+    }
+
+    static ip_network_base parse(const std::u16string& address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
+        auto index = 0;
+        return parse_address_with_prefix(address, strict, code, index);
+    }
+
+    static ip_network_base parse(const std::u32string& address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
+        auto index = 0;
+        return parse_address_with_prefix(address, strict, code, index);
+    }
+
+#if __cpp_char8_t >= 201811L
+
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static ip_network_base parse(const std::u8string& address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return parse_address_with_prefix(address, strict);
+    }
+
+    static ip_network_base parse(const std::u8string& address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
+        auto index = 0;
+        return parse_address_with_prefix(address, strict, code, index);
+    }
+
+#endif // __cpp_char8_t
+
 #endif // IPADDRESS_CPP_VERSION < 17
 
-    template <size_t N>
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR ip_network_base parse(const char(&address)[N], bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    template <typename T, size_t N>
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR ip_network_base parse(const T(&address)[N], bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        internal::is_char_type<T>();
         auto str = make_fixed_string(address);
         return parse_address_with_prefix(str, strict);
     }
 
-    template <size_t N>
-    static IPADDRESS_CONSTEXPR ip_network_base parse(const char(&address)[N], error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
+    template <typename T, size_t N>
+    static IPADDRESS_CONSTEXPR ip_network_base parse(const T(&address)[N], error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
+        internal::is_char_type<T>();
         auto str = make_fixed_string(address);
         auto index = 0;
         return parse_address_with_prefix(str, strict, code, index);
@@ -407,7 +489,8 @@ private:
         auto symbol = 0;
         char address[ip_address_type::_max_string_len + 1] = {};
         for (auto it = str.begin(); it != str.end(); ++it) {
-            if (*it == '/') {
+            const auto c = char(*it);
+            if (c == '/') {
                 if (has_slash) {
                     code = error_code::ONLY_ONE_SLASH_PERMITTED;
                     return ip_network_base<Base>();
@@ -420,7 +503,7 @@ private:
                 has_slash = true;
             }
             if (!has_slash) {
-                address[symbol++] = *it;
+                address[symbol++] = c;
             }
         }
 
