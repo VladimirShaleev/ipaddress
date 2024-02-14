@@ -70,12 +70,61 @@ public:
         return parse_string(address);
     }
 
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(std::wstring_view address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return parse_string(address);
+    }
+
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(std::u16string_view address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return parse_string(address);
+    }
+
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(std::u32string_view address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return parse_string(address);
+    }
+
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(std::string_view address, error_code& code) IPADDRESS_NOEXCEPT {
         return parse_string(address, code);
     }
+
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(std::wstring_view address, error_code& code) IPADDRESS_NOEXCEPT {
+        return parse_string(address, code);
+    }
+
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(std::u16string_view address, error_code& code) IPADDRESS_NOEXCEPT {
+        return parse_string(address, code);
+    }
+
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(std::u32string_view address, error_code& code) IPADDRESS_NOEXCEPT {
+        return parse_string(address, code);
+    }
+
+#if __cpp_char8_t >= 201811L
+
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(std::u8string_view address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return parse_string(address);
+    }
+
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(std::u8string_view address, error_code& code) IPADDRESS_NOEXCEPT {
+        return parse_string(address, code);
+    }
+
+#endif // __cpp_char8_t
+
 #else // IPADDRESS_CPP_VERSION < 17
 
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::string& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return parse_string(address);
+    }
+
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::wstring& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return parse_string(address);
+    }
+
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::u16string& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return parse_string(address);
+    }
+
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::u32string& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return parse_string(address);
     }
 
@@ -83,16 +132,42 @@ public:
         return parse_string(address, code);
     }
 
+    static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::wstring& address, error_code& code) IPADDRESS_NOEXCEPT {
+        return parse_string(address, code);
+    }
+
+    static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::u16string& address, error_code& code) IPADDRESS_NOEXCEPT {
+        return parse_string(address, code);
+    }
+
+    static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::u32string& address, error_code& code) IPADDRESS_NOEXCEPT {
+        return parse_string(address, code);
+    }
+
+#if __cpp_char8_t >= 201811L
+
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::u8string& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return parse_string(address);
+    }
+
+    static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::u8string& address, error_code& code) IPADDRESS_NOEXCEPT {
+        return parse_string(address, code);
+    }
+
+#endif // __cpp_char8_t
+
 #endif // IPADDRESS_CPP_VERSION < 17
 
-    template <size_t N>
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(const char(&address)[N]) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    template <typename T, size_t N>
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(const T(&address)[N]) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        internal::is_char_type<T>();
         auto str = make_fixed_string(address);
         return parse_string(str);
     }
 
-    template <size_t N>
-    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(const char(&address)[N], error_code& code) IPADDRESS_NOEXCEPT {
+    template <typename T, size_t N>
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(const T(&address)[N], error_code& code) IPADDRESS_NOEXCEPT {
+        internal::is_char_type<T>();
         auto str = make_fixed_string(address);
         return parse_string(str, code);
     }

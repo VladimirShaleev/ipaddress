@@ -45,13 +45,26 @@ TEST(ipv4_address, CompileTime) {
     constexpr auto b4 = ip2 >= ip4;
     constexpr auto b5 = ip2 == ip4;
     constexpr auto b6 = ip2 != ip4;
-    
     ASSERT_TRUE(b1);
     ASSERT_FALSE(b2);
     ASSERT_TRUE(b3);
     ASSERT_FALSE(b4);
     ASSERT_FALSE(b5);
     ASSERT_TRUE(b6);
+
+    constexpr auto ip_wchar = ipv4_address::parse<L"127.0.0.1">();
+    ASSERT_EQ(ip_wchar.to_uint(), 0x7F000001);
+
+    constexpr auto ip_char16 = ipv4_address::parse<u"127.0.0.1">();
+    ASSERT_EQ(ip_char16.to_uint(), 0x7F000001);
+
+    constexpr auto ip_char32 = ipv4_address::parse<U"127.0.0.1">();
+    ASSERT_EQ(ip_char32.to_uint(), 0x7F000001);
+
+#if __cpp_char8_t >= 201811L
+    constexpr auto ip_char8 = ipv4_address::parse<u8"127.0.0.1">();
+    ASSERT_EQ(ip_char8.to_uint(), 0x7F000001);
+#endif
 #endif
     auto ip3 = ipv4_address::from_uint<0x7F000001>();
     ASSERT_EQ(ip3.to_uint(), 0x7F000001);
@@ -140,6 +153,20 @@ TEST(ipv4_address, CompileTime) {
     constexpr auto ip24 = ipv4_address::parse("169.255.100.200").is_unspecified();
     ASSERT_TRUE(ip23);
     ASSERT_FALSE(ip24);
+    
+    constexpr auto ip_wchar_2 = ipv4_address::parse(L"127.0.0.1");
+    ASSERT_EQ(ip_wchar_2.to_uint(), 0x7F000001);
+
+    constexpr auto ip_char16_2 = ipv4_address::parse(u"127.0.0.1");
+    ASSERT_EQ(ip_char16_2.to_uint(), 0x7F000001);
+
+    constexpr auto ip_char32_2 = ipv4_address::parse(U"127.0.0.1");
+    ASSERT_EQ(ip_char32_2.to_uint(), 0x7F000001);
+
+#if __cpp_char8_t >= 201811L
+    constexpr auto ip_char8_2 = ipv4_address::parse(u8"127.0.0.1");
+    ASSERT_EQ(ip_char8_2.to_uint(), 0x7F000001);
+#endif
 }
 
 TEST(ipv4_address, DefaultCtor) {
@@ -208,6 +235,26 @@ INSTANTIATE_TEST_SUITE_P(
         ipv4_address::base_type{0x00, 0x08, 0x00, 0x00},
         ipv4_address::base_type{0xC0, 0xA8, 0x00, 0x01}
     ));
+
+TEST(ipv4_address, parse_utf) {
+    auto str1 = L"127.0.0.1";
+    auto ip_wchar = ipv4_address::parse(str1);
+    ASSERT_EQ(ip_wchar.to_uint(), 0x7F000001);
+
+    auto str2 = u"127.0.0.1";
+    auto ip_char16 = ipv4_address::parse(str2);
+    ASSERT_EQ(ip_char16.to_uint(), 0x7F000001);
+
+    auto str3 = U"127.0.0.1";
+    auto ip_char32 = ipv4_address::parse(str3);
+    ASSERT_EQ(ip_char32.to_uint(), 0x7F000001);
+
+#if __cpp_char8_t >= 201811L
+    auto str4 = u8"127.0.0.1";
+    auto ip_char8 = ipv4_address::parse(str4);
+    ASSERT_EQ(ip_char8.to_uint(), 0x7F000001);
+#endif
+}
 
 using AddressParserIpv4Params = TestWithParam<std::tuple<const char*, uint32_t, std::array<uint8_t, 4>>>;
 TEST_P(AddressParserIpv4Params, parse) {

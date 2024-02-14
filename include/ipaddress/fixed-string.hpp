@@ -5,6 +5,24 @@
 
 namespace IPADDRESS_NAMESPACE {
 
+namespace internal {
+
+template <typename T>
+IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void is_char_type() IPADDRESS_NOEXCEPT {
+    static_assert(std::is_same<T, char>::value 
+        || std::is_same<T, signed char>::value 
+        || std::is_same<T, unsigned char>::value 
+        || std::is_same<T, wchar_t>::value 
+        || std::is_same<T, char16_t>::value 
+        || std::is_same<T, char32_t>::value
+    #if __cpp_char8_t >= 201811L
+        || std::is_same<T, char8_t>::value
+    #endif // __cpp_char8_t
+        , "Only character type supported");
+}
+
+} // namespace internal
+
 template <size_t N>
 struct fixed_string {
     using const_pointer          = const char*;
@@ -22,11 +40,7 @@ struct fixed_string {
 
     template <typename T>
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string(const T (&data)[N + 1]) IPADDRESS_NOEXCEPT {
-        static_assert(std::is_same<T, char>::value || std::is_same<T, signed char>::value || std::is_same<T, unsigned char>::value || std::is_same<T, wchar_t>::value || std::is_same<T, char16_t>::value || std::is_same<T, char32_t>::value
-    #if __cpp_char8_t >= 201811L
-         || std::is_same<T, char8_t>::value
-    #endif // __cpp_char8_t
-        , "Only character literal supported");
+        internal::is_char_type<T>();
         auto ended = false;
         for (size_t i = 0; i < N; ++i) {
             if (IPADDRESS_IS_CONST_EVALUATED(data) && data[i] > 127) {

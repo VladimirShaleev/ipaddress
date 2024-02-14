@@ -66,13 +66,26 @@ TEST(ipv6_address, CompileTime) {
     constexpr auto b4 = ip2 >= ip4;
     constexpr auto b5 = ip2 == ip4;
     constexpr auto b6 = ip2 != ip4;
-    
     ASSERT_TRUE(b1);
     ASSERT_FALSE(b2);
     ASSERT_TRUE(b3);
     ASSERT_FALSE(b4);
     ASSERT_FALSE(b5);
     ASSERT_TRUE(b6);
+    
+    constexpr auto ip_wchar = ipv6_address::parse<L"2001:db8::1">();
+    ASSERT_EQ(ip_wchar.bytes(), ip_bytes);
+
+    constexpr auto ip_char16 = ipv6_address::parse<u"2001:db8::1">();
+    ASSERT_EQ(ip_char16.bytes(), ip_bytes);
+
+    constexpr auto ip_char32 = ipv6_address::parse<U"2001:db8::1">();
+    ASSERT_EQ(ip_char32.bytes(), ip_bytes);
+
+#if __cpp_char8_t >= 201811L
+    constexpr auto ip_char8 = ipv6_address::parse<u8"2001:db8::1">();
+    ASSERT_EQ(ip_char8.bytes(), ip_bytes);
+#endif
 #endif
 
     constexpr auto ip5 = ipv6_address::parse("2001:db8::1");
@@ -248,6 +261,20 @@ TEST(ipv6_address, CompileTime) {
     ASSERT_EQ(ipv33_client, ipv4_address::parse("192.0.2.45"));
     ASSERT_EQ(ipv34_server, ipv4_address::parse("0.0.0.0"));
     ASSERT_EQ(ipv34_client, ipv4_address::parse("0.0.0.0"));
+
+    constexpr auto ip_wchar_2 = ipv6_address::parse(L"2001:db8::1");
+    ASSERT_EQ(ip_wchar_2.bytes(), ip_bytes);
+
+    constexpr auto ip_char16_2 = ipv6_address::parse(u"2001:db8::1");
+    ASSERT_EQ(ip_char16_2.bytes(), ip_bytes);
+
+    constexpr auto ip_char32_2 = ipv6_address::parse(U"2001:db8::1");
+    ASSERT_EQ(ip_char32_2.bytes(), ip_bytes);
+
+#if __cpp_char8_t >= 201811L
+    constexpr auto ip_char8_2 = ipv6_address::parse(u8"2001:db8::1");
+    ASSERT_EQ(ip_char8_2.bytes(), ip_bytes);
+#endif
 }
 
 TEST(ipv6_address, DefaultCtor) {
@@ -345,6 +372,28 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple(ipv6_address::base_type{ 0xfe, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0xff, 0xfe, 0x23, 0x45, 0x67, 0x89, 0x0a }, ""),
         std::make_tuple(ipv6_address::base_type{ 0xfe, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0xff, 0xfe, 0x23, 0x45, 0x67, 0x89, 0x0a }, "eth2")
     ));
+
+TEST(ipv6_address, parse_utf) {
+    constexpr ipv6_address::base_type ip_bytes { 0x20, 0x01, 0x0D, 0xB8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 };
+
+    auto str1 = L"2001:db8::1";
+    auto ip_wchar = ipv6_address::parse(str1);
+    ASSERT_EQ(ip_wchar.bytes(), ip_bytes);
+
+    auto str2 = u"2001:db8::1";
+    auto ip_char16 = ipv6_address::parse(str2);
+    ASSERT_EQ(ip_char16.bytes(), ip_bytes);
+
+    auto str3 = U"2001:db8::1";
+    auto ip_char32 = ipv6_address::parse(str3);
+    ASSERT_EQ(ip_char32.bytes(), ip_bytes);
+
+#if __cpp_char8_t >= 201811L
+    auto str4 = u8"2001:db8::1";
+    auto ip_char8 = ipv6_address::parse(str4);
+    ASSERT_EQ(ip_char8.bytes(), ip_bytes);
+#endif
+}
 
 using AddressParserIpv6Params = TestWithParam<std::tuple<const char*, ipv6_address::base_type, bool, bool, const char*, uint32_t>>;
 TEST_P(AddressParserIpv6Params, parse) {

@@ -107,14 +107,15 @@ public:
     }
 };
 
-[[noreturn]] IPADDRESS_CONSTEXPR void raise_error(error_code code, int index, const char* address, size_t length) {
+template <typename T>
+[[noreturn]] IPADDRESS_CONSTEXPR void raise_error(error_code code, int index, const T* address, size_t length) {
     char str[101] = {};
     size_t max_len = length;
     if (length > 100) {
         max_len = 100;
     }
     for (size_t i = 0; i < max_len; ++i) {
-        str[i] = address[i];
+        str[i] = char(address[i]);
     }
     switch (code) {
         case error_code::EMPTY_ADDRESS:
