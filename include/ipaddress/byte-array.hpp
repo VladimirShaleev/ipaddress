@@ -269,6 +269,8 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
         for (std::size_t i = 0; i < N; ++i) {
             if (lhs._data[i] < rhs._data[i]) {
                 return true;
+            } else if (lhs._data[i] != rhs._data[i]) {
+                break;
             }
         }
         return false;
