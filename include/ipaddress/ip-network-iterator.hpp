@@ -311,13 +311,13 @@ public:
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const ip_exclude_network_iterator& other) const IPADDRESS_NOEXCEPT {
-        return _current <=> other._current;
+        return other._current <=> _current;
     }
 
 #else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(const ip_exclude_network_iterator& other) const IPADDRESS_NOEXCEPT {
-        return _current < other._current;
+        return other._current < _current;
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(const ip_exclude_network_iterator& other) const IPADDRESS_NOEXCEPT {

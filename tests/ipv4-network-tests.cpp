@@ -312,6 +312,37 @@ TEST(ipv4_network, CompileTime) {
                                    | std::views::take(2)).begin());
     ASSERT_EQ(subnets_range_0, ipv4_network::parse("192.0.2.64/26"));
 #endif
+
+    constexpr auto exclude_sequence = ipv4_network::parse("192.0.2.0/28").address_exclude(ipv4_network::parse("192.0.2.1/32"));
+    constexpr auto exclude_empty = exclude_sequence.empty();
+    constexpr auto exclude_begin = exclude_sequence.begin();
+    constexpr auto exclude_end = exclude_sequence.end();
+    constexpr auto exclude_begin_0 = *exclude_begin;
+    constexpr auto exclude_begin_0_uint = exclude_begin->network_address().to_uint();
+    constexpr auto exclude_begin_1 = *++exclude_sequence.begin();
+    ASSERT_FALSE(exclude_empty);
+    ASSERT_EQ(exclude_begin_0, ipv4_network::parse("192.0.2.8/29"));
+    ASSERT_EQ(exclude_begin_0_uint, 0xC0000208);
+    ASSERT_EQ(exclude_begin_1, ipv4_network::parse("192.0.2.4/30"));
+    constexpr auto exclude_it_eq = exclude_begin == exclude_end;
+    constexpr auto exclude_it_ne = exclude_begin != exclude_end;
+    constexpr auto exclude_it_ls = exclude_begin < exclude_end;
+    constexpr auto exclude_it_le = exclude_begin <= exclude_end;
+    constexpr auto exclude_it_gt = exclude_begin > exclude_end;
+    constexpr auto exclude_it_ge = exclude_begin >= exclude_end;
+    ASSERT_FALSE(exclude_it_eq);
+    ASSERT_TRUE(exclude_it_ne);
+    ASSERT_TRUE(exclude_it_ls);
+    ASSERT_TRUE(exclude_it_le);
+    ASSERT_FALSE(exclude_it_gt);
+    ASSERT_FALSE(exclude_it_ge);
+
+#if IPADDRESS_CPP_VERSION >= 20
+    constexpr auto exclude_range_0 = *++((ipv4_network::parse("192.0.2.0/28").address_exclude(ipv4_network::parse("192.0.2.1/32"))
+                                   | std::views::filter([](const auto& n) { return n.network_address().to_uint() % 2 == 0; })
+                                   | std::views::take(2)).begin());
+    ASSERT_EQ(exclude_range_0, ipv4_network::parse("192.0.2.4/30"));
+#endif
 }
 
 TEST(ipv4_network, DefaultCtor) {
