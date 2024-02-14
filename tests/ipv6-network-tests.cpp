@@ -7,6 +7,10 @@
 
 #include <ipaddress/ipaddress.hpp>
 
+#if IPADDRESS_CPP_VERSION >= 20
+#  include <ranges>
+#endif
+
 using namespace testing;
 using namespace ipaddress;
 
@@ -140,6 +144,246 @@ TEST(ipv6_network, CompileTime) {
     constexpr auto net25 = ipv6_network::parse("::/127").is_unspecified();
     ASSERT_TRUE(net24);
     ASSERT_FALSE(net25);
+
+    constexpr auto contains = ipv6_network::parse("2001:db8::/32").contains(ipv6_address::parse("2001:db8::1"));
+    ASSERT_TRUE(contains);
+
+    constexpr auto overlaps = ipv6_network::parse("2001:db8::/32").overlaps(ipv6_network::parse("2001:db8::/128"));
+    ASSERT_TRUE(overlaps);
+
+    constexpr auto subnet_of = ipv6_network::parse("2000:aaa::/56").subnet_of(ipv6_network::parse("2000:aaa::/48"));
+    ASSERT_TRUE(subnet_of);
+
+    constexpr auto supernet_of = ipv6_network::parse("2000:aaa::/48").supernet_of(ipv6_network::parse("2000:aaa::/56"));
+    ASSERT_TRUE(supernet_of);
+
+    constexpr auto addresses_count = ipv6_network::parse("2001:658:22a:cafe::/64").addresses_count();
+    ASSERT_EQ(addresses_count, uint128_t::from_string("18446744073709551616").value());
+
+    constexpr auto supernet = ipv6_network::parse("2001:658:22a:cafe::/127").supernet();
+    ASSERT_EQ(supernet, ipv6_network::parse("2001:658:22a:cafe::/126"));
+
+    constexpr auto hosts_sequence = ipv6_network::parse("2001:658:22a:cafe::/120").hosts();
+    constexpr auto hosts_empty = hosts_sequence.empty();
+    constexpr auto hosts_size = hosts_sequence.size();
+    constexpr auto hosts_front = hosts_sequence.front();
+    constexpr auto hosts_back = hosts_sequence.back();
+    constexpr auto hosts_at_0 = hosts_sequence.at(0);
+    constexpr auto hosts_at_1 = hosts_sequence[1];
+    constexpr auto hosts_at_2 = hosts_sequence.at(2);
+    constexpr auto hosts_at_3 = hosts_sequence[3];
+    constexpr auto hosts_begin = hosts_sequence.begin();
+    constexpr auto hosts_end = hosts_sequence.end();
+    constexpr auto hosts_rbegin = hosts_sequence.rbegin();
+    constexpr auto hosts_rend = hosts_sequence.rend();
+    constexpr auto hosts_diff = hosts_end.uint_diff(hosts_begin);
+    constexpr auto hosts_begin_0 = *hosts_begin;
+    constexpr auto hosts_begin_0_uint = hosts_begin->to_uint();
+    constexpr auto hosts_begin_at_0 = hosts_begin[0U];
+    constexpr auto hosts_begin_at_1 = hosts_begin[1U];
+    constexpr auto hosts_begin_at_2 = hosts_begin[2U];
+    constexpr auto hosts_begin_at_3 = hosts_begin[3U];
+    constexpr auto hosts_it = *(--(++hosts_sequence.begin()++ + 2U) -= 1U);
+    constexpr auto hosts_it_eq = hosts_begin == hosts_end;
+    constexpr auto hosts_it_ne = hosts_begin != hosts_end;
+    constexpr auto hosts_it_ls = hosts_begin < hosts_end;
+    constexpr auto hosts_it_le = hosts_begin <= hosts_end;
+    constexpr auto hosts_it_gt = hosts_begin > hosts_end;
+    constexpr auto hosts_it_ge = hosts_begin >= hosts_end;
+    constexpr auto hosts_rdiff = hosts_rend.uint_diff(hosts_rbegin);
+    constexpr auto hosts_rbegin_0 = *hosts_rbegin;
+    constexpr auto hosts_rbegin_0_uint = hosts_rbegin->to_uint();
+    constexpr auto hosts_rbegin_at_0 = hosts_rbegin[0U];
+    constexpr auto hosts_rbegin_at_1 = hosts_rbegin[1U];
+    constexpr auto hosts_rbegin_at_2 = hosts_rbegin[2U];
+    constexpr auto hosts_rbegin_at_3 = hosts_rbegin[3U];
+    constexpr auto hosts_rit = *(--(++hosts_sequence.rbegin()++ + 2U) -= 1U);
+    constexpr auto hosts_rit_eq = hosts_rbegin == hosts_rend;
+    constexpr auto hosts_rit_ne = hosts_rbegin != hosts_rend;
+    constexpr auto hosts_rit_ls = hosts_rbegin < hosts_rend;
+    constexpr auto hosts_rit_le = hosts_rbegin <= hosts_rend;
+    constexpr auto hosts_rit_gt = hosts_rbegin > hosts_rend;
+    constexpr auto hosts_rit_ge = hosts_rbegin >= hosts_rend;
+    ASSERT_FALSE(hosts_empty);
+    ASSERT_EQ(hosts_size, 255);
+    ASSERT_EQ(hosts_front, ipv6_address::parse("2001:658:22a:cafe::1"));
+    ASSERT_EQ(hosts_back, ipv6_address::parse("2001:658:22a:cafe::ff"));
+    ASSERT_EQ(hosts_at_0, ipv6_address::parse("2001:658:22a:cafe::1"));
+    ASSERT_EQ(hosts_at_1, ipv6_address::parse("2001:658:22a:cafe::2"));
+    ASSERT_EQ(hosts_at_2, ipv6_address::parse("2001:658:22a:cafe::3"));
+    ASSERT_EQ(hosts_at_3, ipv6_address::parse("2001:658:22a:cafe::4"));
+    ASSERT_EQ(hosts_diff, 255);
+    ASSERT_EQ(hosts_begin_0, ipv6_address::parse("2001:658:22a:cafe::1"));
+    ASSERT_EQ(hosts_begin_0_uint, uint128_t::from_string("42540616829182469433403647294022090753").value());
+    ASSERT_EQ(hosts_begin_at_0, ipv6_address::parse("2001:658:22a:cafe::1"));
+    ASSERT_EQ(hosts_begin_at_1, ipv6_address::parse("2001:658:22a:cafe::2"));
+    ASSERT_EQ(hosts_begin_at_2, ipv6_address::parse("2001:658:22a:cafe::3"));
+    ASSERT_EQ(hosts_begin_at_3, ipv6_address::parse("2001:658:22a:cafe::4"));
+    ASSERT_EQ(hosts_it, ipv6_address::parse("2001:658:22a:cafe::2"));
+    ASSERT_FALSE(hosts_it_eq);
+    ASSERT_TRUE(hosts_it_ne);
+    ASSERT_TRUE(hosts_it_ls);
+    ASSERT_TRUE(hosts_it_le);
+    ASSERT_FALSE(hosts_it_gt);
+    ASSERT_FALSE(hosts_it_ge);
+    ASSERT_EQ(hosts_rdiff, 255);
+    ASSERT_EQ(hosts_rbegin_0, ipv6_address::parse("2001:658:22a:cafe::ff"));
+    ASSERT_EQ(hosts_rbegin_0_uint, uint128_t::from_string("42540616829182469433403647294022091007").value());
+    ASSERT_EQ(hosts_rbegin_at_0, ipv6_address::parse("2001:658:22a:cafe::ff"));
+    ASSERT_EQ(hosts_rbegin_at_1, ipv6_address::parse("2001:658:22a:cafe::fe"));
+    ASSERT_EQ(hosts_rbegin_at_2, ipv6_address::parse("2001:658:22a:cafe::fd"));
+    ASSERT_EQ(hosts_rbegin_at_3, ipv6_address::parse("2001:658:22a:cafe::fc"));
+    ASSERT_EQ(hosts_rit, ipv6_address::parse("2001:658:22a:cafe::fe"));
+    ASSERT_FALSE(hosts_rit_eq);
+    ASSERT_TRUE(hosts_rit_ne);
+    ASSERT_TRUE(hosts_rit_ls);
+    ASSERT_TRUE(hosts_rit_le);
+    ASSERT_FALSE(hosts_rit_gt);
+    ASSERT_FALSE(hosts_rit_ge);
+
+#if IPADDRESS_CPP_VERSION >= 20
+    constexpr auto host_range_0 = *++((ipv6_network::parse("2001:658:22a:cafe::/120").hosts() 
+                                | std::views::filter([](const auto& a) { return a.to_uint() % 2 == 0; })
+                                | std::views::take(2)).begin());
+    ASSERT_EQ(host_range_0, ipv6_address::parse("2001:658:22a:cafe::4"));
+#endif
+/*
+        std::make_tuple("2001:658:22a:cafe::/120", std::vector<const char*>{
+            "2001:658:22a:cafe::1", "2001:658:22a:cafe::2", "2001:658:22a:cafe::3", "2001:658:22a:cafe::4", "2001:658:22a:cafe::5", "2001:658:22a:cafe::6", "2001:658:22a:cafe::7", "2001:658:22a:cafe::8", "2001:658:22a:cafe::9", "2001:658:22a:cafe::a", "2001:658:22a:cafe::b", "2001:658:22a:cafe::c", "2001:658:22a:cafe::d", "2001:658:22a:cafe::e", "2001:658:22a:cafe::f", 
+            "2001:658:22a:cafe::10", "2001:658:22a:cafe::11", "2001:658:22a:cafe::12", "2001:658:22a:cafe::13", "2001:658:22a:cafe::14", "2001:658:22a:cafe::15", "2001:658:22a:cafe::16", "2001:658:22a:cafe::17", "2001:658:22a:cafe::18", "2001:658:22a:cafe::19", "2001:658:22a:cafe::1a", "2001:658:22a:cafe::1b", "2001:658:22a:cafe::1c", "2001:658:22a:cafe::1d", "2001:658:22a:cafe::1e", "2001:658:22a:cafe::1f", 
+            "2001:658:22a:cafe::20", "2001:658:22a:cafe::21", "2001:658:22a:cafe::22", "2001:658:22a:cafe::23", "2001:658:22a:cafe::24", "2001:658:22a:cafe::25", "2001:658:22a:cafe::26", "2001:658:22a:cafe::27", "2001:658:22a:cafe::28", "2001:658:22a:cafe::29", "2001:658:22a:cafe::2a", "2001:658:22a:cafe::2b", "2001:658:22a:cafe::2c", "2001:658:22a:cafe::2d", "2001:658:22a:cafe::2e", "2001:658:22a:cafe::2f", 
+            "2001:658:22a:cafe::30", "2001:658:22a:cafe::31", "2001:658:22a:cafe::32", "2001:658:22a:cafe::33", "2001:658:22a:cafe::34", "2001:658:22a:cafe::35", "2001:658:22a:cafe::36", "2001:658:22a:cafe::37", "2001:658:22a:cafe::38", "2001:658:22a:cafe::39", "2001:658:22a:cafe::3a", "2001:658:22a:cafe::3b", "2001:658:22a:cafe::3c", "2001:658:22a:cafe::3d", "2001:658:22a:cafe::3e", "2001:658:22a:cafe::3f", 
+            "2001:658:22a:cafe::40", "2001:658:22a:cafe::41", "2001:658:22a:cafe::42", "2001:658:22a:cafe::43", "2001:658:22a:cafe::44", "2001:658:22a:cafe::45", "2001:658:22a:cafe::46", "2001:658:22a:cafe::47", "2001:658:22a:cafe::48", "2001:658:22a:cafe::49", "2001:658:22a:cafe::4a", "2001:658:22a:cafe::4b", "2001:658:22a:cafe::4c", "2001:658:22a:cafe::4d", "2001:658:22a:cafe::4e", "2001:658:22a:cafe::4f", 
+            "2001:658:22a:cafe::50", "2001:658:22a:cafe::51", "2001:658:22a:cafe::52", "2001:658:22a:cafe::53", "2001:658:22a:cafe::54", "2001:658:22a:cafe::55", "2001:658:22a:cafe::56", "2001:658:22a:cafe::57", "2001:658:22a:cafe::58", "2001:658:22a:cafe::59", "2001:658:22a:cafe::5a", "2001:658:22a:cafe::5b", "2001:658:22a:cafe::5c", "2001:658:22a:cafe::5d", "2001:658:22a:cafe::5e", "2001:658:22a:cafe::5f", 
+            "2001:658:22a:cafe::60", "2001:658:22a:cafe::61", "2001:658:22a:cafe::62", "2001:658:22a:cafe::63", "2001:658:22a:cafe::64", "2001:658:22a:cafe::65", "2001:658:22a:cafe::66", "2001:658:22a:cafe::67", "2001:658:22a:cafe::68", "2001:658:22a:cafe::69", "2001:658:22a:cafe::6a", "2001:658:22a:cafe::6b", "2001:658:22a:cafe::6c", "2001:658:22a:cafe::6d", "2001:658:22a:cafe::6e", "2001:658:22a:cafe::6f", 
+            "2001:658:22a:cafe::70", "2001:658:22a:cafe::71", "2001:658:22a:cafe::72", "2001:658:22a:cafe::73", "2001:658:22a:cafe::74", "2001:658:22a:cafe::75", "2001:658:22a:cafe::76", "2001:658:22a:cafe::77", "2001:658:22a:cafe::78", "2001:658:22a:cafe::79", "2001:658:22a:cafe::7a", "2001:658:22a:cafe::7b", "2001:658:22a:cafe::7c", "2001:658:22a:cafe::7d", "2001:658:22a:cafe::7e", "2001:658:22a:cafe::7f", 
+            "2001:658:22a:cafe::80", "2001:658:22a:cafe::81", "2001:658:22a:cafe::82", "2001:658:22a:cafe::83", "2001:658:22a:cafe::84", "2001:658:22a:cafe::85", "2001:658:22a:cafe::86", "2001:658:22a:cafe::87", "2001:658:22a:cafe::88", "2001:658:22a:cafe::89", "2001:658:22a:cafe::8a", "2001:658:22a:cafe::8b", "2001:658:22a:cafe::8c", "2001:658:22a:cafe::8d", "2001:658:22a:cafe::8e", "2001:658:22a:cafe::8f", 
+            "2001:658:22a:cafe::90", "2001:658:22a:cafe::91", "2001:658:22a:cafe::92", "2001:658:22a:cafe::93", "2001:658:22a:cafe::94", "2001:658:22a:cafe::95", "2001:658:22a:cafe::96", "2001:658:22a:cafe::97", "2001:658:22a:cafe::98", "2001:658:22a:cafe::99", "2001:658:22a:cafe::9a", "2001:658:22a:cafe::9b", "2001:658:22a:cafe::9c", "2001:658:22a:cafe::9d", "2001:658:22a:cafe::9e", "2001:658:22a:cafe::9f", 
+            "2001:658:22a:cafe::a0", "2001:658:22a:cafe::a1", "2001:658:22a:cafe::a2", "2001:658:22a:cafe::a3", "2001:658:22a:cafe::a4", "2001:658:22a:cafe::a5", "2001:658:22a:cafe::a6", "2001:658:22a:cafe::a7", "2001:658:22a:cafe::a8", "2001:658:22a:cafe::a9", "2001:658:22a:cafe::aa", "2001:658:22a:cafe::ab", "2001:658:22a:cafe::ac", "2001:658:22a:cafe::ad", "2001:658:22a:cafe::ae", "2001:658:22a:cafe::af", 
+            "2001:658:22a:cafe::b0", "2001:658:22a:cafe::b1", "2001:658:22a:cafe::b2", "2001:658:22a:cafe::b3", "2001:658:22a:cafe::b4", "2001:658:22a:cafe::b5", "2001:658:22a:cafe::b6", "2001:658:22a:cafe::b7", "2001:658:22a:cafe::b8", "2001:658:22a:cafe::b9", "2001:658:22a:cafe::ba", "2001:658:22a:cafe::bb", "2001:658:22a:cafe::bc", "2001:658:22a:cafe::bd", "2001:658:22a:cafe::be", "2001:658:22a:cafe::bf", 
+            "2001:658:22a:cafe::c0", "2001:658:22a:cafe::c1", "2001:658:22a:cafe::c2", "2001:658:22a:cafe::c3", "2001:658:22a:cafe::c4", "2001:658:22a:cafe::c5", "2001:658:22a:cafe::c6", "2001:658:22a:cafe::c7", "2001:658:22a:cafe::c8", "2001:658:22a:cafe::c9", "2001:658:22a:cafe::ca", "2001:658:22a:cafe::cb", "2001:658:22a:cafe::cc", "2001:658:22a:cafe::cd", "2001:658:22a:cafe::ce", "2001:658:22a:cafe::cf", 
+            "2001:658:22a:cafe::d0", "2001:658:22a:cafe::d1", "2001:658:22a:cafe::d2", "2001:658:22a:cafe::d3", "2001:658:22a:cafe::d4", "2001:658:22a:cafe::d5", "2001:658:22a:cafe::d6", "2001:658:22a:cafe::d7", "2001:658:22a:cafe::d8", "2001:658:22a:cafe::d9", "2001:658:22a:cafe::da", "2001:658:22a:cafe::db", "2001:658:22a:cafe::dc", "2001:658:22a:cafe::dd", "2001:658:22a:cafe::de", "2001:658:22a:cafe::df", 
+            "2001:658:22a:cafe::e0", "2001:658:22a:cafe::e1", "2001:658:22a:cafe::e2", "2001:658:22a:cafe::e3", "2001:658:22a:cafe::e4", "2001:658:22a:cafe::e5", "2001:658:22a:cafe::e6", "2001:658:22a:cafe::e7", "2001:658:22a:cafe::e8", "2001:658:22a:cafe::e9", "2001:658:22a:cafe::ea", "2001:658:22a:cafe::eb", "2001:658:22a:cafe::ec", "2001:658:22a:cafe::ed", "2001:658:22a:cafe::ee", "2001:658:22a:cafe::ef", 
+            "2001:658:22a:cafe::f0", "2001:658:22a:cafe::f1", "2001:658:22a:cafe::f2", "2001:658:22a:cafe::f3", "2001:658:22a:cafe::f4", "2001:658:22a:cafe::f5", "2001:658:22a:cafe::f6", "2001:658:22a:cafe::f7", "2001:658:22a:cafe::f8", "2001:658:22a:cafe::f9", "2001:658:22a:cafe::fa", "2001:658:22a:cafe::fb", "2001:658:22a:cafe::fc", "2001:658:22a:cafe::fd", "2001:658:22a:cafe::fe", "2001:658:22a:cafe::ff"
+        })
+
+
+    constexpr auto subnets_sequence = ipv6_network::parse("192.0.2.0/24").subnets(2);
+    constexpr auto subnets_empty = subnets_sequence.empty();
+    constexpr auto subnets_size = subnets_sequence.size();
+    constexpr auto subnets_front = subnets_sequence.front();
+    constexpr auto subnets_back = subnets_sequence.back();
+    constexpr auto subnets_at_0 = subnets_sequence.at(0);
+    constexpr auto subnets_at_1 = subnets_sequence[1];
+    constexpr auto subnets_at_2 = subnets_sequence.at(2);
+    constexpr auto subnets_at_3 = subnets_sequence[3];
+    constexpr auto subnets_begin = subnets_sequence.begin();
+    constexpr auto subnets_end = subnets_sequence.end();
+    constexpr auto subnets_rbegin = subnets_sequence.rbegin();
+    constexpr auto subnets_rend = subnets_sequence.rend();
+    constexpr auto subnets_diff = subnets_end.uint_diff(subnets_begin);
+    constexpr auto subnets_begin_0 = *subnets_begin;
+    constexpr auto subnets_begin_0_uint = subnets_begin->network_address().to_uint();
+    constexpr auto subnets_begin_at_0 = subnets_begin[0U];
+    constexpr auto subnets_begin_at_1 = subnets_begin[1U];
+    constexpr auto subnets_begin_at_2 = subnets_begin[2U];
+    constexpr auto subnets_begin_at_3 = subnets_begin[3U];
+    constexpr auto subnets_it = *(--(++subnets_sequence.begin()++ + 2U) -= 1U);
+    constexpr auto subnets_it_eq = subnets_begin == subnets_end;
+    constexpr auto subnets_it_ne = subnets_begin != subnets_end;
+    constexpr auto subnets_it_ls = subnets_begin < subnets_end;
+    constexpr auto subnets_it_le = subnets_begin <= subnets_end;
+    constexpr auto subnets_it_gt = subnets_begin > subnets_end;
+    constexpr auto subnets_it_ge = subnets_begin >= subnets_end;
+    constexpr auto subnets_rdiff = subnets_rend.uint_diff(subnets_rbegin);
+    constexpr auto subnets_rbegin_0 = *subnets_rbegin;
+    constexpr auto subnets_rbegin_0_uint = subnets_rbegin->network_address().to_uint();
+    constexpr auto subnets_rbegin_at_0 = subnets_rbegin[0U];
+    constexpr auto subnets_rbegin_at_1 = subnets_rbegin[1U];
+    constexpr auto subnets_rbegin_at_2 = subnets_rbegin[2U];
+    constexpr auto subnets_rbegin_at_3 = subnets_rbegin[3U];
+    constexpr auto subnets_rit = *(--(++subnets_sequence.rbegin()++ + 2U) -= 1U);
+    constexpr auto subnets_rit_eq = subnets_rbegin == subnets_rend;
+    constexpr auto subnets_rit_ne = subnets_rbegin != subnets_rend;
+    constexpr auto subnets_rit_ls = subnets_rbegin < subnets_rend;
+    constexpr auto subnets_rit_le = subnets_rbegin <= subnets_rend;
+    constexpr auto subnets_rit_gt = subnets_rbegin > subnets_rend;
+    constexpr auto subnets_rit_ge = subnets_rbegin >= subnets_rend;
+    ASSERT_FALSE(subnets_empty);
+    ASSERT_EQ(subnets_size, 4);
+    ASSERT_EQ(subnets_front, ipv6_network::parse("192.0.2.0/26"));
+    ASSERT_EQ(subnets_back, ipv6_network::parse("192.0.2.192/26"));
+    ASSERT_EQ(subnets_at_0, ipv6_network::parse("192.0.2.0/26"));
+    ASSERT_EQ(subnets_at_1, ipv6_network::parse("192.0.2.64/26"));
+    ASSERT_EQ(subnets_at_2, ipv6_network::parse("192.0.2.128/26"));
+    ASSERT_EQ(subnets_at_3, ipv6_network::parse("192.0.2.192/26"));
+    ASSERT_EQ(subnets_diff, 4);
+    ASSERT_EQ(subnets_begin_0, ipv6_network::parse("192.0.2.0/26"));
+    ASSERT_EQ(subnets_begin_0_uint, 0xC0000200);
+    ASSERT_EQ(subnets_begin_at_0, ipv6_network::parse("192.0.2.0/26"));
+    ASSERT_EQ(subnets_begin_at_1, ipv6_network::parse("192.0.2.64/26"));
+    ASSERT_EQ(subnets_begin_at_2, ipv6_network::parse("192.0.2.128/26"));
+    ASSERT_EQ(subnets_begin_at_3, ipv6_network::parse("192.0.2.192/26"));
+    ASSERT_EQ(subnets_it, ipv6_network::parse("192.0.2.64/26"));
+    ASSERT_FALSE(subnets_it_eq);
+    ASSERT_TRUE(subnets_it_ne);
+    ASSERT_TRUE(subnets_it_ls);
+    ASSERT_TRUE(subnets_it_le);
+    ASSERT_FALSE(subnets_it_gt);
+    ASSERT_FALSE(subnets_it_ge);
+    ASSERT_EQ(subnets_rdiff, 4);
+    ASSERT_EQ(subnets_rbegin_0, ipv6_network::parse("192.0.2.192/26"));
+    ASSERT_EQ(subnets_rbegin_0_uint, 0xC00002C0);
+    ASSERT_EQ(subnets_rbegin_at_0, ipv6_network::parse("192.0.2.192/26"));
+    ASSERT_EQ(subnets_rbegin_at_1, ipv6_network::parse("192.0.2.128/26"));
+    ASSERT_EQ(subnets_rbegin_at_2, ipv6_network::parse("192.0.2.64/26"));
+    ASSERT_EQ(subnets_rbegin_at_3, ipv6_network::parse("192.0.2.0/26"));
+    ASSERT_EQ(subnets_rit, ipv6_network::parse("192.0.2.128/26"));
+    ASSERT_FALSE(subnets_rit_eq);
+    ASSERT_TRUE(subnets_rit_ne);
+    ASSERT_TRUE(subnets_rit_ls);
+    ASSERT_TRUE(subnets_rit_le);
+    ASSERT_FALSE(subnets_rit_gt);
+    ASSERT_FALSE(subnets_rit_ge);
+    
+#if IPADDRESS_CPP_VERSION >= 20
+    constexpr auto subnets_range_0 = *++((ipv6_network::parse("192.0.2.0/24").subnets(2) 
+                                   | std::views::filter([](const auto& n) { return n.network_address().to_uint() % 2 == 0; })
+                                   | std::views::take(2)).begin());
+    ASSERT_EQ(subnets_range_0, ipv6_network::parse("192.0.2.64/26"));
+#endif
+
+    constexpr auto exclude_sequence = ipv6_network::parse("192.0.2.0/28").address_exclude(ipv6_network::parse("192.0.2.1/32"));
+    constexpr auto exclude_empty = exclude_sequence.empty();
+    constexpr auto exclude_begin = exclude_sequence.begin();
+    constexpr auto exclude_end = exclude_sequence.end();
+    constexpr auto exclude_begin_0 = *exclude_begin;
+    constexpr auto exclude_begin_0_uint = exclude_begin->network_address().to_uint();
+    constexpr auto exclude_begin_1 = *++exclude_sequence.begin();
+    ASSERT_FALSE(exclude_empty);
+    ASSERT_EQ(exclude_begin_0, ipv6_network::parse("192.0.2.8/29"));
+    ASSERT_EQ(exclude_begin_0_uint, 0xC0000208);
+    ASSERT_EQ(exclude_begin_1, ipv6_network::parse("192.0.2.4/30"));
+    constexpr auto exclude_it_eq = exclude_begin == exclude_end;
+    constexpr auto exclude_it_ne = exclude_begin != exclude_end;
+    constexpr auto exclude_it_ls = exclude_begin < exclude_end;
+    constexpr auto exclude_it_le = exclude_begin <= exclude_end;
+    constexpr auto exclude_it_gt = exclude_begin > exclude_end;
+    constexpr auto exclude_it_ge = exclude_begin >= exclude_end;
+    ASSERT_FALSE(exclude_it_eq);
+    ASSERT_TRUE(exclude_it_ne);
+    ASSERT_TRUE(exclude_it_ls);
+    ASSERT_TRUE(exclude_it_le);
+    ASSERT_FALSE(exclude_it_gt);
+    ASSERT_FALSE(exclude_it_ge);
+
+#if IPADDRESS_CPP_VERSION >= 20
+    constexpr auto exclude_range_0 = *++((ipv6_network::parse("192.0.2.0/28").address_exclude(ipv6_network::parse("192.0.2.1/32"))
+                                   | std::views::filter([](const auto& n) { return n.network_address().to_uint() % 2 == 0; })
+                                   | std::views::take(2)).begin());
+    ASSERT_EQ(exclude_range_0, ipv6_network::parse("192.0.2.4/30"));
+#endif
+*/
 }
 
 TEST(ipv6_network, DefaultCtor) {
