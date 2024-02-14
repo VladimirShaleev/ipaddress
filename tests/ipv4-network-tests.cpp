@@ -143,6 +143,24 @@ TEST(ipv4_network, CompileTime) {
     ASSERT_TRUE(net22);
     ASSERT_FALSE(net23);
 
+    constexpr auto contains = ipv4_network::parse("192.0.2.0/28").contains(ipv4_address::parse("192.0.2.6"));
+    ASSERT_TRUE(contains);
+
+    constexpr auto overlaps = ipv4_network::parse("1.2.3.0/24").overlaps(ipv4_network::parse("1.2.3.0/30"));
+    ASSERT_TRUE(overlaps);
+
+    constexpr auto subnet_of = ipv4_network::parse("10.0.0.0/30").subnet_of(ipv4_network::parse("10.0.0.0/24"));
+    ASSERT_TRUE(subnet_of);
+
+    constexpr auto supernet_of = ipv4_network::parse("192.168.1.0/24").supernet_of(ipv4_network::parse("192.168.1.128/30"));
+    ASSERT_TRUE(supernet_of);
+
+    constexpr auto addresses_count = ipv4_network::parse("10.0.0.0/30").addresses_count();
+    ASSERT_EQ(addresses_count, 4);
+
+    constexpr auto supernet = ipv4_network::parse("192.0.2.0/24").supernet();
+    ASSERT_EQ(supernet, ipv4_network::parse("192.0.2.0/23"));
+
     constexpr auto hosts_sequence = ipv4_network::parse("192.0.2.0/29").hosts();
     constexpr auto hosts_empty = hosts_sequence.empty();
     constexpr auto hosts_size = hosts_sequence.size();
