@@ -385,16 +385,33 @@ public:
 
     template <typename T, size_t N>
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(const T(&address)[N]) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        internal::is_char_type<T>();
-        auto str = make_fixed_string(address);
-        return parse_string(str);
+        auto code = error_code::NO_ERROR;
+        auto result = parse_string(address, code);
+        if (code != error_code::NO_ERROR) {
+            if (IPADDRESS_IS_CONST_EVALUATED(code)) {
+                raise_error(code, 0, address, N);
+            }
+        #ifndef IPADDRESS_NO_EXCEPTIONS
+            raise_error(code, 0, address, N);
+        #endif
+        }
+        return result;
     }
 
     template <typename T, size_t N>
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(const T(&address)[N], error_code& code) IPADDRESS_NOEXCEPT {
-        internal::is_char_type<T>();
-        auto str = make_fixed_string(address);
-        return parse_string(str, code);
+        code = error_code::NO_ERROR;
+        const auto ipv4 = ipv4_address::parse(address, code);
+        if (code == error_code::NO_ERROR) {
+            return ip_address(ipv4);
+        }
+        
+        const auto ipv6 = ipv6_address::parse(address, code);
+        if (code == error_code::NO_ERROR) {
+            return ip_address(ipv6);
+        }
+        
+        return ip_address();
     }
 
     template <typename T, size_t N>
@@ -481,6 +498,7 @@ private:
 
     template <typename Str>
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse_string(const Str& address, error_code& code) IPADDRESS_NOEXCEPT {
+        code = error_code::NO_ERROR;
         const auto ipv4 = ipv4_address::parse(address, code);
         if (code == error_code::NO_ERROR) {
             return ip_address(ipv4);
@@ -515,6 +533,26 @@ private:
     } _ipv {};
     ip_version _version = ip_version::V4;
 };
+
+#ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
+
+    template <fixed_string FixedString>
+    IPADDRESS_NODISCARD consteval IPADDRESS_FORCE_INLINE ip_address operator""_ip() IPADDRESS_NOEXCEPT {
+        return ip_address::parse<FixedString>();
+    }
+
+#else // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const char* address, std::size_t size) IPADDRESS_NOEXCEPT {
+        assert(size <= 57 && "literal string is too long");
+        char str[57 + 1] = {};
+        for (size_t i = 0; i < size; ++i) {
+            str[i] = address[i];
+        }
+        return ip_address::parse(str);
+    }
+
+#endif // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
 } // namespace IPADDRESS_NAMESPACE
 

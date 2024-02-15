@@ -439,7 +439,7 @@ using ipv6_address = ip_address_base<ipv6_address_base>;
 #else // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_address operator""_ipv6(const char* address, std::size_t size) IPADDRESS_NOEXCEPT {
-        assert(size <= ipv6_address::_max_string_len && "litteral string is too long");
+        assert(size <= ipv6_address::_max_string_len && "literal string is too long");
         char str[ipv6_address::_max_string_len + 1] = {};
         for (size_t i = 0; i < size; ++i) {
             str[i] = address[i];

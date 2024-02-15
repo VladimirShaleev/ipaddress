@@ -45,7 +45,7 @@ using ipv6_network = ip_network_base<ipv6_network_base>;
 #else // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_network operator""_ipv6_net(const char* address, std::size_t size) IPADDRESS_NOEXCEPT {
-        assert(size <= ipv6_network::_max_string_len + 4 && "litteral string is too long");
+        assert(size <= ipv6_network::_max_string_len + 4 && "literal string is too long");
         char str[ipv6_network::_max_string_len + 5] = {};
         for (size_t i = 0; i < size; ++i) {
             str[i] = address[i];
