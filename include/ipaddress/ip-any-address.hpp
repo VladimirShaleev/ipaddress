@@ -556,4 +556,55 @@ private:
 
 } // namespace IPADDRESS_NAMESPACE
 
+#ifndef IPADDRESS_NO_OVERLOAD_STD
+
+namespace std {
+
+template <>
+struct hash<IPADDRESS_NAMESPACE::ip_address> {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::size_t operator()(const IPADDRESS_NAMESPACE::ip_address& ip) const IPADDRESS_NOEXCEPT {
+        return ip.hash();
+    }
+};
+
+IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void swap(IPADDRESS_NAMESPACE::ip_address& ip1, IPADDRESS_NAMESPACE::ip_address& ip2) IPADDRESS_NOEXCEPT {
+    ip1.swap(ip2);
+}
+
+IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string to_string(const IPADDRESS_NAMESPACE::ip_address& ip) {
+    return ip.to_string();
+}
+
+IPADDRESS_FORCE_INLINE std::ostream& operator<<(std::ostream& stream, const IPADDRESS_NAMESPACE::ip_address& ip) {
+    auto& iword = stream.iword(IPADDRESS_NAMESPACE::stream_index());
+    auto fmt = iword
+        ? (IPADDRESS_NAMESPACE::format) (iword - 1) 
+        : IPADDRESS_NAMESPACE::format::compressed;
+    iword = 0;
+    auto str = ip.to_string(fmt);
+    if (stream.flags() & ios_base::uppercase) {
+        auto end = std::find(str.cbegin(), str.cend(), '%');
+        std::transform(str.cbegin(), end, str.begin(), [](auto c){
+            return std::toupper(c);
+        });
+    }
+    return stream << str;
+}
+
+template <typename Base>
+IPADDRESS_FORCE_INLINE std::istream& operator>>(std::istream& stream, IPADDRESS_NAMESPACE::ip_address& ip) {
+    std::string str;
+    stream >> str;
+    IPADDRESS_NAMESPACE::error_code err;
+    ip = IPADDRESS_NAMESPACE::ip_address::parse(str, err);
+    if (err != IPADDRESS_NAMESPACE::error_code::NO_ERROR) {
+        stream.setstate(std::ios_base::failbit);
+    }
+    return stream;
+}
+
+} // namespace std
+
+#endif // IPADDRESS_NO_OVERLOAD_STD
+
 #endif // IPADDRESS_IP_ANY_ADDRESS_HPP
