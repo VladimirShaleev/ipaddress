@@ -6,5 +6,6 @@
 #include "ipv4-network.hpp"
 #include "ipv6-network.hpp"
 #include "ip-networks.hpp"
+#include "ip-any-address.hpp"
 
 #endif

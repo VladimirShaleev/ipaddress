@@ -1,0 +1,364 @@
+#ifndef IPADDRESS_IP_ANY_ADDRESS_HPP
+#define IPADDRESS_IP_ANY_ADDRESS_HPP
+
+#include "ipv6-address.hpp"
+
+namespace IPADDRESS_NAMESPACE {
+
+class ip_address {
+public:
+    using base_type_ipv4 = typename ipv4_address::base_type;
+    using base_type_ipv6 = typename ipv6_address::base_type;
+
+    using uint_type_ipv4 = typename ipv4_address::uint_type;
+    using uint_type_ipv6 = typename ipv6_address::uint_type;
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_version version() const IPADDRESS_NOEXCEPT {
+        return _version;
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_multicast() const IPADDRESS_NOEXCEPT {
+        return _version == ip_version::V4 ? _ipv.ipv4.is_multicast() : _ipv.ipv6.is_multicast();
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_private() const IPADDRESS_NOEXCEPT {
+        return _version == ip_version::V4 ? _ipv.ipv4.is_private() : _ipv.ipv6.is_private();
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_global() const IPADDRESS_NOEXCEPT {
+        return _version == ip_version::V4 ? _ipv.ipv4.is_global() : _ipv.ipv6.is_global();
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_reserved() const IPADDRESS_NOEXCEPT {
+        return _version == ip_version::V4 ? _ipv.ipv4.is_reserved() : _ipv.ipv6.is_reserved();
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_loopback() const IPADDRESS_NOEXCEPT {
+        return _version == ip_version::V4 ? _ipv.ipv4.is_loopback() : _ipv.ipv6.is_loopback();
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_link_local() const IPADDRESS_NOEXCEPT {
+        return _version == ip_version::V4 ? _ipv.ipv4.is_link_local() : _ipv.ipv6.is_link_local();
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_unspecified() const IPADDRESS_NOEXCEPT {
+        return _version == ip_version::V4 ? _ipv.ipv4.is_unspecified() : _ipv.ipv6.is_unspecified();
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_v4() const IPADDRESS_NOEXCEPT {
+        return _version == ip_version::V4;
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_v6() const IPADDRESS_NOEXCEPT {
+        return _version == ip_version::V6;
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t size() const IPADDRESS_NOEXCEPT {
+        return _version == ip_version::V4 ? _ipv.ipv4.size() : _ipv.ipv6.size();
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t hash() const IPADDRESS_NOEXCEPT {
+        return _version == ip_version::V4 ? _ipv.ipv4.hash() : _ipv.ipv6.hash();
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<ipv4_address> v4() const IPADDRESS_NOEXCEPT {
+        auto ip = _ipv.ipv4;
+        return _version == ip_version::V4 ? optional<ipv4_address>(std::move(ip)) : optional<ipv4_address>();
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<ipv6_address> v6() const IPADDRESS_NOEXCEPT {
+        auto ip = _ipv.ipv6;
+        return _version == ip_version::V6 ? optional<ipv6_address>(std::move(ip)) : optional<ipv6_address>();
+    }
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address() IPADDRESS_NOEXCEPT {
+    }
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address(const ipv4_address& ipv4) IPADDRESS_NOEXCEPT : _ipv(ipv4), _version(ip_version::V4) {
+    }
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address(const ipv6_address& ipv6) IPADDRESS_NOEXCEPT : _ipv(ipv6), _version(ip_version::V6) {
+    }
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit ip_address(const base_type_ipv4& bytes) IPADDRESS_NOEXCEPT : _ipv(bytes), _version(ip_version::V4) {
+    }
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit ip_address(const base_type_ipv6& bytes) IPADDRESS_NOEXCEPT : _ipv(bytes), _version(ip_version::V6) {
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address from_bytes(const base_type_ipv4& bytes) IPADDRESS_NOEXCEPT {
+        return ip_address(bytes);
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address from_bytes(const base_type_ipv6& bytes) IPADDRESS_NOEXCEPT {
+        return ip_address(bytes);
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address from_bytes(const uint8_t* bytes, size_t byte_count, ip_version version) IPADDRESS_NOEXCEPT {
+        return version == ip_version::V4 ? ip_address(ipv4_address::from_bytes(bytes, byte_count)) : ip_address(ipv6_address::from_bytes(bytes, byte_count));
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address from_uint(uint_type_ipv4 ip) IPADDRESS_NOEXCEPT {
+        return ip_address(ipv4_address::from_uint(ip));
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address from_uint(const uint_type_ipv6& ip) IPADDRESS_NOEXCEPT {
+        return ip_address(ipv6_address::from_uint(ip));
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string to_string(format fmt = format::compressed) const {
+        return _version == ip_version::V4 ? _ipv.ipv4.to_string(fmt) : _ipv.ipv6.to_string(fmt);
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string reverse_pointer() const {
+       return _version == ip_version::V4 ? _ipv.ipv4.reverse_pointer() : _ipv.ipv6.reverse_pointer();
+    }
+
+    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE void swap(ip_address& ip) IPADDRESS_NOEXCEPT {
+        const auto tmp = *this;
+        *this = ip;
+        ip = tmp;
+    }
+
+#ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
+
+    template <fixed_string FixedString>
+    IPADDRESS_NODISCARD static consteval IPADDRESS_FORCE_INLINE ip_address parse() IPADDRESS_NOEXCEPT {
+        constexpr auto str = FixedString;
+        auto code = error_code::NO_ERROR;
+
+        char ip[str.size() + 1]{};
+        for (size_t i = 0; i < str.size(); ++i) {
+            ip[i] = str[i];
+        }
+
+        const auto ipv4 = ipv4_address::parse(ip, code);
+        if (code == error_code::NO_ERROR) {
+            return ip_address(ipv4);
+        }
+        
+        const auto ipv6 = ipv6_address::parse(ip, code);
+        if (code == error_code::NO_ERROR) {
+            return ip_address(ipv6);
+        }
+
+        raise_error(code, 0, str.data(), str.size());
+    }
+
+#endif // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
+
+#if IPADDRESS_CPP_VERSION >= 17
+
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(std::string_view address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return parse_string(address);
+    }
+
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(std::wstring_view address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return parse_string(address);
+    }
+
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(std::u16string_view address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return parse_string(address);
+    }
+
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(std::u32string_view address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return parse_string(address);
+    }
+
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(std::string_view address, error_code& code) IPADDRESS_NOEXCEPT {
+        return parse_string(address, code);
+    }
+
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(std::wstring_view address, error_code& code) IPADDRESS_NOEXCEPT {
+        return parse_string(address, code);
+    }
+
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(std::u16string_view address, error_code& code) IPADDRESS_NOEXCEPT {
+        return parse_string(address, code);
+    }
+
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(std::u32string_view address, error_code& code) IPADDRESS_NOEXCEPT {
+        return parse_string(address, code);
+    }
+
+#if __cpp_char8_t >= 201811L
+
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(std::u8string_view address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return parse_string(address);
+    }
+
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(std::u8string_view address, error_code& code) IPADDRESS_NOEXCEPT {
+        return parse_string(address, code);
+    }
+
+#endif // __cpp_char8_t
+
+#else // IPADDRESS_CPP_VERSION < 17
+
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_address parse(const std::string& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return parse_string(address);
+    }
+
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_address parse(const std::wstring& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return parse_string(address);
+    }
+
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_address parse(const std::u16string& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return parse_string(address);
+    }
+
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_address parse(const std::u32string& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return parse_string(address);
+    }
+
+    static IPADDRESS_FORCE_INLINE ip_address parse(const std::string& address, error_code& code) IPADDRESS_NOEXCEPT {
+        return parse_string(address, code);
+    }
+
+    static IPADDRESS_FORCE_INLINE ip_address parse(const std::wstring& address, error_code& code) IPADDRESS_NOEXCEPT {
+        return parse_string(address, code);
+    }
+
+    static IPADDRESS_FORCE_INLINE ip_address parse(const std::u16string& address, error_code& code) IPADDRESS_NOEXCEPT {
+        return parse_string(address, code);
+    }
+
+    static IPADDRESS_FORCE_INLINE ip_address parse(const std::u32string& address, error_code& code) IPADDRESS_NOEXCEPT {
+        return parse_string(address, code);
+    }
+
+#if __cpp_char8_t >= 201811L
+
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::u8string& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return parse_string(address);
+    }
+
+    static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::u8string& address, error_code& code) IPADDRESS_NOEXCEPT {
+        return parse_string(address, code);
+    }
+
+#endif // __cpp_char8_t
+
+#endif // IPADDRESS_CPP_VERSION < 17
+
+    template <typename T, size_t N>
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(const T(&address)[N]) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        internal::is_char_type<T>();
+        auto str = make_fixed_string(address);
+        return parse_string(str);
+    }
+
+    template <typename T, size_t N>
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(const T(&address)[N], error_code& code) IPADDRESS_NOEXCEPT {
+        internal::is_char_type<T>();
+        auto str = make_fixed_string(address);
+        return parse_string(str, code);
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE explicit operator std::string() const {
+        return _version == ip_version::V4 ? _ipv.ipv4.to_string() : _ipv.ipv6.to_string();
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(const ip_address& rhs) const IPADDRESS_NOEXCEPT {
+        if (_version != rhs._version) {
+            return false;
+        }
+        return _version == ip_version::V4 ? (_ipv.ipv4 == _ipv.ipv4) : (_ipv.ipv6 == _ipv.ipv6);
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(const ip_address& rhs) const IPADDRESS_NOEXCEPT {
+        return !(*this == rhs);
+    }
+
+#ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const ip_address& rhs) const IPADDRESS_NOEXCEPT {
+        if (const auto result = _version <=> rhs._version; result == std::strong_ordering::equivalent) {
+            return _version == ip_version::V4 ? (_ipv.ipv4 <=> _ipv.ipv4) : (_ipv.ipv6 <=> _ipv.ipv6);
+        } else {
+            return result;
+        }
+    }
+
+#else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(const ip_address& rhs) const IPADDRESS_NOEXCEPT {
+        if (_version < rhs._version) {
+            return true;
+        }
+        if (_version > rhs._version) {
+            return false;
+        }
+        return _version == ip_version::V4 ? (_ipv.ipv4 < _ipv.ipv4) : (_ipv.ipv6 < _ipv.ipv6);
+    }
+    
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(const ip_address& rhs) const IPADDRESS_NOEXCEPT {
+        return rhs < *this;
+    }
+    
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(const ip_address& rhs) const IPADDRESS_NOEXCEPT {
+        return !(rhs < *this);
+    }
+    
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(const ip_address& rhs) const IPADDRESS_NOEXCEPT {
+        return !(*this < rhs);
+    }
+
+#endif // !IPADDRESS_HAS_SPACESHIP_OPERATOR
+
+private:
+    template <typename Str>
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse_string(const Str& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        auto code = error_code::NO_ERROR;
+        auto result = parse_string(address, code);
+        if (code != error_code::NO_ERROR) {
+            if (IPADDRESS_IS_CONST_EVALUATED(code)) {
+                raise_error(code, 0, address.data(), address.size());
+            }
+        #ifndef IPADDRESS_NO_EXCEPTIONS
+            raise_error(code, 0, address.data(), address.size());
+        #endif
+        }
+        return result;
+    }
+
+    template <typename Str>
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse_string(const Str& address, error_code& code) IPADDRESS_NOEXCEPT {
+        const auto ipv4 = ipv4_address::parse(address, code);
+        if (code == error_code::NO_ERROR) {
+            return ip_address(ipv4);
+        }
+        
+        const auto ipv6 = ipv6_address::parse(address, code);
+        if (code == error_code::NO_ERROR) {
+            return ip_address(ipv6);
+        }
+        
+        return ip_address();
+    }
+
+    union ip_any_address {
+        IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_address() IPADDRESS_NOEXCEPT : ipv4() {
+        }
+
+        IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_address(const ipv4_address& ip) IPADDRESS_NOEXCEPT : ipv4(ip) {
+        }
+
+        IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_address(const ipv6_address& ip) IPADDRESS_NOEXCEPT : ipv6(ip) {
+        }
+
+        IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit ip_any_address(const base_type_ipv4& bytes) IPADDRESS_NOEXCEPT : ipv4(bytes) {
+        }
+
+        IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit ip_any_address(const base_type_ipv6& bytes) IPADDRESS_NOEXCEPT : ipv6(bytes) {
+        }
+
+        ipv4_address ipv4;
+        ipv6_address ipv6;
+    } _ipv {};
+    ip_version _version = ip_version::V4;
+};
+
+} // namespace IPADDRESS_NAMESPACE
+
+#endif // IPADDRESS_IP_ANY_ADDRESS_HPP
