@@ -78,13 +78,19 @@ public:
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<ipv4_address> v4() const IPADDRESS_NOEXCEPT {
+        if (_version == ip_version::V6) {
+            return optional<ipv4_address>();
+        }
         auto ip = _ipv.ipv4;
-        return _version == ip_version::V4 ? optional<ipv4_address>(std::move(ip)) : optional<ipv4_address>();
+        return optional<ipv4_address>(std::move(ip));
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<ipv6_address> v6() const IPADDRESS_NOEXCEPT {
+        if (_version == ip_version::V4) {
+            return optional<ipv6_address>();
+        }
         auto ip = _ipv.ipv6;
-        return _version == ip_version::V6 ? optional<ipv6_address>(std::move(ip)) : optional<ipv6_address>();
+        return optional<ipv6_address>(std::move(ip));
     }
 
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address() IPADDRESS_NOEXCEPT {
@@ -197,6 +203,54 @@ public:
         return parse_string(address, code);
     }
 
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::string_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        if (_version == ip_version::V6) {
+            _ipv.ipv6.set_scope_id(scope_id);
+        }
+    }
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::wstring_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        if (_version == ip_version::V6) {
+            _ipv.ipv6.set_scope_id(scope_id);
+        }
+    }
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u16string_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        if (_version == ip_version::V6) {
+            _ipv.ipv6.set_scope_id(scope_id);
+        }
+    }
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u32string_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        if (_version == ip_version::V6) {
+            _ipv.ipv6.set_scope_id(scope_id);
+        }
+    }
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
+        if (_version == ip_version::V6) {
+            _ipv.ipv6.set_scope_id(scope_id, code);
+        }
+    }
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::wstring_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
+        if (_version == ip_version::V6) {
+            _ipv.ipv6.set_scope_id(scope_id, code);
+        }
+    }
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u16string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
+        if (_version == ip_version::V6) {
+            _ipv.ipv6.set_scope_id(scope_id, code);
+        }
+    }
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u32string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
+        if (_version == ip_version::V6) {
+            _ipv.ipv6.set_scope_id(scope_id, code);
+        }
+    }
+
 #if __cpp_char8_t >= 201811L
 
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(std::u8string_view address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
@@ -205,6 +259,18 @@ public:
 
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(std::u8string_view address, error_code& code) IPADDRESS_NOEXCEPT {
         return parse_string(address, code);
+    }
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u8string_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        if (_version == ip_version::V6) {
+            _ipv.ipv6.set_scope_id(scope_id);
+        }
+    }
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u8string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
+        if (_version == ip_version::V6) {
+            _ipv.ipv6.set_scope_id(scope_id, code);
+        }
     }
 
 #endif // __cpp_char8_t
@@ -243,6 +309,54 @@ public:
         return parse_string(address, code);
     }
 
+    IPADDRESS_FORCE_INLINE void set_scope_id(const std::string& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        if (_version == ip_version::V6) {
+            _ipv.ipv6.set_scope_id(scope_id);
+        }
+    }
+
+    IPADDRESS_FORCE_INLINE void set_scope_id(const std::wstring& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        if (_version == ip_version::V6) {
+            _ipv.ipv6.set_scope_id(scope_id);
+        }
+    }
+
+    IPADDRESS_FORCE_INLINE void set_scope_id(const std::u16string& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        if (_version == ip_version::V6) {
+            _ipv.ipv6.set_scope_id(scope_id);
+        }
+    }
+
+    IPADDRESS_FORCE_INLINE void set_scope_id(const std::u32string& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        if (_version == ip_version::V6) {
+            _ipv.ipv6.set_scope_id(scope_id);
+        }
+    }
+
+    IPADDRESS_FORCE_INLINE void set_scope_id(const std::string& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
+        if (_version == ip_version::V6) {
+            _ipv.ipv6.set_scope_id(scope_id, code);
+        }
+    }
+
+    IPADDRESS_FORCE_INLINE void set_scope_id(const std::wstring& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
+        if (_version == ip_version::V6) {
+            _ipv.ipv6.set_scope_id(scope_id, code);
+        }
+    }
+
+    IPADDRESS_FORCE_INLINE void set_scope_id(const std::u16string& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
+        if (_version == ip_version::V6) {
+            _ipv.ipv6.set_scope_id(scope_id, code);
+        }
+    }
+
+    IPADDRESS_FORCE_INLINE void set_scope_id(const std::u32string& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
+        if (_version == ip_version::V6) {
+            _ipv.ipv6.set_scope_id(scope_id, code);
+        }
+    }
+
 #if __cpp_char8_t >= 201811L
 
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::u8string& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
@@ -251,6 +365,18 @@ public:
 
     static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::u8string& address, error_code& code) IPADDRESS_NOEXCEPT {
         return parse_string(address, code);
+    }
+
+    IPADDRESS_FORCE_INLINE void set_scope_id(const std::u8string& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        if (_version == ip_version::V6) {
+            _ipv.ipv6.set_scope_id(scope_id);
+        }
+    }
+
+    IPADDRESS_FORCE_INLINE void set_scope_id(const std::u8string& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
+        if (_version == ip_version::V6) {
+            _ipv.ipv6.set_scope_id(scope_id, code);
+        }
     }
 
 #endif // __cpp_char8_t
@@ -269,6 +395,21 @@ public:
         internal::is_char_type<T>();
         auto str = make_fixed_string(address);
         return parse_string(str, code);
+    }
+
+    template <typename T, size_t N>
+    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE void set_scope_id(const T(&scope_id)[N]) IPADDRESS_NOEXCEPT {
+        internal::is_char_type<T>();
+        if (_version == ip_version::V6) {
+            _ipv.ipv6.set_scope_id(scope_id);
+        }
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE scope get_scope_id() const IPADDRESS_NOEXCEPT {
+        if (_version == ip_version::V4) {
+            return fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>();
+        }
+        return _ipv.ipv6.get_scope_id();
     }
 
     IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE explicit operator std::string() const {

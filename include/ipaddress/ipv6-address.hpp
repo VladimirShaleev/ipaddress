@@ -115,8 +115,9 @@ public:
         );
     }
 
-    template <size_t N>
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE void set_scope_id(const char(&scope_id)[N]) IPADDRESS_NOEXCEPT {
+    template <typename T, size_t N>
+    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE void set_scope_id(const T(&scope_id)[N]) IPADDRESS_NOEXCEPT {
+        internal::is_char_type<T>();
     #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH > 0
         static_assert(N <= IPADDRESS_IPV6_SCOPE_MAX_LENGTH + 1, "scope id is too long");
         char str[IPADDRESS_IPV6_SCOPE_MAX_LENGTH + 1] = {};
@@ -133,9 +134,45 @@ public:
         change_scope_id(scope_id);
     }
 
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::wstring_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        change_scope_id(scope_id);
+    }
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u16string_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        change_scope_id(scope_id);
+    }
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u32string_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        change_scope_id(scope_id);
+    }
+
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
         change_scope_id(scope_id, code);
     }
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::wstring_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
+        change_scope_id(scope_id, code);
+    }
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u16string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
+        change_scope_id(scope_id, code);
+    }
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u32string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
+        change_scope_id(scope_id, code);
+    }
+
+#if __cpp_char8_t >= 201811L
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u8string_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        change_scope_id(scope_id);
+    }
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u8string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
+        change_scope_id(scope_id, code);
+    }
+
+#endif // __cpp_char8_t
 
 #else // IPADDRESS_CPP_VERSION < 17
 
@@ -143,9 +180,45 @@ public:
         change_scope_id(scope_id);
     }
 
+    IPADDRESS_FORCE_INLINE void set_scope_id(const std::wstring& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        change_scope_id(scope_id);
+    }
+
+    IPADDRESS_FORCE_INLINE void set_scope_id(const std::u16string& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        change_scope_id(scope_id);
+    }
+
+    IPADDRESS_FORCE_INLINE void set_scope_id(const std::u32string& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        change_scope_id(scope_id);
+    }
+
     IPADDRESS_FORCE_INLINE void set_scope_id(const std::string& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
         change_scope_id(scope_id, code);
     }
+
+    IPADDRESS_FORCE_INLINE void set_scope_id(const std::wstring& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
+        change_scope_id(scope_id, code);
+    }
+
+    IPADDRESS_FORCE_INLINE void set_scope_id(const std::u16string& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
+        change_scope_id(scope_id, code);
+    }
+
+    IPADDRESS_FORCE_INLINE void set_scope_id(const std::u32string& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
+        change_scope_id(scope_id, code);
+    }
+
+#if __cpp_char8_t >= 201811L
+
+    IPADDRESS_FORCE_INLINE void set_scope_id(const std::u8string& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        change_scope_id(scope_id);
+    }
+
+    IPADDRESS_FORCE_INLINE void set_scope_id(const std::u8string& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
+        change_scope_id(scope_id, code);
+    }
+
+#endif // __cpp_char8_t
 
 #endif // IPADDRESS_CPP_VERSION < 17
 
@@ -333,7 +406,7 @@ private:
         }
         char scope[IPADDRESS_IPV6_SCOPE_MAX_LENGTH + 1] = {};
         for (size_t i = 0; i < scope_id.size(); ++i) {
-            scope[i] = scope_id[i];
+            scope[i] = char(scope_id[i]);
         }
         _data.scope_id = make_fixed_string(scope);
     #endif // IPADDRESS_IPV6_SCOPE_MAX_LENGTH
