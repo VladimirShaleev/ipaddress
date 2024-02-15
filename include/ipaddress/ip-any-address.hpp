@@ -45,6 +45,10 @@ public:
         return _version == ip_version::V4 ? _ipv.ipv4.is_unspecified() : _ipv.ipv6.is_unspecified();
     }
 
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_site_local() const IPADDRESS_NOEXCEPT {
+        return _version == ip_version::V4 ? false : _ipv.ipv6.is_site_local();
+    }
+
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_v4() const IPADDRESS_NOEXCEPT {
         return _version == ip_version::V4;
     }
@@ -55,6 +59,18 @@ public:
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t size() const IPADDRESS_NOEXCEPT {
         return _version == ip_version::V4 ? _ipv.ipv4.size() : _ipv.ipv6.size();
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<ipv4_address> ipv4_mapped() const IPADDRESS_NOEXCEPT {
+        return _version == ip_version::V4 ? optional<ipv4_address>() : _ipv.ipv6.ipv4_mapped();
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<ipv4_address> sixtofour() const IPADDRESS_NOEXCEPT {
+        return _version == ip_version::V4 ? optional<ipv4_address>() : _ipv.ipv6.sixtofour();
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<std::pair<ipv4_address, ipv4_address>> teredo() const IPADDRESS_NOEXCEPT {
+        return _version == ip_version::V4 ? optional<std::pair<ipv4_address, ipv4_address>>() : _ipv.ipv6.teredo();
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t hash() const IPADDRESS_NOEXCEPT {
