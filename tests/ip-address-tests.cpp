@@ -461,3 +461,154 @@ TEST(ip_address, Containers) {
     ASSERT_EQ(unordered_map[ip3], 4);
     ASSERT_EQ(unordered_map[ip3_with_scope], 0);
 }
+
+TEST(ip_address, Swap) {
+    auto ip1 = ip_address::parse("127.0.0.1");
+    auto ip2 = ip_address::parse("2001:db8::2%test");
+    
+    std::swap(ip1, ip2);
+
+    ASSERT_EQ(ip1, ip_address::parse("2001:db8::2%test"));
+    ASSERT_EQ(ip2, ip_address::parse("127.0.0.1"));
+}
+
+TEST(ip_address, reverse_pointer) {
+    constexpr auto ip1 = ip_address::parse("127.0.0.1");
+    constexpr auto ip2 = ip_address::parse("2001:db8::1");
+    
+    const auto actual1 = ip1.reverse_pointer();
+    const auto actual2 = ip2.reverse_pointer();
+
+    ASSERT_EQ(actual1, "1.0.0.127.in-addr.arpa");
+    ASSERT_EQ(actual2, "1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.b.d.0.1.0.0.2.ip6.arpa");
+}
+
+TEST(ip_address, ipv4_mapped) {
+    constexpr auto ip1 = ip_address::parse("127.0.0.1");
+    constexpr auto ip2 = ip_address::parse("::ffff:192.168.1.1%test");
+    constexpr auto ip3 = ip_address::parse("::c0a8:101");
+
+    constexpr auto actual1 = ip1.ipv4_mapped();
+    constexpr auto actual2 = ip2.ipv4_mapped();
+    constexpr auto actual3 = ip3.ipv4_mapped();
+
+    constexpr auto actual_has_value1 = actual1.has_value();
+    constexpr auto actual_has_value2 = actual2.has_value();
+    constexpr auto actual_has_value3 = actual3.has_value();
+    ASSERT_FALSE(actual_has_value1);
+    ASSERT_TRUE(actual_has_value2);
+    ASSERT_FALSE(actual_has_value3);
+
+    constexpr ip_address ipv4 = actual2.value();
+    ASSERT_EQ(ipv4, ip_address::parse("192.168.1.1"));
+}
+
+TEST(ip_address, sixtofour) {
+    constexpr auto ip1 = ip_address::parse("127.0.0.1");
+    constexpr auto ip2 = ip_address::parse("2002:ac1d:2d64::1");
+    constexpr auto ip3 = ip_address::parse("2000:ac1d:2d64::1");
+
+    constexpr auto actual1 = ip1.sixtofour();
+    constexpr auto actual2 = ip2.sixtofour();
+    constexpr auto actual3 = ip3.sixtofour();
+
+    constexpr auto actual_has_value1 = actual1.has_value();
+    constexpr auto actual_has_value2 = actual2.has_value();
+    constexpr auto actual_has_value3 = actual3.has_value();
+    ASSERT_FALSE(actual_has_value1);
+    ASSERT_TRUE(actual_has_value2);
+    ASSERT_FALSE(actual_has_value3);
+
+    constexpr ip_address ipv4 = actual2.value();
+    ASSERT_EQ(ipv4, ip_address::parse("172.29.45.100"));
+}
+
+TEST(ip_address, teredo) {
+    constexpr auto ip1 = ip_address::parse("127.0.0.1");
+    constexpr auto ip2 = ip_address::parse("2001:0000:4136:e378:8000:63bf:3fff:fdd2");
+    constexpr auto ip3 = ip_address::parse("2000::4136:e378:8000:63bf:3fff:fdd2");
+
+    constexpr auto actual1 = ip1.teredo();
+    constexpr auto actual2 = ip2.teredo();
+    constexpr auto actual3 = ip3.teredo();
+
+    constexpr auto actual_has_value1 = actual1.has_value();
+    constexpr auto actual_has_value2 = actual2.has_value();
+    constexpr auto actual_has_value3 = actual3.has_value();
+    ASSERT_FALSE(actual_has_value1);
+    ASSERT_TRUE(actual_has_value2);
+    ASSERT_FALSE(actual_has_value3);
+
+    constexpr ip_address server = actual2.value().first;
+    constexpr ip_address client = actual2.value().second;
+    ASSERT_EQ(server, ip_address::parse("65.54.227.120"));
+    ASSERT_EQ(client, ip_address::parse("192.0.2.45"));
+}
+
+TEST(ip_address, is_prop) {
+    constexpr auto ip1 = ip_address::parse("224.1.1.1").is_multicast();
+    constexpr auto ip2 = ip_address::parse("240.0.0.0").is_multicast();
+    constexpr auto ip3 = ip_address::parse("ffff::").is_multicast();
+    constexpr auto ip4 = ip_address::parse("fdff::").is_multicast();
+    constexpr auto ip5 = ip_address::parse("192.168.1.1").is_private();
+    constexpr auto ip6 = ip_address::parse("192.169.0.0").is_private();
+    constexpr auto ip7 = ip_address::parse("fc00::").is_private();
+    constexpr auto ip8 = ip_address::parse("fbff:ffff::").is_private();
+    constexpr auto ip9 = ip_address::parse("192.0.7.1").is_global();
+    constexpr auto ip10 = ip_address::parse("203.0.113.1").is_global();
+    constexpr auto ip11 = ip_address::parse("200::1").is_global();
+    constexpr auto ip12 = ip_address::parse("fc00::").is_global();
+    constexpr auto ip13 = ip_address::parse("240.0.0.1").is_reserved();
+    constexpr auto ip14 = ip_address::parse("239.255.255.255").is_reserved();
+    constexpr auto ip15 = ip_address::parse("100::").is_reserved();
+    constexpr auto ip16 = ip_address::parse("ffff::").is_reserved();
+    constexpr auto ip17 = ip_address::parse("127.42.0.0").is_loopback();
+    constexpr auto ip18 = ip_address::parse("128.0.0.0").is_loopback();
+    constexpr auto ip19 = ip_address::parse("::1").is_loopback();
+    constexpr auto ip20 = ip_address::parse("::2").is_loopback();
+    constexpr auto ip21 = ip_address::parse("169.254.100.200").is_link_local();
+    constexpr auto ip22 = ip_address::parse("169.255.100.200").is_link_local();
+    constexpr auto ip23 = ip_address::parse("fea0::").is_link_local();
+    constexpr auto ip24 = ip_address::parse("fe7f:ffff::").is_link_local();
+    constexpr auto ip25 = ip_address::parse("0.0.0.0").is_unspecified();
+    constexpr auto ip26 = ip_address::parse("127.0.0.1").is_unspecified();
+    constexpr auto ip27 = ip_address::parse("::").is_unspecified();
+    constexpr auto ip28 = ip_address::parse("::1").is_unspecified();
+    constexpr auto ip29 = ip_address::parse("127.0.0.1").is_site_local();
+    constexpr auto ip30 = ip_address::parse("0.0.0.0").is_site_local();
+    constexpr auto ip31 = ip_address::parse("fecf::").is_site_local();
+    constexpr auto ip32 = ip_address::parse("fbf:ffff::").is_site_local();
+    
+    ASSERT_TRUE(ip1);
+    ASSERT_FALSE(ip2);
+    ASSERT_TRUE(ip3);
+    ASSERT_FALSE(ip4);
+    ASSERT_TRUE(ip5);
+    ASSERT_FALSE(ip6);
+    ASSERT_TRUE(ip7);
+    ASSERT_FALSE(ip8);
+    ASSERT_TRUE(ip9);
+    ASSERT_FALSE(ip10);
+    ASSERT_TRUE(ip11);
+    ASSERT_FALSE(ip12);
+    ASSERT_TRUE(ip13);
+    ASSERT_FALSE(ip14);
+    ASSERT_TRUE(ip15);
+    ASSERT_FALSE(ip16);
+    ASSERT_TRUE(ip17);
+    ASSERT_FALSE(ip18);
+    ASSERT_TRUE(ip19);
+    ASSERT_FALSE(ip20);
+    ASSERT_TRUE(ip21);
+    ASSERT_FALSE(ip22);
+    ASSERT_TRUE(ip23);
+    ASSERT_FALSE(ip24);
+    ASSERT_TRUE(ip25);
+    ASSERT_FALSE(ip26);
+    ASSERT_TRUE(ip27);
+    ASSERT_FALSE(ip28);
+    ASSERT_FALSE(ip29);
+    ASSERT_FALSE(ip30);
+    ASSERT_TRUE(ip31);
+    ASSERT_FALSE(ip32);
+}
