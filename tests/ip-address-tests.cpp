@@ -198,6 +198,39 @@ TEST(ip_address, from_uint) {
     EXPECT_EQ(actual2_ip.value().to_uint(), 281470681743360ULL);
 }
 
+TEST(ip_address, parse_utf) {
+    constexpr ipv6_address::base_type ip_bytes { 0x20, 0x01, 0x0D, 0xB8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 };
+
+    auto str1 = L"127.0.0.1";
+    auto str2 = L"2001:db8::1";
+    auto str3 = u"127.0.0.1";
+    auto str4 = u"2001:db8::1";
+    auto str5 = U"127.0.0.1";
+    auto str6 = U"2001:db8::1";
+
+    auto ip_wchar_1 = ip_address::parse(str1);
+    auto ip_wchar_2 = ip_address::parse(str2);
+    auto ip_char16_3 = ip_address::parse(str3);
+    auto ip_char16_4 = ip_address::parse(str4);
+    auto ip_char32_5 = ip_address::parse(str5);
+    auto ip_char32_6 = ip_address::parse(str6);
+    ASSERT_EQ(ip_wchar_1.v4().value().to_uint(), 0x7F000001);
+    ASSERT_EQ(ip_wchar_2.v6().value().bytes(), ip_bytes);
+    ASSERT_EQ(ip_char16_3.v4().value().to_uint(), 0x7F000001);
+    ASSERT_EQ(ip_char16_4.v6().value().bytes(), ip_bytes);
+    ASSERT_EQ(ip_char32_5.v4().value().to_uint(), 0x7F000001);
+    ASSERT_EQ(ip_char32_6.v6().value().bytes(), ip_bytes);
+
+#if __cpp_char8_t >= 201811L
+    auto str7 = u8"127.0.0.1";
+    auto str8 = u8"2001:db8::1";
+    auto ip_char7_8 = ip_address::parse(str7);
+    auto ip_char8_8 = ip_address::parse(str8);
+    ASSERT_EQ(ip_char7_8.v4().value().to_uint(), 0x7F000001);
+    ASSERT_EQ(ip_char8_8.v6().value().bytes(), ip_bytes);
+#endif
+}
+
 TEST(ip_address, parse) {
     auto str1 = "100.64.0.0";
     auto str2 = "2001:0db8:85a3:0000:0000:8a2e:0370:7334";
@@ -611,4 +644,14 @@ TEST(ip_address, is_prop) {
     ASSERT_FALSE(ip30);
     ASSERT_TRUE(ip31);
     ASSERT_FALSE(ip32);
+}
+
+TEST(ip_address, literals) {
+    constexpr auto ip1 = "127.128.128.255"_ip;
+    constexpr auto ip2 = "2001:db8::1"_ip;
+    
+    ASSERT_TRUE(ip1.is_v4());
+    ASSERT_TRUE(ip2.is_v6());
+    ASSERT_EQ(ip1, ip_address::parse("127.128.128.255"));
+    ASSERT_EQ(ip2, ip_address::parse("2001:db8::1"));
 }
