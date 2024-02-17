@@ -482,18 +482,13 @@ public:
 
 private:
     template <typename Str>
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse_string(const Str& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse_string(const Str& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         auto code = error_code::NO_ERROR;
-        auto result = parse_string(address, code);
-        if (code != error_code::NO_ERROR) {
-            if (IPADDRESS_IS_CONST_EVALUATED(code)) {
-                raise_error(code, 0, address.data(), address.size());
-            }
-        #ifndef IPADDRESS_NO_EXCEPTIONS
-            raise_error(code, 0, address.data(), address.size());
-        #endif
+        const auto ipv4 = ipv4_address::parse(address, code);
+        if (code == error_code::NO_ERROR) {
+            return ip_address(ipv4);
         }
-        return result;
+        return ip_address(ipv6_address::parse(address));
     }
 
     template <typename Str>
@@ -591,7 +586,6 @@ IPADDRESS_FORCE_INLINE std::ostream& operator<<(std::ostream& stream, const IPAD
     return stream << str;
 }
 
-template <typename Base>
 IPADDRESS_FORCE_INLINE std::istream& operator>>(std::istream& stream, IPADDRESS_NAMESPACE::ip_address& ip) {
     std::string str;
     stream >> str;
