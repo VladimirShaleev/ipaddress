@@ -655,3 +655,36 @@ TEST(ip_address, literals) {
     ASSERT_EQ(ip1, ip_address::parse("127.128.128.255"));
     ASSERT_EQ(ip2, ip_address::parse("2001:db8::1"));
 }
+
+TEST(ip_address, ScopeId) {
+    auto ip1 = ip_address::parse("127.128.128.255");
+    auto ip2 = "2001:db8::1"_ip;
+    
+    ASSERT_FALSE(bool(ip1.get_scope_id()));
+    ASSERT_FALSE(bool(ip2.get_scope_id()));
+
+    ip1.set_scope_id("123");
+    ip2.set_scope_id("123");
+    ASSERT_FALSE(bool(ip1.get_scope_id()));
+    ASSERT_TRUE(bool(ip2.get_scope_id()));
+    ASSERT_FALSE(ip1.get_scope_id().has_string());
+    ASSERT_TRUE(ip2.get_scope_id().has_string());
+    ASSERT_FALSE(ip1.get_scope_id().has_uint32());
+    ASSERT_TRUE(ip2.get_scope_id().has_uint32());
+    ASSERT_EQ(ip1.get_scope_id().get_uint32(), 0);
+    ASSERT_EQ(ip2.get_scope_id().get_uint32(), 123);
+
+    ip1.set_scope_id("eth1");
+    ip2.set_scope_id("eth1");
+    ASSERT_FALSE(bool(ip1.get_scope_id()));
+    ASSERT_TRUE(bool(ip2.get_scope_id()));
+    ASSERT_FALSE(ip1.get_scope_id().has_string());
+    ASSERT_TRUE(ip2.get_scope_id().has_string());
+    ASSERT_FALSE(ip1.get_scope_id().has_uint32());
+    ASSERT_FALSE(ip2.get_scope_id().has_uint32());
+    ASSERT_EQ(ip1.get_scope_id().get_string(), "");
+    ASSERT_EQ(ip2.get_scope_id().get_string(), "eth1");
+
+    ASSERT_EQ(ip1.to_string(), "127.128.128.255");
+    ASSERT_EQ(ip2.to_string(), "2001:db8::1%eth1");
+}
