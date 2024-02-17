@@ -38,7 +38,7 @@ public:
     }
 
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE optional& operator=(const optional<T>& opt) IPADDRESS_NOEXCEPT {
-        _has_value = opt.has_value;
+        _has_value = opt._has_value;
         _value = opt._value;
         return *this;
     }
