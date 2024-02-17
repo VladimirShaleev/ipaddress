@@ -1,0 +1,10 @@
+#ifndef IPADDRESS_IP_ANY_NETWORK_HPP
+#define IPADDRESS_IP_ANY_NETWORK_HPP
+
+#include "ipv6-network.hpp"
+
+namespace IPADDRESS_NAMESPACE {
+
+} // namespace IPADDRESS_NAMESPACE
+
+#endif // IPADDRESS_IP_ANY_NETWORK_HPP
