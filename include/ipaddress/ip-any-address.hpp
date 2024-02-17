@@ -437,7 +437,7 @@ public:
         if (_version != rhs._version) {
             return false;
         }
-        return _version == ip_version::V4 ? (_ipv.ipv4 == _ipv.ipv4) : (_ipv.ipv6 == _ipv.ipv6);
+        return _version == ip_version::V4 ? (_ipv.ipv4 == rhs._ipv.ipv4) : (_ipv.ipv6 == rhs._ipv.ipv6);
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(const ip_address& rhs) const IPADDRESS_NOEXCEPT {
@@ -448,7 +448,7 @@ public:
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const ip_address& rhs) const IPADDRESS_NOEXCEPT {
         if (const auto result = _version <=> rhs._version; result == std::strong_ordering::equivalent) {
-            return _version == ip_version::V4 ? (_ipv.ipv4 <=> _ipv.ipv4) : (_ipv.ipv6 <=> _ipv.ipv6);
+            return _version == ip_version::V4 ? (_ipv.ipv4 <=> rhs._ipv.ipv4) : (_ipv.ipv6 <=> rhs._ipv.ipv6);
         } else {
             return result;
         }
@@ -463,7 +463,7 @@ public:
         if (_version > rhs._version) {
             return false;
         }
-        return _version == ip_version::V4 ? (_ipv.ipv4 < _ipv.ipv4) : (_ipv.ipv6 < _ipv.ipv6);
+        return _version == ip_version::V4 ? (_ipv.ipv4 < rhs._ipv.ipv4) : (_ipv.ipv6 < rhs._ipv.ipv6);
     }
     
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(const ip_address& rhs) const IPADDRESS_NOEXCEPT {

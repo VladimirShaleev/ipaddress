@@ -354,11 +354,11 @@ TEST(ip_address, Comparison) {
     ASSERT_TRUE(ip2 != ip1);
 
     ASSERT_FALSE(ip3 < ip2);
-    ASSERT_TRUE(ip3 <= ip2);
-    ASSERT_FALSE(ip3 > ip2);
+    ASSERT_FALSE(ip3 <= ip2);
+    ASSERT_TRUE(ip3 > ip2);
     ASSERT_TRUE(ip3 >= ip2);
-    ASSERT_TRUE(ip3 == ip2);
-    ASSERT_FALSE(ip3 != ip2);
+    ASSERT_FALSE(ip3 == ip2);
+    ASSERT_TRUE(ip3 != ip2);
 }
 
 TEST(ip_address, to_string) {
@@ -406,4 +406,58 @@ TEST(ip_address, to_string) {
     ASSERT_EQ(ss_compact_2.str(), expected_compact_2);
     ASSERT_EQ(ss_compressed_2.str(), expected_compressed_2);
     ASSERT_EQ(ss_compressed_upper_2.str(), expected_compressed_upper_2);
+}
+
+TEST(ip_address, Hash) {
+    constexpr auto hash_functor = std::hash<ip_address>{};
+
+    constexpr auto ip1 = ip_address::parse("127.0.0.1");
+    constexpr auto ip2 = ip_address::parse("2001:db8::1");
+
+    constexpr auto hash1 = ip1.hash();
+    constexpr auto hash2 = ip2.hash();
+    constexpr auto hash3 = hash_functor(ip1);
+    constexpr auto hash4 = hash_functor(ip2);
+
+    ASSERT_EQ(hash1, sizeof(size_t) == 8 ? 2753421670903790749ULL : 4009513643U);
+    ASSERT_EQ(hash2, sizeof(size_t) == 8 ? 6222153021643990098ULL : 1539407693U);
+    ASSERT_EQ(hash3, sizeof(size_t) == 8 ? 2753421670903790749ULL : 4009513643U);
+    ASSERT_EQ(hash4, sizeof(size_t) == 8 ? 6222153021643990098ULL : 1539407693U);
+}
+
+TEST(ip_address, Containers) {
+    constexpr auto ip1 = ip_address::parse("127.0.0.1");
+    constexpr auto ip2 = ip_address::parse("2001:db8::1");
+    constexpr auto ip3 = ip_address::parse("2001:db8::2");
+
+    std::vector<ip_address> vec;
+    vec.push_back(ip1);
+    vec.push_back(ip2);
+    vec.emplace_back(ip3);
+    ASSERT_EQ(vec[0], ip1);
+    ASSERT_EQ(vec[1], ip2);
+    ASSERT_EQ(vec[2], ip3);
+
+    std::map<ip_address, int> map;
+    map[ip2] = 2;
+    map[ip1] = 1;
+    map[ip3] = 3;
+    auto it = map.begin();
+    ASSERT_EQ(map.size(), 3);
+    ASSERT_EQ(it++->first, ip1);
+    ASSERT_EQ(it++->first, ip2);
+    ASSERT_EQ(it++->first, ip3);
+    
+    auto ip3_with_scope = ip_address::parse("2001:db8::2%scope");
+    std::unordered_map<ip_address, int> unordered_map;
+    unordered_map[ip2] = 2;
+    unordered_map[ip1] = 1;
+    unordered_map[ip3] = 3;
+    unordered_map[ip3] = 4;
+    unordered_map[ip3_with_scope] = 0;
+    ASSERT_EQ(unordered_map.size(), 4);
+    ASSERT_EQ(unordered_map[ip1], 1);
+    ASSERT_EQ(unordered_map[ip2], 2);
+    ASSERT_EQ(unordered_map[ip3], 4);
+    ASSERT_EQ(unordered_map[ip3_with_scope], 0);
 }
