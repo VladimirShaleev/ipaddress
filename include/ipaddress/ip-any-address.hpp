@@ -61,6 +61,10 @@ public:
         return _version == ip_version::V4 ? _ipv.ipv4.size() : _ipv.ipv6.size();
     }
 
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t hash() const IPADDRESS_NOEXCEPT {
+        return _version == ip_version::V4 ? _ipv.ipv4.hash() : _ipv.ipv6.hash();
+    }
+
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<ipv4_address> ipv4_mapped() const IPADDRESS_NOEXCEPT {
         return _version == ip_version::V4 ? optional<ipv4_address>() : _ipv.ipv6.ipv4_mapped();
     }
@@ -71,10 +75,6 @@ public:
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<std::pair<ipv4_address, ipv4_address>> teredo() const IPADDRESS_NOEXCEPT {
         return _version == ip_version::V4 ? optional<std::pair<ipv4_address, ipv4_address>>() : _ipv.ipv6.teredo();
-    }
-
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t hash() const IPADDRESS_NOEXCEPT {
-        return _version == ip_version::V4 ? _ipv.ipv4.hash() : _ipv.ipv6.hash();
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<ipv4_address> v4() const IPADDRESS_NOEXCEPT {
