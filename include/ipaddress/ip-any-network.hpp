@@ -237,6 +237,74 @@ private:
     ip_version _version = ip_version::V4;
 };
 
+#ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
+
+    // template <fixed_string FixedString>
+    // IPADDRESS_NODISCARD consteval IPADDRESS_FORCE_INLINE ip_network operator""_ip_net() IPADDRESS_NOEXCEPT {
+    //     return ip_network::parse<FixedString>();
+    // }
+
+#else // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
+
+    // IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_ip_net(const char* address, std::size_t size) IPADDRESS_NOEXCEPT {
+    //     constexpr auto max_len = 41 + IPADDRESS_IPV6_SCOPE_MAX_LENGTH;
+    //     assert(size <= max_len * 2 + 1 && "literal string is too long");
+    //     char str[max_len * 2 + 2] = {};
+    //     for (size_t i = 0; i < size; ++i) {
+    //         str[i] = address[i];
+    //     }
+    //     return ip_network::parse(str);
+    // }
+
+#endif // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
+
 } // namespace IPADDRESS_NAMESPACE
+
+#ifndef IPADDRESS_NO_OVERLOAD_STD
+
+namespace std {
+
+template <>
+struct hash<IPADDRESS_NAMESPACE::ip_network> {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::size_t operator()(const IPADDRESS_NAMESPACE::ip_network& network) const IPADDRESS_NOEXCEPT {
+        return network.hash();
+    }
+};
+
+IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void swap(IPADDRESS_NAMESPACE::ip_network& net1, IPADDRESS_NAMESPACE::ip_network& net2) IPADDRESS_NOEXCEPT {
+    return net1.swap(net2);
+}
+
+IPADDRESS_FORCE_INLINE std::string to_string(const IPADDRESS_NAMESPACE::ip_network& network) {
+    return network.to_string();
+}
+
+IPADDRESS_FORCE_INLINE std::ostream& operator<<(std::ostream& stream, const IPADDRESS_NAMESPACE::ip_network& network) {
+    auto& iword = stream.iword(IPADDRESS_NAMESPACE::stream_index());
+    auto fmt = iword
+        ? (IPADDRESS_NAMESPACE::format) (iword - 1) 
+        : IPADDRESS_NAMESPACE::format::compressed;
+    iword = 0;
+    return stream << network.to_string(fmt);
+}
+
+IPADDRESS_FORCE_INLINE std::istream& operator>>(std::istream& stream, IPADDRESS_NAMESPACE::ip_network& network) {
+    auto& iword = stream.iword(IPADDRESS_NAMESPACE::network_strict_index());
+    auto strict = iword == 0;
+    iword = 0;
+
+    // std::string str;
+    // stream >> str;
+    // IPADDRESS_NAMESPACE::error_code err;
+    // network = IPADDRESS_NAMESPACE::ip_network::parse(str, err, strict);
+    // if (err != IPADDRESS_NAMESPACE::error_code::NO_ERROR) {
+    //     stream.setstate(std::ios_base::failbit);
+    // }
+    return stream;
+}
+
+} // namespace std
+
+#endif // IPADDRESS_NO_OVERLOAD_STD
 
 #endif // IPADDRESS_IP_ANY_NETWORK_HPP
