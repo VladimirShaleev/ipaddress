@@ -174,12 +174,12 @@ public:
         return result;
     }
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR ip_network_base from_address(
+    static IPADDRESS_CONSTEXPR ip_network_base from_address(
         const ip_address_type& address, 
         error_code& code, 
         size_t prefixlen = ip_address_type::max_prefixlen, 
         bool strict = true
-    ) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    ) IPADDRESS_NOEXCEPT {
         code = error_code::NO_ERROR;
 
         const auto netmask = ip_address_type::ip_from_prefix(prefixlen); 
