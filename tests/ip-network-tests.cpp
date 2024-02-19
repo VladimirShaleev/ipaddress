@@ -113,13 +113,9 @@ TEST(ip_network, CopyOperator) {
 TEST(ip_network, Ctors) {
     constexpr auto net4 = ipv4_network::parse("192.168.0.1");
     constexpr auto net6 = ipv6_network::parse("2002:ac1d:2d64::1");
-    constexpr auto ip4 = ipv4_address::parse("192.168.0.1");
-    constexpr auto ip6 = ip_address::parse("2002:ac1d:2d64::1");
 
     constexpr ip_network actual1(net4);
     constexpr ip_network actual2(net6);
-    constexpr ip_network actual3 = ip_network::from_address(ip4, 24, false);
-    constexpr ip_network actual4 = ip_network::from_address(ip6, 128);
     
     auto actual1_net = actual1.v4();
     EXPECT_EQ(actual1.version(), ip_version::V4);
@@ -144,28 +140,36 @@ TEST(ip_network, Ctors) {
     EXPECT_EQ(actual2_net.value().netmask().to_uint(), uint128_t::from_string("340282366920938463463374607431768211455").value());
     EXPECT_EQ(actual2_net.value().hostmask().to_uint(), 0);
     EXPECT_EQ(actual2_net.value().prefixlen(), 128);
-    
-    auto actual3_net = actual3.v4();
-    EXPECT_EQ(actual3.version(), ip_version::V4);
-    EXPECT_EQ(actual3.size(), 4);
-    EXPECT_TRUE(actual3.is_v4());
-    EXPECT_FALSE(actual3.is_v6());
-    EXPECT_TRUE(actual3_net.has_value());
-    EXPECT_EQ(actual3_net.value().network_address().to_uint(), 0xC0A80000);
-    EXPECT_EQ(actual3_net.value().broadcast_address().to_uint(), 0xC0A800FF);
-    EXPECT_EQ(actual3_net.value().netmask().to_uint(), 0xFFFFFF00);
-    EXPECT_EQ(actual3_net.value().hostmask().to_uint(), 0x000000FF);
-    EXPECT_EQ(actual3_net.value().prefixlen(), 24);
+}
 
-    auto actual4_net = actual4.v6();
-    EXPECT_EQ(actual4.version(), ip_version::V6);
-    EXPECT_EQ(actual4.size(), 16);
-    EXPECT_FALSE(actual4.is_v4());
-    EXPECT_TRUE(actual4.is_v6());
-    EXPECT_TRUE(actual4_net.has_value());
-    EXPECT_EQ(actual4_net.value().network_address().to_uint(), uint128_t::from_string("42549171344950636613079587071710986241").value());
-    EXPECT_EQ(actual4_net.value().broadcast_address().to_uint(), uint128_t::from_string("42549171344950636613079587071710986241").value());
-    EXPECT_EQ(actual4_net.value().netmask().to_uint(), uint128_t::from_string("340282366920938463463374607431768211455").value());
-    EXPECT_EQ(actual4_net.value().hostmask().to_uint(), 0);
-    EXPECT_EQ(actual4_net.value().prefixlen(), 128);
+TEST(ip_network, from_address) {
+    constexpr auto ip4 = ipv4_address::parse("192.168.0.1");
+    constexpr auto ip6 = ip_address::parse("2002:ac1d:2d64::1");
+    
+    constexpr ip_network actual1 = ip_network::from_address(ip4, 24, false);
+    constexpr ip_network actual2 = ip_network::from_address(ip6, 128);
+    
+    auto actual1_net = actual1.v4();
+    EXPECT_EQ(actual1.version(), ip_version::V4);
+    EXPECT_EQ(actual1.size(), 4);
+    EXPECT_TRUE(actual1.is_v4());
+    EXPECT_FALSE(actual1.is_v6());
+    EXPECT_TRUE(actual1_net.has_value());
+    EXPECT_EQ(actual1_net.value().network_address().to_uint(), 0xC0A80000);
+    EXPECT_EQ(actual1_net.value().broadcast_address().to_uint(), 0xC0A800FF);
+    EXPECT_EQ(actual1_net.value().netmask().to_uint(), 0xFFFFFF00);
+    EXPECT_EQ(actual1_net.value().hostmask().to_uint(), 0x000000FF);
+    EXPECT_EQ(actual1_net.value().prefixlen(), 24);
+
+    auto actual2_net = actual2.v6();
+    EXPECT_EQ(actual2.version(), ip_version::V6);
+    EXPECT_EQ(actual2.size(), 16);
+    EXPECT_FALSE(actual2.is_v4());
+    EXPECT_TRUE(actual2.is_v6());
+    EXPECT_TRUE(actual2_net.has_value());
+    EXPECT_EQ(actual2_net.value().network_address().to_uint(), uint128_t::from_string("42549171344950636613079587071710986241").value());
+    EXPECT_EQ(actual2_net.value().broadcast_address().to_uint(), uint128_t::from_string("42549171344950636613079587071710986241").value());
+    EXPECT_EQ(actual2_net.value().netmask().to_uint(), uint128_t::from_string("340282366920938463463374607431768211455").value());
+    EXPECT_EQ(actual2_net.value().hostmask().to_uint(), 0);
+    EXPECT_EQ(actual2_net.value().prefixlen(), 128);
 }
