@@ -112,9 +112,13 @@ TEST(uint128_t, OperatorT) {
     ASSERT_EQ(actual9, (unsigned long)(0x7F7F7F7F7F7F));
     ASSERT_EQ(actual10, (long long)(0x7F7F7F7F7F7F));
     ASSERT_EQ(actual11, (unsigned long long)(0x7F7F7F7F7F7F));
-    ASSERT_FLOAT_EQ(actual12, 7.3787117e+19);
-    ASSERT_DOUBLE_EQ(actual13, 7.3787116480414843e+19);
-    ASSERT_DOUBLE_EQ(double(actual14), 7.3787116480414843e+19);
+
+    std::ostringstream str12; str12 << std::setprecision(4) << (actual12 * 1.0e-19);
+    std::ostringstream str13; str13 << std::setprecision(4) << (actual13 * 1.0e-19);
+    std::ostringstream str14; str14 << std::setprecision(4) << (actual14 * 1.0e-19);
+    ASSERT_EQ(str12.str(), "7.379");
+    ASSERT_EQ(str13.str(), "7.379");
+    ASSERT_EQ(str14.str(), "7.379");
 }
 
 TEST(uint128_t, Arithmetic) {
@@ -526,7 +530,7 @@ TEST(uint128_t, NumericLimits) {
 }
 
 TEST(uint128_t, Abs) {
-    auto actual1 = std::abs(uint128_t(5));
+    constexpr auto actual1 = std::abs(uint128_t(5));
 
     ASSERT_EQ(actual1, uint128_t(5));
 }

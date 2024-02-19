@@ -61,16 +61,36 @@ public:
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t& operator=(const uint128_t&) IPADDRESS_NOEXCEPT = default;
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t& operator=(uint128_t&&) IPADDRESS_NOEXCEPT = default;
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(uint64_t upper, uint64_t lower) IPADDRESS_NOEXCEPT : _upper(upper), _lower(lower) {
-    }
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(uint64_t upper, uint64_t lower) IPADDRESS_NOEXCEPT
+
+#if IPADDRESS_ENDIAN == IPADDRESS_BIG_ENDIAN
+
+        : _upper(upper), _lower(lower)
+
+#else // IPADDRESS_ENDIAN != IPADDRESS_BIG_ENDIAN
+
+        : _lower(lower), _upper(upper)
+
+#endif // IPADDRESS_ENDIAN != IPADDRESS_BIG_ENDIAN
+    { }
 
     template <typename T, typename std::enable_if<std::is_integral<T>::value && std::is_unsigned<T>::value, bool>::type = true>
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(T lower) IPADDRESS_NOEXCEPT : _lower(uint64_t(lower)) {
     }
 
     template <typename T, typename std::enable_if<std::is_integral<T>::value && std::is_signed<T>::value, bool>::type = true>
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(T lower) IPADDRESS_NOEXCEPT : _upper(uint64_t(int64_t(lower) >> 63)), _lower(uint64_t(lower)) {
-    }
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(T lower) IPADDRESS_NOEXCEPT
+
+#if IPADDRESS_ENDIAN == IPADDRESS_BIG_ENDIAN
+
+        : _upper(uint64_t(int64_t(lower) >> 63)), _lower(uint64_t(lower))
+
+#else // IPADDRESS_ENDIAN != IPADDRESS_BIG_ENDIAN
+
+        : _lower(uint64_t(lower)), _upper(uint64_t(int64_t(lower) >> 63))
+
+#endif // IPADDRESS_ENDIAN != IPADDRESS_BIG_ENDIAN
+    { }
 
     template <typename T, typename std::enable_if<std::is_floating_point<T>::value, bool>::type = true>
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit uint128_t(T value) IPADDRESS_NOEXCEPT {
