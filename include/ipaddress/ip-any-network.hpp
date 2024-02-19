@@ -247,9 +247,8 @@ private:
 #else // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
     // IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_ip_net(const char* address, std::size_t size) IPADDRESS_NOEXCEPT {
-    //     constexpr auto max_len = 41 + IPADDRESS_IPV6_SCOPE_MAX_LENGTH;
-    //     assert(size <= max_len * 2 + 1 && "literal string is too long");
-    //     char str[max_len * 2 + 2] = {};
+    //     assert(size <= ipv6_address::base_max_string_len * 2 + 1 && "literal string is too long");
+    //     char str[ipv6_address::base_max_string_len * 2 + 2] = {};
     //     for (size_t i = 0; i < size; ++i) {
     //         str[i] = address[i];
     //     }

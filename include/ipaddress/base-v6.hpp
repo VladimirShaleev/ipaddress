@@ -12,25 +12,21 @@ public:
     using base_type = byte_array_type<16>;
     using uint_type = ::IPADDRESS_NAMESPACE::uint128_t;
 
+    static IPADDRESS_CONSTEXPR ip_version base_version = ip_version::V6;
+    static IPADDRESS_CONSTEXPR size_t base_size = 16;
+    static IPADDRESS_CONSTEXPR size_t base_max_string_len = 41 + IPADDRESS_IPV6_SCOPE_MAX_LENGTH;
+    static IPADDRESS_CONSTEXPR size_t base_max_prefixlen = base_size * 8;
+
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_version version() const IPADDRESS_NOEXCEPT {
-        return _version;
+        return base_version;
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t size() const IPADDRESS_NOEXCEPT {
-        return _size;
+        return base_size;
     }
 
 protected:
-    static IPADDRESS_CONSTEXPR ip_version _version = ip_version::V6;
-
-    static IPADDRESS_CONSTEXPR size_t _size = 16;
-
-    static IPADDRESS_CONSTEXPR size_t _max_string_len = 41 + IPADDRESS_IPV6_SCOPE_MAX_LENGTH;
-
-    static IPADDRESS_CONSTEXPR size_t _max_prefixlen = _size * 8;
-
     static IPADDRESS_CONSTEXPR size_t _min_parts = 3;
-
     static IPADDRESS_CONSTEXPR size_t _max_parts = 8;
 
     template <typename Iter>
@@ -83,9 +79,9 @@ protected:
         return ip_address_base<Ext>(bytes);
     }
 
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t ip_to_chars(const base_type& bytes, const fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>& scope_id, format fmt, char (&result)[_max_string_len + 1]) IPADDRESS_NOEXCEPT {
-        char hextets[_size >> 1][5] = {};
-        const size_t max_hextets = _size >> 1;
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t ip_to_chars(const base_type& bytes, const fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>& scope_id, format fmt, char (&result)[base_max_string_len + 1]) IPADDRESS_NOEXCEPT {
+        char hextets[base_size >> 1][5] = {};
+        const size_t max_hextets = base_size >> 1;
         for (size_t i = 0; i < max_hextets; ++i) {
             uint16_t value = (uint16_t(bytes[i * 2]) << 8) | uint16_t(bytes[i * 2 + 1]);
             to_hex(value, hextets[i]);
@@ -189,7 +185,7 @@ protected:
     }
 
     IPADDRESS_NODISCARD static IPADDRESS_FORCE_INLINE std::string ip_reverse_pointer(const base_type& bytes, const fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>& scope_id) {
-        char result[_max_string_len + 1] {};
+        char result[base_max_string_len + 1] {};
         const auto len = ip_to_chars(bytes, scope_id, format::full, result);
         auto ip = std::string(result, len);
         ip.erase(std::remove(ip.begin(), ip.end(), ':'), ip.end());
@@ -214,12 +210,12 @@ protected:
             }
         }
         
-        if (prefixlen > _max_prefixlen) {
+        if (prefixlen > base_max_prefixlen) {
             code = error_code::INVALID_NETMASK;
             return std::make_tuple(ip_address_base<Ext>(), 0);
         }
         
-        prefixlen = has_prefixlen ? prefixlen : _max_prefixlen;
+        prefixlen = has_prefixlen ? prefixlen : base_max_prefixlen;
 
         auto netmask = ip_from_prefix(prefixlen);
         return std::make_tuple(netmask, prefixlen);
@@ -230,7 +226,7 @@ protected:
         const auto& bytes_netmask = netmask.bytes();
         base_type bytes{};
 
-        for (auto i = 0; i < _size; ++i) {
+        for (auto i = 0; i < base_size; ++i) {
             bytes[i] = bytes_address[i] & bytes_netmask[i];
         }
 
@@ -523,6 +519,24 @@ private:
         }
     }
 };
+
+template <typename Ext>
+IPADDRESS_CONSTEXPR ip_version base_v6<Ext>::base_version;
+
+template <typename Ext>
+IPADDRESS_CONSTEXPR size_t base_v6<Ext>::base_size;
+
+template <typename Ext>
+IPADDRESS_CONSTEXPR size_t base_v6<Ext>::base_max_string_len;
+
+template <typename Ext>
+IPADDRESS_CONSTEXPR size_t base_v6<Ext>::base_max_prefixlen;
+
+template <typename Ext>
+IPADDRESS_CONSTEXPR size_t base_v6<Ext>::_min_parts;
+
+template <typename Ext>
+IPADDRESS_CONSTEXPR size_t base_v6<Ext>::_max_parts;
 
 } // namespace IPADDRESS_NAMESPACE
 

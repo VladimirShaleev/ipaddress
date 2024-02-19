@@ -15,8 +15,8 @@ public:
     IPADDRESS_CONSTEXPR ip_network_base() IPADDRESS_NOEXCEPT 
         : 
         _network_address(),
-        _netmask(ip_address_type::ip_from_prefix(Base::_max_prefixlen)),
-        _prefixlen(Base::_max_prefixlen) {
+        _netmask(ip_address_type::ip_from_prefix(Base::base_max_prefixlen)),
+        _prefixlen(Base::base_max_prefixlen) {
     }
 
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
@@ -161,12 +161,12 @@ public:
         auto result = from_address(address, code, prefixlen, strict);
         if (code != error_code::NO_ERROR) {
             if (IPADDRESS_IS_CONST_EVALUATED(code)) {
-                char str[ip_address_type::_max_string_len + 1]{};
+                char str[ip_address_type::base_max_string_len + 1]{};
                 const auto len = address.ip_to_chars(address.bytes(), format::compressed, str);
                 raise_error(code, 0, str, len);
             }
         #ifndef IPADDRESS_NO_EXCEPTIONS
-            char str[ip_address_type::_max_string_len + 1]{};
+            char str[ip_address_type::base_max_string_len + 1]{};
             const auto len = address.ip_to_chars(address.bytes(), format::compressed, str);
             raise_error(code, 0, str, len);
         #endif
@@ -201,7 +201,7 @@ public:
         const auto& address_bytes = network_address().bytes();
         const auto& netmask_bytes = netmask().bytes();
 
-        for (size_t i = 0; i < ip_address_type::_size; ++i) {
+        for (size_t i = 0; i < ip_address_type::base_size; ++i) {
             if ((ip_bytes[i] & netmask_bytes[i]) != address_bytes[i]) {
                 return false;
             }
@@ -245,7 +245,7 @@ public:
         typename ip_address_type::base_type bytes {};
         const auto& network_address_bytes = network_address().bytes();
         const auto hostmask_bytes = hostmask().bytes();
-        for (size_t i = 0; i < ip_address_type::_size; ++i) {
+        for (size_t i = 0; i < ip_address_type::base_size; ++i) {
             bytes[i] = uint8_t(network_address_bytes[i] | hostmask_bytes[i]);
         }
         return ip_address_type(bytes);
@@ -258,7 +258,7 @@ public:
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_type hostmask() const IPADDRESS_NOEXCEPT {
         const auto& netmask_bytes = netmask().bytes();
         typename ip_address_type::base_type bytes {};
-        for (size_t i = 0; i < ip_address_type::_size; ++i) {
+        for (size_t i = 0; i < ip_address_type::base_size; ++i) {
             bytes[i] = uint8_t(netmask_bytes[i] ^ 0xFF);
         }
         return ip_address_type(bytes);
@@ -297,7 +297,7 @@ public:
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_sequence<ip_address_type> hosts() const IPADDRESS_NOEXCEPT {
-        return hosts_sequence<ip_address_type>(network_address(), broadcast_address(), prefixlen(), ip_address_type::_max_prefixlen);
+        return hosts_sequence<ip_address_type>(network_address(), broadcast_address(), prefixlen(), ip_address_type::base_max_prefixlen);
     }
 
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE exclude_network_sequence<ip_network_base<Base>> address_exclude(const ip_network_base& other) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
@@ -347,7 +347,7 @@ public:
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_sequence<ip_network_base<Base>> subnets(error_code& code, size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT {
         auto address = Base::remove_scope_id(network_address());
 
-        if (prefixlen() == ip_address_type::_max_prefixlen) {
+        if (prefixlen() == ip_address_type::base_max_prefixlen) {
             return subnets_sequence<ip_network_base<Base>>(address, prefixlen());
         }
 
@@ -365,7 +365,7 @@ public:
 
         auto new_prefix = prefixlen() + prefixlen_diff;
 
-        if (new_prefix > ip_address_type::_max_prefixlen) {
+        if (new_prefix > ip_address_type::base_max_prefixlen) {
             code = error_code::INVALID_PREFIXLEN_DIFF;
             return subnets_sequence<ip_network_base<Base>>();
         }
@@ -487,7 +487,7 @@ private:
         auto has_slash = false;
         auto netmask = str.end();
         auto symbol = 0;
-        char address[ip_address_type::_max_string_len + 1] = {};
+        char address[ip_address_type::base_max_string_len + 1] = {};
         for (auto it = str.begin(); it != str.end(); ++it) {
             const auto c = char(*it);
             if (c == '/') {

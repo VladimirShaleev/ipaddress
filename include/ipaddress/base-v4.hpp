@@ -12,25 +12,21 @@ public:
     using base_type = byte_array_type<4>;
     using uint_type = uint32_t;
 
+    static IPADDRESS_CONSTEXPR ip_version base_version = ip_version::V4;
+    static IPADDRESS_CONSTEXPR size_t base_size = 4;
+    static IPADDRESS_CONSTEXPR size_t base_max_string_len = 15;
+    static IPADDRESS_CONSTEXPR size_t base_max_prefixlen = base_size * 8;
+    static IPADDRESS_CONSTEXPR uint_type base_all_ones = std::numeric_limits<uint_type>::max();
+
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_version version() const IPADDRESS_NOEXCEPT {
-        return _version;
+        return base_version;
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t size() const IPADDRESS_NOEXCEPT {
-        return _size;
+        return base_size;
     }
 
 protected:
-    static IPADDRESS_CONSTEXPR ip_version _version = ip_version::V4;
-
-    static IPADDRESS_CONSTEXPR size_t _size = 4;
-
-    static IPADDRESS_CONSTEXPR uint_type _all_ones = std::numeric_limits<uint_type>::max();
-
-    static IPADDRESS_CONSTEXPR size_t _max_string_len = 15;
-
-    static IPADDRESS_CONSTEXPR size_t _max_prefixlen = _size * 8;
-
     template <typename Iter>
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<Ext> ip_from_string(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT {
         if (begin == end) {
@@ -109,7 +105,7 @@ protected:
 
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<Ext> ip_from_prefix(size_t prefixlen) {
         return prefixlen != 0
-            ? ip_address_base<Ext>::ip_from_uint32(_all_ones ^ (_all_ones >> (prefixlen - 1) >> 1))
+            ? ip_address_base<Ext>::ip_from_uint32(base_all_ones ^ (base_all_ones >> (prefixlen - 1) >> 1))
             : ip_address_base<Ext>::ip_from_uint32(0);
     }
 
@@ -122,7 +118,7 @@ protected:
         return is_little_endian() ? swap_bytes(ip) : ip;
     }
 
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t ip_to_chars(const base_type& bytes, format fmt, char (&result)[_max_string_len + 1]) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t ip_to_chars(const base_type& bytes, format fmt, char (&result)[base_max_string_len + 1]) IPADDRESS_NOEXCEPT {
         size_t offset = 0;
         char buffer[4] {};
         for (size_t b = 0; b < 4; ++b) {
@@ -158,7 +154,7 @@ protected:
             }
         }
         if (is_value) {
-            if (prefixlen > _max_prefixlen) {
+            if (prefixlen > base_max_prefixlen) {
                 code = error_code::INVALID_NETMASK;
                 return std::make_tuple(ip_address_base<Ext>(), 0);
             }
@@ -171,7 +167,7 @@ protected:
 
             prefixlen = prefix_from_ip_uint32(ip, code);
             if (code != error_code::NO_ERROR) {
-                ip = ip ^ _all_ones;
+                ip = ip ^ base_all_ones;
                 code = error_code::NO_ERROR;
                 prefixlen = prefix_from_ip_uint32(ip, code);
                 if (code != error_code::NO_ERROR) {
@@ -179,7 +175,7 @@ protected:
                 }
             }
         }
-        prefixlen = has_prefixlen ? prefixlen : _max_prefixlen;
+        prefixlen = has_prefixlen ? prefixlen : base_max_prefixlen;
         auto netmask = ip_from_prefix(prefixlen);
         return std::make_tuple(netmask, prefixlen);
     }
@@ -200,8 +196,8 @@ protected:
 
 private:
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t prefix_from_ip_uint32(uint_type ip, error_code& code) IPADDRESS_NOEXCEPT {
-        auto trailing_zeroes = count_righthand_zero_bits(ip, _max_prefixlen);
-        auto prefixlen = _max_prefixlen - trailing_zeroes;
+        auto trailing_zeroes = count_righthand_zero_bits(ip, base_max_prefixlen);
+        auto prefixlen = base_max_prefixlen - trailing_zeroes;
         auto leading_ones = trailing_zeroes != 32 ? (ip >> trailing_zeroes) : 0;
         auto all_ones = (uint_type(1) << (prefixlen - 1) << 1) - uint_type(1);
         if (leading_ones != all_ones) {
@@ -249,6 +245,21 @@ private:
         return length;
     }
 };
+
+template <typename Ext>
+IPADDRESS_CONSTEXPR ip_version base_v4<Ext>::base_version;
+
+template <typename Ext>
+IPADDRESS_CONSTEXPR size_t base_v4<Ext>::base_size;
+
+template <typename Ext>
+IPADDRESS_CONSTEXPR size_t base_v4<Ext>::base_max_string_len;
+
+template <typename Ext>
+IPADDRESS_CONSTEXPR size_t base_v4<Ext>::base_max_prefixlen;
+
+template <typename Ext>
+IPADDRESS_CONSTEXPR typename base_v4<Ext>::uint_type base_v4<Ext>::base_all_ones;
 
 } // namespace IPADDRESS_NAMESPACE
 

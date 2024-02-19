@@ -18,12 +18,6 @@ protected:
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base<ipv4_network_base> remove_scope_id(const ip_network_base<ipv4_network_base>& network) IPADDRESS_NOEXCEPT {
         return network;
     }
-    
-#ifndef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
-
-    friend IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base<ipv4_network_base> operator""_ipv4_net(const char* address, std::size_t size) IPADDRESS_NOEXCEPT;
-
-#endif // !IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 }; // ipv4_network_base
 
 using ipv4_network = ip_network_base<ipv4_network_base>;
@@ -38,8 +32,8 @@ using ipv4_network = ip_network_base<ipv4_network_base>;
 #else // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_network operator""_ipv4_net(const char* address, std::size_t size) IPADDRESS_NOEXCEPT {
-        assert(size <= ipv4_network::_max_string_len * 2 + 1 && "literal string is too long");
-        char str[ipv4_network::_max_string_len * 2 + 2] = {};
+        assert(size <= ipv4_network::base_max_string_len * 2 + 1 && "literal string is too long");
+        char str[ipv4_network::base_max_string_len * 2 + 2] = {};
         for (size_t i = 0; i < size; ++i) {
             str[i] = address[i];
         }

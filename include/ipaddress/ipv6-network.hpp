@@ -25,12 +25,6 @@ protected:
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base<ipv6_network_base> remove_scope_id(const ip_network_base<ipv6_network_base>& network) IPADDRESS_NOEXCEPT {
         return ip_network_base<ipv6_network_base>::from_address(remove_scope_id(network.network_address()), network.prefixlen());
     }
-
-#ifndef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
-
-    friend IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base<ipv6_network_base> operator""_ipv6_net(const char* address, std::size_t size) IPADDRESS_NOEXCEPT;
-
-#endif // !IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 }; // ipv6_network_base
 
 using ipv6_network = ip_network_base<ipv6_network_base>;
@@ -45,8 +39,8 @@ using ipv6_network = ip_network_base<ipv6_network_base>;
 #else // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_network operator""_ipv6_net(const char* address, std::size_t size) IPADDRESS_NOEXCEPT {
-        assert(size <= ipv6_network::_max_string_len + 4 && "literal string is too long");
-        char str[ipv6_network::_max_string_len + 5] = {};
+        assert(size <= ipv6_network::base_max_string_len + 4 && "literal string is too long");
+        char str[ipv6_network::base_max_string_len + 5] = {};
         for (size_t i = 0; i < size; ++i) {
             str[i] = address[i];
         }

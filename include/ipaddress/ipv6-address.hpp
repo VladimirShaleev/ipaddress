@@ -366,7 +366,7 @@ protected:
         );
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t ip_to_chars(const base_type& bytes, format fmt, char (&result)[_max_string_len + 1]) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t ip_to_chars(const base_type& bytes, format fmt, char (&result)[base_max_string_len + 1]) const IPADDRESS_NOEXCEPT {
         return base_v6<ipv6_address_base>::ip_to_chars(bytes, 
 
         #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH > 0
@@ -418,13 +418,6 @@ private:
         fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH> scope_id;
     #endif // IPADDRESS_IPV6_SCOPE_MAX_LENGTH
     } _data;
-
-#ifndef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
-
-    friend IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<ipv6_address_base> operator""_ipv6(const char* address, std::size_t size) IPADDRESS_NOEXCEPT;
-    
-#endif // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
-
 }; // ipv6_address_base
 
 using ipv6_address = ip_address_base<ipv6_address_base>;
@@ -439,8 +432,8 @@ using ipv6_address = ip_address_base<ipv6_address_base>;
 #else // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_address operator""_ipv6(const char* address, std::size_t size) IPADDRESS_NOEXCEPT {
-        assert(size <= ipv6_address::_max_string_len && "literal string is too long");
-        char str[ipv6_address::_max_string_len + 1] = {};
+        assert(size <= ipv6_address::base_max_string_len && "literal string is too long");
+        char str[ipv6_address::base_max_string_len + 1] = {};
         for (size_t i = 0; i < size; ++i) {
             str[i] = address[i];
         }
