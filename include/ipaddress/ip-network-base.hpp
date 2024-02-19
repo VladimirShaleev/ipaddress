@@ -505,6 +505,9 @@ private:
             if (!has_slash) {
                 address[symbol++] = c;
             }
+            if (symbol > ip_address_type::base_max_string_len) {
+                break;
+            }
         }
 
         auto netmask_result = ip_address_type::parse_netmask(netmask, str.end(), code, index);
@@ -552,7 +555,7 @@ inline std::istream& strict(std::istream& stream) {
     return stream;
 }
 
-inline std::istream& not_strict(std::istream& stream) {
+inline std::istream& non_strict(std::istream& stream) {
     stream.iword(network_strict_index()) = 1;
     return stream;
 }

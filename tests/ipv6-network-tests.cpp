@@ -500,7 +500,7 @@ INSTANTIATE_TEST_SUITE_P(
     ));
 
 using NetworkParserIpv6NotStrictParams = TestWithParam<std::tuple<const char*, const char*, const char*, const char*, const char*, size_t>>;
-TEST_P(NetworkParserIpv6NotStrictParams, parse_not_strict) {
+TEST_P(NetworkParserIpv6NotStrictParams, parse_non_strict) {
     auto excepted_address = ipv6_address::parse(get<1>(GetParam()));
     auto excepted_broadcast = ipv6_address::parse(get<2>(GetParam()));
     auto excepted_netmask = ipv6_address::parse(get<3>(GetParam()));
@@ -519,7 +519,7 @@ TEST_P(NetworkParserIpv6NotStrictParams, parse_not_strict) {
     ipv6_network net_from_stream;
     std::string s2;
     std::istringstream ss(std::string("test: ") + get<0>(GetParam()) + " parser");
-    ss >> s1 >> not_strict >> net_from_stream >> s2;
+    ss >> s1 >> non_strict >> net_from_stream >> s2;
 
     ASSERT_EQ(s1, std::string("test:"));
     EXPECT_EQ(net_from_stream.network_address(), excepted_address);
