@@ -341,3 +341,77 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("10%scope/8", error_code::LEAST_3_PARTS, "least 3 parts in address 10%scope/8"),
         std::make_tuple("1234:axy::b%scope", error_code::PART_HAS_INVALID_SYMBOL, "in part 0 of address 1234:axy::b%scope has invalid symbols")
     ));
+
+TEST(ip_network, Comparison) {
+    constexpr auto net1 = ip_network::parse("127.240.0.0/32");
+    constexpr auto net2 = ip_network::parse("2001:db8::/64");
+    constexpr auto net3 = ip_network::parse("2001:db8::/65");
+
+    ASSERT_TRUE(net1 < net2);
+    ASSERT_TRUE(net1 <= net2);
+    ASSERT_FALSE(net1 > net2);
+    ASSERT_FALSE(net1 >= net2);
+    ASSERT_FALSE(net1 == net2);
+    ASSERT_TRUE(net1 != net2);
+    
+    ASSERT_FALSE(net2 < net1);
+    ASSERT_FALSE(net2 <= net1);
+    ASSERT_TRUE(net2 > net1);
+    ASSERT_TRUE(net2 >= net1);
+    ASSERT_FALSE(net2 == net1);
+    ASSERT_TRUE(net2 != net1);
+
+    ASSERT_FALSE(net3 < net2);
+    ASSERT_FALSE(net3 <= net2);
+    ASSERT_TRUE(net3 > net2);
+    ASSERT_TRUE(net3 >= net2);
+    ASSERT_FALSE(net3 == net2);
+    ASSERT_TRUE(net3 != net2);
+}
+
+TEST(ip_network, to_string) {
+    constexpr auto net1 = ip_network::parse("127.240.0.0/24");
+    constexpr auto net2 = ip_network::parse("fe80::1ff:fe23:4567:890a%eth2");
+
+    const std::string expected_address = "127.240.0.0/24";
+    const auto expected_full_2 = "fe80:0000:0000:0000:01ff:fe23:4567:890a%eth2/128";
+    const auto expected_compact_2 = "fe80:0:0:0:1ff:fe23:4567:890a%eth2/128";
+    const auto expected_compressed_2 = "fe80::1ff:fe23:4567:890a%eth2/128";
+    const auto expected_compressed_upper_2 = "FE80::1FF:FE23:4567:890A%eth2/128";
+
+    std::ostringstream ss_full; ss_full << full << net1;
+    std::ostringstream ss_default; ss_default << net1;
+    std::ostringstream ss_compact; ss_compact << compact << net1;
+    std::ostringstream ss_compressed; ss_compressed << compressed << net1;
+    std::ostringstream ss_compressed_upper; ss_compressed_upper << std::uppercase << compressed << net1;
+
+    std::ostringstream ss_full_2; ss_full_2 << full << net2;
+    std::ostringstream ss_default_2; ss_default_2 << net2;
+    std::ostringstream ss_compact_2; ss_compact_2 << compact << net2;
+    std::ostringstream ss_compressed_2; ss_compressed_2 << compressed << net2;
+    std::ostringstream ss_compressed_upper_2; ss_compressed_upper_2 << std::uppercase << compressed << net2;
+    
+    ASSERT_EQ(net1.to_string(format::full), expected_address);
+    ASSERT_EQ(net1.to_string(format::compact), expected_address);
+    ASSERT_EQ(net1.to_string(format::compressed),expected_address);
+    ASSERT_EQ(net1.to_string(), expected_address);
+    ASSERT_EQ((std::string) net1, expected_address);
+    ASSERT_EQ(std::to_string(net1), expected_address);
+    ASSERT_EQ(ss_full.str(),expected_address);
+    ASSERT_EQ(ss_default.str(), expected_address);
+    ASSERT_EQ(ss_compact.str(), expected_address);
+    ASSERT_EQ(ss_compressed.str(), expected_address);
+    ASSERT_EQ(ss_compressed_upper.str(), expected_address);
+
+    ASSERT_EQ(net2.to_string(format::full), expected_full_2);
+    ASSERT_EQ(net2.to_string(format::compact), expected_compact_2);
+    ASSERT_EQ(net2.to_string(format::compressed), expected_compressed_2);
+    ASSERT_EQ(net2.to_string(), expected_compressed_2);
+    ASSERT_EQ((std::string) net2, expected_compressed_2);
+    ASSERT_EQ(std::to_string(net2), expected_compressed_2);
+    ASSERT_EQ(ss_full_2.str(), expected_full_2);
+    ASSERT_EQ(ss_default_2.str(), expected_compressed_2);
+    ASSERT_EQ(ss_compact_2.str(), expected_compact_2);
+    ASSERT_EQ(ss_compressed_2.str(), expected_compressed_2);
+    ASSERT_EQ(ss_compressed_upper_2.str(), expected_compressed_upper_2);
+}

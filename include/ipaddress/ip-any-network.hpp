@@ -460,7 +460,14 @@ IPADDRESS_FORCE_INLINE std::ostream& operator<<(std::ostream& stream, const IPAD
         ? (IPADDRESS_NAMESPACE::format) (iword - 1) 
         : IPADDRESS_NAMESPACE::format::compressed;
     iword = 0;
-    return stream << network.to_string(fmt);
+    auto str = network.to_string(fmt);
+    if (stream.flags() & ios_base::uppercase) {
+        auto end = std::find(str.cbegin(), str.cend(), '%');
+        std::transform(str.cbegin(), end, str.begin(), [](auto c){
+            return std::toupper(c);
+        });
+    }
+    return stream << str;
 }
 
 IPADDRESS_FORCE_INLINE std::istream& operator>>(std::istream& stream, IPADDRESS_NAMESPACE::ip_network& network) {
