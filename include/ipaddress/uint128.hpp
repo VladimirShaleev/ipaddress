@@ -900,8 +900,8 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(T
 
 namespace std {
 
-template <>
-struct numeric_limits<IPADDRESS_NAMESPACE::uint128_t> {
+template <typename T>
+struct __numeric_limits_uint128 {
     static IPADDRESS_CONSTEXPR bool is_bounded               = true;
     static IPADDRESS_CONSTEXPR bool is_exact                 = true;
     static IPADDRESS_CONSTEXPR bool is_integer               = true;
@@ -926,41 +926,114 @@ struct numeric_limits<IPADDRESS_NAMESPACE::uint128_t> {
     static IPADDRESS_CONSTEXPR float_denorm_style has_denorm = denorm_absent;
     static IPADDRESS_CONSTEXPR float_round_style round_style = round_toward_zero;
 
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE IPADDRESS_NAMESPACE::uint128_t (min)() IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T (min)() IPADDRESS_NOEXCEPT {
         return 0;
     }
 
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE IPADDRESS_NAMESPACE::uint128_t (max)() IPADDRESS_NOEXCEPT {
-        return IPADDRESS_NAMESPACE::uint128_t(0xFFFFFFFFFFFFFFFF, 0xFFFFFFFFFFFFFFFF);
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T (max)() IPADDRESS_NOEXCEPT {
+        return T(0xFFFFFFFFFFFFFFFF, 0xFFFFFFFFFFFFFFFF);
     }
 
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE IPADDRESS_NAMESPACE::uint128_t lowest() IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T lowest() IPADDRESS_NOEXCEPT {
         return (min)();
     }
 
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE IPADDRESS_NAMESPACE::uint128_t epsilon() IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T epsilon() IPADDRESS_NOEXCEPT {
         return 0;
     }
 
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE IPADDRESS_NAMESPACE::uint128_t round_error() IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T round_error() IPADDRESS_NOEXCEPT {
         return 0;
     }
 
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE IPADDRESS_NAMESPACE::uint128_t denorm_min() IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T denorm_min() IPADDRESS_NOEXCEPT {
         return 0;
     }
 
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE IPADDRESS_NAMESPACE::uint128_t infinity() IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T infinity() IPADDRESS_NOEXCEPT {
         return 0;
     }
 
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE IPADDRESS_NAMESPACE::uint128_t quiet_NaN() IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T quiet_NaN() IPADDRESS_NOEXCEPT {
         return 0;
     }
 
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE IPADDRESS_NAMESPACE::uint128_t signaling_NaN() IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T signaling_NaN() IPADDRESS_NOEXCEPT {
         return 0;
     }
+};
+
+template <typename T>
+IPADDRESS_CONSTEXPR bool __numeric_limits_uint128<T>::is_bounded;
+
+template <typename T>
+IPADDRESS_CONSTEXPR bool __numeric_limits_uint128<T>::is_exact;
+
+template <typename T>
+IPADDRESS_CONSTEXPR bool __numeric_limits_uint128<T>::is_integer;
+
+template <typename T>
+IPADDRESS_CONSTEXPR bool __numeric_limits_uint128<T>::is_modulo;
+
+template <typename T>
+IPADDRESS_CONSTEXPR bool __numeric_limits_uint128<T>::is_specialized;
+
+template <typename T>
+IPADDRESS_CONSTEXPR bool __numeric_limits_uint128<T>::is_iec559;
+
+template <typename T>
+IPADDRESS_CONSTEXPR bool __numeric_limits_uint128<T>::is_signed;
+
+template <typename T>
+IPADDRESS_CONSTEXPR bool __numeric_limits_uint128<T>::has_denorm_loss;
+
+template <typename T>
+IPADDRESS_CONSTEXPR bool __numeric_limits_uint128<T>::has_infinity;
+
+template <typename T>
+IPADDRESS_CONSTEXPR bool __numeric_limits_uint128<T>::has_quiet_NaN;
+
+template <typename T>
+IPADDRESS_CONSTEXPR bool __numeric_limits_uint128<T>::has_signaling_NaN;
+
+template <typename T>
+IPADDRESS_CONSTEXPR bool __numeric_limits_uint128<T>::tinyness_before;
+
+template <typename T>
+IPADDRESS_CONSTEXPR bool __numeric_limits_uint128<T>::traps;
+
+template <typename T>
+IPADDRESS_CONSTEXPR int __numeric_limits_uint128<T>::max_digits10;
+
+template <typename T>
+IPADDRESS_CONSTEXPR int __numeric_limits_uint128<T>::max_exponent;
+
+template <typename T>
+IPADDRESS_CONSTEXPR int __numeric_limits_uint128<T>::max_exponent10;
+
+template <typename T>
+IPADDRESS_CONSTEXPR int __numeric_limits_uint128<T>::min_exponent;
+
+template <typename T>
+IPADDRESS_CONSTEXPR int __numeric_limits_uint128<T>::min_exponent10;
+
+template <typename T>
+IPADDRESS_CONSTEXPR int __numeric_limits_uint128<T>::digits;
+
+template <typename T>
+IPADDRESS_CONSTEXPR int __numeric_limits_uint128<T>::digits10;
+
+template <typename T>
+IPADDRESS_CONSTEXPR int __numeric_limits_uint128<T>::radix;
+
+template <typename T>
+IPADDRESS_CONSTEXPR float_denorm_style __numeric_limits_uint128<T>::has_denorm;
+
+template <typename T>
+IPADDRESS_CONSTEXPR float_round_style __numeric_limits_uint128<T>::round_style;
+
+template <>
+struct numeric_limits<IPADDRESS_NAMESPACE::uint128_t> : __numeric_limits_uint128<IPADDRESS_NAMESPACE::uint128_t> {
 };
 
 template <>
