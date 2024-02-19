@@ -159,12 +159,7 @@ public:
             return ip_address(ipv4);
         }
         
-        const auto ipv6 = ipv6_address::parse(ip, code);
-        if (code == error_code::NO_ERROR) {
-            return ip_address(ipv6);
-        }
-
-        raise_error(code, 0, str.data(), str.size());
+        return ip_address(ipv6_address::parse<FixedString>());
     }
 
 #endif // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
@@ -359,11 +354,11 @@ public:
 
 #if __cpp_char8_t >= 201811L
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::u8string& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_address parse(const std::u8string& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return parse_string(address);
     }
 
-    static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::u8string& address, error_code& code) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_FORCE_INLINE ip_address parse(const std::u8string& address, error_code& code) IPADDRESS_NOEXCEPT {
         return parse_string(address, code);
     }
 
@@ -385,6 +380,7 @@ public:
 
     template <typename T, size_t N>
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(const T(&address)[N]) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        internal::is_char_type<T>();
         auto code = error_code::NO_ERROR;
         auto result = parse_string(address, code);
         if (code != error_code::NO_ERROR) {
@@ -400,7 +396,9 @@ public:
 
     template <typename T, size_t N>
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(const T(&address)[N], error_code& code) IPADDRESS_NOEXCEPT {
+        internal::is_char_type<T>();
         code = error_code::NO_ERROR;
+        
         const auto ipv4 = ipv4_address::parse(address, code);
         if (code == error_code::NO_ERROR) {
             return ip_address(ipv4);

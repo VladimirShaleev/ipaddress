@@ -51,7 +51,12 @@ TEST(ip_address, CopyCtor) {
 }
 
 TEST(ip_address, CopyOperator) {
-    constexpr auto ip = ip_address::parse("::ffff:0:0");
+    constexpr auto ip = 
+#ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
+    ip_address::parse<"::ffff:0:0">();
+#else
+    ip_address::parse("::ffff:0:0");
+#endif
     ip_address ip_copy = ip_address::parse("127.0.0.1");
 
     auto actual_ip4_copy = ip_copy.v4();
