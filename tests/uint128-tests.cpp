@@ -62,9 +62,9 @@ TEST(uint128_t, Copy) {
 }
 
 TEST(uint128_t, Move) {
-    constexpr uint128_t value = 5;
+    uint128_t value = 5;
 
-    constexpr uint128_t move_ctor = std::move(value);
+    uint128_t move_ctor = std::move(value);
     uint128_t move_operator;
     move_operator = std::move(move_ctor);
 
