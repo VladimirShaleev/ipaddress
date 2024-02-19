@@ -335,10 +335,9 @@ TEST_P(InvalidAddressParams, parse) {
     ASSERT_EQ(err, expected_error_code);
 
 #ifdef IPADDRESS_NO_EXCEPTIONS
-    ip_address::base_type expected_empty { 0 };
     auto error_ip = ip_address::parse(expected_address);
 
-    EXPECT_EQ(error_ip.bytes(), expected_empty);
+    EXPECT_EQ(error_ip.v4().value().to_uint(), 0);
 #else
     EXPECT_THAT(
         [address=expected_address]() { ip_address::parse(address); },
