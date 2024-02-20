@@ -7,6 +7,10 @@
 
 #include <ipaddress/ipaddress.hpp>
 
+#if IPADDRESS_CPP_VERSION >= 20
+#  include <ranges>
+#endif
+
 using namespace testing;
 using namespace ipaddress;
 
@@ -548,6 +552,14 @@ TEST(ip_network, is_prop) {
     ASSERT_FALSE(net32);
 }
 
+TEST(ip_network, addresses_count) {
+    constexpr auto actual1 = ip_network::parse("10.0.0.0/30").addresses_count();
+    constexpr auto actual2 = ip_network::parse("2001:658:22a:cafe::/64").addresses_count();
+
+    ASSERT_EQ(actual1, 4);
+    ASSERT_EQ(actual2, uint128_t::from_string("18446744073709551616").value());
+}
+
 TEST(ip_network, contains) {
     constexpr auto actual1 = ip_network::parse("192.0.2.0/28").contains(ip_address::parse("192.0.2.6"));
     constexpr auto actual2 = ip_network::parse("192.0.2.0/28").contains(ip_address::parse("192.0.3.6"));
@@ -594,6 +606,94 @@ TEST(ip_network, supernet_of) {
     ASSERT_FALSE(actual2);
     ASSERT_TRUE(actual3);
     ASSERT_FALSE(actual4);
+}
+
+TEST(ip_network, hosts) {
+    constexpr auto hosts_sequence = ip_network::parse("192.0.2.0/29").hosts();
+    constexpr auto hosts_empty = hosts_sequence.empty();
+    constexpr auto hosts_size = hosts_sequence.size();
+    constexpr auto hosts_front = hosts_sequence.front();
+    constexpr auto hosts_back = hosts_sequence.back();
+    constexpr auto hosts_at_0 = hosts_sequence.at(0);
+    constexpr auto hosts_at_1 = hosts_sequence[1];
+    constexpr auto hosts_at_2 = hosts_sequence.at(2);
+    constexpr auto hosts_at_3 = hosts_sequence[3];
+    constexpr auto hosts_begin = hosts_sequence.begin();
+    constexpr auto hosts_end = hosts_sequence.end();
+    constexpr auto hosts_rbegin = hosts_sequence.rbegin();
+    constexpr auto hosts_rend = hosts_sequence.rend();
+    constexpr auto hosts_diff = hosts_end.uint_diff(hosts_begin);
+    constexpr auto hosts_begin_0 = *hosts_begin;
+    constexpr auto hosts_begin_0_uint = hosts_begin->v4().value().to_uint();
+    constexpr auto hosts_begin_at_0 = hosts_begin[0U];
+    constexpr auto hosts_begin_at_1 = hosts_begin[1U];
+    constexpr auto hosts_begin_at_2 = hosts_begin[2U];
+    constexpr auto hosts_begin_at_3 = hosts_begin[3U];
+    constexpr auto hosts_it = *(--(++hosts_sequence.begin()++ + 2U) -= 1U);
+    constexpr auto hosts_it_eq = hosts_begin == hosts_end;
+    constexpr auto hosts_it_ne = hosts_begin != hosts_end;
+    constexpr auto hosts_it_ls = hosts_begin < hosts_end;
+    constexpr auto hosts_it_le = hosts_begin <= hosts_end;
+    constexpr auto hosts_it_gt = hosts_begin > hosts_end;
+    constexpr auto hosts_it_ge = hosts_begin >= hosts_end;
+    constexpr auto hosts_rdiff = hosts_rend.uint_diff(hosts_rbegin);
+    constexpr auto hosts_rbegin_0 = *hosts_rbegin;
+    constexpr auto hosts_rbegin_0_uint = hosts_rbegin->v4().value().to_uint();
+    constexpr auto hosts_rbegin_at_0 = hosts_rbegin[0U];
+    constexpr auto hosts_rbegin_at_1 = hosts_rbegin[1U];
+    constexpr auto hosts_rbegin_at_2 = hosts_rbegin[2U];
+    constexpr auto hosts_rbegin_at_3 = hosts_rbegin[3U];
+    constexpr auto hosts_rit = *(--(++hosts_sequence.rbegin()++ + 2U) -= 1U);
+    constexpr auto hosts_rit_eq = hosts_rbegin == hosts_rend;
+    constexpr auto hosts_rit_ne = hosts_rbegin != hosts_rend;
+    constexpr auto hosts_rit_ls = hosts_rbegin < hosts_rend;
+    constexpr auto hosts_rit_le = hosts_rbegin <= hosts_rend;
+    constexpr auto hosts_rit_gt = hosts_rbegin > hosts_rend;
+    constexpr auto hosts_rit_ge = hosts_rbegin >= hosts_rend;
+    ASSERT_FALSE(hosts_empty);
+    ASSERT_EQ(hosts_size, 6);
+    ASSERT_EQ(hosts_front, ip_address::parse("192.0.2.1"));
+    ASSERT_EQ(hosts_back, ip_address::parse("192.0.2.6"));
+    ASSERT_EQ(hosts_at_0, ip_address::parse("192.0.2.1"));
+    ASSERT_EQ(hosts_at_1, ip_address::parse("192.0.2.2"));
+    ASSERT_EQ(hosts_at_2, ip_address::parse("192.0.2.3"));
+    ASSERT_EQ(hosts_at_3, ip_address::parse("192.0.2.4"));
+    ASSERT_EQ(hosts_diff, 6);
+    ASSERT_EQ(hosts_begin_0, ip_address::parse("192.0.2.1"));
+    ASSERT_EQ(hosts_begin_0_uint, 0xC0000201);
+    ASSERT_EQ(hosts_begin_at_0, ip_address::parse("192.0.2.1"));
+    ASSERT_EQ(hosts_begin_at_1, ip_address::parse("192.0.2.2"));
+    ASSERT_EQ(hosts_begin_at_2, ip_address::parse("192.0.2.3"));
+    ASSERT_EQ(hosts_begin_at_3, ip_address::parse("192.0.2.4"));
+    ASSERT_EQ(hosts_it, ip_address::parse("192.0.2.2"));
+    ASSERT_FALSE(hosts_it_eq);
+    ASSERT_TRUE(hosts_it_ne);
+    ASSERT_TRUE(hosts_it_ls);
+    ASSERT_TRUE(hosts_it_le);
+    ASSERT_FALSE(hosts_it_gt);
+    ASSERT_FALSE(hosts_it_ge);
+    ASSERT_EQ(hosts_rdiff, 6);
+    ASSERT_EQ(hosts_rbegin_0, ip_address::parse("192.0.2.6"));
+    ASSERT_EQ(hosts_rbegin_0_uint, 0xC0000206);
+    ASSERT_EQ(hosts_rbegin_at_0, ip_address::parse("192.0.2.6"));
+    ASSERT_EQ(hosts_rbegin_at_1, ip_address::parse("192.0.2.5"));
+    ASSERT_EQ(hosts_rbegin_at_2, ip_address::parse("192.0.2.4"));
+    ASSERT_EQ(hosts_rbegin_at_3, ip_address::parse("192.0.2.3"));
+    ASSERT_EQ(hosts_rit, ip_address::parse("192.0.2.5"));
+    ASSERT_FALSE(hosts_rit_eq);
+    ASSERT_TRUE(hosts_rit_ne);
+    ASSERT_TRUE(hosts_rit_ls);
+    ASSERT_TRUE(hosts_rit_le);
+    ASSERT_FALSE(hosts_rit_gt);
+    ASSERT_FALSE(hosts_rit_ge);
+
+#if IPADDRESS_CPP_VERSION >= 20
+    constexpr auto host_range = *++((ip_network::parse("192.0.2.0/29").hosts()
+                                | std::views::filter([](const auto& a) { return a.v4().value().to_uint() % 2 == 0; })
+                                | std::views::take(2)).begin());
+    ASSERT_EQ(host_range, ip_address::parse("192.0.2.4"));
+#endif
+
 }
 
 TEST(ip_network, literals) {

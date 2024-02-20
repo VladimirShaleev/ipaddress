@@ -4,6 +4,7 @@
 #include "ipv4-network.hpp"
 #include "ipv6-network.hpp"
 #include "ip-any-address.hpp"
+#include "ip-any-iterator.hpp"
 
 namespace IPADDRESS_NAMESPACE {
 
@@ -81,6 +82,10 @@ public:
         return is_v4() ? _ipv_net.ipv4.hash() : _ipv_net.ipv6.hash();
     }
 
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t addresses_count() const IPADDRESS_NOEXCEPT {
+        return is_v4() ? uint128_t(_ipv_net.ipv4.addresses_count()) : _ipv_net.ipv6.addresses_count();
+    }
+
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool contains(const ip_address& address) const IPADDRESS_NOEXCEPT {
         if (_version == address.version()) {
             return is_v4() ? _ipv_net.ipv4.contains(address.v4().value()) : _ipv_net.ipv6.contains(address.v6().value());
@@ -110,6 +115,16 @@ public:
             return is_v4() ? _ipv_net.ipv4.supernet_of(other.v4().value()) : _ipv_net.ipv6.supernet_of(other.v6().value());
         } else {
             return false;
+        }
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_any_sequence hosts() const IPADDRESS_NOEXCEPT {
+        if (is_v4()) {
+            const auto sequence = _ipv_net.ipv4.hosts();
+            return hosts_any_sequence(sequence.begin(), sequence.end());
+        } else {
+            const auto sequence = _ipv_net.ipv6.hosts();
+            return hosts_any_sequence(sequence.begin(), sequence.end());
         }
     }
 

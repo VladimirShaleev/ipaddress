@@ -198,7 +198,7 @@ public:
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_address_iterator& operator=(ip_address_iterator&&) IPADDRESS_NOEXCEPT = default;
 
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator(reference begin, reference end, reference ref, int carry = 0) IPADDRESS_NOEXCEPT
-        : _current(ref), _offset(ref.to_uint()), _begin(begin.to_uint()), _end(end.to_uint()), _carry(carry) {
+        : _current(ref), _offset(ref.to_uint()), _carry(carry) {
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint_type uint_diff(const ip_address_iterator& other) const IPADDRESS_NOEXCEPT {
@@ -343,8 +343,6 @@ private:
         auto result = *this;
         const auto old = result._offset;
         ++result._offset;
-        ++result._begin;
-        ++result._end;
         if (result._offset < old) {
             result._carry = 1 - result._carry;
         }
@@ -356,8 +354,6 @@ private:
         auto result = *this;
         const auto old = result._offset;
         --result._offset;
-        --result._begin;
-        --result._end;
         if (result._offset > old) {
             result._carry = 1 - result._carry;
         }
@@ -393,11 +389,11 @@ private:
     template <typename>
     friend class ip_network_iterator;
 
+    template <typename, typename, typename>
+    friend class ip_any_iterator;
+
     value_type _current{};
-    value_type _at{};
     uint_type _offset{};
-    uint_type _begin{};
-    uint_type _end{};
     int _carry{};
 };
 

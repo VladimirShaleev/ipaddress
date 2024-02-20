@@ -175,8 +175,6 @@ private:
         auto result = *this;
         const auto old = result._it._offset;
         result._it._offset += _step;
-        result._it._begin += _step;
-        result._it._end += _step;
         if (result._it._offset < old) {
             result._it._carry = 1 - result._it._carry;
         }
@@ -189,8 +187,6 @@ private:
         auto result = *this;
         const auto old = result._it._offset;
         result._it._offset -= _step;
-        result._it._begin -= _step;
-        result._it._end -= _step;
         if (result._it._offset > old) {
         result._it._carry = 1 - result._it._carry;
         }
