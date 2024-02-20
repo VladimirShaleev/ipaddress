@@ -172,6 +172,10 @@ public:
         return parse_string(str, code);
     }
 
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const uint8_t* data() const IPADDRESS_NOEXCEPT {
+        return Base::bytes().data();
+    }
+
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_multicast() const IPADDRESS_NOEXCEPT;
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_private() const IPADDRESS_NOEXCEPT;

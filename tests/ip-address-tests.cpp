@@ -203,6 +203,29 @@ TEST(ip_address, from_uint) {
     EXPECT_EQ(actual2_ip.value().to_uint(), 281470681743360ULL);
 }
 
+TEST(ip_address, to_uint) {
+    constexpr auto expected1 = 0xC0A80001;
+    constexpr auto expected2 = uint128_t(2306595200482672640, 1);
+    constexpr auto expected3 = 1;
+
+    constexpr auto ip1 = ip_address::parse("192.168.0.1");
+    constexpr auto ip2 = ip_address::parse("2002:ac1d:2d64::1");
+
+    constexpr auto actual1 = ip1.to_uint();
+    constexpr auto actual2 = (uint128_t) ip1;
+    constexpr auto actual3 = (uint32_t) ip1;
+    constexpr auto actual4 = ip2.to_uint();
+    constexpr auto actual5 = (uint128_t) ip2;
+    constexpr auto actual6 = (uint32_t) ip2;
+
+    EXPECT_EQ(actual1, expected1);
+    EXPECT_EQ(actual2, expected1);
+    EXPECT_EQ(actual3, expected1);
+    EXPECT_EQ(actual4, expected2);
+    EXPECT_EQ(actual5, expected2);
+    EXPECT_EQ(actual6, expected3);
+}
+
 TEST(ip_address, data) {
     byte_array<4> expected1 = { 192, 168, 0, 1 };
     byte_array<16> expected2 = { 

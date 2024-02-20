@@ -94,7 +94,7 @@ public:
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const uint8_t* data() const IPADDRESS_NOEXCEPT {
-        return _version == ip_version::V4 ? _ipv.ipv4.bytes().data() : _ipv.ipv6.bytes().data();
+        return _version == ip_version::V4 ? _ipv.ipv4.data() : _ipv.ipv6.data();
     }
 
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address() IPADDRESS_NOEXCEPT {
@@ -130,6 +130,10 @@ public:
 
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address from_uint(const uint_type_ipv6& ip) IPADDRESS_NOEXCEPT {
         return ip_address(ipv6_address::from_uint(ip));
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t to_uint() const IPADDRESS_NOEXCEPT {
+        return _version == ip_version::V4 ? uint128_t(_ipv.ipv4.to_uint()) : _ipv.ipv6.to_uint();
     }
 
     IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string to_string(format fmt = format::compressed) const {
@@ -429,6 +433,14 @@ public:
             return fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>();
         }
         return _ipv.ipv6.get_scope_id();
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit operator uint32_t() const IPADDRESS_NOEXCEPT {
+        return _version == ip_version::V4 ? _ipv.ipv4.to_uint() : uint32_t(_ipv.ipv6.to_uint());
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit operator uint128_t() const IPADDRESS_NOEXCEPT {
+        return to_uint();
     }
 
     IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE explicit operator std::string() const {
