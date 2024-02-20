@@ -10,6 +10,9 @@ namespace IPADDRESS_NAMESPACE {
 
 class ip_network {
 public:
+    using ip_address_type = ip_address;
+    using uint_type = uint128_t;
+
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_version version() const IPADDRESS_NOEXCEPT {
         return _version;
     }
@@ -126,6 +129,64 @@ public:
             const auto sequence = _ipv_net.ipv6.hosts();
             return hosts_any_sequence(sequence.begin(), sequence.end());
         }
+    }
+
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_any_sequence<ip_network> subnets(size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        if (is_v4()) {
+            const auto sequence = _ipv_net.ipv4.subnets(prefixlen_diff, new_prefixlen);
+            return subnets_any_sequence<ip_network>(sequence.begin(), sequence.end());
+        } else {
+            const auto sequence = _ipv_net.ipv6.subnets(prefixlen_diff, new_prefixlen);
+            return subnets_any_sequence<ip_network>(sequence.begin(), sequence.end());
+        }
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_any_sequence<ip_network> subnets(error_code& code, size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT {
+        if (is_v4()) {
+            const auto sequence = _ipv_net.ipv4.subnets(code, prefixlen_diff, new_prefixlen);
+            return subnets_any_sequence<ip_network>(sequence.begin(), sequence.end());
+        } else {
+            const auto sequence = _ipv_net.ipv6.subnets(code, prefixlen_diff, new_prefixlen);
+            return subnets_any_sequence<ip_network>(sequence.begin(), sequence.end());
+        }
+    }
+
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE exclude_network_sequence<ip_network> address_exclude(const ip_network& other) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        error_code code = error_code::NO_ERROR;
+        const auto result = address_exclude(other, code);
+        if (code != error_code::NO_ERROR) {
+            if (IPADDRESS_IS_CONST_EVALUATED(code)) {
+                raise_error(code, 0, "", 0);
+            }
+        #ifndef IPADDRESS_NO_EXCEPTIONS
+            raise_error(code, 0, "", 0);
+        #endif
+        }
+        return result;
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE exclude_network_sequence<ip_network> address_exclude(const ip_network& other, error_code& code) const IPADDRESS_NOEXCEPT {
+        code = error_code::NO_ERROR;
+        if (_version != other._version) {
+            code = error_code::INVALID_VERSION;
+            return exclude_network_sequence<ip_network>();
+        }
+
+        auto addr1 = network_address(); addr1.set_scope_id("");
+        auto addr2 = other.network_address(); addr2.set_scope_id("");
+        auto lhs = ip_network::from_address(addr1, prefixlen());
+        auto rhs = ip_network::from_address(addr2, other.prefixlen());
+
+        if (!rhs.subnet_of(lhs)) {
+            code = error_code::NOT_CONTAINED_NETWORK;
+            return exclude_network_sequence<ip_network>();
+        }
+
+        if (lhs == rhs) {
+            return exclude_network_sequence<ip_network>();
+        }
+
+        return exclude_network_sequence<ip_network>(lhs, rhs);
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<ipv4_network> v4() const IPADDRESS_NOEXCEPT {

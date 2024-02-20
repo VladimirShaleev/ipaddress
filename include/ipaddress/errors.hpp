@@ -36,6 +36,7 @@ enum class error_code {
     INVALID_SCOPE_ID,
 
     // logic errors
+    INVALID_VERSION,
     INVALID_PREFIXLEN_DIFF,
     NEW_PREFIX_MUST_BE_SHORTER,
     NEW_PREFIX_MUST_BE_LONGER,
@@ -164,6 +165,8 @@ template <typename T>
             throw parse_error(code, "scope id is too long in address", str);
         case error_code::INVALID_SCOPE_ID:
             throw parse_error(code, "invalid scope id in address", str);
+        case error_code::INVALID_VERSION:
+            throw logic_error(code, "Versions don't match");
         case error_code::INVALID_PREFIXLEN_DIFF:
             throw logic_error(code, "invalid prefixlen_diff");
         case error_code::NEW_PREFIX_MUST_BE_SHORTER:

@@ -9,9 +9,6 @@ namespace IPADDRESS_NAMESPACE {
 template <typename T>
 class ip_network_iterator {
 public:
-    template <typename>
-    friend class ip_reverse_iterator;
-
     using iterator_category = std::random_access_iterator_tag;
     using value_type        = T;
     using difference_type   = std::int64_t;
@@ -204,6 +201,12 @@ private:
         _it -= _step * n;
         _current = value_type::from_address(*_it, _prefixlen);
     }
+
+    template <typename>
+    friend class ip_reverse_iterator;
+
+    template <typename, typename, typename>
+    friend class ip_any_iterator;
 
     value_type _current{};
     value_type _at{};

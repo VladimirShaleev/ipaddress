@@ -229,7 +229,7 @@ private:
     } _iter {};
     ip_version _version = ip_version::V4;
     value_type _current {};
-};
+}; // ip_any_iterator
 
 class hosts_any_sequence {
 public:
@@ -318,7 +318,97 @@ public:
 private:
     const_iterator _begin{};
     const_iterator _end{};
-};
+}; // hosts_any_sequence
+
+template <typename T>
+class subnets_any_sequence {
+public:
+    using value_type      = T;
+    using size_type       = std::size_t;
+    using difference_type = uint128_t;
+    using pointer         = value_type*;
+    using const_pointer   = const value_type*;
+    using reference       = value_type&;
+    using const_reference = const value_type&;
+
+    using iterator       = ip_any_iterator<value_type, ip_network_iterator<ipv4_network>, ip_network_iterator<ipv6_network>>;
+    using const_iterator = iterator;
+
+    using reverse_iterator       = ip_reverse_iterator<iterator>;
+    using const_reverse_iterator = ip_reverse_iterator<const_iterator>;
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_any_sequence(const subnets_any_sequence&) IPADDRESS_NOEXCEPT = default;
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_any_sequence(subnets_any_sequence&&) IPADDRESS_NOEXCEPT = default;
+
+    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE subnets_any_sequence& operator=(const subnets_any_sequence&) IPADDRESS_NOEXCEPT = default;
+    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE subnets_any_sequence& operator=(subnets_any_sequence&&) IPADDRESS_NOEXCEPT = default;
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_any_sequence(ip_network_iterator<ipv4_network> begin, ip_network_iterator<ipv4_network> end) IPADDRESS_NOEXCEPT : _begin(begin), _end(end) {
+    }
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_any_sequence(ip_network_iterator<ipv6_network> begin, ip_network_iterator<ipv6_network> end) IPADDRESS_NOEXCEPT : _begin(begin), _end(end) {
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator begin() const IPADDRESS_NOEXCEPT {
+        return _begin;
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator end() const IPADDRESS_NOEXCEPT {
+        return _end;
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reverse_iterator rbegin() const IPADDRESS_NOEXCEPT {
+        return const_reverse_iterator(end());
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reverse_iterator rend() const IPADDRESS_NOEXCEPT {
+        return const_reverse_iterator(begin());
+    }
+    
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator cbegin() const IPADDRESS_NOEXCEPT {
+        return begin();
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator cend() const IPADDRESS_NOEXCEPT {
+        return end();
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reverse_iterator crbegin() const IPADDRESS_NOEXCEPT {
+        return const_reverse_iterator(cend());
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reverse_iterator crend() const IPADDRESS_NOEXCEPT {
+        return const_reverse_iterator(cbegin());
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool empty() const IPADDRESS_NOEXCEPT {
+        return _begin == _end;
+    }
+    
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE difference_type size() const IPADDRESS_NOEXCEPT {
+        return _end.uint_diff(_begin);
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type operator[](difference_type n) const IPADDRESS_NOEXCEPT {
+        return at(n);
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type at(difference_type n) const IPADDRESS_NOEXCEPT {
+        return *(_begin + n);
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type front() const IPADDRESS_NOEXCEPT {
+        return *_begin;
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type back() const IPADDRESS_NOEXCEPT {
+        return *(_end - 1U);
+    }
+
+private:
+    const_iterator _begin{};
+    const_iterator _end{};
+}; // subnets_any_sequence
 
 } // namespace IPADDRESS_NAMESPACE
 
