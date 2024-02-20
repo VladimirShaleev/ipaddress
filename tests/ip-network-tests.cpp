@@ -548,6 +548,54 @@ TEST(ip_network, is_prop) {
     ASSERT_FALSE(net32);
 }
 
+TEST(ip_network, contains) {
+    constexpr auto actual1 = ip_network::parse("192.0.2.0/28").contains(ip_address::parse("192.0.2.6"));
+    constexpr auto actual2 = ip_network::parse("192.0.2.0/28").contains(ip_address::parse("192.0.3.6"));
+    constexpr auto actual3 = ip_network::parse("2001:db8::/32").contains(ip_address::parse("2001:db8::1"));
+    constexpr auto actual4 = ip_network::parse("2001:db8::/32").contains(ip_address::parse("2001:dbc::"));
+
+    ASSERT_TRUE(actual1);
+    ASSERT_FALSE(actual2);
+    ASSERT_TRUE(actual3);
+    ASSERT_FALSE(actual4);
+}
+
+TEST(ip_network, overlaps) {
+    constexpr auto actual1 = ip_network::parse("1.2.3.0/24").overlaps(ip_network::parse("1.2.3.0/30"));
+    constexpr auto actual2 = ip_network::parse("1.2.3.0/24").overlaps(ip_network::parse("1.2.2.0/24"));
+    constexpr auto actual3 = ip_network::parse("2001:db8::/32").overlaps(ip_network::parse("2001:db8::/128"));
+    constexpr auto actual4 = ip_network::parse("2001:dbc::/32").overlaps(ip_network::parse("2001:db8::/32"));
+
+    ASSERT_TRUE(actual1);
+    ASSERT_FALSE(actual2);
+    ASSERT_TRUE(actual3);
+    ASSERT_FALSE(actual4);
+}
+
+TEST(ip_network, subnet_of) {
+    constexpr auto actual1 = ip_network::parse("10.0.0.0/30").subnet_of(ip_network::parse("10.0.0.0/24"));
+    constexpr auto actual2 = ip_network::parse("10.0.0.0/30").subnet_of(ip_network::parse("10.0.1.0/24"));
+    constexpr auto actual3 = ip_network::parse("2000:aaa::/56").subnet_of(ip_network::parse("2000:aaa::/48"));
+    constexpr auto actual4 = ip_network::parse("2000:bbb::/56").subnet_of(ip_network::parse("2000:aaa::/48"));
+
+    ASSERT_TRUE(actual1);
+    ASSERT_FALSE(actual2);
+    ASSERT_TRUE(actual3);
+    ASSERT_FALSE(actual4);
+}
+
+TEST(ip_network, supernet_of) {
+    constexpr auto actual1 = ip_network::parse("192.168.1.0/24").supernet_of(ip_network::parse("192.168.1.128/30"));
+    constexpr auto actual2 = ip_network::parse("10.0.0.0/30").supernet_of(ip_network::parse("10.0.1.0/24"));
+    constexpr auto actual3 = ip_network::parse("2000:aaa::/48").supernet_of(ip_network::parse("2000:aaa::/56"));
+    constexpr auto actual4 = ip_network::parse("2000:aaa::/56").supernet_of(ip_network::parse("2000:aaa::/48"));
+
+    ASSERT_TRUE(actual1);
+    ASSERT_FALSE(actual2);
+    ASSERT_TRUE(actual3);
+    ASSERT_FALSE(actual4);
+}
+
 TEST(ip_network, literals) {
     constexpr auto net1 = "127.128.128.255"_net;
     constexpr auto net2 = "2001:db8::1"_net;
