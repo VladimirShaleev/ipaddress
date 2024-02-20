@@ -93,6 +93,10 @@ public:
         return optional<ipv6_address>(std::move(ip));
     }
 
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const uint8_t* data() const IPADDRESS_NOEXCEPT {
+        return _version == ip_version::V4 ? _ipv.ipv4.bytes().data() : _ipv.ipv6.bytes().data();
+    }
+
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address() IPADDRESS_NOEXCEPT {
     }
 
