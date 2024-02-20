@@ -415,3 +415,145 @@ TEST(ip_network, to_string) {
     ASSERT_EQ(ss_compressed_2.str(), expected_compressed_2);
     ASSERT_EQ(ss_compressed_upper_2.str(), expected_compressed_upper_2);
 }
+
+TEST(ip_network, Hash) {
+    constexpr auto hash_functor = std::hash<ip_network>{};
+
+    constexpr auto net1 = ip_network::parse("127.0.0.0/24");
+    constexpr auto net2 = ip_network::parse("2001:db8::/64");
+
+    constexpr auto hash1 = net1.hash();
+    constexpr auto hash2 = net2.hash();
+    constexpr auto hash3 = hash_functor(net1);
+    constexpr auto hash4 = hash_functor(net2);
+
+    ASSERT_EQ(hash1, sizeof(size_t) == 8 ? 7623195473821216247ULL : 546525844U);
+    ASSERT_EQ(hash2, sizeof(size_t) == 8 ? 9261008770321846004ULL : 3598479863U);
+    ASSERT_EQ(hash3, sizeof(size_t) == 8 ? 7623195473821216247ULL : 546525844U);
+    ASSERT_EQ(hash4, sizeof(size_t) == 8 ? 9261008770321846004ULL : 3598479863U);
+}
+
+TEST(ip_network, Containers) {
+    constexpr auto net1 = ip_network::parse("127.0.0.0/24");
+    constexpr auto net2 = ip_network::parse("2001:db8::/64");
+    constexpr auto net3 = ip_network::parse("2001:db8::/65");
+
+    std::vector<ip_network> vec;
+    vec.push_back(net1);
+    vec.push_back(net2);
+    vec.emplace_back(net3);
+    ASSERT_EQ(vec[0], net1);
+    ASSERT_EQ(vec[1], net2);
+    ASSERT_EQ(vec[2], net3);
+
+    std::map<ip_network, int> map;
+    map[net2] = 2;
+    map[net1] = 1;
+    map[net3] = 3;
+    auto it = map.begin();
+    ASSERT_EQ(map.size(), 3);
+    ASSERT_EQ(it++->first, net1);
+    ASSERT_EQ(it++->first, net2);
+    ASSERT_EQ(it++->first, net3);
+    
+    auto net3_with_scope = ip_network::parse("2001:db8::%scope/65");
+    std::unordered_map<ip_network, int> unordered_map;
+    unordered_map[net2] = 2;
+    unordered_map[net1] = 1;
+    unordered_map[net3] = 3;
+    unordered_map[net3] = 4;
+    unordered_map[net3_with_scope] = 0;
+    ASSERT_EQ(unordered_map.size(), 4);
+    ASSERT_EQ(unordered_map[net1], 1);
+    ASSERT_EQ(unordered_map[net2], 2);
+    ASSERT_EQ(unordered_map[net3], 4);
+    ASSERT_EQ(unordered_map[net3_with_scope], 0);
+}
+
+TEST(ip_network, Swap) {
+    auto net1 = ip_network::parse("127.0.0.1");
+    auto net2 = ip_network::parse("2001:db8::2%test");
+    
+    std::swap(net1, net2);
+
+    ASSERT_EQ(net1, ip_network::parse("2001:db8::2%test"));
+    ASSERT_EQ(net2, ip_network::parse("127.0.0.1"));
+}
+
+TEST(ip_network, is_prop) {
+    constexpr auto net1 = ip_network::parse("224.1.1.1").is_multicast();
+    constexpr auto net2 = ip_network::parse("240.0.0.0").is_multicast();
+    constexpr auto net3 = ip_network::parse("ffff::").is_multicast();
+    constexpr auto net4 = ip_network::parse("fdff::").is_multicast();
+    constexpr auto net5 = ip_network::parse("192.168.1.1").is_private();
+    constexpr auto net6 = ip_network::parse("192.169.0.0").is_private();
+    constexpr auto net7 = ip_network::parse("fc00::").is_private();
+    constexpr auto net8 = ip_network::parse("fbff:ffff::").is_private();
+    constexpr auto net9 = ip_network::parse("192.0.7.1").is_global();
+    constexpr auto net10 = ip_network::parse("203.0.113.1").is_global();
+    constexpr auto net11 = ip_network::parse("200::1").is_global();
+    constexpr auto net12 = ip_network::parse("fc00::").is_global();
+    constexpr auto net13 = ip_network::parse("240.0.0.1").is_reserved();
+    constexpr auto net14 = ip_network::parse("239.255.255.255").is_reserved();
+    constexpr auto net15 = ip_network::parse("100::").is_reserved();
+    constexpr auto net16 = ip_network::parse("ffff::").is_reserved();
+    constexpr auto net17 = ip_network::parse("127.42.0.0").is_loopback();
+    constexpr auto net18 = ip_network::parse("128.0.0.0").is_loopback();
+    constexpr auto net19 = ip_network::parse("::1").is_loopback();
+    constexpr auto net20 = ip_network::parse("::2").is_loopback();
+    constexpr auto net21 = ip_network::parse("169.254.100.200").is_link_local();
+    constexpr auto net22 = ip_network::parse("169.255.100.200").is_link_local();
+    constexpr auto net23 = ip_network::parse("fea0::").is_link_local();
+    constexpr auto net24 = ip_network::parse("fe7f:ffff::").is_link_local();
+    constexpr auto net25 = ip_network::parse("0.0.0.0").is_unspecified();
+    constexpr auto net26 = ip_network::parse("127.0.0.1").is_unspecified();
+    constexpr auto net27 = ip_network::parse("::").is_unspecified();
+    constexpr auto net28 = ip_network::parse("::1").is_unspecified();
+    constexpr auto net29 = ip_network::parse("127.0.0.1").is_site_local();
+    constexpr auto net30 = ip_network::parse("0.0.0.0").is_site_local();
+    constexpr auto net31 = ip_network::parse("fecf::").is_site_local();
+    constexpr auto net32 = ip_network::parse("fbf:ffff::").is_site_local();
+    
+    ASSERT_TRUE(net1);
+    ASSERT_FALSE(net2);
+    ASSERT_TRUE(net3);
+    ASSERT_FALSE(net4);
+    ASSERT_TRUE(net5);
+    ASSERT_FALSE(net6);
+    ASSERT_TRUE(net7);
+    ASSERT_FALSE(net8);
+    ASSERT_TRUE(net9);
+    ASSERT_FALSE(net10);
+    ASSERT_TRUE(net11);
+    ASSERT_FALSE(net12);
+    ASSERT_TRUE(net13);
+    ASSERT_FALSE(net14);
+    ASSERT_TRUE(net15);
+    ASSERT_FALSE(net16);
+    ASSERT_TRUE(net17);
+    ASSERT_FALSE(net18);
+    ASSERT_TRUE(net19);
+    ASSERT_FALSE(net20);
+    ASSERT_TRUE(net21);
+    ASSERT_FALSE(net22);
+    ASSERT_TRUE(net23);
+    ASSERT_FALSE(net24);
+    ASSERT_TRUE(net25);
+    ASSERT_FALSE(net26);
+    ASSERT_TRUE(net27);
+    ASSERT_FALSE(net28);
+    ASSERT_FALSE(net29);
+    ASSERT_FALSE(net30);
+    ASSERT_TRUE(net31);
+    ASSERT_FALSE(net32);
+}
+
+TEST(ip_network, literals) {
+    constexpr auto net1 = "127.128.128.255"_net;
+    constexpr auto net2 = "2001:db8::1"_net;
+    
+    ASSERT_TRUE(net1.is_v4());
+    ASSERT_TRUE(net2.is_v6());
+    ASSERT_EQ(net1, ip_network::parse("127.128.128.255"));
+    ASSERT_EQ(net2, ip_network::parse("2001:db8::1"));
+}

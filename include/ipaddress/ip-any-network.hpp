@@ -416,13 +416,13 @@ private:
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
     template <fixed_string FixedString>
-    IPADDRESS_NODISCARD consteval IPADDRESS_FORCE_INLINE ip_network operator""_ip_net() IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD consteval IPADDRESS_FORCE_INLINE ip_network operator""_net() IPADDRESS_NOEXCEPT {
         return ip_network::parse<FixedString>();
     }
 
 #else // !IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_ip_net(const char* address, std::size_t size) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const char* address, std::size_t size) IPADDRESS_NOEXCEPT {
         assert(size <= ipv6_address::base_max_string_len * 2 + 1 && "literal string is too long");
         char str[ipv6_address::base_max_string_len * 2 + 2] = {};
         for (size_t i = 0; i < size; ++i) {
