@@ -920,6 +920,14 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(T
 
 namespace std {
 
+#pragma warning(push, 3)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#ifdef __clang__
+  _Pragma("clang diagnostic push")
+  _Pragma("clang diagnostic ignored \"-Wdeprecated\"")
+#endif
+
 template <typename T>
 struct __numeric_limits_uint128 {
     static IPADDRESS_CONSTEXPR bool is_bounded               = true;
@@ -1051,6 +1059,12 @@ IPADDRESS_CONSTEXPR float_denorm_style __numeric_limits_uint128<T>::has_denorm;
 
 template <typename T>
 IPADDRESS_CONSTEXPR float_round_style __numeric_limits_uint128<T>::round_style;
+
+#ifdef __clang__
+  _Pragma("clang diagnostic pop")
+#endif
+#pragma GCC diagnostic pop
+#pragma warning(pop)
 
 template <>
 struct numeric_limits<IPADDRESS_NAMESPACE::uint128_t> : __numeric_limits_uint128<IPADDRESS_NAMESPACE::uint128_t> {
