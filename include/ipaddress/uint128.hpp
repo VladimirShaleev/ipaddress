@@ -1,3 +1,14 @@
+/**
+ * \file      uint128.hpp
+ * \brief     Unsigned integer type with width of exactly 128 bits.
+ * \author    Vladimir Shaleev
+ * \copyright MIT License
+ * 
+ * The library adds its own type `uint128_t`, because it is missing in 
+ * the standard. The library does not use compiler extensions such as 
+ * `__int128` for greater portability.
+ */
+
 #ifndef IPADDRESS_UINT128_HPP
 #define IPADDRESS_UINT128_HPP
 
@@ -45,22 +56,40 @@ struct is_object<IPADDRESS_NAMESPACE::uint128_t> : true_type {
 
 namespace IPADDRESS_NAMESPACE {
 
+/**
+ * 128-bit unsigned integer.
+ * 
+ * Unsigned integer type with width of exactly 128 bits.
+ */
 class uint128_t final {
 public:
+    /**
+     * String format
+     * 
+     * Possible representations of uint128_t in string form.
+     */
     enum class format {
-        decimal = 0,
-        octal,
-        hexadecimal,
+        decimal = 0, /**< Decimal format. *Default format.* */
+        octal, /**< Octal format */
+        hexadecimal, /**< Hexadecimal format */
     };
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t() IPADDRESS_NOEXCEPT = default;
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t() IPADDRESS_NOEXCEPT = default; /**< Default constructor */
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(const uint128_t&) IPADDRESS_NOEXCEPT = default;
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(uint128_t&&) IPADDRESS_NOEXCEPT = default;
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(const uint128_t&) IPADDRESS_NOEXCEPT = default; /**< Copy constructor */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(uint128_t&&) IPADDRESS_NOEXCEPT = default; /**< Move constructor */
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t& operator=(const uint128_t&) IPADDRESS_NOEXCEPT = default;
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t& operator=(uint128_t&&) IPADDRESS_NOEXCEPT = default;
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t& operator=(const uint128_t&) IPADDRESS_NOEXCEPT = default; /**< Assignment operator */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t& operator=(uint128_t&&) IPADDRESS_NOEXCEPT = default; /**< Move assignment operator */
 
+    /**
+     * Creates an instance.
+     * 
+     * Creates an instance from the upper and lower integer.
+     * 
+     * @param[in] upper integer of value
+     * @param[in] lower integer of value
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(uint64_t upper, uint64_t lower) IPADDRESS_NOEXCEPT
 
 #if IPADDRESS_ENDIAN == IPADDRESS_BIG_ENDIAN
@@ -74,10 +103,26 @@ public:
 #endif // IPADDRESS_ENDIAN != IPADDRESS_BIG_ENDIAN
     { }
 
+    /**
+     * Creates an instance.
+     * 
+     * Creates an instance from lower integer.
+     * 
+     * @tparam T is unsigned integer type
+     * @param[in] lower integer of value
+     */
     template <typename T, typename std::enable_if<std::is_integral<T>::value && std::is_unsigned<T>::value, bool>::type = true>
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(T lower) IPADDRESS_NOEXCEPT : _lower(uint64_t(lower)) {
     }
 
+    /**
+     * Creates an instance.
+     * 
+     * Creates an instance from lower integer.
+     * 
+     * @tparam T is signed integer type
+     * @param[in] lower integer of value
+     */
     template <typename T, typename std::enable_if<std::is_integral<T>::value && std::is_signed<T>::value, bool>::type = true>
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(T lower) IPADDRESS_NOEXCEPT
 
@@ -92,6 +137,14 @@ public:
 #endif // IPADDRESS_ENDIAN != IPADDRESS_BIG_ENDIAN
     { }
 
+    /**
+     * Creates an instance.
+     * 
+     * Creates an instance from float value.
+     * 
+     * @tparam T is float type
+     * @param[in] value of float type
+     */
     template <typename T, typename std::enable_if<std::is_floating_point<T>::value, bool>::type = true>
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit uint128_t(T value) IPADDRESS_NOEXCEPT {
         const auto result = from_double(double(value));
@@ -99,14 +152,31 @@ public:
         _lower = result._lower;
     }
 
+    /**
+     * Get lower part of uint128_t.
+     * 
+     * @return Lower part `uint64_t` of uint128_t.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint64_t lower() const IPADDRESS_NOEXCEPT {
         return _lower;
     }
 
+    /**
+     * Get upper part of uint128_t.
+     * 
+     * @return Upper part `uint64_t` of uint128_t.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint64_t upper() const IPADDRESS_NOEXCEPT {
         return _upper;
     }
 
+    /**
+     * Calculate hash of uint128_t.
+     * 
+     * Returns a value of type std::size_t that represents the hash value.
+     * 
+     * @return Hash of uint128_t.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::size_t hash() const IPADDRESS_NOEXCEPT {
         hash_combine<8> hasher{};
         const auto seed = hasher(_upper);
@@ -114,12 +184,25 @@ public:
         return hash;
     }
 
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE void swap(IPADDRESS_NAMESPACE::uint128_t& value) IPADDRESS_NOEXCEPT {
+    /**
+     * Swap two uint128_t.
+     * 
+     * Exchanges the given values.
+     * 
+     * @param[in,out] other the value to be swapped
+     */
+    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE void swap(IPADDRESS_NAMESPACE::uint128_t& other) IPADDRESS_NOEXCEPT {
         const auto tmp = *this;
-        *this = value;
-        value = tmp;
+        *this = other;
+        other = tmp;
     }
 
+    /**
+     * Converts value to std::string.
+     * 
+     * @param[in] fmt of format string
+     * @return A string holding the converted value.
+     */
     IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string to_string(format fmt = format::decimal) const {
         if (_upper == 0) {
             std::ostringstream ss;
@@ -148,6 +231,13 @@ public:
         }
     }
 
+    /**
+     * Parse std::string to uint128_t.
+     * 
+     * @param[in] str of input string
+     * @param[in] fmt of format string
+     * @return optional containing uint128_t if parsed successfully.
+     */
     IPADDRESS_NODISCARD static IPADDRESS_FORCE_INLINE optional<uint128_t> from_string(const std::string& str, format fmt = format::decimal) IPADDRESS_NOEXCEPT {
         switch (fmt) {
             case format::octal:
@@ -159,21 +249,43 @@ public:
         }
     }
 
+    /**
+     * Checking that a number is non-zero.
+     * 
+     * @return `true` if non-zero.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit operator bool() const IPADDRESS_NOEXCEPT {
         return _upper || _lower;
     }
 
+    /**
+     * Cast value to integer type.
+     * 
+     * @tparam T is integer type
+     * @return Integer value.
+     */
     template <typename T, typename std::enable_if<std::is_integral<T>::value, bool>::type = true>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit operator T() const IPADDRESS_NOEXCEPT {
         return T(_lower);
     }
 
-    // non-constexpr
+    /**
+     * Cast value to float type.
+     * 
+     * @tparam T is float type
+     * @return Float value.
+     */
     template <typename T, typename std::enable_if<std::is_floating_point<T>::value, bool>::type = true>
     IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE explicit operator T() const IPADDRESS_NOEXCEPT {
         return T(to_double(*this));
     }
 
+    /**
+     * Assigns lower unsigned integer.
+     * 
+     * @param[in] lower unsigned integer of value
+     * @return This object.
+     */
     template <typename T, typename std::enable_if<std::is_integral<T>::value && std::is_unsigned<T>::value, bool>::type = true>
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator=(T lower) IPADDRESS_NOEXCEPT {
         _upper = 0;
@@ -181,6 +293,12 @@ public:
         return *this;
     }
 
+    /**
+     * Assigns lower signed integer.
+     * 
+     * @param[in] lower signed integer of value
+     * @return This object.
+     */
     template <typename T, typename std::enable_if<std::is_integral<T>::value && std::is_signed<T>::value, bool>::type = true>
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator=(T lower) IPADDRESS_NOEXCEPT {
         _upper = uint64_t(int64_t(lower) >> 63);
@@ -188,100 +306,216 @@ public:
         return *this;
     }
 
+    /**
+     * Addition assignment.
+     * 
+     * @param[in] other of value
+     * @return This object.
+     */
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator+=(const uint128_t& other) IPADDRESS_NOEXCEPT {
         *this = *this + other;
         return *this;
     }
     
+    /**
+     * Subtraction assignment.
+     * 
+     * @param[in] other of value
+     * @return This object.
+     */
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator-=(const uint128_t& other) IPADDRESS_NOEXCEPT {
         *this = *this - other;
         return *this;
     }
 
+    /**
+     * Multiplication assignment.
+     * 
+     * @param[in] other of value
+     * @return This object.
+     */
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator*=(const uint128_t& other) IPADDRESS_NOEXCEPT {
         *this = *this * other;
         return *this;
     }
     
+    /**
+     * Division assignment.
+     * 
+     * @param[in] other of value
+     * @return This object.
+     */
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator/=(const uint128_t& other) IPADDRESS_NOEXCEPT {
         *this = *this / other;
         return *this;
     }
     
+    /**
+     * Remainder assignment.
+     * 
+     * @param[in] other of value
+     * @return This object.
+     */
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator%=(const uint128_t& other) IPADDRESS_NOEXCEPT {
         *this = *this % other;
         return *this;
     }
     
+    /**
+     * Bitwise AND assignment.
+     * 
+     * @param[in] other of value
+     * @return This object.
+     */
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator&=(const uint128_t& other) IPADDRESS_NOEXCEPT {
         _upper &= other._upper;
         _lower &= other._lower;
         return *this;
     }
 
+    /**
+     * Bitwise OR assignment.
+     * 
+     * @param[in] other of value
+     * @return This object.
+     */
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator|=(const uint128_t& other) IPADDRESS_NOEXCEPT {
         _upper |= other._upper;
         _lower |= other._lower;
         return *this;
     }
 
+    /**
+     * Bitwise XOR assignment.
+     * 
+     * @param[in] other of value
+     * @return This object.
+     */
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator^=(const uint128_t& other) IPADDRESS_NOEXCEPT {
         _upper ^= other._upper;
         _lower ^= other._lower;
         return *this;
     }
 
+    /**
+     * Bitwise left shift assignment.
+     * 
+     * @tparam T is integer type
+     * @param[in] shift of value
+     * @return This object.
+     */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator<<=(T shift) IPADDRESS_NOEXCEPT {
         *this = *this << shift;
         return *this;
     }
     
+    /**
+     * Bitwise right shift assignment.
+     * 
+     * @tparam T is integer type
+     * @param[in] shift of value
+     * @return This object.
+     */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator>>=(T shift) IPADDRESS_NOEXCEPT {
         *this = *this >> shift;
         return *this;
     }
     
+    /**
+     * Unary plus.
+     * 
+     * @return New value.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator+() const IPADDRESS_NOEXCEPT {
         return *this;
     }
 
+    /**
+     * Unary minus.
+     * 
+     * @return New value.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator-() const IPADDRESS_NOEXCEPT {
         return ++(~*this);
     }
 
+    /**
+     * Bitwise NOT.
+     * 
+     * @return New value.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator~() const IPADDRESS_NOEXCEPT {
         return { ~_upper, ~_lower };
     }
 
+    /**
+     * Addition.
+     * 
+     * @tparam T is integer type
+     * @param[in] lower of value
+     * @return New value.
+     */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator+(T lower) const IPADDRESS_NOEXCEPT {
         return *this + uint128_t(lower);
     }
 
+    /**
+     * Addition.
+     * 
+     * @param[in] other of value
+     * @return New value.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator+(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         const uint64_t lower = _lower + other._lower;
         const uint64_t carry = lower < _lower ? 1 : 0;
         return { _upper + other._upper + carry, lower };
     }
     
+    /**
+     * Subtraction.
+     * 
+     * @tparam T is integer type
+     * @param[in] lower of value
+     * @return New value.
+     */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator-(T lower) const IPADDRESS_NOEXCEPT {
         return *this - uint128_t(lower);
     }
 
+    /**
+     * Subtraction.
+     * 
+     * @param[in] other of value
+     * @return New value.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator-(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         const uint64_t lower = _lower - other._lower;
         const uint64_t borrow = lower > _lower ? 1 : 0;
         return { _upper - other._upper - borrow, lower };
     }
 
+    /**
+     * Multiplication.
+     * 
+     * @tparam T is integer type
+     * @param[in] lower of value
+     * @return New value.
+     */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator*(T lower) const IPADDRESS_NOEXCEPT {
         return *this * uint128_t(lower);
     }
 
+    /**
+     * Multiplication.
+     * 
+     * @param[in] other of value
+     * @return New value.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator*(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         uint64_t lower = 0;
         uint64_t upper = big_mul(_lower, other._lower, lower);
@@ -289,52 +523,124 @@ public:
         return { upper, lower };
     }
     
+    /**
+     * Division.
+     * 
+     * @tparam T is integer type
+     * @param[in] lower of value
+     * @return New value.
+     */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator/(T lower) const IPADDRESS_NOEXCEPT {
         return *this / uint128_t(lower);
     }
 
+    /**
+     * Division.
+     * 
+     * @param[in] other of value
+     * @return New value.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator/(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return divide(*this, other);
     }
 
+    /**
+     * Remainder.
+     * 
+     * @tparam T is integer type
+     * @param[in] lower of value
+     * @return New value.
+     */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator%(T lower) const IPADDRESS_NOEXCEPT {
         return *this % uint128_t(lower);
     }
 
+    /**
+     * Remainder.
+     * 
+     * @param[in] other of value
+     * @return New value.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator%(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         const auto quotient = divide(*this, other);
         return *this - quotient * other;
     }
 
+    /**
+     * Bitwise AND.
+     * 
+     * @tparam T is integer type
+     * @param[in] lower of value
+     * @return New value.
+     */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator&(T lower) const IPADDRESS_NOEXCEPT {
         return *this & uint128_t(lower);
     }
 
+    /**
+     * Bitwise AND.
+     * 
+     * @param[in] other of value
+     * @return New value.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator&(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return { _upper & other._upper, _lower & other._lower };
     }
 
+    /**
+     * Bitwise OR.
+     * 
+     * @tparam T is integer type
+     * @param[in] lower of value
+     * @return New value.
+     */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator|(T lower) const IPADDRESS_NOEXCEPT {
         return *this | uint128_t(lower);
     }
 
+    /**
+     * Bitwise OR.
+     * 
+     * @param[in] other of value
+     * @return New value.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator|(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return { _upper | other._upper, _lower | other._lower };
     }
 
+    /**
+     * Bitwise XOR.
+     * 
+     * @tparam T is integer type
+     * @param[in] lower of value
+     * @return New value.
+     */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator^(T lower) const IPADDRESS_NOEXCEPT {
         return *this ^ uint128_t(lower);
     }
 
+    /**
+     * Bitwise XOR.
+     * 
+     * @param[in] other of value
+     * @return New value.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator^(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return { _upper ^ other._upper, _lower ^ other._lower };
     }
 
+    /**
+     * Bitwise left shift.
+     * 
+     * @tparam T is integer type
+     * @param[in] shift of value
+     * @return New value.
+     */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator<<(T shift) const IPADDRESS_NOEXCEPT {
         if (!shift) {
@@ -349,6 +655,13 @@ public:
         return { 0, 0 };
     }
 
+    /**
+     * Bitwise right shift.
+     * 
+     * @tparam T is integer type
+     * @param[in] shift of value
+     * @return New value.
+     */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator>>(T shift) const IPADDRESS_NOEXCEPT {
         if (!shift) {
@@ -363,54 +676,115 @@ public:
         return { 0, 0 };
     }
 
+    /**
+     * Pre-increment.
+     * 
+     * @return New value.
+     */
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator++() IPADDRESS_NOEXCEPT {
         *this += 1;
         return *this;
     }
     
+    /**
+     * Pre-decrement.
+     * 
+     * @return New value.
+     */
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator--() IPADDRESS_NOEXCEPT {
         *this -= 1;
         return *this;
     }
     
+    /**
+     * Post-increment.
+     * 
+     * @return New value.
+     */
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t operator++(int) IPADDRESS_NOEXCEPT {
         auto tmp = *this;
         ++*this;
         return tmp;
     }
 
+    /**
+     * Post-decrement.
+     * 
+     * @return New value.
+     */
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t operator--(int) IPADDRESS_NOEXCEPT {
         auto tmp = *this;
         --*this;
         return tmp;
     }
 
+    /**
+     * Negation.
+     * 
+     * @return Logical not.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!() const IPADDRESS_NOEXCEPT {
         return !_upper && !_lower;
     }
 
+    /**
+     * AND.
+     * 
+     * @return Logical AND.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator&&(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return (_upper || _lower) && (other._upper || other._lower);
     }
 
+    /**
+     * inclusive OR.
+     * 
+     * @return Logical OR.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator||(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return (_upper || _lower) || (other._upper || other._lower);
     }
 
+    /**
+     * Equal to.
+     * 
+     * @tparam T is integer type
+     * @param[in] lower of value
+     * @return true` if the values of the uint128_t are equal, `false` otherwise.
+     */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(T lower) const IPADDRESS_NOEXCEPT {
         return *this == uint128_t(lower);
     }
 
+    /**
+     * Equal to.
+     * 
+     * @param[in] other of value
+     * @return `true` if the values of the uint128_t are equal, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return _upper == other._upper && _lower == other._lower;
     }
 
+    /**
+     * Not equal to.
+     * 
+     * @tparam T is integer type
+     * @param[in] lower of value
+     * @return `true` if the values of the uint128_t are not equal, `false` otherwise.
+     */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(T lower) const IPADDRESS_NOEXCEPT {
         return *this != uint128_t(lower);
     }
 
+    /**
+     * Not equal to.
+     * 
+     * @param[in] other of value
+     * @return `true` if the values of the uint128_t are not equal, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return !(*this == other);
     }

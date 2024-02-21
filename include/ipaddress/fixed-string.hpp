@@ -66,7 +66,7 @@ struct fixed_string {
      * from other encodings are used.
      * 
      * @tparam T is character type
-     * @param data of character array
+     * @param[in] data of character array
      */
     template <typename T>
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string(const T (&data)[N + 1]) IPADDRESS_NOEXCEPT {
@@ -360,7 +360,7 @@ struct fixed_string {
      * 
      * Exchanges the given values.
      * 
-     * @param[in] other the value to be swapped
+     * @param[in,out] other the value to be swapped
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void swap(fixed_string& other) IPADDRESS_NOEXCEPT {
         auto count = size() < other.size() ? other.size() : size();

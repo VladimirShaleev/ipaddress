@@ -53,7 +53,7 @@ public:
      * 
      * Move constructor.
      * 
-     * @param val of move object
+     * @param[in,out] val of move object
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional(value_type&& val) IPADDRESS_NOEXCEPT
         :
@@ -66,7 +66,7 @@ public:
      * 
      * Copy constructor.
      * 
-     * @param opt of copy object
+     * @param[in] opt of copy object
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional(const optional<T>& opt) IPADDRESS_NOEXCEPT
         :
