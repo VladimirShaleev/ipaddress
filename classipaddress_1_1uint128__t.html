@@ -1,0 +1,949 @@
+<!-- HTML header for doxygen 1.10.0-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="$langISO">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ipaddress: ipaddress::uint128_t Class Reference</title>
+<!--BEGIN PROJECT_ICON-->
+<link rel="icon" href="$projecticon" type="image/x-icon" />
+<!--END PROJECT_ICON-->
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+<script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="doxygen-awesome-tabs.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+$darkmode
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/VladimirShaleev/ipaddress" class="github-corner" title="View source on GitHub" target="_blank" rel="noopener noreferrer">
+  <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+  <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.0.0</span>
+   </div>
+  </td>
+ </tr>
+   <!--BEGIN FULL_SIDEBAR-->
+   <tr><td colspan="2">        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.svg"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td></tr>
+   <!--END FULL_SIDEBAR-->
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Search','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('classipaddress_1_1uint128__t.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="classipaddress_1_1uint128__t-members.html">List of all members</a>  </div>
+  <div class="headertitle">
+<div class="title">ipaddress::uint128_t Class Reference<span class="mlabels"><span class="mlabel">final</span></span></div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>128-bit unsigned integer.  
+ <a href="classipaddress_1_1uint128__t.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="uint128_8hpp_source.html">uint128.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:ae5c5c40c2777dcce5c3e1bd96adb1a91"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1uint128__t.html#ae5c5c40c2777dcce5c3e1bd96adb1a91">format</a> { <a class="el" href="classipaddress_1_1uint128__t.html#ae5c5c40c2777dcce5c3e1bd96adb1a91abdaa3c20a3e3851599514f7c6be5f62f">decimal</a> = 0
+, <a class="el" href="classipaddress_1_1uint128__t.html#ae5c5c40c2777dcce5c3e1bd96adb1a91a34d0e21ea08f041727cd3c62f02535e3">octal</a>
+, <a class="el" href="classipaddress_1_1uint128__t.html#ae5c5c40c2777dcce5c3e1bd96adb1a91a2c34788af99f9ca074434e362d584d54">hexadecimal</a>
+ }</td></tr>
+<tr class="memdesc:ae5c5c40c2777dcce5c3e1bd96adb1a91"><td class="mdescLeft">&#160;</td><td class="mdescRight">String format.  <a href="classipaddress_1_1uint128__t.html#ae5c5c40c2777dcce5c3e1bd96adb1a91">More...</a><br /></td></tr>
+<tr class="separator:ae5c5c40c2777dcce5c3e1bd96adb1a91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:ae4c7fc40fbfc55fff3a4d556a0ac7be1"><td class="memItemLeft" align="right" valign="top"><a id="ae4c7fc40fbfc55fff3a4d556a0ac7be1"></a>
+IPADDRESS_CONSTEXPR&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1uint128__t.html#ae4c7fc40fbfc55fff3a4d556a0ac7be1">__attribute__</a> ((always_inline)) <a class="el" href="classipaddress_1_1uint128__t.html">uint128_t</a>() noexcept=default</td></tr>
+<tr class="memdesc:ae4c7fc40fbfc55fff3a4d556a0ac7be1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
+<tr class="separator:ae4c7fc40fbfc55fff3a4d556a0ac7be1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24cf5b1281848e1b36dba052424be86f"><td class="memItemLeft" align="right" valign="top"><a id="a24cf5b1281848e1b36dba052424be86f"></a>
+IPADDRESS_CONSTEXPR&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1uint128__t.html#a24cf5b1281848e1b36dba052424be86f">__attribute__</a> ((always_inline)) <a class="el" href="classipaddress_1_1uint128__t.html">uint128_t</a>(const <a class="el" href="classipaddress_1_1uint128__t.html">uint128_t</a> &amp;) noexcept=default</td></tr>
+<tr class="memdesc:a24cf5b1281848e1b36dba052424be86f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor. <br /></td></tr>
+<tr class="separator:a24cf5b1281848e1b36dba052424be86f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a090bc2959c36f90c30ec1679bd5fcffa"><td class="memItemLeft" align="right" valign="top"><a id="a090bc2959c36f90c30ec1679bd5fcffa"></a>
+IPADDRESS_CONSTEXPR&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1uint128__t.html#a090bc2959c36f90c30ec1679bd5fcffa">__attribute__</a> ((always_inline)) <a class="el" href="classipaddress_1_1uint128__t.html">uint128_t</a>(<a class="el" href="classipaddress_1_1uint128__t.html">uint128_t</a> &amp;&amp;) noexcept=default</td></tr>
+<tr class="memdesc:a090bc2959c36f90c30ec1679bd5fcffa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move constructor. <br /></td></tr>
+<tr class="separator:a090bc2959c36f90c30ec1679bd5fcffa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9761bb199900308f8f4e527f5b30ed00"><td class="memItemLeft" align="right" valign="top"><a id="a9761bb199900308f8f4e527f5b30ed00"></a>
+IPADDRESS_CONSTEXPR&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1uint128__t.html#a9761bb199900308f8f4e527f5b30ed00">__attribute__</a> ((always_inline)) <a class="el" href="classipaddress_1_1uint128__t.html">uint128_t</a> &amp;operator</td></tr>
+<tr class="memdesc:a9761bb199900308f8f4e527f5b30ed00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assignment operator. <br /></td></tr>
+<tr class="separator:a9761bb199900308f8f4e527f5b30ed00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9761bb199900308f8f4e527f5b30ed00"><td class="memItemLeft" align="right" valign="top"><a id="a9761bb199900308f8f4e527f5b30ed00"></a>
+IPADDRESS_CONSTEXPR&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1uint128__t.html#a9761bb199900308f8f4e527f5b30ed00">__attribute__</a> ((always_inline)) <a class="el" href="classipaddress_1_1uint128__t.html">uint128_t</a> &amp;operator</td></tr>
+<tr class="memdesc:a9761bb199900308f8f4e527f5b30ed00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move assignment operator. <br /></td></tr>
+<tr class="separator:a9761bb199900308f8f4e527f5b30ed00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2af46170fcac9121b02a0fde91d4853d"><td class="memItemLeft" align="right" valign="top">IPADDRESS_CONSTEXPR&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1uint128__t.html#a2af46170fcac9121b02a0fde91d4853d">__attribute__</a> ((always_inline)) <a class="el" href="classipaddress_1_1uint128__t.html">uint128_t</a>(uint64_t upper</td></tr>
+<tr class="memdesc:a2af46170fcac9121b02a0fde91d4853d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an instance.  <a href="classipaddress_1_1uint128__t.html#a2af46170fcac9121b02a0fde91d4853d">More...</a><br /></td></tr>
+<tr class="separator:a2af46170fcac9121b02a0fde91d4853d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54efb5e3bf63eb5368e2c0ddf46ac8d9"><td class="memTemplParams" colspan="2">template&lt;typename T , typename std::enable_if&lt; std::is_integral&lt; T &gt;::value &amp;&amp;std::is_unsigned&lt; T &gt;::value, bool &gt;::type  = true&gt; </td></tr>
+<tr class="memitem:a54efb5e3bf63eb5368e2c0ddf46ac8d9"><td class="memTemplItemLeft" align="right" valign="top">IPADDRESS_CONSTEXPR&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classipaddress_1_1uint128__t.html#a54efb5e3bf63eb5368e2c0ddf46ac8d9">__attribute__</a> ((always_inline)) <a class="el" href="classipaddress_1_1uint128__t.html">uint128_t</a>(T lower) noexcept</td></tr>
+<tr class="memdesc:a54efb5e3bf63eb5368e2c0ddf46ac8d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an instance.  <a href="classipaddress_1_1uint128__t.html#a54efb5e3bf63eb5368e2c0ddf46ac8d9">More...</a><br /></td></tr>
+<tr class="separator:a54efb5e3bf63eb5368e2c0ddf46ac8d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54efb5e3bf63eb5368e2c0ddf46ac8d9"><td class="memTemplParams" colspan="2">template&lt;typename T , typename std::enable_if&lt; std::is_integral&lt; T &gt;::value &amp;&amp;std::is_signed&lt; T &gt;::value, bool &gt;::type  = true&gt; </td></tr>
+<tr class="memitem:a54efb5e3bf63eb5368e2c0ddf46ac8d9"><td class="memTemplItemLeft" align="right" valign="top">IPADDRESS_CONSTEXPR&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classipaddress_1_1uint128__t.html#a54efb5e3bf63eb5368e2c0ddf46ac8d9">__attribute__</a> ((always_inline)) <a class="el" href="classipaddress_1_1uint128__t.html">uint128_t</a>(T lower) noexcept</td></tr>
+<tr class="memdesc:a54efb5e3bf63eb5368e2c0ddf46ac8d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an instance.  <a href="classipaddress_1_1uint128__t.html#a54efb5e3bf63eb5368e2c0ddf46ac8d9">More...</a><br /></td></tr>
+<tr class="separator:a54efb5e3bf63eb5368e2c0ddf46ac8d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe1a48f129966abe44c6d2c5980add03"><td class="memTemplParams" colspan="2">template&lt;typename T , typename std::enable_if&lt; std::is_floating_point&lt; T &gt;::value, bool &gt;::type  = true&gt; </td></tr>
+<tr class="memitem:afe1a48f129966abe44c6d2c5980add03"><td class="memTemplItemLeft" align="right" valign="top">IPADDRESS_CONSTEXPR&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classipaddress_1_1uint128__t.html#afe1a48f129966abe44c6d2c5980add03">__attribute__</a> ((always_inline)) explicit <a class="el" href="classipaddress_1_1uint128__t.html">uint128_t</a>(T value) noexcept</td></tr>
+<tr class="memdesc:afe1a48f129966abe44c6d2c5980add03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an instance.  <a href="classipaddress_1_1uint128__t.html#afe1a48f129966abe44c6d2c5980add03">More...</a><br /></td></tr>
+<tr class="separator:afe1a48f129966abe44c6d2c5980add03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3aeb5d38cc09fe97d5ab706daee54540"><td class="memItemLeft" align="right" valign="top">IPADDRESS_CONSTEXPR&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1uint128__t.html#a3aeb5d38cc09fe97d5ab706daee54540">__attribute__</a> ((always_inline)) uint64_t lower() const noexcept</td></tr>
+<tr class="memdesc:a3aeb5d38cc09fe97d5ab706daee54540"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get lower part of <a class="el" href="classipaddress_1_1uint128__t.html" title="128-bit unsigned integer.">uint128_t</a>.  <a href="classipaddress_1_1uint128__t.html#a3aeb5d38cc09fe97d5ab706daee54540">More...</a><br /></td></tr>
+<tr class="separator:a3aeb5d38cc09fe97d5ab706daee54540"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77554966d213d57d7dd5beb5af95c1d7"><td class="memItemLeft" align="right" valign="top">IPADDRESS_CONSTEXPR&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1uint128__t.html#a77554966d213d57d7dd5beb5af95c1d7">__attribute__</a> ((always_inline)) uint64_t upper() const noexcept</td></tr>
+<tr class="memdesc:a77554966d213d57d7dd5beb5af95c1d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get upper part of <a class="el" href="classipaddress_1_1uint128__t.html" title="128-bit unsigned integer.">uint128_t</a>.  <a href="classipaddress_1_1uint128__t.html#a77554966d213d57d7dd5beb5af95c1d7">More...</a><br /></td></tr>
+<tr class="separator:a77554966d213d57d7dd5beb5af95c1d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b689181a72d3e24197c49b285fd5a81"><td class="memItemLeft" align="right" valign="top">IPADDRESS_CONSTEXPR&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1uint128__t.html#a2b689181a72d3e24197c49b285fd5a81">__attribute__</a> ((always_inline)) std</td></tr>
+<tr class="memdesc:a2b689181a72d3e24197c49b285fd5a81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate hash of <a class="el" href="classipaddress_1_1uint128__t.html" title="128-bit unsigned integer.">uint128_t</a>.  <a href="classipaddress_1_1uint128__t.html#a2b689181a72d3e24197c49b285fd5a81">More...</a><br /></td></tr>
+<tr class="separator:a2b689181a72d3e24197c49b285fd5a81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>128-bit unsigned integer. </p>
+<p>Unsigned integer type with width of exactly 128 bits. </p>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="ae5c5c40c2777dcce5c3e1bd96adb1a91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5c5c40c2777dcce5c3e1bd96adb1a91">&#9670;&nbsp;</a></span>format</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="classipaddress_1_1uint128__t.html#ae5c5c40c2777dcce5c3e1bd96adb1a91">ipaddress::uint128_t::format</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>String format. </p>
+<p>Possible representations of <a class="el" href="classipaddress_1_1uint128__t.html" title="128-bit unsigned integer.">uint128_t</a> in string form. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ae5c5c40c2777dcce5c3e1bd96adb1a91abdaa3c20a3e3851599514f7c6be5f62f"></a>decimal&#160;</td><td class="fielddoc"><p>Decimal format. </p>
+<p><em>Default format.</em> </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ae5c5c40c2777dcce5c3e1bd96adb1a91a34d0e21ea08f041727cd3c62f02535e3"></a>octal&#160;</td><td class="fielddoc"><p>Octal format. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ae5c5c40c2777dcce5c3e1bd96adb1a91a2c34788af99f9ca074434e362d584d54"></a>hexadecimal&#160;</td><td class="fielddoc"><p>Hexadecimal format. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a2af46170fcac9121b02a0fde91d4853d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2af46170fcac9121b02a0fde91d4853d">&#9670;&nbsp;</a></span>__attribute__() <span class="overload">[1/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">IPADDRESS_CONSTEXPR ipaddress::uint128_t::__attribute__ </td>
+          <td>(</td>
+          <td class="paramtype">(always_inline)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates an instance. </p>
+<p>Creates an instance from the upper and lower integer.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">upper</td><td>integer of value </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>integer of value </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a54efb5e3bf63eb5368e2c0ddf46ac8d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54efb5e3bf63eb5368e2c0ddf46ac8d9">&#9670;&nbsp;</a></span>__attribute__() <span class="overload">[2/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename std::enable_if&lt; std::is_integral&lt; T &gt;::value &amp;&amp;std::is_unsigned&lt; T &gt;::value, bool &gt;::type  = true&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IPADDRESS_CONSTEXPR ipaddress::uint128_t::__attribute__ </td>
+          <td>(</td>
+          <td class="paramtype">(always_inline)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates an instance. </p>
+<p>Creates an instance from lower integer.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>is unsigned integer type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>integer of value </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a54efb5e3bf63eb5368e2c0ddf46ac8d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54efb5e3bf63eb5368e2c0ddf46ac8d9">&#9670;&nbsp;</a></span>__attribute__() <span class="overload">[3/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename std::enable_if&lt; std::is_integral&lt; T &gt;::value &amp;&amp;std::is_signed&lt; T &gt;::value, bool &gt;::type  = true&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IPADDRESS_CONSTEXPR ipaddress::uint128_t::__attribute__ </td>
+          <td>(</td>
+          <td class="paramtype">(always_inline)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates an instance. </p>
+<p>Creates an instance from lower integer.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>is signed integer type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>integer of value </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="afe1a48f129966abe44c6d2c5980add03"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe1a48f129966abe44c6d2c5980add03">&#9670;&nbsp;</a></span>__attribute__() <span class="overload">[4/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename std::enable_if&lt; std::is_floating_point&lt; T &gt;::value, bool &gt;::type  = true&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IPADDRESS_CONSTEXPR ipaddress::uint128_t::__attribute__ </td>
+          <td>(</td>
+          <td class="paramtype">(always_inline)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates an instance. </p>
+<p>Creates an instance from float value.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>is float type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>of float type </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a3aeb5d38cc09fe97d5ab706daee54540"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3aeb5d38cc09fe97d5ab706daee54540">&#9670;&nbsp;</a></span>__attribute__() <span class="overload">[5/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IPADDRESS_CONSTEXPR ipaddress::uint128_t::__attribute__ </td>
+          <td>(</td>
+          <td class="paramtype">(always_inline)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get lower part of <a class="el" href="classipaddress_1_1uint128__t.html" title="128-bit unsigned integer.">uint128_t</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd>Lower part <code>uint64_t</code> of <a class="el" href="classipaddress_1_1uint128__t.html" title="128-bit unsigned integer.">uint128_t</a>. </dd></dl>
+
+</div>
+</div>
+<a id="a77554966d213d57d7dd5beb5af95c1d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77554966d213d57d7dd5beb5af95c1d7">&#9670;&nbsp;</a></span>__attribute__() <span class="overload">[6/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IPADDRESS_CONSTEXPR ipaddress::uint128_t::__attribute__ </td>
+          <td>(</td>
+          <td class="paramtype">(always_inline)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get upper part of <a class="el" href="classipaddress_1_1uint128__t.html" title="128-bit unsigned integer.">uint128_t</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd>Upper part <code>uint64_t</code> of <a class="el" href="classipaddress_1_1uint128__t.html" title="128-bit unsigned integer.">uint128_t</a>. </dd></dl>
+
+</div>
+</div>
+<a id="a2b689181a72d3e24197c49b285fd5a81"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b689181a72d3e24197c49b285fd5a81">&#9670;&nbsp;</a></span>__attribute__() <span class="overload">[7/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IPADDRESS_CONSTEXPR ipaddress::uint128_t::__attribute__ </td>
+          <td>(</td>
+          <td class="paramtype">(always_inline)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calculate hash of <a class="el" href="classipaddress_1_1uint128__t.html" title="128-bit unsigned integer.">uint128_t</a>. </p>
+<p>Returns a value of type std::size_t that represents the hash value.</p>
+<dl class="section return"><dt>Returns</dt><dd>Hash of <a class="el" href="classipaddress_1_1uint128__t.html" title="128-bit unsigned integer.">uint128_t</a>. Swap two <a class="el" href="classipaddress_1_1uint128__t.html" title="128-bit unsigned integer.">uint128_t</a>.</dd></dl>
+<p>Exchanges the given values.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">other</td><td>the value to be swapped Converts value to std::string.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fmt</td><td>of format string </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A string holding the converted value. Parse std::string to <a class="el" href="classipaddress_1_1uint128__t.html" title="128-bit unsigned integer.">uint128_t</a>.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">str</td><td>of input string </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fmt</td><td>of format string </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>optional containing <a class="el" href="classipaddress_1_1uint128__t.html" title="128-bit unsigned integer.">uint128_t</a> if parsed successfully. Checking that a number is non-zero.</dd>
+<dd>
+<code>true</code> if non-zero. Cast value to integer type.</dd></dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>is integer type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Integer value. Cast value to float type.</dd></dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>is float type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Float value. Assigns lower unsigned integer.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>unsigned integer of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>This object. Assigns lower signed integer.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>signed integer of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>This object. Addition assignment.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>This object. Subtraction assignment.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>This object. Multiplication assignment.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>This object. Division assignment.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>This object. Remainder assignment.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>This object. Bitwise AND assignment.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>This object. Bitwise OR assignment.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>This object. Bitwise XOR assignment.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>This object. Bitwise left shift assignment.</dd></dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>is integer type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">shift</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>This object. Bitwise right shift assignment.</dd></dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>is integer type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">shift</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>This object. Unary plus.</dd>
+<dd>
+New value. Unary minus.</dd>
+<dd>
+New value. Bitwise NOT.</dd>
+<dd>
+New value. Addition.</dd></dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>is integer type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>New value. Addition.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>New value. Subtraction.</dd></dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>is integer type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>New value. Subtraction.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>New value. Multiplication.</dd></dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>is integer type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>New value. Multiplication.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>New value. Division.</dd></dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>is integer type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>New value. Division.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>New value. Remainder.</dd></dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>is integer type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>New value. Remainder.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>New value. Bitwise AND.</dd></dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>is integer type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>New value. Bitwise AND.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>New value. Bitwise OR.</dd></dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>is integer type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>New value. Bitwise OR.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>New value. Bitwise XOR.</dd></dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>is integer type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>New value. Bitwise XOR.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>New value. Bitwise left shift.</dd></dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>is integer type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">shift</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>New value. Bitwise right shift.</dd></dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>is integer type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">shift</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>New value. Pre-increment.</dd>
+<dd>
+New value. Pre-decrement.</dd>
+<dd>
+New value. Post-increment.</dd>
+<dd>
+New value. Post-decrement.</dd>
+<dd>
+New value. Negation.</dd>
+<dd>
+Logical not. AND.</dd>
+<dd>
+Logical AND. inclusive OR.</dd>
+<dd>
+Logical OR. Equal to.</dd></dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>is integer type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the values of the <a class="el" href="classipaddress_1_1uint128__t.html" title="128-bit unsigned integer.">uint128_t</a> are equal, <code>false</code> otherwise. Equal to.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the values of the <a class="el" href="classipaddress_1_1uint128__t.html" title="128-bit unsigned integer.">uint128_t</a> are equal, <code>false</code> otherwise. Not equal to.</dd></dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>is integer type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the values of the <a class="el" href="classipaddress_1_1uint128__t.html" title="128-bit unsigned integer.">uint128_t</a> are not equal, <code>false</code> otherwise. Not equal to.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the values of the <a class="el" href="classipaddress_1_1uint128__t.html" title="128-bit unsigned integer.">uint128_t</a> are not equal, <code>false</code> otherwise. Less than.</dd></dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>is integer type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the value are lexicographically less than the contents of <em>lower</em>, <code>false</code> otherwise. Less than.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the value are lexicographically less than the contents of <em>other</em>, <code>false</code> otherwise. Greater than.</dd></dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>is integer type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the value are lexicographically greater than the contents of <em>lower</em>, <code>false</code> otherwise. Greater than.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the value are lexicographically greater than the contents of <em>other</em>, <code>false</code> otherwise. Less than or equal to.</dd></dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>is integer type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the value are lexicographically less than or equal to the contents of <em>lower</em>, <code>false</code> otherwise. Less than or equal to.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the value are lexicographically less than or equal to the contents of <em>other</em>, <code>false</code> otherwise. Greater than or equal to.</dd></dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>is integer type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the value are lexicographically greater than or equal to the contents of <em>lower</em>, <code>false</code> otherwise. Greater than or equal to.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>of value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the value are lexicographically greater than or equal to the contents of <em>other</em>, <code>false</code> otherwise. </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>include/ipaddress/<a class="el" href="uint128_8hpp_source.html">uint128.hpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.10.0-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespaceipaddress.html">ipaddress</a></li><li class="navelem"><a class="el" href="classipaddress_1_1uint128__t.html">uint128_t</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>

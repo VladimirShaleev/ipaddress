@@ -1,0 +1,447 @@
+<!-- HTML header for doxygen 1.10.0-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="$langISO">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ipaddress: ipaddress Namespace Reference</title>
+<!--BEGIN PROJECT_ICON-->
+<link rel="icon" href="$projecticon" type="image/x-icon" />
+<!--END PROJECT_ICON-->
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+<script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="doxygen-awesome-tabs.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+$darkmode
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/VladimirShaleev/ipaddress" class="github-corner" title="View source on GitHub" target="_blank" rel="noopener noreferrer">
+  <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+  <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.0.0</span>
+   </div>
+  </td>
+ </tr>
+   <!--BEGIN FULL_SIDEBAR-->
+   <tr><td colspan="2">        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.svg"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td></tr>
+   <!--END FULL_SIDEBAR-->
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Search','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('namespaceipaddress.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle">
+<div class="title">ipaddress Namespace Reference</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>IP addresses and networks.  
+<a href="namespaceipaddress.html#details">More...</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1error.html">error</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base exception for this library.  <a href="classipaddress_1_1error.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1parse__error.html">parse_error</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parsing exception.  <a href="classipaddress_1_1parse__error.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1logic__error.html">logic_error</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logic exception.  <a href="classipaddress_1_1logic__error.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fixed size string.  <a href="structipaddress_1_1fixed__string.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1ip__address.html">ip_address</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents IP address of both versions v4 and v6.  <a href="classipaddress_1_1ip__address.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1optional.html">optional</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The optional object.  <a href="classipaddress_1_1optional.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1uint128__t.html">uint128_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">128-bit unsigned integer.  <a href="classipaddress_1_1uint128__t.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:acc1deee098affa9d26bdd8f2c881d480"><td class="memItemLeft" align="right" valign="top"><a id="acc1deee098affa9d26bdd8f2c881d480"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceipaddress.html#acc1deee098affa9d26bdd8f2c881d480">ipv4_address</a> = ip_address_base&lt; ipv4_address_base &gt;</td></tr>
+<tr class="memdesc:acc1deee098affa9d26bdd8f2c881d480"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test ipv4_address. <br /></td></tr>
+<tr class="separator:acc1deee098affa9d26bdd8f2c881d480"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa093cb17420d33d518eb3c89325d07dc"><td class="memItemLeft" align="right" valign="top"><a id="aa093cb17420d33d518eb3c89325d07dc"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceipaddress.html#aa093cb17420d33d518eb3c89325d07dc">ipv6_address</a> = ip_address_base&lt; ipv6_address_base &gt;</td></tr>
+<tr class="memdesc:aa093cb17420d33d518eb3c89325d07dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test ipv4_address. <br /></td></tr>
+<tr class="separator:aa093cb17420d33d518eb3c89325d07dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:acd1015a989b2b9e45fe6d0faa3e9a0fa"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> { <br />
+&#160;&#160;<a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faad306b6fdee05fe87455110ddf6501e6c">NO_ERROR</a> = 0
+, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faaa278170404490de2776a5db76b560042">EMPTY_ADDRESS</a>
+, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faafdd90c35444d3fb876602516076b3587">EMPTY_NETMASK</a>
+, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa962f78fd3b6e6c118d162aeb758e46ad">INVALID_NETMASK</a>
+, <br />
+&#160;&#160;<a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa40acce788b43717a3a283f7fdcc3fe6d">NETMASK_PATTERN_MIXES_ZEROES_AND_ONES</a>
+, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faaceae5fc57d94a3e3dc8b7363f465bb30">HAS_HOST_BITS_SET</a>
+, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa9b0dd645bae34eb17b79da5c94855dba">ONLY_ONE_SLASH_PERMITTED</a>
+, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faae0e39e65f3844f2ec223ef5f6e4da06a">EMPTY_OCTET</a>
+, <br />
+&#160;&#160;<a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa88e13ee3330b3ffb9385d77d2a9597d4">EXPECTED_4_OCTETS</a>
+, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa46e6c7ae8338fb954dffffe2cf6de430">LEADING_0_ARE_NOT_PERMITTED</a>
+, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa6dd88c745a2fa77cc8cbba26b4adfff6">OCTET_MORE_3_CHARACTERS</a>
+, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faae5158f71e04b29e7ee269f95176890f4">OCTET_HAS_INVALID_SYMBOL</a>
+, <br />
+&#160;&#160;<a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa1435adbd5ad33d9489c6351da36eb143">OCTET_EXCEEDED_255</a>
+, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa6b20b278f4a47ea1933c41afcc6315f0">LEAST_3_PARTS</a>
+, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa5bb9511a002e2e4dc32cce55b5389ac4">MOST_8_COLONS_PERMITTED</a>
+, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa1b2d43d909aa3748fb0086af4f885b6b">PART_IS_MORE_4_CHARS</a>
+, <br />
+&#160;&#160;<a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa0811cb81fdeb9c82cf2d503125435153">PART_HAS_INVALID_SYMBOL</a>
+, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa94252257499a89afae3e0c7b247efcd5">MOST_ONE_DOUBLE_COLON_PERMITTED</a>
+, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa38f075bd82c0db96e8a8e1b51f41c5cf">LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON</a>
+, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa88a06b88201a7f62966d09b9402e0abc">TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON</a>
+, <br />
+&#160;&#160;<a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faaf4b8e5d9d15659507d6728ab9fe0900f">EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON</a>
+, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa8bc2056669746aa3c65f7258352b4f93">EXACTLY_8_PARTS_EXPECTED_WITHOUT_DOUBLE_COLON</a>
+, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faadfd0dab5f42307e96a5178287989387c">SCOPE_ID_IS_TOO_LONG</a>
+, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faaa90995871057dca6d3f898acd73938ee">INVALID_SCOPE_ID</a>
+, <br />
+&#160;&#160;<a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa5f3740fef83818696e8b056c0456173f">INVALID_VERSION</a>
+, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faafc3a498b8337c66d15dd5723d806ff6e">INVALID_PREFIXLEN_DIFF</a>
+, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa200869afe81a28a43dc0e1013b1505ba">NEW_PREFIX_MUST_BE_SHORTER</a>
+, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faadbc879e336113690f7251a9cb59b8519">NEW_PREFIX_MUST_BE_LONGER</a>
+, <br />
+&#160;&#160;<a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa52c82f2ae517fb0d130bc306de035039">CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX</a>
+, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa55989913f931071ab5b76da3b3d3bb69">NOT_CONTAINED_NETWORK</a>
+<br />
+ }</td></tr>
+<tr class="memdesc:acd1015a989b2b9e45fe6d0faa3e9a0fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Error codes.  <a href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">More...</a><br /></td></tr>
+<tr class="separator:acd1015a989b2b9e45fe6d0faa3e9a0fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace60f6a4856e90fa5be15ecf1cf0132e"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceipaddress.html#ace60f6a4856e90fa5be15ecf1cf0132e">ip_version</a> { <a class="el" href="namespaceipaddress.html#ace60f6a4856e90fa5be15ecf1cf0132eab354cab57768c7d4c1106eb4e82c75dc">V4</a> = 4
+, <a class="el" href="namespaceipaddress.html#ace60f6a4856e90fa5be15ecf1cf0132eadb93f1c35b844334e2b266951618b4fe">V6</a> = 6
+ }</td></tr>
+<tr class="memdesc:ace60f6a4856e90fa5be15ecf1cf0132e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ip version.  <a href="namespaceipaddress.html#ace60f6a4856e90fa5be15ecf1cf0132e">More...</a><br /></td></tr>
+<tr class="separator:ace60f6a4856e90fa5be15ecf1cf0132e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a5c18bfe23ebcd2f8ef4e7f133b59a910"><td class="memTemplParams" colspan="2">template&lt;typename T , typename  = typename std::enable_if&lt;std::is_arithmetic&lt;T&gt;::value, T&gt;::type&gt; </td></tr>
+<tr class="memitem:a5c18bfe23ebcd2f8ef4e7f133b59a910"><td class="memTemplItemLeft" align="right" valign="top">IPADDRESS_CONSTEXPR&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceipaddress.html#a5c18bfe23ebcd2f8ef4e7f133b59a910">__attribute__</a> ((always_inline)) <a class="el" href="classipaddress_1_1uint128__t.html">uint128_t</a> operator+(T lower</td></tr>
+<tr class="memdesc:a5c18bfe23ebcd2f8ef4e7f133b59a910"><td class="mdescLeft">&#160;</td><td class="mdescRight">Addition.  <a href="namespaceipaddress.html#a5c18bfe23ebcd2f8ef4e7f133b59a910">More...</a><br /></td></tr>
+<tr class="separator:a5c18bfe23ebcd2f8ef4e7f133b59a910"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7365631cae3c32d5dbb66e8840c34f03"><td class="memTemplParams" colspan="2">template&lt;typename T , typename  = typename std::enable_if&lt;std::is_arithmetic&lt;T&gt;::value, T&gt;::type&gt; </td></tr>
+<tr class="memitem:a7365631cae3c32d5dbb66e8840c34f03"><td class="memTemplItemLeft" align="right" valign="top">IPADDRESS_CONSTEXPR&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceipaddress.html#a7365631cae3c32d5dbb66e8840c34f03">__attribute__</a> ((always_inline)) <a class="el" href="classipaddress_1_1uint128__t.html">uint128_t</a> operator&amp;(T lower</td></tr>
+<tr class="memdesc:a7365631cae3c32d5dbb66e8840c34f03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bitwise AND.  <a href="namespaceipaddress.html#a7365631cae3c32d5dbb66e8840c34f03">More...</a><br /></td></tr>
+<tr class="separator:a7365631cae3c32d5dbb66e8840c34f03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>IP addresses and networks. </p>
+<p>Namespace for working with IP addresses and networks. </p>
+</div><h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="acd1015a989b2b9e45fe6d0faa3e9a0fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd1015a989b2b9e45fe6d0faa3e9a0fa">&#9670;&nbsp;</a></span>error_code</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">ipaddress::error_code</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Error codes. </p>
+<p>Enumeration for identifying IP-address parsing errors and other logical errors. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="acd1015a989b2b9e45fe6d0faa3e9a0faad306b6fdee05fe87455110ddf6501e6c"></a>NO_ERROR&#160;</td><td class="fielddoc"><p>No errors. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acd1015a989b2b9e45fe6d0faa3e9a0faaa278170404490de2776a5db76b560042"></a>EMPTY_ADDRESS&#160;</td><td class="fielddoc"><p>Address cannot be empty. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acd1015a989b2b9e45fe6d0faa3e9a0faafdd90c35444d3fb876602516076b3587"></a>EMPTY_NETMASK&#160;</td><td class="fielddoc"><p>Empty mask in address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acd1015a989b2b9e45fe6d0faa3e9a0faa962f78fd3b6e6c118d162aeb758e46ad"></a>INVALID_NETMASK&#160;</td><td class="fielddoc"><p>Not valid netmask in address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acd1015a989b2b9e45fe6d0faa3e9a0faa40acce788b43717a3a283f7fdcc3fe6d"></a>NETMASK_PATTERN_MIXES_ZEROES_AND_ONES&#160;</td><td class="fielddoc"><p>Netmask pattern mixes zeroes &amp; ones in address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acd1015a989b2b9e45fe6d0faa3e9a0faaceae5fc57d94a3e3dc8b7363f465bb30"></a>HAS_HOST_BITS_SET&#160;</td><td class="fielddoc"><p>Has host bits set in address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acd1015a989b2b9e45fe6d0faa3e9a0faa9b0dd645bae34eb17b79da5c94855dba"></a>ONLY_ONE_SLASH_PERMITTED&#160;</td><td class="fielddoc"><p>Only one '/' permitted in address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acd1015a989b2b9e45fe6d0faa3e9a0faae0e39e65f3844f2ec223ef5f6e4da06a"></a>EMPTY_OCTET&#160;</td><td class="fielddoc"><p>Empty octet in address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acd1015a989b2b9e45fe6d0faa3e9a0faa88e13ee3330b3ffb9385d77d2a9597d4"></a>EXPECTED_4_OCTETS&#160;</td><td class="fielddoc"><p>Expected 4 octets in address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acd1015a989b2b9e45fe6d0faa3e9a0faa46e6c7ae8338fb954dffffe2cf6de430"></a>LEADING_0_ARE_NOT_PERMITTED&#160;</td><td class="fielddoc"><p>Leading zeros are not permitted in octet of address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acd1015a989b2b9e45fe6d0faa3e9a0faa6dd88c745a2fa77cc8cbba26b4adfff6"></a>OCTET_MORE_3_CHARACTERS&#160;</td><td class="fielddoc"><p>In octet of address more 3 characters. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acd1015a989b2b9e45fe6d0faa3e9a0faae5158f71e04b29e7ee269f95176890f4"></a>OCTET_HAS_INVALID_SYMBOL&#160;</td><td class="fielddoc"><p>In octet of address has invalid symbol. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acd1015a989b2b9e45fe6d0faa3e9a0faa1435adbd5ad33d9489c6351da36eb143"></a>OCTET_EXCEEDED_255&#160;</td><td class="fielddoc"><p>Octet of address exceeded 255. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acd1015a989b2b9e45fe6d0faa3e9a0faa6b20b278f4a47ea1933c41afcc6315f0"></a>LEAST_3_PARTS&#160;</td><td class="fielddoc"><p>Least 3 parts in address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acd1015a989b2b9e45fe6d0faa3e9a0faa5bb9511a002e2e4dc32cce55b5389ac4"></a>MOST_8_COLONS_PERMITTED&#160;</td><td class="fielddoc"><p>Most 8 colons permitted in address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acd1015a989b2b9e45fe6d0faa3e9a0faa1b2d43d909aa3748fb0086af4f885b6b"></a>PART_IS_MORE_4_CHARS&#160;</td><td class="fielddoc"><p>In part of address more 4 characters. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acd1015a989b2b9e45fe6d0faa3e9a0faa0811cb81fdeb9c82cf2d503125435153"></a>PART_HAS_INVALID_SYMBOL&#160;</td><td class="fielddoc"><p>In part of address has invalid symbols. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acd1015a989b2b9e45fe6d0faa3e9a0faa94252257499a89afae3e0c7b247efcd5"></a>MOST_ONE_DOUBLE_COLON_PERMITTED&#160;</td><td class="fielddoc"><p>At most one '::' permitted in address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acd1015a989b2b9e45fe6d0faa3e9a0faa38f075bd82c0db96e8a8e1b51f41c5cf"></a>LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON&#160;</td><td class="fielddoc"><p>At leading ':' only permitted as part of '::' in address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acd1015a989b2b9e45fe6d0faa3e9a0faa88a06b88201a7f62966d09b9402e0abc"></a>TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON&#160;</td><td class="fielddoc"><p>At trailing ':' only permitted as part of '::' in address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acd1015a989b2b9e45fe6d0faa3e9a0faaf4b8e5d9d15659507d6728ab9fe0900f"></a>EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON&#160;</td><td class="fielddoc"><p>Expected at most 7 other parts with '::' in address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acd1015a989b2b9e45fe6d0faa3e9a0faa8bc2056669746aa3c65f7258352b4f93"></a>EXACTLY_8_PARTS_EXPECTED_WITHOUT_DOUBLE_COLON&#160;</td><td class="fielddoc"><p>Exactly 8 parts expected without '::' in address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acd1015a989b2b9e45fe6d0faa3e9a0faadfd0dab5f42307e96a5178287989387c"></a>SCOPE_ID_IS_TOO_LONG&#160;</td><td class="fielddoc"><p>Scope id is too long in address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acd1015a989b2b9e45fe6d0faa3e9a0faaa90995871057dca6d3f898acd73938ee"></a>INVALID_SCOPE_ID&#160;</td><td class="fielddoc"><p>Invalid scope id in address. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acd1015a989b2b9e45fe6d0faa3e9a0faa5f3740fef83818696e8b056c0456173f"></a>INVALID_VERSION&#160;</td><td class="fielddoc"><p>Versions don't match. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acd1015a989b2b9e45fe6d0faa3e9a0faafc3a498b8337c66d15dd5723d806ff6e"></a>INVALID_PREFIXLEN_DIFF&#160;</td><td class="fielddoc"><p>Invalid prefixlen diff. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acd1015a989b2b9e45fe6d0faa3e9a0faa200869afe81a28a43dc0e1013b1505ba"></a>NEW_PREFIX_MUST_BE_SHORTER&#160;</td><td class="fielddoc"><p>New prefix must be shorter. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acd1015a989b2b9e45fe6d0faa3e9a0faadbc879e336113690f7251a9cb59b8519"></a>NEW_PREFIX_MUST_BE_LONGER&#160;</td><td class="fielddoc"><p>New prefix must be longer. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acd1015a989b2b9e45fe6d0faa3e9a0faa52c82f2ae517fb0d130bc306de035039"></a>CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX&#160;</td><td class="fielddoc"><p>Cannot set prefixlen diff and new prefix. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="acd1015a989b2b9e45fe6d0faa3e9a0faa55989913f931071ab5b76da3b3d3bb69"></a>NOT_CONTAINED_NETWORK&#160;</td><td class="fielddoc"><p>Network is not a subnet of other. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<a id="ace60f6a4856e90fa5be15ecf1cf0132e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace60f6a4856e90fa5be15ecf1cf0132e">&#9670;&nbsp;</a></span>ip_version</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="namespaceipaddress.html#ace60f6a4856e90fa5be15ecf1cf0132e">ipaddress::ip_version</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Ip version. </p>
+<p>Adds constants for IP addresses versions 4 and 6. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ace60f6a4856e90fa5be15ecf1cf0132eab354cab57768c7d4c1106eb4e82c75dc"></a>V4&#160;</td><td class="fielddoc"><p>Version 4 for IPv4. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ace60f6a4856e90fa5be15ecf1cf0132eadb93f1c35b844334e2b266951618b4fe"></a>V6&#160;</td><td class="fielddoc"><p>Version 6 for IPv6. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="a5c18bfe23ebcd2f8ef4e7f133b59a910"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c18bfe23ebcd2f8ef4e7f133b59a910">&#9670;&nbsp;</a></span>__attribute__() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename  = typename std::enable_if&lt;std::is_arithmetic&lt;T&gt;::value, T&gt;::type&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">IPADDRESS_CONSTEXPR ipaddress::__attribute__ </td>
+          <td>(</td>
+          <td class="paramtype">(always_inline)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Addition. </p>
+<p>Bitwise XOR.</p>
+<p>Bitwise OR.</p>
+<p>Remainder.</p>
+<p>Division.</p>
+<p>Multiplication.</p>
+<p>Subtraction.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>is integer type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>of value </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>of <a class="el" href="classipaddress_1_1uint128__t.html" title="128-bit unsigned integer.">uint128_t</a> value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>New value. </dd></dl>
+
+</div>
+</div>
+<a id="a7365631cae3c32d5dbb66e8840c34f03"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7365631cae3c32d5dbb66e8840c34f03">&#9670;&nbsp;</a></span>__attribute__() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , typename  = typename std::enable_if&lt;std::is_arithmetic&lt;T&gt;::value, T&gt;::type&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">IPADDRESS_CONSTEXPR ipaddress::__attribute__ </td>
+          <td>(</td>
+          <td class="paramtype">(always_inline)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> &amp;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Bitwise AND. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>is integer type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>of value </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>of <a class="el" href="classipaddress_1_1uint128__t.html" title="128-bit unsigned integer.">uint128_t</a> value </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>New value. </dd></dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.10.0-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespaceipaddress.html">ipaddress</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>

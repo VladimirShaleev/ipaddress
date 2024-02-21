@@ -1,0 +1,930 @@
+<!-- HTML header for doxygen 1.10.0-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="$langISO">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ipaddress: ipaddress::fixed_string&lt; N &gt; Struct Template Reference</title>
+<!--BEGIN PROJECT_ICON-->
+<link rel="icon" href="$projecticon" type="image/x-icon" />
+<!--END PROJECT_ICON-->
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+<script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="doxygen-awesome-tabs.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+$darkmode
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/VladimirShaleev/ipaddress" class="github-corner" title="View source on GitHub" target="_blank" rel="noopener noreferrer">
+  <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+  <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.0.0</span>
+   </div>
+  </td>
+ </tr>
+   <!--BEGIN FULL_SIDEBAR-->
+   <tr><td colspan="2">        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.svg"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Search" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td></tr>
+   <!--END FULL_SIDEBAR-->
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Search','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('structipaddress_1_1fixed__string.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="structipaddress_1_1fixed__string-members.html">List of all members</a>  </div>
+  <div class="headertitle">
+<div class="title">ipaddress::fixed_string&lt; N &gt; Struct Template Reference</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>Fixed size string.  
+ <a href="structipaddress_1_1fixed__string.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="fixed-string_8hpp_source.html">fixed-string.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a541fbb8816f09e744cfb18cdbc56d2d9"><td class="memItemLeft" align="right" valign="top"><a id="a541fbb8816f09e744cfb18cdbc56d2d9"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structipaddress_1_1fixed__string.html#a541fbb8816f09e744cfb18cdbc56d2d9">const_pointer</a> = const char *</td></tr>
+<tr class="memdesc:a541fbb8816f09e744cfb18cdbc56d2d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of constant pointer. <br /></td></tr>
+<tr class="separator:a541fbb8816f09e744cfb18cdbc56d2d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a914df5944280a1c576f6ea4b413e5ac6"><td class="memItemLeft" align="right" valign="top"><a id="a914df5944280a1c576f6ea4b413e5ac6"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structipaddress_1_1fixed__string.html#a914df5944280a1c576f6ea4b413e5ac6">const_reference</a> = const char &amp;</td></tr>
+<tr class="memdesc:a914df5944280a1c576f6ea4b413e5ac6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of constant reference. <br /></td></tr>
+<tr class="separator:a914df5944280a1c576f6ea4b413e5ac6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63be579fa9b28bba5b71125451736eee"><td class="memItemLeft" align="right" valign="top"><a id="a63be579fa9b28bba5b71125451736eee"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structipaddress_1_1fixed__string.html#a63be579fa9b28bba5b71125451736eee">const_iterator</a> = <a class="el" href="structipaddress_1_1fixed__string.html#a541fbb8816f09e744cfb18cdbc56d2d9">const_pointer</a></td></tr>
+<tr class="memdesc:a63be579fa9b28bba5b71125451736eee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of constant iterator. <br /></td></tr>
+<tr class="separator:a63be579fa9b28bba5b71125451736eee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac94bd47a6ab3e55e8bf5eb57f4848a5a"><td class="memItemLeft" align="right" valign="top"><a id="ac94bd47a6ab3e55e8bf5eb57f4848a5a"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structipaddress_1_1fixed__string.html#ac94bd47a6ab3e55e8bf5eb57f4848a5a">const_reverse_iterator</a> = std::reverse_iterator&lt; <a class="el" href="structipaddress_1_1fixed__string.html#a63be579fa9b28bba5b71125451736eee">const_iterator</a> &gt;</td></tr>
+<tr class="memdesc:ac94bd47a6ab3e55e8bf5eb57f4848a5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of reverse constant iterator. <br /></td></tr>
+<tr class="separator:ac94bd47a6ab3e55e8bf5eb57f4848a5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a0e27f2ebe35470c5548306fefe274923"><td class="memItemLeft" align="right" valign="top">IPADDRESS_CONSTEXPR&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structipaddress_1_1fixed__string.html#a0e27f2ebe35470c5548306fefe274923">__attribute__</a> ((always_inline)) <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>() noexcept=default</td></tr>
+<tr class="memdesc:a0e27f2ebe35470c5548306fefe274923"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="structipaddress_1_1fixed__string.html#a0e27f2ebe35470c5548306fefe274923">More...</a><br /></td></tr>
+<tr class="separator:a0e27f2ebe35470c5548306fefe274923"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d386b053ce81b8f1d46865d11ca588a"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a9d386b053ce81b8f1d46865d11ca588a"><td class="memTemplItemLeft" align="right" valign="top">IPADDRESS_CONSTEXPR&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structipaddress_1_1fixed__string.html#a9d386b053ce81b8f1d46865d11ca588a">__attribute__</a> ((always_inline)) <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>(const T(&amp;data)[N+1]) noexcept</td></tr>
+<tr class="memdesc:a9d386b053ce81b8f1d46865d11ca588a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an instance from a character array.  <a href="structipaddress_1_1fixed__string.html#a9d386b053ce81b8f1d46865d11ca588a">More...</a><br /></td></tr>
+<tr class="separator:a9d386b053ce81b8f1d46865d11ca588a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4805f10037715110fd4ed82420869598"><td class="memItemLeft" align="right" valign="top">IPADDRESS_CONSTEXPR&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structipaddress_1_1fixed__string.html#a4805f10037715110fd4ed82420869598">__attribute__</a> ((always_inline)) const _iterator begin() const noexcept</td></tr>
+<tr class="memdesc:a4805f10037715110fd4ed82420869598"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get begin iterator.  <a href="structipaddress_1_1fixed__string.html#a4805f10037715110fd4ed82420869598">More...</a><br /></td></tr>
+<tr class="separator:a4805f10037715110fd4ed82420869598"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a491ec789d491165988ae302e5baae36e"><td class="memItemLeft" align="right" valign="top">IPADDRESS_CONSTEXPR&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structipaddress_1_1fixed__string.html#a491ec789d491165988ae302e5baae36e">__attribute__</a> ((always_inline)) const _iterator end() const noexcept</td></tr>
+<tr class="memdesc:a491ec789d491165988ae302e5baae36e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get end iterator.  <a href="structipaddress_1_1fixed__string.html#a491ec789d491165988ae302e5baae36e">More...</a><br /></td></tr>
+<tr class="separator:a491ec789d491165988ae302e5baae36e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac72841b59e396b3de663f72ae304addc"><td class="memItemLeft" align="right" valign="top">IPADDRESS_CONSTEXPR_17&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structipaddress_1_1fixed__string.html#ac72841b59e396b3de663f72ae304addc">__attribute__</a> ((always_inline)) const _reverse_iterator rbegin() const noexcept</td></tr>
+<tr class="memdesc:ac72841b59e396b3de663f72ae304addc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get reverse begin iterator.  <a href="structipaddress_1_1fixed__string.html#ac72841b59e396b3de663f72ae304addc">More...</a><br /></td></tr>
+<tr class="separator:ac72841b59e396b3de663f72ae304addc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77a0591f949c9dfaed8b90588b664e46"><td class="memItemLeft" align="right" valign="top">IPADDRESS_CONSTEXPR_17&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structipaddress_1_1fixed__string.html#a77a0591f949c9dfaed8b90588b664e46">__attribute__</a> ((always_inline)) const _reverse_iterator rend() const noexcept</td></tr>
+<tr class="memdesc:a77a0591f949c9dfaed8b90588b664e46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get reverse end iterator.  <a href="structipaddress_1_1fixed__string.html#a77a0591f949c9dfaed8b90588b664e46">More...</a><br /></td></tr>
+<tr class="separator:a77a0591f949c9dfaed8b90588b664e46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a29b89ca0d0ff1f0119503bec4a963c8a"><td class="memItemLeft" align="right" valign="top">IPADDRESS_CONSTEXPR&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structipaddress_1_1fixed__string.html#a29b89ca0d0ff1f0119503bec4a963c8a">__attribute__</a> ((always_inline)) const _iterator cbegin() const noexcept</td></tr>
+<tr class="memdesc:a29b89ca0d0ff1f0119503bec4a963c8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get begin iterator.  <a href="structipaddress_1_1fixed__string.html#a29b89ca0d0ff1f0119503bec4a963c8a">More...</a><br /></td></tr>
+<tr class="separator:a29b89ca0d0ff1f0119503bec4a963c8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f2b6f5a867a99927f691324ff2f0103"><td class="memItemLeft" align="right" valign="top">IPADDRESS_CONSTEXPR&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structipaddress_1_1fixed__string.html#a5f2b6f5a867a99927f691324ff2f0103">__attribute__</a> ((always_inline)) const _iterator cend() const noexcept</td></tr>
+<tr class="memdesc:a5f2b6f5a867a99927f691324ff2f0103"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get end iterator.  <a href="structipaddress_1_1fixed__string.html#a5f2b6f5a867a99927f691324ff2f0103">More...</a><br /></td></tr>
+<tr class="separator:a5f2b6f5a867a99927f691324ff2f0103"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4fcb26c0fc3d3beb9d9c9bc2d5b2fa3"><td class="memItemLeft" align="right" valign="top">IPADDRESS_CONSTEXPR_17&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structipaddress_1_1fixed__string.html#ae4fcb26c0fc3d3beb9d9c9bc2d5b2fa3">__attribute__</a> ((always_inline)) const _reverse_iterator crbegin() const noexcept</td></tr>
+<tr class="memdesc:ae4fcb26c0fc3d3beb9d9c9bc2d5b2fa3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get reverse begin iterator.  <a href="structipaddress_1_1fixed__string.html#ae4fcb26c0fc3d3beb9d9c9bc2d5b2fa3">More...</a><br /></td></tr>
+<tr class="separator:ae4fcb26c0fc3d3beb9d9c9bc2d5b2fa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a515416078d7ce1de779c89fbdcf6bf39"><td class="memItemLeft" align="right" valign="top">IPADDRESS_CONSTEXPR_17&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structipaddress_1_1fixed__string.html#a515416078d7ce1de779c89fbdcf6bf39">__attribute__</a> ((always_inline)) const _reverse_iterator crend() const noexcept</td></tr>
+<tr class="memdesc:a515416078d7ce1de779c89fbdcf6bf39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get reverse end iterator.  <a href="structipaddress_1_1fixed__string.html#a515416078d7ce1de779c89fbdcf6bf39">More...</a><br /></td></tr>
+<tr class="separator:a515416078d7ce1de779c89fbdcf6bf39"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51c78ea8fbd5b11c5349a5ae6b1565d8"><td class="memItemLeft" align="right" valign="top">IPADDRESS_CONSTEXPR&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structipaddress_1_1fixed__string.html#a51c78ea8fbd5b11c5349a5ae6b1565d8">__attribute__</a> ((always_inline)) bool empty() const noexcept</td></tr>
+<tr class="memdesc:a51c78ea8fbd5b11c5349a5ae6b1565d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the string is empty.  <a href="structipaddress_1_1fixed__string.html#a51c78ea8fbd5b11c5349a5ae6b1565d8">More...</a><br /></td></tr>
+<tr class="separator:a51c78ea8fbd5b11c5349a5ae6b1565d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31197fc888bcdf12b046d61f4c7cc664"><td class="memItemLeft" align="right" valign="top">IPADDRESS_CONSTEXPR&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structipaddress_1_1fixed__string.html#a31197fc888bcdf12b046d61f4c7cc664">__attribute__</a> ((always_inline)) size_t size() const noexcept</td></tr>
+<tr class="memdesc:a31197fc888bcdf12b046d61f4c7cc664"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of characters in the string.  <a href="structipaddress_1_1fixed__string.html#a31197fc888bcdf12b046d61f4c7cc664">More...</a><br /></td></tr>
+<tr class="separator:a31197fc888bcdf12b046d61f4c7cc664"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30c3e2908925938c9d8d84a188840e18"><td class="memItemLeft" align="right" valign="top">IPADDRESS_CONSTEXPR&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structipaddress_1_1fixed__string.html#a30c3e2908925938c9d8d84a188840e18">__attribute__</a> ((always_inline)) size_t capacity() const noexcept</td></tr>
+<tr class="memdesc:a30c3e2908925938c9d8d84a188840e18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of characters that the string has currently allocated space for.  <a href="structipaddress_1_1fixed__string.html#a30c3e2908925938c9d8d84a188840e18">More...</a><br /></td></tr>
+<tr class="separator:a30c3e2908925938c9d8d84a188840e18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada07c73c3ad9880efb71a6e8ae017961"><td class="memItemLeft" align="right" valign="top">IPADDRESS_CONSTEXPR&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structipaddress_1_1fixed__string.html#ada07c73c3ad9880efb71a6e8ae017961">__attribute__</a> ((always_inline)) const _reference operator[](size_t n) const</td></tr>
+<tr class="memdesc:ada07c73c3ad9880efb71a6e8ae017961"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a reference to the element at specified location <em>n</em>.  <a href="structipaddress_1_1fixed__string.html#ada07c73c3ad9880efb71a6e8ae017961">More...</a><br /></td></tr>
+<tr class="separator:ada07c73c3ad9880efb71a6e8ae017961"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae21b63ee5ae9db859ddb6e469ce7d237"><td class="memItemLeft" align="right" valign="top">IPADDRESS_CONSTEXPR&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structipaddress_1_1fixed__string.html#ae21b63ee5ae9db859ddb6e469ce7d237">__attribute__</a> ((always_inline)) const _reference at(size_t n) const</td></tr>
+<tr class="memdesc:ae21b63ee5ae9db859ddb6e469ce7d237"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a reference to the element at specified location <em>n</em>, with bounds checking.  <a href="structipaddress_1_1fixed__string.html#ae21b63ee5ae9db859ddb6e469ce7d237">More...</a><br /></td></tr>
+<tr class="separator:ae21b63ee5ae9db859ddb6e469ce7d237"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65cbd196822535cf37e58f500f1d290a"><td class="memItemLeft" align="right" valign="top">IPADDRESS_CONSTEXPR&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structipaddress_1_1fixed__string.html#a65cbd196822535cf37e58f500f1d290a">__attribute__</a> ((always_inline)) const _reference front() const noexcept</td></tr>
+<tr class="memdesc:a65cbd196822535cf37e58f500f1d290a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a reference to the first element in the string.  <a href="structipaddress_1_1fixed__string.html#a65cbd196822535cf37e58f500f1d290a">More...</a><br /></td></tr>
+<tr class="separator:a65cbd196822535cf37e58f500f1d290a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af92480b1c9fa6fd67bc4db74bf2a3cb1"><td class="memItemLeft" align="right" valign="top">IPADDRESS_CONSTEXPR&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structipaddress_1_1fixed__string.html#af92480b1c9fa6fd67bc4db74bf2a3cb1">__attribute__</a> ((always_inline)) const _reference back() const noexcept</td></tr>
+<tr class="memdesc:af92480b1c9fa6fd67bc4db74bf2a3cb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a reference to the last element in the container.  <a href="structipaddress_1_1fixed__string.html#af92480b1c9fa6fd67bc4db74bf2a3cb1">More...</a><br /></td></tr>
+<tr class="separator:af92480b1c9fa6fd67bc4db74bf2a3cb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc3932730a44f89fc73034e2c851e03f"><td class="memItemLeft" align="right" valign="top">IPADDRESS_CONSTEXPR&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structipaddress_1_1fixed__string.html#abc3932730a44f89fc73034e2c851e03f">__attribute__</a> ((always_inline)) const _pointer data() const noexcept</td></tr>
+<tr class="memdesc:abc3932730a44f89fc73034e2c851e03f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns pointer to the underlying array serving as element storage.  <a href="structipaddress_1_1fixed__string.html#abc3932730a44f89fc73034e2c851e03f">More...</a><br /></td></tr>
+<tr class="separator:abc3932730a44f89fc73034e2c851e03f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6336134c3ff3bbcae2c8a0ac234befb4"><td class="memItemLeft" align="right" valign="top">IPADDRESS_CONSTEXPR&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structipaddress_1_1fixed__string.html#a6336134c3ff3bbcae2c8a0ac234befb4">__attribute__</a> ((always_inline)) size_t hash() const noexcept</td></tr>
+<tr class="memdesc:a6336134c3ff3bbcae2c8a0ac234befb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate hash of string.  <a href="structipaddress_1_1fixed__string.html#a6336134c3ff3bbcae2c8a0ac234befb4">More...</a><br /></td></tr>
+<tr class="separator:a6336134c3ff3bbcae2c8a0ac234befb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e5636ccde28eb7937f1f6cb820c15b7"><td class="memItemLeft" align="right" valign="top">IPADDRESS_CONSTEXPR&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structipaddress_1_1fixed__string.html#a1e5636ccde28eb7937f1f6cb820c15b7">__attribute__</a> ((always_inline)) void swap(<a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a> &amp;other) noexcept</td></tr>
+<tr class="memdesc:a1e5636ccde28eb7937f1f6cb820c15b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swap two string.  <a href="structipaddress_1_1fixed__string.html#a1e5636ccde28eb7937f1f6cb820c15b7">More...</a><br /></td></tr>
+<tr class="separator:a1e5636ccde28eb7937f1f6cb820c15b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><h3>template&lt;size_t N&gt;<br />
+struct ipaddress::fixed_string&lt; N &gt;</h3>
+
+<p>Fixed size string. </p>
+<p>Used in non-type template parameters syntax.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">N</td><td>is maximum number of characters. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a0e27f2ebe35470c5548306fefe274923"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e27f2ebe35470c5548306fefe274923">&#9670;&nbsp;</a></span>__attribute__() <span class="overload">[1/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IPADDRESS_CONSTEXPR <a class="el" href="structipaddress_1_1fixed__string.html">ipaddress::fixed_string</a>&lt; N &gt;::__attribute__ </td>
+          <td>(</td>
+          <td class="paramtype">(always_inline)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">default</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Default constructor. </p>
+<p>Creates an instance with default values, i.e. a string filled with null characters. </p>
+
+</div>
+</div>
+<a id="a9d386b053ce81b8f1d46865d11ca588a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d386b053ce81b8f1d46865d11ca588a">&#9670;&nbsp;</a></span>__attribute__() <span class="overload">[2/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N&gt; </div>
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IPADDRESS_CONSTEXPR <a class="el" href="structipaddress_1_1fixed__string.html">ipaddress::fixed_string</a>&lt; N &gt;::__attribute__ </td>
+          <td>(</td>
+          <td class="paramtype">(always_inline)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td>)[N+1] const &amp;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates an instance from a character array. </p>
+<p>All characters will be converted to ASCII, with possible truncation if characters from other encodings are used.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>is character type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>of character array </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4805f10037715110fd4ed82420869598"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4805f10037715110fd4ed82420869598">&#9670;&nbsp;</a></span>__attribute__() <span class="overload">[3/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IPADDRESS_CONSTEXPR <a class="el" href="structipaddress_1_1fixed__string.html">ipaddress::fixed_string</a>&lt; N &gt;::__attribute__ </td>
+          <td>(</td>
+          <td class="paramtype">(always_inline)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get begin iterator. </p>
+<p>Returns an iterator to the first element of the string. If the string is empty, the returned iterator will be equal to end().</p>
+<dl class="section return"><dt>Returns</dt><dd>Iterator to the first element.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd>end() </dd></dl>
+
+</div>
+</div>
+<a id="a491ec789d491165988ae302e5baae36e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a491ec789d491165988ae302e5baae36e">&#9670;&nbsp;</a></span>__attribute__() <span class="overload">[4/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IPADDRESS_CONSTEXPR <a class="el" href="structipaddress_1_1fixed__string.html">ipaddress::fixed_string</a>&lt; N &gt;::__attribute__ </td>
+          <td>(</td>
+          <td class="paramtype">(always_inline)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get end iterator. </p>
+<p>Returns an iterator to the element following the last element of the string. This element acts as a placeholder; attempting to access it results in undefined behavior.</p>
+<dl class="section return"><dt>Returns</dt><dd>Iterator to the element following the last element.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd>begin() </dd></dl>
+
+</div>
+</div>
+<a id="ac72841b59e396b3de663f72ae304addc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac72841b59e396b3de663f72ae304addc">&#9670;&nbsp;</a></span>__attribute__() <span class="overload">[5/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IPADDRESS_CONSTEXPR_17 <a class="el" href="structipaddress_1_1fixed__string.html">ipaddress::fixed_string</a>&lt; N &gt;::__attribute__ </td>
+          <td>(</td>
+          <td class="paramtype">(always_inline)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get reverse begin iterator. </p>
+<p>Returns a reverse iterator to the first element of the reversed string. It corresponds to the last element of the non-reversed string. If the string is empty, the returned iterator is equal to rend().</p>
+<dl class="section return"><dt>Returns</dt><dd>Reverse iterator to the first element.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd>rend() </dd></dl>
+
+</div>
+</div>
+<a id="a77a0591f949c9dfaed8b90588b664e46"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77a0591f949c9dfaed8b90588b664e46">&#9670;&nbsp;</a></span>__attribute__() <span class="overload">[6/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IPADDRESS_CONSTEXPR_17 <a class="el" href="structipaddress_1_1fixed__string.html">ipaddress::fixed_string</a>&lt; N &gt;::__attribute__ </td>
+          <td>(</td>
+          <td class="paramtype">(always_inline)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get reverse end iterator. </p>
+<p>Returns a reverse iterator to the element following the last element of the reversed string. It corresponds to the element preceding the first element of the non-reversed string. This element acts as a placeholder, attempting to access it results in undefined behavior.</p>
+<dl class="section return"><dt>Returns</dt><dd>Reverse iterator to the element following the last element.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd>rbegin() </dd></dl>
+
+</div>
+</div>
+<a id="a29b89ca0d0ff1f0119503bec4a963c8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a29b89ca0d0ff1f0119503bec4a963c8a">&#9670;&nbsp;</a></span>__attribute__() <span class="overload">[7/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IPADDRESS_CONSTEXPR <a class="el" href="structipaddress_1_1fixed__string.html">ipaddress::fixed_string</a>&lt; N &gt;::__attribute__ </td>
+          <td>(</td>
+          <td class="paramtype">(always_inline)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get begin iterator. </p>
+<p>Returns an iterator to the first element of the string. If the string is empty, the returned iterator will be equal to cend().</p>
+<dl class="section return"><dt>Returns</dt><dd>Iterator to the first element.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd>cend() </dd></dl>
+
+</div>
+</div>
+<a id="a5f2b6f5a867a99927f691324ff2f0103"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f2b6f5a867a99927f691324ff2f0103">&#9670;&nbsp;</a></span>__attribute__() <span class="overload">[8/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IPADDRESS_CONSTEXPR <a class="el" href="structipaddress_1_1fixed__string.html">ipaddress::fixed_string</a>&lt; N &gt;::__attribute__ </td>
+          <td>(</td>
+          <td class="paramtype">(always_inline)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get end iterator. </p>
+<p>Returns an iterator to the element following the last element of the string. This element acts as a placeholder; attempting to access it results in undefined behavior.</p>
+<dl class="section return"><dt>Returns</dt><dd>Iterator to the element following the last element.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd>cbegin() </dd></dl>
+
+</div>
+</div>
+<a id="ae4fcb26c0fc3d3beb9d9c9bc2d5b2fa3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4fcb26c0fc3d3beb9d9c9bc2d5b2fa3">&#9670;&nbsp;</a></span>__attribute__() <span class="overload">[9/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IPADDRESS_CONSTEXPR_17 <a class="el" href="structipaddress_1_1fixed__string.html">ipaddress::fixed_string</a>&lt; N &gt;::__attribute__ </td>
+          <td>(</td>
+          <td class="paramtype">(always_inline)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get reverse begin iterator. </p>
+<p>Returns a reverse iterator to the first element of the reversed string. It corresponds to the last element of the non-reversed string. If the string is empty, the returned iterator is equal to crend().</p>
+<dl class="section return"><dt>Returns</dt><dd>Reverse iterator to the first element.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd>crend() </dd></dl>
+
+</div>
+</div>
+<a id="a515416078d7ce1de779c89fbdcf6bf39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a515416078d7ce1de779c89fbdcf6bf39">&#9670;&nbsp;</a></span>__attribute__() <span class="overload">[10/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IPADDRESS_CONSTEXPR_17 <a class="el" href="structipaddress_1_1fixed__string.html">ipaddress::fixed_string</a>&lt; N &gt;::__attribute__ </td>
+          <td>(</td>
+          <td class="paramtype">(always_inline)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get reverse end iterator. </p>
+<p>Returns a reverse iterator to the element following the last element of the reversed string. It corresponds to the element preceding the first element of the non-reversed string. This element acts as a placeholder, attempting to access it results in undefined behavior.</p>
+<dl class="section return"><dt>Returns</dt><dd>Reverse iterator to the element following the last element.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd>crbegin() </dd></dl>
+
+</div>
+</div>
+<a id="a51c78ea8fbd5b11c5349a5ae6b1565d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51c78ea8fbd5b11c5349a5ae6b1565d8">&#9670;&nbsp;</a></span>__attribute__() <span class="overload">[11/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IPADDRESS_CONSTEXPR <a class="el" href="structipaddress_1_1fixed__string.html">ipaddress::fixed_string</a>&lt; N &gt;::__attribute__ </td>
+          <td>(</td>
+          <td class="paramtype">(always_inline)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if the string is empty. </p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the string is empty, <code>false</code> otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a31197fc888bcdf12b046d61f4c7cc664"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31197fc888bcdf12b046d61f4c7cc664">&#9670;&nbsp;</a></span>__attribute__() <span class="overload">[12/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IPADDRESS_CONSTEXPR <a class="el" href="structipaddress_1_1fixed__string.html">ipaddress::fixed_string</a>&lt; N &gt;::__attribute__ </td>
+          <td>(</td>
+          <td class="paramtype">(always_inline)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the number of characters in the string. </p>
+<dl class="section return"><dt>Returns</dt><dd>The number of characters in the string.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd>capacity() </dd></dl>
+
+</div>
+</div>
+<a id="a30c3e2908925938c9d8d84a188840e18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30c3e2908925938c9d8d84a188840e18">&#9670;&nbsp;</a></span>__attribute__() <span class="overload">[13/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IPADDRESS_CONSTEXPR <a class="el" href="structipaddress_1_1fixed__string.html">ipaddress::fixed_string</a>&lt; N &gt;::__attribute__ </td>
+          <td>(</td>
+          <td class="paramtype">(always_inline)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the number of characters that the string has currently allocated space for. </p>
+<dl class="section return"><dt>Returns</dt><dd>Capacity of the currently allocated storage.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd>size() </dd></dl>
+
+</div>
+</div>
+<a id="ada07c73c3ad9880efb71a6e8ae017961"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada07c73c3ad9880efb71a6e8ae017961">&#9670;&nbsp;</a></span>__attribute__() <span class="overload">[14/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IPADDRESS_CONSTEXPR <a class="el" href="structipaddress_1_1fixed__string.html">ipaddress::fixed_string</a>&lt; N &gt;::__attribute__ </td>
+          <td>(</td>
+          <td class="paramtype">(always_inline)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns a reference to the element at specified location <em>n</em>. </p>
+<p>If n is not within the range of the string, an exception of type std::out_of_range is thrown.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>position of the element to return </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Reference to the requested element.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd>at(size_t) const </dd></dl>
+
+</div>
+</div>
+<a id="ae21b63ee5ae9db859ddb6e469ce7d237"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae21b63ee5ae9db859ddb6e469ce7d237">&#9670;&nbsp;</a></span>__attribute__() <span class="overload">[15/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IPADDRESS_CONSTEXPR <a class="el" href="structipaddress_1_1fixed__string.html">ipaddress::fixed_string</a>&lt; N &gt;::__attribute__ </td>
+          <td>(</td>
+          <td class="paramtype">(always_inline)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns a reference to the element at specified location <em>n</em>, with bounds checking. </p>
+<p>If n is not within the range of the string, an exception of type std::out_of_range is thrown.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>position of the element to return </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Reference to the requested element.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd>operator[](size_t) const </dd></dl>
+
+</div>
+</div>
+<a id="a65cbd196822535cf37e58f500f1d290a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a65cbd196822535cf37e58f500f1d290a">&#9670;&nbsp;</a></span>__attribute__() <span class="overload">[16/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IPADDRESS_CONSTEXPR <a class="el" href="structipaddress_1_1fixed__string.html">ipaddress::fixed_string</a>&lt; N &gt;::__attribute__ </td>
+          <td>(</td>
+          <td class="paramtype">(always_inline)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns a reference to the first element in the string. </p>
+<p>Calling front on an empty string causes undefined behavior.</p>
+<dl class="section return"><dt>Returns</dt><dd>Reference to the first element.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd>back() </dd></dl>
+
+</div>
+</div>
+<a id="af92480b1c9fa6fd67bc4db74bf2a3cb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af92480b1c9fa6fd67bc4db74bf2a3cb1">&#9670;&nbsp;</a></span>__attribute__() <span class="overload">[17/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IPADDRESS_CONSTEXPR <a class="el" href="structipaddress_1_1fixed__string.html">ipaddress::fixed_string</a>&lt; N &gt;::__attribute__ </td>
+          <td>(</td>
+          <td class="paramtype">(always_inline)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns a reference to the last element in the container. </p>
+<p>Calling back on an empty container causes undefined behavior.</p>
+<dl class="section return"><dt>Returns</dt><dd>Reference to the last element.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd>front() </dd></dl>
+
+</div>
+</div>
+<a id="abc3932730a44f89fc73034e2c851e03f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc3932730a44f89fc73034e2c851e03f">&#9670;&nbsp;</a></span>__attribute__() <span class="overload">[18/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IPADDRESS_CONSTEXPR <a class="el" href="structipaddress_1_1fixed__string.html">ipaddress::fixed_string</a>&lt; N &gt;::__attribute__ </td>
+          <td>(</td>
+          <td class="paramtype">(always_inline)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns pointer to the underlying array serving as element storage. </p>
+<p>The pointer is such that range [data(), data() + size()) is always a valid range, even if the string is empty (data() is not dereferenceable in that case).</p>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the underlying element storage. For non-empty containers, the returned pointer compares equal to the address of the first element. </dd></dl>
+
+</div>
+</div>
+<a id="a6336134c3ff3bbcae2c8a0ac234befb4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6336134c3ff3bbcae2c8a0ac234befb4">&#9670;&nbsp;</a></span>__attribute__() <span class="overload">[19/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IPADDRESS_CONSTEXPR <a class="el" href="structipaddress_1_1fixed__string.html">ipaddress::fixed_string</a>&lt; N &gt;::__attribute__ </td>
+          <td>(</td>
+          <td class="paramtype">(always_inline)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calculate hash of string. </p>
+<p>Returns a value of type std::size_t that represents the hash value.</p>
+<dl class="section return"><dt>Returns</dt><dd>Hash of string. </dd></dl>
+
+</div>
+</div>
+<a id="a1e5636ccde28eb7937f1f6cb820c15b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e5636ccde28eb7937f1f6cb820c15b7">&#9670;&nbsp;</a></span>__attribute__() <span class="overload">[20/20]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IPADDRESS_CONSTEXPR <a class="el" href="structipaddress_1_1fixed__string.html">ipaddress::fixed_string</a>&lt; N &gt;::__attribute__ </td>
+          <td>(</td>
+          <td class="paramtype">(always_inline)&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> &amp;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Swap two string. </p>
+<p>Exchanges the given values.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">other</td><td>the value to be swapped </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/>The documentation for this struct was generated from the following file:<ul>
+<li>include/ipaddress/<a class="el" href="fixed-string_8hpp_source.html">fixed-string.hpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.10.0-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespaceipaddress.html">ipaddress</a></li><li class="navelem"><a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>

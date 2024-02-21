@@ -1,0 +1,14 @@
+var hierarchy =
+[
+    [ "ipaddress::error", "classipaddress_1_1error.html", [
+      [ "ipaddress::logic_error", "classipaddress_1_1logic__error.html", null ],
+      [ "ipaddress::parse_error", "classipaddress_1_1parse__error.html", null ]
+    ] ],
+    [ "ipaddress::fixed_string< N >", "structipaddress_1_1fixed__string.html", null ],
+    [ "ipaddress::fixed_string< 16 >", "structipaddress_1_1fixed__string.html", null ],
+    [ "ipaddress::ip_address", "classipaddress_1_1ip__address.html", null ],
+    [ "ipaddress::optional< T >", "classipaddress_1_1optional.html", null ],
+    [ "ipaddress::optional< ipaddress::uint128_t >", "classipaddress_1_1optional.html", null ],
+    [ "ipaddress::optional< size_t >", "classipaddress_1_1optional.html", null ],
+    [ "ipaddress::uint128_t", "classipaddress_1_1uint128__t.html", null ]
+];
