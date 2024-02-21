@@ -7,6 +7,10 @@
  * The library adds its own type `uint128_t`, because it is missing in 
  * the standard. The library does not use compiler extensions such as 
  * `__int128` for greater portability.
+ * 
+ * Algorithms from the implementation of 
+ * [UInt128](https://source.dot.net/#System.Private.CoreLib/src/libraries/System.Private.CoreLib/src/System/UInt128.cs)
+ * for .NET are taken as a basis
  */
 
 #ifndef IPADDRESS_UINT128_HPP
