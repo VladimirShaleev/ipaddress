@@ -1,0 +1,19 @@
+name: Doxygen GitHub Pages
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Doxygen
+        run: sudo apt-get -y install doxygen
+#       - run: mkdir docs
+#       - name: Install theme
+#         run: ./tools/prepare_doxygen.sh
+#       - name: Generate Doxygen Documentation
+#         run: doxygen
