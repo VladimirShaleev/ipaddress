@@ -84,6 +84,8 @@ struct fixed_string {
      * If the string is empty, the returned iterator will be equal to end().
      * 
      * @return Iterator to the first element.
+     * 
+     * @sa end()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator begin() const IPADDRESS_NOEXCEPT {
         return const_iterator(_data);
@@ -96,6 +98,8 @@ struct fixed_string {
      * This element acts as a placeholder; attempting to access it results in undefined behavior.
      * 
      * @return Iterator to the element following the last element.
+     * 
+     * @sa begin()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator end() const IPADDRESS_NOEXCEPT {
         return const_iterator(_data) + length;
@@ -109,6 +113,8 @@ struct fixed_string {
      * is empty, the returned iterator is equal to rend().
      * 
      * @return Reverse iterator to the first element.
+     * 
+     * @sa rend()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator rbegin() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(end());
@@ -123,6 +129,8 @@ struct fixed_string {
      * access it results in undefined behavior.
      * 
      * @return Reverse iterator to the element following the last element.
+     * 
+     * @sa rbegin()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator rend() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(begin());
@@ -135,6 +143,8 @@ struct fixed_string {
      * If the string is empty, the returned iterator will be equal to cend().
      * 
      * @return Iterator to the first element.
+     * 
+     * @sa cend()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator cbegin() const IPADDRESS_NOEXCEPT {
         return begin();
@@ -147,6 +157,8 @@ struct fixed_string {
      * This element acts as a placeholder; attempting to access it results in undefined behavior.
      * 
      * @return Iterator to the element following the last element.
+     * 
+     * @sa cbegin()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator cend() const IPADDRESS_NOEXCEPT {
         return end();
@@ -160,6 +172,8 @@ struct fixed_string {
      * is empty, the returned iterator is equal to crend().
      * 
      * @return Reverse iterator to the first element.
+     * 
+     * @sa crend()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator crbegin() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(cend());
@@ -174,6 +188,8 @@ struct fixed_string {
      * access it results in undefined behavior.
      * 
      * @return Reverse iterator to the element following the last element.
+     * 
+     * @sa crbegin()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator crend() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(cbegin());
@@ -182,7 +198,7 @@ struct fixed_string {
     /**
      * Checks if the string is empty.
      * 
-     * @return true if the string is empty, false otherwise.
+     * @return `true` if the string is empty, `false` otherwise.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool empty() const IPADDRESS_NOEXCEPT {
         return size() == 0;
@@ -192,6 +208,8 @@ struct fixed_string {
      * Returns the number of characters in the string.
      * 
      * @return The number of characters in the string.
+     * 
+     * @sa capacity()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t size() const IPADDRESS_NOEXCEPT {
         return length;
@@ -201,30 +219,36 @@ struct fixed_string {
      * Returns the number of characters that the string has currently allocated space for.
      * 
      * @return Capacity of the currently allocated storage.
+     * 
+     * @sa size()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t capacity() const IPADDRESS_NOEXCEPT {
         return max_length;
     }
 
     /**
-     * Returns a reference to the element at specified location n.
+     * Returns a reference to the element at specified location \a n.
      * 
      * If n is not within the range of the string, an exception of type std::out_of_range is thrown.
      * 
      * @param[in] n position of the element to return
      * @return Reference to the requested element.
+     * 
+     * @sa at(size_t) const
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reference operator[](size_t n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return at(n);
     }
 
     /**
-     * Returns a reference to the element at specified location n, with bounds checking. 
+     * Returns a reference to the element at specified location \a n, with bounds checking. 
      * 
      * If n is not within the range of the string, an exception of type std::out_of_range is thrown.
      * 
      * @param[in] n position of the element to return
      * @return Reference to the requested element.
+     * 
+     * @sa operator[](size_t) const
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reference at(size_t n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         if (n >= 0 && n < N) {
@@ -243,6 +267,8 @@ struct fixed_string {
      * Calling front on an empty string causes undefined behavior.
      * 
      * @return Reference to the first element.
+     * 
+     * @sa back()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reference front() const IPADDRESS_NOEXCEPT {
         return _data[0];
@@ -254,6 +280,8 @@ struct fixed_string {
      * Calling back on an empty container causes undefined behavior.
      * 
      * @return Reference to the last element.
+     * 
+     * @sa front()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reference back() const IPADDRESS_NOEXCEPT {
         return _data[N - 1];
@@ -445,11 +473,35 @@ struct fixed_string<0> {
     }
 }; // fixed_string<0>
 
+/**
+ * Compares the contents of two fixed strings.
+ * 
+ * Checks if the contents of  \a lhs and rhs are equal, that is, they have the same 
+ * number of elements and each element in \a lhs compares equal with the element in rhs at the same position.
+ * 
+ * @tparam N1 is maximum number of characters of \a lhs.
+ * @tparam N2 is maximum number of characters of \a rhs.
+ * @param[in] lhs string whose contents to compare
+ * @param[in] rhs string whose contents to compare
+ * @return `true` if the contents of the strings are equal, `false` otherwise.
+ */
 template <size_t N1, size_t N2>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
     return lhs.compare(rhs) == 0;
 }
 
+/**
+ * Compares the contents of two fixed strings.
+ * 
+ * Checks if the contents of  \a lhs and rhs are equal, that is, they have the same 
+ * number of elements and each element in \a lhs compares equal with the element in rhs at the same position.
+ * 
+ * @tparam N1 is maximum number of characters of \a lhs.
+ * @tparam N2 is maximum number of characters of \a rhs.
+ * @param[in] lhs string whose contents to compare
+ * @param[in] rhs string whose contents to compare
+ * @return `true` if the contents of the strings are not equal, `false` otherwise.
+ */
 template <size_t N1, size_t N2>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
     return !(lhs == rhs);
@@ -457,6 +509,17 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
 
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
 
+    /**
+     * Compares the contents of two fixed strings.
+     * 
+     * Compares the contents of \a lhs and \a rhs lexicographically.
+     * 
+     * @tparam N1 is maximum number of characters of \a lhs.
+     * @tparam N2 is maximum number of characters of \a rhs.
+     * @param[in] lhs string whose contents to compare
+     * @param[in] rhs string whose contents to compare
+     * @return The relative order of the first pair of non-equivalent elements in \a lhs and \a rhs if there are such elements.
+     */
     template <size_t N1, size_t N2>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
         if (const auto result = lhs.compare(rhs); result == 0) {
@@ -470,21 +533,65 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
         
 #else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
+    /**
+     * Compares the contents of two fixed strings.
+     * 
+     * Compares the contents of \a lhs and \a rhs lexicographically.
+     * 
+     * @tparam N1 is maximum number of characters of \a lhs.
+     * @tparam N2 is maximum number of characters of \a rhs.
+     * @param[in] lhs string whose contents to compare
+     * @param[in] rhs string whose contents to compare
+     * @return `true` if the contents of the \a lhs are lexicographically less than the contents of \a rhs, `false` otherwise.
+     */
     template <size_t N1, size_t N2>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
         return lhs.compare(rhs) < 0;
     }
 
+    /**
+     * Compares the contents of two fixed strings.
+     * 
+     * Compares the contents of \a lhs and \a rhs lexicographically.
+     * 
+     * @tparam N1 is maximum number of characters of \a lhs.
+     * @tparam N2 is maximum number of characters of \a rhs.
+     * @param[in] lhs string whose contents to compare
+     * @param[in] rhs string whose contents to compare
+     * @return `true` if the contents of the \a lhs are lexicographically greater than the contents of \a rhs, `false` otherwise.
+     */
     template <size_t N1, size_t N2>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
         return rhs < lhs;
     }
 
+    /**
+     * Compares the contents of two fixed strings.
+     * 
+     * Compares the contents of \a lhs and \a rhs lexicographically.
+     * 
+     * @tparam N1 is maximum number of characters of \a lhs.
+     * @tparam N2 is maximum number of characters of \a rhs.
+     * @param[in] lhs string whose contents to compare
+     * @param[in] rhs string whose contents to compare
+     * @return `true` if the contents of the \a lhs are lexicographically less than or equal to the contents of \a rhs, `false` otherwise.
+     */
     template <size_t N1, size_t N2>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
         return !(rhs < lhs);
     }
 
+    /**
+     * Compares the contents of two fixed strings.
+     * 
+     * Compares the contents of \a lhs and \a rhs lexicographically.
+     * 
+     * @tparam N1 is maximum number of characters of \a lhs.
+     * @tparam N2 is maximum number of characters of \a rhs.
+     * @param[in] lhs string whose contents to compare
+     * @param[in] rhs string whose contents to compare
+     * @return `true` if the contents of the \a lhs are lexicographically greater than or equal to the contents of \a rhs, `false` otherwise.
+     */
     template <size_t N1, size_t N2>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
         return !(lhs < rhs);
@@ -492,21 +599,57 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
 
 #endif // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
+/**
+ * Make fixed string.
+ * 
+ * Creates a fixed-length string from a multicharacter array.
+ * 
+ * @tparam N is maximum number of characters
+ * @param[in] data character array of string
+ * @return Fixed string.
+ */
 template <size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 1> make_fixed_string(const char(&data)[N]) IPADDRESS_NOEXCEPT {
     return fixed_string<N - 1>(data);
 }
 
+/**
+ * Make fixed string.
+ * 
+ * Creates a fixed-length string from a wide character array.
+ * 
+ * @tparam N is maximum number of characters
+ * @param[in] data character array of string
+ * @return Fixed string.
+ */
 template <size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 1> make_fixed_string(const wchar_t(&data)[N]) IPADDRESS_NOEXCEPT {
     return fixed_string<N - 1>(data);
 }
 
+/**
+ * Make fixed string.
+ * 
+ * Creates a fixed-length string from UTF-16 character array.
+ * 
+ * @tparam N is maximum number of characters
+ * @param[in] data character array of string
+ * @return Fixed string.
+ */
 template <size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 1> make_fixed_string(const char16_t(&data)[N]) IPADDRESS_NOEXCEPT {
     return fixed_string<N - 1>(data);
 }
 
+/**
+ * Make fixed string.
+ * 
+ * Creates a fixed-length string from UTF-32 character array.
+ * 
+ * @tparam N is maximum number of characters
+ * @param[in] data character array of string
+ * @return Fixed string.
+ */
 template <size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 1> make_fixed_string(const char32_t(&data)[N]) IPADDRESS_NOEXCEPT {
     return fixed_string<N - 1>(data);
@@ -514,6 +657,15 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 
 
 #if __cpp_char8_t >= 201811L
 
+/**
+ * Make fixed string.
+ * 
+ * Creates a fixed-length string from UTF-8 character array.
+ * 
+ * @tparam N is maximum number of characters
+ * @param[in] data character array of string
+ * @return Fixed string.
+ */
 template <size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 1> make_fixed_string(const char8_t(&data)[N]) IPADDRESS_NOEXCEPT {
     return fixed_string<N - 1>(data);

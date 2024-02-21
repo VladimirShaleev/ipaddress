@@ -2460,7 +2460,8 @@ INCLUDE_FILE_PATTERNS  =
 
 PREDEFINED             = "IPADDRESS_FORCE_INLINE=\"inline\"" \
                          "IPADDRESS_CONSTEXPR=\"constexpr\"" \
-                         "IPADDRESS_CONSTEXPR_17=\"constexpr\""
+                         "IPADDRESS_CONSTEXPR_17=\"constexpr\"" \
+                         "__cpp_char8_t=\"201811L\""
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then this
 # tag can be used to specify a list of macro names that should be expanded. The
