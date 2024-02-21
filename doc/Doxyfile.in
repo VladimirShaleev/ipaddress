@@ -2460,6 +2460,7 @@ INCLUDE_FILE_PATTERNS  =
 
 PREDEFINED             = "IPADDRESS_FORCE_INLINE=\"inline\"" \
                          "IPADDRESS_CONSTEXPR=\"constexpr\"" \
+                         "IPADDRESS_CONSTEXPR_14=\"constexpr\"" \
                          "IPADDRESS_CONSTEXPR_17=\"constexpr\"" \
                          "__cpp_char8_t=\"201811L\""
 
