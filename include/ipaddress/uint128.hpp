@@ -791,11 +791,24 @@ public:
 
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
 
+    /**
+     * Three-way comparison.
+     * 
+     * @tparam T is integer type
+     * @param[in] lower of value
+     * @return Ordering category.
+     */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(T lower) const IPADDRESS_NOEXCEPT {
         return *this <=> uint128_t(lower);
     }
 
+    /**
+     * Three-way comparison.
+     * 
+     * @param[in] other of value
+     * @return Ordering category.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         if (const auto result = _upper <=> other._upper; result == std::strong_ordering::equivalent) {
             return _lower <=> other._lower;
@@ -806,38 +819,90 @@ public:
 
 #else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
+    /**
+     * Less than.
+     * 
+     * @tparam T is integer type
+     * @param[in] lower of value
+     * @return `true` if the value are lexicographically less than the contents of \a lower, `false` otherwise.
+     */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(T lower) const IPADDRESS_NOEXCEPT {
         return *this < uint128_t(lower);
     }
 
+    /**
+     * Less than.
+     * 
+     * @param[in] other of value
+     * @return `true` if the value are lexicographically less than the contents of \a other, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return _upper < other._upper || (_upper == other._upper && _lower < other._lower);
     }
     
+    /**
+     * Greater than.
+     * 
+     * @tparam T is integer type
+     * @param[in] lower of value
+     * @return `true` if the value are lexicographically greater than the contents of \a lower, `false` otherwise.
+     */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(T lower) const IPADDRESS_NOEXCEPT {
         return *this > uint128_t(lower);
     }
 
+    /**
+     * Greater than.
+     * 
+     * @param[in] other of value
+     * @return `true` if the value are lexicographically greater than the contents of \a other, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return other < *this;
     }
     
+    /**
+     * Less than or equal to.
+     * 
+     * @tparam T is integer type
+     * @param[in] lower of value
+     * @return `true` if the value are lexicographically less than or equal to the contents of \a lower, `false` otherwise.
+     */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(T lower) const IPADDRESS_NOEXCEPT {
         return *this <= uint128_t(lower);
     }
 
+    /**
+     * Less than or equal to.
+     * 
+     * @param[in] other of value
+     * @return `true` if the value are lexicographically less than or equal to the contents of \a other, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return !(other < *this);
     }
     
+    /**
+     * Greater than or equal to.
+     * 
+     * @tparam T is integer type
+     * @param[in] lower of value
+     * @return `true` if the value are lexicographically greater than or equal to the contents of \a lower, `false` otherwise.
+     */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(T lower) const IPADDRESS_NOEXCEPT {
         return *this >= uint128_t(lower);
     }
 
+    /**
+     * Greater than or equal to.
+     * 
+     * @param[in] other of value
+     * @return `true` if the value are lexicographically greater than or equal to the contents of \a other, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return !(*this < other);
     }
