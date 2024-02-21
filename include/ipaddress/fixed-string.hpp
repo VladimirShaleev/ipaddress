@@ -1,3 +1,12 @@
+/**
+ * \file      fixed-string.hpp
+ * \brief     Fixed string for non-type template parameters syntax
+ * \author    Vladimir Shaleev
+ * \copyright MIT License
+ * 
+ * Template for fixed length string.
+ */
+
 #ifndef IPADDRESS_FIXED_STRING_HPP
 #define IPADDRESS_FIXED_STRING_HPP
 
@@ -26,7 +35,7 @@ IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void is_char_type() IPADDRESS_NOEXCEP
 /**
  * Fixed size string.
  * 
- * Used in Non-type template parameters syntax.
+ * Used in non-type template parameters syntax.
  * 
  * @tparam N is maximum number of characters.
  */
