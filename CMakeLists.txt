@@ -33,7 +33,14 @@ target_compile_definitions(${PROJECT_NAME} INTERFACE IPADDRESS_ENDIAN=${IPADDRES
 
 cmake_dependent_option(IPADDRESS_BUILD_TESTS "Build tests" ON
   "BUILD_TESTING;CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR" OFF)
+cmake_dependent_option(IPADDRESS_BUILD_DOC "Build doc" ON
+  "CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR" OFF)
 
 if(IPADDRESS_BUILD_TESTS)
   add_subdirectory(tests)
+endif()
+
+if(IPADDRESS_BUILD_DOC)
+  set(IPADDRESS_DOC_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/share/doc/${PROJECT_NAME}" CACHE PATH "Path to the documentation")
+  add_subdirectory(doc)
 endif()
