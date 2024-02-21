@@ -1,3 +1,12 @@
+/**
+ * \file      ip-address-base.hpp
+ * \brief     Basic functionality for IP addresses
+ * \author    Vladimir Shaleev
+ * \copyright MIT License
+ * 
+ * Adds general functionality for IP addresses of any version.
+ */
+
 #ifndef IPADDRESS_IP_ADDRESS_BASE_HPP
 #define IPADDRESS_IP_ADDRESS_BASE_HPP
 
@@ -10,9 +19,14 @@
 
 namespace IPADDRESS_NAMESPACE {
 
+/**
+ * Ip version.
+ * 
+ * Adds constants for IP addresses versions 4 and 6.
+ */
 enum class ip_version {
-    V4 = 4,
-    V6 = 6
+    V4 = 4, /**< Version 4 for IPv4 */
+    V6 = 6 /**< Version 6 for IPv6 */
 };
 
 enum class format {

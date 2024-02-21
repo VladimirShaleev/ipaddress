@@ -420,6 +420,9 @@ private:
     } _data;
 }; // ipv6_address_base
 
+/**
+ * Test ipv4_address
+ */
 using ipv6_address = ip_address_base<ipv6_address_base>;
 
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER

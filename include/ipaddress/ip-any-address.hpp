@@ -1,3 +1,12 @@
+/**
+ * \file      ip-any-address.hpp
+ * \brief     Contains logic for working with IP addresses
+ * \author    Vladimir Shaleev
+ * \copyright MIT License
+ * 
+ * ip_address is a class for working with IP addresses of versions 4 and version 6.
+ */
+
 #ifndef IPADDRESS_IP_ANY_ADDRESS_HPP
 #define IPADDRESS_IP_ANY_ADDRESS_HPP
 
@@ -6,9 +15,9 @@
 namespace IPADDRESS_NAMESPACE {
 
 /**
- * Represents IP address of both versions v4 and v6.
+ * Represents IP address of both versions v4 and v6. 
  * 
- * It is a combination of ipv4_address and ipv6_address. Therefore, the final size of an 
+ * It is union of ipv4_address and ipv6_address. Therefore, the final size of an 
  * instance of this type will always include ipv6_address.
  */
 class ip_address {
@@ -20,9 +29,14 @@ public:
     using uint_type_ipv6 = typename ipv6_address::uint_type;
 
     /**
-     * IP address version
+     * IP address version.
+     * 
+     * Returns the IP-version for the current instance.
+     * 
+     * @return The appropriate version number: 4 for IPv4, 6 for IPv6.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_version version() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE 
+    ip_version version() const IPADDRESS_NOEXCEPT {
         return _version;
     }
 
@@ -411,6 +425,15 @@ public:
         return result;
     }
 
+    /**
+     * Test.
+     * 
+     * Test.
+     * 
+     * @param[in] address character array for ip
+     * @param[out] code saves the execution result
+     * @return ip addresss
+     */
     template <typename T, size_t N>
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(const T(&address)[N], error_code& code) IPADDRESS_NOEXCEPT {
         internal::is_char_type<T>();

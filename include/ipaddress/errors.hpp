@@ -1,3 +1,13 @@
+/**
+ * \file      errors.hpp
+ * \brief     Declares error codes and exceptions
+ * \author    Vladimir Shaleev
+ * \copyright MIT License
+ * 
+ * Contains error codes and strongly typed exceptions. 
+ * And also a function to convert an error code into an exception.
+ */
+
 #ifndef IPADDRESS_ERRORS_HPP
 #define IPADDRESS_ERRORS_HPP
 
@@ -5,43 +15,48 @@
 
 namespace IPADDRESS_NAMESPACE {
 
+/**
+ * Error codes.
+ * 
+ * Enumeration for identifying IP-address parsing errors and other logical errors.
+ */
 enum class error_code {
-    NO_ERROR = 0,
-    EMPTY_ADDRESS,
-    EMPTY_NETMASK,
-    INVALID_NETMASK,
-    NETMASK_PATTERN_MIXES_ZEROES_AND_ONES,
-    HAS_HOST_BITS_SET,
-    ONLY_ONE_SLASH_PERMITTED,
+    NO_ERROR = 0, /**< No errors */
+    EMPTY_ADDRESS, /**< Address cannot be empty */
+    EMPTY_NETMASK, /**< Empty mask in address */
+    INVALID_NETMASK, /**< Not valid netmask in address */
+    NETMASK_PATTERN_MIXES_ZEROES_AND_ONES, /**< Netmask pattern mixes zeroes & ones in address */
+    HAS_HOST_BITS_SET, /**< Has host bits set in address */
+    ONLY_ONE_SLASH_PERMITTED, /**< Only one '/' permitted in address */
 
     // ipv4 errors
-    EMPTY_OCTET,
-    EXPECTED_4_OCTETS,
-    LEADING_0_ARE_NOT_PERMITTED,
-    OCTET_MORE_3_CHARACTERS,
-    OCTET_HAS_INVALID_SYMBOL,
-    OCTET_EXCEEDED_255,
+    EMPTY_OCTET, /**< Empty octet in address */
+    EXPECTED_4_OCTETS, /**< Expected 4 octets in address*/
+    LEADING_0_ARE_NOT_PERMITTED, /**< Leading zeros are not permitted in octet of address */
+    OCTET_MORE_3_CHARACTERS, /**< In octet of address more 3 characters */
+    OCTET_HAS_INVALID_SYMBOL, /**< In octet of address has invalid symbol */
+    OCTET_EXCEEDED_255, /**< Octet of address exceeded 255 */
 
     // ipv6 errors
-    LEAST_3_PARTS,
-    MOST_8_COLONS_PERMITTED,
-    PART_IS_MORE_4_CHARS,
-    PART_HAS_INVALID_SYMBOL,
-    MOST_ONE_DOUBLE_COLON_PERMITTED,
-    LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON,
-    TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON,
-    EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON,
-    EXACTLY_8_PARTS_EXPECTED_WITHOUT_DOUBLE_COLON,
-    SCOPE_ID_IS_TOO_LONG,
-    INVALID_SCOPE_ID,
+    LEAST_3_PARTS, /**< Least 3 parts in address */
+    MOST_8_COLONS_PERMITTED, /**< Most 8 colons permitted in address */
+    PART_IS_MORE_4_CHARS, /**< In part of address more 4 characters */
+    PART_HAS_INVALID_SYMBOL, /**< In part of address has invalid symbols */
+    MOST_ONE_DOUBLE_COLON_PERMITTED, /**< At most one '::' permitted in address */
+    LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, /**< At leading ':' only permitted as part of '::' in address */
+    TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, /**< At trailing ':' only permitted as part of '::' in address */
+    EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, /**< Expected at most 7 other parts with '::' in address */
+    EXACTLY_8_PARTS_EXPECTED_WITHOUT_DOUBLE_COLON, /**< Exactly 8 parts expected without '::' in address */
+    SCOPE_ID_IS_TOO_LONG, /**< Scope id is too long in address */
+    INVALID_SCOPE_ID, /**< Invalid scope id in address */
 
     // logic errors
-    INVALID_VERSION,
-    INVALID_PREFIXLEN_DIFF,
-    NEW_PREFIX_MUST_BE_SHORTER,
-    NEW_PREFIX_MUST_BE_LONGER,
-    CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX,
-    NOT_CONTAINED_NETWORK
+    INVALID_VERSION, /**< Versions don't match */
+    INVALID_PREFIXLEN_DIFF, /**< Invalid prefixlen diff */
+    NEW_PREFIX_MUST_BE_SHORTER, /**< New prefix must be shorter */
+    NEW_PREFIX_MUST_BE_LONGER, /**< New prefix must be longer */
+    CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX, /**< Cannot set prefixlen diff and new prefix */
+    NOT_CONTAINED_NETWORK /**< Network is not a subnet of other */
 };
 
 class error : public std::runtime_error {
@@ -166,7 +181,7 @@ template <typename T>
         case error_code::INVALID_SCOPE_ID:
             throw parse_error(code, "invalid scope id in address", str);
         case error_code::INVALID_VERSION:
-            throw logic_error(code, "Versions don't match");
+            throw logic_error(code, "versions don't match");
         case error_code::INVALID_PREFIXLEN_DIFF:
             throw logic_error(code, "invalid prefixlen_diff");
         case error_code::NEW_PREFIX_MUST_BE_SHORTER:

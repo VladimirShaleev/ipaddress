@@ -61,6 +61,9 @@ private:
     base_type _bytes{};
 }; // ipv4_address_base
 
+/**
+ * Test ipv4_address
+ */
 using ipv4_address = ip_address_base<ipv4_address_base>;
 
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
