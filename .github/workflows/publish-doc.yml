@@ -14,7 +14,7 @@ jobs:
       - name: Install Doxygen
         run: sudo apt-get -y install doxygen
 
-      - name: Set reusable strings
+      - name: Set build output dir
         id: strings
         shell: bash
         run: echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
@@ -22,11 +22,11 @@ jobs:
       - name: Configure CMake
         run: >
           cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }}
-            -DCMAKE_CXX_COMPILER=clang++
-            -DCMAKE_C_COMPILER=clang
-            -DCMAKE_BUILD_TYPE=Release
-            -DIPADDRESS_BUILD_TESTS=OFF
-            -DIPADDRESS_BUILD_DOC=ON
+          -DCMAKE_CXX_COMPILER=clang++
+          -DCMAKE_C_COMPILER=clang
+          -DCMAKE_BUILD_TYPE=Release
+          -DIPADDRESS_BUILD_TESTS=OFF
+          -DIPADDRESS_BUILD_DOC=ON
 
       - name: Build
         run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
