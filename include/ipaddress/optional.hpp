@@ -1,3 +1,19 @@
+/**
+ * \file      optional.hpp
+ * \brief     The class template optional manages an optional contained value.
+ * \author    Vladimir Shaleev
+ * \copyright MIT License
+ * 
+ * A common use case for optional is the return value of a function that may fail. 
+ * Any instance of `optional<T>` at any given point in time either contains a value or does not contain a value. 
+ * 
+ * If an `optional<T>` contains a value, the value is guaranteed to be allocated as part of the optional object 
+ * footprint, i.e. no dynamic memory allocation ever takes place. 
+ * 
+ * When an object of type `optional<T>` is contextually converted to `bool`, the conversion returns `true` if the 
+ * object contains a value and `false` if it does not contain a value.
+ */
+
 #ifndef IPADDRESS_OPTIONAL_HPP
 #define IPADDRESS_OPTIONAL_HPP
 
@@ -5,6 +21,12 @@
 
 namespace IPADDRESS_NAMESPACE {
 
+/**
+ * The optional object.
+ * 
+ * The class template optional manages an optional contained value, 
+ * i.e. a value that may or may not be present.
+ */
 template <typename T>
 class optional {
 public:
