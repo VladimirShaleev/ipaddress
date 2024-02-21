@@ -1,12 +1,8 @@
 var searchData=
 [
-  ['octal_47',['octal',['../classipaddress_1_1uint128__t.html#ae5c5c40c2777dcce5c3e1bd96adb1a91a34d0e21ea08f041727cd3c62f02535e3',1,'ipaddress::uint128_t']]],
-  ['octet_5fexceeded_5f255_48',['OCTET_EXCEEDED_255',['../namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa1435adbd5ad33d9489c6351da36eb143',1,'ipaddress']]],
-  ['octet_5fhas_5finvalid_5fsymbol_49',['OCTET_HAS_INVALID_SYMBOL',['../namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faae5158f71e04b29e7ee269f95176890f4',1,'ipaddress']]],
-  ['octet_5fmore_5f3_5fcharacters_50',['OCTET_MORE_3_CHARACTERS',['../namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa6dd88c745a2fa77cc8cbba26b4adfff6',1,'ipaddress']]],
-  ['only_5fone_5fslash_5fpermitted_51',['ONLY_ONE_SLASH_PERMITTED',['../namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa9b0dd645bae34eb17b79da5c94855dba',1,'ipaddress']]],
-  ['optional_52',['optional',['../classipaddress_1_1optional.html',1,'ipaddress::optional&lt; T &gt;'],['../classipaddress_1_1optional.html#a429c87d46c06d1bb10b5d14c98eaad66',1,'ipaddress::optional::optional() noexcept=default'],['../classipaddress_1_1optional.html#abe9e8f526d6e80ca88bc6d5aca9e3ab1',1,'ipaddress::optional::optional(std::nullptr_t) noexcept']]],
-  ['optional_2ehpp_53',['optional.hpp',['../optional_8hpp.html',1,'']]],
-  ['optional_3c_20ipaddress_3a_3auint128_5ft_20_3e_54',['optional&lt; ipaddress::uint128_t &gt;',['../classipaddress_1_1optional.html',1,'ipaddress']]],
-  ['optional_3c_20size_5ft_20_3e_55',['optional&lt; size_t &gt;',['../classipaddress_1_1optional.html',1,'ipaddress']]]
+  ['netmask_5fpattern_5fmixes_5fzeroes_5fand_5fones_0',['NETMASK_PATTERN_MIXES_ZEROES_AND_ONES',['../namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa40acce788b43717a3a283f7fdcc3fe6d',1,'ipaddress']]],
+  ['new_5fprefix_5fmust_5fbe_5flonger_1',['NEW_PREFIX_MUST_BE_LONGER',['../namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faadbc879e336113690f7251a9cb59b8519',1,'ipaddress']]],
+  ['new_5fprefix_5fmust_5fbe_5fshorter_2',['NEW_PREFIX_MUST_BE_SHORTER',['../namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa200869afe81a28a43dc0e1013b1505ba',1,'ipaddress']]],
+  ['no_5ferror_3',['NO_ERROR',['../namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faad306b6fdee05fe87455110ddf6501e6c',1,'ipaddress']]],
+  ['not_5fcontained_5fnetwork_4',['NOT_CONTAINED_NETWORK',['../namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa55989913f931071ab5b76da3b3d3bb69',1,'ipaddress']]]
 ];

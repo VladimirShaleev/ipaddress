@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['error_66',['error',['../classipaddress_1_1error.html',1,'ipaddress']]]
+  ['error_0',['error',['../classipaddress_1_1error.html',1,'ipaddress']]]
 ];

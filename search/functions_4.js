@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['optional_89',['optional',['../classipaddress_1_1optional.html#a429c87d46c06d1bb10b5d14c98eaad66',1,'ipaddress::optional::optional() noexcept=default'],['../classipaddress_1_1optional.html#abe9e8f526d6e80ca88bc6d5aca9e3ab1',1,'ipaddress::optional::optional(std::nullptr_t) noexcept']]]
+  ['empty_0',['empty',['../structipaddress_1_1fixed__string.html#a8b268fa6d27c77b66280ff8f6d528d8f',1,'ipaddress::fixed_string']]],
+  ['end_1',['end',['../structipaddress_1_1fixed__string.html#aff7bf1019bf28b042bcd05e33fdefa54',1,'ipaddress::fixed_string']]],
+  ['error_2',['error',['../classipaddress_1_1error.html#a2f4ccc8b80dd9f7bdce734a6e717de90',1,'ipaddress::error::error(error_code code, const std::string &amp;message)'],['../classipaddress_1_1error.html#ac386eadaf3497d0e16366be1d5c6cfc5',1,'ipaddress::error::error(error_code code, const char *message)']]]
 ];

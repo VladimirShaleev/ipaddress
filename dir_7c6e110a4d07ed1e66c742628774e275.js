@@ -21,8 +21,6 @@ var dir_7c6e110a4d07ed1e66c742628774e275 =
     [ "ipv4-network.hpp", "ipv4-network_8hpp_source.html", null ],
     [ "ipv6-address.hpp", "ipv6-address_8hpp_source.html", null ],
     [ "ipv6-network.hpp", "ipv6-network_8hpp_source.html", null ],
-    [ "optional.hpp", "optional_8hpp.html", [
-      [ "optional", "classipaddress_1_1optional.html", "classipaddress_1_1optional" ]
-    ] ],
+    [ "optional.hpp", "optional_8hpp.html", "optional_8hpp" ],
     [ "uint128.hpp", "uint128_8hpp.html", "uint128_8hpp" ]
 ];

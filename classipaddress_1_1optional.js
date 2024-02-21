@@ -1,9 +1,21 @@
 var classipaddress_1_1optional =
 [
     [ "value_type", "classipaddress_1_1optional.html#a8b821d3bf4e7cc2018d10e1bfbb111ed", null ],
-    [ "optional", "classipaddress_1_1optional.html#a429c87d46c06d1bb10b5d14c98eaad66", null ],
-    [ "optional", "classipaddress_1_1optional.html#abe9e8f526d6e80ca88bc6d5aca9e3ab1", null ],
-    [ "__attribute__", "classipaddress_1_1optional.html#a5893338f4772197968a9c52be6d4b822", null ],
-    [ "__attribute__", "classipaddress_1_1optional.html#a02657649d53ea80942c1cbfe3ff15ebf", null ],
-    [ "__attribute__", "classipaddress_1_1optional.html#ae31a63fa58641dfb4cce685f7d30045c", null ]
+    [ "optional", "classipaddress_1_1optional.html#ade97c407b3fdd8de99207d7ea6a716f3", null ],
+    [ "optional", "classipaddress_1_1optional.html#ac5f0346eef4e9ae93ec9559a7ca12c8d", null ],
+    [ "optional", "classipaddress_1_1optional.html#ab026b34ed8c6f80f655e79d35cf71f78", null ],
+    [ "optional", "classipaddress_1_1optional.html#af08ea15254a7adb77e090c20655ad844", null ],
+    [ "operator=", "classipaddress_1_1optional.html#aefdd9f325b893ed80561213faf5be39b", null ],
+    [ "operator=", "classipaddress_1_1optional.html#ac82c9c4eae98aac27e2d775d176218ea", null ],
+    [ "operator=", "classipaddress_1_1optional.html#a97f48ebe438f47460e3b9e150a8830fa", null ],
+    [ "operator->", "classipaddress_1_1optional.html#a20da8764d59b05cdb29a5bd8e02b22f4", null ],
+    [ "operator->", "classipaddress_1_1optional.html#a0e653b53ff123ec30ad682c9f660bd31", null ],
+    [ "operator*", "classipaddress_1_1optional.html#aa691753c6e1f018c6f87482d66438176", null ],
+    [ "operator*", "classipaddress_1_1optional.html#acd67d328e967079c86086dbac2c7585b", null ],
+    [ "operator bool", "classipaddress_1_1optional.html#a6b258c381d2a3ec29189990b75dae0ab", null ],
+    [ "has_value", "classipaddress_1_1optional.html#a10c967d5c9d3a6835b2cbaa0d2a4c7a7", null ],
+    [ "value", "classipaddress_1_1optional.html#a0b15e279a1ea600cc504ba8046a9c1ea", null ],
+    [ "value", "classipaddress_1_1optional.html#ab453889cefd6362a53a19662844737e3", null ],
+    [ "value", "classipaddress_1_1optional.html#aaa58be9d2f21636dbb5e5fe0bd4bf4e0", null ],
+    [ "value", "classipaddress_1_1optional.html#a8b2993010f057e7834fee559ab1694ea", null ]
 ];

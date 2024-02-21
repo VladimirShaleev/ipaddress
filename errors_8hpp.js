@@ -1,8 +1,8 @@
 var errors_8hpp =
 [
-    [ "error", "classipaddress_1_1error.html", "classipaddress_1_1error" ],
-    [ "parse_error", "classipaddress_1_1parse__error.html", "classipaddress_1_1parse__error" ],
-    [ "logic_error", "classipaddress_1_1logic__error.html", "classipaddress_1_1logic__error" ],
+    [ "ipaddress::error", "classipaddress_1_1error.html", "classipaddress_1_1error" ],
+    [ "ipaddress::parse_error", "classipaddress_1_1parse__error.html", "classipaddress_1_1parse__error" ],
+    [ "ipaddress::logic_error", "classipaddress_1_1logic__error.html", "classipaddress_1_1logic__error" ],
     [ "error_code", "errors_8hpp.html#acd1015a989b2b9e45fe6d0faa3e9a0fa", [
       [ "NO_ERROR", "errors_8hpp.html#acd1015a989b2b9e45fe6d0faa3e9a0faad306b6fdee05fe87455110ddf6501e6c", null ],
       [ "EMPTY_ADDRESS", "errors_8hpp.html#acd1015a989b2b9e45fe6d0faa3e9a0faaa278170404490de2776a5db76b560042", null ],

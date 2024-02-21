@@ -1,7 +1,14 @@
 var searchData=
 [
-  ['leading_5f0_5fare_5fnot_5fpermitted_36',['LEADING_0_ARE_NOT_PERMITTED',['../namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa46e6c7ae8338fb954dffffe2cf6de430',1,'ipaddress']]],
-  ['leading_5fcolon_5fonly_5fpermitted_5fas_5fpart_5fof_5fdouble_5fcolon_37',['LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON',['../namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa38f075bd82c0db96e8a8e1b51f41c5cf',1,'ipaddress']]],
-  ['least_5f3_5fparts_38',['LEAST_3_PARTS',['../namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa6b20b278f4a47ea1933c41afcc6315f0',1,'ipaddress']]],
-  ['logic_5ferror_39',['logic_error',['../classipaddress_1_1logic__error.html',1,'ipaddress::logic_error'],['../classipaddress_1_1logic__error.html#a75914e37ed009f072baef6cfb2540ec0',1,'ipaddress::logic_error::logic_error(error_code code, const std::string &amp;message)'],['../classipaddress_1_1logic__error.html#a343d42298f669a61ba868dd4046e75bc',1,'ipaddress::logic_error::logic_error(error_code code, const char *message)']]]
+  ['invalid_5fnetmask_0',['INVALID_NETMASK',['../namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa962f78fd3b6e6c118d162aeb758e46ad',1,'ipaddress']]],
+  ['invalid_5fprefixlen_5fdiff_1',['INVALID_PREFIXLEN_DIFF',['../namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faafc3a498b8337c66d15dd5723d806ff6e',1,'ipaddress']]],
+  ['invalid_5fscope_5fid_2',['INVALID_SCOPE_ID',['../namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faaa90995871057dca6d3f898acd73938ee',1,'ipaddress']]],
+  ['invalid_5fversion_3',['INVALID_VERSION',['../namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa5f3740fef83818696e8b056c0456173f',1,'ipaddress']]],
+  ['ip_2daddress_2dbase_2ehpp_4',['ip-address-base.hpp',['../ip-address-base_8hpp.html',1,'']]],
+  ['ip_2dany_2daddress_2ehpp_5',['ip-any-address.hpp',['../ip-any-address_8hpp.html',1,'']]],
+  ['ip_5faddress_6',['ip_address',['../classipaddress_1_1ip__address.html',1,'ipaddress']]],
+  ['ip_5fversion_7',['ip_version',['../namespaceipaddress.html#ace60f6a4856e90fa5be15ecf1cf0132e',1,'ipaddress']]],
+  ['ipaddress_8',['ipaddress',['../namespaceipaddress.html',1,'ipaddress'],['../index.html',1,'ipaddress']]],
+  ['ipv4_5faddress_9',['ipv4_address',['../namespaceipaddress.html#ab9d36790eab20692578a4e2e7d4f36f1',1,'ipaddress']]],
+  ['ipv6_5faddress_10',['ipv6_address',['../namespaceipaddress.html#a1e00093549b928c746d9e31081093ea9',1,'ipaddress']]]
 ];
