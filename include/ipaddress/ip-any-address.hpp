@@ -5,6 +5,12 @@
 
 namespace IPADDRESS_NAMESPACE {
 
+/**
+ * Represents IP address of both versions v4 and v6.
+ * 
+ * It is a combination of ipv4_address and ipv6_address. Therefore, the final size of an 
+ * instance of this type will always include ipv6_address.
+ */
 class ip_address {
 public:
     using base_type_ipv4 = typename ipv4_address::base_type;
@@ -13,6 +19,9 @@ public:
     using uint_type_ipv4 = typename ipv4_address::uint_type;
     using uint_type_ipv6 = typename ipv6_address::uint_type;
 
+    /**
+     * IP address version
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_version version() const IPADDRESS_NOEXCEPT {
         return _version;
     }
