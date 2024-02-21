@@ -31,6 +31,12 @@ jobs:
       - name: Build
         run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
 
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ${{ steps.strings.outputs.build-output-dir }}/doc/html
+          
 #       - run: mkdir docs
 #       - name: Install theme
 #         run: ./tools/prepare_doxygen.sh
