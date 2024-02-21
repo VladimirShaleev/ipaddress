@@ -1,3 +1,16 @@
+/**
+ * \file      endian.hpp
+ * \brief     Defining macros to determine byte order
+ * \author    Vladimir Shaleev
+ * \copyright MIT License
+ * 
+ * The following definitions are used to determine byte order, depending 
+ * on their availability and with the following priority:
+ * 1. user definition `IPADDRESS_ENDIAN`;
+ * 2. `std::endian` for C++20;
+ * 3. macros provided by the platform or compiler;
+ */
+
 #ifndef IPADDRESS_ENDIAN_HPP
 #define IPADDRESS_ENDIAN_HPP
 

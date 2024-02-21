@@ -1,3 +1,13 @@
+/**
+ * \file      config.hpp
+ * \brief     Defines macros for library configuration.
+ * \author    Vladimir Shaleev
+ * \copyright MIT License
+ * 
+ * These macros are needed to support different platforms, compilers, 
+ * as well as different versions of the C++ language standard itself.
+ */
+
 #ifndef IPADDRESS_CONFIG_HPP
 #define IPADDRESS_CONFIG_HPP
 
