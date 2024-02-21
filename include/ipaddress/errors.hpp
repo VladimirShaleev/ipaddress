@@ -59,18 +59,47 @@ enum class error_code {
     NOT_CONTAINED_NETWORK /**< Network is not a subnet of other */
 };
 
+/**
+ * Base exception for this library.
+ * 
+ * Basic exception that can be thrown by this library, for example, 
+ * if it is impossible to parse a string with an IP address.
+ */
 class error : public std::runtime_error {
 public:
     template <typename FirstArg, typename... Args>
     explicit error(error_code code, const FirstArg& arg, const Args&... args) : std::runtime_error(concatenate(arg, args...)), _code(code) {
     }
 
+    /**
+     * Create an instance from an error code and a string describing the error.
+     *
+     * Will save the error code and a line describing the error
+     * 
+     * @param[in] code of error
+     * @param[in] message of detailed description of the error
+     */
     explicit error(error_code code, const std::string& message) : std::runtime_error(message), _code(code) {
     }
 
+    /**
+     * Create an instance from an error code and a string describing the error.
+     *
+     * Will save the error code and a line describing the error
+     * 
+     * @param[in] code of error
+     * @param[in] message of detailed description of the error
+     */
     explicit error(error_code code, const char* message) : std::runtime_error(message), _code(code) {
     }
     
+    /**
+     * Get error code.
+     * 
+     * Constant by which an error can be identified.
+     * 
+     * @return error code
+     */
     IPADDRESS_NODISCARD error_code code() const IPADDRESS_NOEXCEPT {
         return _code;
     }
@@ -97,28 +126,70 @@ private:
     error_code _code;
 };
 
+/**
+ * Parsing exception.
+ * 
+ * Thrown when there are errors in parsing an IP address or network from a string.
+ */
 class parse_error : public error {
 public:
     template <typename FirstArg, typename... Args>
     explicit parse_error(error_code code, const FirstArg& arg, const Args&... args) : error(code, arg, args...) {
     }
 
+    /**
+     * Create an instance from an error code and a string describing the error.
+     *
+     * Will save the error code and a line describing the error
+     * 
+     * @param[in] code of error
+     * @param[in] message of detailed description of the error
+     */
     explicit parse_error(error_code code, const std::string& message) : error(code, message) {
     }
 
+    /**
+     * Create an instance from an error code and a string describing the error.
+     *
+     * Will save the error code and a line describing the error
+     * 
+     * @param[in] code of error
+     * @param[in] message of detailed description of the error
+     */
     explicit parse_error(error_code code, const char* message) : error(code, message) {
     }
 };
 
+/**
+ * Logic exception.
+ * 
+ * Thrown in cases such as using an incorrect prefix length, etc.
+ */
 class logic_error : public error {
 public:
     template <typename FirstArg, typename... Args>
     explicit logic_error(error_code code, const FirstArg& arg, const Args&... args) : error(code, arg, args...) {
     }
 
+    /**
+     * Create an instance from an error code and a string describing the error.
+     *
+     * Will save the error code and a line describing the error
+     * 
+     * @param[in] code of error
+     * @param[in] message of detailed description of the error
+     */
     explicit logic_error(error_code code, const std::string& message) : error(code, message) {
     }
 
+    /**
+     * Create an instance from an error code and a string describing the error.
+     *
+     * Will save the error code and a line describing the error
+     * 
+     * @param[in] code of error
+     * @param[in] message of detailed description of the error
+     */
     explicit logic_error(error_code code, const char* message) : error(code, message) {
     }
 };

@@ -23,12 +23,19 @@ IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void is_char_type() IPADDRESS_NOEXCEP
 
 } // namespace internal
 
+/**
+ * Fixed size string.
+ * 
+ * Used in Non-type template parameters syntax.
+ * 
+ * @tparam N is maximum number of characters.
+ */
 template <size_t N>
 struct fixed_string {
-    using const_pointer          = const char*;
-    using const_reference        = const char&;
-    using const_iterator         = const_pointer;
-    using const_reverse_iterator = std::reverse_iterator<const_iterator>;
+    using const_pointer          = const char*; /**< Type of constant pointer */
+    using const_reference        = const char&; /**< Type of constant reference */
+    using const_iterator         = const_pointer; /**< Type of constant iterator */
+    using const_reverse_iterator = std::reverse_iterator<const_iterator>; /**< Type of reverse constant iterator */
 
     static IPADDRESS_CONSTEXPR size_t max_length = N;
 
@@ -36,8 +43,22 @@ struct fixed_string {
 
     char _data[N] = {};
 
+    /**
+     * Default constructor.
+     * 
+     * Creates an instance with default values, i.e. a string filled with null characters.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string() IPADDRESS_NOEXCEPT = default;
 
+    /**
+     * Creates an instance from a character array.
+     * 
+     * All characters will be converted to ASCII, with possible truncation if characters 
+     * from other encodings are used.
+     * 
+     * @tparam T is character type
+     * @param data of character array
+     */
     template <typename T>
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string(const T (&data)[N + 1]) IPADDRESS_NOEXCEPT {
         internal::is_char_type<T>();
