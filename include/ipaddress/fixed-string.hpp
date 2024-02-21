@@ -77,54 +77,155 @@ struct fixed_string {
         }
     }
 
+    /**
+     * Get begin iterator.
+     * 
+     * Returns an iterator to the first element of the string. 
+     * If the string is empty, the returned iterator will be equal to end().
+     * 
+     * @return Iterator to the first element.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator begin() const IPADDRESS_NOEXCEPT {
         return const_iterator(_data);
     }
     
+    /**
+     * Get end iterator.
+     * 
+     * Returns an iterator to the element following the last element of the string. 
+     * This element acts as a placeholder; attempting to access it results in undefined behavior.
+     * 
+     * @return Iterator to the element following the last element.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator end() const IPADDRESS_NOEXCEPT {
         return const_iterator(_data) + length;
     }
     
+    /**
+     * Get reverse begin iterator.
+     * 
+     * Returns a reverse iterator to the first element of the reversed string. 
+     * It corresponds to the last element of the non-reversed string. If the string 
+     * is empty, the returned iterator is equal to rend().
+     * 
+     * @return Reverse iterator to the first element.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator rbegin() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(end());
     }
 
+    /**
+     * Get reverse end iterator.
+     * 
+     * Returns a reverse iterator to the element following the last element of the 
+     * reversed string. It corresponds to the element preceding the first element of 
+     * the non-reversed string. This element acts as a placeholder, attempting to 
+     * access it results in undefined behavior.
+     * 
+     * @return Reverse iterator to the element following the last element.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator rend() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(begin());
     }
-    
+
+    /**
+     * Get begin iterator.
+     * 
+     * Returns an iterator to the first element of the string. 
+     * If the string is empty, the returned iterator will be equal to end().
+     * 
+     * @return Iterator to the first element.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator cbegin() const IPADDRESS_NOEXCEPT {
         return begin();
     }
 
+    /**
+     * Get end iterator.
+     * 
+     * Returns an iterator to the element following the last element of the string. 
+     * This element acts as a placeholder; attempting to access it results in undefined behavior.
+     * 
+     * @return Iterator to the element following the last element.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator cend() const IPADDRESS_NOEXCEPT {
         return end();
     }
 
+    /**
+     * Get reverse begin iterator.
+     * 
+     * Returns a reverse iterator to the first element of the reversed string. 
+     * It corresponds to the last element of the non-reversed string. If the string 
+     * is empty, the returned iterator is equal to rend().
+     * 
+     * @return Reverse iterator to the first element.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator crbegin() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(cend());
     }
 
+    /**
+     * Get reverse end iterator.
+     * 
+     * Returns a reverse iterator to the element following the last element of the 
+     * reversed string. It corresponds to the element preceding the first element of 
+     * the non-reversed string. This element acts as a placeholder, attempting to 
+     * access it results in undefined behavior.
+     * 
+     * @return Reverse iterator to the element following the last element.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator crend() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(cbegin());
     }
 
+    /**
+     * Checks if the string is empty.
+     * 
+     * @return true if the string is empty, false otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool empty() const IPADDRESS_NOEXCEPT {
         return size() == 0;
     }
     
+    /**
+     * Returns the number of characters in the string.
+     * 
+     * @return The number of characters in the string.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t size() const IPADDRESS_NOEXCEPT {
         return length;
     }
 
+    /**
+     * Returns the number of characters that the string has currently allocated space for.
+     * 
+     * @return Capacity of the currently allocated storage.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t capacity() const IPADDRESS_NOEXCEPT {
         return max_length;
     }
 
+    /**
+     * Returns a reference to the element at specified location n.
+     * 
+     * If n is not within the range of the string, an exception of type std::out_of_range is thrown.
+     * 
+     * @param[in] n position of the element to return
+     * @return Reference to the requested element.
+     */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reference operator[](size_t n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return at(n);
     }
 
+    /**
+     * Returns a reference to the element at specified location n, with bounds checking. 
+     * 
+     * If n is not within the range of the string, an exception of type std::out_of_range is thrown.
+     * 
+     * @param[in] n position of the element to return
+     * @return Reference to the requested element.
+     */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reference at(size_t n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         if (n >= 0 && n < N) {
             return _data[n];
