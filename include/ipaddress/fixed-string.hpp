@@ -174,82 +174,85 @@ struct fixed_string {
      * If the `fixed_string` is empty, the returned iterator will be equal to crend().
      * 
      * @return A constant reverse iterator to the beginning of the reversed `fixed_string`.
-     * @sa crend()
+     * @sa     crend()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator crbegin() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(cend());
     }
 
     /**
-     * Get reverse end iterator.
+     * Retrieves the constant reverse end iterator of the `fixed_string`.
      * 
-     * Returns a reverse iterator to the element following the last element of the 
-     * reversed string. It corresponds to the element preceding the first element of 
-     * the non-reversed string. This element acts as a placeholder, attempting to 
-     * access it results in undefined behavior.
+     * Returns a reverse iterator pointing to the position preceding the first character of the `fixed_string` when reversed.
+     * This iterator acts as a placeholder and should not be dereferenced.
      * 
-     * @return Reverse iterator to the element following the last element.
-     * 
-     * @sa crbegin()
+     * @return A constant reverse iterator to the end of the reversed `fixed_string`.
+     * @sa     crbegin()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator crend() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(cbegin());
     }
 
     /**
-     * Checks if the string is empty.
+     * Checks if the `fixed_string` is empty.
      * 
-     * @return `true` if the string is empty, `false` otherwise.
+     * Evaluates whether the `fixed_string` contains no characters.
+     * 
+     * @return `true` if the `fixed_string` is empty, `false` otherwise.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool empty() const IPADDRESS_NOEXCEPT {
         return size() == 0;
     }
     
     /**
-     * Returns the number of characters in the string.
+     * Retrieves the size of the `fixed_string`.
      * 
-     * @return The number of characters in the string.
+     * Returns the number of characters currently stored in the `fixed_string`.
      * 
-     * @sa capacity()
+     * @return The number of characters in the `fixed_string`.
+     * @sa     capacity()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t size() const IPADDRESS_NOEXCEPT {
         return length;
     }
 
     /**
-     * Returns the number of characters that the string has currently allocated space for.
+     * Retrieves the capacity of the `fixed_string`.
      * 
-     * @return Capacity of the currently allocated storage.
+     * Returns the total number of characters that the `fixed_string` can hold.
      * 
-     * @sa size()
+     * @return The capacity of the `fixed_string`.
+     * @sa     size()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t capacity() const IPADDRESS_NOEXCEPT {
         return max_length;
     }
 
     /**
-     * Returns a reference to the element at specified location \a n.
+     * Accesses the character at the specified location with bounds checking.
      * 
-     * If n is not within the range of the string, an exception of type std::out_of_range is thrown.
+     * Returns a reference to the character at the specified location \a n. If \a n is out of bounds,
+     * an exception of type `std::out_of_range` will be thrown.
      * 
-     * @param[in] n position of the element to return
-     * @return Reference to the requested element.
-     * 
-     * @sa at(size_t) const
+     * @param[in] n the position of the character to return
+     * @return    A reference to the character at the specified location.
+     * @throw     std::out_of_range when going beyond the bounds of the character array
+     * @sa        at(size_t) const
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reference operator[](size_t n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return at(n);
     }
 
     /**
-     * Returns a reference to the element at specified location \a n, with bounds checking. 
+     * Accesses the character at the specified location with bounds checking. 
      * 
-     * If n is not within the range of the string, an exception of type std::out_of_range is thrown.
+     * Returns a reference to the character at the specified location \a n. If \a n is out of bounds,
+     * an exception of type `std::out_of_range` will be thrown.
      * 
-     * @param[in] n position of the element to return
-     * @return Reference to the requested element.
-     * 
-     * @sa operator[](size_t) const
+     * @param[in] n the position of the character to return
+     * @return    A reference to the character at the specified location.
+     * @throw     std::out_of_range when going beyond the bounds of the character array
+     * @sa        operator[](size_t) const
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reference at(size_t n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         if (n >= 0 && n < N) {
