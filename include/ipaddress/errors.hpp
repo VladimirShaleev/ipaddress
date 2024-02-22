@@ -89,45 +89,57 @@ enum class error_code {
 };
 
 /**
- * Base exception for this library.
+ * The primary exception class used by the IP address library.
  * 
- * Basic exception that can be thrown by this library, for example, 
- * if it is impossible to parse a string with an IP address.
+ * This class extends the standard `std::runtime_error` and serves as the base exception
+ * type for the library. It is designed to be thrown when an error condition is encountered
+ * during the processing of IP addresses, such as parsing errors or logical inconsistencies.
+ * 
+ * The `error` class encapsulates an `error_code` value representing the specific error
+ * that occurred, along with a descriptive message that provides context about the error.
+ * This design allows for precise and informative error reporting, aiding in debugging
+ * and error handling.
+ * 
+ * Overall, the `error` class is a critical component of the library's error management
+ * system, providing a standardized way to handle exceptions throughout the library.
  */
 class error : public std::runtime_error {
 public:
+    /**
+     * Constructs an error with a code and a concatenated message from multiple arguments.
+     * 
+     * @tparam    FirstArg  The type of the first argument passed to the constructor.
+     * @tparam    Args      The types of the additional arguments passed to the constructor.
+     * @param[in] code      The error code associated with the exception.
+     * @param[in] arg       The first argument describing the error.
+     * @param[in] args      Additional arguments describing the error.
+     */
     template <typename FirstArg, typename... Args>
     explicit error(error_code code, const FirstArg& arg, const Args&... args) : std::runtime_error(concatenate(arg, args...)), _code(code) {
     }
 
     /**
-     * Create an instance from an error code and a string describing the error.
-     *
-     * Will save the error code and a line describing the error
+     * Constructs an error with a code and a message string.
      * 
-     * @param[in] code of error
-     * @param[in] message of detailed description of the error
+     * @param[in] code    The error code associated with the exception.
+     * @param[in] message A detailed description of the error.
      */
     explicit error(error_code code, const std::string& message) : std::runtime_error(message), _code(code) {
     }
 
     /**
-     * Create an instance from an error code and a string describing the error.
-     *
-     * Will save the error code and a line describing the error
+     * Constructs an error with a code and a message C-string.
      * 
-     * @param[in] code of error
-     * @param[in] message of detailed description of the error
+     * @param[in] code    The error code associated with the exception.
+     * @param[in] message A detailed description of the error.
      */
     explicit error(error_code code, const char* message) : std::runtime_error(message), _code(code) {
     }
     
     /**
-     * Get error code.
+     * Returns the error code associated with this error.
      * 
-     * Constant by which an error can be identified.
-     * 
-     * @return error code
+     * @return The error code that represents the specific error condition.
      */
     IPADDRESS_NODISCARD error_code code() const IPADDRESS_NOEXCEPT {
         return _code;
