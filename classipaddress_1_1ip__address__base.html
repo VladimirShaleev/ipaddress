@@ -144,6 +144,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a297f02f8585714872b00408eafcbcf97" id="r_a297f02f8585714872b00408eafcbcf97"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classipaddress_1_1ip__address__base.html">constexpr</a> <a class="el" href="classipaddress_1_1ip__address__base.html">inline</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a297f02f8585714872b00408eafcbcf97">ip_address_base</a> (<a class="el" href="classipaddress_1_1ip__address__base.html">const</a> <a class="el" href="#ae6cbcdc51fae1518cd5f4918d831a10f">base_type</a> &amp;bytes) <a class="el" href="classipaddress_1_1ip__address__base.html">noexcept</a></td></tr>
 <tr class="memdesc:a297f02f8585714872b00408eafcbcf97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an IP address object from a byte array.  <br /></td></tr>
 <tr class="separator:a297f02f8585714872b00408eafcbcf97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad66aada13d2b831ebc8e4d33f981dc1c" id="r_ad66aada13d2b831ebc8e4d33f981dc1c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classipaddress_1_1ip__address__base.html">constexpr</a> <a class="el" href="classipaddress_1_1ip__address__base.html">inline</a> <a class="el" href="classipaddress_1_1ip__address__base.html">const</a> <a class="el" href="classipaddress_1_1ip__address__base.html">uint8_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad66aada13d2b831ebc8e4d33f981dc1c">data</a> () <a class="el" href="classipaddress_1_1ip__address__base.html">const</a> <a class="el" href="classipaddress_1_1ip__address__base.html">noexcept</a></td></tr>
+<tr class="memdesc:ad66aada13d2b831ebc8e4d33f981dc1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the raw data representing the IP address in <b>network byte order</b> (big-endian).  <br /></td></tr>
+<tr class="separator:ad66aada13d2b831ebc8e4d33f981dc1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a310eec3dc6474197c4ee87d9b1f6bed9" id="r_a310eec3dc6474197c4ee87d9b1f6bed9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classipaddress_1_1ip__address__base.html">constexpr</a> <a class="el" href="classipaddress_1_1ip__address__base.html">inline</a> <a class="el" href="classipaddress_1_1ip__address__base.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a310eec3dc6474197c4ee87d9b1f6bed9">is_multicast</a> () <a class="el" href="classipaddress_1_1ip__address__base.html">const</a> <a class="el" href="classipaddress_1_1ip__address__base.html">noexcept</a></td></tr>
+<tr class="memdesc:a310eec3dc6474197c4ee87d9b1f6bed9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the IP address is a multicast address.  <br /></td></tr>
+<tr class="separator:a310eec3dc6474197c4ee87d9b1f6bed9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af17f1bb972742d7fc3bda4104f71f62a" id="r_af17f1bb972742d7fc3bda4104f71f62a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classipaddress_1_1ip__address__base.html">constexpr</a> <a class="el" href="classipaddress_1_1ip__address__base.html">inline</a> <a class="el" href="classipaddress_1_1ip__address__base.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af17f1bb972742d7fc3bda4104f71f62a">is_private</a> () <a class="el" href="classipaddress_1_1ip__address__base.html">const</a> <a class="el" href="classipaddress_1_1ip__address__base.html">noexcept</a></td></tr>
+<tr class="memdesc:af17f1bb972742d7fc3bda4104f71f62a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the IP address is a private address.  <br /></td></tr>
+<tr class="separator:af17f1bb972742d7fc3bda4104f71f62a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -187,6 +196,14 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:adb504c520329c7121ef238c522b0a572" id="r_adb504c520329c7121ef238c522b0a572"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classipaddress_1_1ip__address__base.html">static</a> <a class="el" href="classipaddress_1_1ip__address__base.html">constexpr</a> <a class="el" href="classipaddress_1_1ip__address__base.html">inline</a> <a class="el" href="classipaddress_1_1ip__address__base.html">ip_address_base</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adb504c520329c7121ef238c522b0a572">parse</a> (std::u32string_view <a class="el" href="classipaddress_1_1ip__address__base.html">address</a>, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;code) <a class="el" href="classipaddress_1_1ip__address__base.html">noexcept</a></td></tr>
 <tr class="memdesc:adb504c520329c7121ef238c522b0a572"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses an IP address from a UTF-32 string view and reports errors through an error code.  <br /></td></tr>
 <tr class="separator:adb504c520329c7121ef238c522b0a572"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e43de3dde61394cdcd6dc6e65c48f14" id="r_a3e43de3dde61394cdcd6dc6e65c48f14"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typename</a> <a class="el" href="classipaddress_1_1ip__address__base.html">T</a> , <a class="el" href="classipaddress_1_1ip__address__base.html">size_t</a> N&gt; </td></tr>
+<tr class="memitem:a3e43de3dde61394cdcd6dc6e65c48f14"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classipaddress_1_1ip__address__base.html">static</a> <a class="el" href="classipaddress_1_1ip__address__base.html">constexpr</a> <a class="el" href="classipaddress_1_1ip__address__base.html">inline</a> <a class="el" href="classipaddress_1_1ip__address__base.html">ip_address_base</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a3e43de3dde61394cdcd6dc6e65c48f14">parse</a> (<a class="el" href="classipaddress_1_1ip__address__base.html">const</a> <a class="el" href="classipaddress_1_1ip__address__base.html">T</a>(&amp;<a class="el" href="classipaddress_1_1ip__address__base.html">address</a>)[<a class="el" href="classipaddress_1_1ip__address__base.html">N</a>])</td></tr>
+<tr class="memdesc:a3e43de3dde61394cdcd6dc6e65c48f14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses an IP address from a character array.  <br /></td></tr>
+<tr class="separator:a3e43de3dde61394cdcd6dc6e65c48f14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3264de4eea251188b8d13f7ad25c8c3" id="r_ae3264de4eea251188b8d13f7ad25c8c3"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typename</a> <a class="el" href="classipaddress_1_1ip__address__base.html">T</a> , <a class="el" href="classipaddress_1_1ip__address__base.html">size_t</a> N&gt; </td></tr>
+<tr class="memitem:ae3264de4eea251188b8d13f7ad25c8c3"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classipaddress_1_1ip__address__base.html">static</a> <a class="el" href="classipaddress_1_1ip__address__base.html">constexpr</a> <a class="el" href="classipaddress_1_1ip__address__base.html">inline</a> <a class="el" href="classipaddress_1_1ip__address__base.html">ip_address_base</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ae3264de4eea251188b8d13f7ad25c8c3">parse</a> (<a class="el" href="classipaddress_1_1ip__address__base.html">const</a> <a class="el" href="classipaddress_1_1ip__address__base.html">T</a>(&amp;<a class="el" href="classipaddress_1_1ip__address__base.html">address</a>)[<a class="el" href="classipaddress_1_1ip__address__base.html">N</a>], <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;code) <a class="el" href="classipaddress_1_1ip__address__base.html">noexcept</a></td></tr>
+<tr class="memdesc:ae3264de4eea251188b8d13f7ad25c8c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses an IP address from a character array and reports errors through an error code.  <br /></td></tr>
+<tr class="separator:ae3264de4eea251188b8d13f7ad25c8c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;<a class="el" href="#aebfa27d9b6ee11f316ef453eb6b690a0">typename</a> Base&gt;<br />
@@ -345,7 +362,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 </div>
 </div>
 <a id="ad9f66485dc6f4906047a9d6384250d70" name="ad9f66485dc6f4906047a9d6384250d70"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad9f66485dc6f4906047a9d6384250d70">&#9670;&#160;</a></span>parse() <span class="overload">[1/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9f66485dc6f4906047a9d6384250d70">&#9670;&#160;</a></span>parse() <span class="overload">[1/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -385,7 +402,7 @@ template&lt;<a class="el" href="structipaddress_1_1fixed__string.html">fixed_str
 </div>
 </div>
 <a id="a95dfb660e9aa9f48b7a601f58c13f6c6" name="a95dfb660e9aa9f48b7a601f58c13f6c6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a95dfb660e9aa9f48b7a601f58c13f6c6">&#9670;&#160;</a></span>parse() <span class="overload">[2/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a95dfb660e9aa9f48b7a601f58c13f6c6">&#9670;&#160;</a></span>parse() <span class="overload">[2/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -430,7 +447,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 </div>
 </div>
 <a id="a591146f92c4ce5f5fd791f8aebeb44ce" name="a591146f92c4ce5f5fd791f8aebeb44ce"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a591146f92c4ce5f5fd791f8aebeb44ce">&#9670;&#160;</a></span>parse() <span class="overload">[3/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a591146f92c4ce5f5fd791f8aebeb44ce">&#9670;&#160;</a></span>parse() <span class="overload">[3/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -475,7 +492,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 </div>
 </div>
 <a id="adb12e4f4668cb90204c0c286d8264c94" name="adb12e4f4668cb90204c0c286d8264c94"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adb12e4f4668cb90204c0c286d8264c94">&#9670;&#160;</a></span>parse() <span class="overload">[4/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#adb12e4f4668cb90204c0c286d8264c94">&#9670;&#160;</a></span>parse() <span class="overload">[4/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -519,7 +536,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 </div>
 </div>
 <a id="a021b217fe7d0cdb2437a9b55b3bc0a48" name="a021b217fe7d0cdb2437a9b55b3bc0a48"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a021b217fe7d0cdb2437a9b55b3bc0a48">&#9670;&#160;</a></span>parse() <span class="overload">[5/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a021b217fe7d0cdb2437a9b55b3bc0a48">&#9670;&#160;</a></span>parse() <span class="overload">[5/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -564,7 +581,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 </div>
 </div>
 <a id="a32e7c2adb42d6052ebb0492cfdf6c227" name="a32e7c2adb42d6052ebb0492cfdf6c227"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a32e7c2adb42d6052ebb0492cfdf6c227">&#9670;&#160;</a></span>parse() <span class="overload">[6/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a32e7c2adb42d6052ebb0492cfdf6c227">&#9670;&#160;</a></span>parse() <span class="overload">[6/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -609,7 +626,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 </div>
 </div>
 <a id="a85759ae57e46a9817df0f7249b664309" name="a85759ae57e46a9817df0f7249b664309"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a85759ae57e46a9817df0f7249b664309">&#9670;&#160;</a></span>parse() <span class="overload">[7/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a85759ae57e46a9817df0f7249b664309">&#9670;&#160;</a></span>parse() <span class="overload">[7/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -653,7 +670,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 </div>
 </div>
 <a id="a33e32cb8ce818448e5fe0449ae17b10b" name="a33e32cb8ce818448e5fe0449ae17b10b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a33e32cb8ce818448e5fe0449ae17b10b">&#9670;&#160;</a></span>parse() <span class="overload">[8/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a33e32cb8ce818448e5fe0449ae17b10b">&#9670;&#160;</a></span>parse() <span class="overload">[8/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -697,7 +714,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 </div>
 </div>
 <a id="a084e79e5c9776ba1c4751d37e24a3145" name="a084e79e5c9776ba1c4751d37e24a3145"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a084e79e5c9776ba1c4751d37e24a3145">&#9670;&#160;</a></span>parse() <span class="overload">[9/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a084e79e5c9776ba1c4751d37e24a3145">&#9670;&#160;</a></span>parse() <span class="overload">[9/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -740,7 +757,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 </div>
 </div>
 <a id="ab36f628d1af457c8bcb47ae1442a6606" name="ab36f628d1af457c8bcb47ae1442a6606"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab36f628d1af457c8bcb47ae1442a6606">&#9670;&#160;</a></span>parse() <span class="overload">[10/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab36f628d1af457c8bcb47ae1442a6606">&#9670;&#160;</a></span>parse() <span class="overload">[10/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -784,7 +801,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 </div>
 </div>
 <a id="adb504c520329c7121ef238c522b0a572" name="adb504c520329c7121ef238c522b0a572"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adb504c520329c7121ef238c522b0a572">&#9670;&#160;</a></span>parse() <span class="overload">[11/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#adb504c520329c7121ef238c522b0a572">&#9670;&#160;</a></span>parse() <span class="overload">[11/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -824,6 +841,200 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <dl class="section return"><dt>Returns</dt><dd>An instance of ip address parsed from the UTF-32 string view. If parsing fails, the returned object will be in an unspecified state. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::u32string</code> and C-strings will be used instead. </dd></dl>
+
+</div>
+</div>
+<a id="a3e43de3dde61394cdcd6dc6e65c48f14" name="a3e43de3dde61394cdcd6dc6e65c48f14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e43de3dde61394cdcd6dc6e65c48f14">&#9670;&#160;</a></span>parse() <span class="overload">[12/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typename</a> Base &gt; </div>
+<div class="memtemplate">
+template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typename</a> <a class="el" href="classipaddress_1_1ip__address__base.html">T</a> , <a class="el" href="classipaddress_1_1ip__address__base.html">size_t</a> N&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classipaddress_1_1ip__address__base.html">static</a> <a class="el" href="classipaddress_1_1ip__address__base.html">constexpr</a> <a class="el" href="classipaddress_1_1ip__address__base.html">inline</a> <a class="el" href="classipaddress_1_1ip__address__base.html">ip_address_base</a> <a class="el" href="classipaddress_1_1ip__address__base.html">ipaddress::ip_address_base</a>&lt; Base &gt;::parse </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classipaddress_1_1ip__address__base.html">const</a> <a class="el" href="classipaddress_1_1ip__address__base.html">T</a>(&amp;)</td>          <td class="paramname"><span class="paramname"><em>address</em>[N]</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parses an IP address from a character array. </p>
+<p>This method template parses an IP address from a character array of a specified size. Can check and get the result at compile time.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>the character type of the array </td></tr>
+    <tr><td class="paramname">N</td><td>the size of the character array </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>the character array containing the IP address to parse </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An instance of ip address parsed from the character array. </dd></dl>
+
+</div>
+</div>
+<a id="ae3264de4eea251188b8d13f7ad25c8c3" name="ae3264de4eea251188b8d13f7ad25c8c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae3264de4eea251188b8d13f7ad25c8c3">&#9670;&#160;</a></span>parse() <span class="overload">[13/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typename</a> Base &gt; </div>
+<div class="memtemplate">
+template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typename</a> <a class="el" href="classipaddress_1_1ip__address__base.html">T</a> , <a class="el" href="classipaddress_1_1ip__address__base.html">size_t</a> N&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classipaddress_1_1ip__address__base.html">static</a> <a class="el" href="classipaddress_1_1ip__address__base.html">constexpr</a> <a class="el" href="classipaddress_1_1ip__address__base.html">inline</a> <a class="el" href="classipaddress_1_1ip__address__base.html">ip_address_base</a> <a class="el" href="classipaddress_1_1ip__address__base.html">ipaddress::ip_address_base</a>&lt; Base &gt;::parse </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classipaddress_1_1ip__address__base.html">const</a> <a class="el" href="classipaddress_1_1ip__address__base.html">T</a>(&amp;)</td>          <td class="paramname"><span class="paramname"><em>address</em>[N], </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>code</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parses an IP address from a character array and reports errors through an error code. </p>
+<p>This method template parses an IP address from a character array of a specified size and provides an error code if the parsing fails.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>the character type of the array </td></tr>
+    <tr><td class="paramname">N</td><td>the size of the character array </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>the character array containing the IP address to parse </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>a reference to an <code>error_code</code> object that will be set if an error occurs during parsing </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An instance of ip address parsed from the character array. If parsing fails, the returned object will be in an unspecified state. </dd></dl>
+
+</div>
+</div>
+<a id="ad66aada13d2b831ebc8e4d33f981dc1c" name="ad66aada13d2b831ebc8e4d33f981dc1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad66aada13d2b831ebc8e4d33f981dc1c">&#9670;&#160;</a></span>data()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typename</a> Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classipaddress_1_1ip__address__base.html">constexpr</a> <a class="el" href="classipaddress_1_1ip__address__base.html">inline</a> <a class="el" href="classipaddress_1_1ip__address__base.html">const</a> <a class="el" href="classipaddress_1_1ip__address__base.html">uint8_t</a> * <a class="el" href="classipaddress_1_1ip__address__base.html">ipaddress::ip_address_base</a>&lt; Base &gt;::data </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the raw data representing the IP address in <b>network byte order</b> (big-endian). </p>
+<p>This method returns a pointer to the underlying byte array that stores the IP address.</p>
+<dl class="section return"><dt>Returns</dt><dd>A pointer to the constant byte array containing the raw IP address data. </dd></dl>
+
+</div>
+</div>
+<a id="a310eec3dc6474197c4ee87d9b1f6bed9" name="a310eec3dc6474197c4ee87d9b1f6bed9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a310eec3dc6474197c4ee87d9b1f6bed9">&#9670;&#160;</a></span>is_multicast()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typename</a> Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classipaddress_1_1ip__address__base.html">constexpr</a> <a class="el" href="classipaddress_1_1ip__address__base.html">inline</a> <a class="el" href="classipaddress_1_1ip__address__base.html">bool</a> <a class="el" href="classipaddress_1_1ip__address__base.html">ipaddress::ip_address_base</a>&lt; Base &gt;::is_multicast </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if the IP address is a multicast address. </p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the IP address is reserved for multicast use, <code>false</code> otherwise. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://datatracker.ietf.org/doc/html/rfc3171.html">RFC 3171 for IPv4</a> </dd>
+<dd>
+<a href="https://datatracker.ietf.org/doc/html/rfc2373.html">RFC 2373 for IPv6</a> </dd></dl>
+
+</div>
+</div>
+<a id="af17f1bb972742d7fc3bda4104f71f62a" name="af17f1bb972742d7fc3bda4104f71f62a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af17f1bb972742d7fc3bda4104f71f62a">&#9670;&#160;</a></span>is_private()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typename</a> Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classipaddress_1_1ip__address__base.html">constexpr</a> <a class="el" href="classipaddress_1_1ip__address__base.html">inline</a> <a class="el" href="classipaddress_1_1ip__address__base.html">bool</a> <a class="el" href="classipaddress_1_1ip__address__base.html">ipaddress::ip_address_base</a>&lt; Base &gt;::is_private </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if the IP address is a private address. </p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the IP address is allocated for private networks, <code>false</code> otherwise. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml">iana-ipv4-special-registry</a> </dd>
+<dd>
+<a href="https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml">iana-ipv6-special-registry</a> </dd></dl>
 
 </div>
 </div>

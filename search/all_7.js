@@ -16,5 +16,7 @@ var searchData=
   ['ipv4_5faddress_13',['ipv4_address',['../namespaceipaddress.html#ab9d36790eab20692578a4e2e7d4f36f1',1,'ipaddress']]],
   ['ipv6_5faddress_14',['ipv6_address',['../namespaceipaddress.html#a1e00093549b928c746d9e31081093ea9',1,'ipaddress']]],
   ['is_5flittle_5fendian_15',['is_little_endian',['../namespaceipaddress.html#a066ef6172d323384668ed580b5bf02e8',1,'ipaddress']]],
-  ['iterator_16',['iterator',['../structipaddress_1_1byte__array.html#a902f0d9f230c31c38ba25b4004ae6dbe',1,'ipaddress::byte_array']]]
+  ['is_5fmulticast_16',['is_multicast',['../classipaddress_1_1ip__address__base.html#a310eec3dc6474197c4ee87d9b1f6bed9',1,'ipaddress::ip_address_base']]],
+  ['is_5fprivate_17',['is_private',['../classipaddress_1_1ip__address__base.html#af17f1bb972742d7fc3bda4104f71f62a',1,'ipaddress::ip_address_base']]],
+  ['iterator_18',['iterator',['../structipaddress_1_1byte__array.html#a902f0d9f230c31c38ba25b4004ae6dbe',1,'ipaddress::byte_array']]]
 ];
