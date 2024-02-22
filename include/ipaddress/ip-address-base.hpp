@@ -490,6 +490,17 @@ public:
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_link_local() const IPADDRESS_NOEXCEPT;
 
+    /**
+     * Checks if the IP address is unspecified.
+     * 
+     * An unspecified IP address is an address with all bits set to zero.
+     * In IPv4, this is represented as 0.0.0.0, and in IPv6, as ::.
+     * This type of address is used to indicate the absence of an address.
+     * 
+     * @return `true` if the IP address is unspecified (all bits are zero), `false` otherwise.
+     * @see    [RFC 5735 for IPv4](https://datatracker.ietf.org/doc/html/rfc5735.html)
+     * @see    [RFC 2373 for IPv6](https://datatracker.ietf.org/doc/html/rfc2373.html)
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_unspecified() const IPADDRESS_NOEXCEPT {
         const auto& b = Base::bytes();
         for (size_t i = 0; i < Base::base_size; ++i) {
@@ -500,20 +511,63 @@ public:
         return true;
     }
 
+    /**
+     * Converts the IP address to a string representation.
+     * 
+     * The function converts the binary representation of the IP address to a string.
+     * The format of the output string can be adjusted by passing the desired format as an argument.
+     * The default format is 'compressed'.
+     * 
+     * @param fmt The format to use for the string representation. Defaults to `format::compressed`.
+     * @return A `std::string` representing the IP address in the specified format.
+     */
     IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string to_string(format fmt = format::compressed) const {
         char res[Base::base_max_string_len + 1]{};
         const auto len = Base::ip_to_chars(Base::bytes(), fmt, res);
         return std::string(res, len);
     }
 
+    /**
+     * Swaps the contents of this IP address with another IP address.
+     * 
+     * This function swaps the underlying bytes representing the IP address with those of another IP address.
+     * 
+     * @param[in] ip The other IP address to swap with.
+     */
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE void swap(ip_address_base& ip) IPADDRESS_NOEXCEPT {
         Base::swap(*this, ip);
     }
 
+    /**
+     * Computes a hash value for the IP address.
+     * 
+     * This function generates a hash value that can be used to uniquely identify the IP address.
+     * It can be useful when IP addresses are used as keys in hash tables.
+     * 
+     * @return A `size_t` hash value of the IP address.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t hash() const IPADDRESS_NOEXCEPT {
         return Base::hash(Base::bytes());
     }
 
+    /**
+     * Generates a reverse DNS lookup pointer for the IP address.
+     * 
+     * This function creates a string that is the reverse DNS lookup pointer of the IP address.
+     * It is commonly used in reverse DNS lookups, where the IP address is reversed and appended with `.in-addr.arpa` for IPv4,
+     * or `.ip6.arpa` for IPv6, to form a domain name that can be looked up in the DNS system.
+     * 
+     * The name of the reverse DNS PTR record for the IP address, e.g.:
+     * @code{.cpp}
+     *   std::cout << ipv4_address::parse("127.0.0.1").reverse_pointer() << std::endl;
+     *   std::cout << ipv6_address::parse("2001:db8::1").reverse_pointer() << std::endl;
+     * 
+     *   // out:
+     *   // 1.0.0.127.in-addr.arpa
+     *   // 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.b.d.0.1.0.0.2.ip6.arpa
+     * @endcode
+     * @return A `std::string` that is the reverse DNS lookup pointer of the IP address.
+     */
     IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string reverse_pointer() const {
        return Base::ip_reverse_pointer(Base::bytes());
     }
