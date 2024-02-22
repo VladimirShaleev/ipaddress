@@ -1,3 +1,15 @@
+/**
+ * @file      ipv4-address.hpp
+ * @brief     Provides a set of functions and classes for handling IPv4 addresses
+ * @author    Vladimir Shaleev
+ * @copyright MIT License
+ * 
+ * Includes functionalities to convert IPv4 addresses to and from various formats,
+ * perform comparisons, and query specific properties of the addresses.
+ * It serves as a foundational component for network applications that require manipulation
+ * and analysis of IPv4 address data.
+ */
+
 #ifndef IPADDRESS_IPV4_ADDRESS_HPP
 #define IPADDRESS_IPV4_ADDRESS_HPP
 
@@ -5,24 +17,56 @@
 
 namespace IPADDRESS_NAMESPACE {
 
+/**
+ * Represents the base class for IPv4 address manipulation.
+ * 
+ * This class provides the basic functionalities required for handling IPv4 addresses,
+ * including conversion to and from numeric representations, access to the underlying bytes,
+ * and utility functions that are common across different representations of IPv4 addresses.
+ */
 class ipv4_address_base : public base_v4<ipv4_address_base> {
 public:
-    using base_type = typename base_v4<ipv4_address_base>::base_type;
-    using uint_type = typename base_v4<ipv4_address_base>::uint_type;
+    using base_type = typename base_v4<ipv4_address_base>::base_type; /**< The base type for the IPv4 address. */
+    using uint_type = typename base_v4<ipv4_address_base>::uint_type; /**< The unsigned integer type for the IPv4 address. */
 
+    /**
+     * Creates an IPv4 address from an unsigned integer using a template parameter.
+     * 
+     * @tparam Ip The unsigned integer representing the IPv4 address.
+     * @return An instance of ip address representing the IPv4 address.
+     */
     template <uint_type Ip>
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<ipv4_address_base> from_uint() IPADDRESS_NOEXCEPT {
         return from_uint(Ip);
     }
 
+    /**
+     * Creates an IPv4 address from an unsigned integer.
+     * 
+     * @param[in] ip The unsigned integer representing the IPv4 address.
+     * @return An instance of ip address representing the IPv4 address.
+     * @remark Bytes in integer \a ip must be presented in **host byte order**.
+     */
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<ipv4_address_base> from_uint(uint_type ip) IPADDRESS_NOEXCEPT {
         return ip_from_uint32(ip);
     }
 
+    /**
+     * Converts the IPv4 address to an unsigned integer.
+     * 
+     * @return The unsigned integer representation of the IPv4 address.
+     * @remark Bytes in integer are presented in **host byte order**.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint_type to_uint() const IPADDRESS_NOEXCEPT {
         return ip_to_uint32(_bytes);
     }
 
+    /**
+     * Provides access to the underlying bytes of the IPv4 address.
+     * 
+     * @return A reference to the base type containing the bytes of the IPv4 address.
+     * @remark Retrieves the data representing the IP address in **network byte order** (big-endian).
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const base_type& bytes() const IPADDRESS_NOEXCEPT {
         return _bytes;
     }
