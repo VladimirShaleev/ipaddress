@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.10.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ipaddress: Class Hierarchy</title>
+<title>ipaddress: include/ipaddress/hash.hpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -85,7 +85,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){initNavTree('hierarchy.html',''); initResizable(); });
+$(function(){initNavTree('hash_8hpp.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -111,27 +111,37 @@ $(function(){initNavTree('hierarchy.html',''); initResizable(); });
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">Class Hierarchy</div></div>
+  <div class="summary">
+<a href="#namespaces">Namespaces</a>  </div>
+  <div class="headertitle"><div class="title">hash.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock">This inheritance list is sorted roughly, but not completely, alphabetically:</div><div class="directory">
-<div class="levels">[detail level <span onclick="javascript:dynsection.toggleLevel(1);">1</span><span onclick="javascript:dynsection.toggleLevel(2);">2</span>]</div><table class="directory">
-<tr id="row_0_" class="even"><td class="entry"><span style="width:0px;display:inline-block;">&#160;</span><span id="arr_0_" class="arrow" onclick="dynsection.toggleFolder('0_')">&#9660;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classipaddress_1_1error.html" target="_self">ipaddress::error</a></td><td class="desc">The primary exception class used by the IP address library </td></tr>
-<tr id="row_0_0_" class="odd"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classipaddress_1_1logic__error.html" target="_self">ipaddress::logic_error</a></td><td class="desc">Exception for logical errors in IP address operations </td></tr>
-<tr id="row_0_1_" class="even"><td class="entry"><span style="width:32px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classipaddress_1_1parse__error.html" target="_self">ipaddress::parse_error</a></td><td class="desc">Exception for errors encountered during IP address parsing </td></tr>
-<tr id="row_1_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structipaddress_1_1fixed__string.html" target="_self">ipaddress::fixed_string&lt; N &gt;</a></td><td class="desc">Fixed size string </td></tr>
-<tr id="row_2_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="structipaddress_1_1fixed__string.html" target="_self">ipaddress::fixed_string&lt; 16 &gt;</a></td><td class="desc"></td></tr>
-<tr id="row_3_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classipaddress_1_1ip__address.html" target="_self">ipaddress::ip_address</a></td><td class="desc">Represents IP address of both versions v4 and v6 </td></tr>
-<tr id="row_4_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classipaddress_1_1optional.html" target="_self">ipaddress::optional&lt; T &gt;</a></td><td class="desc">The optional object </td></tr>
-<tr id="row_5_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><span class="icona"><span class="icon">C</span></span><a class="el" href="classipaddress_1_1uint128__t.html" target="_self">ipaddress::uint128_t</a></td><td class="desc">128-bit unsigned integer </td></tr>
+
+<p>Algorithms for calculating hash sums.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &quot;<a class="el" href="config_8hpp_source.html">config.hpp</a>&quot;</code><br />
+</div>
+<p><a href="hash_8hpp_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespaceipaddress" id="r_namespaceipaddress"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceipaddress.html">ipaddress</a></td></tr>
+<tr class="memdesc:namespaceipaddress"><td class="mdescLeft">&#160;</td><td class="mdescRight">IP addresses and networks. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-</div><!-- directory -->
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Algorithms for calculating hash sums. </p>
+<dl class="section author"><dt>Author</dt><dd>Vladimir Shaleev </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>MIT License</dd></dl>
+<p>The <code><a class="el" href="hash_8hpp.html" title="Algorithms for calculating hash sums.">hash.hpp</a></code> file contains hash templates and functions that can be used to hash IP addresses or other numeric data.</p>
+<p>This code uses patterns and specializations to optimize the hashing process for different sizes of data. Magic numbers and bitwise operations in hash_combine functions help distribute hash values evenly, which is important for avoiding collisions in hash tables. The hash_sum and calc_hash functions provide a convenient interface for calculating hash sums and computing the hash sum of multiple values. </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.10.0-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_7c6e110a4d07ed1e66c742628774e275.html">ipaddress</a></li><li class="navelem"><a class="el" href="hash_8hpp.html">hash.hpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
   </ul>
 </div>

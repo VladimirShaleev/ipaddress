@@ -118,29 +118,91 @@ $(function(){initNavTree('classipaddress_1_1error.html',''); initResizable(); })
 </div><!--header-->
 <div class="contents">
 
-<p>Base exception for this library.  
+<p>The primary exception class used by the IP address library.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="errors_8hpp_source.html">errors.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:aad1df30eb5f8f6873e9dffea2ac35a44" id="r_aad1df30eb5f8f6873e9dffea2ac35a44"><td class="memTemplParams" colspan="2">template&lt;typename FirstArg , typename... Args&gt; </td></tr>
+<tr class="memitem:aad1df30eb5f8f6873e9dffea2ac35a44"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aad1df30eb5f8f6873e9dffea2ac35a44">error</a> (<a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> <a class="el" href="#a441ce9a1abee5e32c1e7d212d7fafc14">code</a>, const FirstArg &amp;arg, const Args &amp;... args)</td></tr>
+<tr class="memdesc:aad1df30eb5f8f6873e9dffea2ac35a44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an error with a code and a concatenated message from multiple arguments.  <br /></td></tr>
+<tr class="separator:aad1df30eb5f8f6873e9dffea2ac35a44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2f4ccc8b80dd9f7bdce734a6e717de90" id="r_a2f4ccc8b80dd9f7bdce734a6e717de90"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2f4ccc8b80dd9f7bdce734a6e717de90">error</a> (<a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> <a class="el" href="#a441ce9a1abee5e32c1e7d212d7fafc14">code</a>, const std::string &amp;message)</td></tr>
-<tr class="memdesc:a2f4ccc8b80dd9f7bdce734a6e717de90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an instance from an error code and a string describing the error.  <br /></td></tr>
+<tr class="memdesc:a2f4ccc8b80dd9f7bdce734a6e717de90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an error with a code and a message string.  <br /></td></tr>
 <tr class="separator:a2f4ccc8b80dd9f7bdce734a6e717de90"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac386eadaf3497d0e16366be1d5c6cfc5" id="r_ac386eadaf3497d0e16366be1d5c6cfc5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac386eadaf3497d0e16366be1d5c6cfc5">error</a> (<a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> <a class="el" href="#a441ce9a1abee5e32c1e7d212d7fafc14">code</a>, const char *message)</td></tr>
-<tr class="memdesc:ac386eadaf3497d0e16366be1d5c6cfc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an instance from an error code and a string describing the error.  <br /></td></tr>
+<tr class="memdesc:ac386eadaf3497d0e16366be1d5c6cfc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an error with a code and a message C-string.  <br /></td></tr>
 <tr class="separator:ac386eadaf3497d0e16366be1d5c6cfc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a441ce9a1abee5e32c1e7d212d7fafc14" id="r_a441ce9a1abee5e32c1e7d212d7fafc14"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a441ce9a1abee5e32c1e7d212d7fafc14">code</a> () const noexcept</td></tr>
-<tr class="memdesc:a441ce9a1abee5e32c1e7d212d7fafc14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get error code.  <br /></td></tr>
+<tr class="memdesc:a441ce9a1abee5e32c1e7d212d7fafc14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the error code associated with this error.  <br /></td></tr>
 <tr class="separator:a441ce9a1abee5e32c1e7d212d7fafc14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Base exception for this library. </p>
-<p>Basic exception that can be thrown by this library, for example, if it is impossible to parse a string with an IP address. </p>
+<div class="textblock"><p>The primary exception class used by the IP address library. </p>
+<p>This class extends the standard <code>std::runtime_error</code> and serves as the base exception type for the library. It is designed to be thrown when an error condition is encountered during the processing of IP addresses, such as parsing errors or logical inconsistencies.</p>
+<p>The <code>error</code> class encapsulates an <code>error_code</code> value representing the specific error that occurred, along with a descriptive message that provides context about the error. This design allows for precise and informative error reporting, aiding in debugging and error handling.</p>
+<p>Overall, the <code>error</code> class is a critical component of the library's error management system, providing a standardized way to handle exceptions throughout the library.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="classipaddress_1_1parse__error.html" title="Exception for errors encountered during IP address parsing.">parse_error</a> </dd>
+<dd>
+<a class="el" href="classipaddress_1_1logic__error.html" title="Exception for logical errors in IP address operations.">logic_error</a> </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="aad1df30eb5f8f6873e9dffea2ac35a44" name="aad1df30eb5f8f6873e9dffea2ac35a44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad1df30eb5f8f6873e9dffea2ac35a44">&#9670;&#160;</a></span>error() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename FirstArg , typename... Args&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">ipaddress::error::error </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a></td>          <td class="paramname"><span class="paramname"><em>code</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const FirstArg &amp;</td>          <td class="paramname"><span class="paramname"><em>arg</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Args &amp;...</td>          <td class="paramname"><span class="paramname"><em>args</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs an error with a code and a concatenated message from multiple arguments. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">FirstArg</td><td>the type of the first argument passed to the constructor </td></tr>
+    <tr><td class="paramname">Args</td><td>the types of the additional arguments passed to the constructor </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">code</td><td>the error code associated with the exception </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">arg</td><td>the first argument describing the error </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">args</td><td>additional arguments describing the error </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a2f4ccc8b80dd9f7bdce734a6e717de90" name="a2f4ccc8b80dd9f7bdce734a6e717de90"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2f4ccc8b80dd9f7bdce734a6e717de90">&#9670;&#160;</a></span>error() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f4ccc8b80dd9f7bdce734a6e717de90">&#9670;&#160;</a></span>error() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -166,12 +228,11 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Create an instance from an error code and a string describing the error. </p>
-<p>Will save the error code and a line describing the error</p>
+<p>Constructs an error with a code and a message string. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">code</td><td>of error </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">message</td><td>of detailed description of the error </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">code</td><td>the error code associated with the exception </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">message</td><td>a detailed description of the error </td></tr>
   </table>
   </dd>
 </dl>
@@ -179,7 +240,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ac386eadaf3497d0e16366be1d5c6cfc5" name="ac386eadaf3497d0e16366be1d5c6cfc5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac386eadaf3497d0e16366be1d5c6cfc5">&#9670;&#160;</a></span>error() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac386eadaf3497d0e16366be1d5c6cfc5">&#9670;&#160;</a></span>error() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -205,12 +266,11 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Create an instance from an error code and a string describing the error. </p>
-<p>Will save the error code and a line describing the error</p>
+<p>Constructs an error with a code and a message C-string. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">code</td><td>of error </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">message</td><td>of detailed description of the error </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">code</td><td>the error code associated with the exception </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">message</td><td>a detailed description of the error </td></tr>
   </table>
   </dd>
 </dl>
@@ -241,9 +301,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Get error code. </p>
-<p>Constant by which an error can be identified.</p>
-<dl class="section return"><dt>Returns</dt><dd>error code </dd></dl>
+<p>Returns the error code associated with this error. </p>
+<dl class="section return"><dt>Returns</dt><dd>The error code that represents the specific error condition. </dd></dl>
 
 </div>
 </div>
