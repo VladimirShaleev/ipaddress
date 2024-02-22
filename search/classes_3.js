@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['logic_5ferror_0',['logic_error',['../classipaddress_1_1logic__error.html',1,'ipaddress']]]
+  ['ip_5faddress_0',['ip_address',['../classipaddress_1_1ip__address.html',1,'ipaddress']]]
 ];

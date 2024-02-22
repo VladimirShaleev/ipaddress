@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['error_0',['error',['../classipaddress_1_1error.html',1,'ipaddress']]]
+  ['byte_5farray_0',['byte_array',['../structipaddress_1_1byte__array.html',1,'ipaddress']]]
 ];

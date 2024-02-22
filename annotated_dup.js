@@ -1,6 +1,7 @@
 var annotated_dup =
 [
     [ "ipaddress", "namespaceipaddress.html", [
+      [ "byte_array", "structipaddress_1_1byte__array.html", "structipaddress_1_1byte__array" ],
       [ "error", "classipaddress_1_1error.html", "classipaddress_1_1error" ],
       [ "fixed_string", "structipaddress_1_1fixed__string.html", "structipaddress_1_1fixed__string" ],
       [ "ip_address", "classipaddress_1_1ip__address.html", "classipaddress_1_1ip__address" ],

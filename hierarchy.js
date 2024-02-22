@@ -1,5 +1,6 @@
 var hierarchy =
 [
+    [ "ipaddress::byte_array< N >", "structipaddress_1_1byte__array.html", null ],
     [ "ipaddress::error", "classipaddress_1_1error.html", [
       [ "ipaddress::logic_error", "classipaddress_1_1logic__error.html", null ],
       [ "ipaddress::parse_error", "classipaddress_1_1parse__error.html", null ]

@@ -74,6 +74,9 @@
     <loc>https://vladimirshaleev.github.io/ipaddress/uint128_8hpp_source.html</loc>
   </url>
   <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/byte-array_8hpp.html</loc>
+  </url>
+  <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/config_8hpp.html</loc>
   </url>
   <url>
@@ -102,6 +105,12 @@
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/namespaceipaddress.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/structipaddress_1_1byte__array.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/structipaddress_1_1byte__array-members.html</loc>
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1error.html</loc>
@@ -176,7 +185,7 @@
     <loc>https://vladimirshaleev.github.io/ipaddress/namespacemembers.html</loc>
   </url>
   <url>
-    <loc>https://vladimirshaleev.github.io/ipaddress/namespacemembers_func.html</loc>
+    <loc>https://vladimirshaleev.github.io/ipaddress/namespacemembers.html</loc>
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/namespacemembers_func.html</loc>
@@ -186,6 +195,12 @@
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/namespacemembers_func.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/namespacemembers_func.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/namespacemembers_type.html</loc>
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/namespacemembers_type.html</loc>
@@ -251,7 +266,10 @@
     <loc>https://vladimirshaleev.github.io/ipaddress/functions.html</loc>
   </url>
   <url>
-    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func.html</loc>
+    <loc>https://vladimirshaleev.github.io/ipaddress/functions.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/functions.html</loc>
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/functions_func.html</loc>
@@ -294,6 +312,27 @@
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/functions_func.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/functions_type.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/functions_type.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/functions_type.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/functions_type.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/functions_type.html</loc>
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/functions_type.html</loc>

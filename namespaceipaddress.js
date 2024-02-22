@@ -1,5 +1,6 @@
 var namespaceipaddress =
 [
+    [ "byte_array", "structipaddress_1_1byte__array.html", "structipaddress_1_1byte__array" ],
     [ "error", "classipaddress_1_1error.html", "classipaddress_1_1error" ],
     [ "fixed_string", "structipaddress_1_1fixed__string.html", "structipaddress_1_1fixed__string" ],
     [ "ip_address", "classipaddress_1_1ip__address.html", "classipaddress_1_1ip__address" ],
@@ -7,6 +8,7 @@ var namespaceipaddress =
     [ "optional", "classipaddress_1_1optional.html", "classipaddress_1_1optional" ],
     [ "parse_error", "classipaddress_1_1parse__error.html", "classipaddress_1_1parse__error" ],
     [ "uint128_t", "classipaddress_1_1uint128__t.html", "classipaddress_1_1uint128__t" ],
+    [ "byte_array_type", "namespaceipaddress.html#abb8d355871eb81f4f736353c99659800", null ],
     [ "ipv4_address", "namespaceipaddress.html#ab9d36790eab20692578a4e2e7d4f36f1", null ],
     [ "ipv6_address", "namespaceipaddress.html#a1e00093549b928c746d9e31081093ea9", null ],
     [ "error_code", "namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa", [
@@ -45,6 +47,12 @@ var namespaceipaddress =
       [ "V4", "namespaceipaddress.html#ace60f6a4856e90fa5be15ecf1cf0132eab354cab57768c7d4c1106eb4e82c75dc", null ],
       [ "V6", "namespaceipaddress.html#ace60f6a4856e90fa5be15ecf1cf0132eadb93f1c35b844334e2b266951618b4fe", null ]
     ] ],
+    [ "operator==", "namespaceipaddress.html#aa62188f453191c0a4b49b52c6f74f331", null ],
+    [ "operator!=", "namespaceipaddress.html#a14f2e022aa662526574cff320ea9d9ed", null ],
+    [ "operator<", "namespaceipaddress.html#ad45f50db754a1ca70cacf529afe9534a", null ],
+    [ "operator>", "namespaceipaddress.html#a74360afcab1925f8452b803e18d418a9", null ],
+    [ "operator<=", "namespaceipaddress.html#a91cab0761776d1d869e3528b529a1a1d", null ],
+    [ "operator>=", "namespaceipaddress.html#a54352d64f7579138a705d55d554a1019", null ],
     [ "is_little_endian", "namespaceipaddress.html#a066ef6172d323384668ed580b5bf02e8", null ],
     [ "swap_bytes", "namespaceipaddress.html#af504ee1a24f3d01cc4c0921fce8afda3", null ],
     [ "operator==", "namespaceipaddress.html#a921afc2b7b1b48c8eaaa542219140a46", null ],

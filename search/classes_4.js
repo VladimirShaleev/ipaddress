@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['optional_0',['optional',['../classipaddress_1_1optional.html',1,'ipaddress']]]
+  ['logic_5ferror_0',['logic_error',['../classipaddress_1_1logic__error.html',1,'ipaddress']]]
 ];
