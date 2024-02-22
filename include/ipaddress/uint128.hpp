@@ -504,11 +504,13 @@ public:
     }
 
     /**
-     * Bitwise left shift assignment.
-     * 
-     * @tparam T is integer type
-     * @param[in] shift of value
-     * @return This object.
+     * Bitwise left shift assignment operator.
+     *
+     * Shifts the bits of this instance to the left by the specified number of places and assigns the result to this instance.
+     *
+     * @tparam    T     an integral type representing the number of places to shift
+     * @param[in] shift the number of bits to shift to the left
+     * @return    A reference to this instance after the shift operation.
      */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator<<=(T shift) IPADDRESS_NOEXCEPT {
@@ -517,11 +519,13 @@ public:
     }
     
     /**
-     * Bitwise right shift assignment.
-     * 
-     * @tparam T is integer type
-     * @param[in] shift of value
-     * @return This object.
+     * Bitwise right shift assignment operator.
+     *
+     * Shifts the bits of this instance to the right by the specified number of places and assigns the result to this instance.
+     *
+     * @tparam    T     an integral type representing the number of places to shift
+     * @param[in] shift the number of bits to shift to the right
+     * @return    A reference to this instance after the shift operation.
      */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator>>=(T shift) IPADDRESS_NOEXCEPT {
@@ -530,38 +534,46 @@ public:
     }
     
     /**
-     * Unary plus.
-     * 
-     * @return New value.
+     * Unary plus operator.
+     *
+     * Returns a new instance of `uint128_t` with the same value as this instance.
+     *
+     * @return A new `uint128_t` instance with the same value.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator+() const IPADDRESS_NOEXCEPT {
         return *this;
     }
 
     /**
-     * Unary minus.
-     * 
-     * @return New value.
+     * Unary minus operator.
+     *
+     * Returns a new instance of `uint128_t` representing the two's complement of this instance.
+     *
+     * @return A new `uint128_t` instance representing the negated value.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator-() const IPADDRESS_NOEXCEPT {
         return ++(~*this);
     }
 
     /**
-     * Bitwise NOT.
-     * 
-     * @return New value.
+     * Bitwise NOT operator.
+     *
+     * Returns a new instance of `uint128_t` with all the bits of this instance inverted.
+     *
+     * @return A new `uint128_t` instance with inverted bits.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator~() const IPADDRESS_NOEXCEPT {
         return { ~_upper, ~_lower };
     }
 
     /**
-     * Addition.
-     * 
-     * @tparam T is integer type
-     * @param[in] lower of value
-     * @return New value.
+     * Addition operator with an integral type.
+     *
+     * Adds an integral value to this instance and returns a new `uint128_t` instance with the result.
+     *
+     * @tparam    T     an integral type to add to this instance
+     * @param[in] lower the integral value to add
+     * @return    A new `uint128_t` instance representing the sum.
      */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator+(T lower) const IPADDRESS_NOEXCEPT {
@@ -569,10 +581,12 @@ public:
     }
 
     /**
-     * Addition.
-     * 
-     * @param[in] other of value
-     * @return New value.
+     * Addition operator with another `uint128_t` instance.
+     *
+     * Adds the value of another `uint128_t` instance to this instance and returns a new `uint128_t` instance with the result.
+     *
+     * @param[in] other the `uint128_t` instance to add
+     * @return    A new `uint128_t` instance representing the sum.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator+(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         const uint64_t lower = _lower + other._lower;
