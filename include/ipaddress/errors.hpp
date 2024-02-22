@@ -102,17 +102,20 @@ enum class error_code {
  * 
  * Overall, the `error` class is a critical component of the library's error management
  * system, providing a standardized way to handle exceptions throughout the library.
+ * 
+ * @sa parse_error
+ * @sa logic_error
  */
 class error : public std::runtime_error {
 public:
     /**
      * Constructs an error with a code and a concatenated message from multiple arguments.
      * 
-     * @tparam    FirstArg  The type of the first argument passed to the constructor.
-     * @tparam    Args      The types of the additional arguments passed to the constructor.
-     * @param[in] code      The error code associated with the exception.
-     * @param[in] arg       The first argument describing the error.
-     * @param[in] args      Additional arguments describing the error.
+     * @tparam    FirstArg the type of the first argument passed to the constructor
+     * @tparam    Args     the types of the additional arguments passed to the constructor
+     * @param[in] code     the error code associated with the exception
+     * @param[in] arg      the first argument describing the error
+     * @param[in] args     additional arguments describing the error
      */
     template <typename FirstArg, typename... Args>
     explicit error(error_code code, const FirstArg& arg, const Args&... args) : std::runtime_error(concatenate(arg, args...)), _code(code) {
@@ -121,8 +124,8 @@ public:
     /**
      * Constructs an error with a code and a message string.
      * 
-     * @param[in] code    The error code associated with the exception.
-     * @param[in] message A detailed description of the error.
+     * @param[in] code    the error code associated with the exception
+     * @param[in] message a detailed description of the error
      */
     explicit error(error_code code, const std::string& message) : std::runtime_error(message), _code(code) {
     }
@@ -130,8 +133,8 @@ public:
     /**
      * Constructs an error with a code and a message C-string.
      * 
-     * @param[in] code    The error code associated with the exception.
-     * @param[in] message A detailed description of the error.
+     * @param[in] code    the error code associated with the exception
+     * @param[in] message a detailed description of the error
      */
     explicit error(error_code code, const char* message) : std::runtime_error(message), _code(code) {
     }
@@ -168,68 +171,88 @@ private:
 };
 
 /**
- * Parsing exception.
+ * Exception for errors encountered during IP address parsing.
  * 
- * Thrown when there are errors in parsing an IP address or network from a string.
+ * This exception is thrown when the library encounters an error while
+ * attempting to parse an IP address or network from a string. It is a
+ * specialized form of the `error` class that provides context specific
+ * to parsing operations.
+ * 
+ * @sa error
  */
 class parse_error : public error {
-public:
+public:    
+    /**
+     * Constructs a parsing error with a code and a concatenated message from multiple arguments.
+     * 
+     * @tparam    FirstArg the type of the first argument passed to the constructor
+     * @tparam    Args     the types of the additional arguments passed to the constructor
+     * @param[in] code     the error code associated with the parsing exception
+     * @param[in] arg      the first argument describing the error
+     * @param[in] args     additional arguments describing the error
+     */
     template <typename FirstArg, typename... Args>
     explicit parse_error(error_code code, const FirstArg& arg, const Args&... args) : error(code, arg, args...) {
     }
 
     /**
-     * Create an instance from an error code and a string describing the error.
-     *
-     * Will save the error code and a line describing the error
+     * Constructs a parsing error with a code and a message string.
      * 
-     * @param[in] code of error
-     * @param[in] message of detailed description of the error
+     * @param[in] code    the error code associated with the parsing exception
+     * @param[in] message a detailed description of the parsing error
      */
     explicit parse_error(error_code code, const std::string& message) : error(code, message) {
     }
 
     /**
-     * Create an instance from an error code and a string describing the error.
-     *
-     * Will save the error code and a line describing the error
+     * Constructs a parsing error with a code and a message C-string.
      * 
-     * @param[in] code of error
-     * @param[in] message of detailed description of the error
+     * @param[in] code    the error code associated with the parsing exception
+     * @param[in] message a detailed description of the parsing error
      */
     explicit parse_error(error_code code, const char* message) : error(code, message) {
     }
 };
 
 /**
- * Logic exception.
+ * Exception for logical errors in IP address operations.
  * 
- * Thrown in cases such as using an incorrect prefix length, etc.
+ * This exception is thrown for logical errors that do not pertain directly
+ * to parsing, such as using an incorrect prefix length or other operations
+ * that violate the logic of IP address manipulation. It extends the `error`
+ * class to provide additional context for these types of logical issues.
+ * 
+ * @sa error
  */
 class logic_error : public error {
 public:
+    /**
+     * Constructs a logic error with a code and a concatenated message from multiple arguments.
+     * 
+     * @tparam    FirstArg the type of the first argument passed to the constructor
+     * @tparam    Args     the types of the additional arguments passed to the constructor
+     * @param[in] code     the error code associated with the logical exception
+     * @param[in] arg      the first argument describing the error
+     * @param[in] args     additional arguments describing the error
+     */
     template <typename FirstArg, typename... Args>
     explicit logic_error(error_code code, const FirstArg& arg, const Args&... args) : error(code, arg, args...) {
     }
 
     /**
-     * Create an instance from an error code and a string describing the error.
-     *
-     * Will save the error code and a line describing the error
+     * Constructs a logic error with a code and a message string.
      * 
-     * @param[in] code of error
-     * @param[in] message of detailed description of the error
+     * @param[in] code    the error code associated with the logical exception
+     * @param[in] message a detailed description of the logical error
      */
     explicit logic_error(error_code code, const std::string& message) : error(code, message) {
     }
 
     /**
-     * Create an instance from an error code and a string describing the error.
-     *
-     * Will save the error code and a line describing the error
+     * Constructs a logic error with a code and a message C-string.
      * 
-     * @param[in] code of error
-     * @param[in] message of detailed description of the error
+     * @param[in] code    the error code associated with the logical exception
+     * @param[in] message a detailed description of the logical error
      */
     explicit logic_error(error_code code, const char* message) : error(code, message) {
     }
