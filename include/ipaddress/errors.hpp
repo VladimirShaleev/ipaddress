@@ -258,6 +258,21 @@ public:
     }
 };
 
+/**
+ * Raises an error with a specific error code and additional context.
+ * 
+ * This function constructs an error message based on the provided error code,
+ * index, and address, then throws a parse_error or a logic_error exception with the constructed message.
+ * 
+ * @tparam T The character type of the address string.
+ * @param[in] code The error code indicating the type of error encountered.
+ * @param[in] index The index at which the error occurred, if applicable.
+ * @param[in] address A pointer to the beginning of the address string.
+ * @param[in] length The length of the address string.
+ * @throw parse_error Thrown with a message corresponding to the error code.
+ * @throw logic_error Thrown with a message corresponding to the error code.
+ * @note This function is marked [[noreturn]] as it always throws an exception.
+ */
 template <typename T>
 [[noreturn]] IPADDRESS_CONSTEXPR inline void raise_error(error_code code, int index, const T* address, size_t length) {
     char str[101] = {};
