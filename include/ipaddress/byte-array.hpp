@@ -377,6 +377,18 @@ public:
     }
 }; // byte_array<0>
 
+/**
+ * Checks if two byte_array objects are equal.
+ * 
+ * Compares two byte_array objects of the same size element-wise to determine if they are equal.
+ * 
+ * @tparam    N   the size of the byte array
+ * @param[in] lhs a reference to the left-hand side byte_array object
+ * @param[in] rhs a reference to the right-hand side byte_array object
+ * @return    A boolean value indicating whether the two byte_array objects are equal.
+ * @retval    true the two byte_array objects are equal
+ * @retval    false the two byte_array objects are not equal
+ */
 template <std::size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
     for (std::size_t i = 0; i < N; ++i) {
@@ -387,6 +399,18 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(c
     return true;
 }
 
+/**
+ * Checks if two byte_array objects are not equal.
+ * 
+ * Compares two byte_array objects of the same size element-wise to determine if they are not equal.
+ * 
+ * @tparam    N   the size of the byte array
+ * @param[in] lhs a reference to the left-hand side byte_array object
+ * @param[in] rhs a reference to the right-hand side byte_array object
+ * @return    A boolean value indicating whether the two byte_array objects are not equal.
+ * @retval    true the two byte_array objects are not equal
+ * @retval    false the two byte_array objects are equal
+ */
 template <std::size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
     return !(lhs == rhs);
@@ -394,6 +418,21 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
 
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
 
+    /**
+     * Compares two byte_array objects for ordering.
+     * 
+     * Performs a lexicographical comparison between two byte_array objects using the three-way comparison operator.
+     * The comparison is done element-wise and stops at the first unequal pair of elements, returning the result
+     * of comparing these two elements. If all elements are equal, the byte_arrays are considered equivalent.
+     * 
+     * @tparam    N   the size of the byte array
+     * @param[in] lhs a reference to the left-hand side byte_array object
+     * @param[in] rhs a reference to the right-hand side byte_array object
+     * @return    An `std::strong_ordering` value indicating the ordering relationship.
+     * @retval    std::strong_ordering::less if lhs is lexicographically less than rhs
+     * @retval    std::strong_ordering::greater if lhs is lexicographically greater than rhs
+     * @retval    std::strong_ordering::equivalent if lhs is lexicographically equal to rhs
+     */
     template <std::size_t N>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
         for (std::size_t i = 0; i < N; ++i) {
@@ -406,6 +445,18 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
 
 #else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
+    /**
+     * Determines if one byte_array is less than another.
+     * 
+     * Performs a lexicographical comparison of two byte_array objects. The comparison is done
+     * element-wise and stops at the first unequal pair where the left-hand side is less than
+     * the right-hand side.
+     * 
+     * @tparam    N   the size of the byte arrays
+     * @param[in] lhs a reference to the left-hand side byte_array object
+     * @param[in] rhs a reference to the right-hand side byte_array object
+     * @return    `true` if lhs is lexicographically less than rhs, `false` otherwise.
+     */
     template <std::size_t N>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
         for (std::size_t i = 0; i < N; ++i) {
@@ -418,16 +469,40 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
         return false;
     }
 
+    /**
+     * Determines if one byte_array is greater than another.
+     * 
+     * @tparam    N   the size of the byte arrays
+     * @param[in] lhs a reference to the left-hand side byte_array object
+     * @param[in] rhs a reference to the right-hand side byte_array object
+     * @return    `true` if lhs is lexicographically greater than rhs, `false` otherwise.
+     */
     template <std::size_t N>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
         return rhs < lhs;
     }
 
+    /**
+     * Determines if one byte_array is less than or equal to another.
+     * 
+     * @tparam    N   the size of the byte arrays
+     * @param[in] lhs a reference to the left-hand side byte_array object
+     * @param[in] rhs a reference to the right-hand side byte_array object
+     * @return    `true` if lhs is lexicographically less than or equal to rhs, `false` otherwise.
+     */
     template <std::size_t N>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
         return !(rhs < lhs);
     }
 
+    /**
+     * Determines if one byte_array is greater than or equal to another.
+     * 
+     * @tparam    N   the size of the byte arrays
+     * @param[in] lhs a reference to the left-hand side byte_array object
+     * @param[in] rhs a reference to the right-hand side byte_array object
+     * @return    `true` if lhs is lexicographically greater than or equal to rhs, `false` otherwise.
+     */
     template <std::size_t N>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
         return !(lhs < rhs);
