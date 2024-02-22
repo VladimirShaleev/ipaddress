@@ -114,6 +114,14 @@ public:
 
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
+    /**
+     * Static method template to parse an IP address from a fixed string at compile time.
+     * 
+     * @tparam FixedString a non-type template parameter that holds the string representation of the IP address.
+     * @return An instance of ip address parsed from the fixed string.
+     * @note   This method is only available when non-type template parameters for strings are supported.
+     * @remark If parsing fails, an error will be raised at compile time.
+     */
     template <fixed_string FixedString>
     IPADDRESS_NODISCARD static consteval IPADDRESS_FORCE_INLINE ip_address_base<Base> parse() IPADDRESS_NOEXCEPT {
         constexpr auto str = FixedString;

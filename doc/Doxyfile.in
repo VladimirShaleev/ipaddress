@@ -2473,6 +2473,7 @@ PREDEFINED             = "IPADDRESS_FORCE_INLINE=\"inline\"" \
                          "IPADDRESS_CONSTEXPR_14=\"constexpr\"" \
                          "IPADDRESS_CONSTEXPR_17=\"constexpr\"" \
                          "IPADDRESS_CPP_VERSION=\"20\"" \
+                         "IPADDRESS_NONTYPE_TEMPLATE_PARAMETER=\"1\"" \
                          "__cpp_char8_t=\"201811L\""
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then this
