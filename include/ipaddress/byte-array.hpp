@@ -510,6 +510,17 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
 
 #endif // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
+/**
+ * Alias template for a byte array type.
+ * 
+ * Defines an alias for a byte array type that is dependent on the C++ version being used.
+ * If C++20 or later is available, it aliases to std::array to utilize constexpr support.
+ * Otherwise, it falls back to a custom byte_array implementation which supports constexpr.
+ * 
+ * @tparam N the size of the byte array
+ * @note   This alias allows for code to be portable across different C++ standards while maintaining
+ *         the ability to use constexpr if available.
+ */
 template <std::size_t N>
 using byte_array_type = 
 #if IPADDRESS_CPP_VERSION >= 20
