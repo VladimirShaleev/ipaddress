@@ -549,6 +549,12 @@ public:
         return _data.bytes;
     }
 
+    /**
+     * Determines if the IPv6 address is an IPv4-mapped address.
+     * 
+     * @return An `optional` containing the mapped IPv4 address if the IPv6 address is IPv4-mapped, or an empty `optional` otherwise.
+     * @remark An IPv4-mapped IPv6 address has its first 80 bits set to zero and the next 16 bits set to one (starting with ::FFFF/96).
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<ipv4_address> ipv4_mapped() const IPADDRESS_NOEXCEPT {
         const auto& b = bytes();
         if (b[10] != 0xFF || b[11] != 0xFF) {
@@ -558,6 +564,13 @@ public:
         return ipv4_address(ipv4_bytes);
     }
 
+    /**
+     * Determines if the IPv6 address is a 6to4 address.
+     * 
+     * @return An optional containing the encapsulated IPv4 address if the IPv6 address is a 6to4 address, or an empty optional otherwise.
+     * @remark A 6to4 address uses a `2002::/16` prefix and embeds an IPv4 address in the next 32 bits.
+     * @see [RFC 3056](https://datatracker.ietf.org/doc/html/rfc3056.html)
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<ipv4_address> sixtofour() const IPADDRESS_NOEXCEPT {
         const auto& b = bytes();
         if (b[0] != 0x20 || b[1] != 0x02) {
@@ -567,6 +580,15 @@ public:
         return ipv4_address(ipv4_bytes);
     }
 
+    /**
+     * Determines if the IPv6 address is a Teredo address.
+     * 
+     * @return An optional containing a pair of IPv4 addresses representing the Teredo server and client if the IPv6 address is a Teredo address, or an empty optional otherwise.
+     * @retval std::pair::first The Teredo server IPv4 address
+     * @retval std::pair::second The Teredo client IPv4 address
+     * @remark A Teredo address begins with the `2001::/32` prefix and is used for NAT traversal for IPv6.
+     * @see [RFC 4380](https://datatracker.ietf.org/doc/html/rfc4380.html)
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<std::pair<ipv4_address, ipv4_address>> teredo() const IPADDRESS_NOEXCEPT {
         const auto& b = bytes();
         if (b[0] != 0x20 || b[1] != 0x01 || b[2] != 0x00 || b[3] != 0x00) {
@@ -577,6 +599,13 @@ public:
         return std::make_pair(ipv4_address(server_bytes), ipv4_address(client_bytes));
     }
 
+    /**
+     * Checks if the IPv6 address is a site-local address.
+     * 
+     * @return `true` if the address is site-local, `false` otherwise.
+     * @note Site-local addresses are equivalent to private addresses in IPv4 and are not routable on the global internet.
+     * @remark These attribute is true for the network as a whole if it is true for both the network address and the broadcast address.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_site_local() const IPADDRESS_NOEXCEPT;
 
 protected:
