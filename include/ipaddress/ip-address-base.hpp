@@ -391,6 +391,17 @@ public:
 
 #endif // IPADDRESS_CPP_VERSION < 17
 
+    /**
+     * Parses an IP address from a character array.
+     * 
+     * This method template parses an IP address from a character array of a 
+     * specified size. Can check and get the result at compile time.
+     * 
+     * @tparam    T       the character type of the array
+     * @tparam    N       the size of the character array
+     * @param[in] address the character array containing the IP address to parse
+     * @return    An instance of ip address parsed from the character array.
+     */
     template <typename T, size_t N>
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(const T(&address)[N]) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         internal::is_char_type<T>();
@@ -398,6 +409,18 @@ public:
         return parse_string(str);
     }
 
+    /**
+     * Parses an IP address from a character array and reports errors through an error code.
+     * 
+     * This method template parses an IP address from a character array of a specified size 
+     * and provides an error code if the parsing fails.
+     * 
+     * @tparam     T       the character type of the array
+     * @tparam     N       the size of the character array
+     * @param[in]  address the character array containing the IP address to parse
+     * @param[out] code    a reference to an `error_code` object that will be set if an error occurs during parsing
+     * @return     An instance of ip address parsed from the character array. If parsing fails, the returned object will be in an unspecified state.
+     */
     template <typename T, size_t N>
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(const T(&address)[N], error_code& code) IPADDRESS_NOEXCEPT {
         internal::is_char_type<T>();
@@ -405,12 +428,33 @@ public:
         return parse_string(str, code);
     }
 
+    /**
+     * Retrieves the raw data representing the IP address in **network byte order** (big-endian).
+     * 
+     * This method returns a pointer to the underlying byte array that stores the IP address.
+     * 
+     * @return A pointer to the constant byte array containing the raw IP address data.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const uint8_t* data() const IPADDRESS_NOEXCEPT {
         return Base::bytes().data();
     }
 
+    /**
+     * Checks if the IP address is a multicast address.
+     * 
+     * @return `true` if the IP address is reserved for multicast use, `false` otherwise.
+     * @see    [RFC 3171 for IPv4](https://datatracker.ietf.org/doc/html/rfc3171.html)
+     * @see    [RFC 2373 for IPv6](https://datatracker.ietf.org/doc/html/rfc2373.html)
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_multicast() const IPADDRESS_NOEXCEPT;
 
+    /**
+     * Checks if the IP address is a private address.
+     * 
+     * @return `true` if the IP address is allocated for private networks, `false` otherwise.
+     * @see    [iana-ipv4-special-registry](https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml)
+     * @see    [iana-ipv6-special-registry](https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml)
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_private() const IPADDRESS_NOEXCEPT;
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_global() const IPADDRESS_NOEXCEPT;

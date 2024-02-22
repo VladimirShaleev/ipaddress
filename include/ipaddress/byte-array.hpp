@@ -261,7 +261,7 @@ struct byte_array {
     /**
      * Swaps the contents of this byte_array with another byte_array.
      * 
-     * @return other The other byte_array to swap contents with.
+     * @param[in,out] other the other byte_array to swap contents with
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void swap(byte_array& other) IPADDRESS_NOEXCEPT {
         for (size_t i = 0; i < N; ++i) {

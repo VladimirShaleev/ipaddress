@@ -115,7 +115,7 @@ public:
      * 
      * @param[in] other the `uint128_t` instance to copy
      */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(const uint128_t&) IPADDRESS_NOEXCEPT = default; /**< Copy constructor */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(const uint128_t& other) IPADDRESS_NOEXCEPT = default; /**< Copy constructor */
     
     /**
      * Move constructor.
@@ -124,7 +124,7 @@ public:
      * 
      * @param[in,out] other the `uint128_t` instance to move
      */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(uint128_t&&) IPADDRESS_NOEXCEPT = default; /**< Move constructor */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(uint128_t&& other) IPADDRESS_NOEXCEPT = default; /**< Move constructor */
 
     /**
      * Assignment operator.
@@ -134,7 +134,7 @@ public:
      * @param[in] other the `uint128_t` instance to assign from
      * @return    A reference to the assigned `uint128_t` instance.
      */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t& operator=(const uint128_t&) IPADDRESS_NOEXCEPT = default; /**< Assignment operator */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t& operator=(const uint128_t& other) IPADDRESS_NOEXCEPT = default; /**< Assignment operator */
     
     /**
      * Move assignment operator.
@@ -144,7 +144,7 @@ public:
      * @param[in,out] other the `uint128_t` instance to move from.
      * @return        A reference to the moved `uint128_t` instance.
      */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t& operator=(uint128_t&&) IPADDRESS_NOEXCEPT = default; /**< Move assignment operator */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t& operator=(uint128_t&& other) IPADDRESS_NOEXCEPT = default; /**< Move assignment operator */
 
     /**
      * Constructs a `uint128_t` instance from upper and lower parts.
