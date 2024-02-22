@@ -1469,12 +1469,12 @@ private:
 };
 
 /**
- * Addition.
+ * Performs addition between an integer and a uint128_t value.
  * 
- * @tparam T is integer type
- * @param[in] lower of value
- * @param[in] value of uint128_t value
- * @return New value.
+ * @tparam    T     integer type
+ * @param[in] lower the integer value to be added
+ * @param[in] value the uint128_t value to be added
+ * @return    uint128_t the result of the addition.
  */
 template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator+(T lower, const uint128_t& value) IPADDRESS_NOEXCEPT {
@@ -1482,12 +1482,12 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operato
 }
 
 /**
- * Subtraction.
+ * Performs subtraction of a uint128_t value from an integer.
  * 
- * @tparam T is integer type
- * @param[in] lower of value
- * @param[in] value of uint128_t value
- * @return New value.
+ * @tparam    T     integer type
+ * @param[in] lower the integer value from which the uint128_t value is subtracted
+ * @param[in] value the uint128_t value to be subtracted
+ * @return    uint128_t the result of the subtraction.
  */
 template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator-(T lower, const uint128_t& value) IPADDRESS_NOEXCEPT {
@@ -1495,12 +1495,12 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operato
 }
 
 /**
- * Multiplication.
+ * Performs multiplication between an integer and a uint128_t value.
  * 
- * @tparam T is integer type
- * @param[in] lower of value
- * @param[in] value of uint128_t value
- * @return New value.
+ * @tparam    T     integer type
+ * @param[in] lower the integer value to be multiplied
+ * @param[in] value the uint128_t value to be multiplied
+ * @return    uint128_t the result of the multiplication.
  */
 template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator*(T lower, const uint128_t& value) IPADDRESS_NOEXCEPT {
@@ -1508,12 +1508,12 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operato
 }
 
 /**
- * Division.
+ * Performs division of an integer by a uint128_t value.
  * 
- * @tparam T is integer type
- * @param[in] lower of value
- * @param[in] value of uint128_t value
- * @return New value.
+ * @tparam    T     integer type
+ * @param[in] lower the integer value to be divided
+ * @param[in] value the uint128_t value that divides the integer
+ * @return    uint128_t the result of the division.
  */
 template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator/(T lower, const uint128_t& value) IPADDRESS_NOEXCEPT {
@@ -1521,12 +1521,12 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operato
 }
 
 /**
- * Remainder.
+ * Calculates the remainder of division of an integer by a uint128_t value.
  * 
- * @tparam T is integer type
- * @param[in] lower of value
- * @param[in] value of uint128_t value
- * @return New value.
+ * @tparam    T     integer type
+ * @param[in] lower the integer value to be divided
+ * @param[in] value the uint128_t value that divides the integer
+ * @return    uint128_t the remainder of the division.
  */
 template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator%(T lower, const uint128_t& value) IPADDRESS_NOEXCEPT {
@@ -1534,12 +1534,12 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operato
 }
 
 /**
- * Bitwise AND.
+ * Performs bitwise AND operation between an integer and a uint128_t value.
  * 
- * @tparam T is integer type
- * @param[in] lower of value
- * @param[in] value of uint128_t value
- * @return New value.
+ * @tparam    T     integer type
+ * @param[in] lower the integer value
+ * @param[in] value the uint128_t value
+ * @return    uint128_t the result of the bitwise AND operation.
  */
 template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator&(T lower, const uint128_t& value) IPADDRESS_NOEXCEPT {
@@ -1547,12 +1547,12 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operato
 }
 
 /**
- * Bitwise OR.
+ * Performs bitwise OR operation between an integer and a uint128_t value.
  * 
- * @tparam T is integer type
- * @param[in] lower of value
- * @param[in] value of uint128_t value
- * @return New value.
+ * @tparam    T     integer type
+ * @param[in] lower the integer value
+ * @param[in] value the uint128_t value
+ * @return    uint128_t the result of the bitwise OR operation.
  */
 template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator|(T lower, const uint128_t& value) IPADDRESS_NOEXCEPT {
@@ -1560,12 +1560,12 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operato
 }
 
 /**
- * Bitwise XOR.
+ * Performs bitwise XOR operation between an integer and a uint128_t value.
  * 
- * @tparam T is integer type
- * @param[in] lower of value
- * @param[in] value of uint128_t value
- * @return New value.
+ * @tparam    T     integer type
+ * @param[in] lower the integer value
+ * @param[in] value the uint128_t value
+ * @return    uint128_t the result of the bitwise XOR operation.
  */
 template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator^(T lower, const uint128_t& value) IPADDRESS_NOEXCEPT {
@@ -1573,12 +1573,12 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operato
 }
 
 /**
- * Equal to.
+ * Checks if an integer value is equal to a uint128_t value.
  * 
- * @tparam T is integer type
- * @param[in] lower of value
- * @param[in] other of uint128_t value
- * @return `true` if the values T and uint128_t are equal, `false` otherwise.
+ * @tparam    T     integral type
+ * @param[in] lower the integer value to compare
+ * @param[in] other the uint128_t value to compare
+ * @return    `true` if the integer value is equal to the uint128_t value, `false` otherwise.
  */
 template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(T lower, const uint128_t& other) IPADDRESS_NOEXCEPT {
@@ -1586,12 +1586,12 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(T
 }
 
 /**
- * Not equal to.
+ * Checks if an integer value is not equal to a uint128_t value.
  * 
- * @tparam T is integer type
- * @param[in] lower of value
- * @param[in] other of uint128_t value
- * @return `true` if the values T and uint128_t are not equal, `false` otherwise.
+ * @tparam    T     integral type
+ * @param[in] lower the integer value to compare
+ * @param[in] other the uint128_t value to compare
+ * @return    `true` if the integer value is not equal to the uint128_t value, `false` otherwise.
  */
 template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(T lower, const uint128_t& other) IPADDRESS_NOEXCEPT {
@@ -1601,12 +1601,16 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(T
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
 
 /**
- * Three-way comparison.
- * 
- * @tparam T is integer type
- * @param[in] lower of value
- * @param[in] other of uint128_t value
- * @return Ordering category.
+ * Performs a three-way comparison between an integer and a uint128_t value.
+ *
+ * This function template overloads the spaceship operator (<=>) to provide a three-way comparison
+ * between a value of an integral type T and a uint128_t value. It returns the ordering category
+ * according to the C++20 standard library definition of std::strong_ordering.
+ *
+ * @tparam    T     an integral type parameter that is checked at compile-time to ensure it is an integer type
+ * @param[in] lower the value of type T to be compared
+ * @param[in] other the uint128_t value to be compared with
+ * @return    The result of the comparison: less, equal, or greater.
  */
 template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(T lower, const uint128_t& other) IPADDRESS_NOEXCEPT {
@@ -1616,12 +1620,15 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_order
 #else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
 /**
- * Less than.
- * 
- * @tparam T is integer type
- * @param[in] lower of value
- * @param[in] other of uint128_t value
- * @return `true` if the \a lower are lexicographically less than the contents of \a other, `false` otherwise.
+ * Compares if an integer value is less than a uint128_t value.
+ *
+ * This function template overloads the less than operator (<) to compare an integer of type T with a uint128_t value.
+ * It checks if the integer value is lexicographically less than the uint128_t value.
+ *
+ * @tparam    T     an integral type parameter that is checked at compile-time to ensure it is an integer type
+ * @param[in] lower the integer value of type T to be compared
+ * @param[in] other the uint128_t value to compare against
+ * @return    `true` if \a lower is less than \a other, `false` otherwise.
  */
 template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(T lower, const uint128_t& other) IPADDRESS_NOEXCEPT {
@@ -1629,12 +1636,15 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(T 
 }
 
 /**
- * Greater than.
- * 
- * @tparam T is integer type
- * @param[in] lower of value
- * @param[in] other of uint128_t value
- * @return `true` if the \a lower are lexicographically greater than the contents of \a other, `false` otherwise.
+ * Compares if an integer value is greater than a uint128_t value.
+ *
+ * This function template overloads the greater than operator (>) to compare an integer of type T with a uint128_t value.
+ * It checks if the integer value is lexicographically greater than the uint128_t value.
+ *
+ * @tparam    T     an integral type parameter that is checked at compile-time to ensure it is an integer type
+ * @param[in] lower the integer value of type T to be compared
+ * @param[in] other the uint128_t value to compare against
+ * @return    `true` if \a lower is greater than \a other, `false` otherwise.
  */
 template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(T lower, const uint128_t& other) IPADDRESS_NOEXCEPT {
@@ -1642,12 +1652,15 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(T 
 }
 
 /**
- * Less than or equal to.
- * 
- * @tparam T is integer type
- * @param[in] lower of value
- * @param[in] other of uint128_t value
- * @return `true` if the \a lower are lexicographically less than or equal to the contents of \a other, `false` otherwise.
+ * Compares if an integer value is less than or equal to a uint128_t value.
+ *
+ * This function template overloads the less than or equal to operator (<=) to compare an integer of type T with a uint128_t value.
+ * It checks if the integer value is lexicographically less than or equal to the uint128_t value.
+ *
+ * @tparam    T     an integral type parameter that is checked at compile-time to ensure it is an integer type
+ * @param[in] lower the integer value of type T to be compared
+ * @param[in] other the uint128_t value to compare against
+ * @return    `true` if \a lower is less than or equal to \a other, `false` otherwise.
  */
 template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(T lower, const uint128_t& other) IPADDRESS_NOEXCEPT {
@@ -1655,12 +1668,15 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(T
 }
 
 /**
- * Greater than or equal to.
- * 
- * @tparam T is integer type
- * @param[in] lower of value
- * @param[in] other of uint128_t value
- * @return `true` if the \a lower are lexicographically greater than or equal to the contents of \a other, `false` otherwise.
+ * Compares if an integer value is greater than or equal to a uint128_t value.
+ *
+ * This function template overloads the greater than or equal to operator (>=) to compare an integer of type T with a uint128_t value.
+ * It checks if the integer value is lexicographically greater than or equal to the uint128_t value.
+ *
+ * @tparam    T     an integral type parameter that is checked at compile-time to ensure it is an integer type
+ * @param[in] lower the integer value of type T to be compared
+ * @param[in] other the uint128_t value to compare against
+ * @return    `true` if \a lower is greater than or equal to \a other, `false` otherwise.
  */
 template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(T lower, const uint128_t& other) IPADDRESS_NOEXCEPT {
