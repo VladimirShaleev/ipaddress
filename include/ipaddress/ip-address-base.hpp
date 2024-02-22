@@ -596,34 +596,94 @@ public:
         return to_string();
     }
 
+    /**
+     * Checks if two IP addresses are equal.
+     * 
+     * This operator compares the binary representation of two IP addresses to determine if they are equal.
+     * 
+     * @param[in] rhs The right-hand side IP address for comparison.
+     * @return `true` if both IP addresses are equal, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(const ip_address_base& rhs) const IPADDRESS_NOEXCEPT {
         return Base::equals(*this, rhs);
     }
 
+    /**
+     * Checks if two IP addresses are not equal.
+     * 
+     * This operator compares the binary representation of two IP addresses to determine if they are not equal.
+     * 
+     * @param[in] rhs The right-hand side IP address for comparison.
+     * @return `true` if both IP addresses are not equal, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(const ip_address_base& rhs) const IPADDRESS_NOEXCEPT {
         return !(*this == rhs);
     }
 
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
 
+    /**
+     * Compares two IP addresses using the three-way comparison operator (spaceship operator).
+     * 
+     * This operator provides a total ordering of IP addresses by comparing their binary representations.
+     * 
+     * @param[in] rhs The right-hand side IP address for comparison.
+     * @return A value of type `std::strong_ordering` that represents the result of the comparison.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const ip_address_base& rhs) const IPADDRESS_NOEXCEPT {
         return Base::compare(*this, rhs);
     }
 
 #else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
+    /**
+     * Checks if one IP address is less than another.
+     * 
+     * This operator compares the binary representation of two IP addresses to determine if 
+     * the left-hand side is less than the right-hand side.
+     * 
+     * @param[in] rhs The right-hand side IP address for comparison.
+     * @return `true` if the left-hand side IP address is less than the right-hand side, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(const ip_address_base& rhs) const IPADDRESS_NOEXCEPT {
         return Base::less(*this, rhs);
     }
-    
+        
+    /**
+     * Checks if one IP address is greater than another.
+     * 
+     * This operator compares the binary representation of two IP addresses to determine if 
+     * the left-hand side is greater than the right-hand side.
+     * 
+     * @param[in] rhs The right-hand side IP address for comparison.
+     * @return `true` if the left-hand side IP address is greater than the right-hand side, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(const ip_address_base& rhs) const IPADDRESS_NOEXCEPT {
         return rhs < *this;
     }
-    
+        
+    /**
+     * Checks if one IP address is less than or equal to another.
+     * 
+     * This operator compares the binary representation of two IP addresses to determine if 
+     * the left-hand side is less than or equal to the right-hand side.
+     * 
+     * @param[in] rhs The right-hand side IP address for comparison.
+     * @return `true` if the left-hand side IP address is less than or equal to the right-hand side, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(const ip_address_base& rhs) const IPADDRESS_NOEXCEPT {
         return !(rhs < *this);
     }
-    
+        
+    /**
+     * Checks if one IP address is greater than or equal to another.
+     * 
+     * This operator compares the binary representation of two IP addresses to determine if 
+     * the left-hand side is greater than or equal to the right-hand side.
+     * 
+     * @param[in] rhs The right-hand side IP address for comparison.
+     * @return `true` if the left-hand side IP address is greater than or equal to the right-hand side, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(const ip_address_base& rhs) const IPADDRESS_NOEXCEPT {
         return !(*this < rhs);
     }
