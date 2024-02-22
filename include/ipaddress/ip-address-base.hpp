@@ -58,19 +58,52 @@ public:
     template <typename>
     friend class ip_network_base;
 
-    using base_type = typename Base::base_type;
-    using uint_type = typename Base::uint_type;
+    using base_type = typename Base::base_type; /**< Type alias for the base storage type. */
+    using uint_type = typename Base::uint_type; /**< Type alias for the underlying unsigned integer type. */
 
+    /**
+     * Default constructor.
+     * 
+     * Constructs an empty IP address object.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base() IPADDRESS_NOEXCEPT : Base() {
     }
 
+    /**
+     * Constructs an IP address object from a byte array.
+     * 
+     * @param[in] bytes the byte array representing an IP address
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit ip_address_base(const base_type& bytes) IPADDRESS_NOEXCEPT : Base(bytes) {
     }
 
+    /**
+     * Static factory method to create an IP address object from a byte array.
+     * 
+     * @param[in] bytes the byte array representing an IP address
+     * @return    An instance of ip address constructed from the given byte array.
+     */
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base from_bytes(const base_type& bytes) IPADDRESS_NOEXCEPT {
         return ip_address_base(bytes);
     }
 
+    /**
+     * Static factory method to create an IP address object from a raw byte buffer.
+     * 
+     * @param[in]   bytes      pointer to the raw byte buffer representing an IP address
+     * @param[in]   byte_count the number of bytes in the buffer to use
+     * @return      An instance of ip address constructed from the given byte buffer.
+     * @parblock
+     * @remark      If the number of bytes \a byte_count is less than the target number 
+     *              of bytes to represent the IP address, the missing bytes will be 
+     *              filled with zeros.
+     * @endparblock
+     * @parblock
+     * @remark      If the number of bytes \a byte_count is greater than the target 
+     *              number of bytes represented by the IP address, then the extra 
+     *              bytes will be ignored
+     * @endparblock
+     */
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base from_bytes(const uint8_t* bytes, size_t byte_count) IPADDRESS_NOEXCEPT {
         base_type data = {};
         for (size_t i = 0; i < Base::base_size && i < byte_count; ++i) {
