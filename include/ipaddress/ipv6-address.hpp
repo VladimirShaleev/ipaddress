@@ -18,8 +18,20 @@
 
 namespace IPADDRESS_NAMESPACE {
 
+/**
+ * Represents the scope identifier for an IPv6 address.
+ * 
+ * The scope identifier is used to distinguish between different zones for the same address,
+ * such as link-local or site-local scopes. This class provides methods to set, retrieve,
+ * and compare scope identifiers in both string and numeric formats.
+ */
 class scope final {
 public:
+    /**
+     * Constructs a scope object with a given scope identifier.
+     * 
+     * @param[in] scope_id A fixed_string representing the scope identifier.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE scope(const fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>& scope_id) IPADDRESS_NOEXCEPT
         : 
         _scope_id(scope_id),
@@ -28,62 +40,139 @@ public:
         parse_value();
     }
 
+    /**
+     * Retrieves the scope identifier as a string.
+     * 
+     * @return A `std::string` representing the scope identifier.
+     */
     IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string get_string() const {
         return std::string(_scope_id.begin(), _scope_id.end());
     }
 
+    /**
+     * Retrieves the scope identifier as a numeric value.
+     * 
+     * @return A uint32_t representing the numeric value of the scope identifier.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint32_t get_uint32() const IPADDRESS_NOEXCEPT {
         return _scope_id_value;
     }
 
+    /**
+     * Checks if the scope identifier has a string representation.
+     * 
+     * @return `true` if a string representation exists, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool has_string() const IPADDRESS_NOEXCEPT {
         return !_scope_id.empty();
     }
 
+    /**
+     * Checks if the scope identifier has a numeric representation.
+     * 
+     * @return `true` if a numeric representation exists, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool has_uint32() const IPADDRESS_NOEXCEPT {
         return _has_value;
     }
 
+    /**
+     * Converts the scope object to a boolean value based on the presence of a scope representation.
+     * 
+     * @return `true` if a scope exists, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit operator bool() const IPADDRESS_NOEXCEPT {
         return has_string();
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE operator std::string() const {
+    /**
+     * Converts the scope object to a string representation.
+     * 
+     * @return A std::string representing the scope identifier.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE explicit operator std::string() const {
         return get_string();
     }
 
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE operator uint32_t() const IPADDRESS_NOEXCEPT {
+    /**
+     * Converts the scope object to a numeric representation.
+     * 
+     * @return A uint32_t representing the numeric value of the scope identifier.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit operator uint32_t() const IPADDRESS_NOEXCEPT {
         return get_uint32();
     }
 
+    /**
+     * Compares two scope objects for equality.
+     * 
+     * @param[in] rhs The right-hand side scope object for comparison.
+     * @return `true` if both scope objects are equal, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(const scope& rhs) const IPADDRESS_NOEXCEPT {
         return _scope_id == rhs._scope_id;
     }
 
+    /**
+     * Compares two scope objects for inequality.
+     * 
+     * @param[in] rhs The right-hand side scope object for comparison.
+     * @return `true` if both scope objects are not equal, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(const scope& rhs) const IPADDRESS_NOEXCEPT {
         return !(*this == rhs);
     }
 
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
 
+    /**
+     * Compares two scope objects using the three-way comparison operator (spaceship operator).
+     * 
+     * @param[in] rhs The right-hand side scope object for comparison.
+     * @return A value of type `std::strong_ordering` that represents the result of the comparison.
+     */
      IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const scope& rhs) const IPADDRESS_NOEXCEPT {
          return _scope_id <=> rhs._scope_id;
      }
 
 #else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
+    /**
+     * Checks if one scope object is less than another.
+     * 
+     * @param[in] rhs The right-hand side scope object for comparison.
+     * @return `true` if the left-hand side scope object is less than the right-hand side, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(const scope& rhs) const IPADDRESS_NOEXCEPT {
         return _scope_id < rhs._scope_id;
     }
     
+    /**
+     * Checks if one scope object is greater than another.
+     * 
+     * @param[in] rhs The right-hand side scope object for comparison.
+     * @return `true` if the left-hand side scope object is greater than the right-hand side, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(const scope& rhs) const IPADDRESS_NOEXCEPT {
         return rhs < *this;
     }
     
+    /**
+     * Checks if one scope object is less than or equal to another.
+     * 
+     * @param[in] rhs The right-hand side scope object for comparison.
+     * @return `true` if the left-hand side scope object is less than or equal to the right-hand side, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(const scope& rhs) const IPADDRESS_NOEXCEPT {
         return !(rhs < *this);
     }
     
+    /**
+     * Checks if one scope object is greater than or equal to another.
+     * 
+     * @param[in] rhs The right-hand side scope object for comparison.
+     * @return `true` if the left-hand side scope object is greater than or equal to the right-hand side, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(const scope& rhs) const IPADDRESS_NOEXCEPT {
         return !(*this < rhs);
     }
@@ -157,6 +246,14 @@ public:
         change_scope_id(scope_id);
     }
 
+#if __cpp_char8_t >= 201811L
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u8string_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        change_scope_id(scope_id);
+    }
+
+#endif // __cpp_char8_t
+
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u16string_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         change_scope_id(scope_id);
     }
@@ -173,6 +270,14 @@ public:
         change_scope_id(scope_id, code);
     }
 
+#if __cpp_char8_t >= 201811L
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u8string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
+        change_scope_id(scope_id, code);
+    }
+
+#endif // __cpp_char8_t
+
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u16string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
         change_scope_id(scope_id, code);
     }
@@ -180,18 +285,6 @@ public:
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u32string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
         change_scope_id(scope_id, code);
     }
-
-#if __cpp_char8_t >= 201811L
-
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u8string_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        change_scope_id(scope_id);
-    }
-
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u8string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
-        change_scope_id(scope_id, code);
-    }
-
-#endif // __cpp_char8_t
 
 #else // IPADDRESS_CPP_VERSION < 17
 
@@ -226,18 +319,6 @@ public:
     IPADDRESS_FORCE_INLINE void set_scope_id(const std::u32string& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
         change_scope_id(scope_id, code);
     }
-
-#if __cpp_char8_t >= 201811L
-
-    IPADDRESS_FORCE_INLINE void set_scope_id(const std::u8string& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        change_scope_id(scope_id);
-    }
-
-    IPADDRESS_FORCE_INLINE void set_scope_id(const std::u8string& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
-        change_scope_id(scope_id, code);
-    }
-
-#endif // __cpp_char8_t
 
 #endif // IPADDRESS_CPP_VERSION < 17
 

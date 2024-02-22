@@ -2474,6 +2474,7 @@ PREDEFINED             = "IPADDRESS_FORCE_INLINE=\"inline\"" \
                          "IPADDRESS_CONSTEXPR_17=\"constexpr\"" \
                          "IPADDRESS_CPP_VERSION=\"20\"" \
                          "IPADDRESS_NONTYPE_TEMPLATE_PARAMETER=\"1\"" \
+                         "IPADDRESS_IPV6_SCOPE_MAX_LENGTH=IPADDRESS_IPV6_SCOPE_MAX_LENGTH" \
                          "__cpp_char8_t=\"201811L\""
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then this
