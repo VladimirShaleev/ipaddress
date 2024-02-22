@@ -50,7 +50,7 @@ enum class format {
  * inherits from a base class that provides the necessary functionality, and 
  * it is extended by more specific IP address classes. 
  * 
- * @tparam Base the base class providing storage and low-level IP address functionalities
+ * @tparam Base The base class providing storage and low-level IP address functionalities.
  */
 template <typename Base>
 class ip_address_base : public Base {
@@ -72,7 +72,7 @@ public:
     /**
      * Constructs an IP address object from a byte array.
      * 
-     * @param[in] bytes the byte array representing an IP address
+     * @param[in] bytes The byte array representing an IP address.
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit ip_address_base(const base_type& bytes) IPADDRESS_NOEXCEPT : Base(bytes) {
     }
@@ -80,8 +80,8 @@ public:
     /**
      * Static factory method to create an IP address object from a byte array.
      * 
-     * @param[in] bytes the byte array representing an IP address
-     * @return    An instance of ip address constructed from the given byte array.
+     * @param[in] bytes The byte array representing an IP address.
+     * @return An instance of ip address constructed from the given byte array.
      */
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base from_bytes(const base_type& bytes) IPADDRESS_NOEXCEPT {
         return ip_address_base(bytes);
@@ -90,16 +90,16 @@ public:
     /**
      * Static factory method to create an IP address object from a raw byte buffer.
      * 
-     * @param[in]   bytes      pointer to the raw byte buffer representing an IP address
-     * @param[in]   byte_count the number of bytes in the buffer to use
-     * @return      An instance of ip address constructed from the given byte buffer.
+     * @param[in] bytes Pointer to the raw byte buffer representing an IP address.
+     * @param[in] byte_count The number of bytes in the buffer to use.
+     * @return An instance of ip address constructed from the given byte buffer.
      * @parblock
-     * @remark      If the number of bytes \a byte_count is less than the target number 
+     * @remark If the number of bytes \a byte_count is less than the target number .
      *              of bytes to represent the IP address, the missing bytes will be 
      *              filled with zeros.
      * @endparblock
      * @parblock
-     * @remark      If the number of bytes \a byte_count is greater than the target 
+     * @remark If the number of bytes \a byte_count is greater than the target .
      *              number of bytes represented by the IP address, then the extra 
      *              bytes will be ignored
      * @endparblock
@@ -117,9 +117,9 @@ public:
     /**
      * Static method template to parse an IP address from a fixed string at compile time.
      * 
-     * @tparam FixedString a non-type template parameter that holds the string representation of the IP address.
+     * @tparam FixedString A non-type template parameter that holds the string representation of the IP address.
      * @return An instance of ip address parsed from the fixed string.
-     * @note   This method is only available when non-type template parameters for strings are supported.
+     * @note This method is only available when non-type template parameters for strings are supported.
      * @remark If parsing fails, an error will be raised at compile time.
      */
     template <fixed_string FixedString>
@@ -144,11 +144,11 @@ public:
      * This method provides a way to parse an IP address from a string view, 
      * which is a non-owning reference to a sequence of characters.
      * 
-     * @param[in] address the string view containing the IP address to parse
-     * @return    An instance of ip address parsed from the string view.
-     * @throw     parse_error exception caused by invalid input string
-     * @note      This method is available for C++17 and later versions.
-     * @remark    For C++ versions prior to C++17, member functions with `std::string` and C-strings will be used instead.
+     * @param[in] address The string view containing the IP address to parse.
+     * @return An instance of ip address parsed from the string view.
+     * @throw parse_error Exception caused by invalid input string.
+     * @note This method is available for C++17 and later versions.
+     * @remark For C++ versions prior to C++17, member functions with `std::string` and C-strings will be used instead.
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(std::string_view address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return parse_string(address);
@@ -160,11 +160,11 @@ public:
      * This method allows for parsing an IP address from a wide string view, 
      * which is typically used for wide character strings.
      * 
-     * @param[in] address the wide string view containing the IP address to parse
-     * @return    An instance of ip address parsed from the string view.
-     * @throw     parse_error exception caused by invalid input string
-     * @note      This method is available for C++17 and later versions.
-     * @remark    For C++ versions prior to C++17, member functions with `std::wstring` and C-strings will be used instead.
+     * @param[in] address The wide string view containing the IP address to parse.
+     * @return An instance of ip address parsed from the string view.
+     * @throw parse_error Exception caused by invalid input string.
+     * @note This method is available for C++17 and later versions.
+     * @remark For C++ versions prior to C++17, member functions with `std::wstring` and C-strings will be used instead.
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(std::wstring_view address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return parse_string(address);
@@ -178,10 +178,10 @@ public:
      * This method parses an IP address from a given UTF-8 string view. It leverages the `char8_t`
      * type introduced in C++20 to handle UTF-8 strings natively.
      * 
-     * @param[in] address a UTF-8 string view containing the IP address to parse
-     * @return    An instance of ip address parsed from the string view.
-     * @throw     parse_error exception caused by invalid input string
-     * @note      This method is available for C++20 and later versions where `char8_t` is supported.
+     * @param[in] address A UTF-8 string view containing the IP address to parse.
+     * @return An instance of ip address parsed from the string view.
+     * @throw parse_error Exception caused by invalid input string.
+     * @note This method is available for C++20 and later versions where `char8_t` is supported.
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(std::u8string_view address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return parse_string(address);
@@ -195,11 +195,11 @@ public:
      * This method is designed to parse an IP address from a UTF-16 string view, 
      * which is a sequence of 16-bit characters.
      * 
-     * @param[in] address the UTF-16 string view containing the IP address to parse
-     * @return    An instance of ip address parsed from the string view.
-     * @throw     parse_error exception caused by invalid input string
-     * @note      This method is available for C++17 and later versions.
-     * @remark    For C++ versions prior to C++17, member functions with `std::u16string` and C-strings will be used instead.
+     * @param[in] address The UTF-16 string view containing the IP address to parse.
+     * @return An instance of ip address parsed from the string view.
+     * @throw parse_error Exception caused by invalid input string.
+     * @note This method is available for C++17 and later versions.
+     * @remark For C++ versions prior to C++17, member functions with `std::u16string` and C-strings will be used instead.
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(std::u16string_view address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return parse_string(address);
@@ -211,11 +211,11 @@ public:
      * This method allows for parsing an IP address from a UTF-32 string view, 
      * which is a sequence of 32-bit characters.
      * 
-     * @param[in] address the UTF-32 string view containing the IP address to parse
-     * @return    An instance of ip address parsed from the string view.
-     * @throw     parse_error exception caused by invalid input string
-     * @note      This method is available for C++17 and later versions.
-     * @remark    For C++ versions prior to C++17, member functions with `std::u32string` and C-strings will be used instead.
+     * @param[in] address The UTF-32 string view containing the IP address to parse.
+     * @return An instance of ip address parsed from the string view.
+     * @throw parse_error Exception caused by invalid input string.
+     * @note This method is available for C++17 and later versions.
+     * @remark For C++ versions prior to C++17, member functions with `std::u32string` and C-strings will be used instead.
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(std::u32string_view address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return parse_string(address);
@@ -226,11 +226,11 @@ public:
      * 
      * This method parses an IP address from a string view and provides an error code if the parsing fails.
      * 
-     * @param[in]  address the string view containing the IP address to parse
-     * @param[out] code    a reference to an `error_code` object that will be set if an error occurs during parsing
-     * @return     An instance of ip address parsed from the string view. If parsing fails, the returned object will be in an unspecified state.
-     * @note       This method is available for C++17 and later versions.
-     * @remark     For C++ versions prior to C++17, member functions with `std::string` and C-strings will be used instead.
+     * @param[in] address The string view containing the IP address to parse.
+     * @param[out] code A reference to an `error_code` object that will be set if an error occurs during parsing.
+     * @return An instance of ip address parsed from the string view. If parsing fails, the returned object will be in an unspecified state.
+     * @note This method is available for C++17 and later versions.
+     * @remark For C++ versions prior to C++17, member functions with `std::string` and C-strings will be used instead.
      */
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(std::string_view address, error_code& code) IPADDRESS_NOEXCEPT {
         return parse_string(address, code);
@@ -241,11 +241,11 @@ public:
      * 
      * This method parses an IP address from a wide string view and provides an error code if the parsing fails.
      * 
-     * @param[in]  address the wide string view containing the IP address to parse
-     * @param[out] code    a reference to an `error_code` object that will be set if an error occurs during parsing
-     * @return     An instance of ip address parsed from the wide string view. If parsing fails, the returned object will be in an unspecified state.
-     * @note       This method is available for C++17 and later versions.
-     * @remark     For C++ versions prior to C++17, member functions with `std::wstring` and C-strings will be used instead.
+     * @param[in] address The wide string view containing the IP address to parse.
+     * @param[out] code A reference to an `error_code` object that will be set if an error occurs during parsing.
+     * @return An instance of ip address parsed from the wide string view. If parsing fails, the returned object will be in an unspecified state.
+     * @note This method is available for C++17 and later versions.
+     * @remark For C++ versions prior to C++17, member functions with `std::wstring` and C-strings will be used instead.
      */
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(std::wstring_view address, error_code& code) IPADDRESS_NOEXCEPT {
         return parse_string(address, code);
@@ -258,10 +258,10 @@ public:
      * 
      * This method parses an IP address from a UTF-8 string view and provides an error code if the parsing fails.
      * 
-     * @param[in]  address the UTF-8 string view containing the IP address to parse
-     * @param[out] code    a reference to an `error_code` object that will be set if an error occurs during parsing
-     * @return     An instance of ip address parsed from the UTF-8 string view. If parsing fails, the returned object will be in an unspecified state.
-     * @note       This method is available for C++20 and later versions where `char8_t` is supported.
+     * @param[in] address The UTF-8 string view containing the IP address to parse.
+     * @param[out] code A reference to an `error_code` object that will be set if an error occurs during parsing.
+     * @return An instance of ip address parsed from the UTF-8 string view. If parsing fails, the returned object will be in an unspecified state.
+     * @note This method is available for C++20 and later versions where `char8_t` is supported.
      */
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(std::u8string_view address, error_code& code) IPADDRESS_NOEXCEPT {
         return parse_string(address, code);
@@ -274,11 +274,11 @@ public:
      * 
      * This method parses an IP address from a UTF-16 string view and provides an error code if the parsing fails.
      * 
-     * @param[in]  address the UTF-16 string view containing the IP address to parse
-     * @param[out] code    a reference to an `error_code` object that will be set if an error occurs during parsing
-     * @return     An instance of ip address parsed from the UTF-16 string view. If parsing fails, the returned object will be in an unspecified state.
-     * @note       This method is available for C++17 and later versions.
-     * @remark     For C++ versions prior to C++17, member functions with `std::u16string` and C-strings will be used instead.
+     * @param[in] address The UTF-16 string view containing the IP address to parse.
+     * @param[out] code A reference to an `error_code` object that will be set if an error occurs during parsing.
+     * @return An instance of ip address parsed from the UTF-16 string view. If parsing fails, the returned object will be in an unspecified state.
+     * @note This method is available for C++17 and later versions.
+     * @remark For C++ versions prior to C++17, member functions with `std::u16string` and C-strings will be used instead.
      */
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(std::u16string_view address, error_code& code) IPADDRESS_NOEXCEPT {
         return parse_string(address, code);
@@ -289,11 +289,11 @@ public:
      * 
      * This method parses an IP address from a UTF-32 string view and provides an error code if the parsing fails.
      * 
-     * @param[in]  address the UTF-32 string view containing the IP address to parse
-     * @param[out] code    a reference to an `error_code` object that will be set if an error occurs during parsing
-     * @return     An instance of ip address parsed from the UTF-32 string view. If parsing fails, the returned object will be in an unspecified state.
-     * @note       This method is available for C++17 and later versions.
-     * @remark     For C++ versions prior to C++17, member functions with `std::u32string` and C-strings will be used instead.
+     * @param[in] address The UTF-32 string view containing the IP address to parse.
+     * @param[out] code A reference to an `error_code` object that will be set if an error occurs during parsing.
+     * @return An instance of ip address parsed from the UTF-32 string view. If parsing fails, the returned object will be in an unspecified state.
+     * @note This method is available for C++17 and later versions.
+     * @remark For C++ versions prior to C++17, member functions with `std::u32string` and C-strings will be used instead.
      */
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(std::u32string_view address, error_code& code) IPADDRESS_NOEXCEPT {
         return parse_string(address, code);
@@ -304,9 +304,9 @@ public:
     /**
      * Parses an IP address from a `std::string`.
      * 
-     * @param[in] address the `std::string` containing the IP address to parse
-     * @return    An instance of ip address parsed from the string.
-     * @throw     parse_error exception caused by invalid input string
+     * @param[in] address The `std::string` containing the IP address to parse.
+     * @return An instance of ip address parsed from the string.
+     * @throw parse_error Exception caused by invalid input string.
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::string& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return parse_string(address);
@@ -315,9 +315,9 @@ public:
     /**
      * Parses an IP address from a wide `std::wstring`.
      * 
-     * @param[in] address the wide `std::wstring` containing the IP address to parse
-     * @return    An instance of ip address parsed from the string.
-     * @throw     parse_error exception caused by invalid input string
+     * @param[in] address The wide `std::wstring` containing the IP address to parse.
+     * @return An instance of ip address parsed from the string.
+     * @throw parse_error Exception caused by invalid input string.
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::wstring& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return parse_string(address);
@@ -326,9 +326,9 @@ public:
     /**
      * Parses an IP address from a UTF-16 `std::u16string`.
      * 
-     * @param[in] address the UTF-16 `std::u16string` containing the IP address to parse
-     * @return    An instance of ip address parsed from the string.
-     * @throw     parse_error exception caused by invalid input string
+     * @param[in] address The UTF-16 `std::u16string` containing the IP address to parse.
+     * @return An instance of ip address parsed from the string.
+     * @throw parse_error Exception caused by invalid input string.
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::u16string& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return parse_string(address);
@@ -337,9 +337,9 @@ public:
     /**
      * Parses an IP address from a UTF-32 `std::u32string`.
      * 
-     * @param[in] address the UTF-32 `std::u32string` containing the IP address to parse
-     * @return    An instance of ip address parsed from the string.
-     * @throw     parse_error exception caused by invalid input string
+     * @param[in] address The UTF-32 `std::u32string` containing the IP address to parse.
+     * @return An instance of ip address parsed from the string.
+     * @throw parse_error Exception caused by invalid input string.
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::u32string& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return parse_string(address);
@@ -348,9 +348,9 @@ public:
     /**
      * Parses an IP address from a `std::string` and reports errors through an error code.
      * 
-     * @param[in]  address the `std::string` containing the IP address to parse
-     * @param[out] code    a reference to an `error_code` object that will be set if an error occurs during parsing
-     * @return     An instance of ip address parsed from the string. If parsing fails, the returned object will be in an unspecified state.
+     * @param[in] address The `std::string` containing the IP address to parse.
+     * @param[out] code A reference to an `error_code` object that will be set if an error occurs during parsing.
+     * @return An instance of ip address parsed from the string. If parsing fails, the returned object will be in an unspecified state.
      */
     static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::string& address, error_code& code) IPADDRESS_NOEXCEPT {
         return parse_string(address, code);
@@ -359,9 +359,9 @@ public:
     /**
      * Parses an IP address from a wide `std::wstring` and reports errors through an error code.
      * 
-     * @param[in]  address the wide `std::wstring` containing the IP address to parse
-     * @param[out] code    a reference to an `error_code` object that will be set if an error occurs during parsing
-     * @return     An instance of ip address parsed from the wide string. If parsing fails, the returned object will be in an unspecified state.
+     * @param[in] address The wide `std::wstring` containing the IP address to parse.
+     * @param[out] code A reference to an `error_code` object that will be set if an error occurs during parsing.
+     * @return An instance of ip address parsed from the wide string. If parsing fails, the returned object will be in an unspecified state.
      */
     static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::wstring& address, error_code& code) IPADDRESS_NOEXCEPT {
         return parse_string(address, code);
@@ -370,9 +370,9 @@ public:
     /**
      * Parses an IP address from a UTF-16 `std::u16string` and reports errors through an error code.
      * 
-     * @param[in]  address the UTF-16 `std::u16string` containing the IP address to parse
-     * @param[out] code    a reference to an `error_code` object that will be set if an error occurs during parsing
-     * @return     An instance of ip address parsed from the UTF-16 string. If parsing fails, the returned object will be in an unspecified state.
+     * @param[in] address The UTF-16 `std::u16string` containing the IP address to parse.
+     * @param[out] code A reference to an `error_code` object that will be set if an error occurs during parsing.
+     * @return An instance of ip address parsed from the UTF-16 string. If parsing fails, the returned object will be in an unspecified state.
      */
     static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::u16string& address, error_code& code) IPADDRESS_NOEXCEPT {
         return parse_string(address, code);
@@ -381,9 +381,9 @@ public:
     /**
      * Parses an IP address from a UTF-32 `std::u32string` and reports errors through an error code.
      * 
-     * @param[in]  address the UTF-32 `std::u32string` containing the IP address to parse
-     * @param[out] code    a reference to an `error_code` object that will be set if an error occurs during parsing
-     * @return     An instance of ip address parsed from the UTF-32 string. If parsing fails, the returned object will be in an unspecified state.
+     * @param[in] address The UTF-32 `std::u32string` containing the IP address to parse.
+     * @param[out] code A reference to an `error_code` object that will be set if an error occurs during parsing.
+     * @return An instance of ip address parsed from the UTF-32 string. If parsing fails, the returned object will be in an unspecified state.
      */
     static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::u32string& address, error_code& code) IPADDRESS_NOEXCEPT {
         return parse_string(address, code);
@@ -397,10 +397,10 @@ public:
      * This method template parses an IP address from a character array of a 
      * specified size. Can check and get the result at compile time.
      * 
-     * @tparam    T       the character type of the array
-     * @tparam    N       the size of the character array
-     * @param[in] address the character array containing the IP address to parse
-     * @return    An instance of ip address parsed from the character array.
+     * @tparam T The character type of the array.
+     * @tparam N The size of the character array.
+     * @param[in] address The character array containing the IP address to parse.
+     * @return An instance of ip address parsed from the character array.
      */
     template <typename T, size_t N>
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(const T(&address)[N]) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
@@ -415,11 +415,11 @@ public:
      * This method template parses an IP address from a character array of a specified size 
      * and provides an error code if the parsing fails.
      * 
-     * @tparam     T       the character type of the array
-     * @tparam     N       the size of the character array
-     * @param[in]  address the character array containing the IP address to parse
-     * @param[out] code    a reference to an `error_code` object that will be set if an error occurs during parsing
-     * @return     An instance of ip address parsed from the character array. If parsing fails, the returned object will be in an unspecified state.
+     * @tparam T The character type of the array.
+     * @tparam N The size of the character array.
+     * @param[in] address The character array containing the IP address to parse.
+     * @param[out] code A reference to an `error_code` object that will be set if an error occurs during parsing.
+     * @return An instance of ip address parsed from the character array. If parsing fails, the returned object will be in an unspecified state.
      */
     template <typename T, size_t N>
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(const T(&address)[N], error_code& code) IPADDRESS_NOEXCEPT {
@@ -443,8 +443,8 @@ public:
      * Checks if the IP address is a multicast address.
      * 
      * @return `true` if the IP address is reserved for multicast use, `false` otherwise.
-     * @see    [RFC 3171 for IPv4](https://datatracker.ietf.org/doc/html/rfc3171.html)
-     * @see    [RFC 2373 for IPv6](https://datatracker.ietf.org/doc/html/rfc2373.html)
+     * @see [RFC 3171 for IPv4](https://datatracker.ietf.org/doc/html/rfc3171.html).
+     * @see [RFC 2373 for IPv6](https://datatracker.ietf.org/doc/html/rfc2373.html).
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_multicast() const IPADDRESS_NOEXCEPT;
 
@@ -452,8 +452,8 @@ public:
      * Checks if the IP address is a private address.
      * 
      * @return `true` if the IP address is allocated for private networks, `false` otherwise.
-     * @see    [iana-ipv4-special-registry](https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml)
-     * @see    [iana-ipv6-special-registry](https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml)
+     * @see [iana-ipv4-special-registry](https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml).
+     * @see [iana-ipv6-special-registry](https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml).
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_private() const IPADDRESS_NOEXCEPT;
 
@@ -461,8 +461,8 @@ public:
      * Checks if the IP address is a global address.
      * 
      * @return `true` if the IP address is allocated for public networks, `false` otherwise.
-     * @see    [iana-ipv4-special-registry](https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml)
-     * @see    [iana-ipv6-special-registry](https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml)
+     * @see [iana-ipv4-special-registry](https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml).
+     * @see [iana-ipv6-special-registry](https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml).
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_global() const IPADDRESS_NOEXCEPT;
 
@@ -477,8 +477,8 @@ public:
      * Checks if the IP address is a loopback address.
      * 
      * @return `true` if the IP address is a loopback address, `false` otherwise.
-     * @see    [RFC 3330 for IPv4](https://datatracker.ietf.org/doc/html/rfc3330.html)
-     * @see    [RFC 2373 for IPv6](https://datatracker.ietf.org/doc/html/rfc2373.html)
+     * @see [RFC 3330 for IPv4](https://datatracker.ietf.org/doc/html/rfc3330.html).
+     * @see [RFC 2373 for IPv6](https://datatracker.ietf.org/doc/html/rfc2373.html).
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_loopback() const IPADDRESS_NOEXCEPT;
 
@@ -486,7 +486,7 @@ public:
      * Checks if the IP address is a link-local address.
      * 
      * @return `true` if the IP address is reserved for link-local usage, `false` otherwise.
-     * @see    [RFC 3927](https://datatracker.ietf.org/doc/html/rfc3927.html)
+     * @see [RFC 3927](https://datatracker.ietf.org/doc/html/rfc3927.html).
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_link_local() const IPADDRESS_NOEXCEPT;
 
@@ -498,8 +498,8 @@ public:
      * This type of address is used to indicate the absence of an address.
      * 
      * @return `true` if the IP address is unspecified (all bits are zero), `false` otherwise.
-     * @see    [RFC 5735 for IPv4](https://datatracker.ietf.org/doc/html/rfc5735.html)
-     * @see    [RFC 2373 for IPv6](https://datatracker.ietf.org/doc/html/rfc2373.html)
+     * @see [RFC 5735 for IPv4](https://datatracker.ietf.org/doc/html/rfc5735.html).
+     * @see [RFC 2373 for IPv6](https://datatracker.ietf.org/doc/html/rfc2373.html).
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_unspecified() const IPADDRESS_NOEXCEPT {
         const auto& b = Base::bytes();
@@ -518,7 +518,7 @@ public:
      * The format of the output string can be adjusted by passing the desired format as an argument.
      * The default format is 'compressed'.
      * 
-     * @param fmt The format to use for the string representation. Defaults to `format::compressed`.
+     * @param[in] fmt The format to use for the string representation. Defaults to `format::compressed`.
      * @return A `std::string` representing the IP address in the specified format.
      */
     IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string to_string(format fmt = format::compressed) const {

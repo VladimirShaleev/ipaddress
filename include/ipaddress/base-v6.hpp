@@ -24,7 +24,7 @@ namespace IPADDRESS_NAMESPACE {
  * such as version identification, size, and conversion from string representations.
  * It is intended to be extended by more specialized IPv6 address classes.
  * 
- * @tparam Ext the extension type that provides additional functionality
+ * @tparam Ext The extension type that provides additional functionality.
  */
 template <typename Ext>
 class base_v6 {

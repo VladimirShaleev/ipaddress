@@ -220,7 +220,7 @@ public:
      * It is particularly relevant for link-local and site-local addresses.
      * 
      * @return A `scope` object representing the scope identifier of the IPv6 address.
-     * @remark If the scope is disabled in the settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`), then an empty scope will be returned
+     * @remark If the scope is disabled in the settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`), then an empty scope will be returned.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE scope get_scope_id() const IPADDRESS_NOEXCEPT {
         return scope(
@@ -241,7 +241,7 @@ public:
      * @tparam T The character type of the scope identifier.
      * @tparam N The size of the scope identifier array.
      * @param[in] scope_id The character array representing the scope identifier.
-     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect
+     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect.
      */
     template <typename T, size_t N>
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE void set_scope_id(const T(&scope_id)[N]) IPADDRESS_NOEXCEPT {
@@ -265,13 +265,13 @@ public:
      * way to handle strings without copying them.
      * 
      * @param[in] scope_id The string view representing the scope identifier.
-     * @throw parse_error exception caused by invalid input string
+     * @throw parse_error Exception caused by invalid input string.
      * @note This method is available for C++17 and later versions.
      * @parblock
      * @remark For C++ versions prior to C++17, member functions with `std::string` and C-strings will be used instead.
      * @endparblock
      * @parblock
-     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect
+     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect.
      * @endparblock
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::string_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
@@ -285,13 +285,13 @@ public:
      * way to handle strings without copying them.
      * 
      * @param[in] scope_id The wide string view representing the scope identifier.
-     * @throw parse_error exception caused by invalid input string
+     * @throw parse_error Exception caused by invalid input string.
      * @note This method is available for C++17 and later versions.
      * @parblock
      * @remark For C++ versions prior to C++17, member functions with `std::wstring` and C-strings will be used instead.
      * @endparblock
      * @parblock
-     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect
+     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect.
      * @endparblock
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::wstring_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
@@ -307,9 +307,9 @@ public:
      * way to handle strings without copying them.
      * 
      * @param[in] scope_id The UTF-8 string view representing the scope identifier.
-     * @throw parse_error exception caused by invalid input string
+     * @throw parse_error Exception caused by invalid input string.
      * @note This method is available for C++20 and later versions where `char8_t` is supported.
-     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect
+     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect.
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u8string_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         change_scope_id(scope_id);
@@ -324,13 +324,13 @@ public:
      * way to handle strings without copying them.
      * 
      * @param[in] scope_id The UTF-16 string view representing the scope identifier.
-     * @throw parse_error exception caused by invalid input string
+     * @throw parse_error Exception caused by invalid input string.
      * @note This method is available for C++17 and later versions.
      * @parblock
      * @remark For C++ versions prior to C++17, member functions with `std::u16string` and C-strings will be used instead.
      * @endparblock
      * @parblock
-     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect
+     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect.
      * @endparblock
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u16string_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
@@ -344,13 +344,13 @@ public:
      * way to handle strings without copying them.
      * 
      * @param[in] scope_id The UTF-32 string view representing the scope identifier.
-     * @throw parse_error exception caused by invalid input string
+     * @throw parse_error Exception caused by invalid input string.
      * @note This method is available for C++17 and later versions.
      * @parblock
      * @remark For C++ versions prior to C++17, member functions with `std::u32string` and C-strings will be used instead.
      * @endparblock
      * @parblock
-     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect
+     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect.
      * @endparblock
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u32string_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
@@ -369,7 +369,7 @@ public:
      * @remark For C++ versions prior to C++17, member functions with `std::string` and C-strings will be used instead.
      * @endparblock
      * @parblock
-     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect
+     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect.
      * @endparblock
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
@@ -388,7 +388,7 @@ public:
      * @remark For C++ versions prior to C++17, member functions with `std::wstring` and C-strings will be used instead.
      * @endparblock
      * @parblock
-     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect
+     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect.
      * @endparblock
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::wstring_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
@@ -405,7 +405,7 @@ public:
      * @param[in] scope_id The UTF-8 string view representing the scope identifier.
      * @param[out] code An error_code object that will be set to the error that occurred, if any.
      * @note This method is available for C++20 and later versions.
-     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect
+     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect.
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u8string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
         change_scope_id(scope_id, code);
@@ -425,7 +425,7 @@ public:
      * @remark For C++ versions prior to C++17, member functions with `std::u16string` and C-strings will be used instead.
      * @endparblock
      * @parblock
-     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect
+     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect.
      * @endparblock
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u16string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
@@ -444,7 +444,7 @@ public:
      * @remark For C++ versions prior to C++17, member functions with `std::u32string` and C-strings will be used instead.
      * @endparblock
      * @parblock
-     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect
+     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect.
      * @endparblock
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u32string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
@@ -457,7 +457,7 @@ public:
      * Sets the scope identifier of the IPv6 address using a `std::string`.
      * 
      * @param[in] scope_id The string representing the scope identifier.
-     * @throw parse_error exception caused by invalid input string
+     * @throw parse_error Exception caused by invalid input string.
      */
     IPADDRESS_FORCE_INLINE void set_scope_id(const std::string& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         change_scope_id(scope_id);
@@ -467,7 +467,7 @@ public:
      * Sets the scope identifier of the IPv6 address using a `std::wstring`.
      * 
      * @param[in] scope_id The wide string representing the scope identifier.
-     * @throw parse_error exception caused by invalid input wide string
+     * @throw parse_error Exception caused by invalid input wide string.
      */
     IPADDRESS_FORCE_INLINE void set_scope_id(const std::wstring& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         change_scope_id(scope_id);
@@ -477,7 +477,7 @@ public:
      * Sets the scope identifier of the IPv6 address using a `std::u16string`.
      * 
      * @param[in] scope_id The UTF-16 string representing the scope identifier.
-     * @throw parse_error exception caused by invalid input UTF-16 string
+     * @throw parse_error Exception caused by invalid input UTF-16 string.
      */
     IPADDRESS_FORCE_INLINE void set_scope_id(const std::u16string& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         change_scope_id(scope_id);
@@ -487,7 +487,7 @@ public:
      * Sets the scope identifier of the IPv6 address using a `std::u32string`.
      * 
      * @param[in] scope_id The UTF-32 string representing the scope identifier.
-     * @throw parse_error exception caused by invalid input UTF-32 string
+     * @throw parse_error Exception caused by invalid input UTF-32 string.
      */
     IPADDRESS_FORCE_INLINE void set_scope_id(const std::u32string& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         change_scope_id(scope_id);
@@ -611,7 +611,7 @@ public:
      * 
      * @return An optional containing the encapsulated IPv4 address if the IPv6 address is a 6to4 address, or an empty optional otherwise.
      * @remark A 6to4 address uses a `2002::/16` prefix and embeds an IPv4 address in the next 32 bits.
-     * @see [RFC 3056](https://datatracker.ietf.org/doc/html/rfc3056.html)
+     * @see [RFC 3056](https://datatracker.ietf.org/doc/html/rfc3056.html).
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<ipv4_address> sixtofour() const IPADDRESS_NOEXCEPT {
         const auto& b = bytes();
@@ -629,7 +629,7 @@ public:
      * @retval std::pair::first The Teredo server IPv4 address
      * @retval std::pair::second The Teredo client IPv4 address
      * @remark A Teredo address begins with the `2001::/32` prefix and is used for NAT traversal for IPv6.
-     * @see [RFC 4380](https://datatracker.ietf.org/doc/html/rfc4380.html)
+     * @see [RFC 4380](https://datatracker.ietf.org/doc/html/rfc4380.html).
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<std::pair<ipv4_address, ipv4_address>> teredo() const IPADDRESS_NOEXCEPT {
         const auto& b = bytes();

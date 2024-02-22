@@ -29,7 +29,7 @@ namespace IPADDRESS_NAMESPACE {
  * check an `optional<T>` in a boolean context, such as in an if-statement, it will 
  * evaluate to true if there’s a value present, and false otherwise.
  * 
- * @tparam T the type of the value to manage initialization state for
+ * @tparam T The type of the value to manage initialization state for.
  */
 template <typename T>
 class optional {
@@ -49,7 +49,7 @@ public:
     /**
      * Move constructor that constructs an `optional` object with a contained value, initializing it with \a val.
      * 
-     * @param[in,out] val the value to move into the `optional` object
+     * @param[in,out] val The value to move into the `optional` object.
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional(value_type&& val) IPADDRESS_NOEXCEPT
         :
@@ -60,7 +60,7 @@ public:
     /**
      * Copy constructor that constructs an `optional` object with a contained value, copying it from \a opt.
      * 
-     * @param[in] opt the `optional` object to copy the value from
+     * @param[in] opt The `optional` object to copy the value from.
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional(const optional<T>& opt) IPADDRESS_NOEXCEPT
         :
@@ -82,8 +82,8 @@ public:
     /**
      * Move assignment operator that sets the contained value of the `optional` object to \a val.
      * 
-     * @param[in,out] val the value to move into the `optional` object
-     * @return        A reference to the `optional` object.
+     * @param[in,out] val The value to move into the `optional` object.
+     * @return A reference to the `optional` object.
      */
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE optional& operator=(value_type&& val) IPADDRESS_NOEXCEPT {
         _has_value = true;
@@ -94,8 +94,8 @@ public:
     /**
      * Assigns the value and the state of existence from another `optional` object.
      * 
-     * @param[in] opt the `optional` object to copy from
-     * @return    A reference to `*this`.
+     * @param[in] opt The `optional` object to copy from.
+     * @return A reference to `*this`.
      */
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE optional& operator=(const optional<T>& opt) IPADDRESS_NOEXCEPT {
         _has_value = opt._has_value;

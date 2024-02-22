@@ -40,7 +40,7 @@ IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void is_char_type() IPADDRESS_NOEXCEP
  * fixed_string is a template class that encapsulates a string of a fixed number of characters.
  * It is designed to be used where strings are needed as non-type template parameters.
  * 
- * @tparam N the maximum number of characters the fixed_string can hold.
+ * @tparam N The maximum number of characters the fixed_string can hold.
  */
 template <size_t N>
 struct fixed_string {
@@ -68,8 +68,8 @@ struct fixed_string {
      * This constructor template initializes a fixed_string with the contents of a given character array.
      * Characters from encodings other than ASCII may be truncated.
      * 
-     * @tparam T  the character type of the input array
-     * @param[in] data the character array to initialize the fixed_string with
+     * @tparam T The character type of the input array.
+     * @param[in] data The character array to initialize the fixed_string with.
      */
     template <typename T>
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string(const T (&data)[N + 1]) IPADDRESS_NOEXCEPT {
@@ -234,10 +234,10 @@ struct fixed_string {
      * Returns a reference to the character at the specified location \a n. If \a n is out of bounds,
      * an exception of type `std::out_of_range` will be thrown.
      * 
-     * @param[in] n the position of the character to return
-     * @return    A reference to the character at the specified location.
-     * @throw     std::out_of_range when going beyond the bounds of the character array
-     * @sa        at(size_t) const
+     * @param[in] n The position of the character to return.
+     * @return A reference to the character at the specified location.
+     * @throw std::out_of_range When going beyond the bounds of the character array.
+     * @sa at(size_t) const
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reference operator[](size_t n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return at(n);
@@ -249,10 +249,10 @@ struct fixed_string {
      * Returns a reference to the character at the specified location \a n. If \a n is out of bounds,
      * an exception of type `std::out_of_range` will be thrown.
      * 
-     * @param[in] n the position of the character to return
-     * @return    A reference to the character at the specified location.
-     * @throw     std::out_of_range when going beyond the bounds of the character array
-     * @sa        operator[](size_t) const
+     * @param[in] n The position of the character to return.
+     * @return A reference to the character at the specified location.
+     * @throw std::out_of_range When going beyond the bounds of the character array.
+     * @sa operator[](size_t) const
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reference at(size_t n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         if (n >= 0 && n < N) {
@@ -309,8 +309,8 @@ struct fixed_string {
      * 
      * Compares the string with another fixed_string lexicographically.
      * 
-     * @tparam    N2  the size of the other fixed_string
-     * @param[in] rhs the other fixed_string to compare with
+     * @tparam N2 The size of the other fixed_string.
+     * @param[in] rhs The other fixed_string to compare with.
      * @return Negative value if less, zero if equal, positive value if greater.
      */
     template <size_t N2>
@@ -492,11 +492,11 @@ struct fixed_string<0> {
  * Checks if the contents of \a lhs and \a rhs are equal, meaning they have the same 
  * number of elements and each element in \a lhs compares equal with the element in \a rhs at the same position.
  * 
- * @tparam    N1  the maximum number of characters of \a lhs
- * @tparam    N2  the maximum number of characters of \a rhs
- * @param[in] lhs the fixed string whose contents to compare
- * @param[in] rhs the fixed string whose contents to compare
- * @return    `true` if the contents of the strings are equal, `false` otherwise.
+ * @tparam N1 The maximum number of characters of \a lhs.
+ * @tparam N2 The maximum number of characters of \a rhs.
+ * @param[in] lhs The fixed string whose contents to compare.
+ * @param[in] rhs The fixed string whose contents to compare.
+ * @return `true` if the contents of the strings are equal, `false` otherwise.
  */
 template <size_t N1, size_t N2>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
@@ -509,11 +509,11 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(c
  * Checks if the contents of \a lhs and \a rhs are not equal, meaning they do not have the same 
  * number of elements or there is at least one position at which the elements in \a lhs and \a rhs differ.
  * 
- * @tparam    N1  the maximum number of characters of \a lhs
- * @tparam    N2  the maximum number of characters of \a rhs
- * @param[in] lhs the fixed string whose contents to compare
- * @param[in] rhs the fixed string whose contents to compare
- * @return    `true` if the contents of the strings are not equal, `false` otherwise.
+ * @tparam N1 The maximum number of characters of \a lhs.
+ * @tparam N2 The maximum number of characters of \a rhs.
+ * @param[in] lhs The fixed string whose contents to compare.
+ * @param[in] rhs The fixed string whose contents to compare.
+ * @return `true` if the contents of the strings are not equal, `false` otherwise.
  */
 template <size_t N1, size_t N2>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
@@ -527,11 +527,11 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
      * 
      * Uses the three-way comparison operator (spaceship operator) to compare the contents of \a lhs and \a rhs.
      * 
-     * @tparam    N1  the maximum number of characters of \a lhs
-     * @tparam    N2  the maximum number of characters of \a rhs
-     * @param[in] lhs the fixed string whose contents to compare
-     * @param[in] rhs the fixed string whose contents to compare
-     * @return    The relative order of the first pair of non-equivalent elements in \a lhs and \a rhs if there are such elements.
+     * @tparam N1 The maximum number of characters of \a lhs.
+     * @tparam N2 The maximum number of characters of \a rhs.
+     * @param[in] lhs The fixed string whose contents to compare.
+     * @param[in] rhs The fixed string whose contents to compare.
+     * @return The relative order of the first pair of non-equivalent elements in \a lhs and \a rhs if there are such elements.
      */
     template <size_t N1, size_t N2>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
@@ -551,11 +551,11 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
      * 
      * Checks if the contents of \a lhs are lexicographically less than the contents of \a rhs.
      * 
-     * @tparam    N1  the maximum number of characters of \a lhs
-     * @tparam    N2  the maximum number of characters of \a rhs
-     * @param[in] lhs the fixed string whose contents to compare
-     * @param[in] rhs the fixed string whose contents to compare
-     * @return    `true` if the contents of \a lhs are lexicographically less than the contents of \a rhs, `false` otherwise.
+     * @tparam N1 The maximum number of characters of \a lhs.
+     * @tparam N2 The maximum number of characters of \a rhs.
+     * @param[in] lhs The fixed string whose contents to compare.
+     * @param[in] rhs The fixed string whose contents to compare.
+     * @return `true` if the contents of \a lhs are lexicographically less than the contents of \a rhs, `false` otherwise.
      */
     template <size_t N1, size_t N2>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
@@ -567,11 +567,11 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
      * 
      * Determines if the contents of \a lhs are lexicographically greater than the contents of \a rhs.
      * 
-     * @tparam    N1  the maximum number of characters of \a lhs
-     * @tparam    N2  the maximum number of characters of \a rhs
-     * @param[in] lhs the fixed string whose contents to compare
-     * @param[in] rhs the fixed string whose contents to compare
-     * @return    `true` if \a lhs is lexicographically greater than \a rhs, `false` otherwise.
+     * @tparam N1 The maximum number of characters of \a lhs.
+     * @tparam N2 The maximum number of characters of \a rhs.
+     * @param[in] lhs The fixed string whose contents to compare.
+     * @param[in] rhs The fixed string whose contents to compare.
+     * @return `true` if \a lhs is lexicographically greater than \a rhs, `false` otherwise.
      */
     template <size_t N1, size_t N2>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
@@ -583,11 +583,11 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
      * 
      * Determines if the contents of \a lhs are lexicographically less than or equal to the contents of \a rhs.
      * 
-     * @tparam    N1  the maximum number of characters of \a lhs
-     * @tparam    N2  the maximum number of characters of \a rhs
-     * @param[in] lhs the fixed string whose contents to compare
-     * @param[in] rhs the fixed string whose contents to compare
-     * @return    `true` if \a lhs is lexicographically less than or equal to \a rhs, `false` otherwise.
+     * @tparam N1 The maximum number of characters of \a lhs.
+     * @tparam N2 The maximum number of characters of \a rhs.
+     * @param[in] lhs The fixed string whose contents to compare.
+     * @param[in] rhs The fixed string whose contents to compare.
+     * @return `true` if \a lhs is lexicographically less than or equal to \a rhs, `false` otherwise.
      */
     template <size_t N1, size_t N2>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
@@ -599,11 +599,11 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
      * 
      * Determines if the contents of \a lhs are lexicographically greater than or equal to the contents of \a rhs.
      * 
-     * @tparam    N1  the maximum number of characters of \a lhs
-     * @tparam    N2  the maximum number of characters of \a rhs
-     * @param[in] lhs the fixed string whose contents to compare
-     * @param[in] rhs the fixed string whose contents to compare
-     * @return    `true` if \a lhs is lexicographically greater than or equal to \a rhs, `false` otherwise.
+     * @tparam N1 The maximum number of characters of \a lhs.
+     * @tparam N2 The maximum number of characters of \a rhs.
+     * @param[in] lhs The fixed string whose contents to compare.
+     * @param[in] rhs The fixed string whose contents to compare.
+     * @return `true` if \a lhs is lexicographically greater than or equal to \a rhs, `false` otherwise.
      */
     template <size_t N1, size_t N2>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
@@ -617,9 +617,9 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
  * 
  * Constructs a fixed_string object from a character array, deducing the size automatically.
  * 
- * @tparam    N    the size of the character array plus one for the null terminator
- * @param[in] data the character array to initialize the fixed_string with
- * @return    A fixed_string object of size N-1.
+ * @tparam N The size of the character array plus one for the null terminator.
+ * @param[in] data The character array to initialize the fixed_string with.
+ * @return A fixed_string object of size N-1.
  */
 template <size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 1> make_fixed_string(const char(&data)[N]) IPADDRESS_NOEXCEPT {
@@ -631,9 +631,9 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 
  * 
  * Constructs a fixed_string object from a wide character array, deducing the size automatically.
  * 
- * @tparam    N    the size of the wide character array plus one for the null terminator
- * @param[in] data the wide character array to initialize the fixed_string with
- * @return    A fixed_string object of size N-1.
+ * @tparam N The size of the wide character array plus one for the null terminator.
+ * @param[in] data The wide character array to initialize the fixed_string with.
+ * @return A fixed_string object of size N-1.
  */
 template <size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 1> make_fixed_string(const wchar_t(&data)[N]) IPADDRESS_NOEXCEPT {
@@ -645,9 +645,9 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 
  * 
  * Constructs a fixed_string object from a UTF-16 character array, deducing the size automatically.
  * 
- * @tparam    N    the size of the UTF-16 character array plus one for the null terminator
- * @param[in] data the UTF-16 character array to initialize the fixed_string with
- * @return    A fixed_string object of size N-1.
+ * @tparam N The size of the UTF-16 character array plus one for the null terminator.
+ * @param[in] data The UTF-16 character array to initialize the fixed_string with.
+ * @return A fixed_string object of size N-1.
  */
 template <size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 1> make_fixed_string(const char16_t(&data)[N]) IPADDRESS_NOEXCEPT {
@@ -659,9 +659,9 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 
  * 
  * Constructs a fixed_string object from a UTF-32 character array, deducing the size automatically.
  * 
- * @tparam    N    the size of the UTF-32 character array plus one for the null terminator
- * @param[in] data the UTF-32 character array to initialize the fixed_string with
- * @return    A fixed_string object of size N-1.
+ * @tparam N The size of the UTF-32 character array plus one for the null terminator.
+ * @param[in] data The UTF-32 character array to initialize the fixed_string with.
+ * @return A fixed_string object of size N-1.
  */
 template <size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 1> make_fixed_string(const char32_t(&data)[N]) IPADDRESS_NOEXCEPT {
@@ -675,9 +675,9 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 
  * 
  * Constructs a fixed_string object from a UTF-8 character array, deducing the size automatically.
  * 
- * @tparam    N    the size of the UTF-8 character array plus one for the null terminator
- * @param[in] data the UTF-8 character array to initialize the fixed_string with
- * @return    A fixed_string object of size N-1.
+ * @tparam N The size of the UTF-8 character array plus one for the null terminator.
+ * @param[in] data The UTF-8 character array to initialize the fixed_string with.
+ * @return A fixed_string object of size N-1.
  */
 template <size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 1> make_fixed_string(const char8_t(&data)[N]) IPADDRESS_NOEXCEPT {

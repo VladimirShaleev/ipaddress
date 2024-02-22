@@ -118,7 +118,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_little_en
 /**
  * Swaps the bytes of a 32-bit unsigned integer.
  * 
- * @param[in] value the integer value to swap bytes of
+ * @param[in] value The integer value to swap bytes of.
  * @return The value with its bytes swapped.
  */
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint32_t swap_bytes(uint32_t value) IPADDRESS_NOEXCEPT {

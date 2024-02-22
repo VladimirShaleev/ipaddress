@@ -430,8 +430,8 @@ public:
      * 
      * Test.
      * 
-     * @param[in] address character array for ip
-     * @param[out] code saves the execution result
+     * @param[in] address Character array for ip.
+     * @param[out] code Saves the execution result.
      * @return ip addresss
      */
     template <typename T, size_t N>

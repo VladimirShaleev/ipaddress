@@ -111,11 +111,11 @@ public:
     /**
      * Constructs an error with a code and a concatenated message from multiple arguments.
      * 
-     * @tparam    FirstArg the type of the first argument passed to the constructor
-     * @tparam    Args     the types of the additional arguments passed to the constructor
-     * @param[in] code     the error code associated with the exception
-     * @param[in] arg      the first argument describing the error
-     * @param[in] args     additional arguments describing the error
+     * @tparam FirstArg The type of the first argument passed to the constructor.
+     * @tparam Args The types of the additional arguments passed to the constructor.
+     * @param[in] code The error code associated with the exception.
+     * @param[in] arg The first argument describing the error.
+     * @param[in] args Additional arguments describing the error.
      */
     template <typename FirstArg, typename... Args>
     explicit error(error_code code, const FirstArg& arg, const Args&... args) : std::runtime_error(concatenate(arg, args...)), _code(code) {
@@ -124,8 +124,8 @@ public:
     /**
      * Constructs an error with a code and a message string.
      * 
-     * @param[in] code    the error code associated with the exception
-     * @param[in] message a detailed description of the error
+     * @param[in] code The error code associated with the exception.
+     * @param[in] message A detailed description of the error.
      */
     explicit error(error_code code, const std::string& message) : std::runtime_error(message), _code(code) {
     }
@@ -133,8 +133,8 @@ public:
     /**
      * Constructs an error with a code and a message C-string.
      * 
-     * @param[in] code    the error code associated with the exception
-     * @param[in] message a detailed description of the error
+     * @param[in] code The error code associated with the exception.
+     * @param[in] message A detailed description of the error.
      */
     explicit error(error_code code, const char* message) : std::runtime_error(message), _code(code) {
     }
@@ -185,11 +185,11 @@ public:
     /**
      * Constructs a parsing error with a code and a concatenated message from multiple arguments.
      * 
-     * @tparam    FirstArg the type of the first argument passed to the constructor
-     * @tparam    Args     the types of the additional arguments passed to the constructor
-     * @param[in] code     the error code associated with the parsing exception
-     * @param[in] arg      the first argument describing the error
-     * @param[in] args     additional arguments describing the error
+     * @tparam FirstArg The type of the first argument passed to the constructor.
+     * @tparam Args The types of the additional arguments passed to the constructor.
+     * @param[in] code The error code associated with the parsing exception.
+     * @param[in] arg The first argument describing the error.
+     * @param[in] args Additional arguments describing the error.
      */
     template <typename FirstArg, typename... Args>
     explicit parse_error(error_code code, const FirstArg& arg, const Args&... args) : error(code, arg, args...) {
@@ -198,8 +198,8 @@ public:
     /**
      * Constructs a parsing error with a code and a message string.
      * 
-     * @param[in] code    the error code associated with the parsing exception
-     * @param[in] message a detailed description of the parsing error
+     * @param[in] code The error code associated with the parsing exception.
+     * @param[in] message A detailed description of the parsing error.
      */
     explicit parse_error(error_code code, const std::string& message) : error(code, message) {
     }
@@ -207,8 +207,8 @@ public:
     /**
      * Constructs a parsing error with a code and a message C-string.
      * 
-     * @param[in] code    the error code associated with the parsing exception
-     * @param[in] message a detailed description of the parsing error
+     * @param[in] code The error code associated with the parsing exception.
+     * @param[in] message A detailed description of the parsing error.
      */
     explicit parse_error(error_code code, const char* message) : error(code, message) {
     }
@@ -229,11 +229,11 @@ public:
     /**
      * Constructs a logic error with a code and a concatenated message from multiple arguments.
      * 
-     * @tparam    FirstArg the type of the first argument passed to the constructor
-     * @tparam    Args     the types of the additional arguments passed to the constructor
-     * @param[in] code     the error code associated with the logical exception
-     * @param[in] arg      the first argument describing the error
-     * @param[in] args     additional arguments describing the error
+     * @tparam FirstArg The type of the first argument passed to the constructor.
+     * @tparam Args The types of the additional arguments passed to the constructor.
+     * @param[in] code The error code associated with the logical exception.
+     * @param[in] arg The first argument describing the error.
+     * @param[in] args Additional arguments describing the error.
      */
     template <typename FirstArg, typename... Args>
     explicit logic_error(error_code code, const FirstArg& arg, const Args&... args) : error(code, arg, args...) {
@@ -242,8 +242,8 @@ public:
     /**
      * Constructs a logic error with a code and a message string.
      * 
-     * @param[in] code    the error code associated with the logical exception
-     * @param[in] message a detailed description of the logical error
+     * @param[in] code The error code associated with the logical exception.
+     * @param[in] message A detailed description of the logical error.
      */
     explicit logic_error(error_code code, const std::string& message) : error(code, message) {
     }
@@ -251,8 +251,8 @@ public:
     /**
      * Constructs a logic error with a code and a message C-string.
      * 
-     * @param[in] code    the error code associated with the logical exception
-     * @param[in] message a detailed description of the logical error
+     * @param[in] code The error code associated with the logical exception.
+     * @param[in] message A detailed description of the logical error.
      */
     explicit logic_error(error_code code, const char* message) : error(code, message) {
     }

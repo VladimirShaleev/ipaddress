@@ -25,8 +25,8 @@ namespace IPADDRESS_NAMESPACE {
  * for element access and iteration in both normal and reverse order. It is designed to be used
  * where a constant size byte buffer is needed, such as in handling network addresses like IP addresses.
  * 
- * @tparam N the number of bytes in the array
- * @remark The purpose of the byte_array class is to provide functionality similar to std::array in 
+ * @tparam N The number of bytes in the array.
+ * @remark The purpose of the byte_array class is to provide functionality similar to std::array in .
  *         environments where std::array cannot be used to its full extent during compile-time operations.
  */
 template <std::size_t N>
@@ -149,9 +149,9 @@ struct byte_array {
     /**
      * Accesses the element at the specified index with bounds checking.
      * 
-     * @param[in] n the index of the element to access
-     * @return    A reference to the element at the specified index.
-     * @throw     std::out_of_range when going beyond the bounds of the array
+     * @param[in] n The index of the element to access.
+     * @return A reference to the element at the specified index.
+     * @throw std::out_of_range When going beyond the bounds of the array.
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference operator[](size_t n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return at(n);
@@ -160,9 +160,9 @@ struct byte_array {
     /**
      * Accesses the element at the specified index with bounds checking (const version).
      * 
-     * @param[in] n the index of the element to access
-     * @return    A const reference to the element at the specified index.
-     * @throw     std::out_of_range when going beyond the bounds of the array
+     * @param[in] n The index of the element to access.
+     * @return A const reference to the element at the specified index.
+     * @throw std::out_of_range When going beyond the bounds of the array.
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reference operator[](size_t n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return at(n);
@@ -171,9 +171,9 @@ struct byte_array {
     /**
      * Accesses the element at the specified index with bounds checking.
      * 
-     * @param[in] n the index of the element to access
-     * @return    A reference to the element at the specified index.
-     * @throw     std::out_of_range when going beyond the bounds of the array
+     * @param[in] n The index of the element to access.
+     * @return A reference to the element at the specified index.
+     * @throw std::out_of_range When going beyond the bounds of the array.
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference at(size_t n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         if (n >= 0 && n < N) {
@@ -189,9 +189,9 @@ struct byte_array {
     /**
      * Accesses the element at the specified index with bounds checking (const version).
      * 
-     * @param[in] n the index of the element to access
-     * @return    A const reference to the element at the specified index.
-     * @throw     std::out_of_range when going beyond the bounds of the array
+     * @param[in] n The index of the element to access.
+     * @return A const reference to the element at the specified index.
+     * @throw std::out_of_range When going beyond the bounds of the array.
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reference at(size_t n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         if (n >= 0 && n < N) {
@@ -261,7 +261,7 @@ struct byte_array {
     /**
      * Swaps the contents of this byte_array with another byte_array.
      * 
-     * @param[in,out] other the other byte_array to swap contents with
+     * @param[in,out] other The other byte_array to swap contents with.
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void swap(byte_array& other) IPADDRESS_NOEXCEPT {
         for (size_t i = 0; i < N; ++i) {
@@ -382,12 +382,12 @@ public:
  * 
  * Compares two byte_array objects of the same size element-wise to determine if they are equal.
  * 
- * @tparam    N   the size of the byte array
- * @param[in] lhs a reference to the left-hand side byte_array object
- * @param[in] rhs a reference to the right-hand side byte_array object
- * @return    A boolean value indicating whether the two byte_array objects are equal.
- * @retval    true the two byte_array objects are equal
- * @retval    false the two byte_array objects are not equal
+ * @tparam N The size of the byte array.
+ * @param[in] lhs A reference to the left-hand side byte_array object.
+ * @param[in] rhs A reference to the right-hand side byte_array object.
+ * @return A boolean value indicating whether the two byte_array objects are equal.
+ * @retval true the two byte_array objects are equal
+ * @retval false the two byte_array objects are not equal
  */
 template <std::size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
@@ -404,12 +404,12 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(c
  * 
  * Compares two byte_array objects of the same size element-wise to determine if they are not equal.
  * 
- * @tparam    N   the size of the byte array
- * @param[in] lhs a reference to the left-hand side byte_array object
- * @param[in] rhs a reference to the right-hand side byte_array object
- * @return    A boolean value indicating whether the two byte_array objects are not equal.
- * @retval    true the two byte_array objects are not equal
- * @retval    false the two byte_array objects are equal
+ * @tparam N The size of the byte array.
+ * @param[in] lhs A reference to the left-hand side byte_array object.
+ * @param[in] rhs A reference to the right-hand side byte_array object.
+ * @return A boolean value indicating whether the two byte_array objects are not equal.
+ * @retval true the two byte_array objects are not equal
+ * @retval false the two byte_array objects are equal
  */
 template <std::size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
@@ -425,13 +425,13 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
      * The comparison is done element-wise and stops at the first unequal pair of elements, returning the result
      * of comparing these two elements. If all elements are equal, the byte_arrays are considered equivalent.
      * 
-     * @tparam    N   the size of the byte array
-     * @param[in] lhs a reference to the left-hand side byte_array object
-     * @param[in] rhs a reference to the right-hand side byte_array object
-     * @return    An `std::strong_ordering` value indicating the ordering relationship.
-     * @retval    std::strong_ordering::less if lhs is lexicographically less than rhs
-     * @retval    std::strong_ordering::greater if lhs is lexicographically greater than rhs
-     * @retval    std::strong_ordering::equivalent if lhs is lexicographically equal to rhs
+     * @tparam N The size of the byte array.
+     * @param[in] lhs A reference to the left-hand side byte_array object.
+     * @param[in] rhs A reference to the right-hand side byte_array object.
+     * @return An `std::strong_ordering` value indicating the ordering relationship.
+     * @retval std::strong_ordering::less if lhs is lexicographically less than rhs
+     * @retval std::strong_ordering::greater if lhs is lexicographically greater than rhs
+     * @retval std::strong_ordering::equivalent if lhs is lexicographically equal to rhs
      */
     template <std::size_t N>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
@@ -452,10 +452,10 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
      * element-wise and stops at the first unequal pair where the left-hand side is less than
      * the right-hand side.
      * 
-     * @tparam    N   the size of the byte arrays
-     * @param[in] lhs a reference to the left-hand side byte_array object
-     * @param[in] rhs a reference to the right-hand side byte_array object
-     * @return    `true` if lhs is lexicographically less than rhs, `false` otherwise.
+     * @tparam N The size of the byte arrays.
+     * @param[in] lhs A reference to the left-hand side byte_array object.
+     * @param[in] rhs A reference to the right-hand side byte_array object.
+     * @return `true` if lhs is lexicographically less than rhs, `false` otherwise.
      */
     template <std::size_t N>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
@@ -472,10 +472,10 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
     /**
      * Determines if one byte_array is greater than another.
      * 
-     * @tparam    N   the size of the byte arrays
-     * @param[in] lhs a reference to the left-hand side byte_array object
-     * @param[in] rhs a reference to the right-hand side byte_array object
-     * @return    `true` if lhs is lexicographically greater than rhs, `false` otherwise.
+     * @tparam N The size of the byte arrays.
+     * @param[in] lhs A reference to the left-hand side byte_array object.
+     * @param[in] rhs A reference to the right-hand side byte_array object.
+     * @return `true` if lhs is lexicographically greater than rhs, `false` otherwise.
      */
     template <std::size_t N>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
@@ -485,10 +485,10 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
     /**
      * Determines if one byte_array is less than or equal to another.
      * 
-     * @tparam    N   the size of the byte arrays
-     * @param[in] lhs a reference to the left-hand side byte_array object
-     * @param[in] rhs a reference to the right-hand side byte_array object
-     * @return    `true` if lhs is lexicographically less than or equal to rhs, `false` otherwise.
+     * @tparam N The size of the byte arrays.
+     * @param[in] lhs A reference to the left-hand side byte_array object.
+     * @param[in] rhs A reference to the right-hand side byte_array object.
+     * @return `true` if lhs is lexicographically less than or equal to rhs, `false` otherwise.
      */
     template <std::size_t N>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
@@ -498,10 +498,10 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
     /**
      * Determines if one byte_array is greater than or equal to another.
      * 
-     * @tparam    N   the size of the byte arrays
-     * @param[in] lhs a reference to the left-hand side byte_array object
-     * @param[in] rhs a reference to the right-hand side byte_array object
-     * @return    `true` if lhs is lexicographically greater than or equal to rhs, `false` otherwise.
+     * @tparam N The size of the byte arrays.
+     * @param[in] lhs A reference to the left-hand side byte_array object.
+     * @param[in] rhs A reference to the right-hand side byte_array object.
+     * @return `true` if lhs is lexicographically greater than or equal to rhs, `false` otherwise.
      */
     template <std::size_t N>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
@@ -517,9 +517,9 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
  * If C++20 or later is available, it aliases to std::array to utilize constexpr support.
  * Otherwise, it falls back to a custom byte_array implementation which supports constexpr.
  * 
- * @tparam N the size of the byte array
- * @note   This alias allows for code to be portable across different C++ standards while maintaining
- *         the ability to use constexpr if available.
+ * @tparam N The size of the byte array.
+ * @note This alias allows for code to be portable across different C++ standards while maintaining.
+ *       the ability to use constexpr if available.
  */
 template <std::size_t N>
 using byte_array_type = 
