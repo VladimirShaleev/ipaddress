@@ -1,3 +1,14 @@
+/**
+ * @file      base-v4.hpp
+ * @brief     Adds basic functionality for working with IPv4
+ * @author    Vladimir Shaleev
+ * @copyright MIT License
+ * 
+ * This file provides foundational classes and functions necessary for handling IPv4 addresses,
+ * including parsing, constructing, and manipulating IPv4 address representations. It serves as
+ * a base for higher-level IPv4 address operations and utilities.
+ */
+
 #ifndef IPADDRESS_BASE_V4_HPP
 #define IPADDRESS_BASE_V4_HPP
 
@@ -6,6 +17,15 @@
 
 namespace IPADDRESS_NAMESPACE {
 
+/**
+ * A template class providing the base functionality for IPv4 addresses.
+ * 
+ * This class encapsulates the basic properties and operations for IPv4 addresses,
+ * such as version identification, size, and conversion from string representations.
+ * It is intended to be extended by more specialized IPv4 address classes.
+ * 
+ * @tparam Ext the extension type that provides additional functionality
+ */
 template <typename Ext>
 class base_v4 {
 public:
