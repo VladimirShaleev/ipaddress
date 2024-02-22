@@ -45,6 +45,8 @@ var namespaceipaddress =
       [ "V4", "namespaceipaddress.html#ace60f6a4856e90fa5be15ecf1cf0132eab354cab57768c7d4c1106eb4e82c75dc", null ],
       [ "V6", "namespaceipaddress.html#ace60f6a4856e90fa5be15ecf1cf0132eadb93f1c35b844334e2b266951618b4fe", null ]
     ] ],
+    [ "is_little_endian", "namespaceipaddress.html#a066ef6172d323384668ed580b5bf02e8", null ],
+    [ "swap_bytes", "namespaceipaddress.html#af504ee1a24f3d01cc4c0921fce8afda3", null ],
     [ "operator==", "namespaceipaddress.html#a921afc2b7b1b48c8eaaa542219140a46", null ],
     [ "operator!=", "namespaceipaddress.html#abc94263fae5eaa9b12381744e4fad052", null ],
     [ "operator<", "namespaceipaddress.html#a6ee39e575ff81121934a9e046708e3d1", null ],

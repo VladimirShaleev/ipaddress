@@ -138,7 +138,7 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exception for logical errors in IP address operations.  <a href="classipaddress_1_1logic__error.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1optional.html">optional</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The optional object.  <a href="classipaddress_1_1optional.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A template class to manage an optional contained value.  <a href="classipaddress_1_1optional.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1parse__error.html">parse_error</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exception for errors encountered during IP address parsing.  <a href="classipaddress_1_1parse__error.html#details">More...</a><br /></td></tr>
@@ -210,6 +210,12 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a066ef6172d323384668ed580b5bf02e8" id="r_a066ef6172d323384668ed580b5bf02e8"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a066ef6172d323384668ed580b5bf02e8">is_little_endian</a> () noexcept</td></tr>
+<tr class="memdesc:a066ef6172d323384668ed580b5bf02e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the system is little-endian.  <br /></td></tr>
+<tr class="separator:a066ef6172d323384668ed580b5bf02e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af504ee1a24f3d01cc4c0921fce8afda3" id="r_af504ee1a24f3d01cc4c0921fce8afda3"><td class="memItemLeft" align="right" valign="top">constexpr inline uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af504ee1a24f3d01cc4c0921fce8afda3">swap_bytes</a> (uint32_t value) noexcept</td></tr>
+<tr class="memdesc:af504ee1a24f3d01cc4c0921fce8afda3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swaps the bytes of a 32-bit unsigned integer.  <br /></td></tr>
+<tr class="separator:af504ee1a24f3d01cc4c0921fce8afda3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a921afc2b7b1b48c8eaaa542219140a46" id="r_a921afc2b7b1b48c8eaaa542219140a46"><td class="memTemplParams" colspan="2">template&lt;size_t N1, size_t N2&gt; </td></tr>
 <tr class="memitem:a921afc2b7b1b48c8eaaa542219140a46"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a921afc2b7b1b48c8eaaa542219140a46">operator==</a> (const <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N1 &gt; &amp;lhs, const <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N2 &gt; &amp;rhs) noexcept</td></tr>
 <tr class="memdesc:a921afc2b7b1b48c8eaaa542219140a46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares the contents of two fixed strings.  <br /></td></tr>
@@ -441,6 +447,68 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a066ef6172d323384668ed580b5bf02e8" name="a066ef6172d323384668ed580b5bf02e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a066ef6172d323384668ed580b5bf02e8">&#9670;&#160;</a></span>is_little_endian()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline bool ipaddress::is_little_endian </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if the system is little-endian. </p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the system is little-endian, <code>false</code> otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="af504ee1a24f3d01cc4c0921fce8afda3" name="af504ee1a24f3d01cc4c0921fce8afda3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af504ee1a24f3d01cc4c0921fce8afda3">&#9670;&#160;</a></span>swap_bytes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline uint32_t ipaddress::swap_bytes </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>value</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Swaps the bytes of a 32-bit unsigned integer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>the integer value to swap bytes of </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The value with its bytes swapped. </dd></dl>
+
+</div>
+</div>
 <a id="a921afc2b7b1b48c8eaaa542219140a46" name="a921afc2b7b1b48c8eaaa542219140a46"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a921afc2b7b1b48c8eaaa542219140a46">&#9670;&#160;</a></span>operator==() <span class="overload">[1/2]</span></h2>
 

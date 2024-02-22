@@ -4,7 +4,7 @@ var dir_7c6e110a4d07ed1e66c742628774e275 =
     [ "base-v6.hpp", "base-v6_8hpp_source.html", null ],
     [ "byte-array.hpp", "byte-array_8hpp_source.html", null ],
     [ "config.hpp", "config_8hpp.html", null ],
-    [ "endian.hpp", "endian_8hpp.html", null ],
+    [ "endian.hpp", "endian_8hpp.html", "endian_8hpp" ],
     [ "errors.hpp", "errors_8hpp.html", "errors_8hpp" ],
     [ "fixed-string.hpp", "fixed-string_8hpp.html", "fixed-string_8hpp" ],
     [ "hash.hpp", "hash_8hpp.html", null ],

@@ -112,12 +112,13 @@ $(function(){initNavTree('endian_8hpp.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#namespaces">Namespaces</a>  </div>
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">endian.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Defining macros to determine byte order.  
+<p>Defines macros to determine byte order.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="config_8hpp_source.html">config.hpp</a>&quot;</code><br />
 </div>
@@ -128,16 +129,28 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespaceipaddress" id="r_namespaceipaddress"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceipaddress.html">ipaddress</a></td></tr>
 <tr class="memdesc:namespaceipaddress"><td class="mdescLeft">&#160;</td><td class="mdescRight">IP addresses and networks. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a066ef6172d323384668ed580b5bf02e8" id="r_a066ef6172d323384668ed580b5bf02e8"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceipaddress.html#a066ef6172d323384668ed580b5bf02e8">ipaddress::is_little_endian</a> () noexcept</td></tr>
+<tr class="memdesc:a066ef6172d323384668ed580b5bf02e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the system is little-endian.  <br /></td></tr>
+<tr class="separator:a066ef6172d323384668ed580b5bf02e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af504ee1a24f3d01cc4c0921fce8afda3" id="r_af504ee1a24f3d01cc4c0921fce8afda3"><td class="memItemLeft" align="right" valign="top">constexpr inline uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceipaddress.html#af504ee1a24f3d01cc4c0921fce8afda3">ipaddress::swap_bytes</a> (uint32_t value) noexcept</td></tr>
+<tr class="memdesc:af504ee1a24f3d01cc4c0921fce8afda3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swaps the bytes of a 32-bit unsigned integer.  <br /></td></tr>
+<tr class="separator:af504ee1a24f3d01cc4c0921fce8afda3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Defining macros to determine byte order. </p>
+<div class="textblock"><p>Defines macros to determine byte order. </p>
 <dl class="section author"><dt>Author</dt><dd>Vladimir Shaleev </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>MIT License</dd></dl>
-<p>The following definitions are used to determine byte order, depending on their availability and with the following priority:</p><ol type="1">
-<li>user definition <code>IPADDRESS_ENDIAN</code>;</li>
-<li><code>std::endian</code> for C++20;</li>
-<li>macros provided by the platform or compiler; </li>
+<p>This header file contains macros and utility functions to determine and work with the byte order (endianness) of the system. It provides a set of preprocessor directives that establish the byte order based on various conditions, such as user definitions, C++20 standard features, or platform-specific macros.</p>
+<p>The file defines <code>IPADDRESS_LITTLE_ENDIAN</code> and <code>IPADDRESS_BIG_ENDIAN</code> as constants for comparison and sets <code>IPADDRESS_ENDIAN</code> accordingly. It also includes functions to check the system's endianness and to swap bytes in an integer, which are useful for network programming and handling data with different endianness.</p>
+<p>The determination of endianness is done with a priority order:</p><ol type="1">
+<li>User-defined <code>IPADDRESS_ENDIAN</code>.</li>
+<li>C++20's <code>std::endian</code>.</li>
+<li>Platform/compiler-provided macros.</li>
 </ol>
+<p>If the endianness cannot be determined, a compilation error is raised prompting the user to define <code>IPADDRESS_ENDIAN</code>. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.10.0-->

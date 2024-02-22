@@ -348,7 +348,7 @@ $(function(){initNavTree('ipv6-address_8hpp_source.html',''); initResizable(); }
 <div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>        <span class="keyword">auto</span>&amp; bytes = result._data.bytes;</div>
 <div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>        <span class="keywordtype">int</span> shift = 0;</div>
 <div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>        <span class="keywordtype">int</span> inc = 8;</div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>        <span class="keywordflow">if</span> (is_little_endian()) {</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="namespaceipaddress.html#a066ef6172d323384668ed580b5bf02e8">is_little_endian</a>()) {</div>
 <div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>            shift = 56;</div>
 <div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>            inc = -8;</div>
 <div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>        }</div>
@@ -365,7 +365,7 @@ $(function(){initNavTree('ipv6-address_8hpp_source.html',''); initResizable(); }
 <div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>        uint64_t lower = 0;</div>
 <div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>        <span class="keywordtype">int</span> shift = 0;</div>
 <div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>        <span class="keywordtype">int</span> inc = 8;</div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>        <span class="keywordflow">if</span> (is_little_endian()) {</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="namespaceipaddress.html#a066ef6172d323384668ed580b5bf02e8">is_little_endian</a>()) {</div>
 <div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>            shift = 56;</div>
 <div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>            inc = -8;</div>
 <div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>        }</div>
@@ -566,6 +566,7 @@ $(function(){initNavTree('ipv6-address_8hpp_source.html',''); initResizable(); }
 <div class="line"><a id="l00448" name="l00448"></a><span class="lineno">  448</span>} <span class="comment">// namespace IPADDRESS_NAMESPACE</span></div>
 <div class="line"><a id="l00449" name="l00449"></a><span class="lineno">  449</span> </div>
 <div class="line"><a id="l00450" name="l00450"></a><span class="lineno">  450</span><span class="preprocessor">#endif </span><span class="comment">// IPADDRESS_IPV6_ADDRESS_HPP</span></div>
+<div class="ttc" id="anamespaceipaddress_html_a066ef6172d323384668ed580b5bf02e8"><div class="ttname"><a href="namespaceipaddress.html#a066ef6172d323384668ed580b5bf02e8">ipaddress::is_little_endian</a></div><div class="ttdeci">constexpr inline bool is_little_endian() noexcept</div><div class="ttdoc">Checks if the system is little-endian.</div><div class="ttdef"><b>Definition</b> endian.hpp:108</div></div>
 <div class="ttc" id="anamespaceipaddress_html_a1e00093549b928c746d9e31081093ea9"><div class="ttname"><a href="namespaceipaddress.html#a1e00093549b928c746d9e31081093ea9">ipaddress::ipv6_address</a></div><div class="ttdeci">ip_address_base&lt; ipv6_address_base &gt; ipv6_address</div><div class="ttdoc">Test ipv4_address.</div><div class="ttdef"><b>Definition</b> ipv6-address.hpp:426</div></div>
 <div class="ttc" id="anamespaceipaddress_html_ab9d36790eab20692578a4e2e7d4f36f1"><div class="ttname"><a href="namespaceipaddress.html#ab9d36790eab20692578a4e2e7d4f36f1">ipaddress::ipv4_address</a></div><div class="ttdeci">ip_address_base&lt; ipv4_address_base &gt; ipv4_address</div><div class="ttdoc">Test ipv4_address.</div><div class="ttdef"><b>Definition</b> ipv4-address.hpp:67</div></div>
 <div class="ttc" id="anamespaceipaddress_html_acd1015a989b2b9e45fe6d0faa3e9a0fa"><div class="ttname"><a href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">ipaddress::error_code</a></div><div class="ttdeci">error_code</div><div class="ttdoc">Enumeration of error codes for IP address parsing and validation.</div><div class="ttdef"><b>Definition</b> errors.hpp:52</div></div>

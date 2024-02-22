@@ -118,7 +118,7 @@ $(function(){initNavTree('optional_8hpp.html',''); initResizable(); });
 </div><!--header-->
 <div class="contents">
 
-<p>The class template optional manages an optional contained value.  
+<p>Manages an optional contained value within a class template.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="config_8hpp_source.html">config.hpp</a>&quot;</code><br />
 </div>
@@ -127,7 +127,7 @@ $(function(){initNavTree('optional_8hpp.html',''); initResizable(); });
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1optional.html">ipaddress::optional&lt; T &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The optional object.  <a href="classipaddress_1_1optional.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A template class to manage an optional contained value.  <a href="classipaddress_1_1optional.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
@@ -137,12 +137,10 @@ Namespaces</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The class template optional manages an optional contained value. </p>
+<div class="textblock"><p>Manages an optional contained value within a class template. </p>
 <dl class="section author"><dt>Author</dt><dd>Vladimir Shaleev </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>MIT License</dd></dl>
-<p>A common use case for optional is the return value of a function that may fail. Any instance of <code>optional&lt;T&gt;</code> at any given point in time either contains a value or does not contain a value.</p>
-<p>If an <code>optional&lt;T&gt;</code> contains a value, the value is guaranteed to be allocated as part of the optional object footprint, i.e. no dynamic memory allocation ever takes place.</p>
-<p>When an object of type <code>optional&lt;T&gt;</code> is contextually converted to <code>bool</code>, the conversion returns <code>true</code> if the object contains a value and <code>false</code> if it does not contain a value. </p>
+<p>The <code>optional</code> class template is designed to handle situations where a value may or may not be present. It encapsulates a value in a way that does not require dynamic memory allocation, ensuring that the value, if present, is part of the <code>optional</code> object's footprint. This makes <code>optional</code> ideal for use as a return type for functions that may fail to return a value. An <code>optional</code> object can be contextually converted to <code>bool</code>, indicating whether a value is contained or not. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.10.0-->
