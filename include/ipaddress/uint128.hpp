@@ -595,11 +595,13 @@ public:
     }
     
     /**
-     * Subtraction.
-     * 
-     * @tparam T is integer type
-     * @param[in] lower of value
-     * @return New value.
+     * Subtraction operator with an integral type.
+     *
+     * Subtracts an integral value from this instance and returns a new `uint128_t` instance with the result.
+     *
+     * @tparam    T     an integral type to subtract from this instance
+     * @param[in] lower the integral value to subtract
+     * @return    A new `uint128_t` instance representing the difference.
      */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator-(T lower) const IPADDRESS_NOEXCEPT {
@@ -607,10 +609,12 @@ public:
     }
 
     /**
-     * Subtraction.
-     * 
-     * @param[in] other of value
-     * @return New value.
+     * Subtraction operator with another `uint128_t` instance.
+     *
+     * Subtracts the value of another `uint128_t` instance from this instance and returns a new `uint128_t` instance with the result.
+     *
+     * @param[in] other the `uint128_t` instance to subtract
+     * @return    A new `uint128_t` instance representing the difference.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator-(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         const uint64_t lower = _lower - other._lower;
@@ -619,11 +623,13 @@ public:
     }
 
     /**
-     * Multiplication.
-     * 
-     * @tparam T is integer type
-     * @param[in] lower of value
-     * @return New value.
+     * Multiplication operator with an integral type.
+     *
+     * Multiplies this instance by an integral value and returns a new `uint128_t` instance with the result.
+     *
+     * @tparam    T     an integral type to multiply this instance by
+     * @param[in] lower the integral value to multiply by
+     * @return    A new `uint128_t` instance representing the product.
      */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator*(T lower) const IPADDRESS_NOEXCEPT {
@@ -631,10 +637,12 @@ public:
     }
 
     /**
-     * Multiplication.
-     * 
-     * @param[in] other of value
-     * @return New value.
+     * Multiplication operator with another `uint128_t` instance.
+     *
+     * Multiplies this instance by another `uint128_t` instance and returns a new `uint128_t` instance with the result.
+     *
+     * @param[in] other the `uint128_t` instance to multiply by
+     * @return    A new `uint128_t` instance representing the product.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator*(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         uint64_t lower = 0;
@@ -644,11 +652,13 @@ public:
     }
     
     /**
-     * Division.
-     * 
-     * @tparam T is integer type
-     * @param[in] lower of value
-     * @return New value.
+     * Division operator with an integral type.
+     *
+     * Divides this instance by an integral value and returns a new `uint128_t` instance with the result.
+     *
+     * @tparam    T     an integral type to divide this instance by
+     * @param[in] lower the integral value to divide by
+     * @return    A new `uint128_t` instance representing the quotient.
      */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator/(T lower) const IPADDRESS_NOEXCEPT {
@@ -656,21 +666,25 @@ public:
     }
 
     /**
-     * Division.
-     * 
-     * @param[in] other of value
-     * @return New value.
+     * Division operator with another `uint128_t` instance.
+     *
+     * Divides this instance by another `uint128_t` instance and returns a new `uint128_t` instance with the result.
+     *
+     * @param[in] other the `uint128_t` instance to divide by
+     * @return    A new `uint128_t` instance representing the quotient.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator/(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return divide(*this, other);
     }
 
     /**
-     * Remainder.
-     * 
-     * @tparam T is integer type
-     * @param[in] lower of value
-     * @return New value.
+     * Remainder operator with an integral type.
+     *
+     * Calculates the remainder of this instance divided by an integral value and returns a new `uint128_t` instance with the result.
+     *
+     * @tparam    T     an integral type to divide this instance by
+     * @param[in] lower the integral value to divide by
+     * @return    A new `uint128_t` instance representing the remainder.
      */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator%(T lower) const IPADDRESS_NOEXCEPT {
@@ -678,10 +692,12 @@ public:
     }
 
     /**
-     * Remainder.
-     * 
-     * @param[in] other of value
-     * @return New value.
+     * Remainder operator with another `uint128_t` instance.
+     *
+     * Calculates the remainder of this instance divided by another `uint128_t` instance and returns a new `uint128_t` instance with the result.
+     *
+     * @param[in] other the `uint128_t` instance to divide by
+     * @return    A new `uint128_t` instance representing the remainder.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator%(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         const auto quotient = divide(*this, other);
@@ -689,11 +705,13 @@ public:
     }
 
     /**
-     * Bitwise AND.
-     * 
-     * @tparam T is integer type
-     * @param[in] lower of value
-     * @return New value.
+     * Bitwise AND operator with an integral type.
+     *
+     * Performs a bitwise AND operation between this instance and an integral value and returns a new `uint128_t` instance with the result.
+     *
+     * @tparam    T     an integral type to perform the bitwise AND with
+     * @param[in] lower the integral value to perform the bitwise AND with
+     * @return    A new `uint128_t` instance representing the result of the bitwise AND operation.
      */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator&(T lower) const IPADDRESS_NOEXCEPT {
@@ -701,21 +719,25 @@ public:
     }
 
     /**
-     * Bitwise AND.
-     * 
-     * @param[in] other of value
-     * @return New value.
+     * Bitwise AND operator with another `uint128_t` instance.
+     *
+     * Performs a bitwise AND operation between this instance and another `uint128_t` instance and returns a new `uint128_t` instance with the result.
+     *
+     * @param[in] other the `uint128_t` instance to perform the bitwise AND with
+     * @return    A new `uint128_t` instance representing the result of the bitwise AND operation.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator&(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return { _upper & other._upper, _lower & other._lower };
     }
 
     /**
-     * Bitwise OR.
-     * 
-     * @tparam T is integer type
-     * @param[in] lower of value
-     * @return New value.
+     * Bitwise OR operator with an integral type.
+     *
+     * Performs a bitwise OR operation between this instance and an integral value and returns a new `uint128_t` instance with the result.
+     *
+     * @tparam    T     an integral type to perform the bitwise OR with
+     * @param[in] lower the integral value to perform the bitwise OR with
+     * @return    A new `uint128_t` instance representing the result of the bitwise OR operation.
      */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator|(T lower) const IPADDRESS_NOEXCEPT {
@@ -723,21 +745,25 @@ public:
     }
 
     /**
-     * Bitwise OR.
-     * 
-     * @param[in] other of value
-     * @return New value.
+     * Bitwise OR operator with another `uint128_t` instance.
+     *
+     * Performs a bitwise OR operation between this instance and another `uint128_t` instance and returns a new `uint128_t` instance with the result.
+     *
+     * @param[in] other the `uint128_t` instance to perform the bitwise OR with
+     * @return    A new `uint128_t` instance representing the result of the bitwise OR operation.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator|(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return { _upper | other._upper, _lower | other._lower };
     }
 
     /**
-     * Bitwise XOR.
-     * 
-     * @tparam T is integer type
-     * @param[in] lower of value
-     * @return New value.
+     * Bitwise XOR operator with an integral type.
+     *
+     * Performs a bitwise XOR operation between this instance and an integral value and returns a new `uint128_t` instance with the result.
+     *
+     * @tparam    T     an integral type to perform the bitwise XOR with
+     * @param[in] lower the integral value to perform the bitwise XOR with
+     * @return    A new `uint128_t` instance representing the result of the bitwise XOR operation.
      */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator^(T lower) const IPADDRESS_NOEXCEPT {
@@ -745,21 +771,25 @@ public:
     }
 
     /**
-     * Bitwise XOR.
-     * 
-     * @param[in] other of value
-     * @return New value.
+     * Bitwise XOR operator with another `uint128_t` instance.
+     *
+     * Performs a bitwise XOR operation between this instance and another `uint128_t` instance and returns a new `uint128_t` instance with the result.
+     *
+     * @param[in] other the `uint128_t` instance to perform the bitwise XOR with
+     * @return    A new `uint128_t` instance representing the result of the bitwise XOR operation.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator^(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return { _upper ^ other._upper, _lower ^ other._lower };
     }
 
     /**
-     * Bitwise left shift.
-     * 
-     * @tparam T is integer type
-     * @param[in] shift of value
-     * @return New value.
+     * Bitwise left shift operator with an integral type.
+     *
+     * Shifts the bits of this instance to the left by the specified number of places and returns a new `uint128_t` instance with the result.
+     *
+     * @tparam    T     an integral type representing the number of places to shift
+     * @param[in] shift the number of bits to shift to the left
+     * @return    A new `uint128_t` instance representing the result of the left shift operation.
      */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator<<(T shift) const IPADDRESS_NOEXCEPT {
@@ -776,11 +806,13 @@ public:
     }
 
     /**
-     * Bitwise right shift.
-     * 
-     * @tparam T is integer type
-     * @param[in] shift of value
-     * @return New value.
+     * Bitwise right shift operator with an integral type.
+     *
+     * Shifts the bits of this instance to the right by the specified number of places and returns a new `uint128_t` instance with the result.
+     *
+     * @tparam    T     an integral type representing the number of places to shift
+     * @param[in] shift the number of bits to shift to the right
+     * @return    A new `uint128_t` instance representing the result of the right shift operation.
      */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator>>(T shift) const IPADDRESS_NOEXCEPT {
