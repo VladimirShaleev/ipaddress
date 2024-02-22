@@ -213,6 +213,15 @@ public:
     using base_type = typename base_v6<ipv6_address_base>::base_type; /**< The base type for the IPv6 address. */
     using uint_type = typename base_v6<ipv6_address_base>::uint_type; /**< The unsigned integer type for the IPv6 address. */
 
+    /**
+     * Retrieves the scope identifier of the IPv6 address.
+     * 
+     * The scope identifier is used to determine the context in which the address is valid.
+     * It is particularly relevant for link-local and site-local addresses.
+     * 
+     * @return A `scope` object representing the scope identifier of the IPv6 address.
+     * @remark If the scope is disabled in the settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`), then an empty scope will be returned
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE scope get_scope_id() const IPADDRESS_NOEXCEPT {
         return scope(
         #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH > 0
@@ -223,6 +232,17 @@ public:
         );
     }
 
+    /**
+     * Sets the scope identifier of the IPv6 address.
+     * 
+     * This function sets the scope identifier using a character array. The length of the array
+     * should not exceed `IPADDRESS_IPV6_SCOPE_MAX_LENGTH + 1`.
+     * 
+     * @tparam T The character type of the scope identifier.
+     * @tparam N The size of the scope identifier array.
+     * @param[in] scope_id The character array representing the scope identifier.
+     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect
+     */
     template <typename T, size_t N>
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE void set_scope_id(const T(&scope_id)[N]) IPADDRESS_NOEXCEPT {
         internal::is_char_type<T>();
