@@ -397,10 +397,12 @@ public:
     }
 
     /**
-     * Addition assignment.
-     * 
-     * @param[in] other of value
-     * @return This object.
+     * Addition assignment operator.
+     *
+     * Adds the value of another `uint128_t` instance to this instance and assigns the result to this instance.
+     *
+     * @param[in] other the `uint128_t` instance to add
+     * @return    A reference to this instance after addition.
      */
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator+=(const uint128_t& other) IPADDRESS_NOEXCEPT {
         *this = *this + other;
@@ -408,10 +410,12 @@ public:
     }
     
     /**
-     * Subtraction assignment.
-     * 
-     * @param[in] other of value
-     * @return This object.
+     * Subtraction assignment operator.
+     *
+     * Subtracts the value of another `uint128_t` instance from this instance and assigns the result to this instance.
+     *
+     * @param[in] other the `uint128_t` instance to subtract.
+     * @return    A reference to this instance after subtraction.
      */
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator-=(const uint128_t& other) IPADDRESS_NOEXCEPT {
         *this = *this - other;
@@ -419,10 +423,12 @@ public:
     }
 
     /**
-     * Multiplication assignment.
-     * 
-     * @param[in] other of value
-     * @return This object.
+     * Multiplication assignment operator.
+     *
+     * Multiplies this instance by another `uint128_t` instance and assigns the result to this instance.
+     *
+     * @param[in] other the `uint128_t` instance to multiply by
+     * @return    A reference to this instance after multiplication.
      */
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator*=(const uint128_t& other) IPADDRESS_NOEXCEPT {
         *this = *this * other;
@@ -430,10 +436,12 @@ public:
     }
     
     /**
-     * Division assignment.
-     * 
-     * @param[in] other of value
-     * @return This object.
+     * Division assignment operator.
+     *
+     * Divides this instance by another `uint128_t` instance and assigns the result to this instance.
+     *
+     * @param[in] other the `uint128_t` instance to divide by
+     * @return    A reference to this instance after division.
      */
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator/=(const uint128_t& other) IPADDRESS_NOEXCEPT {
         *this = *this / other;
@@ -441,10 +449,12 @@ public:
     }
     
     /**
-     * Remainder assignment.
-     * 
-     * @param[in] other of value
-     * @return This object.
+     * Remainder assignment operator.
+     *
+     * Calculates the remainder of this instance divided by another `uint128_t` instance and assigns the result to this instance.
+     *
+     * @param[in] other the `uint128_t` instance to divide by
+     * @return    A reference to this instance after calculating the remainder.
      */
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator%=(const uint128_t& other) IPADDRESS_NOEXCEPT {
         *this = *this % other;
@@ -452,10 +462,12 @@ public:
     }
     
     /**
-     * Bitwise AND assignment.
-     * 
-     * @param[in] other of value
-     * @return This object.
+     * Bitwise AND assignment operator.
+     *
+     * Performs a bitwise AND operation between this instance and another `uint128_t` instance and assigns the result to this instance.
+     *
+     * @param[in] other the `uint128_t` instance to perform the bitwise AND with
+     * @return    A reference to this instance after the bitwise AND operation.
      */
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator&=(const uint128_t& other) IPADDRESS_NOEXCEPT {
         _upper &= other._upper;
@@ -464,10 +476,12 @@ public:
     }
 
     /**
-     * Bitwise OR assignment.
-     * 
-     * @param[in] other of value
-     * @return This object.
+     * Bitwise OR assignment operator.
+     *
+     * Performs a bitwise OR operation between this instance and another `uint128_t` instance and assigns the result to this instance.
+     *
+     * @param[in] other the `uint128_t` instance to perform the bitwise OR with
+     * @return    A reference to this instance after the bitwise OR operation.
      */
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator|=(const uint128_t& other) IPADDRESS_NOEXCEPT {
         _upper |= other._upper;
@@ -476,10 +490,12 @@ public:
     }
 
     /**
-     * Bitwise XOR assignment.
-     * 
-     * @param[in] other of value
-     * @return This object.
+     * Bitwise XOR assignment operator.
+     *
+     * Performs a bitwise XOR operation between this instance and another `uint128_t` instance and assigns the result to this instance.
+     *
+     * @param[in] other the `uint128_t` instance to perform the bitwise XOR with
+     * @return    A reference to this instance after the bitwise XOR operation.
      */
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator^=(const uint128_t& other) IPADDRESS_NOEXCEPT {
         _upper ^= other._upper;
