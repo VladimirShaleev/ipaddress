@@ -572,10 +572,26 @@ public:
        return Base::ip_reverse_pointer(Base::bytes());
     }
 
+    /**
+     * Converts the IP address to an unsigned integer type.
+     * 
+     * This operator allows the IP address to be used as an unsigned integer type.
+     * It can be useful when a numerical representation of the IP address is needed.
+     * 
+     * @return An unsigned integer representation of the IP address.
+     * @remark Bytes in integer are presented in **host byte order**.
+     */
     IPADDRESS_NODISCARD explicit IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE operator uint_type() const IPADDRESS_NOEXCEPT {
         return Base::to_uint();
     }
 
+    /**
+     * Converts the IP address to a string.
+     * 
+     * This operator allows the IP address to be converted to a string.
+     * 
+     * @return A `std::string` representation of the IP address.
+     */
     IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE explicit operator std::string() const {
         return to_string();
     }
