@@ -1,3 +1,15 @@
+/**
+ * @file      ipv6-address.hpp
+ * @brief     Provides a set of functions and classes for handling IPv6 addresses
+ * @author    Vladimir Shaleev
+ * @copyright MIT License
+ * 
+ * Includes functionalities to convert IPv6 addresses to and from various formats,
+ * perform comparisons, and query specific properties of the addresses.
+ * It serves as a foundational component for network applications that require manipulation
+ * and analysis of IPv6 address data.
+ */
+
 #ifndef IPADDRESS_IPV6_ADDRESS_HPP
 #define IPADDRESS_IPV6_ADDRESS_HPP
 
@@ -100,10 +112,17 @@ private:
     bool _has_value;
 }; // scope
 
+/**
+ * Represents the base class for IPv6 address manipulation.
+ * 
+ * This class provides the basic functionalities required for handling IPv6 addresses,
+ * including conversion to and from numeric representations, access to the underlying bytes,
+ * and utility functions that are common across different representations of IPv6 addresses.
+ */
 class ipv6_address_base : public base_v6<ipv6_address_base> {
 public:
-    using base_type = typename base_v6<ipv6_address_base>::base_type;
-    using uint_type = typename base_v6<ipv6_address_base>::uint_type;
+    using base_type = typename base_v6<ipv6_address_base>::base_type; /**< The base type for the IPv6 address. */
+    using uint_type = typename base_v6<ipv6_address_base>::uint_type; /**< The unsigned integer type for the IPv6 address. */
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE scope get_scope_id() const IPADDRESS_NOEXCEPT {
         return scope(
@@ -222,6 +241,12 @@ public:
 
 #endif // IPADDRESS_CPP_VERSION < 17
 
+    /**
+     * Creates an IPv6 address from an unsigned integer using a template parameter.
+     * 
+     * @tparam Ip The unsigned integer representing the IPv6 address.
+     * @return An instance of ip address representing the IPv6 address.
+     */
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<ipv6_address_base> from_uint(uint_type ip) IPADDRESS_NOEXCEPT {
         ip_address_base<ipv6_address_base> result;
         auto& bytes = result._data.bytes;
@@ -238,6 +263,13 @@ public:
         return result;
     }
 
+    /**
+     * Creates an IPv6 address from an unsigned integer.
+     * 
+     * @param[in] ip The unsigned integer representing the IPv6 address.
+     * @return An instance of ip address representing the IPv6 address.
+     * @remark Bytes in integer \a ip must be presented in **host byte order**.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint_type to_uint() const IPADDRESS_NOEXCEPT {
         const auto& bytes = _data.bytes;
         uint64_t upper = 0;
@@ -255,6 +287,12 @@ public:
         return uint_type(upper, lower);
     }
 
+    /**
+     * Provides access to the underlying bytes of the IPv6 address.
+     * 
+     * @return A reference to the base type containing the bytes of the IPv6 address.
+     * @remark Retrieves the data representing the IP address in **network byte order** (big-endian).
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const base_type& bytes() const IPADDRESS_NOEXCEPT {
         return _data.bytes;
     }
