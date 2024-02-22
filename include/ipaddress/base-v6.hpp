@@ -1,3 +1,14 @@
+/**
+ * @file      base-v6.hpp
+ * @brief     Adds basic functionality for working with IPv6
+ * @author    Vladimir Shaleev
+ * @copyright MIT License
+ * 
+ * This file provides foundational classes and functions necessary for handling IPv6 addresses,
+ * including parsing, constructing, and manipulating IPv6 address representations. It serves as
+ * a base for higher-level IPv6 address operations and utilities.
+ */
+
 #ifndef IPADDRESS_BASE_V6_HPP
 #define IPADDRESS_BASE_V6_HPP
 
@@ -6,6 +17,15 @@
 
 namespace IPADDRESS_NAMESPACE {
 
+/**
+ * A template class providing the base functionality for IPv6 addresses.
+ * 
+ * This class encapsulates the basic properties and operations for IPv6 addresses,
+ * such as version identification, size, and conversion from string representations.
+ * It is intended to be extended by more specialized IPv6 address classes.
+ * 
+ * @tparam Ext the extension type that provides additional functionality
+ */
 template <typename Ext>
 class base_v6 {
 public:
@@ -17,10 +37,20 @@ public:
     static IPADDRESS_CONSTEXPR size_t base_max_string_len = 41 + IPADDRESS_IPV6_SCOPE_MAX_LENGTH;
     static IPADDRESS_CONSTEXPR size_t base_max_prefixlen = base_size * 8;
 
+    /**
+     * Retrieves the IP version of the address.
+     * 
+     * @return The IP version enumeration value for IPv6.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_version version() const IPADDRESS_NOEXCEPT {
         return base_version;
     }
 
+    /**
+     * Retrieves the size of the IPv6 address.
+     * 
+     * @return The size of the IPv6 address in bytes.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t size() const IPADDRESS_NOEXCEPT {
         return base_size;
     }

@@ -38,10 +38,20 @@ public:
     static IPADDRESS_CONSTEXPR size_t base_max_prefixlen = base_size * 8;
     static IPADDRESS_CONSTEXPR uint_type base_all_ones = std::numeric_limits<uint_type>::max();
 
+    /**
+     * Retrieves the IP version of the address.
+     * 
+     * @return The IP version enumeration value for IPv4.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_version version() const IPADDRESS_NOEXCEPT {
         return base_version;
     }
 
+    /**
+     * Retrieves the size of the IPv4 address.
+     * 
+     * @return The size of the IPv4 address in bytes.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t size() const IPADDRESS_NOEXCEPT {
         return base_size;
     }
