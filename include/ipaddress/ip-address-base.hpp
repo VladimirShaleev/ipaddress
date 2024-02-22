@@ -301,34 +301,90 @@ public:
 
 #else // IPADDRESS_CPP_VERSION < 17
 
+    /**
+     * Parses an IP address from a `std::string`.
+     * 
+     * @param[in] address the `std::string` containing the IP address to parse
+     * @return    An instance of ip address parsed from the string.
+     * @throw     parse_error exception caused by invalid input string
+     */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::string& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return parse_string(address);
     }
 
+    /**
+     * Parses an IP address from a wide `std::wstring`.
+     * 
+     * @param[in] address the wide `std::wstring` containing the IP address to parse
+     * @return    An instance of ip address parsed from the string.
+     * @throw     parse_error exception caused by invalid input string
+     */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::wstring& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return parse_string(address);
     }
 
+    /**
+     * Parses an IP address from a UTF-16 `std::u16string`.
+     * 
+     * @param[in] address the UTF-16 `std::u16string` containing the IP address to parse
+     * @return    An instance of ip address parsed from the string.
+     * @throw     parse_error exception caused by invalid input string
+     */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::u16string& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return parse_string(address);
     }
 
+    /**
+     * Parses an IP address from a UTF-32 `std::u32string`.
+     * 
+     * @param[in] address the UTF-32 `std::u32string` containing the IP address to parse
+     * @return    An instance of ip address parsed from the string.
+     * @throw     parse_error exception caused by invalid input string
+     */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::u32string& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return parse_string(address);
     }
 
+    /**
+     * Parses an IP address from a `std::string` and reports errors through an error code.
+     * 
+     * @param[in]  address the `std::string` containing the IP address to parse
+     * @param[out] code    a reference to an `error_code` object that will be set if an error occurs during parsing
+     * @return     An instance of ip address parsed from the string. If parsing fails, the returned object will be in an unspecified state.
+     */
     static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::string& address, error_code& code) IPADDRESS_NOEXCEPT {
         return parse_string(address, code);
     }
 
+    /**
+     * Parses an IP address from a wide `std::wstring` and reports errors through an error code.
+     * 
+     * @param[in]  address the wide `std::wstring` containing the IP address to parse
+     * @param[out] code    a reference to an `error_code` object that will be set if an error occurs during parsing
+     * @return     An instance of ip address parsed from the wide string. If parsing fails, the returned object will be in an unspecified state.
+     */
     static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::wstring& address, error_code& code) IPADDRESS_NOEXCEPT {
         return parse_string(address, code);
     }
 
+    /**
+     * Parses an IP address from a UTF-16 `std::u16string` and reports errors through an error code.
+     * 
+     * @param[in]  address the UTF-16 `std::u16string` containing the IP address to parse
+     * @param[out] code    a reference to an `error_code` object that will be set if an error occurs during parsing
+     * @return     An instance of ip address parsed from the UTF-16 string. If parsing fails, the returned object will be in an unspecified state.
+     */
     static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::u16string& address, error_code& code) IPADDRESS_NOEXCEPT {
         return parse_string(address, code);
     }
 
+    /**
+     * Parses an IP address from a UTF-32 `std::u32string` and reports errors through an error code.
+     * 
+     * @param[in]  address the UTF-32 `std::u32string` containing the IP address to parse
+     * @param[out] code    a reference to an `error_code` object that will be set if an error occurs during parsing
+     * @return     An instance of ip address parsed from the UTF-32 string. If parsing fails, the returned object will be in an unspecified state.
+     */
     static IPADDRESS_FORCE_INLINE ip_address_base parse(const std::u32string& address, error_code& code) IPADDRESS_NOEXCEPT {
         return parse_string(address, code);
     }
