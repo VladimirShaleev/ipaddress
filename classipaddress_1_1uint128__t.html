@@ -384,7 +384,7 @@ Static Public Member Functions</h2></td></tr>
 <p><code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> offers a comprehensive suite of operations and utilities for handling 128-bit unsigned integers. It supports basic arithmetic operations, bitwise logic, comparison operators, and specialized functions for advanced integer manipulation. The class is optimized for both space and time efficiency, ensuring minimal overhead and maximum performance.</p>
 <p>The design of <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> is focused on ease of use and integration. It provides constructors for seamless conversion from built-in integer types, as well as explicit methods for converting to and from other numeric representations. The class also includes support for standard library features like hashing and optional values, enhancing its utility in a wide range of programming scenarios.</p>
 <p>The implementation is based on algorithms from the .NET <code>UInt128</code> structure, ensuring reliable and efficient operations.</p>
-<dl class="section see"><dt>See also</dt><dd><a href="https://source.dot.net/#System.Private.CoreLib/src/libraries/System.Private.CoreLib/src/System/UInt128.cs">UInt128</a> .NET Implementation </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://source.dot.net/#System.Private.CoreLib/src/libraries/System.Private.CoreLib/src/System/UInt128.cs">UInt128</a> .NET Implementation. </dd></dl>
 </div><h2 class="groupheader">Member Enumeration Documentation</h2>
 <a id="ae5c5c40c2777dcce5c3e1bd96adb1a91" name="ae5c5c40c2777dcce5c3e1bd96adb1a91"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae5c5c40c2777dcce5c3e1bd96adb1a91">&#9670;&#160;</a></span>format</h2>
@@ -476,7 +476,7 @@ Static Public Member Functions</h2></td></tr>
 <p>Constructs a new <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance by copying the value from another instance.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to copy Copy constructor </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to copy. Copy constructor </td></tr>
   </table>
   </dd>
 </dl>
@@ -510,7 +510,7 @@ Static Public Member Functions</h2></td></tr>
 <p>Constructs a new <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance by moving the value from another instance.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">other</td><td>the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to move Move constructor </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">other</td><td>The <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to move. Move constructor </td></tr>
   </table>
   </dd>
 </dl>
@@ -548,8 +548,8 @@ Static Public Member Functions</h2></td></tr>
 <p>This constructor initializes a <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance using separate upper and lower 64-bit integers.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">upper</td><td>the upper 64 bits of the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> value </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>the lower 64 bits of the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> value </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">upper</td><td>The upper 64 bits of the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> value. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>The lower 64 bits of the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> value. </td></tr>
   </table>
   </dd>
 </dl>
@@ -585,13 +585,13 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>This constructor initializes a <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance using an unsigned integer, setting it as the lower part of the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> value.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>an unsigned integral type </td></tr>
+    <tr><td class="paramname">T</td><td>An unsigned integral type. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>the unsigned integer to initialize the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance with </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>The unsigned integer to initialize the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance with. </td></tr>
   </table>
   </dd>
 </dl>
@@ -627,13 +627,13 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>This constructor initializes a <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance using a signed integer, setting it as the lower part of the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> value and extending the sign to the upper part.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>a signed integral type </td></tr>
+    <tr><td class="paramname">T</td><td>A signed integral type. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>the signed integer to initialize the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance with </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>The signed integer to initialize the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance with. </td></tr>
   </table>
   </dd>
 </dl>
@@ -669,13 +669,13 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>This constructor initializes a <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance by converting a floating-point value to its 128-bit unsigned integer representation. The conversion is explicit to prevent unintended implicit conversions.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>a floating-point type </td></tr>
+    <tr><td class="paramname">T</td><td>A floating-point type. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>the floating-point value to convert </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>The floating-point value to convert. </td></tr>
   </table>
   </dd>
 </dl>
@@ -710,7 +710,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Assigns the value of one <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to another.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to assign from </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to assign from. </td></tr>
   </table>
   </dd>
 </dl>
@@ -745,7 +745,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Moves the value of one <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to another.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">other</td><td>the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to move from. </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">other</td><td>The <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to move from. </td></tr>
   </table>
   </dd>
 </dl>
@@ -867,7 +867,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>This method exchanges the contents of the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance with those of another instance.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">other</td><td>the other <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to swap with </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">other</td><td>The other <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to swap with. </td></tr>
   </table>
   </dd>
 </dl>
@@ -901,7 +901,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>This method converts the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to its string representation in the specified format. It supports decimal, octal, and hexadecimal formats.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">fmt</td><td>the format to use for the conversion, with <code><a class="el" href="#ae5c5c40c2777dcce5c3e1bd96adb1a91abdaa3c20a3e3851599514f7c6be5f62f" title="Represents the number in decimal format.">format::decimal</a></code> as the default </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fmt</td><td>The format to use for the conversion, with <code><a class="el" href="#ae5c5c40c2777dcce5c3e1bd96adb1a91abdaa3c20a3e3851599514f7c6be5f62f" title="Represents the number in decimal format.">format::decimal</a></code> as the default. </td></tr>
   </table>
   </dd>
 </dl>
@@ -940,8 +940,8 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>This static method attempts to parse a given string as a <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> value in the specified format. If the parsing is successful, it returns an optional containing the parsed <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> value.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">str</td><td>the input string to parse </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">fmt</td><td>the string format to interpret the input string (<em>defaults to decimal</em>) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">str</td><td>The input string to parse. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fmt</td><td>The string format to interpret the input string (<em>defaults to decimal</em>). </td></tr>
   </table>
   </dd>
 </dl>
@@ -1007,7 +1007,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>This method allows for the explicit conversion of a <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> value to a specified integral type.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>the integral type to cast to </td></tr>
+    <tr><td class="paramname">T</td><td>The integral type to cast to. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1081,13 +1081,13 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>This method assigns an unsigned integer to the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance, setting it as the lower part of the value.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>the unsigned integral type of the value to assign </td></tr>
+    <tr><td class="paramname">T</td><td>The unsigned integral type of the value to assign. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>the unsigned integer to assign to the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>The unsigned integer to assign to the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1124,13 +1124,13 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>This method assigns a signed integer to the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance, setting it as the lower part of the value and extending the sign to the upper part.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>the signed integral type of the value to assign </td></tr>
+    <tr><td class="paramname">T</td><td>The signed integral type of the value to assign. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>the signed integer to assign to the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>The signed integer to assign to the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1165,7 +1165,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Adds the value of another <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to this instance and assigns the result to this instance.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to add </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to add. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1200,7 +1200,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Subtracts the value of another <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance from this instance and assigns the result to this instance.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to subtract. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to subtract. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1235,7 +1235,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Multiplies this instance by another <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance and assigns the result to this instance.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to multiply by </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to multiply by. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1270,7 +1270,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Divides this instance by another <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance and assigns the result to this instance.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to divide by </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to divide by. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1305,7 +1305,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Calculates the remainder of this instance divided by another <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance and assigns the result to this instance.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to divide by </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to divide by. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1340,7 +1340,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Performs a bitwise AND operation between this instance and another <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance and assigns the result to this instance.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to perform the bitwise AND with </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to perform the bitwise AND with. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1375,7 +1375,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Performs a bitwise OR operation between this instance and another <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance and assigns the result to this instance.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to perform the bitwise OR with </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to perform the bitwise OR with. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1410,7 +1410,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Performs a bitwise XOR operation between this instance and another <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance and assigns the result to this instance.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to perform the bitwise XOR with </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to perform the bitwise XOR with. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1447,13 +1447,13 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Shifts the bits of this instance to the left by the specified number of places and assigns the result to this instance.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>an integral type representing the number of places to shift </td></tr>
+    <tr><td class="paramname">T</td><td>An integral type representing the number of places to shift. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">shift</td><td>the number of bits to shift to the left </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">shift</td><td>The number of bits to shift to the left. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1490,13 +1490,13 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Shifts the bits of this instance to the right by the specified number of places and assigns the result to this instance.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>an integral type representing the number of places to shift </td></tr>
+    <tr><td class="paramname">T</td><td>An integral type representing the number of places to shift. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">shift</td><td>the number of bits to shift to the right </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">shift</td><td>The number of bits to shift to the right. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1620,13 +1620,13 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Adds an integral value to this instance and returns a new <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance with the result.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>an integral type to add to this instance </td></tr>
+    <tr><td class="paramname">T</td><td>An integral type to add to this instance. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>the integral value to add </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>The integral value to add. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1661,7 +1661,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Adds the value of another <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to this instance and returns a new <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance with the result.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to add </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to add. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1698,13 +1698,13 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Subtracts an integral value from this instance and returns a new <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance with the result.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>an integral type to subtract from this instance </td></tr>
+    <tr><td class="paramname">T</td><td>An integral type to subtract from this instance. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>the integral value to subtract </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>The integral value to subtract. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1739,7 +1739,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Subtracts the value of another <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance from this instance and returns a new <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance with the result.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to subtract </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to subtract. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1776,13 +1776,13 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Multiplies this instance by an integral value and returns a new <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance with the result.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>an integral type to multiply this instance by </td></tr>
+    <tr><td class="paramname">T</td><td>An integral type to multiply this instance by. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>the integral value to multiply by </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>The integral value to multiply by. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1817,7 +1817,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Multiplies this instance by another <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance and returns a new <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance with the result.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to multiply by </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to multiply by. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1854,13 +1854,13 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Divides this instance by an integral value and returns a new <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance with the result.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>an integral type to divide this instance by </td></tr>
+    <tr><td class="paramname">T</td><td>An integral type to divide this instance by. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>the integral value to divide by </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>The integral value to divide by. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1895,7 +1895,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Divides this instance by another <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance and returns a new <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance with the result.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to divide by </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to divide by. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1932,13 +1932,13 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Calculates the remainder of this instance divided by an integral value and returns a new <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance with the result.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>an integral type to divide this instance by </td></tr>
+    <tr><td class="paramname">T</td><td>An integral type to divide this instance by. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>the integral value to divide by </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>The integral value to divide by. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1973,7 +1973,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Calculates the remainder of this instance divided by another <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance and returns a new <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance with the result.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to divide by </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to divide by. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2010,13 +2010,13 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Performs a bitwise AND operation between this instance and an integral value and returns a new <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance with the result.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>an integral type to perform the bitwise AND with </td></tr>
+    <tr><td class="paramname">T</td><td>An integral type to perform the bitwise AND with. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>the integral value to perform the bitwise AND with </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>The integral value to perform the bitwise AND with. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2051,7 +2051,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Performs a bitwise AND operation between this instance and another <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance and returns a new <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance with the result.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to perform the bitwise AND with </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to perform the bitwise AND with. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2088,13 +2088,13 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Performs a bitwise OR operation between this instance and an integral value and returns a new <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance with the result.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>an integral type to perform the bitwise OR with </td></tr>
+    <tr><td class="paramname">T</td><td>An integral type to perform the bitwise OR with. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>the integral value to perform the bitwise OR with </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>The integral value to perform the bitwise OR with. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2129,7 +2129,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Performs a bitwise OR operation between this instance and another <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance and returns a new <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance with the result.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to perform the bitwise OR with </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to perform the bitwise OR with. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2166,13 +2166,13 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Performs a bitwise XOR operation between this instance and an integral value and returns a new <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance with the result.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>an integral type to perform the bitwise XOR with </td></tr>
+    <tr><td class="paramname">T</td><td>An integral type to perform the bitwise XOR with. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>the integral value to perform the bitwise XOR with </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>The integral value to perform the bitwise XOR with. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2207,7 +2207,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Performs a bitwise XOR operation between this instance and another <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance and returns a new <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance with the result.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to perform the bitwise XOR with </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to perform the bitwise XOR with. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2244,13 +2244,13 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Shifts the bits of this instance to the left by the specified number of places and returns a new <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance with the result.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>an integral type representing the number of places to shift </td></tr>
+    <tr><td class="paramname">T</td><td>An integral type representing the number of places to shift. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">shift</td><td>the number of bits to shift to the left </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">shift</td><td>The number of bits to shift to the left. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2287,13 +2287,13 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Shifts the bits of this instance to the right by the specified number of places and returns a new <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance with the result.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>an integral type representing the number of places to shift </td></tr>
+    <tr><td class="paramname">T</td><td>An integral type representing the number of places to shift. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">shift</td><td>the number of bits to shift to the right </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">shift</td><td>The number of bits to shift to the right. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2473,7 +2473,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Returns <code>true</code> if both this instance and another <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance are non-zero, otherwise returns <code>false</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to compare with </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to compare with. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2508,7 +2508,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Returns <code>true</code> if either this instance or another <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance is non-zero, otherwise returns <code>false</code>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to compare with </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to compare with. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2545,13 +2545,13 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Compares this instance to an integral value for equality.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>an integral type to compare with </td></tr>
+    <tr><td class="paramname">T</td><td>An integral type to compare with. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>the integral value to compare with </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>The integral value to compare with. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2586,7 +2586,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Compares this instance to another <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance for equality.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to compare with </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to compare with. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2623,13 +2623,13 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Compares this instance to an integral value for inequality.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>an integral type to compare with </td></tr>
+    <tr><td class="paramname">T</td><td>An integral type to compare with. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>the integral value to compare with </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>The integral value to compare with. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2664,7 +2664,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Compares this instance to another <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance for inequality.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to compare with </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to compare with. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2701,13 +2701,13 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Checks if the value of this instance is lexicographically less than the provided integral value.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>an integral type to compare with </td></tr>
+    <tr><td class="paramname">T</td><td>An integral type to compare with. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>the integral value to compare with </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>The integral value to compare with. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2742,7 +2742,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Checks if the value of this instance is lexicographically less than the provided <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to compare with </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to compare with. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2779,13 +2779,13 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Checks if the value of this instance is lexicographically greater than the provided integral value.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>an integral type to compare with </td></tr>
+    <tr><td class="paramname">T</td><td>An integral type to compare with. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>the integral value to compare with </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>The integral value to compare with. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2820,7 +2820,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Checks if the value of this instance is lexicographically greater than the provided <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to compare with </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to compare with. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2857,13 +2857,13 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Checks if the value of this instance is lexicographically less than or equal to the provided integral value.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>an integral type to compare with </td></tr>
+    <tr><td class="paramname">T</td><td>An integral type to compare with. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>the integral value to compare with </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>The integral value to compare with. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2898,7 +2898,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Checks if the value of this instance is lexicographically less than or equal to the provided <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to compare with </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to compare with. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2935,13 +2935,13 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Checks if the value of this instance is lexicographically greater than or equal to the provided integral value.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>an integral type to compare with </td></tr>
+    <tr><td class="paramname">T</td><td>An integral type to compare with. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>the integral value to compare with </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lower</td><td>The integral value to compare with. </td></tr>
   </table>
   </dd>
 </dl>
@@ -2976,7 +2976,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Checks if the value of this instance is lexicographically greater than or equal to the provided <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>the <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to compare with </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The <code><a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a></code> instance to compare with. </td></tr>
   </table>
   </dd>
 </dl>

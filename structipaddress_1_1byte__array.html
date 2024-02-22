@@ -246,11 +246,11 @@ struct ipaddress::byte_array&lt; N &gt;</div><p>A template class for creating an
 <p>The <a class="el" href="structipaddress_1_1byte__array.html" title="A template class for creating and managing a fixed-size array of bytes.">byte_array</a> class encapsulates a static-size array of bytes, providing type definitions for element access and iteration in both normal and reverse order. It is designed to be used where a constant size byte buffer is needed, such as in handling network addresses like IP addresses.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">N</td><td>the number of bytes in the array </td></tr>
+    <tr><td class="paramname">N</td><td>The number of bytes in the array. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section remark"><dt>Remarks</dt><dd>The purpose of the <a class="el" href="structipaddress_1_1byte__array.html" title="A template class for creating and managing a fixed-size array of bytes.">byte_array</a> class is to provide functionality similar to std::array in environments where std::array cannot be used to its full extent during compile-time operations. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>The purpose of the <a class="el" href="structipaddress_1_1byte__array.html" title="A template class for creating and managing a fixed-size array of bytes.">byte_array</a> class is to provide functionality similar to std::array in . environments where std::array cannot be used to its full extent during compile-time operations. </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ada192d8442bbc3da36fafe52c842dad3" name="ada192d8442bbc3da36fafe52c842dad3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ada192d8442bbc3da36fafe52c842dad3">&#9670;&#160;</a></span>begin()</h2>
@@ -610,14 +610,14 @@ template&lt;std::size_t N&gt; </div>
 <p>Accesses the element at the specified index with bounds checking. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>the index of the element to access </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>The index of the element to access. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A reference to the element at the specified index. </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::out_of_range</td><td>when going beyond the bounds of the array </td></tr>
+    <tr><td class="paramname">std::out_of_range</td><td>When going beyond the bounds of the array. </td></tr>
   </table>
   </dd>
 </dl>
@@ -652,14 +652,14 @@ template&lt;std::size_t N&gt; </div>
 <p>Accesses the element at the specified index with bounds checking (const version). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>the index of the element to access </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>The index of the element to access. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A const reference to the element at the specified index. </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::out_of_range</td><td>when going beyond the bounds of the array </td></tr>
+    <tr><td class="paramname">std::out_of_range</td><td>When going beyond the bounds of the array. </td></tr>
   </table>
   </dd>
 </dl>
@@ -694,14 +694,14 @@ template&lt;std::size_t N&gt; </div>
 <p>Accesses the element at the specified index with bounds checking. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>the index of the element to access </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>The index of the element to access. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A reference to the element at the specified index. </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::out_of_range</td><td>when going beyond the bounds of the array </td></tr>
+    <tr><td class="paramname">std::out_of_range</td><td>When going beyond the bounds of the array. </td></tr>
   </table>
   </dd>
 </dl>
@@ -736,14 +736,14 @@ template&lt;std::size_t N&gt; </div>
 <p>Accesses the element at the specified index with bounds checking (const version). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>the index of the element to access </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>The index of the element to access. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A const reference to the element at the specified index. </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::out_of_range</td><td>when going beyond the bounds of the array </td></tr>
+    <tr><td class="paramname">std::out_of_range</td><td>When going beyond the bounds of the array. </td></tr>
   </table>
   </dd>
 </dl>
@@ -958,7 +958,7 @@ template&lt;std::size_t N&gt; </div>
 <p>Swaps the contents of this <a class="el" href="structipaddress_1_1byte__array.html" title="A template class for creating and managing a fixed-size array of bytes.">byte_array</a> with another <a class="el" href="structipaddress_1_1byte__array.html" title="A template class for creating and managing a fixed-size array of bytes.">byte_array</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">other</td><td>the other <a class="el" href="structipaddress_1_1byte__array.html" title="A template class for creating and managing a fixed-size array of bytes.">byte_array</a> to swap contents with </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">other</td><td>The other <a class="el" href="structipaddress_1_1byte__array.html" title="A template class for creating and managing a fixed-size array of bytes.">byte_array</a> to swap contents with. </td></tr>
   </table>
   </dd>
 </dl>

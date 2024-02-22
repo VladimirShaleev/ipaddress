@@ -34,5 +34,6 @@ var errors_8hpp =
       [ "NEW_PREFIX_MUST_BE_LONGER", "errors_8hpp.html#acd1015a989b2b9e45fe6d0faa3e9a0faadbc879e336113690f7251a9cb59b8519", null ],
       [ "CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX", "errors_8hpp.html#acd1015a989b2b9e45fe6d0faa3e9a0faa52c82f2ae517fb0d130bc306de035039", null ],
       [ "NOT_CONTAINED_NETWORK", "errors_8hpp.html#acd1015a989b2b9e45fe6d0faa3e9a0faa55989913f931071ab5b76da3b3d3bb69", null ]
-    ] ]
+    ] ],
+    [ "raise_error", "errors_8hpp.html#a40a4e212b0feb6daf5c03cdf256e262c", null ]
 ];

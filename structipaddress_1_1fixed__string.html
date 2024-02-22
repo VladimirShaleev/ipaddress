@@ -217,7 +217,7 @@ struct ipaddress::fixed_string&lt; N &gt;</div><p>Fixed size string class. </p>
 <p><a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> is a template class that encapsulates a string of a fixed number of characters. It is designed to be used where strings are needed as non-type template parameters.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">N</td><td>the maximum number of characters the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> can hold. </td></tr>
+    <tr><td class="paramname">N</td><td>The maximum number of characters the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> can hold. </td></tr>
   </table>
   </dd>
 </dl>
@@ -283,13 +283,13 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>This constructor template initializes a <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> with the contents of a given character array. Characters from encodings other than ASCII may be truncated.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>the character type of the input array </td></tr>
+    <tr><td class="paramname">T</td><td>The character type of the input array. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>the character array to initialize the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> with </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>The character array to initialize the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> with. </td></tr>
   </table>
   </dd>
 </dl>
@@ -677,14 +677,14 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">size_t
 <p>Returns a reference to the character at the specified location <em>n</em>. If <em>n</em> is out of bounds, an exception of type <code>std::out_of_range</code> will be thrown.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>the position of the character to return </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>The position of the character to return. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A reference to the character at the specified location. </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::out_of_range</td><td>when going beyond the bounds of the character array </td></tr>
+    <tr><td class="paramname">std::out_of_range</td><td>When going beyond the bounds of the character array. </td></tr>
   </table>
   </dd>
 </dl>
@@ -721,14 +721,14 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">size_t
 <p>Returns a reference to the character at the specified location <em>n</em>. If <em>n</em> is out of bounds, an exception of type <code>std::out_of_range</code> will be thrown.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>the position of the character to return </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>The position of the character to return. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A reference to the character at the specified location. </dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::out_of_range</td><td>when going beyond the bounds of the character array </td></tr>
+    <tr><td class="paramname">std::out_of_range</td><td>When going beyond the bounds of the character array. </td></tr>
   </table>
   </dd>
 </dl>
@@ -862,13 +862,13 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">size_t
 <p>Compares the string with another <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> lexicographically.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">N2</td><td>the size of the other <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> </td></tr>
+    <tr><td class="paramname">N2</td><td>The size of the other <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">rhs</td><td>the other <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> to compare with </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rhs</td><td>The other <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> to compare with. </td></tr>
   </table>
   </dd>
 </dl>

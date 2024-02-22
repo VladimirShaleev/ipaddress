@@ -236,7 +236,7 @@ Static Public Member Functions</h2></td></tr>
 <p>Retrieves the scope identifier of the IPv6 address. </p>
 <p>The scope identifier is used to determine the context in which the address is valid. It is particularly relevant for link-local and site-local addresses.</p>
 <dl class="section return"><dt>Returns</dt><dd>A <code>scope</code> object representing the scope identifier of the IPv6 address. </dd></dl>
-<dl class="section remark"><dt>Remarks</dt><dd>If the scope is disabled in the settings (<code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0</code>), then an empty scope will be returned </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>If the scope is disabled in the settings (<code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0</code>), then an empty scope will be returned. </dd></dl>
 
 </div>
 </div>
@@ -280,7 +280,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
   </table>
   </dd>
 </dl>
-<dl class="section remark"><dt>Remarks</dt><dd>If scope is disabled in settings (<code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0</code>) then this call will have no effect </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>If scope is disabled in settings (<code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0</code>) then this call will have no effect. </dd></dl>
 
 </div>
 </div>
@@ -317,12 +317,13 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 </dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classipaddress_1_1parse__error.html" title="Exception for errors encountered during IP address parsing.">parse_error</a></td><td>exception caused by invalid input string </td></tr>
+    <tr><td class="paramname"><a class="el" href="classipaddress_1_1parse__error.html" title="Exception for errors encountered during IP address parsing.">parse_error</a></td><td>Exception caused by invalid input string. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::string</code> and C-strings will be used instead. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>If scope is disabled in settings (<code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0</code>) then this call will have no effect. </dd></dl>
 
 </div>
 </div>
@@ -359,12 +360,13 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 </dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classipaddress_1_1parse__error.html" title="Exception for errors encountered during IP address parsing.">parse_error</a></td><td>exception caused by invalid input string </td></tr>
+    <tr><td class="paramname"><a class="el" href="classipaddress_1_1parse__error.html" title="Exception for errors encountered during IP address parsing.">parse_error</a></td><td>Exception caused by invalid input string. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::wstring</code> and C-strings will be used instead. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>If scope is disabled in settings (<code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0</code>) then this call will have no effect. </dd></dl>
 
 </div>
 </div>
@@ -401,11 +403,12 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 </dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classipaddress_1_1parse__error.html" title="Exception for errors encountered during IP address parsing.">parse_error</a></td><td>exception caused by invalid input string </td></tr>
+    <tr><td class="paramname"><a class="el" href="classipaddress_1_1parse__error.html" title="Exception for errors encountered during IP address parsing.">parse_error</a></td><td>Exception caused by invalid input string. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>This method is available for C++20 and later versions where <code>char8_t</code> is supported. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>If scope is disabled in settings (<code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0</code>) then this call will have no effect. </dd></dl>
 
 </div>
 </div>
@@ -442,12 +445,13 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 </dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classipaddress_1_1parse__error.html" title="Exception for errors encountered during IP address parsing.">parse_error</a></td><td>exception caused by invalid input string </td></tr>
+    <tr><td class="paramname"><a class="el" href="classipaddress_1_1parse__error.html" title="Exception for errors encountered during IP address parsing.">parse_error</a></td><td>Exception caused by invalid input string. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::u16string</code> and C-strings will be used instead. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>If scope is disabled in settings (<code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0</code>) then this call will have no effect. </dd></dl>
 
 </div>
 </div>
@@ -484,12 +488,13 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 </dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classipaddress_1_1parse__error.html" title="Exception for errors encountered during IP address parsing.">parse_error</a></td><td>exception caused by invalid input string </td></tr>
+    <tr><td class="paramname"><a class="el" href="classipaddress_1_1parse__error.html" title="Exception for errors encountered during IP address parsing.">parse_error</a></td><td>Exception caused by invalid input string. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::u32string</code> and C-strings will be used instead. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>If scope is disabled in settings (<code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0</code>) then this call will have no effect. </dd></dl>
 
 </div>
 </div>
@@ -531,6 +536,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 </dl>
 <dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::string</code> and C-strings will be used instead. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>If scope is disabled in settings (<code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0</code>) then this call will have no effect. </dd></dl>
 
 </div>
 </div>
@@ -572,6 +578,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 </dl>
 <dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::wstring</code> and C-strings will be used instead. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>If scope is disabled in settings (<code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0</code>) then this call will have no effect. </dd></dl>
 
 </div>
 </div>
@@ -612,6 +619,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
   </dd>
 </dl>
 <dl class="section note"><dt>Note</dt><dd>This method is available for C++20 and later versions. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>If scope is disabled in settings (<code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0</code>) then this call will have no effect. </dd></dl>
 
 </div>
 </div>
@@ -653,6 +661,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 </dl>
 <dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::u16string</code> and C-strings will be used instead. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>If scope is disabled in settings (<code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0</code>) then this call will have no effect. </dd></dl>
 
 </div>
 </div>
@@ -694,6 +703,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 </dl>
 <dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::u32string</code> and C-strings will be used instead. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>If scope is disabled in settings (<code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0</code>) then this call will have no effect. </dd></dl>
 
 </div>
 </div>
@@ -850,7 +860,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <p>Determines if the IPv6 address is a 6to4 address. </p>
 <dl class="section return"><dt>Returns</dt><dd>An optional containing the encapsulated IPv4 address if the IPv6 address is a 6to4 address, or an empty optional otherwise. </dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>A 6to4 address uses a <code>2002::/16</code> prefix and embeds an IPv4 address in the next 32 bits. </dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a href="https://datatracker.ietf.org/doc/html/rfc3056.html">RFC 3056</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://datatracker.ietf.org/doc/html/rfc3056.html">RFC 3056</a>. </dd></dl>
 
 </div>
 </div>
@@ -887,7 +897,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
   </dd>
 </dl>
 <dl class="section remark"><dt>Remarks</dt><dd>A Teredo address begins with the <code>2001::/32</code> prefix and is used for NAT traversal for IPv6. </dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a href="https://datatracker.ietf.org/doc/html/rfc4380.html">RFC 4380</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://datatracker.ietf.org/doc/html/rfc4380.html">RFC 4380</a>. </dd></dl>
 
 </div>
 </div>
