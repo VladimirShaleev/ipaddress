@@ -457,12 +457,37 @@ public:
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_private() const IPADDRESS_NOEXCEPT;
 
+    /**
+     * Checks if the IP address is a global address.
+     * 
+     * @return `true` if the IP address is allocated for public networks, `false` otherwise.
+     * @see    [iana-ipv4-special-registry](https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml)
+     * @see    [iana-ipv6-special-registry](https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml)
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_global() const IPADDRESS_NOEXCEPT;
 
+    /**
+     * Checks if the IP address is a reserved address.
+     * 
+     * @return `true` if the IP address is otherwise IETF reserved, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_reserved() const IPADDRESS_NOEXCEPT;
 
+    /**
+     * Checks if the IP address is a loopback address.
+     * 
+     * @return `true` if the IP address is a loopback address, `false` otherwise.
+     * @see    [RFC 3330 for IPv4](https://datatracker.ietf.org/doc/html/rfc3330.html)
+     * @see    [RFC 2373 for IPv6](https://datatracker.ietf.org/doc/html/rfc2373.html)
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_loopback() const IPADDRESS_NOEXCEPT;
 
+    /**
+     * Checks if the IP address is a link-local address.
+     * 
+     * @return `true` if the IP address is reserved for link-local usage, `false` otherwise.
+     * @see    [RFC 3927](https://datatracker.ietf.org/doc/html/rfc3927.html)
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_link_local() const IPADDRESS_NOEXCEPT;
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_unspecified() const IPADDRESS_NOEXCEPT {
