@@ -92,11 +92,10 @@ public:
     }
 
     /**
-     * Assigns contents.
+     * Assigns the value and the state of existence from another `optional` object.
      * 
-     * Copy operator for other optional object.
-     * 
-     * @return This object.
+     * @param[in] opt the `optional` object to copy from
+     * @return    A reference to `*this`.
      */
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE optional& operator=(const optional<T>& opt) IPADDRESS_NOEXCEPT {
         _has_value = opt._has_value;
@@ -105,73 +104,80 @@ public:
     }
 
     /**
-     * Accesses the contained value.
+     * Pointer access to the contained value.
      * 
-     * Returns a pointer to the contained value. The behavior is 
-     * undefined if `*this` does not contain a value.
+     * Provides pointer access to the contained value. It is undefined behavior
+     * if the `optional` object does not contain a value.
      * 
-     * @return Pointer to the contained value.
+     * @return A pointer to the contained value.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE value_type* operator->() IPADDRESS_NOEXCEPT {
         return &_value;
     }
 
     /**
-     * Accesses the contained value.
+     * Constant pointer access to the contained value.
      * 
-     * Returns a pointer to the contained value. The behavior is 
-     * undefined if `*this` does not contain a value.
+     * Provides constant pointer access to the contained value. It is undefined behavior
+     * if the `optional` object does not contain a value.
      * 
-     * @return Constant pointer to the contained value.
+     * @return A constant pointer to the contained value.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const value_type* operator->() const IPADDRESS_NOEXCEPT {
         return &_value;
     }
 
     /**
-     * Accesses the contained value.
+     * Reference access to the contained value.
      * 
-     * Returns a reference to the contained value. The behavior is 
-     * undefined if `*this` does not contain a value.
+     * Provides reference access to the contained value. It is undefined behavior
+     * if the `optional` object does not contain a value.
      * 
-     * @return Reference to the contained value.
+     * @return A reference to the contained value.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE value_type& operator*() IPADDRESS_NOEXCEPT {
         return _value;
     }
 
     /**
-     * Accesses the contained value.
+     * Constant reference access to the contained value.
      * 
-     * Returns a reference to the contained value. The behavior is 
-     * undefined if `*this` does not contain a value.
+     * Provides constant reference access to the contained value. It is undefined behavior
+     * if the `optional` object does not contain a value.
      * 
-     * @return Constant reference to the contained value.
+     * @return A constant reference to the contained value.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const value_type& operator*() const IPADDRESS_NOEXCEPT {
         return _value;
     }
 
     /**
-     * Checks whether contains a value.
+     * Checks existence of the contained value.
      * 
-     * @return `true` if contains a value, `false` if does not contain a value.
+     * Determines whether the `optional` object contains a value.
+     * 
+     * @return `true` if a value is contained, otherwise `false`.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit operator bool() const IPADDRESS_NOEXCEPT {
         return has_value();
     }
 
     /**
-     * Checks whether contains a value.
+     * Checks existence of the contained value.
      * 
-     * @return `true` if contains a value, `false` if does not contain a value.
+     * Determines whether the `optional` object contains a value.
+     * 
+     * @return `true` if a value is contained, otherwise `false`.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool has_value() const IPADDRESS_NOEXCEPT {
         return _has_value;
     }
 
     /**
-     * Returns a reference to the contained value.
+     * Reference access to the contained value.
+     * 
+     * Provides reference access to the contained value. It is undefined behavior
+     * if the `optional` object does not contain a value.
      * 
      * @return A reference to the contained value.
      */
@@ -180,7 +186,10 @@ public:
     }
 
     /**
-     * Returns a reference to the contained value.
+     * Constant reference access to the contained value.
+     * 
+     * Provides constant reference access to the contained value. It is undefined behavior
+     * if the `optional` object does not contain a value.
      * 
      * @return A constant reference to the contained value.
      */
@@ -189,18 +198,24 @@ public:
     }
 
     /**
-     * Move the contained value.
+     * Move access to the contained value.
      * 
-     * @return Contained value.
+     * Moves the contained value. It is undefined behavior if the `optional` object
+     * does not contain a value.
+     * 
+     * @return The contained value, moved.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE value_type&& value() && IPADDRESS_NOEXCEPT {
         return std::move(_value);
     }
 
     /**
-     * Move the contained value.
+     * Constant move access to the contained value.
      * 
-     * @return Constant value.
+     * Moves the contained value, maintaining constness. It is undefined behavior if the `optional` object
+     * does not contain a value.
+     * 
+     * @return The contained value, moved, as a constant.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const value_type&& value() const && IPADDRESS_NOEXCEPT {
         return std::move(_value);
