@@ -106,17 +106,34 @@ private:
 }; // ipv4_address_base
 
 /**
- * Test ipv4_address
+ * Alias for the base class specialized for IPv4 address manipulation.
+ * 
+ * This alias provides a convenient shorthand for the specialized `ip_address_base` class
+ * tailored for IPv4 address handling. It inherits all functionalities from the `ipv4_address_base`
+ * class, allowing for operations such as conversion, comparison, and property querying
+ * specific to IPv4 addresses.
  */
 using ipv4_address = ip_address_base<ipv4_address_base>;
 
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
+    /**
+     * User-defined literal for creating an ipv4_address from a fixed string at compile time.
+     * 
+     * @tparam FixedString A compile-time fixed string representing the IPv4 address.
+     * @return An ipv4_address object parsed from the fixed string.
+     */
     template <fixed_string FixedString>
     IPADDRESS_NODISCARD consteval IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4() IPADDRESS_NOEXCEPT {
         return ipv4_address::parse<FixedString>();
     }
 
+    /**
+     * User-defined literal for creating an ipv4_address from an unsigned long long integer at compile time.
+     * 
+     * @param[in] value An unsigned long long integer representing the IPv4 address in *host byte order*.
+     * @return An ipv4_address object created from the integer.
+     */
     IPADDRESS_NODISCARD consteval IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(unsigned long long value) IPADDRESS_NOEXCEPT {
         assert(value <= ipv4_address::base_all_ones && "literal integer is too long");
         return ipv4_address::from_uint(uint32_t(value));
@@ -124,6 +141,13 @@ using ipv4_address = ip_address_base<ipv4_address_base>;
 
 #else // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
+    /**
+     * User-defined literal for creating an ipv4_address from a string literal.
+     * 
+     * @param[in] address A pointer to a character array representing the IPv4 address.
+     * @param[in] size The size of the character array.
+     * @return An ipv4_address object parsed from the string literal.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(const char* address, std::size_t size) IPADDRESS_NOEXCEPT {
         assert(size <= ipv4_address::base_max_string_len && "literal string is too long");
         char str[ipv4_address::base_max_string_len + 1] = {};
@@ -133,6 +157,12 @@ using ipv4_address = ip_address_base<ipv4_address_base>;
         return ipv4_address::parse(str);
     }
 
+    /**
+     * User-defined literal for creating an ipv4_address from an unsigned long long integer.
+     * 
+     * @param[in] value An unsigned long long integer representing the IPv4 address in host byte order.
+     * @return An ipv4_address object created from the integer.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(unsigned long long value) IPADDRESS_NOEXCEPT {
         assert(value <= ipv4_address::base_all_ones && "literal integer is too long");
         return ipv4_address::from_uint(uint32_t(value));
