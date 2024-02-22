@@ -266,44 +266,53 @@ struct fixed_string {
     }
 
     /**
-     * Returns a reference to the first element in the string. 
+     * Accesses the first element.
      * 
-     * Calling front on an empty string causes undefined behavior.
+     * Provides a reference to the first element in the string. 
+     * Undefined behavior occurs if this function is called on an empty string.
      * 
      * @return Reference to the first element.
-     * 
-     * @sa back()
+     * @sa     back()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reference front() const IPADDRESS_NOEXCEPT {
         return _data[0];
     }
 
     /**
-     * Returns a reference to the last element in the container.
+     * Accesses the last element.
      * 
-     * Calling back on an empty container causes undefined behavior.
+     * Provides a reference to the last element in the string.
+     * Undefined behavior occurs if this function is called on an empty string.
      * 
      * @return Reference to the last element.
-     * 
-     * @sa front()
+     * @sa     front()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reference back() const IPADDRESS_NOEXCEPT {
         return _data[N - 1];
     }
 
     /**
-     * Returns pointer to the underlying array serving as element storage. 
+     * Provides a pointer to the underlying data.
      * 
-     * The pointer is such that range [data(), data() + size()) is always a valid range, 
-     * even if the string is empty (data() is not dereferenceable in that case).
+     * Returns a pointer to the underlying array serving as the string's storage.
+     * The range [data(), data() + size()) is valid even if the string is empty,
+     * but the data is not dereferenceable in that case.
      * 
-     * @return Pointer to the underlying element storage. For non-empty containers, 
-     * the returned pointer compares equal to the address of the first element.
+     * @return Pointer to the underlying data storage.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_pointer data() const IPADDRESS_NOEXCEPT {
         return _data;
     }
     
+    /**
+     * Compares the string with another `fixed_string`.
+     * 
+     * Compares the string with another `fixed_string` lexicographically.
+     * 
+     * @tparam    N2  the size of the other `fixed_string`
+     * @param[in] rhs the other `fixed_string` to compare with
+     * @return Negative value if less, zero if equal, positive value if greater.
+     */
     template <size_t N2>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE int compare(const fixed_string<N2>& rhs) const IPADDRESS_NOEXCEPT {
         size_t i = 0;
@@ -325,11 +334,11 @@ struct fixed_string {
     }
 
     /**
-     * Calculate hash of string.
+     * Calculates the hash of the string.
      * 
-     * Returns a value of type std::size_t that represents the hash value.
+     * Computes a hash value for the string using a FNV-1a hash function.
      * 
-     * @return Hash of string.
+     * @return The hash value of the string.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t hash() const IPADDRESS_NOEXCEPT {
         size_t value{};
@@ -351,11 +360,11 @@ struct fixed_string {
     }
 
     /**
-     * Swap two string.
+     * Swaps the contents with another `fixed_string`.
      * 
-     * Exchanges the given values.
+     * Exchanges the contents of the string with those of another `fixed_string`.
      * 
-     * @param[in,out] other the value to be swapped
+     * @param[in,out] other The other `fixed_string` to swap with.
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void swap(fixed_string& other) IPADDRESS_NOEXCEPT {
         auto count = size() < other.size() ? other.size() : size();
