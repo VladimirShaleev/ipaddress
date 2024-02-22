@@ -15,8 +15,13 @@ var searchData=
   ['ipaddress_2ehpp_12',['ipaddress.hpp',['../ipaddress_8hpp.html',1,'']]],
   ['ipv4_5faddress_13',['ipv4_address',['../namespaceipaddress.html#ab9d36790eab20692578a4e2e7d4f36f1',1,'ipaddress']]],
   ['ipv6_5faddress_14',['ipv6_address',['../namespaceipaddress.html#a1e00093549b928c746d9e31081093ea9',1,'ipaddress']]],
-  ['is_5flittle_5fendian_15',['is_little_endian',['../namespaceipaddress.html#a066ef6172d323384668ed580b5bf02e8',1,'ipaddress']]],
-  ['is_5fmulticast_16',['is_multicast',['../classipaddress_1_1ip__address__base.html#a310eec3dc6474197c4ee87d9b1f6bed9',1,'ipaddress::ip_address_base']]],
-  ['is_5fprivate_17',['is_private',['../classipaddress_1_1ip__address__base.html#af17f1bb972742d7fc3bda4104f71f62a',1,'ipaddress::ip_address_base']]],
-  ['iterator_18',['iterator',['../structipaddress_1_1byte__array.html#a902f0d9f230c31c38ba25b4004ae6dbe',1,'ipaddress::byte_array']]]
+  ['is_5fglobal_15',['is_global',['../classipaddress_1_1ip__address__base.html#a1d77d7c45b950773c98262d73d571d54',1,'ipaddress::ip_address_base']]],
+  ['is_5flink_5flocal_16',['is_link_local',['../classipaddress_1_1ip__address__base.html#a8a431b610e5eebf07b709573f55002e5',1,'ipaddress::ip_address_base']]],
+  ['is_5flittle_5fendian_17',['is_little_endian',['../namespaceipaddress.html#a066ef6172d323384668ed580b5bf02e8',1,'ipaddress']]],
+  ['is_5floopback_18',['is_loopback',['../classipaddress_1_1ip__address__base.html#aa5f3400a989b1e447efdb40b7435d2e3',1,'ipaddress::ip_address_base']]],
+  ['is_5fmulticast_19',['is_multicast',['../classipaddress_1_1ip__address__base.html#a310eec3dc6474197c4ee87d9b1f6bed9',1,'ipaddress::ip_address_base']]],
+  ['is_5fprivate_20',['is_private',['../classipaddress_1_1ip__address__base.html#af17f1bb972742d7fc3bda4104f71f62a',1,'ipaddress::ip_address_base']]],
+  ['is_5freserved_21',['is_reserved',['../classipaddress_1_1ip__address__base.html#a81decb63dfb8cc8ff6364321ec7278ca',1,'ipaddress::ip_address_base']]],
+  ['is_5funspecified_22',['is_unspecified',['../classipaddress_1_1ip__address__base.html#a376b86efce57cf6682c0a1cfcb5be3a9',1,'ipaddress::ip_address_base']]],
+  ['iterator_23',['iterator',['../structipaddress_1_1byte__array.html#a902f0d9f230c31c38ba25b4004ae6dbe',1,'ipaddress::byte_array']]]
 ];
