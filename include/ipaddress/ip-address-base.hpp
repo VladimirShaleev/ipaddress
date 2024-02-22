@@ -1,10 +1,12 @@
 /**
  * @file      ip-address-base.hpp
- * @brief     Basic functionality for IP addresses
+ * @brief     Provides basic functionality for IP addresses
  * @author    Vladimir Shaleev
  * @copyright MIT License
  * 
- * Adds general functionality for IP addresses of any version.
+ * This header file includes the core functionalities and definitions that are common to
+ * both IPv4 and IPv6 address handling. It serves as a foundational component for building
+ * specialized IP address classes and utilities.
  */
 
 #ifndef IPADDRESS_IP_ADDRESS_BASE_HPP
@@ -20,21 +22,36 @@
 namespace IPADDRESS_NAMESPACE {
 
 /**
- * Ip version.
+ * Enumerates the IP address versions.
  * 
- * Adds constants for IP addresses versions 4 and 6.
+ * Defines constants representing the two versions of Internet Protocol: IPv4 and IPv6.
  */
 enum class ip_version {
-    V4 = 4, /**< Version 4 for IPv4 */
-    V6 = 6 /**< Version 6 for IPv6 */
+    V4 = 4, /**< IPv4 version identifier. */
+    V6 = 6 /**< IPv6 version identifier. */
 };
 
+/**
+ * Enumerates the formatting options for IP address strings.
+ * 
+ * Defines the formatting styles that can be applied when converting IP addresses to strings,
+ * such as full, compact, or compressed representations.
+ */
 enum class format {
-    full = 0,
-    compact,
-    compressed
+    full = 0, /**< Full format with no compression or omission. */
+    compact, /**< Compact format with possible omission of leading zeros. */
+    compressed /**< Compressed format with maximal omission of segments or octets. */
 };
 
+/**
+ * A template base class for IP address representations.
+ * 
+ * This class template serves as a base for creating IP address objects. It 
+ * inherits from a base class that provides the necessary functionality, and 
+ * it is extended by more specific IP address classes. 
+ * 
+ * @tparam Base the base class providing storage and low-level IP address functionalities
+ */
 template <typename Base>
 class ip_address_base : public Base {
 public:
