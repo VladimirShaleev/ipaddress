@@ -258,84 +258,235 @@ public:
 
 #if IPADDRESS_CPP_VERSION >= 17
 
+    /**
+     * Sets the scope identifier of the IPv6 address using a string view.
+     * 
+     * This function sets the scope identifier using a string view, which allows for a more efficient
+     * way to handle strings without copying them.
+     * 
+     * @param[in] scope_id The string view representing the scope identifier.
+     * @throw parse_error exception caused by invalid input string
+     * @note This method is available for C++17 and later versions.
+     * @remark For C++ versions prior to C++17, member functions with `std::string` and C-strings will be used instead.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::string_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         change_scope_id(scope_id);
     }
 
+    /**
+     * Sets the scope identifier of the IPv6 address using a wide string view.
+     * 
+     * This function sets the scope identifier using a wide string view, which allows for a more efficient
+     * way to handle strings without copying them.
+     * 
+     * @param[in] scope_id The wide string view representing the scope identifier.
+     * @throw parse_error exception caused by invalid input string
+     * @note This method is available for C++17 and later versions.
+     * @remark For C++ versions prior to C++17, member functions with `std::wstring` and C-strings will be used instead.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::wstring_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         change_scope_id(scope_id);
     }
 
 #if __cpp_char8_t >= 201811L
 
+    /**
+     * Sets the scope identifier of the IPv6 address using UTF-8 string view.
+     * 
+     * This function sets the scope identifier using UTF-8 string view, which allows for a more efficient
+     * way to handle strings without copying them.
+     * 
+     * @param[in] scope_id The UTF-8 string view representing the scope identifier.
+     * @throw parse_error exception caused by invalid input string
+     * @note This method is available for C++20 and later versions where `char8_t` is supported.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u8string_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         change_scope_id(scope_id);
     }
 
 #endif // __cpp_char8_t
 
+    /**
+     * Sets the scope identifier of the IPv6 address using UTF-16 string view.
+     * 
+     * This function sets the scope identifier using UTF-16 string view, which allows for a more efficient
+     * way to handle strings without copying them.
+     * 
+     * @param[in] scope_id The UTF-16 string view representing the scope identifier.
+     * @throw parse_error exception caused by invalid input string
+     * @note This method is available for C++17 and later versions.
+     * @remark For C++ versions prior to C++17, member functions with `std::u16string` and C-strings will be used instead.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u16string_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         change_scope_id(scope_id);
     }
 
+    /**
+     * Sets the scope identifier of the IPv6 address using UTF-32 string view.
+     * 
+     * This function sets the scope identifier using UTF-32 string view, which allows for a more efficient
+     * way to handle strings without copying them.
+     * 
+     * @param[in] scope_id The UTF-32 string view representing the scope identifier.
+     * @throw parse_error exception caused by invalid input string
+     * @note This method is available for C++17 and later versions.
+     * @remark For C++ versions prior to C++17, member functions with `std::u32string` and C-strings will be used instead.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u32string_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         change_scope_id(scope_id);
     }
 
+    /**
+     * Sets the scope identifier of the IPv6 address using a string view and reports any errors encountered.
+     * 
+     * This function sets the scope identifier using a string view and provides an error code parameter to report any issues that occur during the operation.
+     * 
+     * @param[in] scope_id The string view representing the scope identifier.
+     * @param[out] code An error_code object that will be set to the error that occurred, if any.
+     * @note This method is available for C++17 and later versions.
+     * @remark For C++ versions prior to C++17, member functions with `std::string` and C-strings will be used instead.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
         change_scope_id(scope_id, code);
     }
 
+    /**
+     * Sets the scope identifier of the IPv6 address using a wide string view and reports any errors encountered.
+     * 
+     * This function sets the scope identifier using a wide string view and provides an error code parameter to report any issues that occur during the operation.
+     * 
+     * @param[in] scope_id The wide string view representing the scope identifier.
+     * @param[out] code An error_code object that will be set to the error that occurred, if any.
+     * @note This method is available for C++17 and later versions.
+     * @remark For C++ versions prior to C++17, member functions with `std::wstring` and C-strings will be used instead.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::wstring_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
         change_scope_id(scope_id, code);
     }
 
 #if __cpp_char8_t >= 201811L
 
+    /**
+     * Sets the scope identifier of the IPv6 address using a UTF-8 string view and reports any errors encountered.
+     * 
+     * This function sets the scope identifier using a UTF-8 string view and provides an error code parameter to report any issues that occur during the operation.
+     * 
+     * @param[in] scope_id The UTF-8 string view representing the scope identifier.
+     * @param[out] code An error_code object that will be set to the error that occurred, if any.
+     * @note This method is available for C++20 and later versions.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u8string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
         change_scope_id(scope_id, code);
     }
 
 #endif // __cpp_char8_t
 
+    /**
+     * Sets the scope identifier of the IPv6 address using a UTF-16 string view and reports any errors encountered.
+     * 
+     * This function sets the scope identifier using a UTF-16 string view and provides an error code parameter to report any issues that occur during the operation.
+     * 
+     * @param[in] scope_id The UTF-16 string view representing the scope identifier.
+     * @param[out] code An error_code object that will be set to the error that occurred, if any.
+     * @note This method is available for C++17 and later versions.
+     * @remark For C++ versions prior to C++17, member functions with `std::u16string` and C-strings will be used instead.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u16string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
         change_scope_id(scope_id, code);
     }
 
+    /**
+     * Sets the scope identifier of the IPv6 address using a UTF-32 string view and reports any errors encountered.
+     * 
+     * This function sets the scope identifier using a UTF-32 string view and provides an error code parameter to report any issues that occur during the operation.
+     * 
+     * @param[in] scope_id The UTF-32 string view representing the scope identifier.
+     * @param[out] code An error_code object that will be set to the error that occurred, if any.
+     * @note This method is available for C++17 and later versions.
+     * @remark For C++ versions prior to C++17, member functions with `std::u32string` and C-strings will be used instead.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u32string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
         change_scope_id(scope_id, code);
     }
 
 #else // IPADDRESS_CPP_VERSION < 17
 
+    /**
+     * Sets the scope identifier of the IPv6 address using a `std::string`.
+     * 
+     * @param[in] scope_id The string representing the scope identifier.
+     * @throw parse_error exception caused by invalid input string
+     */
     IPADDRESS_FORCE_INLINE void set_scope_id(const std::string& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         change_scope_id(scope_id);
     }
 
+    /**
+     * Sets the scope identifier of the IPv6 address using a `std::wstring`.
+     * 
+     * @param[in] scope_id The wide string representing the scope identifier.
+     * @throw parse_error exception caused by invalid input wide string
+     */
     IPADDRESS_FORCE_INLINE void set_scope_id(const std::wstring& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         change_scope_id(scope_id);
     }
 
+    /**
+     * Sets the scope identifier of the IPv6 address using a `std::u16string`.
+     * 
+     * @param[in] scope_id The UTF-16 string representing the scope identifier.
+     * @throw parse_error exception caused by invalid input UTF-16 string
+     */
     IPADDRESS_FORCE_INLINE void set_scope_id(const std::u16string& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         change_scope_id(scope_id);
     }
 
+    /**
+     * Sets the scope identifier of the IPv6 address using a `std::u32string`.
+     * 
+     * @param[in] scope_id The UTF-32 string representing the scope identifier.
+     * @throw parse_error exception caused by invalid input UTF-32 string
+     */
     IPADDRESS_FORCE_INLINE void set_scope_id(const std::u32string& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         change_scope_id(scope_id);
     }
 
+    /**
+     * Sets the scope identifier of the IPv6 address using a `std::string` and reports any errors.
+     * 
+     * @param[in] scope_id The string representing the scope identifier.
+     * @param[out] code An error_code object that will store the result of the operation.
+     */
     IPADDRESS_FORCE_INLINE void set_scope_id(const std::string& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
         change_scope_id(scope_id, code);
     }
 
+    /**
+     * Sets the scope identifier of the IPv6 address using a `std::wstring` and reports any errors.
+     * 
+     * @param[in] scope_id The wide string representing the scope identifier.
+     * @param[out] code An error_code object that will store the result of the operation.
+     */
     IPADDRESS_FORCE_INLINE void set_scope_id(const std::wstring& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
         change_scope_id(scope_id, code);
     }
 
+    /**
+     * Sets the scope identifier of the IPv6 address using a `std::u16string` and reports any errors.
+     * 
+     * @param[in] scope_id The UTF-16 string representing the scope identifier.
+     * @param[out] code An error_code object that will store the result of the operation.
+     */
     IPADDRESS_FORCE_INLINE void set_scope_id(const std::u16string& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
         change_scope_id(scope_id, code);
     }
 
+    /**
+     * Sets the scope identifier of the IPv6 address using a `std::u32string` and reports any errors.
+     * 
+     * @param[in] scope_id The UTF-32 string representing the scope identifier.
+     * @param[out] code An error_code object that will store the result of the operation.
+     */
     IPADDRESS_FORCE_INLINE void set_scope_id(const std::u32string& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
         change_scope_id(scope_id, code);
     }
