@@ -119,7 +119,7 @@ $(function(){initNavTree('uint128_8hpp.html',''); initResizable(); });
 </div><!--header-->
 <div class="contents">
 
-<p>Unsigned integer type with width of exactly 128 bits.  
+<p>Defines <code>uint128_t</code>, a portable 128-bit unsigned integer type.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="config_8hpp_source.html">config.hpp</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="hash_8hpp_source.html">hash.hpp</a>&quot;</code><br />
@@ -130,7 +130,7 @@ $(function(){initNavTree('uint128_8hpp.html',''); initResizable(); });
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1uint128__t.html">ipaddress::uint128_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">128-bit unsigned integer.  <a href="classipaddress_1_1uint128__t.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class for representing a 128-bit unsigned integer.  <a href="classipaddress_1_1uint128__t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
@@ -199,11 +199,11 @@ Functions</h2></td></tr>
 <tr class="separator:ae62073d497e340cef5b0ba88bd450c33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Unsigned integer type with width of exactly 128 bits. </p>
+<div class="textblock"><p>Defines <code>uint128_t</code>, a portable 128-bit unsigned integer type. </p>
 <dl class="section author"><dt>Author</dt><dd>Vladimir Shaleev </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>MIT License</dd></dl>
-<p>The library adds its own type <code>uint128_t</code>, because it is missing in the standard. The library does not use compiler extensions such as <code>__int128</code> for greater portability.</p>
-<p>Algorithms from the implementation of <a href="https://source.dot.net/#System.Private.CoreLib/src/libraries/System.Private.CoreLib/src/System/UInt128.cs">UInt128</a> for .NET are taken as a basis </p>
+<p>This header introduces <code>uint128_t</code>, a class that emulates a 128-bit unsigned integer. It is designed to fill the gap in the C++ standard, which does not natively support 128-bit integers across all platforms. Unlike compiler-specific extensions like <code>__int128</code>, <code>uint128_t</code> ensures compatibility and portability across different compilers and architectures. The implementation is inspired by the algorithms used in the .NET framework's <a href="https://source.dot.net/#System.Private.CoreLib/src/libraries/System.Private.CoreLib/src/System/UInt128.cs">UInt128</a>, providing a reliable foundation for arithmetic operations and other integer-related functionalities. The class integrates seamlessly with the <code>ipaddress</code> library, offering standard hash support and optional type compatibility.</p>
+<p>The <code>uint128_t</code> type is especially useful in applications requiring precise control over large integer values, such as cryptography, high-precision arithmetic, and IP address manipulation. Its design prioritizes accuracy, making it a robust tool for developers working with high-volume data or complex numerical computations. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.10.0-->
