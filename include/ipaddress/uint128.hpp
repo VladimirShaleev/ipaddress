@@ -1,16 +1,23 @@
 /**
- * \file      uint128.hpp
- * \brief     Unsigned integer type with width of exactly 128 bits.
- * \author    Vladimir Shaleev
- * \copyright MIT License
+ * @file      uint128.hpp
+ * @brief     Defines `uint128_t`, a portable 128-bit unsigned integer type
+ * @author    Vladimir Shaleev
+ * @copyright MIT License
  * 
- * The library adds its own type `uint128_t`, because it is missing in 
- * the standard. The library does not use compiler extensions such as 
- * `__int128` for greater portability.
- * 
- * Algorithms from the implementation of 
- * [UInt128](https://source.dot.net/#System.Private.CoreLib/src/libraries/System.Private.CoreLib/src/System/UInt128.cs)
- * for .NET are taken as a basis
+ * This header introduces `uint128_t`, a class that emulates a 128-bit unsigned integer.
+ * It is designed to fill the gap in the C++ standard, which does not natively support
+ * 128-bit integers across all platforms. Unlike compiler-specific extensions like `__int128`,
+ * `uint128_t` ensures compatibility and portability across different compilers and architectures.
+ * The implementation is inspired by the algorithms used in the .NET framework's 
+ * [UInt128](https://source.dot.net/#System.Private.CoreLib/src/libraries/System.Private.CoreLib/src/System/UInt128.cs),
+ * providing a reliable foundation for arithmetic operations and other integer-related functionalities.
+ * The class integrates seamlessly with the `ipaddress` library, offering standard hash support and
+ * optional type compatibility.
+ *
+ * The `uint128_t` type is especially useful in applications requiring precise control over
+ * large integer values, such as cryptography, high-precision arithmetic, and IP address manipulation.
+ * Its design prioritizes accuracy, making it a robust tool for developers
+ * working with high-volume data or complex numerical computations.
  */
 
 #ifndef IPADDRESS_UINT128_HPP
@@ -61,38 +68,91 @@ struct is_object<IPADDRESS_NAMESPACE::uint128_t> : true_type {
 namespace IPADDRESS_NAMESPACE {
 
 /**
- * 128-bit unsigned integer.
+ * Class for representing a 128-bit unsigned integer.
  * 
- * Unsigned integer type with width of exactly 128 bits.
+ * `uint128_t` offers a comprehensive suite of operations and utilities for handling
+ * 128-bit unsigned integers. It supports basic arithmetic operations, bitwise logic,
+ * comparison operators, and specialized functions for advanced integer manipulation.
+ * The class is optimized for both space and time efficiency, ensuring minimal overhead
+ * and maximum performance.
+ *
+ * The design of `uint128_t` is focused on ease of use and integration. It provides
+ * constructors for seamless conversion from built-in integer types, as well as explicit
+ * methods for converting to and from other numeric representations. The class also
+ * includes support for standard library features like hashing and optional values,
+ * enhancing its utility in a wide range of programming scenarios.
+ * 
+ * The implementation is based on algorithms from the .NET `UInt128`
+ * structure, ensuring reliable and efficient operations.
+ * 
+ * @see [UInt128](https://source.dot.net/#System.Private.CoreLib/src/libraries/System.Private.CoreLib/src/System/UInt128.cs) .NET Implementation
  */
 class uint128_t final {
 public:
     /**
-     * String format
+     * Enumerates the string formats available for `uint128_t`.
      * 
-     * Possible representations of uint128_t in string form.
+     * This enumeration defines the possible string representations of `uint128_t` values.
+     * It allows users to specify the desired format when converting `uint128_t` instances to strings.
      */
     enum class format {
-        decimal = 0, /**< Decimal format. *Default format.* */
-        octal, /**< Octal format */
-        hexadecimal, /**< Hexadecimal format */
+        decimal = 0, /**< Represents the number in decimal format. *This is the default format.* */
+        octal,       /**< Represents the number in octal format. */
+        hexadecimal  /**< Represents the number in hexadecimal format. */
     };
 
+    /**
+     * Default constructor.
+     *
+     * Constructs a new `uint128_t` instance with default values.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t() IPADDRESS_NOEXCEPT = default; /**< Default constructor */
 
+    /**
+     * Copy constructor.
+     *
+     * Constructs a new `uint128_t` instance by copying the value from another instance.
+     * 
+     * @param[in] other the `uint128_t` instance to copy
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(const uint128_t&) IPADDRESS_NOEXCEPT = default; /**< Copy constructor */
+    
+    /**
+     * Move constructor.
+     *
+     * Constructs a new `uint128_t` instance by moving the value from another instance.
+     * 
+     * @param[in,out] other the `uint128_t` instance to move
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(uint128_t&&) IPADDRESS_NOEXCEPT = default; /**< Move constructor */
 
+    /**
+     * Assignment operator.
+     *
+     * Assigns the value of one `uint128_t` instance to another.
+     * 
+     * @param[in] other the `uint128_t` instance to assign from
+     * @return    A reference to the assigned `uint128_t` instance.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t& operator=(const uint128_t&) IPADDRESS_NOEXCEPT = default; /**< Assignment operator */
+    
+    /**
+     * Move assignment operator.
+     *
+     * Moves the value of one `uint128_t` instance to another.
+     * 
+     * @param[in,out] other the `uint128_t` instance to move from.
+     * @return        A reference to the moved `uint128_t` instance.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t& operator=(uint128_t&&) IPADDRESS_NOEXCEPT = default; /**< Move assignment operator */
 
     /**
-     * Creates an instance.
+     * Constructs a `uint128_t` instance from upper and lower parts.
+     *
+     * This constructor initializes a `uint128_t` instance using separate upper and lower 64-bit integers.
      * 
-     * Creates an instance from the upper and lower integer.
-     * 
-     * @param[in] upper integer of value
-     * @param[in] lower integer of value
+     * @param[in] upper the upper 64 bits of the `uint128_t` value
+     * @param[in] lower the lower 64 bits of the `uint128_t` value
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(uint64_t upper, uint64_t lower) IPADDRESS_NOEXCEPT
 
@@ -108,24 +168,26 @@ public:
     { }
 
     /**
-     * Creates an instance.
+     * Constructs a `uint128_t` instance from an unsigned integer.
+     *
+     * This constructor initializes a `uint128_t` instance using an unsigned integer,
+     * setting it as the lower part of the `uint128_t` value.
      * 
-     * Creates an instance from lower integer.
-     * 
-     * @tparam T is unsigned integer type
-     * @param[in] lower integer of value
+     * @tparam    T     an unsigned integral type
+     * @param[in] lower the unsigned integer to initialize the `uint128_t` instance with
      */
     template <typename T, typename std::enable_if<std::is_integral<T>::value && std::is_unsigned<T>::value, bool>::type = true>
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(T lower) IPADDRESS_NOEXCEPT : _lower(uint64_t(lower)) {
     }
 
     /**
-     * Creates an instance.
+     * Constructs a `uint128_t` instance from a signed integer.
+     *
+     * This constructor initializes a `uint128_t` instance using a signed integer,
+     * setting it as the lower part of the `uint128_t` value and extending the sign to the upper part.
      * 
-     * Creates an instance from lower integer.
-     * 
-     * @tparam T is signed integer type
-     * @param[in] lower integer of value
+     * @tparam    T     a signed integral type
+     * @param[in] lower the signed integer to initialize the `uint128_t` instance with
      */
     template <typename T, typename std::enable_if<std::is_integral<T>::value && std::is_signed<T>::value, bool>::type = true>
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(T lower) IPADDRESS_NOEXCEPT
@@ -142,12 +204,13 @@ public:
     { }
 
     /**
-     * Creates an instance.
+     * Constructs a `uint128_t` instance from a floating-point value.
      * 
-     * Creates an instance from float value.
+     * This constructor initializes a `uint128_t` instance by converting a floating-point value to its
+     * 128-bit unsigned integer representation. The conversion is explicit to prevent unintended implicit conversions.
      * 
-     * @tparam T is float type
-     * @param[in] value of float type
+     * @tparam    T     a floating-point type
+     * @param[in] value the floating-point value to convert
      */
     template <typename T, typename std::enable_if<std::is_floating_point<T>::value, bool>::type = true>
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit uint128_t(T value) IPADDRESS_NOEXCEPT {
@@ -157,29 +220,33 @@ public:
     }
 
     /**
-     * Get lower part of uint128_t.
+     * Retrieves the lower 64 bits of the `uint128_t` value.
      * 
-     * @return Lower part `uint64_t` of uint128_t.
+     * This method returns the lower part of the `uint128_t` instance, allowing access to the least significant bits.
+     * 
+     * @return The lower 64 bits as a `uint64_t`.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint64_t lower() const IPADDRESS_NOEXCEPT {
         return _lower;
     }
 
     /**
-     * Get upper part of uint128_t.
+     * Retrieves the upper 64 bits of the `uint128_t` value.
      * 
-     * @return Upper part `uint64_t` of uint128_t.
+     * This method returns the upper part of the `uint128_t` instance, allowing access to the most significant bits.
+     * 
+     * @return The upper 64 bits as a `uint64_t`.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint64_t upper() const IPADDRESS_NOEXCEPT {
         return _upper;
     }
 
     /**
-     * Calculate hash of uint128_t.
+     * Computes the hash value of the `uint128_t` instance.
      * 
-     * Returns a value of type std::size_t that represents the hash value.
+     * This method calculates a hash value for the `uint128_t` instance, which can be used in hash-based data structures.
      * 
-     * @return Hash of uint128_t.
+     * @return A `std::size_t` representing the hash value of the `uint128_t` instance.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::size_t hash() const IPADDRESS_NOEXCEPT {
         hash_combine<8> hasher{};
@@ -189,11 +256,11 @@ public:
     }
 
     /**
-     * Swap two uint128_t.
+     * Swaps the values of two `uint128_t` instances.
      * 
-     * Exchanges the given values.
+     * This method exchanges the contents of the `uint128_t` instance with those of another instance.
      * 
-     * @param[in,out] other the value to be swapped
+     * @param[in,out] other the other `uint128_t` instance to swap with
      */
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE void swap(IPADDRESS_NAMESPACE::uint128_t& other) IPADDRESS_NOEXCEPT {
         const auto tmp = *this;
@@ -202,10 +269,13 @@ public:
     }
 
     /**
-     * Converts value to std::string.
+     * Converts the `uint128_t` value to a string representation.
      * 
-     * @param[in] fmt of format string
-     * @return A string holding the converted value.
+     * This method converts the `uint128_t` instance to its string representation in the specified format.
+     * It supports decimal, octal, and hexadecimal formats.
+     * 
+     * @param[in] fmt the format to use for the conversion, with `format::decimal` as the default
+     * @return    A `std::string` holding the converted value.
      */
     IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string to_string(format fmt = format::decimal) const {
         if (_upper == 0) {
@@ -1082,7 +1152,7 @@ private:
         return uint32_t(carry);
     }
 
-    IPADDRESS_NODISCARD static uint128_t from_double(double value) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_FORCE_INLINE uint128_t from_double(double value) IPADDRESS_NOEXCEPT {
         constexpr double two_pow_128 = 340282366920938463463374607431768211456.0;
 
         if (value < 0 || std::isnan(value)) {
@@ -1103,7 +1173,7 @@ private:
         return uint128_t(0, 0);
     }
 
-    IPADDRESS_NODISCARD static double to_double(uint128_t value) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_FORCE_INLINE double to_double(uint128_t value) IPADDRESS_NOEXCEPT {
         constexpr double two_pow_52 = 4503599627370496.0;
         constexpr double two_pow_76 = 75557863725914323419136.0;
         constexpr double two_pow_104 = 20282409603651670423947251286016.0;
