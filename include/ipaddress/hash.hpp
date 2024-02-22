@@ -1,3 +1,19 @@
+/**
+ * @file      hash.hpp
+ * @brief     Algorithms for calculating hash sums
+ * @author    Vladimir Shaleev
+ * @copyright MIT License
+ * 
+ * The `hash.hpp` file contains hash templates and functions that can be used to 
+ * hash IP addresses or other numeric data.
+ * 
+ * This code uses patterns and specializations to optimize the hashing process 
+ * for different sizes of data. Magic numbers and bitwise operations in hash_combine 
+ * functions help distribute hash values evenly, which is important for avoiding 
+ * collisions in hash tables. The hash_sum and calc_hash functions provide a convenient 
+ * interface for calculating hash sums and computing the hash sum of multiple values.
+ */
+
 #ifndef IPADDRESS_HASH_HPP
 #define IPADDRESS_HASH_HPP
 

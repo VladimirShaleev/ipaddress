@@ -1,11 +1,17 @@
 /**
- * \file      config.hpp
- * \brief     Defines macros for library configuration.
- * \author    Vladimir Shaleev
- * \copyright MIT License
+ * @file      config.hpp
+ * @brief     Defines macros for library configuration.
+ * @author    Vladimir Shaleev
+ * @copyright MIT License
  * 
- * These macros are needed to support different platforms, compilers, 
- * as well as different versions of the C++ language standard itself.
+ * This header file contains a collection of preprocessor macros that are essential
+ * for configuring the library to work across various platforms and compilers.
+ * It also ensures compatibility with different versions of the C++ language standard.
+ * The macros facilitate feature detection and conditional compilation, which are
+ * crucial for maintaining cross-platform and cross-compiler support.
+ * 
+ * Overall, `config.hpp` serves as the backbone for the library's adaptability and
+ * robustness in varied development environments.
  */
 
 #ifndef IPADDRESS_CONFIG_HPP
