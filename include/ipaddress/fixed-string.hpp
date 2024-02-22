@@ -613,13 +613,13 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
 #endif // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
 /**
- * Make fixed string.
+ * Creates a fixed-length string from a character array.
  * 
- * Creates a fixed-length string from a multicharacter array.
+ * Constructs a `fixed_string` object from a character array, deducing the size automatically.
  * 
- * @tparam N is maximum number of characters
- * @param[in] data character array of string
- * @return Fixed string.
+ * @tparam    N    the size of the character array plus one for the null terminator
+ * @param[in] data the character array to initialize the `fixed_string` with
+ * @return    A `fixed_string` object of size N-1.
  */
 template <size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 1> make_fixed_string(const char(&data)[N]) IPADDRESS_NOEXCEPT {
@@ -627,13 +627,13 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 
 }
 
 /**
- * Make fixed string.
- * 
  * Creates a fixed-length string from a wide character array.
  * 
- * @tparam N is maximum number of characters
- * @param[in] data character array of string
- * @return Fixed string.
+ * Constructs a `fixed_string` object from a wide character array, deducing the size automatically.
+ * 
+ * @tparam    N    the size of the wide character array plus one for the null terminator
+ * @param[in] data the wide character array to initialize the `fixed_string` with
+ * @return    A `fixed_string` object of size N-1.
  */
 template <size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 1> make_fixed_string(const wchar_t(&data)[N]) IPADDRESS_NOEXCEPT {
@@ -641,13 +641,13 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 
 }
 
 /**
- * Make fixed string.
+ * Creates a fixed-length string from a UTF-16 character array.
  * 
- * Creates a fixed-length string from UTF-16 character array.
+ * Constructs a `fixed_string` object from a UTF-16 character array, deducing the size automatically.
  * 
- * @tparam N is maximum number of characters
- * @param[in] data character array of string
- * @return Fixed string.
+ * @tparam    N    the size of the UTF-16 character array plus one for the null terminator
+ * @param[in] data the UTF-16 character array to initialize the `fixed_string` with
+ * @return    A `fixed_string` object of size N-1.
  */
 template <size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 1> make_fixed_string(const char16_t(&data)[N]) IPADDRESS_NOEXCEPT {
@@ -655,13 +655,13 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 
 }
 
 /**
- * Make fixed string.
+ * Creates a fixed-length string from a UTF-32 character array.
  * 
- * Creates a fixed-length string from UTF-32 character array.
+ * Constructs a `fixed_string` object from a UTF-32 character array, deducing the size automatically.
  * 
- * @tparam N is maximum number of characters
- * @param[in] data character array of string
- * @return Fixed string.
+ * @tparam    N    the size of the UTF-32 character array plus one for the null terminator
+ * @param[in] data the UTF-32 character array to initialize the `fixed_string` with
+ * @return    A `fixed_string` object of size N-1.
  */
 template <size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 1> make_fixed_string(const char32_t(&data)[N]) IPADDRESS_NOEXCEPT {
@@ -671,13 +671,13 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 
 #if __cpp_char8_t >= 201811L
 
 /**
- * Make fixed string.
+ * Creates a fixed-length string from a UTF-8 character array.
  * 
- * Creates a fixed-length string from UTF-8 character array.
+ * Constructs a `fixed_string` object from a UTF-8 character array, deducing the size automatically.
  * 
- * @tparam N is maximum number of characters
- * @param[in] data character array of string
- * @return Fixed string.
+ * @tparam    N    the size of the UTF-8 character array plus one for the null terminator
+ * @param[in] data the UTF-8 character array to initialize the `fixed_string` with
+ * @return    A `fixed_string` object of size N-1.
  */
 template <size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 1> make_fixed_string(const char8_t(&data)[N]) IPADDRESS_NOEXCEPT {
