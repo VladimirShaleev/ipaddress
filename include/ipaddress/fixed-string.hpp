@@ -1,10 +1,12 @@
 /**
- * \file      fixed-string.hpp
- * \brief     Fixed string for non-type template parameters syntax
- * \author    Vladimir Shaleev
- * \copyright MIT License
+ * @file      fixed-string.hpp
+ * @brief     Provides a template for a fixed-length string suitable for use in non-type template parameters
+ * @author    Vladimir Shaleev
+ * @copyright MIT License
  * 
- * Template for fixed length string.
+ * This header defines `fixed_string`, a template class designed to store a string of fixed size.
+ * It is particularly useful in contexts where a constant string is required at compile-time,
+ * such as in template metaprogramming or when specifying non-type template parameters.
  */
 
 #ifndef IPADDRESS_FIXED_STRING_HPP
@@ -33,18 +35,19 @@ IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void is_char_type() IPADDRESS_NOEXCEP
 } // namespace internal
 
 /**
- * Fixed size string.
+ * Fixed size string class.
  * 
- * Used in non-type template parameters syntax.
+ * `fixed_string` is a template class that encapsulates a string of a fixed number of characters.
+ * It is designed to be used where strings are needed as non-type template parameters.
  * 
- * @tparam N is maximum number of characters.
+ * @tparam N the maximum number of characters the `fixed_string` can hold.
  */
 template <size_t N>
 struct fixed_string {
-    using const_pointer          = const char*; /**< Type of constant pointer */
-    using const_reference        = const char&; /**< Type of constant reference */
-    using const_iterator         = const_pointer; /**< Type of constant iterator */
-    using const_reverse_iterator = std::reverse_iterator<const_iterator>; /**< Type of reverse constant iterator */
+    using const_pointer          = const char*; /**< Type of constant pointer to the string data. */
+    using const_reference        = const char&; /**< Type of constant reference to a character in the string. */
+    using const_iterator         = const_pointer; /**< Type of constant iterator for traversing the string. */
+    using const_reverse_iterator = std::reverse_iterator<const_iterator>; /**< Type of constant reverse iterator for traversing the string in reverse. */
 
     static IPADDRESS_CONSTEXPR size_t max_length = N;
 
@@ -55,18 +58,18 @@ struct fixed_string {
     /**
      * Default constructor.
      * 
-     * Creates an instance with default values, i.e. a string filled with null characters.
+     * Constructs a `fixed_string` with default values, initializing the string with null characters.
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string() IPADDRESS_NOEXCEPT = default;
 
     /**
-     * Creates an instance from a character array.
+     * Constructs a `fixed_string` from a character array.
      * 
-     * All characters will be converted to ASCII, with possible truncation if characters 
-     * from other encodings are used.
+     * This constructor template initializes a `fixed_string` with the contents of a given character array.
+     * Characters from encodings other than ASCII may be truncated.
      * 
-     * @tparam T is character type
-     * @param[in] data of character array
+     * @tparam T  the character type of the input array
+     * @param[in] data the character array to initialize the `fixed_string` with
      */
     template <typename T>
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string(const T (&data)[N + 1]) IPADDRESS_NOEXCEPT {
@@ -87,101 +90,90 @@ struct fixed_string {
     }
 
     /**
-     * Get begin iterator.
+     * Retrieves the begin iterator of the `fixed_string`.
      * 
-     * Returns an iterator to the first element of the string. 
-     * If the string is empty, the returned iterator will be equal to end().
+     * Returns an iterator pointing to the first character of the `fixed_string`.
+     * If the `fixed_string` is empty, the returned iterator will be equal to the one returned by end().
      * 
-     * @return Iterator to the first element.
-     * 
-     * @sa end()
+     * @return A constant iterator to the beginning of the `fixed_string`.
+     * @sa     end()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator begin() const IPADDRESS_NOEXCEPT {
         return const_iterator(_data);
     }
     
     /**
-     * Get end iterator.
+     * Retrieves the end iterator of the `fixed_string`.
      * 
-     * Returns an iterator to the element following the last element of the string. 
-     * This element acts as a placeholder; attempting to access it results in undefined behavior.
+     * Returns an iterator pointing to the past-the-end character of the `fixed_string`.
+     * This iterator acts as a placeholder and should not be dereferenced.
      * 
-     * @return Iterator to the element following the last element.
-     * 
-     * @sa begin()
+     * @return A constant iterator to the element following the last character.
+     * @sa     begin()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator end() const IPADDRESS_NOEXCEPT {
         return const_iterator(_data) + length;
     }
     
     /**
-     * Get reverse begin iterator.
+     * Retrieves the reverse begin iterator of the `fixed_string`.
      * 
-     * Returns a reverse iterator to the first element of the reversed string. 
-     * It corresponds to the last element of the non-reversed string. If the string 
-     * is empty, the returned iterator is equal to rend().
+     * Returns a reverse iterator pointing to the last character of the `fixed_string`.
+     * If the `fixed_string` is empty, the returned iterator will be equal to rend().
      * 
-     * @return Reverse iterator to the first element.
-     * 
-     * @sa rend()
+     * @return A constant reverse iterator to the beginning of the reversed `fixed_string`.
+     * @sa    rend()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator rbegin() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(end());
     }
 
     /**
-     * Get reverse end iterator.
+     * Retrieves the reverse end iterator of the `fixed_string`.
      * 
-     * Returns a reverse iterator to the element following the last element of the 
-     * reversed string. It corresponds to the element preceding the first element of 
-     * the non-reversed string. This element acts as a placeholder, attempting to 
-     * access it results in undefined behavior.
+     * Returns a reverse iterator pointing to the position preceding the first character of the `fixed_string`.
+     * This iterator acts as a placeholder and should not be dereferenced.
      * 
-     * @return Reverse iterator to the element following the last element.
-     * 
-     * @sa rbegin()
+     * @return A constant reverse iterator to the end of the reversed `fixed_string`.
+     * @sa     rbegin()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator rend() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(begin());
     }
 
     /**
-     * Get begin iterator.
+     * Retrieves the constant begin iterator of the `fixed_string`.
      * 
-     * Returns an iterator to the first element of the string. 
-     * If the string is empty, the returned iterator will be equal to cend().
+     * Returns a constant iterator pointing to the first character of the `fixed_string`.
+     * If the `fixed_string` is empty, the returned iterator will be equal to cend().
      * 
-     * @return Iterator to the first element.
-     * 
-     * @sa cend()
+     * @return A constant iterator to the beginning of the `fixed_string`.
+     * @sa     cend()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator cbegin() const IPADDRESS_NOEXCEPT {
         return begin();
     }
 
     /**
-     * Get end iterator.
+     * Retrieves the constant end iterator of the `fixed_string`.
      * 
-     * Returns an iterator to the element following the last element of the string. 
-     * This element acts as a placeholder; attempting to access it results in undefined behavior.
+     * Returns a constant iterator pointing to the past-the-end character of the `fixed_string`.
+     * This iterator acts as a placeholder and should not be dereferenced.
      * 
-     * @return Iterator to the element following the last element.
-     * 
-     * @sa cbegin()
+     * @return A constant iterator to the end of the `fixed_string`.
+     * @sa     cbegin()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator cend() const IPADDRESS_NOEXCEPT {
         return end();
     }
 
     /**
-     * Get reverse begin iterator.
+     * Retrieves the constant reverse begin iterator of the `fixed_string`.
      * 
-     * Returns a reverse iterator to the first element of the reversed string. 
-     * It corresponds to the last element of the non-reversed string. If the string 
-     * is empty, the returned iterator is equal to crend().
+     * Returns a constant reverse iterator pointing to the last character of the `fixed_string`.
+     * If the `fixed_string` is empty, the returned iterator will be equal to crend().
      * 
-     * @return Reverse iterator to the first element.
-     * 
+     * @return A constant reverse iterator to the beginning of the reversed `fixed_string`.
      * @sa crend()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator crbegin() const IPADDRESS_NOEXCEPT {
