@@ -1,17 +1,15 @@
 /**
- * \file      optional.hpp
- * \brief     The class template optional manages an optional contained value.
- * \author    Vladimir Shaleev
- * \copyright MIT License
+ * @file      optional.hpp
+ * @brief     Manages an optional contained value within a class template
+ * @author    Vladimir Shaleev
+ * @copyright MIT License
  * 
- * A common use case for optional is the return value of a function that may fail. 
- * Any instance of `optional<T>` at any given point in time either contains a value or does not contain a value. 
- * 
- * If an `optional<T>` contains a value, the value is guaranteed to be allocated as part of the optional object 
- * footprint, i.e. no dynamic memory allocation ever takes place. 
- * 
- * When an object of type `optional<T>` is contextually converted to `bool`, the conversion returns `true` if the 
- * object contains a value and `false` if it does not contain a value.
+ * The `optional` class template is designed to handle situations where a value
+ * may or may not be present. It encapsulates a value in a way that does not require
+ * dynamic memory allocation, ensuring that the value, if present, is part of the
+ * `optional` object's footprint. This makes `optional` ideal for use as a return
+ * type for functions that may fail to return a value. An `optional` object can be
+ * contextually converted to `bool`, indicating whether a value is contained or not.
  */
 
 #ifndef IPADDRESS_OPTIONAL_HPP
@@ -22,10 +20,14 @@
 namespace IPADDRESS_NAMESPACE {
 
 /**
- * The optional object.
+ * A template class to manage an optional contained value.
  * 
- * The class template optional manages an optional contained value, 
- * i.e. a value that may or may not be present.
+ * The `optional` class template is often used to represent the outcome of a function 
+ * that might not succeed. An `optional<T>` can either hold a value or be empty at any 
+ * moment. When it does hold a value, that value is stored within the optional object 
+ * itself, meaning there’s no need for separate dynamic memory allocation. If you 
+ * check an `optional<T>` in a boolean context, such as in an if-statement, it will 
+ * evaluate to true if there’s a value present, and false otherwise.
  * 
  * @tparam T the type of the value to manage initialization state for
  */
@@ -35,25 +37,19 @@ public:
     using value_type = T; /**< The type of the value to manage initialization state for */
 
     /**
-     * Default constructor.
-     * 
-     * Constructs an object that does not contain a value.
+     * Default constructor that constructs an `optional` object without a contained value.
      */
-    IPADDRESS_CONSTEXPR optional() IPADDRESS_NOEXCEPT = default;
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional() IPADDRESS_NOEXCEPT = default;
     
     /**
-     * Constructs the optional object.
-     * 
-     * Constructs an object that does *not* contain a value.
+     * Constructs an `optional` object that does not contain a value.
      */
-    IPADDRESS_CONSTEXPR optional(std::nullptr_t) IPADDRESS_NOEXCEPT { };
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional(std::nullptr_t) IPADDRESS_NOEXCEPT { };
 
     /**
-     * Constructs the optional object.
+     * Move constructor that constructs an `optional` object with a contained value, initializing it with \a val.
      * 
-     * Move constructor.
-     * 
-     * @param[in,out] val of move object
+     * @param[in,out] val the value to move into the `optional` object
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional(value_type&& val) IPADDRESS_NOEXCEPT
         :
@@ -62,11 +58,9 @@ public:
     }
 
     /**
-     * Constructs the optional object.
+     * Copy constructor that constructs an `optional` object with a contained value, copying it from \a opt.
      * 
-     * Copy constructor.
-     * 
-     * @param[in] opt of copy object
+     * @param[in] opt the `optional` object to copy the value from
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional(const optional<T>& opt) IPADDRESS_NOEXCEPT
         :
@@ -75,11 +69,9 @@ public:
     }
 
     /**
-     * Assigns contents.
+     * Assignment operator that clears the contained value of the `optional` object.
      * 
-     * Clear contained value.
-     * 
-     * @return This object.
+     * @return A reference to the `optional` object.
      */
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE optional& operator=(std::nullptr_t) IPADDRESS_NOEXCEPT {
         _has_value = false;
@@ -88,11 +80,10 @@ public:
     }
 
     /**
-     * Assigns contents.
+     * Move assignment operator that sets the contained value of the `optional` object to \a val.
      * 
-     * Move operator for value.
-     * 
-     * @return This object.
+     * @param[in,out] val the value to move into the `optional` object
+     * @return        A reference to the `optional` object.
      */
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE optional& operator=(value_type&& val) IPADDRESS_NOEXCEPT {
         _has_value = true;

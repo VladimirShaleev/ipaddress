@@ -1,6 +1,6 @@
 /**
  * @file      config.hpp
- * @brief     Defines macros for library configuration.
+ * @brief     Defines macros for library configuration
  * @author    Vladimir Shaleev
  * @copyright MIT License
  * 
