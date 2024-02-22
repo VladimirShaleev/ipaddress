@@ -119,7 +119,7 @@ $(function(){initNavTree('structipaddress_1_1fixed__string.html',''); initResiza
 </div><!--header-->
 <div class="contents">
 
-<p>Fixed size string.  
+<p>Fixed size string class.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="fixed-string_8hpp_source.html">fixed-string.hpp</a>&gt;</code></p>
@@ -128,19 +128,19 @@ $(function(){initNavTree('structipaddress_1_1fixed__string.html',''); initResiza
 Public Types</h2></td></tr>
 <tr class="memitem:a541fbb8816f09e744cfb18cdbc56d2d9" id="r_a541fbb8816f09e744cfb18cdbc56d2d9"><td class="memItemLeft" align="right" valign="top"><a id="a541fbb8816f09e744cfb18cdbc56d2d9" name="a541fbb8816f09e744cfb18cdbc56d2d9"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>const_pointer</b> = const char*</td></tr>
-<tr class="memdesc:a541fbb8816f09e744cfb18cdbc56d2d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of constant pointer. <br /></td></tr>
+<tr class="memdesc:a541fbb8816f09e744cfb18cdbc56d2d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of constant pointer to the string data. <br /></td></tr>
 <tr class="separator:a541fbb8816f09e744cfb18cdbc56d2d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a914df5944280a1c576f6ea4b413e5ac6" id="r_a914df5944280a1c576f6ea4b413e5ac6"><td class="memItemLeft" align="right" valign="top"><a id="a914df5944280a1c576f6ea4b413e5ac6" name="a914df5944280a1c576f6ea4b413e5ac6"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>const_reference</b> = const char&amp;</td></tr>
-<tr class="memdesc:a914df5944280a1c576f6ea4b413e5ac6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of constant reference. <br /></td></tr>
+<tr class="memdesc:a914df5944280a1c576f6ea4b413e5ac6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of constant reference to a character in the string. <br /></td></tr>
 <tr class="separator:a914df5944280a1c576f6ea4b413e5ac6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a63be579fa9b28bba5b71125451736eee" id="r_a63be579fa9b28bba5b71125451736eee"><td class="memItemLeft" align="right" valign="top"><a id="a63be579fa9b28bba5b71125451736eee" name="a63be579fa9b28bba5b71125451736eee"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>const_iterator</b> = <a class="el" href="#a541fbb8816f09e744cfb18cdbc56d2d9">const_pointer</a></td></tr>
-<tr class="memdesc:a63be579fa9b28bba5b71125451736eee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of constant iterator. <br /></td></tr>
+<tr class="memdesc:a63be579fa9b28bba5b71125451736eee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of constant iterator for traversing the string. <br /></td></tr>
 <tr class="separator:a63be579fa9b28bba5b71125451736eee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac94bd47a6ab3e55e8bf5eb57f4848a5a" id="r_ac94bd47a6ab3e55e8bf5eb57f4848a5a"><td class="memItemLeft" align="right" valign="top"><a id="ac94bd47a6ab3e55e8bf5eb57f4848a5a" name="ac94bd47a6ab3e55e8bf5eb57f4848a5a"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>const_reverse_iterator</b> = std::reverse_iterator&lt;<a class="el" href="#a63be579fa9b28bba5b71125451736eee">const_iterator</a>&gt;</td></tr>
-<tr class="memdesc:ac94bd47a6ab3e55e8bf5eb57f4848a5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of reverse constant iterator. <br /></td></tr>
+<tr class="memdesc:ac94bd47a6ab3e55e8bf5eb57f4848a5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of constant reverse iterator for traversing the string in reverse. <br /></td></tr>
 <tr class="separator:ac94bd47a6ab3e55e8bf5eb57f4848a5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -150,70 +150,74 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a5b115ced8e8666f79b322988f051ee38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac72eca3e6fbc842c1e24bfe1104a90ce" id="r_ac72eca3e6fbc842c1e24bfe1104a90ce"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:ac72eca3e6fbc842c1e24bfe1104a90ce"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ac72eca3e6fbc842c1e24bfe1104a90ce">fixed_string</a> (const T(&amp;<a class="el" href="#a2cf856ab9b6b010fb4a89b04782f7fad">data</a>)[N+1]) noexcept</td></tr>
-<tr class="memdesc:ac72eca3e6fbc842c1e24bfe1104a90ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an instance from a character array.  <br /></td></tr>
+<tr class="memdesc:ac72eca3e6fbc842c1e24bfe1104a90ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> from a character array.  <br /></td></tr>
 <tr class="separator:ac72eca3e6fbc842c1e24bfe1104a90ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10b181852d98e7265972777f262ed119" id="r_a10b181852d98e7265972777f262ed119"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="#a63be579fa9b28bba5b71125451736eee">const_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a10b181852d98e7265972777f262ed119">begin</a> () const noexcept</td></tr>
-<tr class="memdesc:a10b181852d98e7265972777f262ed119"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get begin iterator.  <br /></td></tr>
+<tr class="memdesc:a10b181852d98e7265972777f262ed119"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the begin iterator of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>.  <br /></td></tr>
 <tr class="separator:a10b181852d98e7265972777f262ed119"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff7bf1019bf28b042bcd05e33fdefa54" id="r_aff7bf1019bf28b042bcd05e33fdefa54"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="#a63be579fa9b28bba5b71125451736eee">const_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aff7bf1019bf28b042bcd05e33fdefa54">end</a> () const noexcept</td></tr>
-<tr class="memdesc:aff7bf1019bf28b042bcd05e33fdefa54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get end iterator.  <br /></td></tr>
+<tr class="memdesc:aff7bf1019bf28b042bcd05e33fdefa54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the end iterator of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>.  <br /></td></tr>
 <tr class="separator:aff7bf1019bf28b042bcd05e33fdefa54"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0d38b3ecdf89f0e142a947f80cca6450" id="r_a0d38b3ecdf89f0e142a947f80cca6450"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="#ac94bd47a6ab3e55e8bf5eb57f4848a5a">const_reverse_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0d38b3ecdf89f0e142a947f80cca6450">rbegin</a> () const noexcept</td></tr>
-<tr class="memdesc:a0d38b3ecdf89f0e142a947f80cca6450"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get reverse begin iterator.  <br /></td></tr>
+<tr class="memdesc:a0d38b3ecdf89f0e142a947f80cca6450"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the reverse begin iterator of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>.  <br /></td></tr>
 <tr class="separator:a0d38b3ecdf89f0e142a947f80cca6450"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aefd1f973f3b4c23131e69c671ac73c27" id="r_aefd1f973f3b4c23131e69c671ac73c27"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="#ac94bd47a6ab3e55e8bf5eb57f4848a5a">const_reverse_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aefd1f973f3b4c23131e69c671ac73c27">rend</a> () const noexcept</td></tr>
-<tr class="memdesc:aefd1f973f3b4c23131e69c671ac73c27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get reverse end iterator.  <br /></td></tr>
+<tr class="memdesc:aefd1f973f3b4c23131e69c671ac73c27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the reverse end iterator of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>.  <br /></td></tr>
 <tr class="separator:aefd1f973f3b4c23131e69c671ac73c27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a82ec355cb77b006ca474c7c2729971fa" id="r_a82ec355cb77b006ca474c7c2729971fa"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="#a63be579fa9b28bba5b71125451736eee">const_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a82ec355cb77b006ca474c7c2729971fa">cbegin</a> () const noexcept</td></tr>
-<tr class="memdesc:a82ec355cb77b006ca474c7c2729971fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get begin iterator.  <br /></td></tr>
+<tr class="memdesc:a82ec355cb77b006ca474c7c2729971fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the constant begin iterator of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>.  <br /></td></tr>
 <tr class="separator:a82ec355cb77b006ca474c7c2729971fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aad5302bc6ad6899c28d6d756c054b5cf" id="r_aad5302bc6ad6899c28d6d756c054b5cf"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="#a63be579fa9b28bba5b71125451736eee">const_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aad5302bc6ad6899c28d6d756c054b5cf">cend</a> () const noexcept</td></tr>
-<tr class="memdesc:aad5302bc6ad6899c28d6d756c054b5cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get end iterator.  <br /></td></tr>
+<tr class="memdesc:aad5302bc6ad6899c28d6d756c054b5cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the constant end iterator of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>.  <br /></td></tr>
 <tr class="separator:aad5302bc6ad6899c28d6d756c054b5cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a35040e2648bb8fd0dd3437c773c5488a" id="r_a35040e2648bb8fd0dd3437c773c5488a"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="#ac94bd47a6ab3e55e8bf5eb57f4848a5a">const_reverse_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a35040e2648bb8fd0dd3437c773c5488a">crbegin</a> () const noexcept</td></tr>
-<tr class="memdesc:a35040e2648bb8fd0dd3437c773c5488a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get reverse begin iterator.  <br /></td></tr>
+<tr class="memdesc:a35040e2648bb8fd0dd3437c773c5488a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the constant reverse begin iterator of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>.  <br /></td></tr>
 <tr class="separator:a35040e2648bb8fd0dd3437c773c5488a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c30e631d955154277842a1540f0d3be" id="r_a6c30e631d955154277842a1540f0d3be"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="#ac94bd47a6ab3e55e8bf5eb57f4848a5a">const_reverse_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6c30e631d955154277842a1540f0d3be">crend</a> () const noexcept</td></tr>
-<tr class="memdesc:a6c30e631d955154277842a1540f0d3be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get reverse end iterator.  <br /></td></tr>
+<tr class="memdesc:a6c30e631d955154277842a1540f0d3be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the constant reverse end iterator of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>.  <br /></td></tr>
 <tr class="separator:a6c30e631d955154277842a1540f0d3be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b268fa6d27c77b66280ff8f6d528d8f" id="r_a8b268fa6d27c77b66280ff8f6d528d8f"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8b268fa6d27c77b66280ff8f6d528d8f">empty</a> () const noexcept</td></tr>
-<tr class="memdesc:a8b268fa6d27c77b66280ff8f6d528d8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the string is empty.  <br /></td></tr>
+<tr class="memdesc:a8b268fa6d27c77b66280ff8f6d528d8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> is empty.  <br /></td></tr>
 <tr class="separator:a8b268fa6d27c77b66280ff8f6d528d8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b3c8771895bfff0621b10fe1c4a6b11" id="r_a5b3c8771895bfff0621b10fe1c4a6b11"><td class="memItemLeft" align="right" valign="top">constexpr inline size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5b3c8771895bfff0621b10fe1c4a6b11">size</a> () const noexcept</td></tr>
-<tr class="memdesc:a5b3c8771895bfff0621b10fe1c4a6b11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of characters in the string.  <br /></td></tr>
+<tr class="memdesc:a5b3c8771895bfff0621b10fe1c4a6b11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the size of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>.  <br /></td></tr>
 <tr class="separator:a5b3c8771895bfff0621b10fe1c4a6b11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ca89be733e0f4aa6430f0ee2ec6caeb" id="r_a4ca89be733e0f4aa6430f0ee2ec6caeb"><td class="memItemLeft" align="right" valign="top">constexpr inline size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4ca89be733e0f4aa6430f0ee2ec6caeb">capacity</a> () const noexcept</td></tr>
-<tr class="memdesc:a4ca89be733e0f4aa6430f0ee2ec6caeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of characters that the string has currently allocated space for.  <br /></td></tr>
+<tr class="memdesc:a4ca89be733e0f4aa6430f0ee2ec6caeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the capacity of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>.  <br /></td></tr>
 <tr class="separator:a4ca89be733e0f4aa6430f0ee2ec6caeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2aacb4e058050b2c752d0ecc038345d8" id="r_a2aacb4e058050b2c752d0ecc038345d8"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="#a914df5944280a1c576f6ea4b413e5ac6">const_reference</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2aacb4e058050b2c752d0ecc038345d8">operator[]</a> (size_t n) const</td></tr>
-<tr class="memdesc:a2aacb4e058050b2c752d0ecc038345d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a reference to the element at specified location <em>n</em>.  <br /></td></tr>
+<tr class="memdesc:a2aacb4e058050b2c752d0ecc038345d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accesses the character at the specified location with bounds checking.  <br /></td></tr>
 <tr class="separator:a2aacb4e058050b2c752d0ecc038345d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c299abc7a8821cf00d0bbe3f8280a6d" id="r_a7c299abc7a8821cf00d0bbe3f8280a6d"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="#a914df5944280a1c576f6ea4b413e5ac6">const_reference</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7c299abc7a8821cf00d0bbe3f8280a6d">at</a> (size_t n) const</td></tr>
-<tr class="memdesc:a7c299abc7a8821cf00d0bbe3f8280a6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a reference to the element at specified location <em>n</em>, with bounds checking.  <br /></td></tr>
+<tr class="memdesc:a7c299abc7a8821cf00d0bbe3f8280a6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accesses the character at the specified location with bounds checking.  <br /></td></tr>
 <tr class="separator:a7c299abc7a8821cf00d0bbe3f8280a6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abca8cc726a23200db1b4d02bf1bcbd2e" id="r_abca8cc726a23200db1b4d02bf1bcbd2e"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="#a914df5944280a1c576f6ea4b413e5ac6">const_reference</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abca8cc726a23200db1b4d02bf1bcbd2e">front</a> () const noexcept</td></tr>
-<tr class="memdesc:abca8cc726a23200db1b4d02bf1bcbd2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a reference to the first element in the string.  <br /></td></tr>
+<tr class="memdesc:abca8cc726a23200db1b4d02bf1bcbd2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accesses the first element.  <br /></td></tr>
 <tr class="separator:abca8cc726a23200db1b4d02bf1bcbd2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a29ba45d12558b4b9935371b372c67619" id="r_a29ba45d12558b4b9935371b372c67619"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="#a914df5944280a1c576f6ea4b413e5ac6">const_reference</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a29ba45d12558b4b9935371b372c67619">back</a> () const noexcept</td></tr>
-<tr class="memdesc:a29ba45d12558b4b9935371b372c67619"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a reference to the last element in the container.  <br /></td></tr>
+<tr class="memdesc:a29ba45d12558b4b9935371b372c67619"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accesses the last element.  <br /></td></tr>
 <tr class="separator:a29ba45d12558b4b9935371b372c67619"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2cf856ab9b6b010fb4a89b04782f7fad" id="r_a2cf856ab9b6b010fb4a89b04782f7fad"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="#a541fbb8816f09e744cfb18cdbc56d2d9">const_pointer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2cf856ab9b6b010fb4a89b04782f7fad">data</a> () const noexcept</td></tr>
-<tr class="memdesc:a2cf856ab9b6b010fb4a89b04782f7fad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns pointer to the underlying array serving as element storage.  <br /></td></tr>
+<tr class="memdesc:a2cf856ab9b6b010fb4a89b04782f7fad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides a pointer to the underlying data.  <br /></td></tr>
 <tr class="separator:a2cf856ab9b6b010fb4a89b04782f7fad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf648857369396bfad9693b71e326cee" id="r_aaf648857369396bfad9693b71e326cee"><td class="memTemplParams" colspan="2">template&lt;size_t N2&gt; </td></tr>
+<tr class="memitem:aaf648857369396bfad9693b71e326cee"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aaf648857369396bfad9693b71e326cee">compare</a> (const <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N2 &gt; &amp;rhs) const noexcept</td></tr>
+<tr class="memdesc:aaf648857369396bfad9693b71e326cee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares the string with another <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>.  <br /></td></tr>
+<tr class="separator:aaf648857369396bfad9693b71e326cee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa72857bd63f97275f1d5ce7857a16c53" id="r_aa72857bd63f97275f1d5ce7857a16c53"><td class="memItemLeft" align="right" valign="top">constexpr inline size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa72857bd63f97275f1d5ce7857a16c53">hash</a> () const noexcept</td></tr>
-<tr class="memdesc:aa72857bd63f97275f1d5ce7857a16c53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate hash of string.  <br /></td></tr>
+<tr class="memdesc:aa72857bd63f97275f1d5ce7857a16c53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the hash of the string.  <br /></td></tr>
 <tr class="separator:aa72857bd63f97275f1d5ce7857a16c53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad12f633aa8475616e325f7d520892908" id="r_ad12f633aa8475616e325f7d520892908"><td class="memItemLeft" align="right" valign="top">constexpr inline void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad12f633aa8475616e325f7d520892908">swap</a> (<a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a> &amp;other) noexcept</td></tr>
-<tr class="memdesc:ad12f633aa8475616e325f7d520892908"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swap two string.  <br /></td></tr>
+<tr class="memdesc:ad12f633aa8475616e325f7d520892908"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swaps the contents with another <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>.  <br /></td></tr>
 <tr class="separator:ad12f633aa8475616e325f7d520892908"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;size_t N&gt;<br />
-struct ipaddress::fixed_string&lt; N &gt;</div><p>Fixed size string. </p>
-<p>Used in non-type template parameters syntax.</p>
+struct ipaddress::fixed_string&lt; N &gt;</div><p>Fixed size string class. </p>
+<p><a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> is a template class that encapsulates a string of a fixed number of characters. It is designed to be used where strings are needed as non-type template parameters.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">N</td><td>is maximum number of characters. </td></tr>
+    <tr><td class="paramname">N</td><td>the maximum number of characters the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> can hold. </td></tr>
   </table>
   </dd>
 </dl>
@@ -244,7 +248,7 @@ template&lt;size_t N&gt; </div>
 </div><div class="memdoc">
 
 <p>Default constructor. </p>
-<p>Creates an instance with default values, i.e. a string filled with null characters. </p>
+<p>Constructs a <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> with default values, initializing the string with null characters. </p>
 
 </div>
 </div>
@@ -275,17 +279,17 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Creates an instance from a character array. </p>
-<p>All characters will be converted to ASCII, with possible truncation if characters from other encodings are used.</p>
+<p>Constructs a <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> from a character array. </p>
+<p>This constructor template initializes a <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> with the contents of a given character array. Characters from encodings other than ASCII may be truncated.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>is character type </td></tr>
+    <tr><td class="paramname">T</td><td>the character type of the input array </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>of character array </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>the character array to initialize the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> with </td></tr>
   </table>
   </dd>
 </dl>
@@ -318,10 +322,10 @@ template&lt;size_t N&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Get begin iterator. </p>
-<p>Returns an iterator to the first element of the string. If the string is empty, the returned iterator will be equal to <a class="el" href="#aff7bf1019bf28b042bcd05e33fdefa54" title="Get end iterator.">end()</a>.</p>
-<dl class="section return"><dt>Returns</dt><dd>Iterator to the first element.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#aff7bf1019bf28b042bcd05e33fdefa54" title="Get end iterator.">end()</a> </dd></dl>
+<p>Retrieves the begin iterator of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>. </p>
+<p>Returns an iterator pointing to the first character of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>. If the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> is empty, the returned iterator will be equal to the one returned by <a class="el" href="#aff7bf1019bf28b042bcd05e33fdefa54" title="Retrieves the end iterator of the fixed_string.">end()</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>A constant iterator to the beginning of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#aff7bf1019bf28b042bcd05e33fdefa54" title="Retrieves the end iterator of the fixed_string.">end()</a> </dd></dl>
 
 </div>
 </div>
@@ -350,10 +354,10 @@ template&lt;size_t N&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Get end iterator. </p>
-<p>Returns an iterator to the element following the last element of the string. This element acts as a placeholder; attempting to access it results in undefined behavior.</p>
-<dl class="section return"><dt>Returns</dt><dd>Iterator to the element following the last element.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a10b181852d98e7265972777f262ed119" title="Get begin iterator.">begin()</a> </dd></dl>
+<p>Retrieves the end iterator of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>. </p>
+<p>Returns an iterator pointing to the past-the-end character of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>. This iterator acts as a placeholder and should not be dereferenced.</p>
+<dl class="section return"><dt>Returns</dt><dd>A constant iterator to the element following the last character. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a10b181852d98e7265972777f262ed119" title="Retrieves the begin iterator of the fixed_string.">begin()</a> </dd></dl>
 
 </div>
 </div>
@@ -382,10 +386,10 @@ template&lt;size_t N&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Get reverse begin iterator. </p>
-<p>Returns a reverse iterator to the first element of the reversed string. It corresponds to the last element of the non-reversed string. If the string is empty, the returned iterator is equal to <a class="el" href="#aefd1f973f3b4c23131e69c671ac73c27" title="Get reverse end iterator.">rend()</a>.</p>
-<dl class="section return"><dt>Returns</dt><dd>Reverse iterator to the first element.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#aefd1f973f3b4c23131e69c671ac73c27" title="Get reverse end iterator.">rend()</a> </dd></dl>
+<p>Retrieves the reverse begin iterator of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>. </p>
+<p>Returns a reverse iterator pointing to the last character of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>. If the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> is empty, the returned iterator will be equal to <a class="el" href="#aefd1f973f3b4c23131e69c671ac73c27" title="Retrieves the reverse end iterator of the fixed_string.">rend()</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>A constant reverse iterator to the beginning of the reversed <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#aefd1f973f3b4c23131e69c671ac73c27" title="Retrieves the reverse end iterator of the fixed_string.">rend()</a> </dd></dl>
 
 </div>
 </div>
@@ -414,10 +418,10 @@ template&lt;size_t N&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Get reverse end iterator. </p>
-<p>Returns a reverse iterator to the element following the last element of the reversed string. It corresponds to the element preceding the first element of the non-reversed string. This element acts as a placeholder, attempting to access it results in undefined behavior.</p>
-<dl class="section return"><dt>Returns</dt><dd>Reverse iterator to the element following the last element.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a0d38b3ecdf89f0e142a947f80cca6450" title="Get reverse begin iterator.">rbegin()</a> </dd></dl>
+<p>Retrieves the reverse end iterator of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>. </p>
+<p>Returns a reverse iterator pointing to the position preceding the first character of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>. This iterator acts as a placeholder and should not be dereferenced.</p>
+<dl class="section return"><dt>Returns</dt><dd>A constant reverse iterator to the end of the reversed <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a0d38b3ecdf89f0e142a947f80cca6450" title="Retrieves the reverse begin iterator of the fixed_string.">rbegin()</a> </dd></dl>
 
 </div>
 </div>
@@ -446,10 +450,10 @@ template&lt;size_t N&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Get begin iterator. </p>
-<p>Returns an iterator to the first element of the string. If the string is empty, the returned iterator will be equal to <a class="el" href="#aad5302bc6ad6899c28d6d756c054b5cf" title="Get end iterator.">cend()</a>.</p>
-<dl class="section return"><dt>Returns</dt><dd>Iterator to the first element.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#aad5302bc6ad6899c28d6d756c054b5cf" title="Get end iterator.">cend()</a> </dd></dl>
+<p>Retrieves the constant begin iterator of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>. </p>
+<p>Returns a constant iterator pointing to the first character of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>. If the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> is empty, the returned iterator will be equal to <a class="el" href="#aad5302bc6ad6899c28d6d756c054b5cf" title="Retrieves the constant end iterator of the fixed_string.">cend()</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>A constant iterator to the beginning of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#aad5302bc6ad6899c28d6d756c054b5cf" title="Retrieves the constant end iterator of the fixed_string.">cend()</a> </dd></dl>
 
 </div>
 </div>
@@ -478,10 +482,10 @@ template&lt;size_t N&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Get end iterator. </p>
-<p>Returns an iterator to the element following the last element of the string. This element acts as a placeholder; attempting to access it results in undefined behavior.</p>
-<dl class="section return"><dt>Returns</dt><dd>Iterator to the element following the last element.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a82ec355cb77b006ca474c7c2729971fa" title="Get begin iterator.">cbegin()</a> </dd></dl>
+<p>Retrieves the constant end iterator of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>. </p>
+<p>Returns a constant iterator pointing to the past-the-end character of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>. This iterator acts as a placeholder and should not be dereferenced.</p>
+<dl class="section return"><dt>Returns</dt><dd>A constant iterator to the end of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a82ec355cb77b006ca474c7c2729971fa" title="Retrieves the constant begin iterator of the fixed_string.">cbegin()</a> </dd></dl>
 
 </div>
 </div>
@@ -510,10 +514,10 @@ template&lt;size_t N&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Get reverse begin iterator. </p>
-<p>Returns a reverse iterator to the first element of the reversed string. It corresponds to the last element of the non-reversed string. If the string is empty, the returned iterator is equal to <a class="el" href="#a6c30e631d955154277842a1540f0d3be" title="Get reverse end iterator.">crend()</a>.</p>
-<dl class="section return"><dt>Returns</dt><dd>Reverse iterator to the first element.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a6c30e631d955154277842a1540f0d3be" title="Get reverse end iterator.">crend()</a> </dd></dl>
+<p>Retrieves the constant reverse begin iterator of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>. </p>
+<p>Returns a constant reverse iterator pointing to the last character of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>. If the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> is empty, the returned iterator will be equal to <a class="el" href="#a6c30e631d955154277842a1540f0d3be" title="Retrieves the constant reverse end iterator of the fixed_string.">crend()</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>A constant reverse iterator to the beginning of the reversed <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a6c30e631d955154277842a1540f0d3be" title="Retrieves the constant reverse end iterator of the fixed_string.">crend()</a> </dd></dl>
 
 </div>
 </div>
@@ -542,10 +546,10 @@ template&lt;size_t N&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Get reverse end iterator. </p>
-<p>Returns a reverse iterator to the element following the last element of the reversed string. It corresponds to the element preceding the first element of the non-reversed string. This element acts as a placeholder, attempting to access it results in undefined behavior.</p>
-<dl class="section return"><dt>Returns</dt><dd>Reverse iterator to the element following the last element.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a35040e2648bb8fd0dd3437c773c5488a" title="Get reverse begin iterator.">crbegin()</a> </dd></dl>
+<p>Retrieves the constant reverse end iterator of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>. </p>
+<p>Returns a reverse iterator pointing to the position preceding the first character of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> when reversed. This iterator acts as a placeholder and should not be dereferenced.</p>
+<dl class="section return"><dt>Returns</dt><dd>A constant reverse iterator to the end of the reversed <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a35040e2648bb8fd0dd3437c773c5488a" title="Retrieves the constant reverse begin iterator of the fixed_string.">crbegin()</a> </dd></dl>
 
 </div>
 </div>
@@ -574,8 +578,9 @@ template&lt;size_t N&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Checks if the string is empty. </p>
-<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the string is empty, <code>false</code> otherwise. </dd></dl>
+<p>Checks if the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> is empty. </p>
+<p>Evaluates whether the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> contains no characters.</p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> is empty, <code>false</code> otherwise. </dd></dl>
 
 </div>
 </div>
@@ -604,9 +609,10 @@ template&lt;size_t N&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Returns the number of characters in the string. </p>
-<dl class="section return"><dt>Returns</dt><dd>The number of characters in the string.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a4ca89be733e0f4aa6430f0ee2ec6caeb" title="Returns the number of characters that the string has currently allocated space for.">capacity()</a> </dd></dl>
+<p>Retrieves the size of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>. </p>
+<p>Returns the number of characters currently stored in the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>The number of characters in the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a4ca89be733e0f4aa6430f0ee2ec6caeb" title="Retrieves the capacity of the fixed_string.">capacity()</a> </dd></dl>
 
 </div>
 </div>
@@ -635,9 +641,10 @@ template&lt;size_t N&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Returns the number of characters that the string has currently allocated space for. </p>
-<dl class="section return"><dt>Returns</dt><dd>Capacity of the currently allocated storage.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a5b3c8771895bfff0621b10fe1c4a6b11" title="Returns the number of characters in the string.">size()</a> </dd></dl>
+<p>Retrieves the capacity of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>. </p>
+<p>Returns the total number of characters that the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> can hold.</p>
+<dl class="section return"><dt>Returns</dt><dd>The capacity of the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a5b3c8771895bfff0621b10fe1c4a6b11" title="Retrieves the size of the fixed_string.">size()</a> </dd></dl>
 
 </div>
 </div>
@@ -666,16 +673,22 @@ template&lt;size_t N&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Returns a reference to the element at specified location <em>n</em>. </p>
-<p>If n is not within the range of the string, an exception of type std::out_of_range is thrown.</p>
+<p>Accesses the character at the specified location with bounds checking. </p>
+<p>Returns a reference to the character at the specified location <em>n</em>. If <em>n</em> is out of bounds, an exception of type <code>std::out_of_range</code> will be thrown.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>position of the element to return </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>the position of the character to return </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Reference to the requested element.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a7c299abc7a8821cf00d0bbe3f8280a6d" title="Returns a reference to the element at specified location n, with bounds checking.">at(size_t) const</a> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A reference to the character at the specified location. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::out_of_range</td><td>when going beyond the bounds of the character array </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a7c299abc7a8821cf00d0bbe3f8280a6d" title="Accesses the character at the specified location with bounds checking.">at(size_t) const</a> </dd></dl>
 
 </div>
 </div>
@@ -704,16 +717,22 @@ template&lt;size_t N&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Returns a reference to the element at specified location <em>n</em>, with bounds checking. </p>
-<p>If n is not within the range of the string, an exception of type std::out_of_range is thrown.</p>
+<p>Accesses the character at the specified location with bounds checking. </p>
+<p>Returns a reference to the character at the specified location <em>n</em>. If <em>n</em> is out of bounds, an exception of type <code>std::out_of_range</code> will be thrown.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>position of the element to return </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>the position of the character to return </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Reference to the requested element.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a2aacb4e058050b2c752d0ecc038345d8" title="Returns a reference to the element at specified location n.">operator[](size_t) const</a> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A reference to the character at the specified location. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::out_of_range</td><td>when going beyond the bounds of the character array </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a2aacb4e058050b2c752d0ecc038345d8" title="Accesses the character at the specified location with bounds checking.">operator[](size_t) const</a> </dd></dl>
 
 </div>
 </div>
@@ -742,10 +761,10 @@ template&lt;size_t N&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Returns a reference to the first element in the string. </p>
-<p>Calling front on an empty string causes undefined behavior.</p>
-<dl class="section return"><dt>Returns</dt><dd>Reference to the first element.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a29ba45d12558b4b9935371b372c67619" title="Returns a reference to the last element in the container.">back()</a> </dd></dl>
+<p>Accesses the first element. </p>
+<p>Provides a reference to the first element in the string. Undefined behavior occurs if this function is called on an empty string.</p>
+<dl class="section return"><dt>Returns</dt><dd>Reference to the first element. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#a29ba45d12558b4b9935371b372c67619" title="Accesses the last element.">back()</a> </dd></dl>
 
 </div>
 </div>
@@ -774,10 +793,10 @@ template&lt;size_t N&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Returns a reference to the last element in the container. </p>
-<p>Calling back on an empty container causes undefined behavior.</p>
-<dl class="section return"><dt>Returns</dt><dd>Reference to the last element.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="#abca8cc726a23200db1b4d02bf1bcbd2e" title="Returns a reference to the first element in the string.">front()</a> </dd></dl>
+<p>Accesses the last element. </p>
+<p>Provides a reference to the last element in the string. Undefined behavior occurs if this function is called on an empty string.</p>
+<dl class="section return"><dt>Returns</dt><dd>Reference to the last element. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="#abca8cc726a23200db1b4d02bf1bcbd2e" title="Accesses the first element.">front()</a> </dd></dl>
 
 </div>
 </div>
@@ -806,9 +825,54 @@ template&lt;size_t N&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Returns pointer to the underlying array serving as element storage. </p>
-<p>The pointer is such that range [<a class="el" href="#a2cf856ab9b6b010fb4a89b04782f7fad" title="Returns pointer to the underlying array serving as element storage.">data()</a>, <a class="el" href="#a2cf856ab9b6b010fb4a89b04782f7fad" title="Returns pointer to the underlying array serving as element storage.">data()</a> + <a class="el" href="#a5b3c8771895bfff0621b10fe1c4a6b11" title="Returns the number of characters in the string.">size()</a>) is always a valid range, even if the string is empty (<a class="el" href="#a2cf856ab9b6b010fb4a89b04782f7fad" title="Returns pointer to the underlying array serving as element storage.">data()</a> is not dereferenceable in that case).</p>
-<dl class="section return"><dt>Returns</dt><dd>Pointer to the underlying element storage. For non-empty containers, the returned pointer compares equal to the address of the first element. </dd></dl>
+<p>Provides a pointer to the underlying data. </p>
+<p>Returns a pointer to the underlying array serving as the string's storage. The range [<a class="el" href="#a2cf856ab9b6b010fb4a89b04782f7fad" title="Provides a pointer to the underlying data.">data()</a>, <a class="el" href="#a2cf856ab9b6b010fb4a89b04782f7fad" title="Provides a pointer to the underlying data.">data()</a> + <a class="el" href="#a5b3c8771895bfff0621b10fe1c4a6b11" title="Retrieves the size of the fixed_string.">size()</a>) is valid even if the string is empty, but the data is not dereferenceable in that case.</p>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the underlying data storage. </dd></dl>
+
+</div>
+</div>
+<a id="aaf648857369396bfad9693b71e326cee" name="aaf648857369396bfad9693b71e326cee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf648857369396bfad9693b71e326cee">&#9670;&#160;</a></span>compare()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N&gt; </div>
+<div class="memtemplate">
+template&lt;size_t N2&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline int <a class="el" href="structipaddress_1_1fixed__string.html">ipaddress::fixed_string</a>&lt; N &gt;::compare </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N2 &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compares the string with another <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>. </p>
+<p>Compares the string with another <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> lexicographically.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">N2</td><td>the size of the other <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">rhs</td><td>the other <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> to compare with </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Negative value if less, zero if equal, positive value if greater. </dd></dl>
 
 </div>
 </div>
@@ -837,9 +901,9 @@ template&lt;size_t N&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Calculate hash of string. </p>
-<p>Returns a value of type std::size_t that represents the hash value.</p>
-<dl class="section return"><dt>Returns</dt><dd>Hash of string. </dd></dl>
+<p>Calculates the hash of the string. </p>
+<p>Computes a hash value for the string using a FNV-1a hash function.</p>
+<dl class="section return"><dt>Returns</dt><dd>The hash value of the string. </dd></dl>
 
 </div>
 </div>
@@ -868,11 +932,11 @@ template&lt;size_t N&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Swap two string. </p>
-<p>Exchanges the given values.</p>
+<p>Swaps the contents with another <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>. </p>
+<p>Exchanges the contents of the string with those of another <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a>.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">other</td><td>the value to be swapped </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">other</td><td>The other <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> to swap with. </td></tr>
   </table>
   </dd>
 </dl>

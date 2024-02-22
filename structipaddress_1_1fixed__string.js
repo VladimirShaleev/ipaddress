@@ -22,6 +22,7 @@ var structipaddress_1_1fixed__string =
     [ "front", "structipaddress_1_1fixed__string.html#abca8cc726a23200db1b4d02bf1bcbd2e", null ],
     [ "back", "structipaddress_1_1fixed__string.html#a29ba45d12558b4b9935371b372c67619", null ],
     [ "data", "structipaddress_1_1fixed__string.html#a2cf856ab9b6b010fb4a89b04782f7fad", null ],
+    [ "compare", "structipaddress_1_1fixed__string.html#aaf648857369396bfad9693b71e326cee", null ],
     [ "hash", "structipaddress_1_1fixed__string.html#aa72857bd63f97275f1d5ce7857a16c53", null ],
     [ "swap", "structipaddress_1_1fixed__string.html#ad12f633aa8475616e325f7d520892908", null ]
 ];
