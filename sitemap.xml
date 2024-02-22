@@ -107,6 +107,12 @@
     <loc>https://vladimirshaleev.github.io/ipaddress/ipaddress_8hpp.html</loc>
   </url>
   <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/ipv4-address_8hpp.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/ipv6-address_8hpp.html</loc>
+  </url>
+  <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/optional_8hpp.html</loc>
   </url>
   <url>
@@ -158,6 +164,18 @@
     <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1ip__address__base-members.html</loc>
   </url>
   <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1ipv4__address__base.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1ipv4__address__base-members.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1ipv6__address__base.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1ipv6__address__base-members.html</loc>
+  </url>
+  <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1logic__error.html</loc>
   </url>
   <url>
@@ -174,6 +192,12 @@
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1parse__error-members.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1scope.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1scope-members.html</loc>
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1uint128__t.html</loc>
@@ -272,6 +296,9 @@
     <loc>https://vladimirshaleev.github.io/ipaddress/functions_f.html</loc>
   </url>
   <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/functions_g.html</loc>
+  </url>
+  <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/functions_h.html</loc>
   </url>
   <url>
@@ -308,52 +335,55 @@
     <loc>https://vladimirshaleev.github.io/ipaddress/functions_func.html</loc>
   </url>
   <url>
-    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func.html</loc>
+    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func_b.html</loc>
   </url>
   <url>
-    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func.html</loc>
+    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func_c.html</loc>
   </url>
   <url>
-    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func.html</loc>
+    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func_d.html</loc>
   </url>
   <url>
-    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func.html</loc>
+    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func_e.html</loc>
   </url>
   <url>
-    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func.html</loc>
+    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func_f.html</loc>
   </url>
   <url>
-    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func.html</loc>
+    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func_g.html</loc>
   </url>
   <url>
-    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func.html</loc>
+    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func_h.html</loc>
   </url>
   <url>
-    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func.html</loc>
+    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func_i.html</loc>
   </url>
   <url>
-    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func.html</loc>
+    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func_l.html</loc>
   </url>
   <url>
-    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func.html</loc>
+    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func_m.html</loc>
   </url>
   <url>
-    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func.html</loc>
+    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func_o.html</loc>
   </url>
   <url>
-    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func.html</loc>
+    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func_p.html</loc>
   </url>
   <url>
-    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func.html</loc>
+    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func_r.html</loc>
   </url>
   <url>
-    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func.html</loc>
+    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func_s.html</loc>
   </url>
   <url>
-    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func.html</loc>
+    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func_t.html</loc>
   </url>
   <url>
-    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func.html</loc>
+    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func_u.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func_v.html</loc>
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/functions_type.html</loc>
