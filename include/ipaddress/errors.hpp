@@ -34,47 +34,58 @@
 namespace IPADDRESS_NAMESPACE {
 
 /**
- * Error codes.
+ * Enumeration of error codes for IP address parsing and validation.
  * 
- * Enumeration for identifying IP-address parsing errors and other logical errors.
+ * This enumeration defines a set of error codes used to represent various error conditions
+ * that can occur during the parsing and validation of IP addresses. These error codes are
+ * used to provide detailed feedback about the nature of the error encountered, allowing
+ * for more precise error handling and troubleshooting.
+ * 
+ * The error codes are divided into several categories:
+ * - General errors related to the overall format and structure of the IP address.
+ * - IPv4-specific errors that address the unique syntactical requirements of IPv4 addresses.
+ * - IPv6-specific errors that address the unique syntactical requirements of IPv6 addresses.
+ * - Logical errors that represent inconsistencies or invalid operations in network calculations.
+ * 
+ * Each error code is accompanied by a brief comment explaining the specific error condition it represents.
  */
 enum class error_code {
-    NO_ERROR = 0, /**< No errors */
-    EMPTY_ADDRESS, /**< Address cannot be empty */
-    EMPTY_NETMASK, /**< Empty mask in address */
-    INVALID_NETMASK, /**< Not valid netmask in address */
-    NETMASK_PATTERN_MIXES_ZEROES_AND_ONES, /**< Netmask pattern mixes zeroes & ones in address */
-    HAS_HOST_BITS_SET, /**< Has host bits set in address */
-    ONLY_ONE_SLASH_PERMITTED, /**< Only one '/' permitted in address */
+    NO_ERROR = 0, /**< Indicates the absence of any errors. */
+    EMPTY_ADDRESS, /**< The IP address string is empty when it should contain a valid address. */
+    EMPTY_NETMASK, /**< The netmask portion of the address is empty when it should specify a valid netmask. */
+    INVALID_NETMASK, /**< The provided netmask is not valid according to standard netmask formatting rules. */
+    NETMASK_PATTERN_MIXES_ZEROES_AND_ONES, /**< The netmask contains an invalid pattern of zeroes and ones. */
+    HAS_HOST_BITS_SET, /**< The address has host bits set when they are expected to be clear. */
+    ONLY_ONE_SLASH_PERMITTED, /**< Only one slash character is permitted, used to separate the address from the netmask. */
 
     // ipv4 errors
-    EMPTY_OCTET, /**< Empty octet in address */
-    EXPECTED_4_OCTETS, /**< Expected 4 octets in address*/
-    LEADING_0_ARE_NOT_PERMITTED, /**< Leading zeros are not permitted in octet of address */
-    OCTET_MORE_3_CHARACTERS, /**< In octet of address more 3 characters */
-    OCTET_HAS_INVALID_SYMBOL, /**< In octet of address has invalid symbol */
-    OCTET_EXCEEDED_255, /**< Octet of address exceeded 255 */
+    EMPTY_OCTET, /**< An octet in the IPv4 address is empty when it should contain a numeric value. */
+    EXPECTED_4_OCTETS, /**< The IPv4 address does not contain the expected four octets. */
+    LEADING_0_ARE_NOT_PERMITTED, /**< Leading zeroes are not permitted in any octet of the IPv4 address. */
+    OCTET_MORE_3_CHARACTERS, /**< An octet contains more than three characters, exceeding the maximum allowed. */
+    OCTET_HAS_INVALID_SYMBOL, /**< An octet contains characters other than digits, which are invalid. */
+    OCTET_EXCEEDED_255, /**< An octet's value exceeds the maximum allowed value of 255. */
 
     // ipv6 errors
-    LEAST_3_PARTS, /**< Least 3 parts in address */
-    MOST_8_COLONS_PERMITTED, /**< Most 8 colons permitted in address */
-    PART_IS_MORE_4_CHARS, /**< In part of address more 4 characters */
-    PART_HAS_INVALID_SYMBOL, /**< In part of address has invalid symbols */
-    MOST_ONE_DOUBLE_COLON_PERMITTED, /**< At most one '::' permitted in address */
-    LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, /**< At leading ':' only permitted as part of '::' in address */
-    TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, /**< At trailing ':' only permitted as part of '::' in address */
-    EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, /**< Expected at most 7 other parts with '::' in address */
-    EXACTLY_8_PARTS_EXPECTED_WITHOUT_DOUBLE_COLON, /**< Exactly 8 parts expected without '::' in address */
-    SCOPE_ID_IS_TOO_LONG, /**< Scope id is too long in address */
-    INVALID_SCOPE_ID, /**< Invalid scope id in address */
+    LEAST_3_PARTS, /**< The IPv6 address contains fewer than the minimum required parts. */
+    MOST_8_COLONS_PERMITTED, /**< The IPv6 address contains more than the maximum allowed number of colons. */
+    PART_IS_MORE_4_CHARS, /**< A part of the IPv6 address contains more than four characters. */
+    PART_HAS_INVALID_SYMBOL, /**< A part of the IPv6 address contains invalid characters. */
+    MOST_ONE_DOUBLE_COLON_PERMITTED, /**< More than one double colon is present in the IPv6 address. */
+    LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, /**< A leading colon is only permitted as part of a double colon. */
+    TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, /**< A trailing colon is only permitted as part of a double colon. */
+    EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, /**< With a double colon present, at most seven other parts are expected. */
+    EXACTLY_8_PARTS_EXPECTED_WITHOUT_DOUBLE_COLON, /**< Without a double colon, exactly eight parts are expected. */
+    SCOPE_ID_IS_TOO_LONG, /**< The scope ID in the IPv6 address exceeds the maximum length. */
+    INVALID_SCOPE_ID, /**< The scope ID in the IPv6 address is invalid. */
 
     // logic errors
-    INVALID_VERSION, /**< Versions don't match */
-    INVALID_PREFIXLEN_DIFF, /**< Invalid prefixlen diff */
-    NEW_PREFIX_MUST_BE_SHORTER, /**< New prefix must be shorter */
-    NEW_PREFIX_MUST_BE_LONGER, /**< New prefix must be longer */
-    CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX, /**< Cannot set prefixlen diff and new prefix */
-    NOT_CONTAINED_NETWORK /**< Network is not a subnet of other */
+    INVALID_VERSION, /**< The IP address version does not match the expected version. */
+    INVALID_PREFIXLEN_DIFF, /**< The difference in prefix length is invalid for the operation being performed. */
+    NEW_PREFIX_MUST_BE_SHORTER, /**< The new prefix length must be shorter for the operation being performed. */
+    NEW_PREFIX_MUST_BE_LONGER, /**< The new prefix length must be longer for the operation being performed. */
+    CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX, /**< Both prefix length difference and new prefix cannot be set simultaneously. */
+    NOT_CONTAINED_NETWORK /**< The network is not a subnet of the other network as expected. */
 };
 
 /**
