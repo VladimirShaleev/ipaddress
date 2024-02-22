@@ -1,14 +1,28 @@
 /**
  * \file      endian.hpp
- * \brief     Defining macros to determine byte order
+ * \brief     Defines macros to determine byte order
  * \author    Vladimir Shaleev
  * \copyright MIT License
  * 
- * The following definitions are used to determine byte order, depending 
- * on their availability and with the following priority:
- * 1. user definition `IPADDRESS_ENDIAN`;
- * 2. `std::endian` for C++20;
- * 3. macros provided by the platform or compiler;
+ * This header file contains macros and utility functions to determine
+ * and work with the byte order (endianness) of the system. It provides
+ * a set of preprocessor directives that establish the byte order based
+ * on various conditions, such as user definitions, C++20 standard features,
+ * or platform-specific macros.
+ * 
+ * The file defines `IPADDRESS_LITTLE_ENDIAN` and `IPADDRESS_BIG_ENDIAN`
+ * as constants for comparison and sets `IPADDRESS_ENDIAN` accordingly.
+ * It also includes functions to check the system's endianness and to
+ * swap bytes in an integer, which are useful for network programming
+ * and handling data with different endianness.
+ * 
+ * The determination of endianness is done with a priority order:
+ * 1. User-defined `IPADDRESS_ENDIAN`.
+ * 2. C++20's `std::endian`.
+ * 3. Platform/compiler-provided macros.
+ * 
+ * If the endianness cannot be determined, a compilation error is raised
+ * prompting the user to define `IPADDRESS_ENDIAN`.
  */
 
 #ifndef IPADDRESS_ENDIAN_HPP
@@ -86,6 +100,11 @@
 
 namespace IPADDRESS_NAMESPACE {
 
+/**
+ * Checks if the system is little-endian.
+ * 
+ * @return `true` if the system is little-endian, `false` otherwise.
+ */
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_little_endian() IPADDRESS_NOEXCEPT {
 #if defined(IPADDRESS_HAS_STD_ENDIAN)
     return std::endian::native == std::endian::little;
@@ -96,6 +115,12 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_little_en
 #endif
 }
 
+/**
+ * Swaps the bytes of a 32-bit unsigned integer.
+ * 
+ * @param[in] value the integer value to swap bytes of
+ * @return    The value with its bytes swapped.
+ */
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint32_t swap_bytes(uint32_t value) IPADDRESS_NOEXCEPT {
     value = ((value << 8) & 0xFF00FF00) | ((value >> 8) & 0x00FF00FF);
     value = (value << 16) | (value >> 16);
