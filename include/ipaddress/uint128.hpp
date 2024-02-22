@@ -829,9 +829,11 @@ public:
     }
 
     /**
-     * Pre-increment.
-     * 
-     * @return New value.
+     * Pre-increment operator.
+     *
+     * Increments this instance by one and returns a reference to this instance.
+     *
+     * @return A reference to this instance after the increment.
      */
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator++() IPADDRESS_NOEXCEPT {
         *this += 1;
@@ -839,9 +841,11 @@ public:
     }
     
     /**
-     * Pre-decrement.
-     * 
-     * @return New value.
+     * Pre-decrement operator.
+     *
+     * Decrements this instance by one and returns a reference to this instance.
+     *
+     * @return A reference to this instance after the decrement.
      */
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator--() IPADDRESS_NOEXCEPT {
         *this -= 1;
@@ -849,9 +853,11 @@ public:
     }
     
     /**
-     * Post-increment.
-     * 
-     * @return New value.
+     * Post-increment operator.
+     *
+     * Increments this instance by one and returns the value of the instance before the increment.
+     *
+     * @return The value of this instance before the increment.
      */
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t operator++(int) IPADDRESS_NOEXCEPT {
         auto tmp = *this;
@@ -860,9 +866,11 @@ public:
     }
 
     /**
-     * Post-decrement.
-     * 
-     * @return New value.
+     * Post-decrement operator.
+     *
+     * Decrements this instance by one and returns the value of the instance before the decrement.
+     *
+     * @return The value of this instance before the decrement.
      */
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t operator--(int) IPADDRESS_NOEXCEPT {
         auto tmp = *this;
@@ -871,38 +879,48 @@ public:
     }
 
     /**
-     * Negation.
-     * 
-     * @return Logical not.
+     * Logical NOT operator.
+     *
+     * Returns `true` if this instance is zero, otherwise returns `false`.
+     *
+     * @return `true` if this instance is zero, `false` otherwise.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!() const IPADDRESS_NOEXCEPT {
         return !_upper && !_lower;
     }
 
     /**
-     * AND.
-     * 
-     * @return Logical AND.
+     * Logical AND operator.
+     *
+     * Returns `true` if both this instance and another `uint128_t` instance are non-zero, otherwise returns `false`.
+     *
+     * @param[in] other the `uint128_t` instance to compare with
+     * @return    `true` if both instances are non-zero, `false` otherwise.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator&&(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return (_upper || _lower) && (other._upper || other._lower);
     }
 
     /**
-     * inclusive OR.
-     * 
-     * @return Logical OR.
+     * Logical OR operator.
+     *
+     * Returns `true` if either this instance or another `uint128_t` instance is non-zero, otherwise returns `false`.
+     *
+     * @param[in] other the `uint128_t` instance to compare with
+     * @return    `true` if either instance is non-zero, `false` otherwise.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator||(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return (_upper || _lower) || (other._upper || other._lower);
     }
 
     /**
-     * Equal to.
-     * 
-     * @tparam T is integer type
-     * @param[in] lower of value
-     * @return `true` if the values of the uint128_t are equal, `false` otherwise.
+     * Equality operator with an integral type.
+     *
+     * Compares this instance to an integral value for equality.
+     *
+     * @tparam    T     an integral type to compare with
+     * @param[in] lower the integral value to compare with
+     * @return    `true` if this instance is equal to the integral value, `false` otherwise.
      */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(T lower) const IPADDRESS_NOEXCEPT {
@@ -910,21 +928,25 @@ public:
     }
 
     /**
-     * Equal to.
-     * 
-     * @param[in] other of value
-     * @return `true` if the values of the uint128_t are equal, `false` otherwise.
+     * Equality operator with another `uint128_t` instance.
+     *
+     * Compares this instance to another `uint128_t` instance for equality.
+     *
+     * @param[in] other the `uint128_t` instance to compare with
+     * @return    `true` if this instance is equal to the other instance, `false` otherwise.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return _upper == other._upper && _lower == other._lower;
     }
 
     /**
-     * Not equal to.
-     * 
-     * @tparam T is integer type
-     * @param[in] lower of value
-     * @return `true` if the values of the uint128_t are not equal, `false` otherwise.
+     * Inequality operator with an integral type.
+     *
+     * Compares this instance to an integral value for inequality.
+     *
+     * @tparam    T     an integral type to compare with
+     * @param[in] lower the integral value to compare with
+     * @return    `true` if this instance is not equal to the integral value, `false` otherwise.
      */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(T lower) const IPADDRESS_NOEXCEPT {
@@ -932,10 +954,12 @@ public:
     }
 
     /**
-     * Not equal to.
-     * 
-     * @param[in] other of value
-     * @return `true` if the values of the uint128_t are not equal, `false` otherwise.
+     * Inequality operator with another `uint128_t` instance.
+     *
+     * Compares this instance to another `uint128_t` instance for inequality.
+     *
+     * @param[in] other the `uint128_t` instance to compare with
+     * @return    `true` if this instance is not equal to the other instance, `false` otherwise.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return !(*this == other);
@@ -944,11 +968,13 @@ public:
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
 
     /**
-     * Three-way comparison.
-     * 
-     * @tparam T is integer type
-     * @param[in] lower of value
-     * @return Ordering category.
+     * Three-way comparison operator with an integral type.
+     *
+     * Compares this instance to an integral value to determine the ordering relationship.
+     *
+     * @tparam    T     an integral type to compare with
+     * @param[in] lower the integral value to compare with
+     * @return    An `std::strong_ordering` value indicating the ordering relationship.
      */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(T lower) const IPADDRESS_NOEXCEPT {
@@ -956,10 +982,12 @@ public:
     }
 
     /**
-     * Three-way comparison.
-     * 
-     * @param[in] other of value
-     * @return Ordering category.
+     * Three-way comparison operator with another `uint128_t` instance.
+     *
+     * Compares this instance to another `uint128_t` instance to determine the ordering relationship.
+     *
+     * @param[in] other the `uint128_t` instance to compare with
+     * @return    An `std::strong_ordering` value indicating the ordering relationship.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         if (const auto result = _upper <=> other._upper; result == std::strong_ordering::equivalent) {
@@ -972,11 +1000,13 @@ public:
 #else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
     /**
-     * Less than.
-     * 
-     * @tparam T is integer type
-     * @param[in] lower of value
-     * @return `true` if the value are lexicographically less than the contents of \a lower, `false` otherwise.
+     * Less than operator with an integral type.
+     *
+     * Checks if the value of this instance is lexicographically less than the provided integral value.
+     *
+     * @tparam    T     an integral type to compare with
+     * @param[in] lower the integral value to compare with
+     * @return   `true` if this instance is less than the integral value, `false` otherwise.
      */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(T lower) const IPADDRESS_NOEXCEPT {
@@ -984,21 +1014,25 @@ public:
     }
 
     /**
-     * Less than.
-     * 
-     * @param[in] other of value
-     * @return `true` if the value are lexicographically less than the contents of \a other, `false` otherwise.
+     * Less than operator with another `uint128_t` instance.
+     *
+     * Checks if the value of this instance is lexicographically less than the provided `uint128_t` instance.
+     *
+     * @param[in] other the `uint128_t` instance to compare with
+     * @return    `true` if this instance is less than the other instance, `false` otherwise.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return _upper < other._upper || (_upper == other._upper && _lower < other._lower);
     }
     
     /**
-     * Greater than.
-     * 
-     * @tparam T is integer type
-     * @param[in] lower of value
-     * @return `true` if the value are lexicographically greater than the contents of \a lower, `false` otherwise.
+     * Greater than operator with an integral type.
+     *
+     * Checks if the value of this instance is lexicographically greater than the provided integral value.
+     *
+     * @tparam    T     an integral type to compare with
+     * @param[in] lower the integral value to compare with
+     * @return    `true` if this instance is greater than the integral value, `false` otherwise.
      */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(T lower) const IPADDRESS_NOEXCEPT {
@@ -1006,21 +1040,25 @@ public:
     }
 
     /**
-     * Greater than.
-     * 
-     * @param[in] other of value
-     * @return `true` if the value are lexicographically greater than the contents of \a other, `false` otherwise.
+     * Greater than operator with another `uint128_t` instance.
+     *
+     * Checks if the value of this instance is lexicographically greater than the provided `uint128_t` instance.
+     *
+     * @param[in] other the `uint128_t` instance to compare with
+     * @return    `true` if this instance is greater than the other instance, `false` otherwise.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return other < *this;
     }
     
     /**
-     * Less than or equal to.
-     * 
-     * @tparam T is integer type
-     * @param[in] lower of value
-     * @return `true` if the value are lexicographically less than or equal to the contents of \a lower, `false` otherwise.
+     * Less than or equal to operator with an integral type.
+     *
+     * Checks if the value of this instance is lexicographically less than or equal to the provided integral value.
+     *
+     * @tparam    T     an integral type to compare with
+     * @param[in] lower the integral value to compare with
+     * @return    `true` if this instance is less than or equal to the integral value, `false` otherwise.
      */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(T lower) const IPADDRESS_NOEXCEPT {
@@ -1028,21 +1066,25 @@ public:
     }
 
     /**
-     * Less than or equal to.
-     * 
-     * @param[in] other of value
-     * @return `true` if the value are lexicographically less than or equal to the contents of \a other, `false` otherwise.
+     * Less than or equal to operator with another `uint128_t` instance.
+     *
+     * Checks if the value of this instance is lexicographically less than or equal to the provided `uint128_t` instance.
+     *
+     * @param[in] other the `uint128_t` instance to compare with
+     * @return    `true` if this instance is less than or equal to the other instance, `false` otherwise.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return !(other < *this);
     }
     
     /**
-     * Greater than or equal to.
-     * 
-     * @tparam T is integer type
-     * @param[in] lower of value
-     * @return `true` if the value are lexicographically greater than or equal to the contents of \a lower, `false` otherwise.
+     * Greater than or equal to operator with an integral type.
+     *
+     * Checks if the value of this instance is lexicographically greater than or equal to the provided integral value.
+     *
+     * @tparam    T     an integral type to compare with
+     * @param[in] lower the integral value to compare with
+     * @return    `true` if this instance is greater than or equal to the integral value, `false` otherwise.
      */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(T lower) const IPADDRESS_NOEXCEPT {
@@ -1050,10 +1092,12 @@ public:
     }
 
     /**
-     * Greater than or equal to.
-     * 
-     * @param[in] other of value
-     * @return `true` if the value are lexicographically greater than or equal to the contents of \a other, `false` otherwise.
+     * Greater than or equal to operator with another `uint128_t` instance.
+     *
+     * Checks if the value of this instance is lexicographically greater than or equal to the provided `uint128_t` instance.
+     *
+     * @param[in] other the `uint128_t` instance to compare with
+     * @return    `true` if this instance is greater than or equal to the other instance, `false` otherwise.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return !(*this < other);
