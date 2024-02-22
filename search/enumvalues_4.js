@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['invalid_5fnetmask_0',['INVALID_NETMASK',['../namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa962f78fd3b6e6c118d162aeb758e46ad',1,'ipaddress']]],
-  ['invalid_5fprefixlen_5fdiff_1',['INVALID_PREFIXLEN_DIFF',['../namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faafc3a498b8337c66d15dd5723d806ff6e',1,'ipaddress']]],
-  ['invalid_5fscope_5fid_2',['INVALID_SCOPE_ID',['../namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faaa90995871057dca6d3f898acd73938ee',1,'ipaddress']]],
-  ['invalid_5fversion_3',['INVALID_VERSION',['../namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa5f3740fef83818696e8b056c0456173f',1,'ipaddress']]]
+  ['has_5fhost_5fbits_5fset_0',['HAS_HOST_BITS_SET',['../namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faaceae5fc57d94a3e3dc8b7363f465bb30',1,'ipaddress']]],
+  ['hexadecimal_1',['hexadecimal',['../classipaddress_1_1uint128__t.html#ae5c5c40c2777dcce5c3e1bd96adb1a91a2c34788af99f9ca074434e362d584d54',1,'ipaddress::uint128_t']]]
 ];

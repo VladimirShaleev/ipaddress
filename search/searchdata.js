@@ -5,9 +5,9 @@ var indexSectionsWithContent =
   2: "i",
   3: "bcefhiou",
   4: "abcdefhilmoprstuv",
-  5: "bcdiprsv",
+  5: "bcdiprsuv",
   6: "efi",
-  7: "cdehilmnopstv",
+  7: "cdefhilmnopstv",
   8: "i"
 };
 

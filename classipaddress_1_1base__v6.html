@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.10.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ipaddress: ipaddress::ip_address Class Reference</title>
+<title>ipaddress: ipaddress::base_v6&lt; Ext &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -85,7 +85,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){initNavTree('classipaddress_1_1ip__address.html',''); initResizable(); });
+$(function(){initNavTree('classipaddress_1_1base__v6.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -113,45 +113,49 @@ $(function(){initNavTree('classipaddress_1_1ip__address.html',''); initResizable
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
-<a href="classipaddress_1_1ip__address-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">ipaddress::ip_address Class Reference</div></div>
+<a href="classipaddress_1_1base__v6-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">ipaddress::base_v6&lt; Ext &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Represents IP address of both versions v4 and v6.  
+<p>A template class providing the base functionality for IPv6 addresses.  
  <a href="#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="ip-any-address_8hpp_source.html">ip-any-address.hpp</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="base-v6_8hpp_source.html">base-v6.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a16ec2076c50ef6211a3f776cb2cdd19a" id="r_a16ec2076c50ef6211a3f776cb2cdd19a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classipaddress_1_1ip__address__base.html">constexpr</a> <a class="el" href="classipaddress_1_1ip__address__base.html">inline</a> <a class="el" href="namespaceipaddress.html#ace60f6a4856e90fa5be15ecf1cf0132e">ip_version</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a16ec2076c50ef6211a3f776cb2cdd19a">version</a> () <a class="el" href="classipaddress_1_1ip__address__base.html">const</a> <a class="el" href="classipaddress_1_1ip__address__base.html">noexcept</a></td></tr>
-<tr class="memdesc:a16ec2076c50ef6211a3f776cb2cdd19a"><td class="mdescLeft">&#160;</td><td class="mdescRight">IP address version.  <br /></td></tr>
-<tr class="separator:a16ec2076c50ef6211a3f776cb2cdd19a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ab5124c3bffb5355856d08eed175a7b10" id="r_ab5124c3bffb5355856d08eed175a7b10"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typename</a> <a class="el" href="classipaddress_1_1ip__address__base.html">T</a> , <a class="el" href="classipaddress_1_1ip__address__base.html">size_t</a> N&gt; </td></tr>
-<tr class="memitem:ab5124c3bffb5355856d08eed175a7b10"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classipaddress_1_1ip__address__base.html">static</a> <a class="el" href="classipaddress_1_1ip__address__base.html">constexpr</a> <a class="el" href="classipaddress_1_1ip__address__base.html">inline</a> <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ab5124c3bffb5355856d08eed175a7b10">parse</a> (<a class="el" href="classipaddress_1_1ip__address__base.html">const</a> <a class="el" href="classipaddress_1_1ip__address__base.html">T</a>(&amp;<a class="el" href="classipaddress_1_1ip__address__base.html">address</a>)[<a class="el" href="classipaddress_1_1ip__address__base.html">N</a>], <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;code) <a class="el" href="classipaddress_1_1ip__address__base.html">noexcept</a></td></tr>
-<tr class="memdesc:ab5124c3bffb5355856d08eed175a7b10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test.  <br /></td></tr>
-<tr class="separator:ab5124c3bffb5355856d08eed175a7b10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedb73b7802b034df47c1dcdd9e50e5e7" id="r_aedb73b7802b034df47c1dcdd9e50e5e7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classipaddress_1_1ip__address__base.html">constexpr</a> <a class="el" href="classipaddress_1_1ip__address__base.html">inline</a> <a class="el" href="namespaceipaddress.html#ace60f6a4856e90fa5be15ecf1cf0132e">ip_version</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aedb73b7802b034df47c1dcdd9e50e5e7">version</a> () <a class="el" href="classipaddress_1_1ip__address__base.html">const</a> <a class="el" href="classipaddress_1_1ip__address__base.html">noexcept</a></td></tr>
+<tr class="memdesc:aedb73b7802b034df47c1dcdd9e50e5e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the IP version of the address.  <br /></td></tr>
+<tr class="separator:aedb73b7802b034df47c1dcdd9e50e5e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a513ad89d194934610ea1706d37775069" id="r_a513ad89d194934610ea1706d37775069"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classipaddress_1_1ip__address__base.html">constexpr</a> <a class="el" href="classipaddress_1_1ip__address__base.html">inline</a> <a class="el" href="classipaddress_1_1ip__address__base.html">size_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a513ad89d194934610ea1706d37775069">size</a> () <a class="el" href="classipaddress_1_1ip__address__base.html">const</a> <a class="el" href="classipaddress_1_1ip__address__base.html">noexcept</a></td></tr>
+<tr class="memdesc:a513ad89d194934610ea1706d37775069"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the size of the IPv6 address.  <br /></td></tr>
+<tr class="separator:a513ad89d194934610ea1706d37775069"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Represents IP address of both versions v4 and v6. </p>
-<p>It is union of ipv4_address and ipv6_address. Therefore, the final size of an instance of this type will always include ipv6_address. </p>
+<div class="textblock"><div class="compoundTemplParams">template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typename</a> <a class="el" href="classipaddress_1_1ip__address__base.html">Ext</a>&gt;<br />
+class ipaddress::base_v6&lt; Ext &gt;</div><p>A template class providing the base functionality for IPv6 addresses. </p>
+<p>This class encapsulates the basic properties and operations for IPv6 addresses, such as version identification, size, and conversion from string representations. It is intended to be extended by more specialized IPv6 address classes.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Ext</td><td>the extension type that provides additional functionality </td></tr>
+  </table>
+  </dd>
+</dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a16ec2076c50ef6211a3f776cb2cdd19a" name="a16ec2076c50ef6211a3f776cb2cdd19a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a16ec2076c50ef6211a3f776cb2cdd19a">&#9670;&#160;</a></span>version()</h2>
+<a id="aedb73b7802b034df47c1dcdd9e50e5e7" name="aedb73b7802b034df47c1dcdd9e50e5e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aedb73b7802b034df47c1dcdd9e50e5e7">&#9670;&#160;</a></span>version()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typename</a> <a class="el" href="classipaddress_1_1ip__address__base.html">Ext</a> &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classipaddress_1_1ip__address__base.html">constexpr</a> <a class="el" href="classipaddress_1_1ip__address__base.html">inline</a> <a class="el" href="namespaceipaddress.html#ace60f6a4856e90fa5be15ecf1cf0132e">ip_version</a> ipaddress::ip_address::version </td>
+          <td class="memname"><a class="el" href="classipaddress_1_1ip__address__base.html">constexpr</a> <a class="el" href="classipaddress_1_1ip__address__base.html">inline</a> <a class="el" href="namespaceipaddress.html#ace60f6a4856e90fa5be15ecf1cf0132e">ip_version</a> <a class="el" href="classipaddress_1_1base__v6.html">ipaddress::base_v6</a>&lt; <a class="el" href="classipaddress_1_1ip__address__base.html">Ext</a> &gt;::version </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"></span></td><td>)</td>
           <td> const</td>
@@ -164,56 +168,43 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>IP address version. </p>
-<p>Returns the IP-version for the current instance.</p>
-<dl class="section return"><dt>Returns</dt><dd>The appropriate version number: 4 for IPv4, 6 for IPv6. </dd></dl>
+<p>Retrieves the IP version of the address. </p>
+<dl class="section return"><dt>Returns</dt><dd>The IP version enumeration value for IPv6. </dd></dl>
 
 </div>
 </div>
-<a id="ab5124c3bffb5355856d08eed175a7b10" name="ab5124c3bffb5355856d08eed175a7b10"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab5124c3bffb5355856d08eed175a7b10">&#9670;&#160;</a></span>parse()</h2>
+<a id="a513ad89d194934610ea1706d37775069" name="a513ad89d194934610ea1706d37775069"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a513ad89d194934610ea1706d37775069">&#9670;&#160;</a></span>size()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typename</a> <a class="el" href="classipaddress_1_1ip__address__base.html">T</a> , <a class="el" href="classipaddress_1_1ip__address__base.html">size_t</a> N&gt; </div>
+template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typename</a> <a class="el" href="classipaddress_1_1ip__address__base.html">Ext</a> &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classipaddress_1_1ip__address__base.html">static</a> <a class="el" href="classipaddress_1_1ip__address__base.html">constexpr</a> <a class="el" href="classipaddress_1_1ip__address__base.html">inline</a> <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> ipaddress::ip_address::parse </td>
+          <td class="memname"><a class="el" href="classipaddress_1_1ip__address__base.html">constexpr</a> <a class="el" href="classipaddress_1_1ip__address__base.html">inline</a> <a class="el" href="classipaddress_1_1ip__address__base.html">size_t</a> <a class="el" href="classipaddress_1_1base__v6.html">ipaddress::base_v6</a>&lt; <a class="el" href="classipaddress_1_1ip__address__base.html">Ext</a> &gt;::size </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classipaddress_1_1ip__address__base.html">const</a> <a class="el" href="classipaddress_1_1ip__address__base.html">T</a>(&amp;)</td>          <td class="paramname"><span class="paramname"><em>address</em>[N], </span></td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>code</em></span>&#160;)</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Test. </p>
-<p>Test.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>character array for ip </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>saves the execution result </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>ip addresss </dd></dl>
+<p>Retrieves the size of the IPv6 address. </p>
+<dl class="section return"><dt>Returns</dt><dd>The size of the IPv6 address in bytes. </dd></dl>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>include/ipaddress/<a class="el" href="ip-any-address_8hpp_source.html">ip-any-address.hpp</a></li>
+<li>include/ipaddress/<a class="el" href="base-v6_8hpp_source.html">base-v6.hpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -221,7 +212,7 @@ template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typena
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="namespaceipaddress.html">ipaddress</a></li><li class="navelem"><a class="el" href="classipaddress_1_1ip__address.html">ip_address</a></li>
+    <li class="navelem"><a class="el" href="namespaceipaddress.html">ipaddress</a></li><li class="navelem"><a class="el" href="classipaddress_1_1base__v6.html">base_v6</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
   </ul>
 </div>

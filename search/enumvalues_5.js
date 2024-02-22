@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['leading_5f0_5fare_5fnot_5fpermitted_0',['LEADING_0_ARE_NOT_PERMITTED',['../namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa46e6c7ae8338fb954dffffe2cf6de430',1,'ipaddress']]],
-  ['leading_5fcolon_5fonly_5fpermitted_5fas_5fpart_5fof_5fdouble_5fcolon_1',['LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON',['../namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa38f075bd82c0db96e8a8e1b51f41c5cf',1,'ipaddress']]],
-  ['least_5f3_5fparts_2',['LEAST_3_PARTS',['../namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa6b20b278f4a47ea1933c41afcc6315f0',1,'ipaddress']]]
+  ['invalid_5fnetmask_0',['INVALID_NETMASK',['../namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa962f78fd3b6e6c118d162aeb758e46ad',1,'ipaddress']]],
+  ['invalid_5fprefixlen_5fdiff_1',['INVALID_PREFIXLEN_DIFF',['../namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faafc3a498b8337c66d15dd5723d806ff6e',1,'ipaddress']]],
+  ['invalid_5fscope_5fid_2',['INVALID_SCOPE_ID',['../namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faaa90995871057dca6d3f898acd73938ee',1,'ipaddress']]],
+  ['invalid_5fversion_3',['INVALID_VERSION',['../namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa5f3740fef83818696e8b056c0456173f',1,'ipaddress']]]
 ];

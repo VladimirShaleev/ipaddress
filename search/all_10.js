@@ -2,5 +2,6 @@ var searchData=
 [
   ['uint128_2ehpp_0',['uint128.hpp',['../uint128_8hpp.html',1,'']]],
   ['uint128_5ft_1',['uint128_t',['../classipaddress_1_1uint128__t.html',1,'ipaddress::uint128_t'],['../classipaddress_1_1uint128__t.html#addb329ccea68af2ba794b7e7d9fcef09',1,'ipaddress::uint128_t::uint128_t() noexcept=default'],['../classipaddress_1_1uint128__t.html#a0e5bab141b462edee9e8bc50da448957',1,'ipaddress::uint128_t::uint128_t(const uint128_t &amp;) noexcept=default'],['../classipaddress_1_1uint128__t.html#a5ed9333b7db951d99cf38ece8e26da55',1,'ipaddress::uint128_t::uint128_t(uint128_t &amp;&amp;) noexcept=default'],['../classipaddress_1_1uint128__t.html#a72753cb89f059bd2ae1a925cc8dadf30',1,'ipaddress::uint128_t::uint128_t(uint64_t upper, uint64_t lower) noexcept'],['../classipaddress_1_1uint128__t.html#a8ee4da97c22518ae7f041b8e8d225335',1,'ipaddress::uint128_t::uint128_t(T lower) noexcept'],['../classipaddress_1_1uint128__t.html#a8ee4da97c22518ae7f041b8e8d225335',1,'ipaddress::uint128_t::uint128_t(T lower) noexcept'],['../classipaddress_1_1uint128__t.html#a602a5e8b45e7eb2a7f31c824fde055a8',1,'ipaddress::uint128_t::uint128_t(T value) noexcept']]],
-  ['upper_2',['upper',['../classipaddress_1_1uint128__t.html#ac3ac0bb72e150a06715878f12435e163',1,'ipaddress::uint128_t']]]
+  ['uint_5ftype_2',['uint_type',['../classipaddress_1_1ip__address__base.html#a7c80eb5ba3ff7c13231c886d2161e0ab',1,'ipaddress::ip_address_base']]],
+  ['upper_3',['upper',['../classipaddress_1_1uint128__t.html#ac3ac0bb72e150a06715878f12435e163',1,'ipaddress::uint128_t']]]
 ];

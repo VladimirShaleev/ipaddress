@@ -77,6 +77,9 @@
     <loc>https://vladimirshaleev.github.io/ipaddress/base-v4_8hpp.html</loc>
   </url>
   <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/base-v6_8hpp.html</loc>
+  </url>
+  <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/byte-array_8hpp.html</loc>
   </url>
   <url>
@@ -119,6 +122,12 @@
     <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1base__v4-members.html</loc>
   </url>
   <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1base__v6.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1base__v6-members.html</loc>
+  </url>
+  <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/structipaddress_1_1byte__array.html</loc>
   </url>
   <url>
@@ -141,6 +150,12 @@
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1ip__address-members.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1ip__address__base.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1ip__address__base-members.html</loc>
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1logic__error.html</loc>
@@ -200,6 +215,9 @@
     <loc>https://vladimirshaleev.github.io/ipaddress/namespacemembers.html</loc>
   </url>
   <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/namespacemembers.html</loc>
+  </url>
+  <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/namespacemembers_func.html</loc>
   </url>
   <url>
@@ -216,6 +234,9 @@
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/namespacemembers_type.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/namespacemembers_enum.html</loc>
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/namespacemembers_enum.html</loc>
@@ -330,6 +351,15 @@
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/functions_func.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/functions_func.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/functions_type.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/functions_type.html</loc>
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/functions_type.html</loc>

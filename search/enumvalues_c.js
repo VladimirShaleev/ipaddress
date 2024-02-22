@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['v4_0',['V4',['../namespaceipaddress.html#ace60f6a4856e90fa5be15ecf1cf0132eab354cab57768c7d4c1106eb4e82c75dc',1,'ipaddress']]],
-  ['v6_1',['V6',['../namespaceipaddress.html#ace60f6a4856e90fa5be15ecf1cf0132eadb93f1c35b844334e2b266951618b4fe',1,'ipaddress']]]
+  ['trailing_5fcolon_5fonly_5fpermitted_5fas_5fpart_5fof_5fdouble_5fcolon_0',['TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON',['../namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faa88a06b88201a7f62966d09b9402e0abc',1,'ipaddress']]]
 ];

@@ -1,10 +1,12 @@
 var namespaceipaddress =
 [
-    [ "base_v4", "classipaddress_1_1base__v4.html", null ],
+    [ "base_v4", "classipaddress_1_1base__v4.html", "classipaddress_1_1base__v4" ],
+    [ "base_v6", "classipaddress_1_1base__v6.html", "classipaddress_1_1base__v6" ],
     [ "byte_array", "structipaddress_1_1byte__array.html", "structipaddress_1_1byte__array" ],
     [ "error", "classipaddress_1_1error.html", "classipaddress_1_1error" ],
     [ "fixed_string", "structipaddress_1_1fixed__string.html", "structipaddress_1_1fixed__string" ],
     [ "ip_address", "classipaddress_1_1ip__address.html", "classipaddress_1_1ip__address" ],
+    [ "ip_address_base", "classipaddress_1_1ip__address__base.html", "classipaddress_1_1ip__address__base" ],
     [ "logic_error", "classipaddress_1_1logic__error.html", "classipaddress_1_1logic__error" ],
     [ "optional", "classipaddress_1_1optional.html", "classipaddress_1_1optional" ],
     [ "parse_error", "classipaddress_1_1parse__error.html", "classipaddress_1_1parse__error" ],
@@ -47,6 +49,11 @@ var namespaceipaddress =
     [ "ip_version", "namespaceipaddress.html#ace60f6a4856e90fa5be15ecf1cf0132e", [
       [ "V4", "namespaceipaddress.html#ace60f6a4856e90fa5be15ecf1cf0132eab354cab57768c7d4c1106eb4e82c75dc", null ],
       [ "V6", "namespaceipaddress.html#ace60f6a4856e90fa5be15ecf1cf0132eadb93f1c35b844334e2b266951618b4fe", null ]
+    ] ],
+    [ "format", "namespaceipaddress.html#ab54b11d879107889b3bf313724c4b611", [
+      [ "full", "namespaceipaddress.html#ab54b11d879107889b3bf313724c4b611ae9dc924f238fa6cc29465942875fe8f0", null ],
+      [ "compact", "namespaceipaddress.html#ab54b11d879107889b3bf313724c4b611a7cf74ca49c304df8150205fc915cd465", null ],
+      [ "compressed", "namespaceipaddress.html#ab54b11d879107889b3bf313724c4b611a2b98a4ad988a18c42682f388901f2672", null ]
     ] ],
     [ "operator==", "namespaceipaddress.html#aa62188f453191c0a4b49b52c6f74f331", null ],
     [ "operator!=", "namespaceipaddress.html#a14f2e022aa662526574cff320ea9d9ed", null ],

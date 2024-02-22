@@ -30,6 +30,7 @@ var menudata={children:[
 {text:"All",url:"namespacemembers.html",children:[
 {text:"b",url:"namespacemembers.html#index_b"},
 {text:"e",url:"namespacemembers.html#index_e"},
+{text:"f",url:"namespacemembers.html#index_f"},
 {text:"i",url:"namespacemembers.html#index_i"},
 {text:"m",url:"namespacemembers.html#index_m"},
 {text:"o",url:"namespacemembers.html#index_o"},
@@ -72,6 +73,7 @@ var menudata={children:[
 {text:"e",url:"functions_func.html#index_e"},
 {text:"f",url:"functions_func.html#index_f"},
 {text:"h",url:"functions_func.html#index_h"},
+{text:"i",url:"functions_func.html#index_i"},
 {text:"l",url:"functions_func.html#index_l"},
 {text:"m",url:"functions_func.html#index_m"},
 {text:"o",url:"functions_func.html#index_o"},
