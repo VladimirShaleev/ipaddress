@@ -306,11 +306,14 @@ public:
     }
 
     /**
-     * Parse std::string to uint128_t.
-     * 
-     * @param[in] str of input string
-     * @param[in] fmt of format string
-     * @return optional containing uint128_t if parsed successfully.
+     * Parses a string to a `uint128_t` instance.
+     *
+     * This static method attempts to parse a given string as a `uint128_t` value in the specified format.
+     * If the parsing is successful, it returns an optional containing the parsed `uint128_t` value.
+     *
+     * @param[in] str the input string to parse
+     * @param[in] fmt the string format to interpret the input string (*defaults to decimal*)
+     * @return    An optional containing the parsed `uint128_t` value if successful, otherwise an empty optional.
      */
     IPADDRESS_NODISCARD static IPADDRESS_FORCE_INLINE optional<uint128_t> from_string(const std::string& str, format fmt = format::decimal) IPADDRESS_NOEXCEPT {
         switch (fmt) {
@@ -324,19 +327,23 @@ public:
     }
 
     /**
-     * Checking that a number is non-zero.
-     * 
-     * @return `true` if non-zero.
+     * Checks if the `uint128_t` value is non-zero.
+     *
+     * This method allows `uint128_t` instances to be contextually converted to a boolean to check for non-zero values.
+     *
+     * @return `true` if the `uint128_t` value is non-zero, `false` otherwise.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit operator bool() const IPADDRESS_NOEXCEPT {
         return _upper || _lower;
     }
 
     /**
-     * Cast value to integer type.
-     * 
-     * @tparam T is integer type
-     * @return Integer value.
+     * Casts the `uint128_t` value to an integral type.
+     *
+     * This method allows for the explicit conversion of a `uint128_t` value to a specified integral type.
+     *
+     * @tparam T the integral type to cast to
+     * @return The `uint128_t` value cast to the specified integral type.
      */
     template <typename T, typename std::enable_if<std::is_integral<T>::value, bool>::type = true>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit operator T() const IPADDRESS_NOEXCEPT {
@@ -344,10 +351,12 @@ public:
     }
 
     /**
-     * Cast value to float type.
-     * 
-     * @tparam T is float type
-     * @return Float value.
+     * Casts the `uint128_t` value to a floating-point type.
+     *
+     * This method allows for the explicit conversion of a `uint128_t` value to a specified floating-point type.
+     *
+     * @tparam T The floating-point type to cast to.
+     * @return The `uint128_t` value cast to the specified floating-point type.
      */
     template <typename T, typename std::enable_if<std::is_floating_point<T>::value, bool>::type = true>
     IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE explicit operator T() const IPADDRESS_NOEXCEPT {
@@ -355,10 +364,13 @@ public:
     }
 
     /**
-     * Assigns lower unsigned integer.
-     * 
-     * @param[in] lower unsigned integer of value
-     * @return This object.
+     * Assigns a lower unsigned integer to the `uint128_t` instance.
+     *
+     * This method assigns an unsigned integer to the `uint128_t` instance, setting it as the lower part of the value.
+     *
+     * @tparam    T     the unsigned integral type of the value to assign
+     * @param[in] lower the unsigned integer to assign to the `uint128_t` instance
+     * @return    A reference to the `uint128_t` instance after assignment.
      */
     template <typename T, typename std::enable_if<std::is_integral<T>::value && std::is_unsigned<T>::value, bool>::type = true>
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator=(T lower) IPADDRESS_NOEXCEPT {
@@ -368,10 +380,14 @@ public:
     }
 
     /**
-     * Assigns lower signed integer.
-     * 
-     * @param[in] lower signed integer of value
-     * @return This object.
+     * Assigns a lower signed integer to the `uint128_t` instance.
+     *
+     * This method assigns a signed integer to the `uint128_t` instance, setting it as the lower part of the value
+     * and extending the sign to the upper part.
+     *
+     * @tparam    T     the signed integral type of the value to assign
+     * @param[in] lower the signed integer to assign to the `uint128_t` instance
+     * @return    A reference to the `uint128_t` instance after assignment.
      */
     template <typename T, typename std::enable_if<std::is_integral<T>::value && std::is_signed<T>::value, bool>::type = true>
     IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator=(T lower) IPADDRESS_NOEXCEPT {
