@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.10.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ipaddress: include/ipaddress/ip-address-base.hpp File Reference</title>
+<title>ipaddress: include/ipaddress/ipaddress.hpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -85,7 +85,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){initNavTree('ip-address-base_8hpp.html',''); initResizable(); });
+$(function(){initNavTree('ipaddress_8hpp.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -112,52 +112,41 @@ $(function(){initNavTree('ip-address-base_8hpp.html',''); initResizable(); });
 
 <div class="header">
   <div class="summary">
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
-  <div class="headertitle"><div class="title">ip-address-base.hpp File Reference</div></div>
+<a href="#namespaces">Namespaces</a>  </div>
+  <div class="headertitle"><div class="title">ipaddress.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Basic functionality for IP addresses.  
+<p>The main include file for the ipaddress library.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="config_8hpp_source.html">config.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="errors_8hpp_source.html">errors.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="endian_8hpp_source.html">endian.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="optional_8hpp_source.html">optional.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="byte-array_8hpp_source.html">byte-array.hpp</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="fixed-string_8hpp_source.html">fixed-string.hpp</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;ipv4-address.hpp&quot;</code><br />
+<code>#include &quot;ipv6-address.hpp&quot;</code><br />
+<code>#include &quot;ipv4-network.hpp&quot;</code><br />
+<code>#include &quot;ipv6-network.hpp&quot;</code><br />
+<code>#include &quot;ip-networks.hpp&quot;</code><br />
+<code>#include &quot;<a class="el" href="ip-any-address_8hpp_source.html">ip-any-address.hpp</a>&quot;</code><br />
+<code>#include &quot;ip-any-network.hpp&quot;</code><br />
 </div>
-<p><a href="ip-address-base_8hpp_source.html">Go to the source code of this file.</a></p>
+<p><a href="ipaddress_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespaceipaddress" id="r_namespaceipaddress"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceipaddress.html">ipaddress</a></td></tr>
 <tr class="memdesc:namespaceipaddress"><td class="mdescLeft">&#160;</td><td class="mdescRight">Namespace dedicated to IP addresses and networks operations. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:ace60f6a4856e90fa5be15ecf1cf0132e" id="r_ace60f6a4856e90fa5be15ecf1cf0132e"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceipaddress.html#ace60f6a4856e90fa5be15ecf1cf0132e">ipaddress::ip_version</a> { <br />
-&#160;&#160;<a class="el" href="namespaceipaddress.html#ace60f6a4856e90fa5be15ecf1cf0132eab354cab57768c7d4c1106eb4e82c75dc">ipaddress::V4</a> = 4
-, <br />
-&#160;&#160;<a class="el" href="namespaceipaddress.html#ace60f6a4856e90fa5be15ecf1cf0132eadb93f1c35b844334e2b266951618b4fe">ipaddress::V6</a> = 6
-<br />
- }</td></tr>
-<tr class="memdesc:ace60f6a4856e90fa5be15ecf1cf0132e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ip version.  <a href="namespaceipaddress.html#ace60f6a4856e90fa5be15ecf1cf0132e">More...</a><br /></td></tr>
-<tr class="separator:ace60f6a4856e90fa5be15ecf1cf0132e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Basic functionality for IP addresses. </p>
+<div class="textblock"><p>The main include file for the ipaddress library. </p>
 <dl class="section author"><dt>Author</dt><dd>Vladimir Shaleev </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>MIT License</dd></dl>
-<p>Adds general functionality for IP addresses of any version. </p>
+<p>This file includes all the necessary components for working with IP addresses and networks, as well as providing functionality for their manipulation. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.10.0-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_7c6e110a4d07ed1e66c742628774e275.html">ipaddress</a></li><li class="navelem"><a class="el" href="ip-address-base_8hpp.html">ip-address-base.hpp</a></li>
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_7c6e110a4d07ed1e66c742628774e275.html">ipaddress</a></li><li class="navelem"><a class="el" href="ipaddress_8hpp.html">ipaddress.hpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
   </ul>
 </div>

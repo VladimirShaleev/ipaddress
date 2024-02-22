@@ -1,5 +1,8 @@
 var hierarchy =
 [
+    [ "ipaddress::base_v4< Ext >", "classipaddress_1_1base__v4.html", null ],
+    [ "ipaddress::base_v4< ipv4_address_base >", "classipaddress_1_1base__v4.html", null ],
+    [ "ipaddress::base_v4< ipv4_network_base >", "classipaddress_1_1base__v4.html", null ],
     [ "ipaddress::byte_array< N >", "structipaddress_1_1byte__array.html", null ],
     [ "ipaddress::error", "classipaddress_1_1error.html", [
       [ "ipaddress::logic_error", "classipaddress_1_1logic__error.html", null ],

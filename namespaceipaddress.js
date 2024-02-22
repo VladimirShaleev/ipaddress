@@ -1,5 +1,6 @@
 var namespaceipaddress =
 [
+    [ "base_v4", "classipaddress_1_1base__v4.html", null ],
     [ "byte_array", "structipaddress_1_1byte__array.html", "structipaddress_1_1byte__array" ],
     [ "error", "classipaddress_1_1error.html", "classipaddress_1_1error" ],
     [ "fixed_string", "structipaddress_1_1fixed__string.html", "structipaddress_1_1fixed__string" ],

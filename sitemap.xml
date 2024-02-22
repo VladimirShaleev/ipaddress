@@ -74,6 +74,9 @@
     <loc>https://vladimirshaleev.github.io/ipaddress/uint128_8hpp_source.html</loc>
   </url>
   <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/base-v4_8hpp.html</loc>
+  </url>
+  <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/byte-array_8hpp.html</loc>
   </url>
   <url>
@@ -98,6 +101,9 @@
     <loc>https://vladimirshaleev.github.io/ipaddress/ip-any-address_8hpp.html</loc>
   </url>
   <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/ipaddress_8hpp.html</loc>
+  </url>
+  <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/optional_8hpp.html</loc>
   </url>
   <url>
@@ -105,6 +111,12 @@
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/namespaceipaddress.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1base__v4.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1base__v4-members.html</loc>
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/structipaddress_1_1byte__array.html</loc>
