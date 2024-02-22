@@ -1,8 +1,8 @@
 /**
- * \file      endian.hpp
- * \brief     Defines macros to determine byte order
- * \author    Vladimir Shaleev
- * \copyright MIT License
+ * @file      endian.hpp
+ * @brief     Defines macros to determine byte order
+ * @author    Vladimir Shaleev
+ * @copyright MIT License
  * 
  * This header file contains macros and utility functions to determine
  * and work with the byte order (endianness) of the system. It provides

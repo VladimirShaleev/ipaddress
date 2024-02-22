@@ -1,8 +1,8 @@
 /**
- * \file      ip-any-address.hpp
- * \brief     Contains logic for working with IP addresses
- * \author    Vladimir Shaleev
- * \copyright MIT License
+ * @file      ip-any-address.hpp
+ * @brief     Contains logic for working with IP addresses
+ * @author    Vladimir Shaleev
+ * @copyright MIT License
  * 
  * ip_address is a class for working with IP addresses of versions 4 and version 6.
  */

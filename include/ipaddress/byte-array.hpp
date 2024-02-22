@@ -1,8 +1,8 @@
 /**
- * \file      byte-array.hpp
- * \brief     Provides the byte_array template class for handling fixed-size byte arrays
- * \author    Vladimir Shaleev
- * \copyright MIT License
+ * @file      byte-array.hpp
+ * @brief     Provides the byte_array template class for handling fixed-size byte arrays
+ * @author    Vladimir Shaleev
+ * @copyright MIT License
  * 
  * The byte_array template class is designed to encapsulate a fixed-size array of bytes (uint8_t),
  * providing various type definitions for ease of use, and methods for accessing the array elements. 

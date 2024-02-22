@@ -1,8 +1,8 @@
 /**
- * \file      ip-address-base.hpp
- * \brief     Basic functionality for IP addresses
- * \author    Vladimir Shaleev
- * \copyright MIT License
+ * @file      ip-address-base.hpp
+ * @brief     Basic functionality for IP addresses
+ * @author    Vladimir Shaleev
+ * @copyright MIT License
  * 
  * Adds general functionality for IP addresses of any version.
  */

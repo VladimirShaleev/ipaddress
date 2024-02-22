@@ -1,3 +1,13 @@
+/**
+ * @file      ipaddress.hpp
+ * @brief     The main include file for the ipaddress library
+ * @author    Vladimir Shaleev
+ * @copyright MIT License
+ * 
+ * This file includes all the necessary components for working with IP addresses 
+ * and networks, as well as providing functionality for their manipulation.
+ */
+
 #ifndef IPADDRESS_IPADDRESS_HPP
 #define IPADDRESS_IPADDRESS_HPP
 
@@ -12,9 +22,11 @@
 /**
  * @namespace ipaddress
  * 
- * IP addresses and networks.
+ * Namespace dedicated to IP addresses and networks operations.
  * 
- * Namespace for working with IP addresses and networks.
+ * This namespace contains all the classes, functions, and utilities necessary for handling
+ * both IPv4 and IPv6 addresses and networks. It provides a comprehensive suite of tools
+ * for various operations such as parsing, constructing, and manipulating IP addresses and networks.
  */
 
 #endif
