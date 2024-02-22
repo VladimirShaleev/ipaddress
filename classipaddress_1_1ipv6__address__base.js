@@ -16,6 +16,10 @@ var classipaddress_1_1ipv6__address__base =
     [ "set_scope_id", "classipaddress_1_1ipv6__address__base.html#a31355239c841dfed042bcb790ff8466a", null ],
     [ "to_uint", "classipaddress_1_1ipv6__address__base.html#af0255fa5996aee0be413a2b788c00fd7", null ],
     [ "bytes", "classipaddress_1_1ipv6__address__base.html#a1ef9075d6b1d2c843b68e7974f01c133", null ],
+    [ "ipv4_mapped", "classipaddress_1_1ipv6__address__base.html#adc83b8ab32d8581e4c45bcb078889f99", null ],
+    [ "sixtofour", "classipaddress_1_1ipv6__address__base.html#a27fb47fb1bc329c9b0595bd1049ef093", null ],
+    [ "teredo", "classipaddress_1_1ipv6__address__base.html#ae2194ca3a96bdd01c0f14b948e9276e9", null ],
+    [ "is_site_local", "classipaddress_1_1ipv6__address__base.html#a20c04bce60477e5df3b598ce4d26fa3a", null ],
     [ "version", "classipaddress_1_1ipv6__address__base.html#aedb73b7802b034df47c1dcdd9e50e5e7", null ],
     [ "size", "classipaddress_1_1ipv6__address__base.html#a513ad89d194934610ea1706d37775069", null ]
 ];
