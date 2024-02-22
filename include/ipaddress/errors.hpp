@@ -1,11 +1,29 @@
 /**
- * \file      errors.hpp
- * \brief     Declares error codes and exceptions
- * \author    Vladimir Shaleev
- * \copyright MIT License
+ * @file      errors.hpp
+ * @brief     Declares error codes and exceptions for IP address operations
+ * @author    Vladimir Shaleev
+ * @copyright MIT License
  * 
- * Contains error codes and strongly typed exceptions. 
- * And also a function to convert an error code into an exception.
+ * This header file is part of an IP address processing library and is responsible
+ * for defining error codes and exceptions that represent various failure states
+ * encountered during IP address parsing and processing. It includes an enumeration
+ * of error codes that cover a range of issues from syntactical errors in IP address
+ * strings to logical inconsistencies in network operations. Additionally, the file
+ * declares a base exception class tailored to encapsulate these error codes along
+ * with descriptive messages, facilitating precise error handling and reporting.
+ * 
+ * The error codes are categorized into general parsing errors, IPv4-specific errors,
+ * IPv6-specific errors, and logical errors, each with a brief description of the
+ * condition they represent. The base exception class, `error`, inherits from the
+ * standard `std::runtime_error` and is constructed with an error code and a message,
+ * allowing exceptions to carry both a machine-readable identifier and a human-readable
+ * explanation.
+ * 
+ * The file also includes a function template that converts an error code into an
+ * exception, streamlining the process of throwing exceptions upon encountering
+ * errors during IP address operations. This design ensures that all potential error
+ * conditions are accounted for and can be handled gracefully by client code using
+ * the library.
  */
 
 #ifndef IPADDRESS_ERRORS_HPP
@@ -195,7 +213,7 @@ public:
 };
 
 template <typename T>
-[[noreturn]] IPADDRESS_CONSTEXPR void raise_error(error_code code, int index, const T* address, size_t length) {
+[[noreturn]] IPADDRESS_CONSTEXPR inline void raise_error(error_code code, int index, const T* address, size_t length) {
     char str[101] = {};
     size_t max_len = length;
     if (length > 100) {
