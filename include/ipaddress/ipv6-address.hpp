@@ -267,7 +267,12 @@ public:
      * @param[in] scope_id The string view representing the scope identifier.
      * @throw parse_error exception caused by invalid input string
      * @note This method is available for C++17 and later versions.
+     * @parblock
      * @remark For C++ versions prior to C++17, member functions with `std::string` and C-strings will be used instead.
+     * @endparblock
+     * @parblock
+     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect
+     * @endparblock
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::string_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         change_scope_id(scope_id);
@@ -282,7 +287,12 @@ public:
      * @param[in] scope_id The wide string view representing the scope identifier.
      * @throw parse_error exception caused by invalid input string
      * @note This method is available for C++17 and later versions.
+     * @parblock
      * @remark For C++ versions prior to C++17, member functions with `std::wstring` and C-strings will be used instead.
+     * @endparblock
+     * @parblock
+     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect
+     * @endparblock
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::wstring_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         change_scope_id(scope_id);
@@ -299,6 +309,7 @@ public:
      * @param[in] scope_id The UTF-8 string view representing the scope identifier.
      * @throw parse_error exception caused by invalid input string
      * @note This method is available for C++20 and later versions where `char8_t` is supported.
+     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u8string_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         change_scope_id(scope_id);
@@ -315,7 +326,12 @@ public:
      * @param[in] scope_id The UTF-16 string view representing the scope identifier.
      * @throw parse_error exception caused by invalid input string
      * @note This method is available for C++17 and later versions.
+     * @parblock
      * @remark For C++ versions prior to C++17, member functions with `std::u16string` and C-strings will be used instead.
+     * @endparblock
+     * @parblock
+     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect
+     * @endparblock
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u16string_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         change_scope_id(scope_id);
@@ -330,7 +346,12 @@ public:
      * @param[in] scope_id The UTF-32 string view representing the scope identifier.
      * @throw parse_error exception caused by invalid input string
      * @note This method is available for C++17 and later versions.
+     * @parblock
      * @remark For C++ versions prior to C++17, member functions with `std::u32string` and C-strings will be used instead.
+     * @endparblock
+     * @parblock
+     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect
+     * @endparblock
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u32string_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         change_scope_id(scope_id);
@@ -344,7 +365,12 @@ public:
      * @param[in] scope_id The string view representing the scope identifier.
      * @param[out] code An error_code object that will be set to the error that occurred, if any.
      * @note This method is available for C++17 and later versions.
+     * @parblock
      * @remark For C++ versions prior to C++17, member functions with `std::string` and C-strings will be used instead.
+     * @endparblock
+     * @parblock
+     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect
+     * @endparblock
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
         change_scope_id(scope_id, code);
@@ -358,7 +384,12 @@ public:
      * @param[in] scope_id The wide string view representing the scope identifier.
      * @param[out] code An error_code object that will be set to the error that occurred, if any.
      * @note This method is available for C++17 and later versions.
+     * @parblock
      * @remark For C++ versions prior to C++17, member functions with `std::wstring` and C-strings will be used instead.
+     * @endparblock
+     * @parblock
+     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect
+     * @endparblock
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::wstring_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
         change_scope_id(scope_id, code);
@@ -374,6 +405,7 @@ public:
      * @param[in] scope_id The UTF-8 string view representing the scope identifier.
      * @param[out] code An error_code object that will be set to the error that occurred, if any.
      * @note This method is available for C++20 and later versions.
+     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u8string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
         change_scope_id(scope_id, code);
@@ -389,7 +421,12 @@ public:
      * @param[in] scope_id The UTF-16 string view representing the scope identifier.
      * @param[out] code An error_code object that will be set to the error that occurred, if any.
      * @note This method is available for C++17 and later versions.
+     * @parblock
      * @remark For C++ versions prior to C++17, member functions with `std::u16string` and C-strings will be used instead.
+     * @endparblock
+     * @parblock
+     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect
+     * @endparblock
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u16string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
         change_scope_id(scope_id, code);
@@ -403,7 +440,12 @@ public:
      * @param[in] scope_id The UTF-32 string view representing the scope identifier.
      * @param[out] code An error_code object that will be set to the error that occurred, if any.
      * @note This method is available for C++17 and later versions.
+     * @parblock
      * @remark For C++ versions prior to C++17, member functions with `std::u32string` and C-strings will be used instead.
+     * @endparblock
+     * @parblock
+     * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect
+     * @endparblock
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u32string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
         change_scope_id(scope_id, code);
