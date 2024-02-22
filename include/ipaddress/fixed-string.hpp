@@ -4,7 +4,7 @@
  * @author    Vladimir Shaleev
  * @copyright MIT License
  * 
- * This header defines `fixed_string`, a template class designed to store a string of fixed size.
+ * This header defines fixed_string, a template class designed to store a string of fixed size.
  * It is particularly useful in contexts where a constant string is required at compile-time,
  * such as in template metaprogramming or when specifying non-type template parameters.
  */
@@ -37,10 +37,10 @@ IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void is_char_type() IPADDRESS_NOEXCEP
 /**
  * Fixed size string class.
  * 
- * `fixed_string` is a template class that encapsulates a string of a fixed number of characters.
+ * fixed_string is a template class that encapsulates a string of a fixed number of characters.
  * It is designed to be used where strings are needed as non-type template parameters.
  * 
- * @tparam N the maximum number of characters the `fixed_string` can hold.
+ * @tparam N the maximum number of characters the fixed_string can hold.
  */
 template <size_t N>
 struct fixed_string {
@@ -58,18 +58,18 @@ struct fixed_string {
     /**
      * Default constructor.
      * 
-     * Constructs a `fixed_string` with default values, initializing the string with null characters.
+     * Constructs a fixed_string with default values, initializing the string with null characters.
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string() IPADDRESS_NOEXCEPT = default;
 
     /**
-     * Constructs a `fixed_string` from a character array.
+     * Constructs a fixed_string from a character array.
      * 
-     * This constructor template initializes a `fixed_string` with the contents of a given character array.
+     * This constructor template initializes a fixed_string with the contents of a given character array.
      * Characters from encodings other than ASCII may be truncated.
      * 
      * @tparam T  the character type of the input array
-     * @param[in] data the character array to initialize the `fixed_string` with
+     * @param[in] data the character array to initialize the fixed_string with
      */
     template <typename T>
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string(const T (&data)[N + 1]) IPADDRESS_NOEXCEPT {
@@ -90,12 +90,12 @@ struct fixed_string {
     }
 
     /**
-     * Retrieves the begin iterator of the `fixed_string`.
+     * Retrieves the begin iterator of the fixed_string.
      * 
-     * Returns an iterator pointing to the first character of the `fixed_string`.
-     * If the `fixed_string` is empty, the returned iterator will be equal to the one returned by end().
+     * Returns an iterator pointing to the first character of the fixed_string.
+     * If the fixed_string is empty, the returned iterator will be equal to the one returned by end().
      * 
-     * @return A constant iterator to the beginning of the `fixed_string`.
+     * @return A constant iterator to the beginning of the fixed_string.
      * @sa     end()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator begin() const IPADDRESS_NOEXCEPT {
@@ -103,9 +103,9 @@ struct fixed_string {
     }
     
     /**
-     * Retrieves the end iterator of the `fixed_string`.
+     * Retrieves the end iterator of the fixed_string.
      * 
-     * Returns an iterator pointing to the past-the-end character of the `fixed_string`.
+     * Returns an iterator pointing to the past-the-end character of the fixed_string.
      * This iterator acts as a placeholder and should not be dereferenced.
      * 
      * @return A constant iterator to the element following the last character.
@@ -116,12 +116,12 @@ struct fixed_string {
     }
     
     /**
-     * Retrieves the reverse begin iterator of the `fixed_string`.
+     * Retrieves the reverse begin iterator of the fixed_string.
      * 
-     * Returns a reverse iterator pointing to the last character of the `fixed_string`.
-     * If the `fixed_string` is empty, the returned iterator will be equal to rend().
+     * Returns a reverse iterator pointing to the last character of the fixed_string.
+     * If the fixed_string is empty, the returned iterator will be equal to rend().
      * 
-     * @return A constant reverse iterator to the beginning of the reversed `fixed_string`.
+     * @return A constant reverse iterator to the beginning of the reversed fixed_string.
      * @sa    rend()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator rbegin() const IPADDRESS_NOEXCEPT {
@@ -129,12 +129,12 @@ struct fixed_string {
     }
 
     /**
-     * Retrieves the reverse end iterator of the `fixed_string`.
+     * Retrieves the reverse end iterator of the fixed_string.
      * 
-     * Returns a reverse iterator pointing to the position preceding the first character of the `fixed_string`.
+     * Returns a reverse iterator pointing to the position preceding the first character of the fixed_string.
      * This iterator acts as a placeholder and should not be dereferenced.
      * 
-     * @return A constant reverse iterator to the end of the reversed `fixed_string`.
+     * @return A constant reverse iterator to the end of the reversed fixed_string.
      * @sa     rbegin()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator rend() const IPADDRESS_NOEXCEPT {
@@ -142,12 +142,12 @@ struct fixed_string {
     }
 
     /**
-     * Retrieves the constant begin iterator of the `fixed_string`.
+     * Retrieves the constant begin iterator of the fixed_string.
      * 
-     * Returns a constant iterator pointing to the first character of the `fixed_string`.
-     * If the `fixed_string` is empty, the returned iterator will be equal to cend().
+     * Returns a constant iterator pointing to the first character of the fixed_string.
+     * If the fixed_string is empty, the returned iterator will be equal to cend().
      * 
-     * @return A constant iterator to the beginning of the `fixed_string`.
+     * @return A constant iterator to the beginning of the fixed_string.
      * @sa     cend()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator cbegin() const IPADDRESS_NOEXCEPT {
@@ -155,12 +155,12 @@ struct fixed_string {
     }
 
     /**
-     * Retrieves the constant end iterator of the `fixed_string`.
+     * Retrieves the constant end iterator of the fixed_string.
      * 
-     * Returns a constant iterator pointing to the past-the-end character of the `fixed_string`.
+     * Returns a constant iterator pointing to the past-the-end character of the fixed_string.
      * This iterator acts as a placeholder and should not be dereferenced.
      * 
-     * @return A constant iterator to the end of the `fixed_string`.
+     * @return A constant iterator to the end of the fixed_string.
      * @sa     cbegin()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator cend() const IPADDRESS_NOEXCEPT {
@@ -168,12 +168,12 @@ struct fixed_string {
     }
 
     /**
-     * Retrieves the constant reverse begin iterator of the `fixed_string`.
+     * Retrieves the constant reverse begin iterator of the fixed_string.
      * 
-     * Returns a constant reverse iterator pointing to the last character of the `fixed_string`.
-     * If the `fixed_string` is empty, the returned iterator will be equal to crend().
+     * Returns a constant reverse iterator pointing to the last character of the fixed_string.
+     * If the fixed_string is empty, the returned iterator will be equal to crend().
      * 
-     * @return A constant reverse iterator to the beginning of the reversed `fixed_string`.
+     * @return A constant reverse iterator to the beginning of the reversed fixed_string.
      * @sa     crend()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator crbegin() const IPADDRESS_NOEXCEPT {
@@ -181,12 +181,12 @@ struct fixed_string {
     }
 
     /**
-     * Retrieves the constant reverse end iterator of the `fixed_string`.
+     * Retrieves the constant reverse end iterator of the fixed_string.
      * 
-     * Returns a reverse iterator pointing to the position preceding the first character of the `fixed_string` when reversed.
+     * Returns a reverse iterator pointing to the position preceding the first character of the fixed_string when reversed.
      * This iterator acts as a placeholder and should not be dereferenced.
      * 
-     * @return A constant reverse iterator to the end of the reversed `fixed_string`.
+     * @return A constant reverse iterator to the end of the reversed fixed_string.
      * @sa     crbegin()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_17 IPADDRESS_FORCE_INLINE const_reverse_iterator crend() const IPADDRESS_NOEXCEPT {
@@ -194,22 +194,22 @@ struct fixed_string {
     }
 
     /**
-     * Checks if the `fixed_string` is empty.
+     * Checks if the fixed_string is empty.
      * 
-     * Evaluates whether the `fixed_string` contains no characters.
+     * Evaluates whether the fixed_string contains no characters.
      * 
-     * @return `true` if the `fixed_string` is empty, `false` otherwise.
+     * @return `true` if the fixed_string is empty, `false` otherwise.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool empty() const IPADDRESS_NOEXCEPT {
         return size() == 0;
     }
     
     /**
-     * Retrieves the size of the `fixed_string`.
+     * Retrieves the size of the fixed_string.
      * 
-     * Returns the number of characters currently stored in the `fixed_string`.
+     * Returns the number of characters currently stored in the fixed_string.
      * 
-     * @return The number of characters in the `fixed_string`.
+     * @return The number of characters in the fixed_string.
      * @sa     capacity()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t size() const IPADDRESS_NOEXCEPT {
@@ -217,11 +217,11 @@ struct fixed_string {
     }
 
     /**
-     * Retrieves the capacity of the `fixed_string`.
+     * Retrieves the capacity of the fixed_string.
      * 
-     * Returns the total number of characters that the `fixed_string` can hold.
+     * Returns the total number of characters that the fixed_string can hold.
      * 
-     * @return The capacity of the `fixed_string`.
+     * @return The capacity of the fixed_string.
      * @sa     size()
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t capacity() const IPADDRESS_NOEXCEPT {
@@ -305,12 +305,12 @@ struct fixed_string {
     }
     
     /**
-     * Compares the string with another `fixed_string`.
+     * Compares the string with another fixed_string.
      * 
-     * Compares the string with another `fixed_string` lexicographically.
+     * Compares the string with another fixed_string lexicographically.
      * 
-     * @tparam    N2  the size of the other `fixed_string`
-     * @param[in] rhs the other `fixed_string` to compare with
+     * @tparam    N2  the size of the other fixed_string
+     * @param[in] rhs the other fixed_string to compare with
      * @return Negative value if less, zero if equal, positive value if greater.
      */
     template <size_t N2>
@@ -360,11 +360,11 @@ struct fixed_string {
     }
 
     /**
-     * Swaps the contents with another `fixed_string`.
+     * Swaps the contents with another fixed_string.
      * 
-     * Exchanges the contents of the string with those of another `fixed_string`.
+     * Exchanges the contents of the string with those of another fixed_string.
      * 
-     * @param[in,out] other The other `fixed_string` to swap with.
+     * @param[in,out] other The other fixed_string to swap with.
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void swap(fixed_string& other) IPADDRESS_NOEXCEPT {
         auto count = size() < other.size() ? other.size() : size();
@@ -615,11 +615,11 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
 /**
  * Creates a fixed-length string from a character array.
  * 
- * Constructs a `fixed_string` object from a character array, deducing the size automatically.
+ * Constructs a fixed_string object from a character array, deducing the size automatically.
  * 
  * @tparam    N    the size of the character array plus one for the null terminator
- * @param[in] data the character array to initialize the `fixed_string` with
- * @return    A `fixed_string` object of size N-1.
+ * @param[in] data the character array to initialize the fixed_string with
+ * @return    A fixed_string object of size N-1.
  */
 template <size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 1> make_fixed_string(const char(&data)[N]) IPADDRESS_NOEXCEPT {
@@ -629,11 +629,11 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 
 /**
  * Creates a fixed-length string from a wide character array.
  * 
- * Constructs a `fixed_string` object from a wide character array, deducing the size automatically.
+ * Constructs a fixed_string object from a wide character array, deducing the size automatically.
  * 
  * @tparam    N    the size of the wide character array plus one for the null terminator
- * @param[in] data the wide character array to initialize the `fixed_string` with
- * @return    A `fixed_string` object of size N-1.
+ * @param[in] data the wide character array to initialize the fixed_string with
+ * @return    A fixed_string object of size N-1.
  */
 template <size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 1> make_fixed_string(const wchar_t(&data)[N]) IPADDRESS_NOEXCEPT {
@@ -643,11 +643,11 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 
 /**
  * Creates a fixed-length string from a UTF-16 character array.
  * 
- * Constructs a `fixed_string` object from a UTF-16 character array, deducing the size automatically.
+ * Constructs a fixed_string object from a UTF-16 character array, deducing the size automatically.
  * 
  * @tparam    N    the size of the UTF-16 character array plus one for the null terminator
- * @param[in] data the UTF-16 character array to initialize the `fixed_string` with
- * @return    A `fixed_string` object of size N-1.
+ * @param[in] data the UTF-16 character array to initialize the fixed_string with
+ * @return    A fixed_string object of size N-1.
  */
 template <size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 1> make_fixed_string(const char16_t(&data)[N]) IPADDRESS_NOEXCEPT {
@@ -657,11 +657,11 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 
 /**
  * Creates a fixed-length string from a UTF-32 character array.
  * 
- * Constructs a `fixed_string` object from a UTF-32 character array, deducing the size automatically.
+ * Constructs a fixed_string object from a UTF-32 character array, deducing the size automatically.
  * 
  * @tparam    N    the size of the UTF-32 character array plus one for the null terminator
- * @param[in] data the UTF-32 character array to initialize the `fixed_string` with
- * @return    A `fixed_string` object of size N-1.
+ * @param[in] data the UTF-32 character array to initialize the fixed_string with
+ * @return    A fixed_string object of size N-1.
  */
 template <size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 1> make_fixed_string(const char32_t(&data)[N]) IPADDRESS_NOEXCEPT {
@@ -673,11 +673,11 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 
 /**
  * Creates a fixed-length string from a UTF-8 character array.
  * 
- * Constructs a `fixed_string` object from a UTF-8 character array, deducing the size automatically.
+ * Constructs a fixed_string object from a UTF-8 character array, deducing the size automatically.
  * 
  * @tparam    N    the size of the UTF-8 character array plus one for the null terminator
- * @param[in] data the UTF-8 character array to initialize the `fixed_string` with
- * @return    A `fixed_string` object of size N-1.
+ * @param[in] data the UTF-8 character array to initialize the fixed_string with
+ * @return    A fixed_string object of size N-1.
  */
 template <size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 1> make_fixed_string(const char8_t(&data)[N]) IPADDRESS_NOEXCEPT {
