@@ -487,16 +487,16 @@ struct fixed_string<0> {
 }; // fixed_string<0>
 
 /**
- * Compares the contents of two fixed strings.
+ * Compares the contents of two fixed strings for equality.
  * 
- * Checks if the contents of  \a lhs and rhs are equal, that is, they have the same 
- * number of elements and each element in \a lhs compares equal with the element in rhs at the same position.
+ * Checks if the contents of \a lhs and \a rhs are equal, meaning they have the same 
+ * number of elements and each element in \a lhs compares equal with the element in \a rhs at the same position.
  * 
- * @tparam N1 is maximum number of characters of \a lhs.
- * @tparam N2 is maximum number of characters of \a rhs.
- * @param[in] lhs string whose contents to compare
- * @param[in] rhs string whose contents to compare
- * @return `true` if the contents of the strings are equal, `false` otherwise.
+ * @tparam    N1  the maximum number of characters of \a lhs
+ * @tparam    N2  the maximum number of characters of \a rhs
+ * @param[in] lhs the fixed string whose contents to compare
+ * @param[in] rhs the fixed string whose contents to compare
+ * @return    `true` if the contents of the strings are equal, `false` otherwise.
  */
 template <size_t N1, size_t N2>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
@@ -504,16 +504,16 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(c
 }
 
 /**
- * Compares the contents of two fixed strings.
+ * Compares the contents of two fixed strings for inequality.
  * 
- * Checks if the contents of  \a lhs and rhs are equal, that is, they have the same 
- * number of elements and each element in \a lhs compares equal with the element in rhs at the same position.
+ * Checks if the contents of \a lhs and \a rhs are not equal, meaning they do not have the same 
+ * number of elements or there is at least one position at which the elements in \a lhs and \a rhs differ.
  * 
- * @tparam N1 is maximum number of characters of \a lhs.
- * @tparam N2 is maximum number of characters of \a rhs.
- * @param[in] lhs string whose contents to compare
- * @param[in] rhs string whose contents to compare
- * @return `true` if the contents of the strings are not equal, `false` otherwise.
+ * @tparam    N1  the maximum number of characters of \a lhs
+ * @tparam    N2  the maximum number of characters of \a rhs
+ * @param[in] lhs the fixed string whose contents to compare
+ * @param[in] rhs the fixed string whose contents to compare
+ * @return    `true` if the contents of the strings are not equal, `false` otherwise.
  */
 template <size_t N1, size_t N2>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
@@ -523,15 +523,15 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
 
     /**
-     * Compares the contents of two fixed strings.
+     * Compares the contents of two fixed strings lexicographically.
      * 
-     * Compares the contents of \a lhs and \a rhs lexicographically.
+     * Uses the three-way comparison operator (spaceship operator) to compare the contents of \a lhs and \a rhs.
      * 
-     * @tparam N1 is maximum number of characters of \a lhs.
-     * @tparam N2 is maximum number of characters of \a rhs.
-     * @param[in] lhs string whose contents to compare
-     * @param[in] rhs string whose contents to compare
-     * @return The relative order of the first pair of non-equivalent elements in \a lhs and \a rhs if there are such elements.
+     * @tparam    N1  the maximum number of characters of \a lhs
+     * @tparam    N2  the maximum number of characters of \a rhs
+     * @param[in] lhs the fixed string whose contents to compare
+     * @param[in] rhs the fixed string whose contents to compare
+     * @return    The relative order of the first pair of non-equivalent elements in \a lhs and \a rhs if there are such elements.
      */
     template <size_t N1, size_t N2>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
@@ -547,15 +547,15 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
 #else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
     /**
-     * Compares the contents of two fixed strings.
+     * Compares the contents of two fixed strings lexicographically.
      * 
-     * Compares the contents of \a lhs and \a rhs lexicographically.
+     * Checks if the contents of \a lhs are lexicographically less than the contents of \a rhs.
      * 
-     * @tparam N1 is maximum number of characters of \a lhs.
-     * @tparam N2 is maximum number of characters of \a rhs.
-     * @param[in] lhs string whose contents to compare
-     * @param[in] rhs string whose contents to compare
-     * @return `true` if the contents of the \a lhs are lexicographically less than the contents of \a rhs, `false` otherwise.
+     * @tparam    N1  the maximum number of characters of \a lhs
+     * @tparam    N2  the maximum number of characters of \a rhs
+     * @param[in] lhs the fixed string whose contents to compare
+     * @param[in] rhs the fixed string whose contents to compare
+     * @return    `true` if the contents of \a lhs are lexicographically less than the contents of \a rhs, `false` otherwise.
      */
     template <size_t N1, size_t N2>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
@@ -563,15 +563,15 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
     }
 
     /**
-     * Compares the contents of two fixed strings.
+     * Compares the contents of two fixed strings for greater than relation.
      * 
-     * Compares the contents of \a lhs and \a rhs lexicographically.
+     * Determines if the contents of \a lhs are lexicographically greater than the contents of \a rhs.
      * 
-     * @tparam N1 is maximum number of characters of \a lhs.
-     * @tparam N2 is maximum number of characters of \a rhs.
-     * @param[in] lhs string whose contents to compare
-     * @param[in] rhs string whose contents to compare
-     * @return `true` if the contents of the \a lhs are lexicographically greater than the contents of \a rhs, `false` otherwise.
+     * @tparam    N1  the maximum number of characters of \a lhs
+     * @tparam    N2  the maximum number of characters of \a rhs
+     * @param[in] lhs the fixed string whose contents to compare
+     * @param[in] rhs the fixed string whose contents to compare
+     * @return    `true` if \a lhs is lexicographically greater than \a rhs, `false` otherwise.
      */
     template <size_t N1, size_t N2>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
@@ -579,15 +579,15 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
     }
 
     /**
-     * Compares the contents of two fixed strings.
+     * Compares the contents of two fixed strings for less than or equal relation.
      * 
-     * Compares the contents of \a lhs and \a rhs lexicographically.
+     * Determines if the contents of \a lhs are lexicographically less than or equal to the contents of \a rhs.
      * 
-     * @tparam N1 is maximum number of characters of \a lhs.
-     * @tparam N2 is maximum number of characters of \a rhs.
-     * @param[in] lhs string whose contents to compare
-     * @param[in] rhs string whose contents to compare
-     * @return `true` if the contents of the \a lhs are lexicographically less than or equal to the contents of \a rhs, `false` otherwise.
+     * @tparam    N1  the maximum number of characters of \a lhs
+     * @tparam    N2  the maximum number of characters of \a rhs
+     * @param[in] lhs the fixed string whose contents to compare
+     * @param[in] rhs the fixed string whose contents to compare
+     * @return    `true` if \a lhs is lexicographically less than or equal to \a rhs, `false` otherwise.
      */
     template <size_t N1, size_t N2>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
@@ -595,15 +595,15 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
     }
 
     /**
-     * Compares the contents of two fixed strings.
+     * Compares the contents of two fixed strings for greater than or equal relation.
      * 
-     * Compares the contents of \a lhs and \a rhs lexicographically.
+     * Determines if the contents of \a lhs are lexicographically greater than or equal to the contents of \a rhs.
      * 
-     * @tparam N1 is maximum number of characters of \a lhs.
-     * @tparam N2 is maximum number of characters of \a rhs.
-     * @param[in] lhs string whose contents to compare
-     * @param[in] rhs string whose contents to compare
-     * @return `true` if the contents of the \a lhs are lexicographically greater than or equal to the contents of \a rhs, `false` otherwise.
+     * @tparam    N1  the maximum number of characters of \a lhs
+     * @tparam    N2  the maximum number of characters of \a rhs
+     * @param[in] lhs the fixed string whose contents to compare
+     * @param[in] rhs the fixed string whose contents to compare
+     * @return    `true` if \a lhs is lexicographically greater than or equal to \a rhs, `false` otherwise.
      */
     template <size_t N1, size_t N2>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
