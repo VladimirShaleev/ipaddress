@@ -6,6 +6,7 @@ set(IPADDRESS_IPV6_SCOPE_MAX_LENGTH "16" CACHE STRING "Maximum scope-id length f
 
 project(ipaddress 
   HOMEPAGE_URL "https://github.com/VladimirShaleev/ipaddress"
+  DESCRIPTION "Description"
   VERSION 1.0.0
   LANGUAGES CXX)
 
@@ -13,8 +14,6 @@ include(CMakePackageConfigHelpers)
 include(CMakeDependentOption)
 include(GNUInstallDirs)
 include(TestBigEndian)
-include(CTest)
-
 test_big_endian(IPADDRESS_BIG_ENDIAN)
 
 add_library(${PROJECT_NAME} INTERFACE)
@@ -33,20 +32,8 @@ endif()
 target_compile_definitions(${PROJECT_NAME} INTERFACE IPADDRESS_IPV6_SCOPE_MAX_LENGTH=${IPADDRESS_IPV6_SCOPE_MAX_LENGTH})
 target_compile_definitions(${PROJECT_NAME} INTERFACE $<BUILD_INTERFACE:IPADDRESS_ENDIAN=${IPADDRESS_BIG_ENDIAN}>)
 
-if (NOT EXISTS "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config.cmake.in")
-  file(WRITE ${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config.cmake.in [[
-    include(TestBigEndian)
-    test_big_endian(IPADDRESS_BIG_ENDIAN)
-
-    @PACKAGE_INIT@
-    
-    include("${CMAKE_CURRENT_LIST_DIR}/@PROJECT_NAME@-targets.cmake")
-    set_target_properties(ipaddress::ipaddress PROPERTIES INTERFACE_COMPILE_DEFINITIONS "IPADDRESS_ENDIAN=${IPADDRESS_BIG_ENDIAN}")
-  ]])
-endif()
-
 configure_package_config_file(
-  "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config.cmake.in"
+  "${CMAKE_CURRENT_SOURCE_DIR}/package/ipaddress-config.cmake.in" 
   "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
   INSTALL_DESTINATION "${CMAKE_INSTALL_DATADIR}/cmake/${PROJECT_NAME}"
   NO_SET_AND_CHECK_MACRO
@@ -57,7 +44,7 @@ write_basic_package_version_file(${PROJECT_NAME}-config-version.cmake
   COMPATIBILITY SameMajorVersion)
 
 configure_file(
-  "${CMAKE_CURRENT_SOURCE_DIR}/package/pkgconfig.pc.in" 
+  "${CMAKE_CURRENT_SOURCE_DIR}/package/ipaddress.pc.in" 
   "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.pc" @ONLY)
 
 install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}-targets)
@@ -99,55 +86,6 @@ if(IPADDRESS_BUILD_DOC)
   add_subdirectory(doc)
 endif()
 
-if(NOT IPADDRESS_BUILD_PACKAGES)
-  return()
+if(IPADDRESS_BUILD_PACKAGES)
+  add_subdirectory(package)
 endif()
-
-list(APPEND CPACK_SOURCE_GENERATOR TBZ2 TGZ TXZ ZIP)
-list(APPEND CPACK_SOURCE_IGNORE_FILES /.git/ /.github/ /.vscode/ /.vs/ /build/ .gitignore .DS_Store)
-
-if (IPADDRESS_BUILD_DEB_PACKAGE)
-  list(APPEND IPADDRESS_PACKAGE_GENERATORS "DEB")
-endif()
-
-if (IPADDRESS_BUILD_RPM_PACKAGE)
-  list(APPEND IPADDRESS_PACKAGE_GENERATORS "RPM")
-endif()
-
-set(CPACK_GENERATOR ${IPADDRESS_PACKAGE_GENERATORS})
-
-set(CPACK_PACKAGE_VENDOR "Vladimir Shaleev")
-set(CPACK_PACKAGE_CONTACT "Vladimir Shaleev <vladimirshaleev@gmail.com>")
-set(CPACK_PACKAGE_FILE_NAME "${PROJECT_NAME}-${PROJECT_VERSION}")
-set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
-set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})
-set(CPACK_PACKAGE_VERSION_PATCH ${PROJECT_VERSION_PATCH})
-set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Description")# "${PROJECT_DESCRIPTION}")
-set(CPACK_SOURCE_PACKAGE_FILE_NAME "${PROJECT_NAME}-${PROJECT_VERSION}")
-set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_SOURCE_DIR}/LICENSE)
-set(CPACK_RESOURCE_FILE_README ${CMAKE_SOURCE_DIR}/README.md)
-
-set(CPACK_DEBIAN_PACKAGE_NAME "lib${PROJECT_NAME}-dev")
-set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://github.com/VladimirShaleev/ipaddress")
-
-set(CPACK_RPM_PACKAGE_NAME "lib${PROJECT_NAME}-devel")
-set(CPACK_RPM_PACKAGE_LICENSE "MIT License")
-set(CPACK_RPM_COMPRESSION_TYPE lzma)
-list(APPEND CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST
-  /etc
-  /etc/init.d
-  /usr
-  /usr/bin
-  /usr/include
-  /usr/lib
-  /usr/libx32
-  /usr/lib64
-  /usr/share
-  /usr/share/aclocal
-  /usr/share/doc
-  /usr/share/cmake
-  /usr/share/pkgconfig
-)
-
-include(CPack)
