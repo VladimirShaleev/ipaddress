@@ -104,6 +104,9 @@
     <loc>https://vladimirshaleev.github.io/ipaddress/ip-any-address_8hpp.html</loc>
   </url>
   <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/ip-network-base_8hpp.html</loc>
+  </url>
+  <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/ipaddress_8hpp.html</loc>
   </url>
   <url>
@@ -162,6 +165,12 @@
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1ip__address__base-members.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1ip__network__base.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1ip__network__base-members.html</loc>
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1ipv4__address__base.html</loc>

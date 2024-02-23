@@ -7,6 +7,7 @@ var namespaceipaddress =
     [ "fixed_string", "structipaddress_1_1fixed__string.html", "structipaddress_1_1fixed__string" ],
     [ "ip_address", "classipaddress_1_1ip__address.html", "classipaddress_1_1ip__address" ],
     [ "ip_address_base", "classipaddress_1_1ip__address__base.html", "classipaddress_1_1ip__address__base" ],
+    [ "ip_network_base", "classipaddress_1_1ip__network__base.html", "classipaddress_1_1ip__network__base" ],
     [ "ipv4_address_base", "classipaddress_1_1ipv4__address__base.html", "classipaddress_1_1ipv4__address__base" ],
     [ "ipv6_address_base", "classipaddress_1_1ipv6__address__base.html", "classipaddress_1_1ipv6__address__base" ],
     [ "logic_error", "classipaddress_1_1logic__error.html", "classipaddress_1_1logic__error" ],

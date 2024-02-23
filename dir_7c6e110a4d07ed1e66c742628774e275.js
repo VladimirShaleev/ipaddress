@@ -13,7 +13,7 @@ var dir_7c6e110a4d07ed1e66c742628774e275 =
     [ "ip-any-address.hpp", "ip-any-address_8hpp.html", "ip-any-address_8hpp" ],
     [ "ip-any-iterator.hpp", "ip-any-iterator_8hpp_source.html", null ],
     [ "ip-any-network.hpp", "ip-any-network_8hpp_source.html", null ],
-    [ "ip-network-base.hpp", "ip-network-base_8hpp_source.html", null ],
+    [ "ip-network-base.hpp", "ip-network-base_8hpp.html", "ip-network-base_8hpp" ],
     [ "ip-network-iterator.hpp", "ip-network-iterator_8hpp_source.html", null ],
     [ "ip-networks.hpp", "ip-networks_8hpp_source.html", null ],
     [ "ipaddress.hpp", "ipaddress_8hpp.html", null ],

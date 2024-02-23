@@ -23,6 +23,7 @@ var hierarchy =
     [ "ipaddress::fixed_string< IPADDRESS_IPV6_SCOPE_MAX_LENGTH >", "structipaddress_1_1fixed__string.html", null ],
     [ "ipaddress::ip_address", "classipaddress_1_1ip__address.html", null ],
     [ "ipaddress::ip_address_base< Base >", "classipaddress_1_1ip__address__base.html", null ],
+    [ "ipaddress::ip_network_base< Base >", "classipaddress_1_1ip__network__base.html", null ],
     [ "ipaddress::optional< T >", "classipaddress_1_1optional.html", null ],
     [ "ipaddress::scope", "classipaddress_1_1scope.html", null ],
     [ "ipaddress::uint128_t", "classipaddress_1_1uint128__t.html", null ]
