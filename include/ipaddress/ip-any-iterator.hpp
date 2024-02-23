@@ -3,6 +3,8 @@
 
 #include "ip-any-address.hpp"
 #include "ip-network-iterator.hpp"
+#include "ipv4-network.hpp"
+#include "ipv6-network.hpp"
 
 namespace IPADDRESS_NAMESPACE {
 

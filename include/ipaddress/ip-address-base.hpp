@@ -95,13 +95,13 @@ public:
      * @return An instance of ip address constructed from the given byte buffer.
      * @parblock
      * @remark If the number of bytes \a byte_count is less than the target number .
-     *              of bytes to represent the IP address, the missing bytes will be 
-     *              filled with zeros.
+     *         of bytes to represent the IP address, the missing bytes will be 
+     *         filled with zeros.
      * @endparblock
      * @parblock
      * @remark If the number of bytes \a byte_count is greater than the target .
-     *              number of bytes represented by the IP address, then the extra 
-     *              bytes will be ignored
+     *         number of bytes represented by the IP address, then the extra 
+     *         bytes will be ignored
      * @endparblock
      */
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base from_bytes(const uint8_t* bytes, size_t byte_count) IPADDRESS_NOEXCEPT {
