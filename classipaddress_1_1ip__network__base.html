@@ -147,13 +147,130 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a95c558ba00cf3e9128deede4acaf3cdd" id="r_a95c558ba00cf3e9128deede4acaf3cdd"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a95c558ba00cf3e9128deede4acaf3cdd">ip_network_base</a> () noexcept</td></tr>
 <tr class="memdesc:a95c558ba00cf3e9128deede4acaf3cdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new IP network base object.  <br /></td></tr>
 <tr class="separator:a95c558ba00cf3e9128deede4acaf3cdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8349c4c4e583db3cbf48d08f58857c73" id="r_a8349c4c4e583db3cbf48d08f58857c73"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8349c4c4e583db3cbf48d08f58857c73">contains</a> (const <a class="el" href="#ad4a474aa73d6545412e6c32746a41891">ip_address_type</a> &amp;address) const noexcept</td></tr>
+<tr class="memdesc:a8349c4c4e583db3cbf48d08f58857c73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the given IP address is contained within this network.  <br /></td></tr>
+<tr class="separator:a8349c4c4e583db3cbf48d08f58857c73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a696923e16865077f6952eb02eec6a53a" id="r_a696923e16865077f6952eb02eec6a53a"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a696923e16865077f6952eb02eec6a53a">overlaps</a> (const <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a> &amp;other) const noexcept</td></tr>
+<tr class="memdesc:a696923e16865077f6952eb02eec6a53a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines if this network overlaps with another network.  <br /></td></tr>
+<tr class="separator:a696923e16865077f6952eb02eec6a53a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad02cd6b64e7f5f5212bb4df81b901a09" id="r_ad02cd6b64e7f5f5212bb4df81b901a09"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad02cd6b64e7f5f5212bb4df81b901a09">subnet_of</a> (const <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a> &amp;other) const noexcept</td></tr>
+<tr class="memdesc:ad02cd6b64e7f5f5212bb4df81b901a09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if this network is a subnet of another network.  <br /></td></tr>
+<tr class="separator:ad02cd6b64e7f5f5212bb4df81b901a09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7830390b87710aeaca0881efc785cd9b" id="r_a7830390b87710aeaca0881efc785cd9b"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7830390b87710aeaca0881efc785cd9b">supernet_of</a> (const <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a> &amp;other) const noexcept</td></tr>
+<tr class="memdesc:a7830390b87710aeaca0881efc785cd9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if this network is a supernet of another network.  <br /></td></tr>
+<tr class="separator:a7830390b87710aeaca0881efc785cd9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafac986da2adad9f4f3d5748aba031f6" id="r_aafac986da2adad9f4f3d5748aba031f6"><td class="memItemLeft" align="right" valign="top">inline std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aafac986da2adad9f4f3d5748aba031f6">to_string</a> (<a class="el" href="namespaceipaddress.html#ab54b11d879107889b3bf313724c4b611">format</a> fmt=<a class="el" href="namespaceipaddress.html#ab54b11d879107889b3bf313724c4b611a2b98a4ad988a18c42682f388901f2672">format::compressed</a>) const</td></tr>
+<tr class="memdesc:aafac986da2adad9f4f3d5748aba031f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the network to a string representation.  <br /></td></tr>
+<tr class="separator:aafac986da2adad9f4f3d5748aba031f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a809aea6e68c42f76014c3db80b7b28" id="r_a3a809aea6e68c42f76014c3db80b7b28"><td class="memItemLeft" align="right" valign="top">constexpr inline void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3a809aea6e68c42f76014c3db80b7b28">swap</a> (<a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a> &amp;network) noexcept</td></tr>
+<tr class="memdesc:a3a809aea6e68c42f76014c3db80b7b28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swaps the contents of this network with another network.  <br /></td></tr>
+<tr class="separator:a3a809aea6e68c42f76014c3db80b7b28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b111204d8585f7be66984ce554c3d6f" id="r_a1b111204d8585f7be66984ce554c3d6f"><td class="memItemLeft" align="right" valign="top">constexpr inline size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1b111204d8585f7be66984ce554c3d6f">hash</a> () const noexcept</td></tr>
+<tr class="memdesc:a1b111204d8585f7be66984ce554c3d6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates a hash value for the network.  <br /></td></tr>
+<tr class="separator:a1b111204d8585f7be66984ce554c3d6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a5699b4af54ebd3fbc742b68bc7ff36" id="r_a8a5699b4af54ebd3fbc742b68bc7ff36"><td class="memItemLeft" align="right" valign="top">constexpr inline const <a class="el" href="#ad4a474aa73d6545412e6c32746a41891">ip_address_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8a5699b4af54ebd3fbc742b68bc7ff36">network_address</a> () const noexcept</td></tr>
+<tr class="memdesc:a8a5699b4af54ebd3fbc742b68bc7ff36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the network address of this network.  <br /></td></tr>
+<tr class="separator:a8a5699b4af54ebd3fbc742b68bc7ff36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05245a57788e9aa6cff79f3c32cf1d63" id="r_a05245a57788e9aa6cff79f3c32cf1d63"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="#ad4a474aa73d6545412e6c32746a41891">ip_address_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a05245a57788e9aa6cff79f3c32cf1d63">broadcast_address</a> () const noexcept</td></tr>
+<tr class="memdesc:a05245a57788e9aa6cff79f3c32cf1d63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the broadcast address of this network.  <br /></td></tr>
+<tr class="separator:a05245a57788e9aa6cff79f3c32cf1d63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf58ded4549b03ffbbc16a4426b73d56" id="r_aaf58ded4549b03ffbbc16a4426b73d56"><td class="memItemLeft" align="right" valign="top">constexpr inline const <a class="el" href="#ad4a474aa73d6545412e6c32746a41891">ip_address_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaf58ded4549b03ffbbc16a4426b73d56">netmask</a> () const noexcept</td></tr>
+<tr class="memdesc:aaf58ded4549b03ffbbc16a4426b73d56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the netmask of this network.  <br /></td></tr>
+<tr class="separator:aaf58ded4549b03ffbbc16a4426b73d56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32a954c923ac5232a8ec2dc72efc5f54" id="r_a32a954c923ac5232a8ec2dc72efc5f54"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="#ad4a474aa73d6545412e6c32746a41891">ip_address_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a32a954c923ac5232a8ec2dc72efc5f54">hostmask</a> () const noexcept</td></tr>
+<tr class="memdesc:a32a954c923ac5232a8ec2dc72efc5f54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the hostmask of this network.  <br /></td></tr>
+<tr class="separator:a32a954c923ac5232a8ec2dc72efc5f54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37dae43b045632cd052c3c1ae904558c" id="r_a37dae43b045632cd052c3c1ae904558c"><td class="memItemLeft" align="right" valign="top">constexpr inline size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a37dae43b045632cd052c3c1ae904558c">prefixlen</a> () const noexcept</td></tr>
+<tr class="memdesc:a37dae43b045632cd052c3c1ae904558c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the prefix length of this network.  <br /></td></tr>
+<tr class="separator:a37dae43b045632cd052c3c1ae904558c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecbb6efe6a9390b75134513898c8c12f" id="r_aecbb6efe6a9390b75134513898c8c12f"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aecbb6efe6a9390b75134513898c8c12f">is_multicast</a> () const noexcept</td></tr>
+<tr class="memdesc:aecbb6efe6a9390b75134513898c8c12f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the network is a multicast network.  <br /></td></tr>
+<tr class="separator:aecbb6efe6a9390b75134513898c8c12f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf2b49ded5cfa694c6a10fe005a134c5" id="r_aaf2b49ded5cfa694c6a10fe005a134c5"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaf2b49ded5cfa694c6a10fe005a134c5">is_private</a> () const noexcept</td></tr>
+<tr class="memdesc:aaf2b49ded5cfa694c6a10fe005a134c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the network is a private network.  <br /></td></tr>
+<tr class="separator:aaf2b49ded5cfa694c6a10fe005a134c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c6de785de6de0dc9c9a8adad046890b" id="r_a0c6de785de6de0dc9c9a8adad046890b"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0c6de785de6de0dc9c9a8adad046890b">is_global</a> () const noexcept</td></tr>
+<tr class="memdesc:a0c6de785de6de0dc9c9a8adad046890b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the network is a global network.  <br /></td></tr>
+<tr class="separator:a0c6de785de6de0dc9c9a8adad046890b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab17c2212bcc3f09cc17a4dcc4ae34b5b" id="r_ab17c2212bcc3f09cc17a4dcc4ae34b5b"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab17c2212bcc3f09cc17a4dcc4ae34b5b">is_reserved</a> () const noexcept</td></tr>
+<tr class="memdesc:ab17c2212bcc3f09cc17a4dcc4ae34b5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the network is a reserved network.  <br /></td></tr>
+<tr class="separator:ab17c2212bcc3f09cc17a4dcc4ae34b5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35468d0f919b04ac2b446b16f45db7ae" id="r_a35468d0f919b04ac2b446b16f45db7ae"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a35468d0f919b04ac2b446b16f45db7ae">is_loopback</a> () const noexcept</td></tr>
+<tr class="memdesc:a35468d0f919b04ac2b446b16f45db7ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the network is a loopback network.  <br /></td></tr>
+<tr class="separator:a35468d0f919b04ac2b446b16f45db7ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4c489c28534bff8b3c0cc3fbc289122" id="r_ab4c489c28534bff8b3c0cc3fbc289122"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab4c489c28534bff8b3c0cc3fbc289122">is_link_local</a> () const noexcept</td></tr>
+<tr class="memdesc:ab4c489c28534bff8b3c0cc3fbc289122"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the network is a link-local network.  <br /></td></tr>
+<tr class="separator:ab4c489c28534bff8b3c0cc3fbc289122"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14e2f45ba37d31b05a4681e7fb928959" id="r_a14e2f45ba37d31b05a4681e7fb928959"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a14e2f45ba37d31b05a4681e7fb928959">is_unspecified</a> () const noexcept</td></tr>
+<tr class="memdesc:a14e2f45ba37d31b05a4681e7fb928959"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the network is an unspecified network.  <br /></td></tr>
+<tr class="separator:a14e2f45ba37d31b05a4681e7fb928959"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7490b0e8e2f2224b2eb7ca2b47efc64" id="r_ac7490b0e8e2f2224b2eb7ca2b47efc64"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="#ae6ac27da83ce4ccb26c8c86227079a29">uint_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac7490b0e8e2f2224b2eb7ca2b47efc64">addresses_count</a> () const noexcept</td></tr>
+<tr class="memdesc:ac7490b0e8e2f2224b2eb7ca2b47efc64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the total number of addresses in the network.  <br /></td></tr>
+<tr class="separator:ac7490b0e8e2f2224b2eb7ca2b47efc64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a272cfac702ba39637feccf1ee1671334" id="r_a272cfac702ba39637feccf1ee1671334"><td class="memItemLeft" align="right" valign="top">constexpr inline hosts_sequence&lt; <a class="el" href="#ad4a474aa73d6545412e6c32746a41891">ip_address_type</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a272cfac702ba39637feccf1ee1671334">hosts</a> () const noexcept</td></tr>
+<tr class="memdesc:a272cfac702ba39637feccf1ee1671334"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves a sequence of host addresses in the network.  <br /></td></tr>
+<tr class="separator:a272cfac702ba39637feccf1ee1671334"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace1cd360d70af716aef6ddedb8a4d517" id="r_ace1cd360d70af716aef6ddedb8a4d517"><td class="memItemLeft" align="right" valign="top">constexpr inline exclude_network_sequence&lt; <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&lt; Base &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ace1cd360d70af716aef6ddedb8a4d517">address_exclude</a> (const <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a> &amp;other) const</td></tr>
+<tr class="memdesc:ace1cd360d70af716aef6ddedb8a4d517"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the network definitions resulting from removing the given network from this one.  <br /></td></tr>
+<tr class="separator:ace1cd360d70af716aef6ddedb8a4d517"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e8e9b14ec6cf397ed24bc2243de4993" id="r_a6e8e9b14ec6cf397ed24bc2243de4993"><td class="memItemLeft" align="right" valign="top">constexpr inline exclude_network_sequence&lt; <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&lt; Base &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6e8e9b14ec6cf397ed24bc2243de4993">address_exclude</a> (const <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a> &amp;other, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;code) const noexcept</td></tr>
+<tr class="memdesc:a6e8e9b14ec6cf397ed24bc2243de4993"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the network definitions resulting from removing the given network from this one, with error handling.  <br /></td></tr>
+<tr class="separator:a6e8e9b14ec6cf397ed24bc2243de4993"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac088d282e97fbf51c01bcae5a8ff56b6" id="r_ac088d282e97fbf51c01bcae5a8ff56b6"><td class="memItemLeft" align="right" valign="top">constexpr inline subnets_sequence&lt; <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&lt; Base &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac088d282e97fbf51c01bcae5a8ff56b6">subnets</a> (size_t prefixlen_diff=1, <a class="el" href="classipaddress_1_1optional.html">optional</a>&lt; size_t &gt; new_prefixlen=nullptr) const</td></tr>
+<tr class="memdesc:ac088d282e97fbf51c01bcae5a8ff56b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a sequence of subnets from this network.  <br /></td></tr>
+<tr class="separator:ac088d282e97fbf51c01bcae5a8ff56b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa017a85594d7601bc9426405eb13b222" id="r_aa017a85594d7601bc9426405eb13b222"><td class="memItemLeft" align="right" valign="top">constexpr inline subnets_sequence&lt; <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&lt; Base &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa017a85594d7601bc9426405eb13b222">subnets</a> (<a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;code, size_t prefixlen_diff=1, <a class="el" href="classipaddress_1_1optional.html">optional</a>&lt; size_t &gt; new_prefixlen=nullptr) const noexcept</td></tr>
+<tr class="memdesc:aa017a85594d7601bc9426405eb13b222"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a sequence of subnets from this network with error handling.  <br /></td></tr>
+<tr class="separator:aa017a85594d7601bc9426405eb13b222"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a10567e92ccc02eaaec171bb5447f2ea1" id="r_a10567e92ccc02eaaec171bb5447f2ea1"><td class="memItemLeft" align="right" valign="top">static constexpr inline <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a10567e92ccc02eaaec171bb5447f2ea1">from_address</a> (const <a class="el" href="#ad4a474aa73d6545412e6c32746a41891">ip_address_type</a> &amp;address, size_t prefixlen=ip_address_type::max_prefixlen, bool strict=true)</td></tr>
+<tr class="memitem:a8489e6b960705d187197f6e3f198b4d4" id="r_a8489e6b960705d187197f6e3f198b4d4"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a> FixedString, bool Strict = true&gt; </td></tr>
+<tr class="memitem:a8489e6b960705d187197f6e3f198b4d4"><td class="memTemplItemLeft" align="right" valign="top">static consteval <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a8489e6b960705d187197f6e3f198b4d4">parse</a> () noexcept</td></tr>
+<tr class="memdesc:a8489e6b960705d187197f6e3f198b4d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses a network address and prefix from a fixed string at compile time.  <br /></td></tr>
+<tr class="separator:a8489e6b960705d187197f6e3f198b4d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77546369cd0fcdf779120238737744c6" id="r_a77546369cd0fcdf779120238737744c6"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a77546369cd0fcdf779120238737744c6">parse</a> (std::string_view address, bool strict=true)</td></tr>
+<tr class="memdesc:a77546369cd0fcdf779120238737744c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses a network address and prefix from a string view.  <br /></td></tr>
+<tr class="separator:a77546369cd0fcdf779120238737744c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82c5444e31d30ad6c34898edac90a651" id="r_a82c5444e31d30ad6c34898edac90a651"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a82c5444e31d30ad6c34898edac90a651">parse</a> (std::wstring_view address, bool strict=true)</td></tr>
+<tr class="memdesc:a82c5444e31d30ad6c34898edac90a651"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses a network address and prefix from a wide string view.  <br /></td></tr>
+<tr class="separator:a82c5444e31d30ad6c34898edac90a651"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0333dfb5ea154c30d4158ab1153bf915" id="r_a0333dfb5ea154c30d4158ab1153bf915"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0333dfb5ea154c30d4158ab1153bf915">parse</a> (std::u8string_view address, bool strict=true)</td></tr>
+<tr class="memdesc:a0333dfb5ea154c30d4158ab1153bf915"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses a network address and prefix from UTF-8 string view.  <br /></td></tr>
+<tr class="separator:a0333dfb5ea154c30d4158ab1153bf915"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c6b7feb75fe425859838e6ca18621b7" id="r_a6c6b7feb75fe425859838e6ca18621b7"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6c6b7feb75fe425859838e6ca18621b7">parse</a> (std::u16string_view address, bool strict=true)</td></tr>
+<tr class="memdesc:a6c6b7feb75fe425859838e6ca18621b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses a network address and prefix from UTF-16 string view.  <br /></td></tr>
+<tr class="separator:a6c6b7feb75fe425859838e6ca18621b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a629ba7a6e547ea0c6d4b88687010ac9e" id="r_a629ba7a6e547ea0c6d4b88687010ac9e"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a629ba7a6e547ea0c6d4b88687010ac9e">parse</a> (std::u32string_view address, bool strict=true)</td></tr>
+<tr class="memdesc:a629ba7a6e547ea0c6d4b88687010ac9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses a network address and prefix from UTF-32 string view.  <br /></td></tr>
+<tr class="separator:a629ba7a6e547ea0c6d4b88687010ac9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51d226c0b48c6e6c4eb984c29365c954" id="r_a51d226c0b48c6e6c4eb984c29365c954"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a51d226c0b48c6e6c4eb984c29365c954">parse</a> (std::string_view address, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;code, bool strict=true) noexcept</td></tr>
+<tr class="memdesc:a51d226c0b48c6e6c4eb984c29365c954"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses a network address and prefix from a string view with error handling.  <br /></td></tr>
+<tr class="separator:a51d226c0b48c6e6c4eb984c29365c954"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f04ea3348847dafbc8dede4c7a53708" id="r_a3f04ea3348847dafbc8dede4c7a53708"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3f04ea3348847dafbc8dede4c7a53708">parse</a> (std::wstring_view address, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;code, bool strict=true) noexcept</td></tr>
+<tr class="memdesc:a3f04ea3348847dafbc8dede4c7a53708"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses a network address and prefix from a wide string view with error handling.  <br /></td></tr>
+<tr class="separator:a3f04ea3348847dafbc8dede4c7a53708"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa0fadacf81a9c12d0e15dbb66a6c436" id="r_afa0fadacf81a9c12d0e15dbb66a6c436"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afa0fadacf81a9c12d0e15dbb66a6c436">parse</a> (std::u8string_view address, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;code, bool strict=true) noexcept</td></tr>
+<tr class="memdesc:afa0fadacf81a9c12d0e15dbb66a6c436"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses a network address and prefix from UTF-8 string view with error handling.  <br /></td></tr>
+<tr class="separator:afa0fadacf81a9c12d0e15dbb66a6c436"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad954bb1c81319387407f56b7f7935c12" id="r_ad954bb1c81319387407f56b7f7935c12"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad954bb1c81319387407f56b7f7935c12">parse</a> (std::u16string_view address, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;code, bool strict=true) noexcept</td></tr>
+<tr class="memdesc:ad954bb1c81319387407f56b7f7935c12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses a network address and prefix from UTF-16 string view with error handling.  <br /></td></tr>
+<tr class="separator:ad954bb1c81319387407f56b7f7935c12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ef54ca850fa4a038297268c7c9d0d2a" id="r_a3ef54ca850fa4a038297268c7c9d0d2a"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3ef54ca850fa4a038297268c7c9d0d2a">parse</a> (std::u32string_view address, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;code, bool strict=true) noexcept</td></tr>
+<tr class="memdesc:a3ef54ca850fa4a038297268c7c9d0d2a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses a network address and prefix from UTF-32 string view with error handling.  <br /></td></tr>
+<tr class="separator:a3ef54ca850fa4a038297268c7c9d0d2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5ab94e248914c8e8d60a56f53fa7084" id="r_ad5ab94e248914c8e8d60a56f53fa7084"><td class="memTemplParams" colspan="2">template&lt;typename T , size_t N&gt; </td></tr>
+<tr class="memitem:ad5ab94e248914c8e8d60a56f53fa7084"><td class="memTemplItemLeft" align="right" valign="top">static constexpr inline <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ad5ab94e248914c8e8d60a56f53fa7084">parse</a> (const T(&amp;address)[N], bool strict=true)</td></tr>
+<tr class="memdesc:ad5ab94e248914c8e8d60a56f53fa7084"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses a network address and prefix from a character array.  <br /></td></tr>
+<tr class="separator:ad5ab94e248914c8e8d60a56f53fa7084"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a217230d61626250d1cb7ef6a00ccb228" id="r_a217230d61626250d1cb7ef6a00ccb228"><td class="memTemplParams" colspan="2">template&lt;typename T , size_t N&gt; </td></tr>
+<tr class="memitem:a217230d61626250d1cb7ef6a00ccb228"><td class="memTemplItemLeft" align="right" valign="top">static constexpr inline <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a217230d61626250d1cb7ef6a00ccb228">parse</a> (const T(&amp;address)[N], <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;code, bool strict=true) noexcept</td></tr>
+<tr class="memdesc:a217230d61626250d1cb7ef6a00ccb228"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses a network address and prefix from a character array and reports errors through an error code.  <br /></td></tr>
+<tr class="separator:a217230d61626250d1cb7ef6a00ccb228"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10567e92ccc02eaaec171bb5447f2ea1" id="r_a10567e92ccc02eaaec171bb5447f2ea1"><td class="memItemLeft" align="right" valign="top">static constexpr inline <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a10567e92ccc02eaaec171bb5447f2ea1">from_address</a> (const <a class="el" href="#ad4a474aa73d6545412e6c32746a41891">ip_address_type</a> &amp;address, size_t <a class="el" href="#a37dae43b045632cd052c3c1ae904558c">prefixlen</a>=ip_address_type::max_prefixlen, bool strict=true)</td></tr>
 <tr class="memdesc:a10567e92ccc02eaaec171bb5447f2ea1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an ip network object from a given IP address and prefix length.  <br /></td></tr>
 <tr class="separator:a10567e92ccc02eaaec171bb5447f2ea1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a174c14e00926760f9810038ab9ffdd05" id="r_a174c14e00926760f9810038ab9ffdd05"><td class="memItemLeft" align="right" valign="top">static constexpr inline <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a174c14e00926760f9810038ab9ffdd05">from_address</a> (const <a class="el" href="#ad4a474aa73d6545412e6c32746a41891">ip_address_type</a> &amp;address, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;code, size_t prefixlen=ip_address_type::max_prefixlen, bool strict=true) noexcept</td></tr>
+<tr class="memitem:a174c14e00926760f9810038ab9ffdd05" id="r_a174c14e00926760f9810038ab9ffdd05"><td class="memItemLeft" align="right" valign="top">static constexpr inline <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a174c14e00926760f9810038ab9ffdd05">from_address</a> (const <a class="el" href="#ad4a474aa73d6545412e6c32746a41891">ip_address_type</a> &amp;address, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;code, size_t <a class="el" href="#a37dae43b045632cd052c3c1ae904558c">prefixlen</a>=ip_address_type::max_prefixlen, bool strict=true) noexcept</td></tr>
 <tr class="memdesc:a174c14e00926760f9810038ab9ffdd05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an ip network object from a given IP address and prefix length, with error handling.  <br /></td></tr>
 <tr class="separator:a174c14e00926760f9810038ab9ffdd05"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -199,6 +316,652 @@ template&lt;typename Base &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a8489e6b960705d187197f6e3f198b4d4" name="a8489e6b960705d187197f6e3f198b4d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8489e6b960705d187197f6e3f198b4d4">&#9670;&#160;</a></span>parse() <span class="overload">[1/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<div class="memtemplate">
+template&lt;<a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a> FixedString, bool Strict = true&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static consteval <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a> <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::parse </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parses a network address and prefix from a fixed string at compile time. </p>
+<p>This template function allows for the compile-time parsing of an IP network address and prefix length from a fixed string. It is enabled only when non-type template parameters are supported by the compiler.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">FixedString</td><td>A string literal representing the IP network in "address/prefix" format. </td></tr>
+    <tr><td class="paramname">Strict</td><td>A boolean flag indicating whether to perform strict validation of the address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A consteval ip network object representing the parsed network. </dd></dl>
+
+</div>
+</div>
+<a id="a77546369cd0fcdf779120238737744c6" name="a77546369cd0fcdf779120238737744c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77546369cd0fcdf779120238737744c6">&#9670;&#160;</a></span>parse() <span class="overload">[2/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a> <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::parse </td>
+          <td>(</td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>address</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>strict</em><span class="paramdefsep"> = </span><span class="paramdefval">true</span></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parses a network address and prefix from a string view. </p>
+<p>This function parses an IP network address and prefix length from a string view. It is available when the compiler supports C++17 or later.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>A string view representing the IP network in "address/prefix" format. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">strict</td><td>A boolean flag indicating whether to perform strict validation of the address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An ip network object representing the parsed network. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classipaddress_1_1parse__error.html" title="Exception for errors encountered during IP address parsing.">parse_error</a></td><td>Exception caused by invalid input string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::string</code> and C-strings will be used instead. </dd></dl>
+
+</div>
+</div>
+<a id="a82c5444e31d30ad6c34898edac90a651" name="a82c5444e31d30ad6c34898edac90a651"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a82c5444e31d30ad6c34898edac90a651">&#9670;&#160;</a></span>parse() <span class="overload">[3/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a> <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::parse </td>
+          <td>(</td>
+          <td class="paramtype">std::wstring_view</td>          <td class="paramname"><span class="paramname"><em>address</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>strict</em><span class="paramdefsep"> = </span><span class="paramdefval">true</span></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parses a network address and prefix from a wide string view. </p>
+<p>This function parses an IP network address and prefix length from a wide string view. It is available when the compiler supports C++17 or later.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>The wide string view representing the IP network in "address/prefix" format. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">strict</td><td>A boolean flag indicating whether to perform strict validation of the address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An ip network object representing the parsed network. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classipaddress_1_1parse__error.html" title="Exception for errors encountered during IP address parsing.">parse_error</a></td><td>Exception caused by invalid input string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::wstring</code> and C-strings will be used instead. </dd></dl>
+
+</div>
+</div>
+<a id="a0333dfb5ea154c30d4158ab1153bf915" name="a0333dfb5ea154c30d4158ab1153bf915"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0333dfb5ea154c30d4158ab1153bf915">&#9670;&#160;</a></span>parse() <span class="overload">[4/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a> <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::parse </td>
+          <td>(</td>
+          <td class="paramtype">std::u8string_view</td>          <td class="paramname"><span class="paramname"><em>address</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>strict</em><span class="paramdefsep"> = </span><span class="paramdefval">true</span></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parses a network address and prefix from UTF-8 string view. </p>
+<p>This function parses an IP network address and prefix length from UTF-8 string view. It leverages the <code>char8_t</code> type introduced in C++20 to handle UTF-8 strings natively.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>A UTF-8 string view representing the IP network in "address/prefix" format. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">strict</td><td>A boolean flag indicating whether to perform strict validation of the address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An ip network object representing the parsed network. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classipaddress_1_1parse__error.html" title="Exception for errors encountered during IP address parsing.">parse_error</a></td><td>Exception caused by invalid input string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This method is available for C++20 and later versions where <code>char8_t</code> is supported. </dd></dl>
+
+</div>
+</div>
+<a id="a6c6b7feb75fe425859838e6ca18621b7" name="a6c6b7feb75fe425859838e6ca18621b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c6b7feb75fe425859838e6ca18621b7">&#9670;&#160;</a></span>parse() <span class="overload">[5/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a> <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::parse </td>
+          <td>(</td>
+          <td class="paramtype">std::u16string_view</td>          <td class="paramname"><span class="paramname"><em>address</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>strict</em><span class="paramdefsep"> = </span><span class="paramdefval">true</span></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parses a network address and prefix from UTF-16 string view. </p>
+<p>This function parses an IP network address and prefix length from UTF-16 string view. It is available when the compiler supports C++17 or later.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>The UTF-16 string view representing the IP network in "address/prefix" format. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">strict</td><td>A boolean flag indicating whether to perform strict validation of the address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An ip network object representing the parsed network. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classipaddress_1_1parse__error.html" title="Exception for errors encountered during IP address parsing.">parse_error</a></td><td>Exception caused by invalid input string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::u16string</code> and C-strings will be used instead. </dd></dl>
+
+</div>
+</div>
+<a id="a629ba7a6e547ea0c6d4b88687010ac9e" name="a629ba7a6e547ea0c6d4b88687010ac9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a629ba7a6e547ea0c6d4b88687010ac9e">&#9670;&#160;</a></span>parse() <span class="overload">[6/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a> <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::parse </td>
+          <td>(</td>
+          <td class="paramtype">std::u32string_view</td>          <td class="paramname"><span class="paramname"><em>address</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>strict</em><span class="paramdefsep"> = </span><span class="paramdefval">true</span></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parses a network address and prefix from UTF-32 string view. </p>
+<p>This function parses an IP network address and prefix length from UTF-32 string view. It is available when the compiler supports C++17 or later.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>The UTF-32 string view representing the IP network in "address/prefix" format. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">strict</td><td>A boolean flag indicating whether to perform strict validation of the address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An ip network object representing the parsed network. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classipaddress_1_1parse__error.html" title="Exception for errors encountered during IP address parsing.">parse_error</a></td><td>Exception caused by invalid input string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::u32string</code> and C-strings will be used instead. </dd></dl>
+
+</div>
+</div>
+<a id="a51d226c0b48c6e6c4eb984c29365c954" name="a51d226c0b48c6e6c4eb984c29365c954"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51d226c0b48c6e6c4eb984c29365c954">&#9670;&#160;</a></span>parse() <span class="overload">[7/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a> <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::parse </td>
+          <td>(</td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>address</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>code</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>strict</em><span class="paramdefsep"> = </span><span class="paramdefval">true</span></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parses a network address and prefix from a string view with error handling. </p>
+<p>This function parses an IP network address and prefix length from a string view, providing an error code for exception-free error handling.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>The string view representing the IP network in "address/prefix" format. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>An error_code object that will be set if an error occurs during parsing. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">strict</td><td>A boolean flag indicating whether to perform strict validation of the address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An ip network object representing the parsed network. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::string</code> and C-strings will be used instead. </dd></dl>
+
+</div>
+</div>
+<a id="a3f04ea3348847dafbc8dede4c7a53708" name="a3f04ea3348847dafbc8dede4c7a53708"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f04ea3348847dafbc8dede4c7a53708">&#9670;&#160;</a></span>parse() <span class="overload">[8/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a> <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::parse </td>
+          <td>(</td>
+          <td class="paramtype">std::wstring_view</td>          <td class="paramname"><span class="paramname"><em>address</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>code</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>strict</em><span class="paramdefsep"> = </span><span class="paramdefval">true</span></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parses a network address and prefix from a wide string view with error handling. </p>
+<p>This function parses an IP network address and prefix length from a wide string view, providing an error code for exception-free error handling.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>The wide string view representing the IP network in "address/prefix" format. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>An error_code object that will be set if an error occurs during parsing. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">strict</td><td>A boolean flag indicating whether to perform strict validation of the address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An ip network object representing the parsed network. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::wstring</code> and C-strings will be used instead. </dd></dl>
+
+</div>
+</div>
+<a id="afa0fadacf81a9c12d0e15dbb66a6c436" name="afa0fadacf81a9c12d0e15dbb66a6c436"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa0fadacf81a9c12d0e15dbb66a6c436">&#9670;&#160;</a></span>parse() <span class="overload">[9/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a> <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::parse </td>
+          <td>(</td>
+          <td class="paramtype">std::u8string_view</td>          <td class="paramname"><span class="paramname"><em>address</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>code</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>strict</em><span class="paramdefsep"> = </span><span class="paramdefval">true</span></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parses a network address and prefix from UTF-8 string view with error handling. </p>
+<p>This function parses an IP network address and prefix length from UTF-8 string view, providing an error code for exception-free error handling.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>The UTF-8 string view representing the IP network in "address/prefix" format. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>An error_code object that will be set if an error occurs during parsing. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">strict</td><td>A boolean flag indicating whether to perform strict validation of the address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An ip network object representing the parsed network. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This method is available for C++20 and later versions where <code>char8_t</code> is supported. </dd></dl>
+
+</div>
+</div>
+<a id="ad954bb1c81319387407f56b7f7935c12" name="ad954bb1c81319387407f56b7f7935c12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad954bb1c81319387407f56b7f7935c12">&#9670;&#160;</a></span>parse() <span class="overload">[10/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a> <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::parse </td>
+          <td>(</td>
+          <td class="paramtype">std::u16string_view</td>          <td class="paramname"><span class="paramname"><em>address</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>code</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>strict</em><span class="paramdefsep"> = </span><span class="paramdefval">true</span></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parses a network address and prefix from UTF-16 string view with error handling. </p>
+<p>This function parses an IP network address and prefix length from UTF-16 string view, providing an error code for exception-free error handling.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>The UTF-16 string view representing the IP network in "address/prefix" format. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>An error_code object that will be set if an error occurs during parsing. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">strict</td><td>A boolean flag indicating whether to perform strict validation of the address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An ip network object representing the parsed network. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::u16string</code> and C-strings will be used instead. </dd></dl>
+
+</div>
+</div>
+<a id="a3ef54ca850fa4a038297268c7c9d0d2a" name="a3ef54ca850fa4a038297268c7c9d0d2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ef54ca850fa4a038297268c7c9d0d2a">&#9670;&#160;</a></span>parse() <span class="overload">[11/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a> <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::parse </td>
+          <td>(</td>
+          <td class="paramtype">std::u32string_view</td>          <td class="paramname"><span class="paramname"><em>address</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>code</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>strict</em><span class="paramdefsep"> = </span><span class="paramdefval">true</span></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parses a network address and prefix from UTF-32 string view with error handling. </p>
+<p>This function parses an IP network address and prefix length from UTF-32 string view, providing an error code for exception-free error handling.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>The UTF-32 string view representing the IP network in "address/prefix" format. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>An error_code object that will be set if an error occurs during parsing. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">strict</td><td>A boolean flag indicating whether to perform strict validation of the address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An ip network object representing the parsed network. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::u32string</code> and C-strings will be used instead. </dd></dl>
+
+</div>
+</div>
+<a id="ad5ab94e248914c8e8d60a56f53fa7084" name="ad5ab94e248914c8e8d60a56f53fa7084"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5ab94e248914c8e8d60a56f53fa7084">&#9670;&#160;</a></span>parse() <span class="overload">[12/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<div class="memtemplate">
+template&lt;typename T , size_t N&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr inline <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a> <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::parse </td>
+          <td>(</td>
+          <td class="paramtype">const T(&amp;)</td>          <td class="paramname"><span class="paramname"><em>address</em>[N], </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>strict</em><span class="paramdefsep"> = </span><span class="paramdefval">true</span></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parses a network address and prefix from a character array. </p>
+<p>This function parses an IP network address and prefix length from a character array of a specified size. Can check and get the result at compile time.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>The character type of the array. </td></tr>
+    <tr><td class="paramname">N</td><td>The size of the character array. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>The character array representing the IP network in "address/prefix" format. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">strict</td><td>A boolean flag indicating whether to perform strict validation of the address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An ip network object representing the parsed network. </dd></dl>
+
+</div>
+</div>
+<a id="a217230d61626250d1cb7ef6a00ccb228" name="a217230d61626250d1cb7ef6a00ccb228"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a217230d61626250d1cb7ef6a00ccb228">&#9670;&#160;</a></span>parse() <span class="overload">[13/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<div class="memtemplate">
+template&lt;typename T , size_t N&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr inline <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a> <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::parse </td>
+          <td>(</td>
+          <td class="paramtype">const T(&amp;)</td>          <td class="paramname"><span class="paramname"><em>address</em>[N], </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>code</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>strict</em><span class="paramdefsep"> = </span><span class="paramdefval">true</span></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parses a network address and prefix from a character array and reports errors through an error code. </p>
+<p>This function parses an IP network address and prefix length from a character array of a specified size and provides an error code if the parsing fails.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>The character type of the array. </td></tr>
+    <tr><td class="paramname">N</td><td>The size of the character array. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>The character array representing the IP network in "address/prefix" format. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>An error_code object that will be set if an error occurs during parsing. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">strict</td><td>A boolean flag indicating whether to perform strict validation of the address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An ip network object representing the parsed network. </dd></dl>
+
+</div>
+</div>
 <a id="a10567e92ccc02eaaec171bb5447f2ea1" name="a10567e92ccc02eaaec171bb5447f2ea1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a10567e92ccc02eaaec171bb5447f2ea1">&#9670;&#160;</a></span>from_address() <span class="overload">[1/2]</span></h2>
 
@@ -238,7 +1001,7 @@ template&lt;typename Base &gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>The IP address to use for creating the network. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">prefixlen</td><td>The prefix length for the network's netmask. Defaults to the maximum prefix length. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">prefixlen</td><td>The prefix length for the network's netmask. <em>Defaults to the maximum prefix length</em>. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">strict</td><td>Whether to validate the address against the netmask. </td></tr>
   </table>
   </dd>
@@ -305,6 +1068,1006 @@ template&lt;typename Base &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>An ip network object representing the network, or an object in an error state if an error occurs. </dd></dl>
+
+</div>
+</div>
+<a id="a8349c4c4e583db3cbf48d08f58857c73" name="a8349c4c4e583db3cbf48d08f58857c73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8349c4c4e583db3cbf48d08f58857c73">&#9670;&#160;</a></span>contains()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline bool <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::contains </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#ad4a474aa73d6545412e6c32746a41891">ip_address_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>address</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if the given IP address is contained within this network. </p>
+<p>This method determines whether the provided IP address is part of the network represented by this ip network object, based on the network address and netmask.</p>
+<div class="fragment"><div class="line"><span class="keyword">constexpr</span> <span class="keyword">auto</span> result1 = <a class="code hl_function" href="#a8489e6b960705d187197f6e3f198b4d4">ipv4_network::parse</a>(<span class="stringliteral">&quot;192.0.2.0/28&quot;</span>).<a class="code hl_function" href="#a8349c4c4e583db3cbf48d08f58857c73">contains</a>(<a class="code hl_function" href="classipaddress_1_1ip__address__base.html#ad9f66485dc6f4906047a9d6384250d70">ipv4_address::parse</a>(<span class="stringliteral">&quot;192.0.2.6&quot;</span>));</div>
+<div class="line"><span class="keyword">constexpr</span> <span class="keyword">auto</span> result2 = <a class="code hl_function" href="#a8489e6b960705d187197f6e3f198b4d4">ipv4_network::parse</a>(<span class="stringliteral">&quot;192.0.2.0/28&quot;</span>).<a class="code hl_function" href="#a8349c4c4e583db3cbf48d08f58857c73">contains</a>(<a class="code hl_function" href="classipaddress_1_1ip__address__base.html#ad9f66485dc6f4906047a9d6384250d70">ipv4_address::parse</a>(<span class="stringliteral">&quot;192.0.3.6&quot;</span>));</div>
+<div class="line"> </div>
+<div class="line">std::cout &lt;&lt; std::boolalpha &lt;&lt; result1 &lt;&lt; std::endl;</div>
+<div class="line">std::cout &lt;&lt; std::boolalpha &lt;&lt; result2 &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// out:</span></div>
+<div class="line"><span class="comment">// true</span></div>
+<div class="line"><span class="comment">// false</span></div>
+<div class="ttc" id="aclassipaddress_1_1ip__address__base_html_ad9f66485dc6f4906047a9d6384250d70"><div class="ttname"><a href="classipaddress_1_1ip__address__base.html#ad9f66485dc6f4906047a9d6384250d70">ipaddress::ip_address_base&lt; ipv4_address_base &gt;::parse</a></div><div class="ttdeci">static consteval inline ip_address_base&lt; ipv4_address_base &gt; parse() noexcept</div><div class="ttdoc">Static method template to parse an IP address from a fixed string at compile time.</div><div class="ttdef"><b>Definition</b> ip-address-base.hpp:126</div></div>
+<div class="ttc" id="aclassipaddress_1_1ip__network__base_html_a8349c4c4e583db3cbf48d08f58857c73"><div class="ttname"><a href="#a8349c4c4e583db3cbf48d08f58857c73">ipaddress::ip_network_base::contains</a></div><div class="ttdeci">constexpr inline bool contains(const ip_address_type &amp;address) const noexcept</div><div class="ttdoc">Checks if the given IP address is contained within this network.</div><div class="ttdef"><b>Definition</b> ip-network-base.hpp:495</div></div>
+<div class="ttc" id="aclassipaddress_1_1ip__network__base_html_a8489e6b960705d187197f6e3f198b4d4"><div class="ttname"><a href="#a8489e6b960705d187197f6e3f198b4d4">ipaddress::ip_network_base&lt; ipv4_network_base &gt;::parse</a></div><div class="ttdeci">static consteval ip_network_base parse() noexcept</div><div class="ttdoc">Parses a network address and prefix from a fixed string at compile time.</div><div class="ttdef"><b>Definition</b> ip-network-base.hpp:65</div></div>
+</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>The IP address to check. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the address is part of the network, <code>false</code> otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a696923e16865077f6952eb02eec6a53a" name="a696923e16865077f6952eb02eec6a53a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a696923e16865077f6952eb02eec6a53a">&#9670;&#160;</a></span>overlaps()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline bool <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::overlaps </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&lt; Base &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Determines if this network overlaps with another network. </p>
+<p>This method checks if there is any overlap between the network represented by this ip network object and another network, meaning if any part of one network lies within the other.</p>
+<div class="fragment"><div class="line"><span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_function" href="#a696923e16865077f6952eb02eec6a53a">overlaps</a> = <a class="code hl_function" href="#a8489e6b960705d187197f6e3f198b4d4">ipv4_network::parse</a>(<span class="stringliteral">&quot;1.2.3.0/24&quot;</span>).<a class="code hl_function" href="#a696923e16865077f6952eb02eec6a53a">overlaps</a>(<a class="code hl_function" href="#a8489e6b960705d187197f6e3f198b4d4">ipv4_network::parse</a>(<span class="stringliteral">&quot;1.2.3.0/30&quot;</span>));</div>
+<div class="line">std::cout &lt;&lt; std::boolalpha &lt;&lt; <a class="code hl_function" href="#a696923e16865077f6952eb02eec6a53a">overlaps</a> &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// out:</span></div>
+<div class="line"><span class="comment">// true</span></div>
+<div class="ttc" id="aclassipaddress_1_1ip__network__base_html_a696923e16865077f6952eb02eec6a53a"><div class="ttname"><a href="#a696923e16865077f6952eb02eec6a53a">ipaddress::ip_network_base::overlaps</a></div><div class="ttdeci">constexpr inline bool overlaps(const ip_network_base &amp;other) const noexcept</div><div class="ttdoc">Determines if this network overlaps with another network.</div><div class="ttdef"><b>Definition</b> ip-network-base.hpp:524</div></div>
+</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The other ip network object to compare with. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if there is an overlap, <code>false</code> otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="ad02cd6b64e7f5f5212bb4df81b901a09" name="ad02cd6b64e7f5f5212bb4df81b901a09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad02cd6b64e7f5f5212bb4df81b901a09">&#9670;&#160;</a></span>subnet_of()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline bool <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::subnet_of </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&lt; Base &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if this network is a subnet of another network. </p>
+<p>This method verifies if the network represented by this ip network object is a subnet of the provided network, meaning if this network is entirely contained within the other network.</p>
+<div class="fragment"><div class="line"><span class="keyword">constexpr</span> <span class="keyword">auto</span> a = <a class="code hl_function" href="#a8489e6b960705d187197f6e3f198b4d4">ipv4_network::parse</a>(<span class="stringliteral">&quot;192.168.1.0/24&quot;</span>);</div>
+<div class="line"><span class="keyword">constexpr</span> <span class="keyword">auto</span> b = <a class="code hl_function" href="#a8489e6b960705d187197f6e3f198b4d4">ipv4_network::parse</a>(<span class="stringliteral">&quot;192.168.1.128/30&quot;</span>);</div>
+<div class="line"><span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_function" href="#ad02cd6b64e7f5f5212bb4df81b901a09">subnet_of</a> = a.subnet_of(b);</div>
+<div class="line"> </div>
+<div class="line">std::cout &lt;&lt; std::boolalpha &lt;&lt; <a class="code hl_function" href="#ad02cd6b64e7f5f5212bb4df81b901a09">subnet_of</a> &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// out:</span></div>
+<div class="line"><span class="comment">// false</span></div>
+<div class="ttc" id="aclassipaddress_1_1ip__network__base_html_ad02cd6b64e7f5f5212bb4df81b901a09"><div class="ttname"><a href="#ad02cd6b64e7f5f5212bb4df81b901a09">ipaddress::ip_network_base::subnet_of</a></div><div class="ttdeci">constexpr inline bool subnet_of(const ip_network_base &amp;other) const noexcept</div><div class="ttdoc">Checks if this network is a subnet of another network.</div><div class="ttdef"><b>Definition</b> ip-network-base.hpp:547</div></div>
+</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The other ip network object to compare with. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if this network is a subnet of the other network, <code>false</code> otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a7830390b87710aeaca0881efc785cd9b" name="a7830390b87710aeaca0881efc785cd9b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7830390b87710aeaca0881efc785cd9b">&#9670;&#160;</a></span>supernet_of()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline bool <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::supernet_of </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&lt; Base &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if this network is a supernet of another network. </p>
+<p>This method determines if the network represented by this ip network object is a supernet of the provided network, meaning if the other network is entirely contained within this network.</p>
+<div class="fragment"><div class="line"><span class="keyword">constexpr</span> <span class="keyword">auto</span> a = <a class="code hl_function" href="#a8489e6b960705d187197f6e3f198b4d4">ipv4_network::parse</a>(<span class="stringliteral">&quot;192.168.1.0/24&quot;</span>);</div>
+<div class="line"><span class="keyword">constexpr</span> <span class="keyword">auto</span> b = <a class="code hl_function" href="#a8489e6b960705d187197f6e3f198b4d4">ipv4_network::parse</a>(<span class="stringliteral">&quot;192.168.1.128/30&quot;</span>);</div>
+<div class="line"><span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_function" href="#a7830390b87710aeaca0881efc785cd9b">supernet_of</a> = a.supernet_of(b);</div>
+<div class="line"> </div>
+<div class="line">std::cout &lt;&lt; std::boolalpha &lt;&lt; <a class="code hl_function" href="#a7830390b87710aeaca0881efc785cd9b">supernet_of</a> &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// out:</span></div>
+<div class="line"><span class="comment">// true</span></div>
+<div class="ttc" id="aclassipaddress_1_1ip__network__base_html_a7830390b87710aeaca0881efc785cd9b"><div class="ttname"><a href="#a7830390b87710aeaca0881efc785cd9b">ipaddress::ip_network_base::supernet_of</a></div><div class="ttdeci">constexpr inline bool supernet_of(const ip_network_base &amp;other) const noexcept</div><div class="ttdoc">Checks if this network is a supernet of another network.</div><div class="ttdef"><b>Definition</b> ip-network-base.hpp:570</div></div>
+</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The other ip network object to compare with. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if this network is a supernet of the other network, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="aafac986da2adad9f4f3d5748aba031f6" name="aafac986da2adad9f4f3d5748aba031f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aafac986da2adad9f4f3d5748aba031f6">&#9670;&#160;</a></span>to_string()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">inline std::string <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::to_string </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceipaddress.html#ab54b11d879107889b3bf313724c4b611">format</a></td>          <td class="paramname"><span class="paramname"><em>fmt</em><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="namespaceipaddress.html#ab54b11d879107889b3bf313724c4b611a2b98a4ad988a18c42682f388901f2672">format::compressed</a></span></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Converts the network to a string representation. </p>
+<p>This method returns a string representation of the network, combining the network address and the prefix length, formatted according to the specified format.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">fmt</td><td>The format to use for the string representation. <em>Defaults to <a class="el" href="namespaceipaddress.html#ab54b11d879107889b3bf313724c4b611a2b98a4ad988a18c42682f388901f2672" title="Compressed format with maximal omission of segments or octets.">format::compressed</a></em>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A string representation of the network. </dd></dl>
+
+</div>
+</div>
+<a id="a3a809aea6e68c42f76014c3db80b7b28" name="a3a809aea6e68c42f76014c3db80b7b28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a809aea6e68c42f76014c3db80b7b28">&#9670;&#160;</a></span>swap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline void <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::swap </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&lt; Base &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>network</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Swaps the contents of this network with another network. </p>
+<p>This method exchanges the network address, netmask, and prefix length with those of another ip network object.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">network</td><td>The other ip network object to swap contents with. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a1b111204d8585f7be66984ce554c3d6f" name="a1b111204d8585f7be66984ce554c3d6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b111204d8585f7be66984ce554c3d6f">&#9670;&#160;</a></span>hash()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline size_t <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::hash </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calculates a hash value for the network. </p>
+<p>This method computes a hash value for the network, which can be used for storing the object in hash-based containers.</p>
+<dl class="section return"><dt>Returns</dt><dd>A size_t value representing the hash of the network. </dd></dl>
+
+</div>
+</div>
+<a id="a8a5699b4af54ebd3fbc742b68bc7ff36" name="a8a5699b4af54ebd3fbc742b68bc7ff36"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a5699b4af54ebd3fbc742b68bc7ff36">&#9670;&#160;</a></span>network_address()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline const <a class="el" href="#ad4a474aa73d6545412e6c32746a41891">ip_address_type</a> &amp; <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::network_address </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the network address of this network. </p>
+<p>This method returns the network address component of the ip network object.</p>
+<dl class="section return"><dt>Returns</dt><dd>A reference to the network address. </dd></dl>
+
+</div>
+</div>
+<a id="a05245a57788e9aa6cff79f3c32cf1d63" name="a05245a57788e9aa6cff79f3c32cf1d63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05245a57788e9aa6cff79f3c32cf1d63">&#9670;&#160;</a></span>broadcast_address()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline <a class="el" href="#ad4a474aa73d6545412e6c32746a41891">ip_address_type</a> <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::broadcast_address </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the broadcast address of this network. </p>
+<p>The broadcast address is the last address in the network and is used to communicate with all hosts on this network.</p>
+<dl class="section return"><dt>Returns</dt><dd>The broadcast address of the network as an ip address object. </dd></dl>
+
+</div>
+</div>
+<a id="aaf58ded4549b03ffbbc16a4426b73d56" name="aaf58ded4549b03ffbbc16a4426b73d56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf58ded4549b03ffbbc16a4426b73d56">&#9670;&#160;</a></span>netmask()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline const <a class="el" href="#ad4a474aa73d6545412e6c32746a41891">ip_address_type</a> &amp; <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::netmask </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the netmask of this network. </p>
+<p>This method returns the netmask of the network. The netmask is used to determine which portion of an IP address is the network portion and which is the host portion.</p>
+<dl class="section return"><dt>Returns</dt><dd>A reference to the netmask as an ip address object. </dd></dl>
+
+</div>
+</div>
+<a id="a32a954c923ac5232a8ec2dc72efc5f54" name="a32a954c923ac5232a8ec2dc72efc5f54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32a954c923ac5232a8ec2dc72efc5f54">&#9670;&#160;</a></span>hostmask()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline <a class="el" href="#ad4a474aa73d6545412e6c32746a41891">ip_address_type</a> <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::hostmask </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the hostmask of this network. </p>
+<p>The hostmask identifies the portion of the IP address that is allocated for host identifiers.</p>
+<dl class="section return"><dt>Returns</dt><dd>The hostmask of the network as an ip address object. </dd></dl>
+
+</div>
+</div>
+<a id="a37dae43b045632cd052c3c1ae904558c" name="a37dae43b045632cd052c3c1ae904558c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37dae43b045632cd052c3c1ae904558c">&#9670;&#160;</a></span>prefixlen()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline size_t <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::prefixlen </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the prefix length of this network. </p>
+<p>This method returns the prefix length of the network. The prefix length is the number of bits in the network address portion of the IP address and is used to calculate the netmask.</p>
+<dl class="section return"><dt>Returns</dt><dd>The prefix length of the network as a size_t value. </dd></dl>
+
+</div>
+</div>
+<a id="aecbb6efe6a9390b75134513898c8c12f" name="aecbb6efe6a9390b75134513898c8c12f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aecbb6efe6a9390b75134513898c8c12f">&#9670;&#160;</a></span>is_multicast()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline bool <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::is_multicast </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if the network is a multicast network. </p>
+<p>This method determines whether the network is a multicast network by checking if both the network address and the broadcast address are multicast addresses.</p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the network is multicast, <code>false</code> otherwise. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://datatracker.ietf.org/doc/html/rfc3171.html">RFC 3171</a> for IPv4. </dd>
+<dd>
+<a href="https://datatracker.ietf.org/doc/html/rfc2373.html">RFC 2373</a> for IPv6. </dd></dl>
+
+</div>
+</div>
+<a id="aaf2b49ded5cfa694c6a10fe005a134c5" name="aaf2b49ded5cfa694c6a10fe005a134c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf2b49ded5cfa694c6a10fe005a134c5">&#9670;&#160;</a></span>is_private()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline bool <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::is_private </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if the network is a private network. </p>
+<p>This method determines whether the network is a private network. Private networks are not routed on the global internet.</p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the network is private, <code>false</code> otherwise. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml">iana-ipv4-special-registry</a>. </dd>
+<dd>
+<a href="https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml">iana-ipv6-special-registry</a>. </dd></dl>
+
+</div>
+</div>
+<a id="a0c6de785de6de0dc9c9a8adad046890b" name="a0c6de785de6de0dc9c9a8adad046890b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c6de785de6de0dc9c9a8adad046890b">&#9670;&#160;</a></span>is_global()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline bool <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::is_global </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if the network is a global network. </p>
+<p>This method determines whether the network is a global network. Global networks are routable on the internet and are not private.</p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the network is global, <code>false</code> otherwise. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml">iana-ipv4-special-registry</a>. </dd>
+<dd>
+<a href="https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml">iana-ipv6-special-registry</a>. </dd></dl>
+
+</div>
+</div>
+<a id="ab17c2212bcc3f09cc17a4dcc4ae34b5b" name="ab17c2212bcc3f09cc17a4dcc4ae34b5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab17c2212bcc3f09cc17a4dcc4ae34b5b">&#9670;&#160;</a></span>is_reserved()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline bool <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::is_reserved </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if the network is a reserved network. </p>
+<p>This method determines whether the network is reserved by checking if both the network address and the broadcast address are reserved addresses.</p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the network is reserved, <code>false</code> otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a35468d0f919b04ac2b446b16f45db7ae" name="a35468d0f919b04ac2b446b16f45db7ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35468d0f919b04ac2b446b16f45db7ae">&#9670;&#160;</a></span>is_loopback()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline bool <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::is_loopback </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if the network is a loopback network. </p>
+<p>This method determines whether the network is a loopback network by checking if both the network address and the broadcast address are loopback addresses.</p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the network is loopback, <code>false</code> otherwise. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://datatracker.ietf.org/doc/html/rfc3330.html">RFC 3330</a> for IPv4. </dd>
+<dd>
+<a href="https://datatracker.ietf.org/doc/html/rfc2373.html">RFC 2373</a> for IPv6. </dd></dl>
+
+</div>
+</div>
+<a id="ab4c489c28534bff8b3c0cc3fbc289122" name="ab4c489c28534bff8b3c0cc3fbc289122"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4c489c28534bff8b3c0cc3fbc289122">&#9670;&#160;</a></span>is_link_local()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline bool <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::is_link_local </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if the network is a link-local network. </p>
+<p>This method determines whether the network is a link-local network by checking if both the network address and the broadcast address are link-local addresses.</p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the network is link-local, <code>false</code> otherwise. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://datatracker.ietf.org/doc/html/rfc3927.html">RFC 3927</a>. </dd></dl>
+
+</div>
+</div>
+<a id="a14e2f45ba37d31b05a4681e7fb928959" name="a14e2f45ba37d31b05a4681e7fb928959"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14e2f45ba37d31b05a4681e7fb928959">&#9670;&#160;</a></span>is_unspecified()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline bool <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::is_unspecified </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if the network is an unspecified network. </p>
+<p>This method determines whether the network is unspecified by checking if both the network address and the broadcast address are unspecified addresses.</p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the network is unspecified, <code>false</code> otherwise. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://datatracker.ietf.org/doc/html/rfc5735.html">RFC 5735</a> for IPv4. </dd>
+<dd>
+<a href="https://datatracker.ietf.org/doc/html/rfc2373.html">RFC 2373</a> for IPv6. </dd></dl>
+
+</div>
+</div>
+<a id="ac7490b0e8e2f2224b2eb7ca2b47efc64" name="ac7490b0e8e2f2224b2eb7ca2b47efc64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7490b0e8e2f2224b2eb7ca2b47efc64">&#9670;&#160;</a></span>addresses_count()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline <a class="el" href="#ae6ac27da83ce4ccb26c8c86227079a29">uint_type</a> <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::addresses_count </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Calculates the total number of addresses in the network. </p>
+<dl class="section return"><dt>Returns</dt><dd>The total number of addresses in the network as a uint_type value. </dd></dl>
+
+</div>
+</div>
+<a id="a272cfac702ba39637feccf1ee1671334" name="a272cfac702ba39637feccf1ee1671334"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a272cfac702ba39637feccf1ee1671334">&#9670;&#160;</a></span>hosts()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline hosts_sequence&lt; <a class="el" href="#ad4a474aa73d6545412e6c32746a41891">ip_address_type</a> &gt; <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::hosts </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves a sequence of host addresses in the network. </p>
+<p>This method returns a sequence of host addresses within the network, excluding the network and broadcast addresses.</p>
+<div class="fragment"><div class="line"><span class="keyword">constexpr</span> <span class="keyword">auto</span> hosts_sequence = <a class="code hl_function" href="#a8489e6b960705d187197f6e3f198b4d4">ipv4_network::parse</a>(<span class="stringliteral">&quot;192.0.2.0/29&quot;</span>).<a class="code hl_function" href="#a272cfac702ba39637feccf1ee1671334">hosts</a>();</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; addr : hosts_sequence) {</div>
+<div class="line">   std::cout &lt;&lt; addr &lt;&lt; std::endl;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// out:</span></div>
+<div class="line"><span class="comment">// 192.0.2.1</span></div>
+<div class="line"><span class="comment">// 192.0.2.2</span></div>
+<div class="line"><span class="comment">// 192.0.2.3</span></div>
+<div class="line"><span class="comment">// 192.0.2.4</span></div>
+<div class="line"><span class="comment">// 192.0.2.5</span></div>
+<div class="line"><span class="comment">// 192.0.2.6</span></div>
+<div class="ttc" id="aclassipaddress_1_1ip__network__base_html_a272cfac702ba39637feccf1ee1671334"><div class="ttname"><a href="#a272cfac702ba39637feccf1ee1671334">ipaddress::ip_network_base::hosts</a></div><div class="ttdeci">constexpr inline hosts_sequence&lt; ip_address_type &gt; hosts() const noexcept</div><div class="ttdoc">Retrieves a sequence of host addresses in the network.</div><div class="ttdef"><b>Definition</b> ip-network-base.hpp:819</div></div>
+</div><!-- fragment --> <dl class="section return"><dt>Returns</dt><dd>A <code>hosts_sequence</code> object representing the sequence of host addresses. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">Ipv4</td><td>The usable hosts are all the IP addresses that belong to the network, except the network address itself and the network broadcast address. For networks with a mask length of 31, the network address and network broadcast address are also included in the result. Networks with a mask of 32 will return a list containing the single host address. </td></tr>
+    <tr><td class="paramname">Ipv6</td><td>The usable hosts are all the IP addresses that belong to the network, except the Subnet-Router anycast address. For networks with a mask length of 127, the Subnet-Router anycast address is also included in the result. Networks with a mask of 128 will return a list containing the single host address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section warning"><dt>Warning</dt><dd>Please note that with IPv6, the number of addresses can be so large that iterating through them all may be practically impossible. Therefore, use the <a class="el" href="#a272cfac702ba39637feccf1ee1671334" title="Retrieves a sequence of host addresses in the network.">hosts()</a> method cautiously to avoid endlessly retrieving addresses. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd><code>hosts_sequence</code> uses lazy evaluation to iterate addresses. </dd></dl>
+
+</div>
+</div>
+<a id="ace1cd360d70af716aef6ddedb8a4d517" name="ace1cd360d70af716aef6ddedb8a4d517"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace1cd360d70af716aef6ddedb8a4d517">&#9670;&#160;</a></span>address_exclude() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline exclude_network_sequence&lt; <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&lt; Base &gt; &gt; <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::address_exclude </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&lt; Base &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the network definitions resulting from removing the given network from this one. </p>
+<div class="fragment"><div class="line"><span class="keyword">constexpr</span> <span class="keyword">auto</span> a = <a class="code hl_function" href="#a8489e6b960705d187197f6e3f198b4d4">ipv4_network::parse</a>(<span class="stringliteral">&quot;192.0.2.0/28&quot;</span>);</div>
+<div class="line"><span class="keyword">constexpr</span> <span class="keyword">auto</span> b = <a class="code hl_function" href="#a8489e6b960705d187197f6e3f198b4d4">ipv4_network::parse</a>(<span class="stringliteral">&quot;192.0.2.1/32&quot;</span>);</div>
+<div class="line"><span class="keyword">constexpr</span> <span class="keyword">auto</span> exclude_sequence = a.address_exclude(b);</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; net : exclude_sequence) {</div>
+<div class="line">   std::cout &lt;&lt; net &lt;&lt; std::endl;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// out:</span></div>
+<div class="line"><span class="comment">// 192.0.2.8/29</span></div>
+<div class="line"><span class="comment">// 192.0.2.4/30</span></div>
+<div class="line"><span class="comment">// 192.0.2.2/31</span></div>
+<div class="line"><span class="comment">// 192.0.2.0/32</span></div>
+</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The other network to exclude from this network. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An <code>exclude_network_sequence</code> object representing the remaining address ranges. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classipaddress_1_1logic__error.html" title="Exception for logical errors in IP address operations.">logic_error</a></td><td>Raise if network is not completely contained in this network. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section remark"><dt>Remarks</dt><dd><code>exclude_network_sequence</code> uses lazy evaluation to iterate networks. </dd></dl>
+
+</div>
+</div>
+<a id="a6e8e9b14ec6cf397ed24bc2243de4993" name="a6e8e9b14ec6cf397ed24bc2243de4993"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e8e9b14ec6cf397ed24bc2243de4993">&#9670;&#160;</a></span>address_exclude() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline exclude_network_sequence&lt; <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&lt; Base &gt; &gt; <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::address_exclude </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&lt; Base &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>other</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>code</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes the network definitions resulting from removing the given network from this one, with error handling. </p>
+<div class="fragment"><div class="line"><span class="keyword">constexpr</span> <span class="keyword">auto</span> a = <a class="code hl_function" href="#a8489e6b960705d187197f6e3f198b4d4">ipv4_network::parse</a>(<span class="stringliteral">&quot;192.0.2.0/28&quot;</span>);</div>
+<div class="line"><span class="keyword">constexpr</span> <span class="keyword">auto</span> b = <a class="code hl_function" href="#a8489e6b960705d187197f6e3f198b4d4">ipv4_network::parse</a>(<span class="stringliteral">&quot;192.0.2.1/32&quot;</span>);</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">auto</span> err = <a class="code hl_enumvalue" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faad306b6fdee05fe87455110ddf6501e6c">error_code::NO_ERROR</a>;</div>
+<div class="line"><span class="keyword">auto</span> exclude_sequence = a.address_exclude(b, err);</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">if</span> (err == <a class="code hl_enumvalue" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faad306b6fdee05fe87455110ddf6501e6c">error_code::NO_ERROR</a>) {</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; net : exclude_sequence) {</div>
+<div class="line">       std::cout &lt;&lt; net &lt;&lt; std::endl;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// out:</span></div>
+<div class="line"><span class="comment">// 192.0.2.8/29</span></div>
+<div class="line"><span class="comment">// 192.0.2.4/30</span></div>
+<div class="line"><span class="comment">// 192.0.2.2/31</span></div>
+<div class="line"><span class="comment">// 192.0.2.0/32</span></div>
+<div class="ttc" id="anamespaceipaddress_html_acd1015a989b2b9e45fe6d0faa3e9a0faad306b6fdee05fe87455110ddf6501e6c"><div class="ttname"><a href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faad306b6fdee05fe87455110ddf6501e6c">ipaddress::error_code::NO_ERROR</a></div><div class="ttdeci">@ NO_ERROR</div><div class="ttdoc">Indicates the absence of any errors.</div></div>
+</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The other network to exclude from this network. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>An error_code object that will be set if an error occurs during the operation. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An <code>exclude_network_sequence</code> object representing the remaining address ranges, or an empty sequence if an error occurs. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd><code>exclude_network_sequence</code> uses lazy evaluation to iterate networks. </dd></dl>
+
+</div>
+</div>
+<a id="ac088d282e97fbf51c01bcae5a8ff56b6" name="ac088d282e97fbf51c01bcae5a8ff56b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac088d282e97fbf51c01bcae5a8ff56b6">&#9670;&#160;</a></span>subnets() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline subnets_sequence&lt; <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&lt; Base &gt; &gt; <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::subnets </td>
+          <td>(</td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>prefixlen_diff</em><span class="paramdefsep"> = </span><span class="paramdefval">1</span>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classipaddress_1_1optional.html">optional</a>&lt; size_t &gt;</td>          <td class="paramname"><span class="paramname"><em>new_prefixlen</em><span class="paramdefsep"> = </span><span class="paramdefval">nullptr</span></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Generates a sequence of subnets from this network. </p>
+<p>The subnets that join to make the current network definition, depending on the argument values. prefixlen_diff is the amount our prefix length should be increased by. new_prefix is the desired new prefix of the subnets; it must be larger than our prefix. One and only one of prefixlen_diff and new_prefix must be set.</p>
+<div class="fragment"><div class="line"><span class="keyword">constexpr</span> <span class="keyword">auto</span> subnets_sequence = <a class="code hl_function" href="#a8489e6b960705d187197f6e3f198b4d4">ipv4_network::parse</a>(<span class="stringliteral">&quot;192.0.2.0/24&quot;</span>).<a class="code hl_function" href="#ac088d282e97fbf51c01bcae5a8ff56b6">subnets</a>(2);</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; net : subnets_sequence) {</div>
+<div class="line">   std::cout &lt;&lt; net &lt;&lt; std::endl;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// out:</span></div>
+<div class="line"><span class="comment">// 192.0.2.0/26</span></div>
+<div class="line"><span class="comment">// 192.0.2.64/26</span></div>
+<div class="line"><span class="comment">// 192.0.2.128/26</span></div>
+<div class="line"><span class="comment">// 192.0.2.192/26</span></div>
+<div class="ttc" id="aclassipaddress_1_1ip__network__base_html_ac088d282e97fbf51c01bcae5a8ff56b6"><div class="ttname"><a href="#ac088d282e97fbf51c01bcae5a8ff56b6">ipaddress::ip_network_base::subnets</a></div><div class="ttdeci">constexpr inline subnets_sequence&lt; ip_network_base&lt; Base &gt; &gt; subnets(size_t prefixlen_diff=1, optional&lt; size_t &gt; new_prefixlen=nullptr) const</div><div class="ttdoc">Generates a sequence of subnets from this network.</div><div class="ttdef"><b>Definition</b> ip-network-base.hpp:930</div></div>
+</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">prefixlen_diff</td><td>The difference in prefix length for the subnets. <em>Defaults to 1</em>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">new_prefixlen</td><td>An optional new prefix length for the subnets. If not specified, the prefix length is determined by adding prefixlen_diff to the current prefix length. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A <code>subnets_sequence</code> object representing the sequence of subnets. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classipaddress_1_1logic__error.html" title="Exception for logical errors in IP address operations.">logic_error</a></td><td>Raised if the operation cannot be performed due to invalid parameters or prefix length. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section remark"><dt>Remarks</dt><dd><code>subnets_sequence</code> uses lazy evaluation to iterate over the subnets. </dd></dl>
+
+</div>
+</div>
+<a id="aa017a85594d7601bc9426405eb13b222" name="aa017a85594d7601bc9426405eb13b222"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa017a85594d7601bc9426405eb13b222">&#9670;&#160;</a></span>subnets() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Base &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline subnets_sequence&lt; <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&lt; Base &gt; &gt; <a class="el" href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a>&lt; Base &gt;::subnets </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>code</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>prefixlen_diff</em><span class="paramdefsep"> = </span><span class="paramdefval">1</span>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classipaddress_1_1optional.html">optional</a>&lt; size_t &gt;</td>          <td class="paramname"><span class="paramname"><em>new_prefixlen</em><span class="paramdefsep"> = </span><span class="paramdefval">nullptr</span></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Generates a sequence of subnets from this network with error handling. </p>
+<p>The subnets that join to make the current network definition, depending on the argument values. prefixlen_diff is the amount our prefix length should be increased by. new_prefix is the desired new prefix of the subnets; it must be larger than our prefix. One and only one of prefixlen_diff and new_prefix must be set.</p>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> err = <a class="code hl_enumvalue" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faad306b6fdee05fe87455110ddf6501e6c">error_code::NO_ERROR</a>;</div>
+<div class="line"><span class="keyword">auto</span> subnets_sequence = <a class="code hl_function" href="#a8489e6b960705d187197f6e3f198b4d4">ipv4_network::parse</a>(<span class="stringliteral">&quot;192.0.2.0/24&quot;</span>).<a class="code hl_function" href="#ac088d282e97fbf51c01bcae5a8ff56b6">subnets</a>(err, 2);</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">if</span> (err == <a class="code hl_enumvalue" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0faad306b6fdee05fe87455110ddf6501e6c">error_code::NO_ERROR</a>) {</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; net : subnets_sequence) {</div>
+<div class="line">       std::cout &lt;&lt; net &lt;&lt; std::endl;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// out:</span></div>
+<div class="line"><span class="comment">// 192.0.2.0/26</span></div>
+<div class="line"><span class="comment">// 192.0.2.64/26</span></div>
+<div class="line"><span class="comment">// 192.0.2.128/26</span></div>
+<div class="line"><span class="comment">// 192.0.2.192/26</span></div>
+</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>An error_code object that will be set if an error occurs during the operation. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">prefixlen_diff</td><td>The difference in prefix length for the subnets. <em>Defaults to 1</em>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">new_prefixlen</td><td>An optional new prefix length for the subnets. If not specified, the prefix length is determined by adding prefixlen_diff to the current prefix length. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A <code>subnets_sequence</code> object representing the sequence of subnets, or an empty sequence if an error occurs. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd><code>subnets_sequence</code> uses lazy evaluation to iterate over the subnets. </dd></dl>
 
 </div>
 </div>

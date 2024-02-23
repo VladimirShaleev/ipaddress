@@ -50,5 +50,6 @@ var searchData=
   ['operator_7c_7c_47',['operator||',['../classipaddress_1_1uint128__t.html#aff8e10bd8d3d4323afd65b6118a29855',1,'ipaddress::uint128_t']]],
   ['operator_7e_48',['operator~',['../classipaddress_1_1uint128__t.html#a126c124c3dc41bc7772446dcef8e145e',1,'ipaddress::uint128_t']]],
   ['optional_49',['optional',['../classipaddress_1_1optional.html',1,'ipaddress::optional&lt; T &gt;'],['../classipaddress_1_1optional.html#a309c1a24c14a3ad51cb4a5601e18e271',1,'ipaddress::optional::optional() noexcept=default'],['../classipaddress_1_1optional.html#a0f9524f8d3cab12a35ee86999910014a',1,'ipaddress::optional::optional(std::nullptr_t) noexcept'],['../classipaddress_1_1optional.html#ab026b34ed8c6f80f655e79d35cf71f78',1,'ipaddress::optional::optional(value_type &amp;&amp;val) noexcept'],['../classipaddress_1_1optional.html#af08ea15254a7adb77e090c20655ad844',1,'ipaddress::optional::optional(const optional&lt; T &gt; &amp;opt) noexcept']]],
-  ['optional_2ehpp_50',['optional.hpp',['../optional_8hpp.html',1,'']]]
+  ['optional_2ehpp_50',['optional.hpp',['../optional_8hpp.html',1,'']]],
+  ['overlaps_51',['overlaps',['../classipaddress_1_1ip__network__base.html#a696923e16865077f6952eb02eec6a53a',1,'ipaddress::ip_network_base']]]
 ];

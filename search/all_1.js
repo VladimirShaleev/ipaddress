@@ -13,8 +13,9 @@ var searchData=
   ['base_5fv6_3c_20ipv6_5faddress_5fbase_20_3e_10',['base_v6&lt; ipv6_address_base &gt;',['../classipaddress_1_1base__v6.html',1,'ipaddress']]],
   ['base_5fv6_3c_20ipv6_5fnetwork_5fbase_20_3e_11',['base_v6&lt; ipv6_network_base &gt;',['../classipaddress_1_1base__v6.html',1,'ipaddress']]],
   ['begin_12',['begin',['../structipaddress_1_1byte__array.html#ada192d8442bbc3da36fafe52c842dad3',1,'ipaddress::byte_array::begin()'],['../structipaddress_1_1fixed__string.html#a10b181852d98e7265972777f262ed119',1,'ipaddress::fixed_string::begin()']]],
-  ['byte_2darray_2ehpp_13',['byte-array.hpp',['../byte-array_8hpp.html',1,'']]],
-  ['byte_5farray_14',['byte_array',['../structipaddress_1_1byte__array.html',1,'ipaddress']]],
-  ['byte_5farray_5ftype_15',['byte_array_type',['../namespaceipaddress.html#abb8d355871eb81f4f736353c99659800',1,'ipaddress']]],
-  ['bytes_16',['bytes',['../classipaddress_1_1ipv4__address__base.html#a242b51351b7b84ee389a1afc9ccefdc6',1,'ipaddress::ipv4_address_base::bytes()'],['../classipaddress_1_1ipv6__address__base.html#a1ef9075d6b1d2c843b68e7974f01c133',1,'ipaddress::ipv6_address_base::bytes()']]]
+  ['broadcast_5faddress_13',['broadcast_address',['../classipaddress_1_1ip__network__base.html#a05245a57788e9aa6cff79f3c32cf1d63',1,'ipaddress::ip_network_base']]],
+  ['byte_2darray_2ehpp_14',['byte-array.hpp',['../byte-array_8hpp.html',1,'']]],
+  ['byte_5farray_15',['byte_array',['../structipaddress_1_1byte__array.html',1,'ipaddress']]],
+  ['byte_5farray_5ftype_16',['byte_array_type',['../namespaceipaddress.html#abb8d355871eb81f4f736353c99659800',1,'ipaddress']]],
+  ['bytes_17',['bytes',['../classipaddress_1_1ipv4__address__base.html#a242b51351b7b84ee389a1afc9ccefdc6',1,'ipaddress::ipv4_address_base::bytes()'],['../classipaddress_1_1ipv6__address__base.html#a1ef9075d6b1d2c843b68e7974f01c133',1,'ipaddress::ipv6_address_base::bytes()']]]
 ];
