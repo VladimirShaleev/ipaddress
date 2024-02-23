@@ -443,8 +443,8 @@ public:
      * Checks if the IP address is a multicast address.
      * 
      * @return `true` if the IP address is reserved for multicast use, `false` otherwise.
-     * @see [RFC 3171 for IPv4](https://datatracker.ietf.org/doc/html/rfc3171.html).
-     * @see [RFC 2373 for IPv6](https://datatracker.ietf.org/doc/html/rfc2373.html).
+     * @see [RFC 3171](https://datatracker.ietf.org/doc/html/rfc3171.html) for IPv4.
+     * @see [RFC 2373](https://datatracker.ietf.org/doc/html/rfc2373.html) for IPv6.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_multicast() const IPADDRESS_NOEXCEPT;
 
@@ -477,8 +477,8 @@ public:
      * Checks if the IP address is a loopback address.
      * 
      * @return `true` if the IP address is a loopback address, `false` otherwise.
-     * @see [RFC 3330 for IPv4](https://datatracker.ietf.org/doc/html/rfc3330.html).
-     * @see [RFC 2373 for IPv6](https://datatracker.ietf.org/doc/html/rfc2373.html).
+     * @see [RFC 3330](https://datatracker.ietf.org/doc/html/rfc3330.html) for IPv4.
+     * @see [RFC 2373](https://datatracker.ietf.org/doc/html/rfc2373.html) for IPv6.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_loopback() const IPADDRESS_NOEXCEPT;
 
@@ -498,8 +498,8 @@ public:
      * This type of address is used to indicate the absence of an address.
      * 
      * @return `true` if the IP address is unspecified (all bits are zero), `false` otherwise.
-     * @see [RFC 5735 for IPv4](https://datatracker.ietf.org/doc/html/rfc5735.html).
-     * @see [RFC 2373 for IPv6](https://datatracker.ietf.org/doc/html/rfc2373.html).
+     * @see [RFC 5735](https://datatracker.ietf.org/doc/html/rfc5735.html) for IPv4.
+     * @see [RFC 2373](https://datatracker.ietf.org/doc/html/rfc2373.html) for IPv6.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_unspecified() const IPADDRESS_NOEXCEPT {
         const auto& b = Base::bytes();

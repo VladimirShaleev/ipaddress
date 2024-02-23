@@ -558,11 +558,10 @@ public:
     }
 
     /**
-     * Creates an IPv6 address from an unsigned integer.
+     * Converts the IPv6 address to an unsigned integer.
      * 
-     * @param[in] ip The unsigned integer representing the IPv6 address.
-     * @return An instance of ip address representing the IPv6 address.
-     * @remark Bytes in integer \a ip must be presented in **host byte order**.
+     * @return The unsigned integer representation of the IPv6 address.
+     * @remark Bytes in integer are presented in **host byte order**.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint_type to_uint() const IPADDRESS_NOEXCEPT {
         const auto& bytes = _data.bytes;
