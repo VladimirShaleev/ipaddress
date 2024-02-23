@@ -921,7 +921,7 @@ public:
      *   // 192.0.2.128/26
      *   // 192.0.2.192/26
      * @endcode
-     * @param[in] prefixlen_diff The difference in prefix length for the subnets. Defaults to 1.
+     * @param[in] prefixlen_diff The difference in prefix length for the subnets. *Defaults to 1*.
      * @param[in] new_prefixlen An optional new prefix length for the subnets. If not specified, the prefix length is determined by adding prefixlen_diff to the current prefix length.
      * @return A `subnets_sequence` object representing the sequence of subnets.
      * @throw logic_error Raised if the operation cannot be performed due to invalid parameters or prefix length.
@@ -941,6 +941,36 @@ public:
         return result;
     }
 
+    /**
+     * Generates a sequence of subnets from this network with error handling.
+     * 
+     * The subnets that join to make the current network definition, depending on the argument values. 
+     * prefixlen_diff is the amount our prefix length should be increased by. new_prefix is the desired 
+     * new prefix of the subnets; it must be larger than our prefix. One and only one of prefixlen_diff 
+     * and new_prefix must be set.
+     * 
+     * @code{.cpp}
+     *   auto err = error_code::NO_ERROR;
+     *   auto subnets_sequence = ipv4_network::parse("192.0.2.0/24").subnets(err, 2);
+     *   
+     *   if (err == error_code::NO_ERROR) {
+     *       for (const auto& net : subnets_sequence) {
+     *          std::cout << net << std::endl;
+     *       }
+     *   }
+     * 
+     *   // out:
+     *   // 192.0.2.0/26
+     *   // 192.0.2.64/26
+     *   // 192.0.2.128/26
+     *   // 192.0.2.192/26
+     * @endcode
+     * @param[out] code An error_code object that will be set if an error occurs during the operation.
+     * @param[in] prefixlen_diff The difference in prefix length for the subnets. *Defaults to 1*.
+     * @param[in] new_prefixlen An optional new prefix length for the subnets. If not specified, the prefix length is determined by adding prefixlen_diff to the current prefix length.
+     * @return A `subnets_sequence` object representing the sequence of subnets, or an empty sequence if an error occurs.
+     * @remark `subnets_sequence` uses lazy evaluation to iterate over the subnets.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_sequence<ip_network_base<Base>> subnets(error_code& code, size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT {
         auto address = Base::remove_scope_id(network_address());
 
