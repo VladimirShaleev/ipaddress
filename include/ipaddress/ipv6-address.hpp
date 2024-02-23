@@ -594,7 +594,7 @@ public:
      * Determines if the IPv6 address is an IPv4-mapped address.
      * 
      * @return An `optional` containing the mapped IPv4 address if the IPv6 address is IPv4-mapped, or an empty `optional` otherwise.
-     * @remark An IPv4-mapped IPv6 address has its first 80 bits set to zero and the next 16 bits set to one (starting with ::FFFF/96).
+     * @remark An IPv4-mapped IPv6 address has its first 80 bits set to zero and the next 16 bits set to one (starting with `::FFFF/96`).
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<ipv4_address> ipv4_mapped() const IPADDRESS_NOEXCEPT {
         const auto& b = bytes();
