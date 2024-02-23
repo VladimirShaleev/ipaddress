@@ -622,7 +622,15 @@ public:
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const ip_address_type& network_address() const IPADDRESS_NOEXCEPT {
         return _network_address;
     }
-    
+        
+    /**
+     * Retrieves the broadcast address of this network.
+     * 
+     * The broadcast address is the last address in the network and is used to communicate 
+     * with all hosts on this network.
+     * 
+     * @return The broadcast address of the network as an ip address object.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_type broadcast_address() const IPADDRESS_NOEXCEPT {
         typename ip_address_type::base_type bytes {};
         const auto& network_address_bytes = network_address().bytes();
@@ -633,10 +641,25 @@ public:
         return ip_address_type(bytes);
     }
     
+    /**
+     * Retrieves the netmask of this network.
+     * 
+     * This method returns the netmask of the network. The netmask is used to determine
+     * which portion of an IP address is the network portion and which is the host portion.
+     * 
+     * @return A reference to the netmask as an ip address object.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const ip_address_type& netmask() const IPADDRESS_NOEXCEPT {
         return _netmask;
     }
     
+    /**
+     * Retrieves the hostmask of this network.
+     * 
+     * The hostmask identifies the portion of the IP address that is allocated for host identifiers.
+     * 
+     * @return The hostmask of the network as an ip address object.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_type hostmask() const IPADDRESS_NOEXCEPT {
         const auto& netmask_bytes = netmask().bytes();
         typename ip_address_type::base_type bytes {};
@@ -646,6 +669,14 @@ public:
         return ip_address_type(bytes);
     }
     
+    /**
+     * Retrieves the prefix length of this network.
+     * 
+     * This method returns the prefix length of the network. The prefix length is the number
+     * of bits in the network address portion of the IP address and is used to calculate the netmask.
+     * 
+     * @return The prefix length of the network as a size_t value.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t prefixlen() const IPADDRESS_NOEXCEPT {
         return _prefixlen;
     }
