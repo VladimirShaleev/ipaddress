@@ -28,7 +28,6 @@ else()
   )
 
   add_custom_target(doc ALL DEPENDS html)
-  install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html
-    DESTINATION ${IPADDRESS_DOC_INSTALL_DIR}
-    COMPONENT doc)
+  
+  install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html DESTINATION doc COMPONENT doc)
 endif()
