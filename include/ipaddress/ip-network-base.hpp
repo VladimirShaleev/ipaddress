@@ -260,54 +260,105 @@ public:
 
 #else // IPADDRESS_CPP_VERSION < 17
 
+    /**
+     * Parses a network address and prefix from a `std::string`.
+     * 
+     * @param[in] address The `std::string` representing the IP network in "address/prefix" format.
+     * @param[in] strict A boolean flag indicating whether to perform strict validation of the address.
+     * @return An ip network object representing the parsed network.
+     * @throw parse_error Exception caused by invalid input string.
+     */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static ip_network_base parse(const std::string& address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return parse_address_with_prefix(address, strict);
     }
 
+    /**
+     * Parses a network address and prefix from a `std::wstring`.
+     * 
+     * @param[in] address The `std::wstring` representing the IP network in "address/prefix" format.
+     * @param[in] strict A boolean flag indicating whether to perform strict validation of the address.
+     * @return An ip network object representing the parsed network.
+     * @throw parse_error Exception caused by invalid input string.
+     */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static ip_network_base parse(const std::wstring& address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return parse_address_with_prefix(address, strict);
     }
 
+    /**
+     * Parses a network address and prefix from a `std::u16string`.
+     * 
+     * @param[in] address The `std::u16string` representing the IP network in "address/prefix" format.
+     * @param[in] strict A boolean flag indicating whether to perform strict validation of the address.
+     * @return An ip network object representing the parsed network.
+     * @throw parse_error Exception caused by invalid input string.
+     */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static ip_network_base parse(const std::u16string& address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return parse_address_with_prefix(address, strict);
     }
 
+    /**
+     * Parses a network address and prefix from a `std::u32string`.
+     * 
+     * @param[in] address The `std::u32string` representing the IP network in "address/prefix" format.
+     * @param[in] strict A boolean flag indicating whether to perform strict validation of the address.
+     * @return An ip network object representing the parsed network.
+     * @throw parse_error Exception caused by invalid input string.
+     */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static ip_network_base parse(const std::u32string& address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return parse_address_with_prefix(address, strict);
     }
 
+    /**
+     * Parses a network address and prefix from a `std::string` and reports errors through an error code.
+     * 
+     * @param[in] address The `std::string` representing the IP network in "address/prefix" format.
+     * @param[out] code An error_code object that will be set if an error occurs during parsing.
+     * @param[in] strict A boolean flag indicating whether to perform strict validation of the address.
+     * @return An ip network object representing the parsed network.
+     */
     static ip_network_base parse(const std::string& address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
         auto index = 0;
         return parse_address_with_prefix(address, strict, code, index);
     }
 
+    /**
+     * Parses a network address and prefix from a `std::wstring` and reports errors through an error code.
+     * 
+     * @param[in] address The `std::wstring` representing the IP network in "address/prefix" format.
+     * @param[out] code An error_code object that will be set if an error occurs during parsing.
+     * @param[in] strict A boolean flag indicating whether to perform strict validation of the address.
+     * @return An ip network object representing the parsed network.
+     */
     static ip_network_base parse(const std::wstring& address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
         auto index = 0;
         return parse_address_with_prefix(address, strict, code, index);
     }
 
+    /**
+     * Parses a network address and prefix from a `std::u16string` and reports errors through an error code.
+     * 
+     * @param[in] address The `std::u16string` representing the IP network in "address/prefix" format.
+     * @param[out] code An error_code object that will be set if an error occurs during parsing.
+     * @param[in] strict A boolean flag indicating whether to perform strict validation of the address.
+     * @return An ip network object representing the parsed network.
+     */
     static ip_network_base parse(const std::u16string& address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
         auto index = 0;
         return parse_address_with_prefix(address, strict, code, index);
     }
 
+    /**
+     * Parses a network address and prefix from a `std::u32string` and reports errors through an error code.
+     * 
+     * @param[in] address The `std::u32string` representing the IP network in "address/prefix" format.
+     * @param[out] code An error_code object that will be set if an error occurs during parsing.
+     * @param[in] strict A boolean flag indicating whether to perform strict validation of the address.
+     * @return An ip network object representing the parsed network.
+     */
     static ip_network_base parse(const std::u32string& address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
         auto index = 0;
         return parse_address_with_prefix(address, strict, code, index);
     }
-
-#if __cpp_char8_t >= 201811L
-
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static ip_network_base parse(const std::u8string& address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        return parse_address_with_prefix(address, strict);
-    }
-
-    static ip_network_base parse(const std::u8string& address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
-        auto index = 0;
-        return parse_address_with_prefix(address, strict, code, index);
-    }
-
-#endif // __cpp_char8_t
 
 #endif // IPADDRESS_CPP_VERSION < 17
 
