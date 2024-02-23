@@ -472,6 +472,26 @@ public:
         return result;
     }
 
+    /**
+     * Checks if the given IP address is contained within this network.
+     * 
+     * This method determines whether the provided IP address is part of the network
+     * represented by this ip network object, based on the network address and netmask.
+     * 
+     * @code{.cpp}
+     *   constexpr auto result1 = ipv4_network::parse("192.0.2.0/28").contains(ipv4_address::parse("192.0.2.6"));
+     *   constexpr auto result2 = ipv4_network::parse("192.0.2.0/28").contains(ipv4_address::parse("192.0.3.6"));
+     * 
+     *   std::cout << std::boolalpha << result1 << std::endl;
+     *   std::cout << std::boolalpha << result2 << std::endl;
+     * 
+     *   // out:
+     *   // true
+     *   // false
+     * @endcode
+     * @param[in] address The IP address to check.
+     * @return `true` if the address is part of the network, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool contains(const ip_address_type& address) const IPADDRESS_NOEXCEPT {
         const auto& ip_bytes = address.bytes();
         const auto& address_bytes = network_address().bytes();
@@ -485,22 +505,93 @@ public:
         return true;
     }
 
+    /**
+     * Determines if this network overlaps with another network.
+     * 
+     * This method checks if there is any overlap between the network represented by this
+     * ip network object and another network, meaning if any part of one network lies within the other.
+     * 
+     * @code{.cpp}
+     *   constexpr auto overlaps = ipv4_network::parse("1.2.3.0/24").overlaps(ipv4_network::parse("1.2.3.0/30"));
+     *   std::cout << std::boolalpha << overlaps << std::endl;
+     * 
+     *   // out:
+     *   // true
+     * @endcode
+     * @param[in] other The other ip network object to compare with.
+     * @return `true` if there is an overlap, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool overlaps(const ip_network_base& other) const IPADDRESS_NOEXCEPT {
         return other.contains(network_address()) || other.contains(broadcast_address()) || contains(other.network_address()) || contains(other.broadcast_address());
     }
 
+    /**
+     * Checks if this network is a subnet of another network.
+     * 
+     * This method verifies if the network represented by this ip network object is a subnet
+     * of the provided network, meaning if this network is entirely contained within the other network.
+     * 
+     * @code{.cpp}
+     *   constexpr auto a = ipv4_network::parse("192.168.1.0/24");
+     *   constexpr auto b = ipv4_network::parse("192.168.1.128/30");
+     *   constexpr auto subnet_of = a.subnet_of(b);
+     * 
+     *   std::cout << std::boolalpha << subnet_of << std::endl;
+     * 
+     *   // out:
+     *   // false
+     * @endcode
+     * @param[in] other The other ip network object to compare with.
+     * @return `true` if this network is a subnet of the other network, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool subnet_of(const ip_network_base& other) const IPADDRESS_NOEXCEPT {
         return is_subnet_of(*this, other);
     }
 
+    /**
+     * Checks if this network is a supernet of another network.
+     * 
+     * This method determines if the network represented by this ip network object is a supernet
+     * of the provided network, meaning if the other network is entirely contained within this network.
+     * 
+     * @code{.cpp}
+     *   constexpr auto a = ipv4_network::parse("192.168.1.0/24");
+     *   constexpr auto b = ipv4_network::parse("192.168.1.128/30");
+     *   constexpr auto supernet_of = a.supernet_of(b);
+     * 
+     *   std::cout << std::boolalpha << supernet_of << std::endl;
+     * 
+     *   // out:
+     *   // true
+     * @endcode
+     * @param[in] other The other ip network object to compare with.
+     * @return True if this network is a supernet of the other network, false otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool supernet_of(const ip_network_base& other) const IPADDRESS_NOEXCEPT {
         return is_subnet_of(other, *this);
     }
 
+    /**
+     * Converts the network to a string representation.
+     * 
+     * This method returns a string representation of the network, combining the network address
+     * and the prefix length, formatted according to the specified format.
+     * 
+     * @param[in] fmt The format to use for the string representation. *Defaults to format::compressed*.
+     * @return A string representation of the network.
+     */
     IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string to_string(format fmt = format::compressed) const {
         return _network_address.to_string(fmt) + '/' + std::to_string(_prefixlen);
     }
 
+    /**
+     * Swaps the contents of this network with another network.
+     * 
+     * This method exchanges the network address, netmask, and prefix length with those of another
+     * ip network object.
+     * 
+     * @param[in,out] network The other ip network object to swap contents with.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void swap(ip_network_base& network) IPADDRESS_NOEXCEPT {
         _network_address.swap(network._network_address);
         _netmask.swap(network._netmask);
@@ -509,10 +600,25 @@ public:
         network._prefixlen = tmp;
     }
 
+    /**
+     * Calculates a hash value for the network.
+     * 
+     * This method computes a hash value for the network, which can be used for storing the
+     * object in hash-based containers.
+     * 
+     * @return A size_t value representing the hash of the network.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t hash() const IPADDRESS_NOEXCEPT {
         return calc_hash(_network_address.hash(), _netmask.hash());
     }
 
+    /**
+     * Retrieves the network address of this network.
+     * 
+     * This method returns the network address component of the ip network object.
+     * 
+     * @return A reference to the network address.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const ip_address_type& network_address() const IPADDRESS_NOEXCEPT {
         return _network_address;
     }
