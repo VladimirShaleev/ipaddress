@@ -1,0 +1,9 @@
+<map id="ipaddress::ipv4_address_base" name="ipaddress::ipv4_address_base">
+<area shape="rect" id="Node000001" title="Represents the base class for IPv4 address manipulation." alt="" coords="5,197,223,223"/>
+<area shape="rect" id="Node000004" href="$classipaddress_1_1ip__address__base.html" title=" " alt="" coords="7,272,221,312"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="117,236,117,272,111,272,111,236"/>
+<area shape="rect" id="Node000002" href="$classipaddress_1_1base__v4.html" title=" " alt="" coords="26,108,202,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="117,162,117,197,111,197,111,162"/>
+<area shape="rect" id="Node000003" href="$classipaddress_1_1base__v4.html" title="A template class providing the base functionality for IPv4 addresses." alt="" coords="41,5,187,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="117,59,117,108,111,108,111,59"/>
+</map>

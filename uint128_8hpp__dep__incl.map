@@ -1,0 +1,39 @@
+<map id="include/ipaddress/uint128.hpp" name="include/ipaddress/uint128.hpp">
+<area shape="rect" id="Node000001" title="Defines uint128_t, a portable 128&#45;bit unsigned integer type." alt="" coords="175,5,393,31"/>
+<area shape="rect" id="Node000002" href="$base-v6_8hpp.html" title="Adds basic functionality for working with IPv6." alt="" coords="199,79,369,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="287,44,287,79,281,79,281,44"/>
+<area shape="rect" id="Node000003" href="$ipv6-address_8hpp.html" title="Provides a set of functions and classes for handling IPv6 addresses." alt="" coords="200,167,368,207"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="287,133,287,166,281,166,281,133"/>
+<area shape="rect" id="Node000004" href="$ip-address-iterator_8hpp_source.html" title=" " alt="" coords="146,255,305,295"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="266,219,241,256,236,253,261,216"/>
+<area shape="rect" id="Node000008" href="$ipaddress_8hpp.html" title="The main include file for the ipaddress library." alt="" coords="163,695,394,720"/>
+<area shape="poly" id="edge23_Node000003_Node000008" title=" " alt="" coords="187,209,125,230,67,262,43,282,25,305,12,331,8,362,8,540,13,572,28,600,50,624,78,644,110,661,143,674,209,692,208,697,142,679,107,665,75,649,46,628,23,603,8,574,3,540,3,361,7,330,20,302,40,278,64,257,123,225,186,204"/>
+<area shape="rect" id="Node000010" href="$ipv6-network_8hpp_source.html" title=" " alt="" coords="235,519,403,559"/>
+<area shape="poly" id="edge24_Node000003_Node000010" title=" " alt="" coords="305,218,319,254,330,330,332,406,324,519,319,518,327,406,325,331,313,255,300,220"/>
+<area shape="rect" id="Node000013" href="$ip-any-address_8hpp.html" title="Contains logic for working with IP addresses." alt="" coords="483,431,635,471"/>
+<area shape="poly" id="edge19_Node000003_Node000013" title=" " alt="" coords="319,214,363,253,465,351,542,429,539,433,462,355,360,257,315,218"/>
+<area shape="rect" id="Node000005" href="$ip-network-base_8hpp_source.html" title=" " alt="" coords="57,431,209,471"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="174,304,152,322,136,344,129,366,126,389,131,430,126,431,121,389,123,364,131,341,148,318,170,300"/>
+<area shape="rect" id="Node000011" href="$ip-network-iterator_8hpp_source.html" title=" " alt="" coords="145,343,305,383"/>
+<area shape="poly" id="edge15_Node000004_Node000011" title=" " alt="" coords="228,309,228,342,223,342,223,309"/>
+<area shape="rect" id="Node000006" href="$ipv4-network_8hpp_source.html" title=" " alt="" coords="43,519,211,559"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="133,484,131,519,125,518,128,484"/>
+<area shape="poly" id="edge11_Node000005_Node000010" title=" " alt="" coords="188,474,279,516,277,521,185,479"/>
+<area shape="rect" id="Node000007" href="$ip-any-network_8hpp_source.html" title=" " alt="" coords="373,607,525,647"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="211,560,379,604,378,609,210,565"/>
+<area shape="poly" id="edge10_Node000006_Node000008" title=" " alt="" coords="123,573,124,610,128,628,137,645,152,662,171,675,213,692,211,697,168,679,149,666,132,648,123,630,118,611,118,573"/>
+<area shape="rect" id="Node000009" href="$ip-networks_8hpp_source.html" title=" " alt="" coords="147,607,299,647"/>
+<area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="160,566,203,604,200,608,157,570"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="397,655,305,697,303,692,395,650"/>
+<area shape="poly" id="edge9_Node000009_Node000008" title=" " alt="" coords="246,656,272,693,268,696,242,660"/>
+<area shape="poly" id="edge12_Node000010_Node000007" title=" " alt="" coords="360,564,422,604,419,609,357,568"/>
+<area shape="poly" id="edge14_Node000010_Node000008" title=" " alt="" coords="322,573,320,609,313,647,302,674,289,696,285,693,297,672,308,646,315,608,317,572"/>
+<area shape="poly" id="edge13_Node000010_Node000009" title=" " alt="" coords="289,570,246,608,242,604,285,566"/>
+<area shape="poly" id="edge18_Node000011_Node000005" title=" " alt="" coords="197,394,156,432,152,428,193,390"/>
+<area shape="rect" id="Node000012" href="$ip-any-iterator_8hpp_source.html" title=" " alt="" coords="427,519,579,559"/>
+<area shape="poly" id="edge16_Node000011_Node000012" title=" " alt="" coords="268,388,474,516,471,521,265,392"/>
+<area shape="poly" id="edge17_Node000012_Node000007" title=" " alt="" coords="486,572,463,608,459,605,481,569"/>
+<area shape="poly" id="edge21_Node000013_Node000007" title=" " alt="" coords="583,482,599,520,600,540,593,560,580,577,563,590,527,610,524,605,561,586,576,573,588,557,595,540,594,521,578,484"/>
+<area shape="poly" id="edge22_Node000013_Node000008" title=" " alt="" coords="591,479,604,497,615,518,619,539,615,559,601,590,586,612,567,631,539,649,505,667,468,680,395,698,394,693,466,675,502,662,536,644,563,626,582,609,597,588,609,558,614,539,609,520,600,500,587,482"/>
+<area shape="poly" id="edge20_Node000013_Node000012" title=" " alt="" coords="541,484,517,520,513,517,537,481"/>
+</map>

@@ -1,0 +1,63 @@
+<map id="include/ipaddress/ip&#45;any&#45;address.hpp" name="include/ipaddress/ip&#45;any&#45;address.hpp">
+<area shape="rect" id="Node000001" title="Contains logic for working with IP addresses." alt="" coords="649,5,801,45"/>
+<area shape="rect" id="Node000002" href="$ipv6-address_8hpp.html" title="Provides a set of functions and classes for handling IPv6 addresses." alt="" coords="658,93,793,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="728,46,728,79,723,79,723,46"/>
+<area shape="rect" id="Node000003" href="$ipv4-address_8hpp.html" title="Provides a set of functions and classes for handling IPv4 addresses." alt="" coords="614,240,749,265"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="724,119,709,167,691,228,686,226,704,166,719,118"/>
+<area shape="rect" id="Node000025" href="$base-v6_8hpp.html" title="Adds basic functionality for working with IPv6." alt="" coords="719,167,820,192"/>
+<area shape="poly" id="edge30_Node000002_Node000025" title=" " alt="" coords="735,118,757,154,753,156,730,120"/>
+<area shape="rect" id="Node000004" href="$base-v4_8hpp.html" title="Adds basic functionality for working with IPv4." alt="" coords="631,313,732,339"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="684,266,684,300,679,300,679,266"/>
+<area shape="rect" id="Node000005" href="$ip-address-base_8hpp.html" title="Provides basic functionality for IP addresses." alt="" coords="405,387,560,412"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="650,341,529,384,527,379,649,336"/>
+<area shape="rect" id="Node000024" href="$hash_8hpp.html" title="Algorithms for calculating hash sums." alt="" coords="746,460,827,485"/>
+<area shape="poly" id="edge28_Node000004_Node000024" title=" " alt="" coords="688,338,704,372,727,410,764,449,760,453,723,414,699,374,684,340"/>
+<area shape="rect" id="Node000006" href="$config_8hpp.html" title="Defines macros for library configuration." alt="" coords="487,533,577,559"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="507,410,535,430,558,459,563,475,561,492,550,522,545,520,556,491,557,476,554,461,532,434,504,414"/>
+<area shape="rect" id="Node000019" href="$errors_8hpp.html" title="Declares error codes and exceptions for IP address operations." alt="" coords="49,460,137,485"/>
+<area shape="poly" id="edge18_Node000005_Node000019" title=" " alt="" coords="417,415,151,462,150,457,416,409"/>
+<area shape="rect" id="Node000020" href="$endian_8hpp.html" title="Defines macros to determine byte order." alt="" coords="162,460,257,485"/>
+<area shape="poly" id="edge20_Node000005_Node000020" title=" " alt="" coords="439,415,267,459,266,454,438,409"/>
+<area shape="rect" id="Node000021" href="$optional_8hpp.html" title="Manages an optional contained value within a class template." alt="" coords="619,460,722,485"/>
+<area shape="poly" id="edge22_Node000005_Node000021" title=" " alt="" coords="514,410,628,452,626,457,512,415"/>
+<area shape="rect" id="Node000022" href="$byte-array_8hpp.html" title="Provides the byte_array template class for handling fixed&#45;size byte arrays." alt="" coords="281,460,397,485"/>
+<area shape="poly" id="edge24_Node000005_Node000022" title=" " alt="" coords="461,414,376,456,373,451,458,410"/>
+<area shape="rect" id="Node000023" href="$fixed-string_8hpp.html" title="Provides a template for a fixed&#45;length string suitable for use in non&#45;type template parameters." alt="" coords="421,460,544,485"/>
+<area shape="poly" id="edge26_Node000005_Node000023" title=" " alt="" coords="485,412,485,446,480,446,480,412"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="5,607,72,632"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="488,554,315,574,86,609,85,604,315,569,487,549"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="97,607,167,632"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="487,557,354,578,181,609,180,604,353,572,486,551"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="192,607,248,632"/>
+<area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="488,559,262,609,261,604,486,554"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="273,607,327,632"/>
+<area shape="poly" id="edge9_Node000006_Node000010" title=" " alt="" coords="496,561,341,608,340,603,494,556"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="352,607,421,632"/>
+<area shape="poly" id="edge10_Node000006_Node000011" title=" " alt="" coords="510,561,424,603,421,598,507,556"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="445,607,520,632"/>
+<area shape="poly" id="edge11_Node000006_Node000012" title=" " alt="" coords="526,561,501,597,496,594,522,557"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="544,607,619,632"/>
+<area shape="poly" id="edge12_Node000006_Node000013" title=" " alt="" coords="542,557,568,594,563,597,538,561"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="643,607,714,632"/>
+<area shape="poly" id="edge13_Node000006_Node000014" title=" " alt="" coords="557,556,644,598,641,603,554,561"/>
+<area shape="rect" id="Node000015" title=" " alt="" coords="739,607,824,632"/>
+<area shape="poly" id="edge14_Node000006_Node000015" title=" " alt="" coords="573,556,728,600,727,605,571,561"/>
+<area shape="rect" id="Node000016" title=" " alt="" coords="849,607,935,632"/>
+<area shape="poly" id="edge15_Node000006_Node000016" title=" " alt="" coords="577,553,836,604,835,609,576,559"/>
+<area shape="rect" id="Node000017" title=" " alt="" coords="959,607,1051,632"/>
+<area shape="poly" id="edge16_Node000006_Node000017" title=" " alt="" coords="577,550,736,572,946,604,945,609,736,577,577,556"/>
+<area shape="rect" id="Node000018" title=" " alt="" coords="1075,607,1173,632"/>
+<area shape="poly" id="edge17_Node000006_Node000018" title=" " alt="" coords="577,549,783,569,1062,604,1061,609,782,574,577,554"/>
+<area shape="poly" id="edge19_Node000019_Node000006" title=" " alt="" coords="138,481,150,483,474,534,473,539,149,488,137,486"/>
+<area shape="poly" id="edge21_Node000020_Node000006" title=" " alt="" coords="258,482,475,529,474,535,256,487"/>
+<area shape="poly" id="edge23_Node000021_Node000006" title=" " alt="" coords="650,488,568,529,566,525,647,483"/>
+<area shape="poly" id="edge25_Node000022_Node000006" title=" " alt="" coords="371,483,489,526,487,531,369,488"/>
+<area shape="poly" id="edge27_Node000023_Node000006" title=" " alt="" coords="493,484,518,521,514,524,489,487"/>
+<area shape="poly" id="edge29_Node000024_Node000006" title=" " alt="" coords="746,488,587,532,585,527,745,483"/>
+<area shape="poly" id="edge31_Node000025_Node000003" title=" " alt="" coords="757,194,708,233,705,229,754,190"/>
+<area shape="rect" id="Node000026" href="$uint128_8hpp.html" title="Defines uint128_t, a portable 128&#45;bit unsigned integer type." alt="" coords="737,387,836,412"/>
+<area shape="poly" id="edge32_Node000025_Node000026" title=" " alt="" coords="773,192,787,372,782,373,768,193"/>
+<area shape="poly" id="edge33_Node000026_Node000006" title=" " alt="" coords="805,410,823,426,840,445,848,466,848,477,842,487,825,501,800,512,734,529,659,539,590,545,590,539,658,534,733,523,798,507,822,496,838,484,842,475,843,467,835,447,819,429,802,414"/>
+<area shape="poly" id="edge35_Node000026_Node000021" title=" " alt="" coords="769,414,703,455,700,450,767,410"/>
+<area shape="poly" id="edge34_Node000026_Node000024" title=" " alt="" coords="789,412,789,446,784,446,784,412"/>
+</map>

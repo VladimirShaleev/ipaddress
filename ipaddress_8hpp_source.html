@@ -36,6 +36,7 @@
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <a href="https://github.com/VladimirShaleev/ipaddress" class="github-corner" title="View source on GitHub" target="_blank" rel="noopener noreferrer">
@@ -119,22 +120,38 @@ $(function(){initNavTree('ipaddress_8hpp_source.html',''); initResizable(); });
   <div class="headertitle"><div class="title">ipaddress.hpp</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="ipaddress_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#ifndef IPADDRESS_IPADDRESS_HPP</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#define IPADDRESS_IPADDRESS_HPP</span></div>
+<a href="ipaddress_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/**</span></div>
+<div class="line"><span class="lineno">    2</span><span class="comment"> * @file      ipaddress.hpp</span></div>
+<div class="line"><span class="lineno">    3</span><span class="comment"> * @brief     The main include file for the ipaddress library</span></div>
+<div class="line"><span class="lineno">    4</span><span class="comment"> * @author    Vladimir Shaleev</span></div>
+<div class="line"><span class="lineno">    5</span><span class="comment"> * @copyright MIT License</span></div>
+<div class="line"><span class="lineno">    6</span><span class="comment"> * </span></div>
+<div class="line"><span class="lineno">    7</span><span class="comment"> * This file includes all the necessary components for working with IP addresses </span></div>
+<div class="line"><span class="lineno">    8</span><span class="comment"> * and networks, as well as providing functionality for their manipulation.</span></div>
+<div class="line"><span class="lineno">    9</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#</span><span class="preprocessor">ifndef</span> <span class="preprocessor">IPADDRESS_IPADDRESS_HPP</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="preprocessor">IPADDRESS_IPADDRESS_HPP</span></div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;<a class="code" href="ipv4-address_8hpp.html">ipv4-address.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &quot;<a class="code" href="ipv6-address_8hpp.html">ipv6-address.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &quot;ipv4-network.hpp&quot;</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &quot;ipv6-network.hpp&quot;</span></div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &quot;ip-networks.hpp&quot;</span></div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#include &quot;<a class="code" href="ip-any-address_8hpp.html">ip-any-address.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &quot;ip-any-network.hpp&quot;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#</span><span class="preprocessor">include</span> <a class="code" href="ipv4-address_8hpp.html" title="Provides a set of functions and classes for handling IPv4 addresses.">&quot;ipv4-address.hpp&quot;</a></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#</span><span class="preprocessor">include</span> <a class="code" href="ipv6-address_8hpp.html" title="Provides a set of functions and classes for handling IPv6 addresses.">&quot;ipv6-address.hpp&quot;</a></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#</span><span class="preprocessor">include</span> <a class="code" href="ipv4-network_8hpp.html">&quot;ipv4-network.hpp&quot;</a></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#</span><span class="preprocessor">include</span> <a class="code" href="ipv6-network_8hpp.html">&quot;ipv6-network.hpp&quot;</a></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#</span><span class="preprocessor">include</span> <a class="code" href="ip-networks_8hpp.html">&quot;ip-networks.hpp&quot;</a></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="preprocessor">#</span><span class="preprocessor">include</span> <a class="code" href="ip-any-address_8hpp.html" title="Contains logic for working with IP addresses.">&quot;ip-any-address.hpp&quot;</a></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#</span><span class="preprocessor">include</span> <a class="code" href="ip-any-network_8hpp.html">&quot;ip-any-network.hpp&quot;</a></div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aip-any-address_8hpp_html"><div class="ttname"><a href="ip-any-address_8hpp.html">ip-any-address.hpp</a></div><div class="ttdoc">Contains logic for working with IP addresses.</div></div>
-<div class="ttc" id="aipv4-address_8hpp_html"><div class="ttname"><a href="ipv4-address_8hpp.html">ipv4-address.hpp</a></div><div class="ttdoc">Provides a set of functions and classes for handling IPv4 addresses.</div></div>
-<div class="ttc" id="aipv6-address_8hpp_html"><div class="ttname"><a href="ipv6-address_8hpp.html">ipv6-address.hpp</a></div><div class="ttdoc">Provides a set of functions and classes for handling IPv6 addresses.</div></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment">/**</span></div>
+<div class="line"><span class="lineno">   23</span><span class="comment"> * @namespace ipaddress</span></div>
+<div class="line"><span class="lineno">   24</span><span class="comment"> * </span></div>
+<div class="line"><span class="lineno">   25</span><span class="comment"> * Namespace dedicated to IP addresses and networks operations.</span></div>
+<div class="line"><span class="lineno">   26</span><span class="comment"> * </span></div>
+<div class="line"><span class="lineno">   27</span><span class="comment"> * This namespace contains all the classes, functions, and utilities necessary for handling</span></div>
+<div class="line"><span class="lineno">   28</span><span class="comment"> * both IPv4 and IPv6 addresses and networks. It provides a comprehensive suite of tools</span></div>
+<div class="line"><span class="lineno">   29</span><span class="comment"> * for various operations such as parsing, constructing, and manipulating IP addresses and networks.</span></div>
+<div class="line"><span class="lineno">   30</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="preprocessor">#</span><span class="preprocessor">endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.10.0-->

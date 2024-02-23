@@ -36,6 +36,7 @@
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <a href="https://github.com/VladimirShaleev/ipaddress" class="github-corner" title="View source on GitHub" target="_blank" rel="noopener noreferrer">
@@ -126,14 +127,14 @@ $(function(){initNavTree('classipaddress_1_1ip__address.html',''); initResizable
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a16ec2076c50ef6211a3f776cb2cdd19a" id="r_a16ec2076c50ef6211a3f776cb2cdd19a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classipaddress_1_1ip__address__base.html">constexpr</a> <a class="el" href="classipaddress_1_1ip__address__base.html">inline</a> <a class="el" href="namespaceipaddress.html#ace60f6a4856e90fa5be15ecf1cf0132e">ip_version</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a16ec2076c50ef6211a3f776cb2cdd19a">version</a> () <a class="el" href="classipaddress_1_1ip__address__base.html">const</a> <a class="el" href="classipaddress_1_1ip__address__base.html">noexcept</a></td></tr>
+<tr class="memitem:a16ec2076c50ef6211a3f776cb2cdd19a" id="r_a16ec2076c50ef6211a3f776cb2cdd19a"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="namespaceipaddress.html#ace60f6a4856e90fa5be15ecf1cf0132e">ip_version</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a16ec2076c50ef6211a3f776cb2cdd19a">version</a> () const noexcept</td></tr>
 <tr class="memdesc:a16ec2076c50ef6211a3f776cb2cdd19a"><td class="mdescLeft">&#160;</td><td class="mdescRight">IP address version.  <br /></td></tr>
 <tr class="separator:a16ec2076c50ef6211a3f776cb2cdd19a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ab5124c3bffb5355856d08eed175a7b10" id="r_ab5124c3bffb5355856d08eed175a7b10"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typename</a> <a class="el" href="classipaddress_1_1ip__address__base.html">T</a> , <a class="el" href="classipaddress_1_1ip__address__base.html">size_t</a> N&gt; </td></tr>
-<tr class="memitem:ab5124c3bffb5355856d08eed175a7b10"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classipaddress_1_1ip__address__base.html">static</a> <a class="el" href="classipaddress_1_1ip__address__base.html">constexpr</a> <a class="el" href="classipaddress_1_1ip__address__base.html">inline</a> <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ab5124c3bffb5355856d08eed175a7b10">parse</a> (<a class="el" href="classipaddress_1_1ip__address__base.html">const</a> <a class="el" href="classipaddress_1_1ip__address__base.html">T</a>(&amp;<a class="el" href="classipaddress_1_1ip__address__base.html">address</a>)[<a class="el" href="classipaddress_1_1ip__address__base.html">N</a>], <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;code) <a class="el" href="classipaddress_1_1ip__address__base.html">noexcept</a></td></tr>
+<tr class="memitem:ab5124c3bffb5355856d08eed175a7b10" id="r_ab5124c3bffb5355856d08eed175a7b10"><td class="memTemplParams" colspan="2">template&lt;typename T , size_t N&gt; </td></tr>
+<tr class="memitem:ab5124c3bffb5355856d08eed175a7b10"><td class="memTemplItemLeft" align="right" valign="top">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ab5124c3bffb5355856d08eed175a7b10">parse</a> (const T(&amp;address)[N], <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;code) noexcept</td></tr>
 <tr class="memdesc:ab5124c3bffb5355856d08eed175a7b10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test.  <br /></td></tr>
 <tr class="separator:ab5124c3bffb5355856d08eed175a7b10"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -151,7 +152,7 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classipaddress_1_1ip__address__base.html">constexpr</a> <a class="el" href="classipaddress_1_1ip__address__base.html">inline</a> <a class="el" href="namespaceipaddress.html#ace60f6a4856e90fa5be15ecf1cf0132e">ip_version</a> ipaddress::ip_address::version </td>
+          <td class="memname">constexpr inline <a class="el" href="namespaceipaddress.html#ace60f6a4856e90fa5be15ecf1cf0132e">ip_version</a> ipaddress::ip_address::version </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"></span></td><td>)</td>
           <td> const</td>
@@ -176,15 +177,15 @@ Static Public Member Functions</h2></td></tr>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;<a class="el" href="classipaddress_1_1ip__address__base.html">typename</a> <a class="el" href="classipaddress_1_1ip__address__base.html">T</a> , <a class="el" href="classipaddress_1_1ip__address__base.html">size_t</a> N&gt; </div>
+template&lt;typename T , size_t N&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classipaddress_1_1ip__address__base.html">static</a> <a class="el" href="classipaddress_1_1ip__address__base.html">constexpr</a> <a class="el" href="classipaddress_1_1ip__address__base.html">inline</a> <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> ipaddress::ip_address::parse </td>
+          <td class="memname">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> ipaddress::ip_address::parse </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classipaddress_1_1ip__address__base.html">const</a> <a class="el" href="classipaddress_1_1ip__address__base.html">T</a>(&amp;)</td>          <td class="paramname"><span class="paramname"><em>address</em>[N], </span></td>
+          <td class="paramtype">const T(&amp;)</td>          <td class="paramname"><span class="paramname"><em>address</em>[N], </span></td>
         </tr>
         <tr>
           <td class="paramkey"></td>

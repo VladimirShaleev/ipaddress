@@ -36,6 +36,7 @@
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <a href="https://github.com/VladimirShaleev/ipaddress" class="github-corner" title="View source on GitHub" target="_blank" rel="noopener noreferrer">
@@ -119,139 +120,245 @@ $(function(){initNavTree('optional_8hpp_source.html',''); initResizable(); });
   <div class="headertitle"><div class="title">optional.hpp</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="optional_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#ifndef IPADDRESS_OPTIONAL_HPP</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#define IPADDRESS_OPTIONAL_HPP</span></div>
+<a href="optional_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/**</span></div>
+<div class="line"><span class="lineno">    2</span><span class="comment"> * @file      optional.hpp</span></div>
+<div class="line"><span class="lineno">    3</span><span class="comment"> * @brief     Manages an optional contained value within a class template</span></div>
+<div class="line"><span class="lineno">    4</span><span class="comment"> * @author    Vladimir Shaleev</span></div>
+<div class="line"><span class="lineno">    5</span><span class="comment"> * @copyright MIT License</span></div>
+<div class="line"><span class="lineno">    6</span><span class="comment"> * </span></div>
+<div class="line"><span class="lineno">    7</span><span class="comment"> * The `optional` class template is designed to handle situations where a value</span></div>
+<div class="line"><span class="lineno">    8</span><span class="comment"> * may or may not be present. It encapsulates a value in a way that does not require</span></div>
+<div class="line"><span class="lineno">    9</span><span class="comment"> * dynamic memory allocation, ensuring that the value, if present, is part of the</span></div>
+<div class="line"><span class="lineno">   10</span><span class="comment"> * `optional` object&#39;s footprint. This makes `optional` ideal for use as a return</span></div>
+<div class="line"><span class="lineno">   11</span><span class="comment"> * type for functions that may fail to return a value. An `optional` object can be</span></div>
+<div class="line"><span class="lineno">   12</span><span class="comment"> * contextually converted to `bool`, indicating whether a value is contained or not.</span></div>
+<div class="line"><span class="lineno">   13</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#</span><span class="preprocessor">ifndef</span> <span class="preprocessor">IPADDRESS_OPTIONAL_HPP</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="preprocessor">IPADDRESS_OPTIONAL_HPP</span></div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#include &quot;<a class="code" href="config_8hpp.html">config.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#</span><span class="preprocessor">include</span> <a class="code" href="config_8hpp.html" title="Defines macros for library configuration.">&quot;config.hpp&quot;</a></div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keyword">namespace </span>IPADDRESS_NAMESPACE {</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keyword">namespace</span> <a class="code hl_define" href="config_8hpp.html#ad0b1f2a1113cf0f75cc8e7468bcf56db">IPADDRESS_NAMESPACE</a> {</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment">/**</span></div>
+<div class="line"><span class="lineno">   23</span><span class="comment"> * A template class to manage an optional contained value.</span></div>
+<div class="line"><span class="lineno">   24</span><span class="comment"> * </span></div>
+<div class="line"><span class="lineno">   25</span><span class="comment"> * The `optional` class template is often used to represent the outcome of a function </span></div>
+<div class="line"><span class="lineno">   26</span><span class="comment"> * that might not succeed. An `optional&lt;T&gt;` can either hold a value or be empty at any </span></div>
+<div class="line"><span class="lineno">   27</span><span class="comment"> * moment. When it does hold a value, that value is stored within the optional object </span></div>
+<div class="line"><span class="lineno">   28</span><span class="comment"> * itself, meaning there’s no need for separate dynamic memory allocation. If you </span></div>
+<div class="line"><span class="lineno">   29</span><span class="comment"> * check an `optional&lt;T&gt;` in a boolean context, such as in an if-statement, it will </span></div>
+<div class="line"><span class="lineno">   30</span><span class="comment"> * evaluate to true if there’s a value present, and false otherwise.</span></div>
+<div class="line"><span class="lineno">   31</span><span class="comment"> * </span></div>
+<div class="line"><span class="lineno">   32</span><span class="comment"> * @tparam T The type of the value to manage initialization state for.</span></div>
+<div class="line"><span class="lineno">   33</span><span class="comment"> */</span></div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="foldopen" id="foldopen00035" data-start="{" data-end="};">
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html">   35</a></span><span class="keyword">class </span><a class="code hl_class" href="classipaddress_1_1optional.html">optional</a> {</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html">   35</a></span><span class="keyword">class</span> <a class="code hl_class" href="classipaddress_1_1optional.html">optional</a> {</div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#a8b821d3bf4e7cc2018d10e1bfbb111ed">   37</a></span>    <span class="keyword">using </span><a class="code hl_class" href="classipaddress_1_1ip__address__base.html">value_type</a> = <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">T</a>; </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#a309c1a24c14a3ad51cb4a5601e18e271">   42</a></span>    <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">IPADDRESS_CONSTEXPR</a> IPADDRESS_FORCE_INLINE <a class="code hl_function" href="classipaddress_1_1optional.html#a309c1a24c14a3ad51cb4a5601e18e271">optional</a>() IPADDRESS_NOEXCEPT = <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">default</a>;</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#a0f9524f8d3cab12a35ee86999910014a">   47</a></span>    <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">IPADDRESS_CONSTEXPR</a> IPADDRESS_FORCE_INLINE <a class="code hl_class" href="classipaddress_1_1optional.html">optional</a>(std::<a class="code hl_class" href="classipaddress_1_1ip__address__base.html">nullptr_t</a>) IPADDRESS_NOEXCEPT { };</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#a8b821d3bf4e7cc2018d10e1bfbb111ed">   37</a></span>    <span class="keyword">using</span> value_type = T; <span class="comment">/**&lt; The type of the value to manage initialization state for */</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="comment">/**</span></div>
+<div class="line"><span class="lineno">   40</span><span class="comment">     * Default constructor that constructs an `optional` object without a contained value.</span></div>
+<div class="line"><span class="lineno">   41</span><span class="comment">     */</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#a309c1a24c14a3ad51cb4a5601e18e271">   42</a></span>    IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> <a class="code hl_function" href="classipaddress_1_1optional.html#a309c1a24c14a3ad51cb4a5601e18e271">optional</a>() <a class="code hl_define" href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a> = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="comment">/**</span></div>
+<div class="line"><span class="lineno">   45</span><span class="comment">     * Constructs an `optional` object that does not contain a value.</span></div>
+<div class="line"><span class="lineno">   46</span><span class="comment">     */</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#a0f9524f8d3cab12a35ee86999910014a">   47</a></span>    IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> <a class="code hl_function" href="classipaddress_1_1optional.html#a0f9524f8d3cab12a35ee86999910014a">optional</a>(std::nullptr_t) <a class="code hl_define" href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a> { };</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
-<div class="foldopen" id="foldopen00054" data-start="{" data-end="}">
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#ab026b34ed8c6f80f655e79d35cf71f78">   54</a></span>    <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">IPADDRESS_CONSTEXPR</a> IPADDRESS_FORCE_INLINE <a class="code hl_function" href="classipaddress_1_1optional.html#ab026b34ed8c6f80f655e79d35cf71f78">optional</a>(<a class="code hl_class" href="classipaddress_1_1ip__address__base.html">value_type</a>&amp;&amp; <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">val</a>) IPADDRESS_NOEXCEPT</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="comment">/**</span></div>
+<div class="line"><span class="lineno">   50</span><span class="comment">     * Move constructor that constructs an `optional` object with a contained value, initializing it with \a val.</span></div>
+<div class="line"><span class="lineno">   51</span><span class="comment">     * </span></div>
+<div class="line"><span class="lineno">   52</span><span class="comment">     * @param[in,out] val The value to move into the `optional` object.</span></div>
+<div class="line"><span class="lineno">   53</span><span class="comment">     */</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#ab026b34ed8c6f80f655e79d35cf71f78">   54</a></span>    IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> <a class="code hl_function" href="classipaddress_1_1optional.html#ab026b34ed8c6f80f655e79d35cf71f78">optional</a>(value_type&amp;&amp; val) <a class="code hl_define" href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a></div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        :</div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        _has_value(<span class="keyword">true</span>),</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        _value(<a class="code hl_class" href="classipaddress_1_1ip__address__base.html">val</a>) {</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        _value(val) {</div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    }</div>
-</div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="foldopen" id="foldopen00065" data-start="{" data-end="}">
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#af08ea15254a7adb77e090c20655ad844">   65</a></span>    <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">IPADDRESS_CONSTEXPR</a> IPADDRESS_FORCE_INLINE <a class="code hl_function" href="classipaddress_1_1optional.html#af08ea15254a7adb77e090c20655ad844">optional</a>(<span class="keyword">const</span> <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">optional&lt;T&gt;</a>&amp; <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">opt</a>) IPADDRESS_NOEXCEPT</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="comment">/**</span></div>
+<div class="line"><span class="lineno">   61</span><span class="comment">     * Copy constructor that constructs an `optional` object with a contained value, copying it from \a opt.</span></div>
+<div class="line"><span class="lineno">   62</span><span class="comment">     * </span></div>
+<div class="line"><span class="lineno">   63</span><span class="comment">     * @param[in] opt The `optional` object to copy the value from.</span></div>
+<div class="line"><span class="lineno">   64</span><span class="comment">     */</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#af08ea15254a7adb77e090c20655ad844">   65</a></span>    IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> <a class="code hl_function" href="classipaddress_1_1optional.html#af08ea15254a7adb77e090c20655ad844">optional</a>(<span class="keyword">const</span> <a class="code hl_class" href="classipaddress_1_1optional.html">optional</a>&lt;T&gt;&amp; opt) <a class="code hl_define" href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a></div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        :</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        _has_value(<a class="code hl_class" href="classipaddress_1_1ip__address__base.html">opt</a>._has_value),</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        _value(<a class="code hl_class" href="classipaddress_1_1ip__address__base.html">opt</a>._value) {</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        _has_value(opt._has_value),</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        _value(opt._value) {</div>
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    }</div>
-</div>
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
-<div class="foldopen" id="foldopen00076" data-start="{" data-end="}">
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#aefdd9f325b893ed80561213faf5be39b">   76</a></span>    <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">IPADDRESS_CONSTEXPR_14</a> IPADDRESS_FORCE_INLINE <a class="code hl_class" href="classipaddress_1_1optional.html">optional</a>&amp; <a class="code hl_function" href="classipaddress_1_1optional.html#aefdd9f325b893ed80561213faf5be39b">operator=</a>(std::nullptr_t) IPADDRESS_NOEXCEPT {</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    <span class="comment">/**</span></div>
+<div class="line"><span class="lineno">   72</span><span class="comment">     * Assignment operator that clears the contained value of the `optional` object.</span></div>
+<div class="line"><span class="lineno">   73</span><span class="comment">     * </span></div>
+<div class="line"><span class="lineno">   74</span><span class="comment">     * @return A reference to the `optional` object.</span></div>
+<div class="line"><span class="lineno">   75</span><span class="comment">     */</span></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#aefdd9f325b893ed80561213faf5be39b">   76</a></span>    IPADDRESS_CONSTEXPR_14 <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> <a class="code hl_class" href="classipaddress_1_1optional.html">optional</a>&amp; <a class="code hl_function" href="classipaddress_1_1optional.html#aefdd9f325b893ed80561213faf5be39b">operator</a>=(std::nullptr_t) <a class="code hl_define" href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a> {</div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        _has_value = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        _value = <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">value_type</a>{};</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        _value = value_type{};</div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    }</div>
-</div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
-<div class="foldopen" id="foldopen00088" data-start="{" data-end="}">
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#ac82c9c4eae98aac27e2d775d176218ea">   88</a></span>    <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">IPADDRESS_CONSTEXPR_14</a> IPADDRESS_FORCE_INLINE <a class="code hl_class" href="classipaddress_1_1optional.html">optional</a>&amp; <a class="code hl_function" href="classipaddress_1_1optional.html#ac82c9c4eae98aac27e2d775d176218ea">operator=</a>(<a class="code hl_class" href="classipaddress_1_1ip__address__base.html">value_type</a>&amp;&amp; <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">val</a>) IPADDRESS_NOEXCEPT {</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    <span class="comment">/**</span></div>
+<div class="line"><span class="lineno">   83</span><span class="comment">     * Move assignment operator that sets the contained value of the `optional` object to \a val.</span></div>
+<div class="line"><span class="lineno">   84</span><span class="comment">     * </span></div>
+<div class="line"><span class="lineno">   85</span><span class="comment">     * @param[in,out] val The value to move into the `optional` object.</span></div>
+<div class="line"><span class="lineno">   86</span><span class="comment">     * @return A reference to the `optional` object.</span></div>
+<div class="line"><span class="lineno">   87</span><span class="comment">     */</span></div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#ac82c9c4eae98aac27e2d775d176218ea">   88</a></span>    IPADDRESS_CONSTEXPR_14 <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> <a class="code hl_class" href="classipaddress_1_1optional.html">optional</a>&amp; <a class="code hl_function" href="classipaddress_1_1optional.html#ac82c9c4eae98aac27e2d775d176218ea">operator</a>=(value_type&amp;&amp; val) <a class="code hl_define" href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a> {</div>
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        _has_value = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        _value = <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">val</a>;</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        _value = val;</div>
 <div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
 <div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    }</div>
-</div>
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
-<div class="foldopen" id="foldopen00100" data-start="{" data-end="}">
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#a97f48ebe438f47460e3b9e150a8830fa">  100</a></span>    <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">IPADDRESS_CONSTEXPR_14</a> IPADDRESS_FORCE_INLINE <a class="code hl_class" href="classipaddress_1_1optional.html">optional</a>&amp; <a class="code hl_function" href="classipaddress_1_1optional.html#a97f48ebe438f47460e3b9e150a8830fa">operator=</a>(<span class="keyword">const</span> <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">optional&lt;T&gt;</a>&amp; <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">opt</a>) IPADDRESS_NOEXCEPT {</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        _has_value = <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">opt</a>._has_value;</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        _value = <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">opt</a>._value;</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    <span class="comment">/**</span></div>
+<div class="line"><span class="lineno">   95</span><span class="comment">     * Assigns the value and the state of existence from another `optional` object.</span></div>
+<div class="line"><span class="lineno">   96</span><span class="comment">     * </span></div>
+<div class="line"><span class="lineno">   97</span><span class="comment">     * @param[in] opt The `optional` object to copy from.</span></div>
+<div class="line"><span class="lineno">   98</span><span class="comment">     * @return A reference to `*this`.</span></div>
+<div class="line"><span class="lineno">   99</span><span class="comment">     */</span></div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#a97f48ebe438f47460e3b9e150a8830fa">  100</a></span>    IPADDRESS_CONSTEXPR_14 <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> <a class="code hl_class" href="classipaddress_1_1optional.html">optional</a>&amp; <a class="code hl_function" href="classipaddress_1_1optional.html#a97f48ebe438f47460e3b9e150a8830fa">operator</a>=(<span class="keyword">const</span> <a class="code hl_class" href="classipaddress_1_1optional.html">optional</a>&lt;T&gt;&amp; opt) <a class="code hl_define" href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a> {</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        _has_value = opt._has_value;</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        _value = opt._value;</div>
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
 <div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    }</div>
-</div>
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
-<div class="foldopen" id="foldopen00114" data-start="{" data-end="}">
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#a20da8764d59b05cdb29a5bd8e02b22f4">  114</a></span>    IPADDRESS_NODISCARD <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">IPADDRESS_CONSTEXPR_14</a> IPADDRESS_FORCE_INLINE <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">value_type</a>* <a class="code hl_function" href="classipaddress_1_1optional.html#a20da8764d59b05cdb29a5bd8e02b22f4">operator-&gt;</a>() IPADDRESS_NOEXCEPT {</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    <span class="comment">/**</span></div>
+<div class="line"><span class="lineno">  107</span><span class="comment">     * Pointer access to the contained value.</span></div>
+<div class="line"><span class="lineno">  108</span><span class="comment">     * </span></div>
+<div class="line"><span class="lineno">  109</span><span class="comment">     * Provides pointer access to the contained value. It is undefined behavior</span></div>
+<div class="line"><span class="lineno">  110</span><span class="comment">     * if the `optional` object does not contain a value.</span></div>
+<div class="line"><span class="lineno">  111</span><span class="comment">     * </span></div>
+<div class="line"><span class="lineno">  112</span><span class="comment">     * @return A pointer to the contained value.</span></div>
+<div class="line"><span class="lineno">  113</span><span class="comment">     */</span></div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#a20da8764d59b05cdb29a5bd8e02b22f4">  114</a></span>    <a class="code hl_define" href="config_8hpp.html#a7c6e8e32885550d898b7de8d1fd0e828">IPADDRESS_NODISCARD</a> IPADDRESS_CONSTEXPR_14 <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> value_type* <a class="code hl_function" href="classipaddress_1_1optional.html#a20da8764d59b05cdb29a5bd8e02b22f4">operator</a>-&gt;() <a class="code hl_define" href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a> {</div>
 <div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        <span class="keywordflow">return</span> &amp;_value;</div>
 <div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    }</div>
-</div>
 <div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
-<div class="foldopen" id="foldopen00126" data-start="{" data-end="}">
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#a0e653b53ff123ec30ad682c9f660bd31">  126</a></span>    IPADDRESS_NODISCARD <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">IPADDRESS_CONSTEXPR</a> IPADDRESS_FORCE_INLINE <span class="keyword">const</span> <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">value_type</a>* <a class="code hl_function" href="classipaddress_1_1optional.html#a0e653b53ff123ec30ad682c9f660bd31">operator-&gt;</a>() <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">const</a> IPADDRESS_NOEXCEPT {</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    <span class="comment">/**</span></div>
+<div class="line"><span class="lineno">  119</span><span class="comment">     * Constant pointer access to the contained value.</span></div>
+<div class="line"><span class="lineno">  120</span><span class="comment">     * </span></div>
+<div class="line"><span class="lineno">  121</span><span class="comment">     * Provides constant pointer access to the contained value. It is undefined behavior</span></div>
+<div class="line"><span class="lineno">  122</span><span class="comment">     * if the `optional` object does not contain a value.</span></div>
+<div class="line"><span class="lineno">  123</span><span class="comment">     * </span></div>
+<div class="line"><span class="lineno">  124</span><span class="comment">     * @return A constant pointer to the contained value.</span></div>
+<div class="line"><span class="lineno">  125</span><span class="comment">     */</span></div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#a0e653b53ff123ec30ad682c9f660bd31">  126</a></span>    <a class="code hl_define" href="config_8hpp.html#a7c6e8e32885550d898b7de8d1fd0e828">IPADDRESS_NODISCARD</a> IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> <span class="keyword">const</span> value_type* <a class="code hl_function" href="classipaddress_1_1optional.html#a0e653b53ff123ec30ad682c9f660bd31">operator</a>-&gt;() <span class="keyword">const</span> <a class="code hl_define" href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a> {</div>
 <div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>        <span class="keywordflow">return</span> &amp;_value;</div>
 <div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    }</div>
-</div>
 <div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> </div>
-<div class="foldopen" id="foldopen00138" data-start="{" data-end="}">
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#aa691753c6e1f018c6f87482d66438176">  138</a></span>    IPADDRESS_NODISCARD <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">IPADDRESS_CONSTEXPR_14</a> IPADDRESS_FORCE_INLINE <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">value_type</a>&amp; <a class="code hl_function" href="classipaddress_1_1optional.html#aa691753c6e1f018c6f87482d66438176">operator*</a>() IPADDRESS_NOEXCEPT {</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    <span class="comment">/**</span></div>
+<div class="line"><span class="lineno">  131</span><span class="comment">     * Reference access to the contained value.</span></div>
+<div class="line"><span class="lineno">  132</span><span class="comment">     * </span></div>
+<div class="line"><span class="lineno">  133</span><span class="comment">     * Provides reference access to the contained value. It is undefined behavior</span></div>
+<div class="line"><span class="lineno">  134</span><span class="comment">     * if the `optional` object does not contain a value.</span></div>
+<div class="line"><span class="lineno">  135</span><span class="comment">     * </span></div>
+<div class="line"><span class="lineno">  136</span><span class="comment">     * @return A reference to the contained value.</span></div>
+<div class="line"><span class="lineno">  137</span><span class="comment">     */</span></div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#aa691753c6e1f018c6f87482d66438176">  138</a></span>    <a class="code hl_define" href="config_8hpp.html#a7c6e8e32885550d898b7de8d1fd0e828">IPADDRESS_NODISCARD</a> IPADDRESS_CONSTEXPR_14 <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> value_type&amp; <a class="code hl_function" href="classipaddress_1_1optional.html#aa691753c6e1f018c6f87482d66438176">operator</a>*() <a class="code hl_define" href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a> {</div>
 <div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>        <span class="keywordflow">return</span> _value;</div>
 <div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    }</div>
-</div>
 <div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span> </div>
-<div class="foldopen" id="foldopen00150" data-start="{" data-end="}">
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#acd67d328e967079c86086dbac2c7585b">  150</a></span>    IPADDRESS_NODISCARD <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">IPADDRESS_CONSTEXPR</a> IPADDRESS_FORCE_INLINE <span class="keyword">const</span> <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">value_type</a>&amp; <a class="code hl_function" href="classipaddress_1_1optional.html#acd67d328e967079c86086dbac2c7585b">operator*</a>() <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">const</a> IPADDRESS_NOEXCEPT {</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    <span class="comment">/**</span></div>
+<div class="line"><span class="lineno">  143</span><span class="comment">     * Constant reference access to the contained value.</span></div>
+<div class="line"><span class="lineno">  144</span><span class="comment">     * </span></div>
+<div class="line"><span class="lineno">  145</span><span class="comment">     * Provides constant reference access to the contained value. It is undefined behavior</span></div>
+<div class="line"><span class="lineno">  146</span><span class="comment">     * if the `optional` object does not contain a value.</span></div>
+<div class="line"><span class="lineno">  147</span><span class="comment">     * </span></div>
+<div class="line"><span class="lineno">  148</span><span class="comment">     * @return A constant reference to the contained value.</span></div>
+<div class="line"><span class="lineno">  149</span><span class="comment">     */</span></div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#acd67d328e967079c86086dbac2c7585b">  150</a></span>    <a class="code hl_define" href="config_8hpp.html#a7c6e8e32885550d898b7de8d1fd0e828">IPADDRESS_NODISCARD</a> IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> <span class="keyword">const</span> value_type&amp; <a class="code hl_function" href="classipaddress_1_1optional.html#acd67d328e967079c86086dbac2c7585b">operator</a>*() <span class="keyword">const</span> <a class="code hl_define" href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a> {</div>
 <div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>        <span class="keywordflow">return</span> _value;</div>
 <div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    }</div>
-</div>
 <div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span> </div>
-<div class="foldopen" id="foldopen00161" data-start="{" data-end="}">
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#a6b258c381d2a3ec29189990b75dae0ab">  161</a></span>    IPADDRESS_NODISCARD <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">IPADDRESS_CONSTEXPR</a> IPADDRESS_FORCE_INLINE <span class="keyword">explicit</span> <span class="keyword">operator</span> <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">bool</a>() <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">const</a> IPADDRESS_NOEXCEPT {</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        <span class="keywordflow">return</span> has_value();</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>    <span class="comment">/**</span></div>
+<div class="line"><span class="lineno">  155</span><span class="comment">     * Checks existence of the contained value.</span></div>
+<div class="line"><span class="lineno">  156</span><span class="comment">     * </span></div>
+<div class="line"><span class="lineno">  157</span><span class="comment">     * Determines whether the `optional` object contains a value.</span></div>
+<div class="line"><span class="lineno">  158</span><span class="comment">     * </span></div>
+<div class="line"><span class="lineno">  159</span><span class="comment">     * @return `true` if a value is contained, otherwise `false`.</span></div>
+<div class="line"><span class="lineno">  160</span><span class="comment">     */</span></div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#a6b258c381d2a3ec29189990b75dae0ab">  161</a></span>    <a class="code hl_define" href="config_8hpp.html#a7c6e8e32885550d898b7de8d1fd0e828">IPADDRESS_NODISCARD</a> IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> <span class="keyword">explicit</span> <a class="code hl_function" href="classipaddress_1_1optional.html#a6b258c381d2a3ec29189990b75dae0ab">operator</a> <span class="keywordtype">bool</span>() <span class="keyword">const</span> <a class="code hl_define" href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a> {</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="classipaddress_1_1optional.html#a10c967d5c9d3a6835b2cbaa0d2a4c7a7">has_value</a><a class="code hl_function" href="classipaddress_1_1optional.html#a10c967d5c9d3a6835b2cbaa0d2a4c7a7">(</a><a class="code hl_function" href="classipaddress_1_1optional.html#a10c967d5c9d3a6835b2cbaa0d2a4c7a7">)</a>;</div>
 <div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>    }</div>
-</div>
 <div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span> </div>
-<div class="foldopen" id="foldopen00172" data-start="{" data-end="}">
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#a10c967d5c9d3a6835b2cbaa0d2a4c7a7">  172</a></span>    IPADDRESS_NODISCARD <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">IPADDRESS_CONSTEXPR</a> IPADDRESS_FORCE_INLINE <span class="keywordtype">bool</span> <a class="code hl_function" href="classipaddress_1_1optional.html#a10c967d5c9d3a6835b2cbaa0d2a4c7a7">has_value</a>() <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">const</a> IPADDRESS_NOEXCEPT {</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>    <span class="comment">/**</span></div>
+<div class="line"><span class="lineno">  166</span><span class="comment">     * Checks existence of the contained value.</span></div>
+<div class="line"><span class="lineno">  167</span><span class="comment">     * </span></div>
+<div class="line"><span class="lineno">  168</span><span class="comment">     * Determines whether the `optional` object contains a value.</span></div>
+<div class="line"><span class="lineno">  169</span><span class="comment">     * </span></div>
+<div class="line"><span class="lineno">  170</span><span class="comment">     * @return `true` if a value is contained, otherwise `false`.</span></div>
+<div class="line"><span class="lineno">  171</span><span class="comment">     */</span></div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#a10c967d5c9d3a6835b2cbaa0d2a4c7a7">  172</a></span>    <a class="code hl_define" href="config_8hpp.html#a7c6e8e32885550d898b7de8d1fd0e828">IPADDRESS_NODISCARD</a> IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> <span class="keywordtype">bool</span> <a class="code hl_function" href="classipaddress_1_1optional.html#a10c967d5c9d3a6835b2cbaa0d2a4c7a7">has_value</a>() <span class="keyword">const</span> <a class="code hl_define" href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a> {</div>
 <div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>        <span class="keywordflow">return</span> _has_value;</div>
 <div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>    }</div>
-</div>
 <div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span> </div>
-<div class="foldopen" id="foldopen00184" data-start="{" data-end="}">
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#a0b15e279a1ea600cc504ba8046a9c1ea">  184</a></span>    IPADDRESS_NODISCARD <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">IPADDRESS_CONSTEXPR_14</a> IPADDRESS_FORCE_INLINE <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">value_type</a>&amp; <a class="code hl_function" href="classipaddress_1_1optional.html#a0b15e279a1ea600cc504ba8046a9c1ea">value</a>() &amp; IPADDRESS_NOEXCEPT {</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>    <span class="comment">/**</span></div>
+<div class="line"><span class="lineno">  177</span><span class="comment">     * Reference access to the contained value.</span></div>
+<div class="line"><span class="lineno">  178</span><span class="comment">     * </span></div>
+<div class="line"><span class="lineno">  179</span><span class="comment">     * Provides reference access to the contained value. It is undefined behavior</span></div>
+<div class="line"><span class="lineno">  180</span><span class="comment">     * if the `optional` object does not contain a value.</span></div>
+<div class="line"><span class="lineno">  181</span><span class="comment">     * </span></div>
+<div class="line"><span class="lineno">  182</span><span class="comment">     * @return A reference to the contained value.</span></div>
+<div class="line"><span class="lineno">  183</span><span class="comment">     */</span></div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#a0b15e279a1ea600cc504ba8046a9c1ea">  184</a></span>    <a class="code hl_define" href="config_8hpp.html#a7c6e8e32885550d898b7de8d1fd0e828">IPADDRESS_NODISCARD</a> IPADDRESS_CONSTEXPR_14 <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> value_type&amp; <a class="code hl_function" href="classipaddress_1_1optional.html#a0b15e279a1ea600cc504ba8046a9c1ea">value</a>() &amp; <a class="code hl_define" href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a> {</div>
 <div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>        <span class="keywordflow">return</span> _value;</div>
 <div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    }</div>
-</div>
 <div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span> </div>
-<div class="foldopen" id="foldopen00196" data-start="{" data-end="}">
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#ab453889cefd6362a53a19662844737e3">  196</a></span>    IPADDRESS_NODISCARD <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">IPADDRESS_CONSTEXPR</a> IPADDRESS_FORCE_INLINE <span class="keyword">const</span> <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">value_type</a>&amp; <a class="code hl_function" href="classipaddress_1_1optional.html#ab453889cefd6362a53a19662844737e3">value</a>() <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">const</a> &amp; IPADDRESS_NOEXCEPT {</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    <span class="comment">/**</span></div>
+<div class="line"><span class="lineno">  189</span><span class="comment">     * Constant reference access to the contained value.</span></div>
+<div class="line"><span class="lineno">  190</span><span class="comment">     * </span></div>
+<div class="line"><span class="lineno">  191</span><span class="comment">     * Provides constant reference access to the contained value. It is undefined behavior</span></div>
+<div class="line"><span class="lineno">  192</span><span class="comment">     * if the `optional` object does not contain a value.</span></div>
+<div class="line"><span class="lineno">  193</span><span class="comment">     * </span></div>
+<div class="line"><span class="lineno">  194</span><span class="comment">     * @return A constant reference to the contained value.</span></div>
+<div class="line"><span class="lineno">  195</span><span class="comment">     */</span></div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#ab453889cefd6362a53a19662844737e3">  196</a></span>    <a class="code hl_define" href="config_8hpp.html#a7c6e8e32885550d898b7de8d1fd0e828">IPADDRESS_NODISCARD</a> IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> <span class="keyword">const</span> value_type&amp; <a class="code hl_function" href="classipaddress_1_1optional.html#ab453889cefd6362a53a19662844737e3">value</a>() <span class="keyword">const</span> &amp; <a class="code hl_define" href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a> {</div>
 <div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>        <span class="keywordflow">return</span> _value;</div>
 <div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    }</div>
-</div>
 <div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span> </div>
-<div class="foldopen" id="foldopen00208" data-start="{" data-end="}">
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#aaa58be9d2f21636dbb5e5fe0bd4bf4e0">  208</a></span>    IPADDRESS_NODISCARD <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">IPADDRESS_CONSTEXPR_14</a> IPADDRESS_FORCE_INLINE <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">value_type</a>&amp;&amp; <a class="code hl_function" href="classipaddress_1_1optional.html#aaa58be9d2f21636dbb5e5fe0bd4bf4e0">value</a>() &amp;&amp; IPADDRESS_NOEXCEPT {</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    <span class="comment">/**</span></div>
+<div class="line"><span class="lineno">  201</span><span class="comment">     * Move access to the contained value.</span></div>
+<div class="line"><span class="lineno">  202</span><span class="comment">     * </span></div>
+<div class="line"><span class="lineno">  203</span><span class="comment">     * Moves the contained value. It is undefined behavior if the `optional` object</span></div>
+<div class="line"><span class="lineno">  204</span><span class="comment">     * does not contain a value.</span></div>
+<div class="line"><span class="lineno">  205</span><span class="comment">     * </span></div>
+<div class="line"><span class="lineno">  206</span><span class="comment">     * @return The contained value, moved.</span></div>
+<div class="line"><span class="lineno">  207</span><span class="comment">     */</span></div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#aaa58be9d2f21636dbb5e5fe0bd4bf4e0">  208</a></span>    <a class="code hl_define" href="config_8hpp.html#a7c6e8e32885550d898b7de8d1fd0e828">IPADDRESS_NODISCARD</a> IPADDRESS_CONSTEXPR_14 <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> value_type&amp;&amp; <a class="code hl_function" href="classipaddress_1_1optional.html#aaa58be9d2f21636dbb5e5fe0bd4bf4e0">value</a>() &amp;&amp; <a class="code hl_define" href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a> {</div>
 <div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>        <span class="keywordflow">return</span> std::move(_value);</div>
 <div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>    }</div>
-</div>
 <div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span> </div>
-<div class="foldopen" id="foldopen00220" data-start="{" data-end="}">
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#a8b2993010f057e7834fee559ab1694ea">  220</a></span>    IPADDRESS_NODISCARD <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">IPADDRESS_CONSTEXPR</a> IPADDRESS_FORCE_INLINE <span class="keyword">const</span> <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">value_type</a>&amp;&amp; <a class="code hl_function" href="classipaddress_1_1optional.html#a8b2993010f057e7834fee559ab1694ea">value</a>() <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">const</a> &amp;&amp; IPADDRESS_NOEXCEPT {</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>    <span class="comment">/**</span></div>
+<div class="line"><span class="lineno">  213</span><span class="comment">     * Constant move access to the contained value.</span></div>
+<div class="line"><span class="lineno">  214</span><span class="comment">     * </span></div>
+<div class="line"><span class="lineno">  215</span><span class="comment">     * Moves the contained value, maintaining constness. It is undefined behavior if the `optional` object</span></div>
+<div class="line"><span class="lineno">  216</span><span class="comment">     * does not contain a value.</span></div>
+<div class="line"><span class="lineno">  217</span><span class="comment">     * </span></div>
+<div class="line"><span class="lineno">  218</span><span class="comment">     * @return The contained value, moved, as a constant.</span></div>
+<div class="line"><span class="lineno">  219</span><span class="comment">     */</span></div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno"><a class="line" href="classipaddress_1_1optional.html#a8b2993010f057e7834fee559ab1694ea">  220</a></span>    <a class="code hl_define" href="config_8hpp.html#a7c6e8e32885550d898b7de8d1fd0e828">IPADDRESS_NODISCARD</a> IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> <span class="keyword">const</span> value_type&amp;&amp; <a class="code hl_function" href="classipaddress_1_1optional.html#a8b2993010f057e7834fee559ab1694ea">value</a>() <span class="keyword">const</span> &amp;&amp; <a class="code hl_define" href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a> {</div>
 <div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>        <span class="keywordflow">return</span> std::move(_value);</div>
 <div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>    }</div>
-</div>
 <div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span> </div>
 <div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span><span class="keyword">private</span>:</div>
 <div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>    <span class="keywordtype">bool</span> _has_value{};</div>
 <div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>    value_type _value{};</div>
 <div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>};</div>
-</div>
 <div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span> </div>
 <div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>} <span class="comment">// namespace IPADDRESS_NAMESPACE</span></div>
 <div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span> </div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span><span class="preprocessor">#endif </span><span class="comment">// IPADDRESS_OPTIONAL_HPP</span></div>
-<div class="ttc" id="aclassipaddress_1_1ip__address__base_html"><div class="ttname"><a href="classipaddress_1_1ip__address__base.html">ipaddress::ip_address_base</a></div><div class="ttdoc">A template base class for IP address representations.</div><div class="ttdef"><b>Definition</b> ip-address-base.hpp:56</div></div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span><span class="preprocessor">#</span><span class="preprocessor">endif</span> <span class="comment">// IPADDRESS_OPTIONAL_HPP</span></div>
 <div class="ttc" id="aclassipaddress_1_1optional_html"><div class="ttname"><a href="classipaddress_1_1optional.html">ipaddress::optional</a></div><div class="ttdoc">A template class to manage an optional contained value.</div><div class="ttdef"><b>Definition</b> optional.hpp:35</div></div>
 <div class="ttc" id="aclassipaddress_1_1optional_html_a0b15e279a1ea600cc504ba8046a9c1ea"><div class="ttname"><a href="classipaddress_1_1optional.html#a0b15e279a1ea600cc504ba8046a9c1ea">ipaddress::optional::value</a></div><div class="ttdeci">constexpr inline value_type &amp; value() &amp;noexcept</div><div class="ttdoc">Reference access to the contained value.</div><div class="ttdef"><b>Definition</b> optional.hpp:184</div></div>
 <div class="ttc" id="aclassipaddress_1_1optional_html_a0e653b53ff123ec30ad682c9f660bd31"><div class="ttname"><a href="classipaddress_1_1optional.html#a0e653b53ff123ec30ad682c9f660bd31">ipaddress::optional::operator-&gt;</a></div><div class="ttdeci">constexpr inline const value_type * operator-&gt;() const noexcept</div><div class="ttdoc">Constant pointer access to the contained value.</div><div class="ttdef"><b>Definition</b> optional.hpp:126</div></div>
+<div class="ttc" id="aclassipaddress_1_1optional_html_a0f9524f8d3cab12a35ee86999910014a"><div class="ttname"><a href="classipaddress_1_1optional.html#a0f9524f8d3cab12a35ee86999910014a">ipaddress::optional::optional</a></div><div class="ttdeci">constexpr inline optional(std::nullptr_t) noexcept</div><div class="ttdoc">Constructs an optional object that does not contain a value.</div><div class="ttdef"><b>Definition</b> optional.hpp:47</div></div>
 <div class="ttc" id="aclassipaddress_1_1optional_html_a10c967d5c9d3a6835b2cbaa0d2a4c7a7"><div class="ttname"><a href="classipaddress_1_1optional.html#a10c967d5c9d3a6835b2cbaa0d2a4c7a7">ipaddress::optional::has_value</a></div><div class="ttdeci">constexpr inline bool has_value() const noexcept</div><div class="ttdoc">Checks existence of the contained value.</div><div class="ttdef"><b>Definition</b> optional.hpp:172</div></div>
 <div class="ttc" id="aclassipaddress_1_1optional_html_a20da8764d59b05cdb29a5bd8e02b22f4"><div class="ttname"><a href="classipaddress_1_1optional.html#a20da8764d59b05cdb29a5bd8e02b22f4">ipaddress::optional::operator-&gt;</a></div><div class="ttdeci">constexpr inline value_type * operator-&gt;() noexcept</div><div class="ttdoc">Pointer access to the contained value.</div><div class="ttdef"><b>Definition</b> optional.hpp:114</div></div>
 <div class="ttc" id="aclassipaddress_1_1optional_html_a309c1a24c14a3ad51cb4a5601e18e271"><div class="ttname"><a href="classipaddress_1_1optional.html#a309c1a24c14a3ad51cb4a5601e18e271">ipaddress::optional::optional</a></div><div class="ttdeci">constexpr inline optional() noexcept=default</div><div class="ttdoc">Default constructor that constructs an optional object without a contained value.</div></div>
+<div class="ttc" id="aclassipaddress_1_1optional_html_a6b258c381d2a3ec29189990b75dae0ab"><div class="ttname"><a href="classipaddress_1_1optional.html#a6b258c381d2a3ec29189990b75dae0ab">ipaddress::optional::operator bool</a></div><div class="ttdeci">constexpr inline operator bool() const noexcept</div><div class="ttdoc">Checks existence of the contained value.</div><div class="ttdef"><b>Definition</b> optional.hpp:161</div></div>
 <div class="ttc" id="aclassipaddress_1_1optional_html_a8b2993010f057e7834fee559ab1694ea"><div class="ttname"><a href="classipaddress_1_1optional.html#a8b2993010f057e7834fee559ab1694ea">ipaddress::optional::value</a></div><div class="ttdeci">constexpr inline const value_type &amp;&amp; value() const &amp;&amp;noexcept</div><div class="ttdoc">Constant move access to the contained value.</div><div class="ttdef"><b>Definition</b> optional.hpp:220</div></div>
 <div class="ttc" id="aclassipaddress_1_1optional_html_a97f48ebe438f47460e3b9e150a8830fa"><div class="ttname"><a href="classipaddress_1_1optional.html#a97f48ebe438f47460e3b9e150a8830fa">ipaddress::optional::operator=</a></div><div class="ttdeci">constexpr inline optional &amp; operator=(const optional&lt; T &gt; &amp;opt) noexcept</div><div class="ttdoc">Assigns the value and the state of existence from another optional object.</div><div class="ttdef"><b>Definition</b> optional.hpp:100</div></div>
 <div class="ttc" id="aclassipaddress_1_1optional_html_aa691753c6e1f018c6f87482d66438176"><div class="ttname"><a href="classipaddress_1_1optional.html#aa691753c6e1f018c6f87482d66438176">ipaddress::optional::operator*</a></div><div class="ttdeci">constexpr inline value_type &amp; operator*() noexcept</div><div class="ttdoc">Reference access to the contained value.</div><div class="ttdef"><b>Definition</b> optional.hpp:138</div></div>
@@ -262,7 +369,10 @@ $(function(){initNavTree('optional_8hpp_source.html',''); initResizable(); });
 <div class="ttc" id="aclassipaddress_1_1optional_html_acd67d328e967079c86086dbac2c7585b"><div class="ttname"><a href="classipaddress_1_1optional.html#acd67d328e967079c86086dbac2c7585b">ipaddress::optional::operator*</a></div><div class="ttdeci">constexpr inline const value_type &amp; operator*() const noexcept</div><div class="ttdoc">Constant reference access to the contained value.</div><div class="ttdef"><b>Definition</b> optional.hpp:150</div></div>
 <div class="ttc" id="aclassipaddress_1_1optional_html_aefdd9f325b893ed80561213faf5be39b"><div class="ttname"><a href="classipaddress_1_1optional.html#aefdd9f325b893ed80561213faf5be39b">ipaddress::optional::operator=</a></div><div class="ttdeci">constexpr inline optional &amp; operator=(std::nullptr_t) noexcept</div><div class="ttdoc">Assignment operator that clears the contained value of the optional object.</div><div class="ttdef"><b>Definition</b> optional.hpp:76</div></div>
 <div class="ttc" id="aclassipaddress_1_1optional_html_af08ea15254a7adb77e090c20655ad844"><div class="ttname"><a href="classipaddress_1_1optional.html#af08ea15254a7adb77e090c20655ad844">ipaddress::optional::optional</a></div><div class="ttdeci">constexpr inline optional(const optional&lt; T &gt; &amp;opt) noexcept</div><div class="ttdoc">Copy constructor that constructs an optional object with a contained value, copying it from opt.</div><div class="ttdef"><b>Definition</b> optional.hpp:65</div></div>
-<div class="ttc" id="aconfig_8hpp_html"><div class="ttname"><a href="config_8hpp.html">config.hpp</a></div><div class="ttdoc">Defines macros for library configuration.</div></div>
+<div class="ttc" id="aconfig_8hpp_html_a7c6e8e32885550d898b7de8d1fd0e828"><div class="ttname"><a href="config_8hpp.html#a7c6e8e32885550d898b7de8d1fd0e828">IPADDRESS_NODISCARD</a></div><div class="ttdeci">#define IPADDRESS_NODISCARD</div><div class="ttdef"><b>Definition</b> config.hpp:83</div></div>
+<div class="ttc" id="aconfig_8hpp_html_aa38a708bf692a56b2b1f00cb14582617"><div class="ttname"><a href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a></div><div class="ttdeci">#define IPADDRESS_FORCE_INLINE</div><div class="ttdef"><b>Definition</b> config.hpp:97</div></div>
+<div class="ttc" id="aconfig_8hpp_html_ad0b1f2a1113cf0f75cc8e7468bcf56db"><div class="ttname"><a href="config_8hpp.html#ad0b1f2a1113cf0f75cc8e7468bcf56db">IPADDRESS_NAMESPACE</a></div><div class="ttdeci">#define IPADDRESS_NAMESPACE</div><div class="ttdef"><b>Definition</b> config.hpp:34</div></div>
+<div class="ttc" id="aconfig_8hpp_html_adea1f8ab9ec3e0c6a0a3ec7684871068"><div class="ttname"><a href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a></div><div class="ttdeci">#define IPADDRESS_NOEXCEPT</div><div class="ttdef"><b>Definition</b> config.hpp:74</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.10.0-->

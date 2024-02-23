@@ -1,0 +1,5 @@
+<map id="ipaddress::parse_error" name="ipaddress::parse_error">
+<area shape="rect" id="Node000001" title="Exception for errors encountered during IP address parsing." alt="" coords="5,79,172,104"/>
+<area shape="rect" id="Node000002" href="$classipaddress_1_1error.html" title="The primary exception class used by the IP address library." alt="" coords="27,5,151,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="91,44,91,79,86,79,86,44"/>
+</map>

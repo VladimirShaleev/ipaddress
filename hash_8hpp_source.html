@@ -36,6 +36,7 @@
 <link href="custom.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <a href="https://github.com/VladimirShaleev/ipaddress" class="github-corner" title="View source on GitHub" target="_blank" rel="noopener noreferrer">
@@ -119,20 +120,35 @@ $(function(){initNavTree('hash_8hpp_source.html',''); initResizable(); });
   <div class="headertitle"><div class="title">hash.hpp</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="hash_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#ifndef IPADDRESS_HASH_HPP</span></div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#define IPADDRESS_HASH_HPP</span></div>
+<a href="hash_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/**</span></div>
+<div class="line"><span class="lineno">    2</span><span class="comment"> * @file      hash.hpp</span></div>
+<div class="line"><span class="lineno">    3</span><span class="comment"> * @brief     Algorithms for calculating hash sums</span></div>
+<div class="line"><span class="lineno">    4</span><span class="comment"> * @author    Vladimir Shaleev</span></div>
+<div class="line"><span class="lineno">    5</span><span class="comment"> * @copyright MIT License</span></div>
+<div class="line"><span class="lineno">    6</span><span class="comment"> * </span></div>
+<div class="line"><span class="lineno">    7</span><span class="comment"> * The `hash.hpp` file contains hash templates and functions that can be used to </span></div>
+<div class="line"><span class="lineno">    8</span><span class="comment"> * hash IP addresses or other numeric data.</span></div>
+<div class="line"><span class="lineno">    9</span><span class="comment"> * </span></div>
+<div class="line"><span class="lineno">   10</span><span class="comment"> * This code uses patterns and specializations to optimize the hashing process </span></div>
+<div class="line"><span class="lineno">   11</span><span class="comment"> * for different sizes of data. Magic numbers and bitwise operations in hash_combine </span></div>
+<div class="line"><span class="lineno">   12</span><span class="comment"> * functions help distribute hash values evenly, which is important for avoiding </span></div>
+<div class="line"><span class="lineno">   13</span><span class="comment"> * collisions in hash tables. The hash_sum and calc_hash functions provide a convenient </span></div>
+<div class="line"><span class="lineno">   14</span><span class="comment"> * interface for calculating hash sums and computing the hash sum of multiple values.</span></div>
+<div class="line"><span class="lineno">   15</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#</span><span class="preprocessor">ifndef</span> <span class="preprocessor">IPADDRESS_HASH_HPP</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="preprocessor">IPADDRESS_HASH_HPP</span></div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &quot;<a class="code" href="config_8hpp.html">config.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#</span><span class="preprocessor">include</span> <a class="code" href="config_8hpp.html" title="Defines macros for library configuration.">&quot;config.hpp&quot;</a></div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keyword">namespace </span>IPADDRESS_NAMESPACE {</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keyword">namespace</span> <a class="code hl_define" href="config_8hpp.html#ad0b1f2a1113cf0f75cc8e7468bcf56db">IPADDRESS_NAMESPACE</a> {</div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">template</span> &lt;std::<span class="keywordtype">size_t</span> Size&gt;</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keyword">struct </span>hash_combine;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">template</span> &lt;std::size_t Size&gt;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keyword">struct</span> hash_combine;</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keyword">template</span> &lt;&gt;</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">struct </span>hash_combine&lt;4&gt; {</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::size_t operator()(std::uint32_t value) <span class="keyword">const</span> IPADDRESS_NOEXCEPT {</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">struct</span> hash_combine&lt;4&gt; {</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <a class="code hl_define" href="config_8hpp.html#a7c6e8e32885550d898b7de8d1fd0e828">IPADDRESS_NODISCARD</a> IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> std::size_t operator()(std::uint32_t value) <span class="keyword">const</span> <a class="code hl_define" href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a> {</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        value ^= value &gt;&gt; 16;</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        value *= 0x21f0aaad;</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        value ^= value &gt;&gt; 15;</div>
@@ -143,8 +159,8 @@ $(function(){initNavTree('hash_8hpp_source.html',''); initResizable(); });
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>};</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="keyword">template</span> &lt;&gt;</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="keyword">struct </span>hash_combine&lt;8&gt; {</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::size_t operator()(std::uint64_t value) <span class="keyword">const</span> IPADDRESS_NOEXCEPT {</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="keyword">struct</span> hash_combine&lt;8&gt; {</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <a class="code hl_define" href="config_8hpp.html#a7c6e8e32885550d898b7de8d1fd0e828">IPADDRESS_NODISCARD</a> IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> std::size_t operator()(std::uint64_t value) <span class="keyword">const</span> <a class="code hl_define" href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a> {</div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        value ^= value &gt;&gt; 32;</div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        value *= 0xe9846af9b1a615d;</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        value ^= value &gt;&gt; 32;</div>
@@ -154,26 +170,29 @@ $(function(){initNavTree('hash_8hpp_source.html',''); initResizable(); });
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    }</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>};</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::size_t hash_sum(std::size_t seed, std::size_t value) IPADDRESS_NOEXCEPT {</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><a class="code hl_define" href="config_8hpp.html#a7c6e8e32885550d898b7de8d1fd0e828">IPADDRESS_NODISCARD</a> IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> std::size_t hash_sum(std::size_t seed, std::size_t value) <a class="code hl_define" href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a> {</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    hash_combine&lt;<span class="keyword">sizeof</span>(std::size_t)&gt; hash{};</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <span class="keywordflow">return</span> hash(seed + 0x9e3779b9 + value);</div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>}</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Arg&gt;</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::size_t calc_hash(std::size_t seed, Arg arg) IPADDRESS_NOEXCEPT {</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><a class="code hl_define" href="config_8hpp.html#a7c6e8e32885550d898b7de8d1fd0e828">IPADDRESS_NODISCARD</a> IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> std::size_t calc_hash(std::size_t seed, Arg arg) <a class="code hl_define" href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a> {</div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="keywordflow">return</span> hash_sum(seed, arg);</div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>}</div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Arg, <span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::size_t calc_hash(std::size_t seed, Arg arg, Args... args) IPADDRESS_NOEXCEPT {</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><a class="code hl_define" href="config_8hpp.html#a7c6e8e32885550d898b7de8d1fd0e828">IPADDRESS_NODISCARD</a> IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> std::size_t calc_hash(std::size_t seed, Arg arg, Args... args) <a class="code hl_define" href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a> {</div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    seed = hash_sum(seed, std::size_t(arg));</div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keywordflow">return</span> calc_hash(seed, args...);</div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>}</div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>} <span class="comment">// namespace IPADDRESS_NAMESPACE</span></div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="preprocessor">#endif </span><span class="comment">// IPADDRESS_HASH_HPP</span></div>
-<div class="ttc" id="aconfig_8hpp_html"><div class="ttname"><a href="config_8hpp.html">config.hpp</a></div><div class="ttdoc">Defines macros for library configuration.</div></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="preprocessor">#</span><span class="preprocessor">endif</span> <span class="comment">// IPADDRESS_HASH_HPP</span></div>
+<div class="ttc" id="aconfig_8hpp_html_a7c6e8e32885550d898b7de8d1fd0e828"><div class="ttname"><a href="config_8hpp.html#a7c6e8e32885550d898b7de8d1fd0e828">IPADDRESS_NODISCARD</a></div><div class="ttdeci">#define IPADDRESS_NODISCARD</div><div class="ttdef"><b>Definition</b> config.hpp:83</div></div>
+<div class="ttc" id="aconfig_8hpp_html_aa38a708bf692a56b2b1f00cb14582617"><div class="ttname"><a href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a></div><div class="ttdeci">#define IPADDRESS_FORCE_INLINE</div><div class="ttdef"><b>Definition</b> config.hpp:97</div></div>
+<div class="ttc" id="aconfig_8hpp_html_ad0b1f2a1113cf0f75cc8e7468bcf56db"><div class="ttname"><a href="config_8hpp.html#ad0b1f2a1113cf0f75cc8e7468bcf56db">IPADDRESS_NAMESPACE</a></div><div class="ttdeci">#define IPADDRESS_NAMESPACE</div><div class="ttdef"><b>Definition</b> config.hpp:34</div></div>
+<div class="ttc" id="aconfig_8hpp_html_adea1f8ab9ec3e0c6a0a3ec7684871068"><div class="ttname"><a href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a></div><div class="ttdeci">#define IPADDRESS_NOEXCEPT</div><div class="ttdef"><b>Definition</b> config.hpp:74</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.10.0-->
