@@ -1318,6 +1318,12 @@ private:
 
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
+    /**
+     * User-defined literal for creating an ip_address from a fixed string at compile time.
+     * 
+     * @tparam FixedString A compile-time fixed string representing the IPv6 address.
+     * @return An ip_address object parsed from the fixed string.
+     */
     template <fixed_string FixedString>
     IPADDRESS_NODISCARD consteval IPADDRESS_FORCE_INLINE ip_address operator""_ip() IPADDRESS_NOEXCEPT {
         return ip_address::parse<FixedString>();
@@ -1325,9 +1331,64 @@ private:
 
 #else // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
+    /**
+     * User-defined literal for creating an ip_address from a string literal.
+     * 
+     * @param[in] address A pointer to a character array representing the IPv6 address.
+     * @param[in] size The size of the character array.
+     * @return An ip_address object parsed from the string literal.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const char* address, std::size_t size) IPADDRESS_NOEXCEPT {
         assert(size <= ipv6_address::base_max_string_len && "literal string is too long");
         char str[ipv6_address::base_max_string_len + 1] = {};
+        for (size_t i = 0; i < size; ++i) {
+            str[i] = address[i];
+        }
+        return ip_address::parse(str);
+    }
+
+    /**
+     * User-defined literal for creating an ip_address from a wide string literal.
+     * 
+     * @param[in] address A pointer to a character array representing the IPv6 address.
+     * @param[in] size The size of the character array.
+     * @return An ip_address object parsed from the string literal.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const wchar_t* address, std::size_t size) IPADDRESS_NOEXCEPT {
+        assert(size <= ipv6_address::base_max_string_len && "literal string is too long");
+        wchar_t str[ipv6_address::base_max_string_len + 1] = {};
+        for (size_t i = 0; i < size; ++i) {
+            str[i] = address[i];
+        }
+        return ip_address::parse(str);
+    }
+
+    /**
+     * User-defined literal for creating an ip_address from a UTF-16 string literal.
+     * 
+     * @param[in] address A pointer to a character array representing the IPv6 address.
+     * @param[in] size The size of the character array.
+     * @return An ip_address object parsed from the string literal.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const char16_t* address, std::size_t size) IPADDRESS_NOEXCEPT {
+        assert(size <= ipv6_address::base_max_string_len && "literal string is too long");
+        char16_t str[ipv6_address::base_max_string_len + 1] = {};
+        for (size_t i = 0; i < size; ++i) {
+            str[i] = address[i];
+        }
+        return ip_address::parse(str);
+    }
+
+    /**
+     * User-defined literal for creating an ip_address from a UTF-32 string literal.
+     * 
+     * @param[in] address A pointer to a character array representing the IPv6 address.
+     * @param[in] size The size of the character array.
+     * @return An ip_address object parsed from the string literal.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const char32_t* address, std::size_t size) IPADDRESS_NOEXCEPT {
+        assert(size <= ipv6_address::base_max_string_len && "literal string is too long");
+        char32_t str[ipv6_address::base_max_string_len + 1] = {};
         for (size_t i = 0; i < size; ++i) {
             str[i] = address[i];
         }
