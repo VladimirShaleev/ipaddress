@@ -54,8 +54,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"classipaddress_1_1uint128__t.html#a100905babd6134b81de15858b372c544",
-"ip-any-network_8hpp_source.html"
+"classipaddress_1_1ipv6__address__base.html#aedb73b7802b034df47c1dcdd9e50e5e7",
+"errors_8hpp.html#a40a4e212b0feb6daf5c03cdf256e262c",
+"structipaddress_1_1byte__array.html#a92684764e73698028936bd88caf6d817"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

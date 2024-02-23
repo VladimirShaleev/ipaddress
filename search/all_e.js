@@ -5,5 +5,5 @@ var searchData=
   ['reference_2',['reference',['../structipaddress_1_1byte__array.html#a47e6e30d4acccd0660a63a83ba2d3f71',1,'ipaddress::byte_array']]],
   ['rend_3',['rend',['../structipaddress_1_1byte__array.html#a9208a75717e47fb29411078ca2f2e9e2',1,'ipaddress::byte_array::rend()'],['../structipaddress_1_1fixed__string.html#aefd1f973f3b4c23131e69c671ac73c27',1,'ipaddress::fixed_string::rend()']]],
   ['reverse_5fiterator_4',['reverse_iterator',['../structipaddress_1_1byte__array.html#a3f79fc3c790b68ac8b2a546bbe744537',1,'ipaddress::byte_array']]],
-  ['reverse_5fpointer_5',['reverse_pointer',['../classipaddress_1_1ip__address__base.html#afc7162a429aff737db107584662baad5',1,'ipaddress::ip_address_base']]]
+  ['reverse_5fpointer_5',['reverse_pointer',['../classipaddress_1_1ip__address__base.html#afc7162a429aff737db107584662baad5',1,'ipaddress::ip_address_base::reverse_pointer()'],['../classipaddress_1_1ip__address.html#a94dc2c2cde37f123d65fa73b408c96a9',1,'ipaddress::ip_address::reverse_pointer()']]]
 ];

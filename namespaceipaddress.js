@@ -78,6 +78,7 @@ var namespaceipaddress =
     [ "make_fixed_string", "namespaceipaddress.html#a24fd4d84ed24d253236e58139ccc8b74", null ],
     [ "make_fixed_string", "namespaceipaddress.html#ac405aa2e474fe7a55e6adfa66aee1f53", null ],
     [ "make_fixed_string", "namespaceipaddress.html#a82ef0138709c21eee9e14b9c45e1e344", null ],
+    [ "operator\"\"_ip", "namespaceipaddress.html#a7c6f5030f081c1d075efbe9e4d78e539", null ],
     [ "operator\"\"_ipv4", "namespaceipaddress.html#aef2c2789536fe9450b1ee9d5637f4540", null ],
     [ "operator\"\"_ipv4", "namespaceipaddress.html#a60b579cc08a03e35fb2a690174a15fdf", null ],
     [ "operator\"\"_ipv6", "namespaceipaddress.html#a02e454651673e5856a8e39cc61c2b3bf", null ],

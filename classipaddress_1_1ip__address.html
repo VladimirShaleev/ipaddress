@@ -113,6 +113,7 @@ $(function(){initNavTree('classipaddress_1_1ip__address.html',''); initResizable
 
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classipaddress_1_1ip__address-members.html">List of all members</a>  </div>
@@ -120,28 +121,411 @@ $(function(){initNavTree('classipaddress_1_1ip__address.html',''); initResizable
 </div><!--header-->
 <div class="contents">
 
-<p>Represents IP address of both versions v4 and v6.  
+<p>A class that represents an IP address, supporting both IPv4 and IPv6 formats.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="ip-any-address_8hpp_source.html">ip-any-address.hpp</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a942ac9b100051d0f2a59bf3ead774d5e" id="r_a942ac9b100051d0f2a59bf3ead774d5e"><td class="memItemLeft" align="right" valign="top"><a id="a942ac9b100051d0f2a59bf3ead774d5e" name="a942ac9b100051d0f2a59bf3ead774d5e"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>base_type_ipv4</b> = typename <a class="el" href="classipaddress_1_1ip__address__base.html#ae6cbcdc51fae1518cd5f4918d831a10f">ipv4_address::base_type</a></td></tr>
+<tr class="memdesc:a942ac9b100051d0f2a59bf3ead774d5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base type for IPv4 address storage. <br /></td></tr>
+<tr class="separator:a942ac9b100051d0f2a59bf3ead774d5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a872da62583d4b69498c1aefa5663ac0f" id="r_a872da62583d4b69498c1aefa5663ac0f"><td class="memItemLeft" align="right" valign="top"><a id="a872da62583d4b69498c1aefa5663ac0f" name="a872da62583d4b69498c1aefa5663ac0f"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>base_type_ipv6</b> = typename <a class="el" href="classipaddress_1_1ip__address__base.html#ae6cbcdc51fae1518cd5f4918d831a10f">ipv6_address::base_type</a></td></tr>
+<tr class="memdesc:a872da62583d4b69498c1aefa5663ac0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Base type for IPv6 address storage. <br /></td></tr>
+<tr class="separator:a872da62583d4b69498c1aefa5663ac0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a460c930ae62f2d17dc21137309574a16" id="r_a460c930ae62f2d17dc21137309574a16"><td class="memItemLeft" align="right" valign="top"><a id="a460c930ae62f2d17dc21137309574a16" name="a460c930ae62f2d17dc21137309574a16"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>uint_type_ipv4</b> = typename <a class="el" href="classipaddress_1_1ip__address__base.html#a7c80eb5ba3ff7c13231c886d2161e0ab">ipv4_address::uint_type</a></td></tr>
+<tr class="memdesc:a460c930ae62f2d17dc21137309574a16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unsigned integer type for IPv4 address representation. <br /></td></tr>
+<tr class="separator:a460c930ae62f2d17dc21137309574a16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab14ebfad93bbd25914227aeca820f6be" id="r_ab14ebfad93bbd25914227aeca820f6be"><td class="memItemLeft" align="right" valign="top"><a id="ab14ebfad93bbd25914227aeca820f6be" name="ab14ebfad93bbd25914227aeca820f6be"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>uint_type_ipv6</b> = typename <a class="el" href="classipaddress_1_1ip__address__base.html#a7c80eb5ba3ff7c13231c886d2161e0ab">ipv6_address::uint_type</a></td></tr>
+<tr class="memdesc:ab14ebfad93bbd25914227aeca820f6be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unsigned integer type for IPv6 address representation. <br /></td></tr>
+<tr class="separator:ab14ebfad93bbd25914227aeca820f6be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a16ec2076c50ef6211a3f776cb2cdd19a" id="r_a16ec2076c50ef6211a3f776cb2cdd19a"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="namespaceipaddress.html#ace60f6a4856e90fa5be15ecf1cf0132e">ip_version</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a16ec2076c50ef6211a3f776cb2cdd19a">version</a> () const noexcept</td></tr>
-<tr class="memdesc:a16ec2076c50ef6211a3f776cb2cdd19a"><td class="mdescLeft">&#160;</td><td class="mdescRight">IP address version.  <br /></td></tr>
+<tr class="memdesc:a16ec2076c50ef6211a3f776cb2cdd19a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the version of the IP address.  <br /></td></tr>
 <tr class="separator:a16ec2076c50ef6211a3f776cb2cdd19a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6224f6c59e29fb4577f10d7e39aef98" id="r_ab6224f6c59e29fb4577f10d7e39aef98"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab6224f6c59e29fb4577f10d7e39aef98">is_multicast</a> () const noexcept</td></tr>
+<tr class="memdesc:ab6224f6c59e29fb4577f10d7e39aef98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the IP address is a multicast address.  <br /></td></tr>
+<tr class="separator:ab6224f6c59e29fb4577f10d7e39aef98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7cce24452cbdfc0d7cc2a8dc23357f1" id="r_ac7cce24452cbdfc0d7cc2a8dc23357f1"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac7cce24452cbdfc0d7cc2a8dc23357f1">is_private</a> () const noexcept</td></tr>
+<tr class="memdesc:ac7cce24452cbdfc0d7cc2a8dc23357f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the IP address is a private address.  <br /></td></tr>
+<tr class="separator:ac7cce24452cbdfc0d7cc2a8dc23357f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44f404aad076925a3288dc25c3adb403" id="r_a44f404aad076925a3288dc25c3adb403"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a44f404aad076925a3288dc25c3adb403">is_global</a> () const noexcept</td></tr>
+<tr class="memdesc:a44f404aad076925a3288dc25c3adb403"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the IP address is a global address.  <br /></td></tr>
+<tr class="separator:a44f404aad076925a3288dc25c3adb403"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaffab29c1978eb88719234abed221de3" id="r_aaffab29c1978eb88719234abed221de3"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaffab29c1978eb88719234abed221de3">is_reserved</a> () const noexcept</td></tr>
+<tr class="memdesc:aaffab29c1978eb88719234abed221de3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the IP address is a reserved address.  <br /></td></tr>
+<tr class="separator:aaffab29c1978eb88719234abed221de3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28029375adc16c95bc2be33b8193a86b" id="r_a28029375adc16c95bc2be33b8193a86b"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a28029375adc16c95bc2be33b8193a86b">is_loopback</a> () const noexcept</td></tr>
+<tr class="memdesc:a28029375adc16c95bc2be33b8193a86b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the IP address is a loopback address.  <br /></td></tr>
+<tr class="separator:a28029375adc16c95bc2be33b8193a86b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07d27a80db51bb9deb29505db1ed4ff7" id="r_a07d27a80db51bb9deb29505db1ed4ff7"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a07d27a80db51bb9deb29505db1ed4ff7">is_link_local</a> () const noexcept</td></tr>
+<tr class="memdesc:a07d27a80db51bb9deb29505db1ed4ff7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the IP address is link-local.  <br /></td></tr>
+<tr class="separator:a07d27a80db51bb9deb29505db1ed4ff7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb76bb747dd0dc66399ef3b9f9dad7fa" id="r_afb76bb747dd0dc66399ef3b9f9dad7fa"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afb76bb747dd0dc66399ef3b9f9dad7fa">is_unspecified</a> () const noexcept</td></tr>
+<tr class="memdesc:afb76bb747dd0dc66399ef3b9f9dad7fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the IP address is unspecified.  <br /></td></tr>
+<tr class="separator:afb76bb747dd0dc66399ef3b9f9dad7fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d3b0763f7aaa422952658c1c7f2d5fd" id="r_a3d3b0763f7aaa422952658c1c7f2d5fd"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3d3b0763f7aaa422952658c1c7f2d5fd">is_site_local</a> () const noexcept</td></tr>
+<tr class="memdesc:a3d3b0763f7aaa422952658c1c7f2d5fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the IPv6 address is a site-local address.  <br /></td></tr>
+<tr class="separator:a3d3b0763f7aaa422952658c1c7f2d5fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa26f7ca743edc3912d57a5df9297a41d" id="r_aa26f7ca743edc3912d57a5df9297a41d"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa26f7ca743edc3912d57a5df9297a41d">is_v4</a> () const noexcept</td></tr>
+<tr class="memdesc:aa26f7ca743edc3912d57a5df9297a41d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the IP address is an IPv4 address.  <br /></td></tr>
+<tr class="separator:aa26f7ca743edc3912d57a5df9297a41d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3989a5c89fed3a30efdeeefdb3ab13f" id="r_ad3989a5c89fed3a30efdeeefdb3ab13f"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad3989a5c89fed3a30efdeeefdb3ab13f">is_v6</a> () const noexcept</td></tr>
+<tr class="memdesc:ad3989a5c89fed3a30efdeeefdb3ab13f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the IP address is an IPv6 address.  <br /></td></tr>
+<tr class="separator:ad3989a5c89fed3a30efdeeefdb3ab13f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a051e9a727851b340f63701e9bd645ac3" id="r_a051e9a727851b340f63701e9bd645ac3"><td class="memItemLeft" align="right" valign="top">constexpr inline size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a051e9a727851b340f63701e9bd645ac3">size</a> () const noexcept</td></tr>
+<tr class="memdesc:a051e9a727851b340f63701e9bd645ac3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the size of the IPv4 address.  <br /></td></tr>
+<tr class="separator:a051e9a727851b340f63701e9bd645ac3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab1144481b66b7d333b5d9c56efe5834" id="r_aab1144481b66b7d333b5d9c56efe5834"><td class="memItemLeft" align="right" valign="top">constexpr inline size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aab1144481b66b7d333b5d9c56efe5834">hash</a> () const noexcept</td></tr>
+<tr class="memdesc:aab1144481b66b7d333b5d9c56efe5834"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes a hash value for the IP address.  <br /></td></tr>
+<tr class="separator:aab1144481b66b7d333b5d9c56efe5834"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c16ca52d1d9c204fa0530e65f57045e" id="r_a6c16ca52d1d9c204fa0530e65f57045e"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1optional.html">optional</a>&lt; <a class="el" href="namespaceipaddress.html#ab9d36790eab20692578a4e2e7d4f36f1">ipv4_address</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6c16ca52d1d9c204fa0530e65f57045e">ipv4_mapped</a> () const noexcept</td></tr>
+<tr class="memdesc:a6c16ca52d1d9c204fa0530e65f57045e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines if the IPv6 address is an IPv4-mapped address.  <br /></td></tr>
+<tr class="separator:a6c16ca52d1d9c204fa0530e65f57045e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a627380bdd28717224ac68d8b56b6d1ca" id="r_a627380bdd28717224ac68d8b56b6d1ca"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1optional.html">optional</a>&lt; <a class="el" href="namespaceipaddress.html#ab9d36790eab20692578a4e2e7d4f36f1">ipv4_address</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a627380bdd28717224ac68d8b56b6d1ca">sixtofour</a> () const noexcept</td></tr>
+<tr class="memdesc:a627380bdd28717224ac68d8b56b6d1ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines if the IPv6 address is a 6to4 address.  <br /></td></tr>
+<tr class="separator:a627380bdd28717224ac68d8b56b6d1ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad64b9c25ae34283c6412243d1e59be7d" id="r_ad64b9c25ae34283c6412243d1e59be7d"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1optional.html">optional</a>&lt; std::pair&lt; <a class="el" href="namespaceipaddress.html#ab9d36790eab20692578a4e2e7d4f36f1">ipv4_address</a>, <a class="el" href="namespaceipaddress.html#ab9d36790eab20692578a4e2e7d4f36f1">ipv4_address</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad64b9c25ae34283c6412243d1e59be7d">teredo</a> () const noexcept</td></tr>
+<tr class="memdesc:ad64b9c25ae34283c6412243d1e59be7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines if the IPv6 address is a Teredo address.  <br /></td></tr>
+<tr class="separator:ad64b9c25ae34283c6412243d1e59be7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f158559ed636c35ed7ed5d4e1ac1790" id="r_a7f158559ed636c35ed7ed5d4e1ac1790"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1optional.html">optional</a>&lt; <a class="el" href="namespaceipaddress.html#ab9d36790eab20692578a4e2e7d4f36f1">ipv4_address</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7f158559ed636c35ed7ed5d4e1ac1790">v4</a> () const noexcept</td></tr>
+<tr class="memdesc:a7f158559ed636c35ed7ed5d4e1ac1790"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the IPv4 address.  <br /></td></tr>
+<tr class="separator:a7f158559ed636c35ed7ed5d4e1ac1790"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb1a9b0d05a6b5bba4e0bcf635745532" id="r_acb1a9b0d05a6b5bba4e0bcf635745532"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1optional.html">optional</a>&lt; <a class="el" href="namespaceipaddress.html#a1e00093549b928c746d9e31081093ea9">ipv6_address</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acb1a9b0d05a6b5bba4e0bcf635745532">v6</a> () const noexcept</td></tr>
+<tr class="memdesc:acb1a9b0d05a6b5bba4e0bcf635745532"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the IPv6 address.  <br /></td></tr>
+<tr class="separator:acb1a9b0d05a6b5bba4e0bcf635745532"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a5190d8b769efcf6f9e5f049f076cf5" id="r_a1a5190d8b769efcf6f9e5f049f076cf5"><td class="memItemLeft" align="right" valign="top">constexpr inline const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1a5190d8b769efcf6f9e5f049f076cf5">data</a> () const noexcept</td></tr>
+<tr class="memdesc:a1a5190d8b769efcf6f9e5f049f076cf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the raw data of the IP address in <b>network byte order</b> (big-endian).  <br /></td></tr>
+<tr class="separator:a1a5190d8b769efcf6f9e5f049f076cf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9554cf1cd48599227c8de88fa8bf213a" id="r_a9554cf1cd48599227c8de88fa8bf213a"><td class="memItemLeft" align="right" valign="top">constexpr inline&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9554cf1cd48599227c8de88fa8bf213a">ip_address</a> () noexcept</td></tr>
+<tr class="memdesc:a9554cf1cd48599227c8de88fa8bf213a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <br /></td></tr>
+<tr class="separator:a9554cf1cd48599227c8de88fa8bf213a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a651fd384f5c61203048e21c058da89" id="r_a8a651fd384f5c61203048e21c058da89"><td class="memItemLeft" align="right" valign="top">constexpr inline&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8a651fd384f5c61203048e21c058da89">ip_address</a> (const <a class="el" href="namespaceipaddress.html#ab9d36790eab20692578a4e2e7d4f36f1">ipv4_address</a> &amp;ipv4) noexcept</td></tr>
+<tr class="memdesc:a8a651fd384f5c61203048e21c058da89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor from an ipv4_address.  <br /></td></tr>
+<tr class="separator:a8a651fd384f5c61203048e21c058da89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0451245f66e0e99b2a86e479d2b7a348" id="r_a0451245f66e0e99b2a86e479d2b7a348"><td class="memItemLeft" align="right" valign="top">constexpr inline&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0451245f66e0e99b2a86e479d2b7a348">ip_address</a> (const <a class="el" href="namespaceipaddress.html#a1e00093549b928c746d9e31081093ea9">ipv6_address</a> &amp;ipv6) noexcept</td></tr>
+<tr class="memdesc:a0451245f66e0e99b2a86e479d2b7a348"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor from an ipv6_address.  <br /></td></tr>
+<tr class="separator:a0451245f66e0e99b2a86e479d2b7a348"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05ecab3b60dc62601ad875de3b5746b3" id="r_a05ecab3b60dc62601ad875de3b5746b3"><td class="memItemLeft" align="right" valign="top">constexpr inline&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a05ecab3b60dc62601ad875de3b5746b3">ip_address</a> (const <a class="el" href="#a942ac9b100051d0f2a59bf3ead774d5e">base_type_ipv4</a> &amp;bytes) noexcept</td></tr>
+<tr class="memdesc:a05ecab3b60dc62601ad875de3b5746b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor from byte array for IPv4.  <br /></td></tr>
+<tr class="separator:a05ecab3b60dc62601ad875de3b5746b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c31fc31002b28be50d5b351b09d71da" id="r_a4c31fc31002b28be50d5b351b09d71da"><td class="memItemLeft" align="right" valign="top">constexpr inline&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4c31fc31002b28be50d5b351b09d71da">ip_address</a> (const <a class="el" href="#a872da62583d4b69498c1aefa5663ac0f">base_type_ipv6</a> &amp;bytes) noexcept</td></tr>
+<tr class="memdesc:a4c31fc31002b28be50d5b351b09d71da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor from byte array for IPv6.  <br /></td></tr>
+<tr class="separator:a4c31fc31002b28be50d5b351b09d71da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41df88fbb5c11ebb3579b02ece93209f" id="r_a41df88fbb5c11ebb3579b02ece93209f"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1uint128__t.html">uint128_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a41df88fbb5c11ebb3579b02ece93209f">to_uint</a> () const noexcept</td></tr>
+<tr class="memdesc:a41df88fbb5c11ebb3579b02ece93209f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the IP address to a <a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a>.  <br /></td></tr>
+<tr class="separator:a41df88fbb5c11ebb3579b02ece93209f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7712e3c887f642cc95519cb032774e85" id="r_a7712e3c887f642cc95519cb032774e85"><td class="memItemLeft" align="right" valign="top">inline std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7712e3c887f642cc95519cb032774e85">to_string</a> (<a class="el" href="namespaceipaddress.html#ab54b11d879107889b3bf313724c4b611">format</a> fmt=<a class="el" href="namespaceipaddress.html#ab54b11d879107889b3bf313724c4b611a2b98a4ad988a18c42682f388901f2672">format::compressed</a>) const</td></tr>
+<tr class="memdesc:a7712e3c887f642cc95519cb032774e85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the IP address to a string.  <br /></td></tr>
+<tr class="separator:a7712e3c887f642cc95519cb032774e85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94dc2c2cde37f123d65fa73b408c96a9" id="r_a94dc2c2cde37f123d65fa73b408c96a9"><td class="memItemLeft" align="right" valign="top">inline std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a94dc2c2cde37f123d65fa73b408c96a9">reverse_pointer</a> () const</td></tr>
+<tr class="memdesc:a94dc2c2cde37f123d65fa73b408c96a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a reverse DNS lookup pointer for the IP address.  <br /></td></tr>
+<tr class="separator:a94dc2c2cde37f123d65fa73b408c96a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad93a08eb7e563275f259b9a068627f9e" id="r_ad93a08eb7e563275f259b9a068627f9e"><td class="memItemLeft" align="right" valign="top">constexpr inline void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad93a08eb7e563275f259b9a068627f9e">swap</a> (<a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> &amp;ip) noexcept</td></tr>
+<tr class="memdesc:ad93a08eb7e563275f259b9a068627f9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swaps the contents of this <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> with another <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a>.  <br /></td></tr>
+<tr class="separator:ad93a08eb7e563275f259b9a068627f9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a510a76b49cc7fd6db501748a6bd00c90" id="r_a510a76b49cc7fd6db501748a6bd00c90"><td class="memItemLeft" align="right" valign="top">constexpr inline void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a510a76b49cc7fd6db501748a6bd00c90">set_scope_id</a> (std::string_view scope_id)</td></tr>
+<tr class="memdesc:a510a76b49cc7fd6db501748a6bd00c90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the scope identifier of the IPv6 address using a string view.  <br /></td></tr>
+<tr class="separator:a510a76b49cc7fd6db501748a6bd00c90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af05f749a3f04548c7989e31f5cc2863e" id="r_af05f749a3f04548c7989e31f5cc2863e"><td class="memItemLeft" align="right" valign="top">constexpr inline void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af05f749a3f04548c7989e31f5cc2863e">set_scope_id</a> (std::wstring_view scope_id)</td></tr>
+<tr class="memdesc:af05f749a3f04548c7989e31f5cc2863e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the scope identifier of the IPv6 address using a wide string view.  <br /></td></tr>
+<tr class="separator:af05f749a3f04548c7989e31f5cc2863e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e751a2ce57afb9c68721bed6c8782aa" id="r_a2e751a2ce57afb9c68721bed6c8782aa"><td class="memItemLeft" align="right" valign="top">constexpr inline void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2e751a2ce57afb9c68721bed6c8782aa">set_scope_id</a> (std::u8string_view scope_id)</td></tr>
+<tr class="memdesc:a2e751a2ce57afb9c68721bed6c8782aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the scope identifier of the IPv6 address using UTF-8 string view.  <br /></td></tr>
+<tr class="separator:a2e751a2ce57afb9c68721bed6c8782aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35f549e912f4fa1b69edb142ff39d4d4" id="r_a35f549e912f4fa1b69edb142ff39d4d4"><td class="memItemLeft" align="right" valign="top">constexpr inline void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a35f549e912f4fa1b69edb142ff39d4d4">set_scope_id</a> (std::u16string_view scope_id)</td></tr>
+<tr class="memdesc:a35f549e912f4fa1b69edb142ff39d4d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the scope identifier of the IPv6 address using UTF-16 string view.  <br /></td></tr>
+<tr class="separator:a35f549e912f4fa1b69edb142ff39d4d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac916fb93e7337ab75af157f16e122d3f" id="r_ac916fb93e7337ab75af157f16e122d3f"><td class="memItemLeft" align="right" valign="top">constexpr inline void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac916fb93e7337ab75af157f16e122d3f">set_scope_id</a> (std::u32string_view scope_id)</td></tr>
+<tr class="memdesc:ac916fb93e7337ab75af157f16e122d3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the scope identifier of the IPv6 address using UTF-32 string view.  <br /></td></tr>
+<tr class="separator:ac916fb93e7337ab75af157f16e122d3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae14254dafd25c40047f1205d821c5a71" id="r_ae14254dafd25c40047f1205d821c5a71"><td class="memItemLeft" align="right" valign="top">constexpr inline void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae14254dafd25c40047f1205d821c5a71">set_scope_id</a> (std::string_view scope_id, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;code) noexcept</td></tr>
+<tr class="memdesc:ae14254dafd25c40047f1205d821c5a71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the scope identifier of the IPv6 address using a string view and reports any errors encountered.  <br /></td></tr>
+<tr class="separator:ae14254dafd25c40047f1205d821c5a71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6849c30858e96ef9457f6a5ffa26574" id="r_aa6849c30858e96ef9457f6a5ffa26574"><td class="memItemLeft" align="right" valign="top">constexpr inline void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa6849c30858e96ef9457f6a5ffa26574">set_scope_id</a> (std::wstring_view scope_id, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;code) noexcept</td></tr>
+<tr class="memdesc:aa6849c30858e96ef9457f6a5ffa26574"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the scope identifier of the IPv6 address using a wide string view and reports any errors encountered.  <br /></td></tr>
+<tr class="separator:aa6849c30858e96ef9457f6a5ffa26574"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade501712feb61d877961b62cf0d1f462" id="r_ade501712feb61d877961b62cf0d1f462"><td class="memItemLeft" align="right" valign="top">constexpr inline void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ade501712feb61d877961b62cf0d1f462">set_scope_id</a> (std::u8string_view scope_id, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;code) noexcept</td></tr>
+<tr class="memdesc:ade501712feb61d877961b62cf0d1f462"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the scope identifier of the IPv6 address using a UTF-8 string view and reports any errors encountered.  <br /></td></tr>
+<tr class="separator:ade501712feb61d877961b62cf0d1f462"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc4b450d19f763cb2423663ebd18674f" id="r_abc4b450d19f763cb2423663ebd18674f"><td class="memItemLeft" align="right" valign="top">constexpr inline void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abc4b450d19f763cb2423663ebd18674f">set_scope_id</a> (std::u16string_view scope_id, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;code) noexcept</td></tr>
+<tr class="memdesc:abc4b450d19f763cb2423663ebd18674f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the scope identifier of the IPv6 address using a UTF-16 string view and reports any errors encountered.  <br /></td></tr>
+<tr class="separator:abc4b450d19f763cb2423663ebd18674f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a919cd712af69c1f4a0b6b6cf69c43cfa" id="r_a919cd712af69c1f4a0b6b6cf69c43cfa"><td class="memItemLeft" align="right" valign="top">constexpr inline void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a919cd712af69c1f4a0b6b6cf69c43cfa">set_scope_id</a> (std::u32string_view scope_id, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;code) noexcept</td></tr>
+<tr class="memdesc:a919cd712af69c1f4a0b6b6cf69c43cfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the scope identifier of the IPv6 address using a UTF-32 string view and reports any errors encountered.  <br /></td></tr>
+<tr class="separator:a919cd712af69c1f4a0b6b6cf69c43cfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0d3dc9c0e481964211ef30a6494c008" id="r_af0d3dc9c0e481964211ef30a6494c008"><td class="memTemplParams" colspan="2">template&lt;typename T , size_t N&gt; </td></tr>
+<tr class="memitem:af0d3dc9c0e481964211ef30a6494c008"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#af0d3dc9c0e481964211ef30a6494c008">set_scope_id</a> (const T(&amp;scope_id)[N]) noexcept</td></tr>
+<tr class="memdesc:af0d3dc9c0e481964211ef30a6494c008"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the scope identifier of the IPv6 address.  <br /></td></tr>
+<tr class="separator:af0d3dc9c0e481964211ef30a6494c008"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78617069e8fe52999fa3ef802bd30ad9" id="r_a78617069e8fe52999fa3ef802bd30ad9"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1scope.html">scope</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a78617069e8fe52999fa3ef802bd30ad9">get_scope_id</a> () const noexcept</td></tr>
+<tr class="memdesc:a78617069e8fe52999fa3ef802bd30ad9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the scope identifier of the IPv6 address.  <br /></td></tr>
+<tr class="separator:a78617069e8fe52999fa3ef802bd30ad9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65367795c1b3893bf4e90d902db3b342" id="r_a65367795c1b3893bf4e90d902db3b342"><td class="memItemLeft" align="right" valign="top">constexpr inline&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a65367795c1b3893bf4e90d902db3b342">operator uint32_t</a> () const noexcept</td></tr>
+<tr class="memdesc:a65367795c1b3893bf4e90d902db3b342"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the IP address to a uint32_t.  <br /></td></tr>
+<tr class="separator:a65367795c1b3893bf4e90d902db3b342"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af01677c163f81b2aebd07eea5794ec2d" id="r_af01677c163f81b2aebd07eea5794ec2d"><td class="memItemLeft" align="right" valign="top">constexpr inline&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af01677c163f81b2aebd07eea5794ec2d">operator uint128_t</a> () const noexcept</td></tr>
+<tr class="memdesc:af01677c163f81b2aebd07eea5794ec2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the IP address to a <a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a>.  <br /></td></tr>
+<tr class="separator:af01677c163f81b2aebd07eea5794ec2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c3680bbbbbcd47537d6430e1e7d2e64" id="r_a6c3680bbbbbcd47537d6430e1e7d2e64"><td class="memItemLeft" align="right" valign="top">inline&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6c3680bbbbbcd47537d6430e1e7d2e64">operator std::string</a> () const</td></tr>
+<tr class="memdesc:a6c3680bbbbbcd47537d6430e1e7d2e64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the IP address to a string.  <br /></td></tr>
+<tr class="separator:a6c3680bbbbbcd47537d6430e1e7d2e64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a744b1b3f26167089ab0204972324ba1f" id="r_a744b1b3f26167089ab0204972324ba1f"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a744b1b3f26167089ab0204972324ba1f">operator==</a> (const <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> &amp;rhs) const noexcept</td></tr>
+<tr class="memdesc:a744b1b3f26167089ab0204972324ba1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Equality comparison operator.  <br /></td></tr>
+<tr class="separator:a744b1b3f26167089ab0204972324ba1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23d01be1805cb8b7522c44d69b4b8c89" id="r_a23d01be1805cb8b7522c44d69b4b8c89"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a23d01be1805cb8b7522c44d69b4b8c89">operator!=</a> (const <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> &amp;rhs) const noexcept</td></tr>
+<tr class="memdesc:a23d01be1805cb8b7522c44d69b4b8c89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inequality comparison operator.  <br /></td></tr>
+<tr class="separator:a23d01be1805cb8b7522c44d69b4b8c89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecbcb93cabb4e9760e916bb7b186a7a3" id="r_aecbcb93cabb4e9760e916bb7b186a7a3"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aecbcb93cabb4e9760e916bb7b186a7a3">operator&lt;</a> (const <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> &amp;rhs) const noexcept</td></tr>
+<tr class="memdesc:aecbcb93cabb4e9760e916bb7b186a7a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Less than comparison operator.  <br /></td></tr>
+<tr class="separator:aecbcb93cabb4e9760e916bb7b186a7a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34ad1a281effd96ef04e6b223fb8c8c2" id="r_a34ad1a281effd96ef04e6b223fb8c8c2"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a34ad1a281effd96ef04e6b223fb8c8c2">operator&gt;</a> (const <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> &amp;rhs) const noexcept</td></tr>
+<tr class="memdesc:a34ad1a281effd96ef04e6b223fb8c8c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Greater than comparison operator.  <br /></td></tr>
+<tr class="separator:a34ad1a281effd96ef04e6b223fb8c8c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae256a624fefcb24e2ad83cd8b97c5bab" id="r_ae256a624fefcb24e2ad83cd8b97c5bab"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae256a624fefcb24e2ad83cd8b97c5bab">operator&lt;=</a> (const <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> &amp;rhs) const noexcept</td></tr>
+<tr class="memdesc:ae256a624fefcb24e2ad83cd8b97c5bab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Less than or equal to comparison operator.  <br /></td></tr>
+<tr class="separator:ae256a624fefcb24e2ad83cd8b97c5bab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaab1ed23d1824de324400f6d6afcffce" id="r_aaab1ed23d1824de324400f6d6afcffce"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaab1ed23d1824de324400f6d6afcffce">operator&gt;=</a> (const <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> &amp;rhs) const noexcept</td></tr>
+<tr class="memdesc:aaab1ed23d1824de324400f6d6afcffce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Greater than or equal to comparison operator.  <br /></td></tr>
+<tr class="separator:aaab1ed23d1824de324400f6d6afcffce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a67560b472e45f5ebddafffecf5dd7246" id="r_a67560b472e45f5ebddafffecf5dd7246"><td class="memItemLeft" align="right" valign="top">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a67560b472e45f5ebddafffecf5dd7246">from_bytes</a> (const <a class="el" href="#a942ac9b100051d0f2a59bf3ead774d5e">base_type_ipv4</a> &amp;bytes) noexcept</td></tr>
+<tr class="memdesc:a67560b472e45f5ebddafffecf5dd7246"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static factory method to create an <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> from byte array for IPv4.  <br /></td></tr>
+<tr class="separator:a67560b472e45f5ebddafffecf5dd7246"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0503aa44567a4d7a337368090a19a154" id="r_a0503aa44567a4d7a337368090a19a154"><td class="memItemLeft" align="right" valign="top">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0503aa44567a4d7a337368090a19a154">from_bytes</a> (const <a class="el" href="#a872da62583d4b69498c1aefa5663ac0f">base_type_ipv6</a> &amp;bytes) noexcept</td></tr>
+<tr class="memdesc:a0503aa44567a4d7a337368090a19a154"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static factory method to create an <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> from byte array for IPv6.  <br /></td></tr>
+<tr class="separator:a0503aa44567a4d7a337368090a19a154"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe8e2743d2b056522cf1a0b09c57faa3" id="r_afe8e2743d2b056522cf1a0b09c57faa3"><td class="memItemLeft" align="right" valign="top">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afe8e2743d2b056522cf1a0b09c57faa3">from_bytes</a> (const uint8_t *bytes, size_t byte_count, <a class="el" href="namespaceipaddress.html#ace60f6a4856e90fa5be15ecf1cf0132e">ip_version</a> <a class="el" href="#a16ec2076c50ef6211a3f776cb2cdd19a">version</a>) noexcept</td></tr>
+<tr class="memdesc:afe8e2743d2b056522cf1a0b09c57faa3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static factory method to create an <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> from raw bytes.  <br /></td></tr>
+<tr class="separator:afe8e2743d2b056522cf1a0b09c57faa3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e7bfba2057a4667e8c64a5e13b651d2" id="r_a7e7bfba2057a4667e8c64a5e13b651d2"><td class="memItemLeft" align="right" valign="top">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7e7bfba2057a4667e8c64a5e13b651d2">from_uint</a> (<a class="el" href="#a460c930ae62f2d17dc21137309574a16">uint_type_ipv4</a> ip) noexcept</td></tr>
+<tr class="memdesc:a7e7bfba2057a4667e8c64a5e13b651d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static factory method to create an <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> from a uint_type_ipv4.  <br /></td></tr>
+<tr class="separator:a7e7bfba2057a4667e8c64a5e13b651d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa727d6135350885c18afb7c4f45fdbb3" id="r_aa727d6135350885c18afb7c4f45fdbb3"><td class="memItemLeft" align="right" valign="top">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa727d6135350885c18afb7c4f45fdbb3">from_uint</a> (const <a class="el" href="#ab14ebfad93bbd25914227aeca820f6be">uint_type_ipv6</a> &amp;ip) noexcept</td></tr>
+<tr class="memdesc:aa727d6135350885c18afb7c4f45fdbb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static factory method to create an <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> from a uint_type_ipv6.  <br /></td></tr>
+<tr class="separator:aa727d6135350885c18afb7c4f45fdbb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae392f27610452464fb0ea5271d300ff1" id="r_ae392f27610452464fb0ea5271d300ff1"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a> FixedString&gt; </td></tr>
+<tr class="memitem:ae392f27610452464fb0ea5271d300ff1"><td class="memTemplItemLeft" align="right" valign="top">static consteval inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ae392f27610452464fb0ea5271d300ff1">parse</a> () noexcept</td></tr>
+<tr class="memdesc:ae392f27610452464fb0ea5271d300ff1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static method template to parse an IP address from a fixed string at compile time.  <br /></td></tr>
+<tr class="separator:ae392f27610452464fb0ea5271d300ff1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08cf710198d4660c5b005de35372d495" id="r_a08cf710198d4660c5b005de35372d495"><td class="memItemLeft" align="right" valign="top">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a08cf710198d4660c5b005de35372d495">parse</a> (std::string_view address)</td></tr>
+<tr class="memdesc:a08cf710198d4660c5b005de35372d495"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses an IP address from a string view.  <br /></td></tr>
+<tr class="separator:a08cf710198d4660c5b005de35372d495"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ce3401a8aa8eccffba978d4774fdda7" id="r_a8ce3401a8aa8eccffba978d4774fdda7"><td class="memItemLeft" align="right" valign="top">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8ce3401a8aa8eccffba978d4774fdda7">parse</a> (std::wstring_view address)</td></tr>
+<tr class="memdesc:a8ce3401a8aa8eccffba978d4774fdda7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses an IP address from a wide string view.  <br /></td></tr>
+<tr class="separator:a8ce3401a8aa8eccffba978d4774fdda7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45c863e76de23747df747e6ff3c5e1a4" id="r_a45c863e76de23747df747e6ff3c5e1a4"><td class="memItemLeft" align="right" valign="top">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a45c863e76de23747df747e6ff3c5e1a4">parse</a> (std::u8string_view address)</td></tr>
+<tr class="memdesc:a45c863e76de23747df747e6ff3c5e1a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses an IP address from a UTF-8 string view.  <br /></td></tr>
+<tr class="separator:a45c863e76de23747df747e6ff3c5e1a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa23d6de7284b38232bee5ea000220933" id="r_aa23d6de7284b38232bee5ea000220933"><td class="memItemLeft" align="right" valign="top">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa23d6de7284b38232bee5ea000220933">parse</a> (std::u16string_view address)</td></tr>
+<tr class="memdesc:aa23d6de7284b38232bee5ea000220933"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses an IP address from a UTF-16 string view.  <br /></td></tr>
+<tr class="separator:aa23d6de7284b38232bee5ea000220933"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34b192545d1895082560274c91bad390" id="r_a34b192545d1895082560274c91bad390"><td class="memItemLeft" align="right" valign="top">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a34b192545d1895082560274c91bad390">parse</a> (std::u32string_view address)</td></tr>
+<tr class="memdesc:a34b192545d1895082560274c91bad390"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses an IP address from a UTF-32 string view.  <br /></td></tr>
+<tr class="separator:a34b192545d1895082560274c91bad390"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a207e6d67cf24ffd26ffa2f578905bb0e" id="r_a207e6d67cf24ffd26ffa2f578905bb0e"><td class="memItemLeft" align="right" valign="top">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a207e6d67cf24ffd26ffa2f578905bb0e">parse</a> (std::string_view address, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;code) noexcept</td></tr>
+<tr class="memdesc:a207e6d67cf24ffd26ffa2f578905bb0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses an IP address from a string view and reports errors through an error code.  <br /></td></tr>
+<tr class="separator:a207e6d67cf24ffd26ffa2f578905bb0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04c197489894b0194558bb6b4916387c" id="r_a04c197489894b0194558bb6b4916387c"><td class="memItemLeft" align="right" valign="top">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a04c197489894b0194558bb6b4916387c">parse</a> (std::wstring_view address, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;code) noexcept</td></tr>
+<tr class="memdesc:a04c197489894b0194558bb6b4916387c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses an IP address from a wide string view and reports errors through an error code.  <br /></td></tr>
+<tr class="separator:a04c197489894b0194558bb6b4916387c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeef17c7cccafdb26e55f8ebaf5363aa9" id="r_aeef17c7cccafdb26e55f8ebaf5363aa9"><td class="memItemLeft" align="right" valign="top">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeef17c7cccafdb26e55f8ebaf5363aa9">parse</a> (std::u8string_view address, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;code) noexcept</td></tr>
+<tr class="memdesc:aeef17c7cccafdb26e55f8ebaf5363aa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses an IP address from a UTF-8 string view and reports errors through an error code.  <br /></td></tr>
+<tr class="separator:aeef17c7cccafdb26e55f8ebaf5363aa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff8f9565077add2f9bc1f0ac84f8b232" id="r_aff8f9565077add2f9bc1f0ac84f8b232"><td class="memItemLeft" align="right" valign="top">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aff8f9565077add2f9bc1f0ac84f8b232">parse</a> (std::u16string_view address, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;code) noexcept</td></tr>
+<tr class="memdesc:aff8f9565077add2f9bc1f0ac84f8b232"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses an IP address from a UTF-16 string view and reports errors through an error code.  <br /></td></tr>
+<tr class="separator:aff8f9565077add2f9bc1f0ac84f8b232"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab54faa1bba87ecf9e049714dfa18bafd" id="r_ab54faa1bba87ecf9e049714dfa18bafd"><td class="memItemLeft" align="right" valign="top">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab54faa1bba87ecf9e049714dfa18bafd">parse</a> (std::u32string_view address, <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;code) noexcept</td></tr>
+<tr class="memdesc:ab54faa1bba87ecf9e049714dfa18bafd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses an IP address from a UTF-32 string view and reports errors through an error code.  <br /></td></tr>
+<tr class="separator:ab54faa1bba87ecf9e049714dfa18bafd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49d8c62d6640405dd14c92f45b37e7b6" id="r_a49d8c62d6640405dd14c92f45b37e7b6"><td class="memTemplParams" colspan="2">template&lt;typename T , size_t N&gt; </td></tr>
+<tr class="memitem:a49d8c62d6640405dd14c92f45b37e7b6"><td class="memTemplItemLeft" align="right" valign="top">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a49d8c62d6640405dd14c92f45b37e7b6">parse</a> (const T(&amp;address)[N])</td></tr>
+<tr class="memdesc:a49d8c62d6640405dd14c92f45b37e7b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses an IP address from a character array.  <br /></td></tr>
+<tr class="separator:a49d8c62d6640405dd14c92f45b37e7b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab5124c3bffb5355856d08eed175a7b10" id="r_ab5124c3bffb5355856d08eed175a7b10"><td class="memTemplParams" colspan="2">template&lt;typename T , size_t N&gt; </td></tr>
 <tr class="memitem:ab5124c3bffb5355856d08eed175a7b10"><td class="memTemplItemLeft" align="right" valign="top">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ab5124c3bffb5355856d08eed175a7b10">parse</a> (const T(&amp;address)[N], <a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;code) noexcept</td></tr>
-<tr class="memdesc:ab5124c3bffb5355856d08eed175a7b10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test.  <br /></td></tr>
+<tr class="memdesc:ab5124c3bffb5355856d08eed175a7b10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses an IP address from a character array and reports errors through an error code.  <br /></td></tr>
 <tr class="separator:ab5124c3bffb5355856d08eed175a7b10"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Represents IP address of both versions v4 and v6. </p>
-<p>It is union of ipv4_address and ipv6_address. Therefore, the final size of an instance of this type will always include ipv6_address. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+<div class="textblock"><p>A class that represents an IP address, supporting both IPv4 and IPv6 formats. </p>
+<p>The <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> class is a union-type structure that encapsulates both ipv4_address and ipv6_address, allowing for the representation and manipulation of both IPv4 and IPv6 addresses. It provides a set of functions and type aliases that facilitate the handling of IP addresses in a network context, making it a versatile tool for developers working with IP-based communications.</p>
+<p>The class ensures that the size of its instances will always be large enough to store an IPv6 address, which is the larger of the two address types. This design guarantees that an <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> object can store any valid IP address, regardless of its version, without the need for separate storage mechanisms. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a9554cf1cd48599227c8de88fa8bf213a" name="a9554cf1cd48599227c8de88fa8bf213a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9554cf1cd48599227c8de88fa8bf213a">&#9670;&#160;</a></span>ip_address() <span class="overload">[1/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline ipaddress::ip_address::ip_address </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Default constructor. </p>
+<p>Constructs an <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> object with an unspecified ip address with version IPv4. </p>
+
+</div>
+</div>
+<a id="a8a651fd384f5c61203048e21c058da89" name="a8a651fd384f5c61203048e21c058da89"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a651fd384f5c61203048e21c058da89">&#9670;&#160;</a></span>ip_address() <span class="overload">[2/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline ipaddress::ip_address::ip_address </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespaceipaddress.html#ab9d36790eab20692578a4e2e7d4f36f1">ipv4_address</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>ipv4</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructor from an ipv4_address. </p>
+<p>Constructs an <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> object with the specified IPv4 address.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ipv4</td><td>An ipv4_address object to initialize the <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a0451245f66e0e99b2a86e479d2b7a348" name="a0451245f66e0e99b2a86e479d2b7a348"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0451245f66e0e99b2a86e479d2b7a348">&#9670;&#160;</a></span>ip_address() <span class="overload">[3/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline ipaddress::ip_address::ip_address </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespaceipaddress.html#a1e00093549b928c746d9e31081093ea9">ipv6_address</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>ipv6</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructor from an ipv6_address. </p>
+<p>Constructs an <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> object with the specified IPv6 address.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ipv6</td><td>An ipv6_address object to initialize the <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a05ecab3b60dc62601ad875de3b5746b3" name="a05ecab3b60dc62601ad875de3b5746b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05ecab3b60dc62601ad875de3b5746b3">&#9670;&#160;</a></span>ip_address() <span class="overload">[4/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline ipaddress::ip_address::ip_address </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a942ac9b100051d0f2a59bf3ead774d5e">base_type_ipv4</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>bytes</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructor from byte array for IPv4. </p>
+<p>Constructs an <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> object with the specified byte array for an IPv4 address.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">bytes</td><td>A base_type_ipv4 object representing the byte array of the IPv4 address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4c31fc31002b28be50d5b351b09d71da" name="a4c31fc31002b28be50d5b351b09d71da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c31fc31002b28be50d5b351b09d71da">&#9670;&#160;</a></span>ip_address() <span class="overload">[5/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline ipaddress::ip_address::ip_address </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a872da62583d4b69498c1aefa5663ac0f">base_type_ipv6</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>bytes</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructor from byte array for IPv6. </p>
+<p>Constructs an <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> object with the specified byte array for an IPv6 address.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">bytes</td><td>A base_type_ipv6 object representing the byte array of the IPv6 address. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="a16ec2076c50ef6211a3f776cb2cdd19a" name="a16ec2076c50ef6211a3f776cb2cdd19a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a16ec2076c50ef6211a3f776cb2cdd19a">&#9670;&#160;</a></span>version()</h2>
 
@@ -165,14 +549,1805 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>IP address version. </p>
-<p>Returns the IP-version for the current instance.</p>
-<dl class="section return"><dt>Returns</dt><dd>The appropriate version number: 4 for IPv4, 6 for IPv6. </dd></dl>
+<p>Retrieves the version of the IP address. </p>
+<dl class="section return"><dt>Returns</dt><dd>The version of the IP address, either IPv4 or IPv6. </dd></dl>
+
+</div>
+</div>
+<a id="ab6224f6c59e29fb4577f10d7e39aef98" name="ab6224f6c59e29fb4577f10d7e39aef98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6224f6c59e29fb4577f10d7e39aef98">&#9670;&#160;</a></span>is_multicast()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline bool ipaddress::ip_address::is_multicast </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if the IP address is a multicast address. </p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the IP address is reserved for multicast use, <code>false</code> otherwise. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://datatracker.ietf.org/doc/html/rfc3171.html">RFC 3171</a> for IPv4. </dd>
+<dd>
+<a href="https://datatracker.ietf.org/doc/html/rfc2373.html">RFC 2373</a> for IPv6. </dd></dl>
+
+</div>
+</div>
+<a id="ac7cce24452cbdfc0d7cc2a8dc23357f1" name="ac7cce24452cbdfc0d7cc2a8dc23357f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7cce24452cbdfc0d7cc2a8dc23357f1">&#9670;&#160;</a></span>is_private()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline bool ipaddress::ip_address::is_private </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if the IP address is a private address. </p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the IP address is allocated for private networks, <code>false</code> otherwise. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml">iana-ipv4-special-registry</a>. </dd>
+<dd>
+<a href="https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml">iana-ipv6-special-registry</a>. </dd></dl>
+
+</div>
+</div>
+<a id="a44f404aad076925a3288dc25c3adb403" name="a44f404aad076925a3288dc25c3adb403"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44f404aad076925a3288dc25c3adb403">&#9670;&#160;</a></span>is_global()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline bool ipaddress::ip_address::is_global </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if the IP address is a global address. </p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the IP address is allocated for public networks, <code>false</code> otherwise. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml">iana-ipv4-special-registry</a>. </dd>
+<dd>
+<a href="https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml">iana-ipv6-special-registry</a>. </dd></dl>
+
+</div>
+</div>
+<a id="aaffab29c1978eb88719234abed221de3" name="aaffab29c1978eb88719234abed221de3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaffab29c1978eb88719234abed221de3">&#9670;&#160;</a></span>is_reserved()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline bool ipaddress::ip_address::is_reserved </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if the IP address is a reserved address. </p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the IP address is otherwise IETF reserved, <code>false</code> otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a28029375adc16c95bc2be33b8193a86b" name="a28029375adc16c95bc2be33b8193a86b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28029375adc16c95bc2be33b8193a86b">&#9670;&#160;</a></span>is_loopback()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline bool ipaddress::ip_address::is_loopback </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if the IP address is a loopback address. </p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the IP address is a loopback address, <code>false</code> otherwise. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://datatracker.ietf.org/doc/html/rfc3330.html">RFC 3330</a> for IPv4. </dd>
+<dd>
+<a href="https://datatracker.ietf.org/doc/html/rfc2373.html">RFC 2373</a> for IPv6. </dd></dl>
+
+</div>
+</div>
+<a id="a07d27a80db51bb9deb29505db1ed4ff7" name="a07d27a80db51bb9deb29505db1ed4ff7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07d27a80db51bb9deb29505db1ed4ff7">&#9670;&#160;</a></span>is_link_local()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline bool ipaddress::ip_address::is_link_local </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if the IP address is link-local. </p>
+<dl class="section return"><dt>Returns</dt><dd>True if the IP address is link-local, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="afb76bb747dd0dc66399ef3b9f9dad7fa" name="afb76bb747dd0dc66399ef3b9f9dad7fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb76bb747dd0dc66399ef3b9f9dad7fa">&#9670;&#160;</a></span>is_unspecified()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline bool ipaddress::ip_address::is_unspecified </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if the IP address is unspecified. </p>
+<p>An unspecified IP address is an address with all bits set to zero. In IPv4, this is represented as 0.0.0.0, and in IPv6, as ::. This type of address is used to indicate the absence of an address.</p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the IP address is unspecified (all bits are zero), <code>false</code> otherwise. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://datatracker.ietf.org/doc/html/rfc5735.html">RFC 5735</a> for IPv4. </dd>
+<dd>
+<a href="https://datatracker.ietf.org/doc/html/rfc2373.html">RFC 2373</a> for IPv6. </dd></dl>
+
+</div>
+</div>
+<a id="a3d3b0763f7aaa422952658c1c7f2d5fd" name="a3d3b0763f7aaa422952658c1c7f2d5fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d3b0763f7aaa422952658c1c7f2d5fd">&#9670;&#160;</a></span>is_site_local()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline bool ipaddress::ip_address::is_site_local </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if the IPv6 address is a site-local address. </p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the address is site-local, <code>false</code> otherwise. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Site-local addresses are equivalent to private addresses in IPv4 and are not routable on the global internet. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>These attribute is true for the network as a whole if it is true for both the network address and the broadcast address. </dd></dl>
+
+</div>
+</div>
+<a id="aa26f7ca743edc3912d57a5df9297a41d" name="aa26f7ca743edc3912d57a5df9297a41d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa26f7ca743edc3912d57a5df9297a41d">&#9670;&#160;</a></span>is_v4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline bool ipaddress::ip_address::is_v4 </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if the IP address is an IPv4 address. </p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the IP address is an IPv4 address, <code>false</code> otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="ad3989a5c89fed3a30efdeeefdb3ab13f" name="ad3989a5c89fed3a30efdeeefdb3ab13f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3989a5c89fed3a30efdeeefdb3ab13f">&#9670;&#160;</a></span>is_v6()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline bool ipaddress::ip_address::is_v6 </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Checks if the IP address is an IPv6 address. </p>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the IP address is an IPv6 address, <code>false</code> otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a051e9a727851b340f63701e9bd645ac3" name="a051e9a727851b340f63701e9bd645ac3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a051e9a727851b340f63701e9bd645ac3">&#9670;&#160;</a></span>size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline size_t ipaddress::ip_address::size </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the size of the IPv4 address. </p>
+<p>Depending on the IP version, this function returns the size of the IPv4 or IPv6 address.</p>
+<dl class="section return"><dt>Returns</dt><dd>The size of the IP address in bytes. </dd></dl>
+
+</div>
+</div>
+<a id="aab1144481b66b7d333b5d9c56efe5834" name="aab1144481b66b7d333b5d9c56efe5834"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab1144481b66b7d333b5d9c56efe5834">&#9670;&#160;</a></span>hash()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline size_t ipaddress::ip_address::hash </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Computes a hash value for the IP address. </p>
+<p>This function generates a hash value that can be used to uniquely identify the IP address. It can be useful when IP addresses are used as keys in hash tables.</p>
+<dl class="section return"><dt>Returns</dt><dd>A <code>size_t</code> hash value of the IP address. </dd></dl>
+
+</div>
+</div>
+<a id="a6c16ca52d1d9c204fa0530e65f57045e" name="a6c16ca52d1d9c204fa0530e65f57045e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c16ca52d1d9c204fa0530e65f57045e">&#9670;&#160;</a></span>ipv4_mapped()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline <a class="el" href="classipaddress_1_1optional.html">optional</a>&lt; <a class="el" href="namespaceipaddress.html#ab9d36790eab20692578a4e2e7d4f36f1">ipv4_address</a> &gt; ipaddress::ip_address::ipv4_mapped </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Determines if the IPv6 address is an IPv4-mapped address. </p>
+<p>If the IP address is an IPv6 address, this function returns the IPv4-mapped IPv6 address if available.</p>
+<dl class="section return"><dt>Returns</dt><dd>An <code>optional</code> containing the mapped IPv4 address if the IPv6 address is IPv4-mapped, or an empty <code>optional</code> otherwise. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>An IPv4-mapped IPv6 address has its first 80 bits set to zero and the next 16 bits set to one (starting with <code>::FFFF/96</code>). </dd></dl>
+
+</div>
+</div>
+<a id="a627380bdd28717224ac68d8b56b6d1ca" name="a627380bdd28717224ac68d8b56b6d1ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a627380bdd28717224ac68d8b56b6d1ca">&#9670;&#160;</a></span>sixtofour()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline <a class="el" href="classipaddress_1_1optional.html">optional</a>&lt; <a class="el" href="namespaceipaddress.html#ab9d36790eab20692578a4e2e7d4f36f1">ipv4_address</a> &gt; ipaddress::ip_address::sixtofour </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Determines if the IPv6 address is a 6to4 address. </p>
+<p>If the IP address is an IPv6 address, this function returns the 6to4 address if available.</p>
+<dl class="section return"><dt>Returns</dt><dd>An optional containing the encapsulated IPv4 address if the IPv6 address is a 6to4 address, or an empty optional otherwise. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>A 6to4 address uses a <code>2002::/16</code> prefix and embeds an IPv4 address in the next 32 bits. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://datatracker.ietf.org/doc/html/rfc3056.html">RFC 3056</a>. </dd></dl>
+
+</div>
+</div>
+<a id="ad64b9c25ae34283c6412243d1e59be7d" name="ad64b9c25ae34283c6412243d1e59be7d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad64b9c25ae34283c6412243d1e59be7d">&#9670;&#160;</a></span>teredo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline <a class="el" href="classipaddress_1_1optional.html">optional</a>&lt; std::pair&lt; <a class="el" href="namespaceipaddress.html#ab9d36790eab20692578a4e2e7d4f36f1">ipv4_address</a>, <a class="el" href="namespaceipaddress.html#ab9d36790eab20692578a4e2e7d4f36f1">ipv4_address</a> &gt; &gt; ipaddress::ip_address::teredo </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Determines if the IPv6 address is a Teredo address. </p>
+<p>If the IP address is an IPv6 address, this function returns the Teredo address, which includes both the Teredo server and client IPv4 addresses.</p>
+<dl class="section return"><dt>Returns</dt><dd>An optional containing a pair of IPv4 addresses representing the Teredo server and client if the IPv6 address is a Teredo address, or an empty optional otherwise. </dd></dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">std::pair::first</td><td>The Teredo server IPv4 address </td></tr>
+    <tr><td class="paramname">std::pair::second</td><td>The Teredo client IPv4 address </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section remark"><dt>Remarks</dt><dd>A Teredo address begins with the <code>2001::/32</code> prefix and is used for NAT traversal for IPv6. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://datatracker.ietf.org/doc/html/rfc4380.html">RFC 4380</a>. </dd></dl>
+
+</div>
+</div>
+<a id="a7f158559ed636c35ed7ed5d4e1ac1790" name="a7f158559ed636c35ed7ed5d4e1ac1790"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f158559ed636c35ed7ed5d4e1ac1790">&#9670;&#160;</a></span>v4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline <a class="el" href="classipaddress_1_1optional.html">optional</a>&lt; <a class="el" href="namespaceipaddress.html#ab9d36790eab20692578a4e2e7d4f36f1">ipv4_address</a> &gt; ipaddress::ip_address::v4 </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the IPv4 address. </p>
+<p>If the IP address is an IPv4 address, this function returns the IPv4 address.</p>
+<dl class="section return"><dt>Returns</dt><dd>An optional containing the IPv4 address, or an empty optional if the IP address is not IPv4. </dd></dl>
+
+</div>
+</div>
+<a id="acb1a9b0d05a6b5bba4e0bcf635745532" name="acb1a9b0d05a6b5bba4e0bcf635745532"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb1a9b0d05a6b5bba4e0bcf635745532">&#9670;&#160;</a></span>v6()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline <a class="el" href="classipaddress_1_1optional.html">optional</a>&lt; <a class="el" href="namespaceipaddress.html#a1e00093549b928c746d9e31081093ea9">ipv6_address</a> &gt; ipaddress::ip_address::v6 </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the IPv6 address. </p>
+<p>If the IP address is an IPv6 address, this function returns the IPv6 address.</p>
+<dl class="section return"><dt>Returns</dt><dd>An optional containing the IPv6 address, or an empty optional if the IP address is not IPv6. </dd></dl>
+
+</div>
+</div>
+<a id="a1a5190d8b769efcf6f9e5f049f076cf5" name="a1a5190d8b769efcf6f9e5f049f076cf5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a5190d8b769efcf6f9e5f049f076cf5">&#9670;&#160;</a></span>data()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline const uint8_t * ipaddress::ip_address::data </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the raw data of the IP address in <b>network byte order</b> (big-endian). </p>
+<p>This function returns a pointer to the raw data representing the IP address. The format of the data depends on whether the address is IPv4 or IPv6.</p>
+<dl class="section return"><dt>Returns</dt><dd>A pointer to the raw data of the IP address. </dd></dl>
+
+</div>
+</div>
+<a id="a67560b472e45f5ebddafffecf5dd7246" name="a67560b472e45f5ebddafffecf5dd7246"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67560b472e45f5ebddafffecf5dd7246">&#9670;&#160;</a></span>from_bytes() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> ipaddress::ip_address::from_bytes </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a942ac9b100051d0f2a59bf3ead774d5e">base_type_ipv4</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>bytes</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Static factory method to create an <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> from byte array for IPv4. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">bytes</td><td>A base_type_ipv4 object representing the byte array of the IPv4 address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> object initialized with the provided IPv4 bytes. </dd></dl>
+
+</div>
+</div>
+<a id="a0503aa44567a4d7a337368090a19a154" name="a0503aa44567a4d7a337368090a19a154"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0503aa44567a4d7a337368090a19a154">&#9670;&#160;</a></span>from_bytes() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> ipaddress::ip_address::from_bytes </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a872da62583d4b69498c1aefa5663ac0f">base_type_ipv6</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>bytes</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Static factory method to create an <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> from byte array for IPv6. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">bytes</td><td>A base_type_ipv6 object representing the byte array of the IPv6 address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> object initialized with the provided IPv6 bytes. </dd></dl>
+
+</div>
+</div>
+<a id="afe8e2743d2b056522cf1a0b09c57faa3" name="afe8e2743d2b056522cf1a0b09c57faa3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe8e2743d2b056522cf1a0b09c57faa3">&#9670;&#160;</a></span>from_bytes() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> ipaddress::ip_address::from_bytes </td>
+          <td>(</td>
+          <td class="paramtype">const uint8_t *</td>          <td class="paramname"><span class="paramname"><em>bytes</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>byte_count</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceipaddress.html#ace60f6a4856e90fa5be15ecf1cf0132e">ip_version</a></td>          <td class="paramname"><span class="paramname"><em>version</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Static factory method to create an <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> from raw bytes. </p>
+<p>This method creates an <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> object from raw bytes, with the specified IP version.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">bytes</td><td>A pointer to the raw bytes representing the IP address. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">byte_count</td><td>The number of bytes to use from the pointer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">version</td><td>The version of the IP address to create (IPv4 or IPv6). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> object initialized with the provided bytes and version. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>If the number of bytes <em>byte_count</em> is less than the target number . of bytes to represent the IP address, the missing bytes will be filled with zeros. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>If the number of bytes <em>byte_count</em> is greater than the target . number of bytes represented by the IP address, then the extra bytes will be ignored </dd></dl>
+
+</div>
+</div>
+<a id="a7e7bfba2057a4667e8c64a5e13b651d2" name="a7e7bfba2057a4667e8c64a5e13b651d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e7bfba2057a4667e8c64a5e13b651d2">&#9670;&#160;</a></span>from_uint() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> ipaddress::ip_address::from_uint </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a460c930ae62f2d17dc21137309574a16">uint_type_ipv4</a></td>          <td class="paramname"><span class="paramname"><em>ip</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Static factory method to create an <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> from a uint_type_ipv4. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ip</td><td>A uint_type_ipv4 (uint32_t) representing the IPv4 address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> object initialized with the provided IPv4 address. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>Bytes in integer <em>ip</em> must be presented in <b>host byte order</b>. </dd></dl>
+
+</div>
+</div>
+<a id="aa727d6135350885c18afb7c4f45fdbb3" name="aa727d6135350885c18afb7c4f45fdbb3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa727d6135350885c18afb7c4f45fdbb3">&#9670;&#160;</a></span>from_uint() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> ipaddress::ip_address::from_uint </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#ab14ebfad93bbd25914227aeca820f6be">uint_type_ipv6</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>ip</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Static factory method to create an <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> from a uint_type_ipv6. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ip</td><td>A uint_type_ipv6 (<a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a>) representing the IPv6 address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> object initialized with the provided IPv6 address. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>Bytes in integer <em>ip</em> must be presented in <b>host byte order</b>. </dd></dl>
+
+</div>
+</div>
+<a id="a41df88fbb5c11ebb3579b02ece93209f" name="a41df88fbb5c11ebb3579b02ece93209f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41df88fbb5c11ebb3579b02ece93209f">&#9670;&#160;</a></span>to_uint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline <a class="el" href="classipaddress_1_1uint128__t.html">uint128_t</a> ipaddress::ip_address::to_uint </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Converts the IP address to a <a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a>. </p>
+<p>This function returns the numeric representation of the IP address as a <a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a>. For IPv4 addresses, the function converts the address to a <a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a> format.</p>
+<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a> representing the numeric value of the IP address. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>Bytes in integer are presented in <b>host byte order</b>. </dd></dl>
+
+</div>
+</div>
+<a id="a7712e3c887f642cc95519cb032774e85" name="a7712e3c887f642cc95519cb032774e85"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7712e3c887f642cc95519cb032774e85">&#9670;&#160;</a></span>to_string()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">inline std::string ipaddress::ip_address::to_string </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceipaddress.html#ab54b11d879107889b3bf313724c4b611">format</a></td>          <td class="paramname"><span class="paramname"><em>fmt</em><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="namespaceipaddress.html#ab54b11d879107889b3bf313724c4b611a2b98a4ad988a18c42682f388901f2672">format::compressed</a></span></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Converts the IP address to a string. </p>
+<p>This function returns a string representation of the IP address. The format can be specified by the <em>fmt</em> parameter.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">fmt</td><td>The format to use for the string representation, defaults to compressed format. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A <code>std::string</code> representing the IP address in the specified format. </dd></dl>
+
+</div>
+</div>
+<a id="a94dc2c2cde37f123d65fa73b408c96a9" name="a94dc2c2cde37f123d65fa73b408c96a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94dc2c2cde37f123d65fa73b408c96a9">&#9670;&#160;</a></span>reverse_pointer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">inline std::string ipaddress::ip_address::reverse_pointer </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Generates a reverse DNS lookup pointer for the IP address. </p>
+<p>This function creates a string that is the reverse DNS lookup pointer of the IP address. It is commonly used in reverse DNS lookups, where the IP address is reversed and appended with <code>.in-addr.arpa</code> for IPv4, or <code>.ip6.arpa</code> for IPv6, to form a domain name that can be looked up in the DNS system.</p>
+<p>The name of the reverse DNS PTR record for the IP address, e.g.: </p><div class="fragment"><div class="line">std::cout &lt;&lt; <a class="code hl_function" href="#ae392f27610452464fb0ea5271d300ff1">ip_address::parse</a>(<span class="stringliteral">&quot;127.0.0.1&quot;</span>).<a class="code hl_function" href="#a94dc2c2cde37f123d65fa73b408c96a9">reverse_pointer</a>() &lt;&lt; std::endl;</div>
+<div class="line">std::cout &lt;&lt; <a class="code hl_function" href="#ae392f27610452464fb0ea5271d300ff1">ip_address::parse</a>(<span class="stringliteral">&quot;2001:db8::1&quot;</span>).<a class="code hl_function" href="#a94dc2c2cde37f123d65fa73b408c96a9">reverse_pointer</a>() &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// out:</span></div>
+<div class="line"><span class="comment">// 1.0.0.127.in-addr.arpa</span></div>
+<div class="line"><span class="comment">// 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.b.d.0.1.0.0.2.ip6.arpa</span></div>
+<div class="ttc" id="aclassipaddress_1_1ip__address_html_a94dc2c2cde37f123d65fa73b408c96a9"><div class="ttname"><a href="#a94dc2c2cde37f123d65fa73b408c96a9">ipaddress::ip_address::reverse_pointer</a></div><div class="ttdeci">inline std::string reverse_pointer() const</div><div class="ttdoc">Generates a reverse DNS lookup pointer for the IP address.</div><div class="ttdef"><b>Definition</b> ip-any-address.hpp:427</div></div>
+<div class="ttc" id="aclassipaddress_1_1ip__address_html_ae392f27610452464fb0ea5271d300ff1"><div class="ttname"><a href="#ae392f27610452464fb0ea5271d300ff1">ipaddress::ip_address::parse</a></div><div class="ttdeci">static consteval inline ip_address parse() noexcept</div><div class="ttdoc">Static method template to parse an IP address from a fixed string at compile time.</div><div class="ttdef"><b>Definition</b> ip-any-address.hpp:455</div></div>
+</div><!-- fragment --> <dl class="section return"><dt>Returns</dt><dd>A <code>std::string</code> that is the reverse DNS lookup pointer of the IP address. </dd></dl>
+
+</div>
+</div>
+<a id="ad93a08eb7e563275f259b9a068627f9e" name="ad93a08eb7e563275f259b9a068627f9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad93a08eb7e563275f259b9a068627f9e">&#9670;&#160;</a></span>swap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline void ipaddress::ip_address::swap </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>ip</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Swaps the contents of this <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> with another <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a>. </p>
+<p>This function exchanges the contents of the <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> with those of the ip parameter.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">ip</td><td>The other <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> object to swap with. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ae392f27610452464fb0ea5271d300ff1" name="ae392f27610452464fb0ea5271d300ff1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae392f27610452464fb0ea5271d300ff1">&#9670;&#160;</a></span>parse() <span class="overload">[1/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a> FixedString&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static consteval inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> ipaddress::ip_address::parse </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Static method template to parse an IP address from a fixed string at compile time. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">FixedString</td><td>A non-type template parameter that holds the string representation of the IP address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An instance of ip address parsed from the fixed string. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This method is only available when non-type template parameters for strings are supported. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>If parsing fails, an error will be raised at compile time. </dd></dl>
+
+</div>
+</div>
+<a id="a08cf710198d4660c5b005de35372d495" name="a08cf710198d4660c5b005de35372d495"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08cf710198d4660c5b005de35372d495">&#9670;&#160;</a></span>parse() <span class="overload">[2/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> ipaddress::ip_address::parse </td>
+          <td>(</td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>address</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parses an IP address from a string view. </p>
+<p>This method provides a way to parse an IP address from a string view, which is a non-owning reference to a sequence of characters.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>The string view containing the IP address to parse. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An instance of ip address parsed from the string view. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classipaddress_1_1parse__error.html" title="Exception for errors encountered during IP address parsing.">parse_error</a></td><td>Exception caused by invalid input string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::string</code> and C-strings will be used instead. </dd></dl>
+
+</div>
+</div>
+<a id="a8ce3401a8aa8eccffba978d4774fdda7" name="a8ce3401a8aa8eccffba978d4774fdda7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ce3401a8aa8eccffba978d4774fdda7">&#9670;&#160;</a></span>parse() <span class="overload">[3/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> ipaddress::ip_address::parse </td>
+          <td>(</td>
+          <td class="paramtype">std::wstring_view</td>          <td class="paramname"><span class="paramname"><em>address</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parses an IP address from a wide string view. </p>
+<p>This method allows for parsing an IP address from a wide string view, which is typically used for wide character strings.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>The wide string view containing the IP address to parse. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An instance of ip address parsed from the string view. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classipaddress_1_1parse__error.html" title="Exception for errors encountered during IP address parsing.">parse_error</a></td><td>Exception caused by invalid input string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::wstring</code> and C-strings will be used instead. </dd></dl>
+
+</div>
+</div>
+<a id="a45c863e76de23747df747e6ff3c5e1a4" name="a45c863e76de23747df747e6ff3c5e1a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45c863e76de23747df747e6ff3c5e1a4">&#9670;&#160;</a></span>parse() <span class="overload">[4/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> ipaddress::ip_address::parse </td>
+          <td>(</td>
+          <td class="paramtype">std::u8string_view</td>          <td class="paramname"><span class="paramname"><em>address</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parses an IP address from a UTF-8 string view. </p>
+<p>This method parses an IP address from a given UTF-8 string view. It leverages the <code>char8_t</code> type introduced in C++20 to handle UTF-8 strings natively.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>A UTF-8 string view containing the IP address to parse. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An instance of ip address parsed from the string view. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classipaddress_1_1parse__error.html" title="Exception for errors encountered during IP address parsing.">parse_error</a></td><td>Exception caused by invalid input string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This method is available for C++20 and later versions where <code>char8_t</code> is supported. </dd></dl>
+
+</div>
+</div>
+<a id="aa23d6de7284b38232bee5ea000220933" name="aa23d6de7284b38232bee5ea000220933"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa23d6de7284b38232bee5ea000220933">&#9670;&#160;</a></span>parse() <span class="overload">[5/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> ipaddress::ip_address::parse </td>
+          <td>(</td>
+          <td class="paramtype">std::u16string_view</td>          <td class="paramname"><span class="paramname"><em>address</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parses an IP address from a UTF-16 string view. </p>
+<p>This method is designed to parse an IP address from a UTF-16 string view, which is a sequence of 16-bit characters.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>The UTF-16 string view containing the IP address to parse. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An instance of ip address parsed from the string view. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classipaddress_1_1parse__error.html" title="Exception for errors encountered during IP address parsing.">parse_error</a></td><td>Exception caused by invalid input string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::u16string</code> and C-strings will be used instead. </dd></dl>
+
+</div>
+</div>
+<a id="a34b192545d1895082560274c91bad390" name="a34b192545d1895082560274c91bad390"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34b192545d1895082560274c91bad390">&#9670;&#160;</a></span>parse() <span class="overload">[6/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> ipaddress::ip_address::parse </td>
+          <td>(</td>
+          <td class="paramtype">std::u32string_view</td>          <td class="paramname"><span class="paramname"><em>address</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parses an IP address from a UTF-32 string view. </p>
+<p>This method allows for parsing an IP address from a UTF-32 string view, which is a sequence of 32-bit characters.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>The UTF-32 string view containing the IP address to parse. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An instance of ip address parsed from the string view. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classipaddress_1_1parse__error.html" title="Exception for errors encountered during IP address parsing.">parse_error</a></td><td>Exception caused by invalid input string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::u32string</code> and C-strings will be used instead. </dd></dl>
+
+</div>
+</div>
+<a id="a207e6d67cf24ffd26ffa2f578905bb0e" name="a207e6d67cf24ffd26ffa2f578905bb0e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a207e6d67cf24ffd26ffa2f578905bb0e">&#9670;&#160;</a></span>parse() <span class="overload">[7/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> ipaddress::ip_address::parse </td>
+          <td>(</td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>address</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>code</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parses an IP address from a string view and reports errors through an error code. </p>
+<p>This method parses an IP address from a string view and provides an error code if the parsing fails.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>The string view containing the IP address to parse. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>A reference to an <code>error_code</code> object that will be set if an error occurs during parsing. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An instance of ip address parsed from the string view. If parsing fails, the returned object will be in an unspecified state. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::string</code> and C-strings will be used instead. </dd></dl>
+
+</div>
+</div>
+<a id="a04c197489894b0194558bb6b4916387c" name="a04c197489894b0194558bb6b4916387c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04c197489894b0194558bb6b4916387c">&#9670;&#160;</a></span>parse() <span class="overload">[8/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> ipaddress::ip_address::parse </td>
+          <td>(</td>
+          <td class="paramtype">std::wstring_view</td>          <td class="paramname"><span class="paramname"><em>address</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>code</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parses an IP address from a wide string view and reports errors through an error code. </p>
+<p>This method parses an IP address from a wide string view and provides an error code if the parsing fails.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>The wide string view containing the IP address to parse. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>A reference to an <code>error_code</code> object that will be set if an error occurs during parsing. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An instance of ip address parsed from the wide string view. If parsing fails, the returned object will be in an unspecified state. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::wstring</code> and C-strings will be used instead. </dd></dl>
+
+</div>
+</div>
+<a id="aeef17c7cccafdb26e55f8ebaf5363aa9" name="aeef17c7cccafdb26e55f8ebaf5363aa9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeef17c7cccafdb26e55f8ebaf5363aa9">&#9670;&#160;</a></span>parse() <span class="overload">[9/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> ipaddress::ip_address::parse </td>
+          <td>(</td>
+          <td class="paramtype">std::u8string_view</td>          <td class="paramname"><span class="paramname"><em>address</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>code</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parses an IP address from a UTF-8 string view and reports errors through an error code. </p>
+<p>This method parses an IP address from a UTF-8 string view and provides an error code if the parsing fails.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>The UTF-8 string view containing the IP address to parse. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>A reference to an <code>error_code</code> object that will be set if an error occurs during parsing. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An instance of ip address parsed from the UTF-8 string view. If parsing fails, the returned object will be in an unspecified state. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This method is available for C++20 and later versions where <code>char8_t</code> is supported. </dd></dl>
+
+</div>
+</div>
+<a id="aff8f9565077add2f9bc1f0ac84f8b232" name="aff8f9565077add2f9bc1f0ac84f8b232"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff8f9565077add2f9bc1f0ac84f8b232">&#9670;&#160;</a></span>parse() <span class="overload">[10/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> ipaddress::ip_address::parse </td>
+          <td>(</td>
+          <td class="paramtype">std::u16string_view</td>          <td class="paramname"><span class="paramname"><em>address</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>code</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parses an IP address from a UTF-16 string view and reports errors through an error code. </p>
+<p>This method parses an IP address from a UTF-16 string view and provides an error code if the parsing fails.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>The UTF-16 string view containing the IP address to parse. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>A reference to an <code>error_code</code> object that will be set if an error occurs during parsing. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An instance of ip address parsed from the UTF-16 string view. If parsing fails, the returned object will be in an unspecified state. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::u16string</code> and C-strings will be used instead. </dd></dl>
+
+</div>
+</div>
+<a id="ab54faa1bba87ecf9e049714dfa18bafd" name="ab54faa1bba87ecf9e049714dfa18bafd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab54faa1bba87ecf9e049714dfa18bafd">&#9670;&#160;</a></span>parse() <span class="overload">[11/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> ipaddress::ip_address::parse </td>
+          <td>(</td>
+          <td class="paramtype">std::u32string_view</td>          <td class="paramname"><span class="paramname"><em>address</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>code</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parses an IP address from a UTF-32 string view and reports errors through an error code. </p>
+<p>This method parses an IP address from a UTF-32 string view and provides an error code if the parsing fails.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>The UTF-32 string view containing the IP address to parse. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>A reference to an <code>error_code</code> object that will be set if an error occurs during parsing. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An instance of ip address parsed from the UTF-32 string view. If parsing fails, the returned object will be in an unspecified state. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::u32string</code> and C-strings will be used instead. </dd></dl>
+
+</div>
+</div>
+<a id="a510a76b49cc7fd6db501748a6bd00c90" name="a510a76b49cc7fd6db501748a6bd00c90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a510a76b49cc7fd6db501748a6bd00c90">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[1/11]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline void ipaddress::ip_address::set_scope_id </td>
+          <td>(</td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>scope_id</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the scope identifier of the IPv6 address using a string view. </p>
+<p>This function sets the scope identifier using a string view, which allows for a more efficient way to handle strings without copying them.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">scope_id</td><td>The string view representing the scope identifier. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classipaddress_1_1parse__error.html" title="Exception for errors encountered during IP address parsing.">parse_error</a></td><td>Exception caused by invalid input string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::string</code> and C-strings will be used instead. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>If scope is disabled in settings (<code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0</code>) then this call will have no effect. </dd></dl>
+
+</div>
+</div>
+<a id="af05f749a3f04548c7989e31f5cc2863e" name="af05f749a3f04548c7989e31f5cc2863e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af05f749a3f04548c7989e31f5cc2863e">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[2/11]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline void ipaddress::ip_address::set_scope_id </td>
+          <td>(</td>
+          <td class="paramtype">std::wstring_view</td>          <td class="paramname"><span class="paramname"><em>scope_id</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the scope identifier of the IPv6 address using a wide string view. </p>
+<p>This function sets the scope identifier using a wide string view, which allows for a more efficient way to handle strings without copying them.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">scope_id</td><td>The wide string view representing the scope identifier. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classipaddress_1_1parse__error.html" title="Exception for errors encountered during IP address parsing.">parse_error</a></td><td>Exception caused by invalid input string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::wstring</code> and C-strings will be used instead. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>If scope is disabled in settings (<code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0</code>) then this call will have no effect. </dd></dl>
+
+</div>
+</div>
+<a id="a2e751a2ce57afb9c68721bed6c8782aa" name="a2e751a2ce57afb9c68721bed6c8782aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e751a2ce57afb9c68721bed6c8782aa">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[3/11]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline void ipaddress::ip_address::set_scope_id </td>
+          <td>(</td>
+          <td class="paramtype">std::u8string_view</td>          <td class="paramname"><span class="paramname"><em>scope_id</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the scope identifier of the IPv6 address using UTF-8 string view. </p>
+<p>This function sets the scope identifier using UTF-8 string view, which allows for a more efficient way to handle strings without copying them.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">scope_id</td><td>The UTF-8 string view representing the scope identifier. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classipaddress_1_1parse__error.html" title="Exception for errors encountered during IP address parsing.">parse_error</a></td><td>Exception caused by invalid input string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This method is available for C++20 and later versions where <code>char8_t</code> is supported. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>If scope is disabled in settings (<code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0</code>) then this call will have no effect. </dd></dl>
+
+</div>
+</div>
+<a id="a35f549e912f4fa1b69edb142ff39d4d4" name="a35f549e912f4fa1b69edb142ff39d4d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35f549e912f4fa1b69edb142ff39d4d4">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[4/11]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline void ipaddress::ip_address::set_scope_id </td>
+          <td>(</td>
+          <td class="paramtype">std::u16string_view</td>          <td class="paramname"><span class="paramname"><em>scope_id</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the scope identifier of the IPv6 address using UTF-16 string view. </p>
+<p>This function sets the scope identifier using UTF-16 string view, which allows for a more efficient way to handle strings without copying them.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">scope_id</td><td>The UTF-16 string view representing the scope identifier. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classipaddress_1_1parse__error.html" title="Exception for errors encountered during IP address parsing.">parse_error</a></td><td>Exception caused by invalid input string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::u16string</code> and C-strings will be used instead. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>If scope is disabled in settings (<code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0</code>) then this call will have no effect. </dd></dl>
+
+</div>
+</div>
+<a id="ac916fb93e7337ab75af157f16e122d3f" name="ac916fb93e7337ab75af157f16e122d3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac916fb93e7337ab75af157f16e122d3f">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[5/11]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline void ipaddress::ip_address::set_scope_id </td>
+          <td>(</td>
+          <td class="paramtype">std::u32string_view</td>          <td class="paramname"><span class="paramname"><em>scope_id</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the scope identifier of the IPv6 address using UTF-32 string view. </p>
+<p>This function sets the scope identifier using UTF-32 string view, which allows for a more efficient way to handle strings without copying them.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">scope_id</td><td>The UTF-32 string view representing the scope identifier. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classipaddress_1_1parse__error.html" title="Exception for errors encountered during IP address parsing.">parse_error</a></td><td>Exception caused by invalid input string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::u32string</code> and C-strings will be used instead. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>If scope is disabled in settings (<code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0</code>) then this call will have no effect. </dd></dl>
+
+</div>
+</div>
+<a id="ae14254dafd25c40047f1205d821c5a71" name="ae14254dafd25c40047f1205d821c5a71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae14254dafd25c40047f1205d821c5a71">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[6/11]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline void ipaddress::ip_address::set_scope_id </td>
+          <td>(</td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>scope_id</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>code</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the scope identifier of the IPv6 address using a string view and reports any errors encountered. </p>
+<p>This function sets the scope identifier using a string view and provides an error code parameter to report any issues that occur during the operation.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">scope_id</td><td>The string view representing the scope identifier. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>An error_code object that will be set to the error that occurred, if any. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::string</code> and C-strings will be used instead. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>If scope is disabled in settings (<code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0</code>) then this call will have no effect. </dd></dl>
+
+</div>
+</div>
+<a id="aa6849c30858e96ef9457f6a5ffa26574" name="aa6849c30858e96ef9457f6a5ffa26574"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6849c30858e96ef9457f6a5ffa26574">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[7/11]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline void ipaddress::ip_address::set_scope_id </td>
+          <td>(</td>
+          <td class="paramtype">std::wstring_view</td>          <td class="paramname"><span class="paramname"><em>scope_id</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>code</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the scope identifier of the IPv6 address using a wide string view and reports any errors encountered. </p>
+<p>This function sets the scope identifier using a wide string view and provides an error code parameter to report any issues that occur during the operation.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">scope_id</td><td>The wide string view representing the scope identifier. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>An error_code object that will be set to the error that occurred, if any. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::wstring</code> and C-strings will be used instead. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>If scope is disabled in settings (<code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0</code>) then this call will have no effect. </dd></dl>
+
+</div>
+</div>
+<a id="ade501712feb61d877961b62cf0d1f462" name="ade501712feb61d877961b62cf0d1f462"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade501712feb61d877961b62cf0d1f462">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[8/11]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline void ipaddress::ip_address::set_scope_id </td>
+          <td>(</td>
+          <td class="paramtype">std::u8string_view</td>          <td class="paramname"><span class="paramname"><em>scope_id</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>code</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the scope identifier of the IPv6 address using a UTF-8 string view and reports any errors encountered. </p>
+<p>This function sets the scope identifier using a UTF-8 string view and provides an error code parameter to report any issues that occur during the operation.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">scope_id</td><td>The UTF-8 string view representing the scope identifier. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>An error_code object that will be set to the error that occurred, if any. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This method is available for C++20 and later versions. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>If scope is disabled in settings (<code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0</code>) then this call will have no effect. </dd></dl>
+
+</div>
+</div>
+<a id="abc4b450d19f763cb2423663ebd18674f" name="abc4b450d19f763cb2423663ebd18674f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc4b450d19f763cb2423663ebd18674f">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[9/11]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline void ipaddress::ip_address::set_scope_id </td>
+          <td>(</td>
+          <td class="paramtype">std::u16string_view</td>          <td class="paramname"><span class="paramname"><em>scope_id</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>code</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the scope identifier of the IPv6 address using a UTF-16 string view and reports any errors encountered. </p>
+<p>This function sets the scope identifier using a UTF-16 string view and provides an error code parameter to report any issues that occur during the operation.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">scope_id</td><td>The UTF-16 string view representing the scope identifier. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>An error_code object that will be set to the error that occurred, if any. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::u16string</code> and C-strings will be used instead. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>If scope is disabled in settings (<code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0</code>) then this call will have no effect. </dd></dl>
+
+</div>
+</div>
+<a id="a919cd712af69c1f4a0b6b6cf69c43cfa" name="a919cd712af69c1f4a0b6b6cf69c43cfa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a919cd712af69c1f4a0b6b6cf69c43cfa">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[10/11]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline void ipaddress::ip_address::set_scope_id </td>
+          <td>(</td>
+          <td class="paramtype">std::u32string_view</td>          <td class="paramname"><span class="paramname"><em>scope_id</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceipaddress.html#acd1015a989b2b9e45fe6d0faa3e9a0fa">error_code</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>code</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the scope identifier of the IPv6 address using a UTF-32 string view and reports any errors encountered. </p>
+<p>This function sets the scope identifier using a UTF-32 string view and provides an error code parameter to report any issues that occur during the operation.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">scope_id</td><td>The UTF-32 string view representing the scope identifier. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>An error_code object that will be set to the error that occurred, if any. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This method is available for C++17 and later versions. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>For C++ versions prior to C++17, member functions with <code>std::u32string</code> and C-strings will be used instead. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>If scope is disabled in settings (<code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0</code>) then this call will have no effect. </dd></dl>
+
+</div>
+</div>
+<a id="a49d8c62d6640405dd14c92f45b37e7b6" name="a49d8c62d6640405dd14c92f45b37e7b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a49d8c62d6640405dd14c92f45b37e7b6">&#9670;&#160;</a></span>parse() <span class="overload">[12/13]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t N&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> ipaddress::ip_address::parse </td>
+          <td>(</td>
+          <td class="paramtype">const T(&amp;)</td>          <td class="paramname"><span class="paramname"><em>address</em>[N]</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Parses an IP address from a character array. </p>
+<p>This method template parses an IP address from a character array of a specified size. Can check and get the result at compile time.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>The character type of the array. </td></tr>
+    <tr><td class="paramname">N</td><td>The size of the character array. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>The character array containing the IP address to parse. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An instance of ip address parsed from the character array. </dd></dl>
 
 </div>
 </div>
 <a id="ab5124c3bffb5355856d08eed175a7b10" name="ab5124c3bffb5355856d08eed175a7b10"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab5124c3bffb5355856d08eed175a7b10">&#9670;&#160;</a></span>parse()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5124c3bffb5355856d08eed175a7b10">&#9670;&#160;</a></span>parse() <span class="overload">[13/13]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -200,16 +2375,396 @@ template&lt;typename T , size_t N&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Test. </p>
-<p>Test.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>Character array for ip. </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>Saves the execution result. </td></tr>
+<p>Parses an IP address from a character array and reports errors through an error code. </p>
+<p>This method template parses an IP address from a character array of a specified size and provides an error code if the parsing fails.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>The character type of the array. </td></tr>
+    <tr><td class="paramname">N</td><td>The size of the character array. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>ip addresss </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>The character array containing the IP address to parse. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>A reference to an <code>error_code</code> object that will be set if an error occurs during parsing. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An instance of ip address parsed from the character array. If parsing fails, the returned object will be in an unspecified state. </dd></dl>
+
+</div>
+</div>
+<a id="af0d3dc9c0e481964211ef30a6494c008" name="af0d3dc9c0e481964211ef30a6494c008"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0d3dc9c0e481964211ef30a6494c008">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[11/11]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t N&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline void ipaddress::ip_address::set_scope_id </td>
+          <td>(</td>
+          <td class="paramtype">const T(&amp;)</td>          <td class="paramname"><span class="paramname"><em>scope_id</em>[N]</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the scope identifier of the IPv6 address. </p>
+<p>This function sets the scope identifier using a character array. The length of the array should not exceed <code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH + 1</code>.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>The character type of the scope identifier. </td></tr>
+    <tr><td class="paramname">N</td><td>The size of the scope identifier array. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">scope_id</td><td>The character array representing the scope identifier. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section remark"><dt>Remarks</dt><dd>If scope is disabled in settings (<code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0</code>) then this call will have no effect. </dd></dl>
+
+</div>
+</div>
+<a id="a78617069e8fe52999fa3ef802bd30ad9" name="a78617069e8fe52999fa3ef802bd30ad9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78617069e8fe52999fa3ef802bd30ad9">&#9670;&#160;</a></span>get_scope_id()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline <a class="el" href="classipaddress_1_1scope.html">scope</a> ipaddress::ip_address::get_scope_id </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the scope identifier of the IPv6 address. </p>
+<p>The scope identifier is used to determine the context in which the address is valid. It is particularly relevant for link-local and site-local addresses.</p>
+<dl class="section return"><dt>Returns</dt><dd>A <code>scope</code> object representing the scope identifier of the IPv6 address. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>If the scope is disabled in the settings (<code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0</code>), then an empty scope will be returned. </dd></dl>
+
+</div>
+</div>
+<a id="a65367795c1b3893bf4e90d902db3b342" name="a65367795c1b3893bf4e90d902db3b342"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a65367795c1b3893bf4e90d902db3b342">&#9670;&#160;</a></span>operator uint32_t()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline ipaddress::ip_address::operator uint32_t </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Converts the IP address to a uint32_t. </p>
+<p>This function casts the IP address to a uint32_t. For IPv4 addresses, it returns the direct numeric representation. For IPv6 addresses, it returns the least significant 32 bits of the address.</p>
+<dl class="section return"><dt>Returns</dt><dd>A uint32_t representing the IPv4 address or the least significant 32 bits of the IPv6 address. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>Bytes in integer are presented in <b>host byte order</b>. </dd></dl>
+
+</div>
+</div>
+<a id="af01677c163f81b2aebd07eea5794ec2d" name="af01677c163f81b2aebd07eea5794ec2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af01677c163f81b2aebd07eea5794ec2d">&#9670;&#160;</a></span>operator uint128_t()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline ipaddress::ip_address::operator <a class="el" href="classipaddress_1_1uint128__t.html">uint128_t</a> </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Converts the IP address to a <a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a>. </p>
+<p>This function casts the IP address to a <a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a>. It is used to obtain the full numeric representation of the IP address, especially for IPv6 addresses.</p>
+<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a> representing the numeric value of the IP address. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>Bytes in integer are presented in <b>host byte order</b>. </dd></dl>
+
+</div>
+</div>
+<a id="a6c3680bbbbbcd47537d6430e1e7d2e64" name="a6c3680bbbbbcd47537d6430e1e7d2e64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c3680bbbbbcd47537d6430e1e7d2e64">&#9670;&#160;</a></span>operator std::string()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">inline ipaddress::ip_address::operator std::string </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Converts the IP address to a string. </p>
+<p>This operator allows the IP address to be converted to a string.</p>
+<dl class="section return"><dt>Returns</dt><dd>A <code>std::string</code> representation of the IP address. </dd></dl>
+
+</div>
+</div>
+<a id="a744b1b3f26167089ab0204972324ba1f" name="a744b1b3f26167089ab0204972324ba1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a744b1b3f26167089ab0204972324ba1f">&#9670;&#160;</a></span>operator==()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline bool ipaddress::ip_address::operator== </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Equality comparison operator. </p>
+<p>Compares this IP address with another IP address for equality.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">rhs</td><td>The right-hand side <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> object for comparison. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if both IP addresses are equal, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a23d01be1805cb8b7522c44d69b4b8c89" name="a23d01be1805cb8b7522c44d69b4b8c89"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23d01be1805cb8b7522c44d69b4b8c89">&#9670;&#160;</a></span>operator!=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline bool ipaddress::ip_address::operator!= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Inequality comparison operator. </p>
+<p>Compares this IP address with another IP address for inequality.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">rhs</td><td>The right-hand side <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> object for comparison. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if both IP addresses are not equal, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="aecbcb93cabb4e9760e916bb7b186a7a3" name="aecbcb93cabb4e9760e916bb7b186a7a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aecbcb93cabb4e9760e916bb7b186a7a3">&#9670;&#160;</a></span>operator&lt;()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline bool ipaddress::ip_address::operator&lt; </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Less than comparison operator. </p>
+<p>Compares this IP address with another IP address to determine if it is less than the other.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">rhs</td><td>The right-hand side <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> object for comparison. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if this IP address is less than the other, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a34ad1a281effd96ef04e6b223fb8c8c2" name="a34ad1a281effd96ef04e6b223fb8c8c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34ad1a281effd96ef04e6b223fb8c8c2">&#9670;&#160;</a></span>operator&gt;()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline bool ipaddress::ip_address::operator&gt; </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Greater than comparison operator. </p>
+<p>Compares this IP address with another IP address to determine if it is greater than the other.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">rhs</td><td>The right-hand side <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> object for comparison. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if this IP address is greater than the other, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="ae256a624fefcb24e2ad83cd8b97c5bab" name="ae256a624fefcb24e2ad83cd8b97c5bab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae256a624fefcb24e2ad83cd8b97c5bab">&#9670;&#160;</a></span>operator&lt;=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline bool ipaddress::ip_address::operator&lt;= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Less than or equal to comparison operator. </p>
+<p>Compares this IP address with another IP address to determine if it is less than or equal to the other.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">rhs</td><td>The right-hand side <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> object for comparison. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if this IP address is less than or equal to the other, false otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="aaab1ed23d1824de324400f6d6afcffce" name="aaab1ed23d1824de324400f6d6afcffce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaab1ed23d1824de324400f6d6afcffce">&#9670;&#160;</a></span>operator&gt;=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline bool ipaddress::ip_address::operator&gt;= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Greater than or equal to comparison operator. </p>
+<p>Compares this IP address with another IP address to determine if it is greater than or equal to the other.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">rhs</td><td>The right-hand side <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> object for comparison. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if this IP address is greater than or equal to the other, false otherwise. </dd></dl>
 
 </div>
 </div>

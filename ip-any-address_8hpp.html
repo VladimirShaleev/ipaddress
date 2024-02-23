@@ -114,12 +114,13 @@ $(function(){initNavTree('ip-any-address_8hpp.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a>  </div>
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">ip-any-address.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Contains logic for working with IP addresses.  
+<p>Unified interface for handling both IPv4 and IPv6 addresses.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="ipv6-address_8hpp_source.html">ipv6-address.hpp</a>&quot;</code><br />
 </div>
@@ -128,7 +129,7 @@ $(function(){initNavTree('ip-any-address_8hpp.html',''); initResizable(); });
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1ip__address.html">ipaddress::ip_address</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents IP address of both versions v4 and v6.  <a href="classipaddress_1_1ip__address.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A class that represents an IP address, supporting both IPv4 and IPv6 formats.  <a href="classipaddress_1_1ip__address.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
@@ -136,12 +137,20 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespaceipaddress" id="r_namespaceipaddress"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceipaddress.html">ipaddress</a></td></tr>
 <tr class="memdesc:namespaceipaddress"><td class="mdescLeft">&#160;</td><td class="mdescRight">Namespace dedicated to IP addresses and networks operations. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a7c6f5030f081c1d075efbe9e4d78e539" id="r_a7c6f5030f081c1d075efbe9e4d78e539"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a> FixedString&gt; </td></tr>
+<tr class="memitem:a7c6f5030f081c1d075efbe9e4d78e539"><td class="memTemplItemLeft" align="right" valign="top">consteval inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceipaddress.html#a7c6f5030f081c1d075efbe9e4d78e539">ipaddress::operator&quot;&quot;_ip</a> () noexcept</td></tr>
+<tr class="memdesc:a7c6f5030f081c1d075efbe9e4d78e539"><td class="mdescLeft">&#160;</td><td class="mdescRight">User-defined literal for creating an <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> from a fixed string at compile time.  <br /></td></tr>
+<tr class="separator:a7c6f5030f081c1d075efbe9e4d78e539"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Contains logic for working with IP addresses. </p>
+<div class="textblock"><p>Unified interface for handling both IPv4 and IPv6 addresses. </p>
 <dl class="section author"><dt>Author</dt><dd>Vladimir Shaleev </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>MIT License</dd></dl>
-<p>ip_address is a class for working with IP addresses of versions 4 and version 6. </p>
+<p>This header defines the ip_address class, which provides a seamless and efficient way to handle IP addresses, supporting both IPv4 and IPv6 versions. It encapsulates the complexities of dealing with different IP versions and offers a simple and consistent API to work with. The class internally manages the storage and representation of the IP addresses, abstracting away the underlying details from the user.</p>
+<p>The ip_address class is designed to be a versatile and robust solution for IP address manipulation in network-related applications. It integrates the ipv4_address and ipv6_address classes through a union, ensuring optimal space usage while maintaining the ability to represent both IP address versions. This file is part of a larger library that aims to provide comprehensive support for network operations. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.10.0-->
