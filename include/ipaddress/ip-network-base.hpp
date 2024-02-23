@@ -181,6 +181,20 @@ public:
         return parse_address_with_prefix(str, strict, code, index);
     }
 
+    /**
+     * Creates an ip network object from a given IP address and prefix length.
+     * 
+     * This static method constructs an ip network object representing the network
+     * that includes the given IP address, with the specified prefix length. If 'strict' is true,
+     * the address is validated against the netmask.
+     * 
+     * @param[in] address The IP address to use for creating the network.
+     * @param[in] prefixlen The prefix length for the network's netmask. Defaults to the maximum prefix length.
+     * @param[in] strict Whether to validate the address against the netmask.
+     * @return An ip network object representing the network.
+     * @throw parse_error Exception caused by invalid input string.
+     * @remark May throw an exception if the address does not conform to the netmask when \a strict is `true`.
+     */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base from_address(
         const ip_address_type& address, 
         size_t prefixlen = ip_address_type::max_prefixlen, 
@@ -203,6 +217,18 @@ public:
         return result;
     }
 
+    /**
+     * Creates an ip network object from a given IP address and prefix length, with error handling.
+     * 
+     * Similar to the from_address method above, but this version allows for error handling without exceptions.
+     * It populates the provided error_code object instead of throwing.
+     * 
+     * @param[in] address The IP address to use for creating the network.
+     * @param[in] code An error_code object that will be set if an error occurs.
+     * @param[in] prefixlen The prefix length for the network's netmask. Defaults to the maximum prefix length.
+     * @param[in] strict Whether to validate the address against the netmask.
+     * @return An ip network object representing the network, or an object in an error state if an error occurs.
+     */
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base from_address(
         const ip_address_type& address, 
         error_code& code, 
