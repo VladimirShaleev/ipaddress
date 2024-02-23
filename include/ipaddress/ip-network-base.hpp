@@ -680,35 +680,141 @@ public:
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t prefixlen() const IPADDRESS_NOEXCEPT {
         return _prefixlen;
     }
-    
+      
+    /**
+     * Checks if the network is a multicast network.
+     * 
+     * This method determines whether the network is a multicast network by checking if both the network
+     * address and the broadcast address are multicast addresses.
+     * 
+     * @return `true` if the network is multicast, `false` otherwise.
+     * @see [RFC 3171](https://datatracker.ietf.org/doc/html/rfc3171.html) for IPv4.
+     * @see [RFC 2373](https://datatracker.ietf.org/doc/html/rfc2373.html) for IPv6.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_multicast() const IPADDRESS_NOEXCEPT {
         return network_address().is_multicast() && broadcast_address().is_multicast();
     }
 
+    /**
+     * Checks if the network is a private network.
+     * 
+     * This method determines whether the network is a private network. Private networks are not routed
+     * on the global internet.
+     * 
+     * @return `true` if the network is private, `false` otherwise.
+     * @see [iana-ipv4-special-registry](https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml).
+     * @see [iana-ipv6-special-registry](https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml).
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_private() const IPADDRESS_NOEXCEPT;
 
+    /**
+     * Checks if the network is a global network.
+     * 
+     * This method determines whether the network is a global network. Global networks are routable on the
+     * internet and are not private.
+     * 
+     * @return `true` if the network is global, `false` otherwise.
+     * @see [iana-ipv4-special-registry](https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml).
+     * @see [iana-ipv6-special-registry](https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml).
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_global() const IPADDRESS_NOEXCEPT;
 
+    /**
+     * Checks if the network is a reserved network.
+     * 
+     * This method determines whether the network is reserved by checking if both the network address and
+     * the broadcast address are reserved addresses.
+     * 
+     * @return `true` if the network is reserved, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_reserved() const IPADDRESS_NOEXCEPT {
         return network_address().is_reserved() && broadcast_address().is_reserved();
     }
 
+    /**
+     * Checks if the network is a loopback network.
+     * 
+     * This method determines whether the network is a loopback network by checking if both the network
+     * address and the broadcast address are loopback addresses.
+     * 
+     * @return `true` if the network is loopback, `false` otherwise.
+     * @see [RFC 3330](https://datatracker.ietf.org/doc/html/rfc3330.html) for IPv4.
+     * @see [RFC 2373](https://datatracker.ietf.org/doc/html/rfc2373.html) for IPv6.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_loopback() const IPADDRESS_NOEXCEPT {
         return network_address().is_loopback() && broadcast_address().is_loopback();
     }
 
+    /**
+     * Checks if the network is a link-local network.
+     * 
+     * This method determines whether the network is a link-local network by checking if both the network
+     * address and the broadcast address are link-local addresses.
+     * 
+     * @return `true` if the network is link-local, `false` otherwise.
+     * @see [RFC 3927](https://datatracker.ietf.org/doc/html/rfc3927.html).
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_link_local() const IPADDRESS_NOEXCEPT {
         return network_address().is_link_local() && broadcast_address().is_link_local();
     }
 
+    /**
+     * Checks if the network is an unspecified network.
+     * 
+     * This method determines whether the network is unspecified by checking if both the network address and
+     * the broadcast address are unspecified addresses.
+     * 
+     * @return `true` if the network is unspecified, `false` otherwise.
+     * @see [RFC 5735](https://datatracker.ietf.org/doc/html/rfc5735.html) for IPv4.
+     * @see [RFC 2373](https://datatracker.ietf.org/doc/html/rfc2373.html) for IPv6.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_unspecified() const IPADDRESS_NOEXCEPT {
         return network_address().is_unspecified() && broadcast_address().is_unspecified();
     }
 
+    /**
+     * Calculates the total number of addresses in the network.
+     * 
+     * @return The total number of addresses in the network as a uint_type value.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint_type addresses_count() const IPADDRESS_NOEXCEPT {
         return broadcast_address().to_uint() - network_address().to_uint() + 1;
     }
 
+    /**
+     * Retrieves a sequence of host addresses in the network.
+     * 
+     * This method returns a sequence of host addresses within the network, excluding the network and
+     * broadcast addresses.
+     * 
+     * @code{.cpp}
+     *   constexpr auto hosts_sequence = ipv4_network::parse("192.0.2.0/29").hosts();
+     *   
+     *   for (const auto& addr : hosts_sequence) {
+     *      std::cout << addr << std::endl;
+     *   }
+     * 
+     *   // out:
+     *   // 192.0.2.1
+     *   // 192.0.2.2
+     *   // 192.0.2.3
+     *   // 192.0.2.4
+     *   // 192.0.2.5
+     *   // 192.0.2.6
+     * @endcode
+     * @return A `hosts_sequence` object representing the sequence of host addresses.
+     * @retval Ipv4 The usable hosts are all the IP addresses that belong to the network, except the network 
+     *         address itself and the network broadcast address. For networks with a mask length of 31, 
+     *         the network address and network broadcast address are also included in the result. 
+     *         Networks with a mask of 32 will return a list containing the single host address.
+     * @retval Ipv6 The usable hosts are all the IP addresses that belong to the network, except the 
+     *         Subnet-Router anycast address. For networks with a mask length of 127, the Subnet-Router 
+     *         anycast address is also included in the result. Networks with a mask of 128 will return a 
+     *         list containing the single host address.
+     * @warning Please note that with IPv6, the number of addresses can be so large that iterating through 
+     *          them all may be practically impossible. Therefore, use the hosts() method cautiously to 
+     *          avoid endlessly retrieving addresses.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_sequence<ip_address_type> hosts() const IPADDRESS_NOEXCEPT {
         return hosts_sequence<ip_address_type>(network_address(), broadcast_address(), prefixlen(), ip_address_type::base_max_prefixlen);
     }
