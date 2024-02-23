@@ -362,6 +362,18 @@ public:
 
 #endif // IPADDRESS_CPP_VERSION < 17
 
+    /**
+     * Parses a network address and prefix from a character array.
+     * 
+     * This function parses an IP network address and prefix length from a character array of a 
+     * specified size. Can check and get the result at compile time.
+     * 
+     * @tparam T The character type of the array.
+     * @tparam N The size of the character array.
+     * @param[in] address The character array representing the IP network in "address/prefix" format.
+     * @param[in] strict A boolean flag indicating whether to perform strict validation of the address.
+     * @return An ip network object representing the parsed network.
+     */
     template <typename T, size_t N>
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base parse(const T(&address)[N], bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         internal::is_char_type<T>();
@@ -369,6 +381,19 @@ public:
         return parse_address_with_prefix(str, strict);
     }
 
+    /**
+     * Parses a network address and prefix from a character array and reports errors through an error code.
+     * 
+     * This function parses an IP network address and prefix length from a character array of a specified size 
+     * and provides an error code if the parsing fails.
+     * 
+     * @tparam T The character type of the array.
+     * @tparam N The size of the character array.
+     * @param[in] address The character array representing the IP network in "address/prefix" format.
+     * @param[out] code An error_code object that will be set if an error occurs during parsing.
+     * @param[in] strict A boolean flag indicating whether to perform strict validation of the address.
+     * @return An ip network object representing the parsed network.
+     */
     template <typename T, size_t N>
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base parse(const T(&address)[N], error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
         internal::is_char_type<T>();
