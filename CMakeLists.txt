@@ -31,12 +31,17 @@ if(IPADDRESS_NO_OVERLOAD_STD)
   target_compile_definitions(${PROJECT_NAME} INTERFACE IPADDRESS_NO_OVERLOAD_STD)
 endif()
 target_compile_definitions(${PROJECT_NAME} INTERFACE IPADDRESS_IPV6_SCOPE_MAX_LENGTH=${IPADDRESS_IPV6_SCOPE_MAX_LENGTH})
-target_compile_definitions(${PROJECT_NAME} INTERFACE IPADDRESS_ENDIAN=${IPADDRESS_BIG_ENDIAN})
+target_compile_definitions(${PROJECT_NAME} INTERFACE $<BUILD_INTERFACE:IPADDRESS_ENDIAN=${IPADDRESS_BIG_ENDIAN}>)
 
 if (NOT EXISTS "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config.cmake.in")
   file(WRITE ${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config.cmake.in [[
+    include(TestBigEndian)
+    test_big_endian(IPADDRESS_BIG_ENDIAN)
+
     @PACKAGE_INIT@
+    
     include("${CMAKE_CURRENT_LIST_DIR}/@PROJECT_NAME@-targets.cmake")
+    set_target_properties(ipaddress::ipaddress PROPERTIES INTERFACE_COMPILE_DEFINITIONS "IPADDRESS_ENDIAN=${IPADDRESS_BIG_ENDIAN}")
   ]])
 endif()
 
@@ -51,6 +56,10 @@ write_basic_package_version_file(${PROJECT_NAME}-config-version.cmake
   VERSION ${PROJECT_VERSION}
   COMPATIBILITY SameMajorVersion)
 
+configure_file(
+  "${CMAKE_CURRENT_SOURCE_DIR}/package/pkgconfig.pc.in" 
+  "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.pc" @ONLY)
+
 install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}-targets)
 install(EXPORT ${PROJECT_NAME}-targets 
   DESTINATION "${CMAKE_INSTALL_DATADIR}/cmake/${PROJECT_NAME}"
@@ -60,6 +69,11 @@ install(
     "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake"
     "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
   DESTINATION ${CMAKE_INSTALL_DATADIR}/cmake/${PROJECT_NAME})
+install(
+  FILES 
+    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.pc"
+	DESTINATION "${CMAKE_INSTALL_DATADIR}/pkgconfig"
+)
 install(DIRECTORY include/ DESTINATION include)
 
 find_program(IPADDRESS_DPKG_BUILDPACKAGE_FOUND dpkg-buildpackage)
