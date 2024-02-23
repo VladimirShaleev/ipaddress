@@ -16,6 +16,7 @@ else()
   list(APPEND IPADDRESS_DOC_MARKDOWN ${CMAKE_CURRENT_LIST_DIR}/../README.md)
 
   set(IPADDRESS_DOC_CSS "${doxygen-awesome-css_SOURCE_DIR}" CACHE STRING "doxygen-awesome")
+  set(IPADDRESS_DOC_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/share/doc/${PROJECT_NAME}" CACHE PATH "Path to the documentation")
 
   CONFIGURE_FILE(Doxyfile.in Doxyfile @ONLY)
 

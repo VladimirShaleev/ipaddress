@@ -63,26 +63,18 @@ install(
 )
 install(DIRECTORY include/ DESTINATION include)
 
-find_program(IPADDRESS_DPKG_BUILDPACKAGE_FOUND dpkg-buildpackage)
-find_program(IPADDRESS_RPMBUILD_FOUND rpmbuild)
-
 cmake_dependent_option(IPADDRESS_BUILD_TESTS "Build tests" ON
   "BUILD_TESTING;CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR" OFF)
 cmake_dependent_option(IPADDRESS_BUILD_DOC "Build doc" ON
   "CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR" OFF)
 cmake_dependent_option(IPADDRESS_BUILD_PACKAGES "Build packages" ON
   "CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR" OFF)
-cmake_dependent_option(IPADDRESS_BUILD_DEB_PACKAGE "Create DEB package" ON
-  "IPADDRESS_BUILD_PACKAGES;IPADDRESS_DPKG_BUILDPACKAGE_FOUND" OFF)
-cmake_dependent_option(IPADDRESS_BUILD_RPM_PACKAGE "Create RPM package" ON
-  "IPADDRESS_BUILD_PACKAGES;IPADDRESS_RPMBUILD_FOUND" OFF)
 
 if(IPADDRESS_BUILD_TESTS)
   add_subdirectory(tests)
 endif()
 
 if(IPADDRESS_BUILD_DOC)
-  set(IPADDRESS_DOC_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/share/doc/${PROJECT_NAME}" CACHE PATH "Path to the documentation")
   add_subdirectory(doc)
 endif()
 
