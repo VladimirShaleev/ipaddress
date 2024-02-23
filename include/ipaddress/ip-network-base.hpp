@@ -1,3 +1,14 @@
+/**
+ * @file      ip-network-base.hpp
+ * @brief     Defines the base class for IP network representation.
+ * @author    Vladimir Shaleev
+ * @copyright MIT License
+ * 
+ * This file contains the declaration of the ip_network_base class, which serves as
+ * a foundation for creating representations of IP networks. The class employs a template
+ * approach, allowing it to work with various types of IP addresses, such as IPv4 and IPv6.
+ */
+
 #ifndef IPADDRESS_IP_NETWORK_BASE_HPP
 #define IPADDRESS_IP_NETWORK_BASE_HPP
 
@@ -6,12 +17,30 @@
 
 namespace IPADDRESS_NAMESPACE {
 
+/**
+ * Template base class for representing a network of IP addresses.
+ *
+ * This class provides the foundational elements for representing a network of IP addresses,
+ * offering methods to iterate over them and perform common network-related operations.
+ * It is designed to be flexible and work with any IP address type that conforms to a
+ * specific interface, making it suitable for both IPv4 and IPv6 networks.
+ * 
+ * @tparam Base The base class from which ip_network_base inherits. Should be a type that
+ *              represents an individual IP address.
+ */
 template <typename Base>
 class ip_network_base : public Base {
 public:
-    using ip_address_type = typename Base::ip_address_type;
-    using uint_type = typename ip_address_type::uint_type;
+    using ip_address_type = typename Base::ip_address_type; /**< The IP address type used by the network. */
+    using uint_type = typename ip_address_type::uint_type; /**< Unsigned integer type used for the underlying IP address representation. */
 
+    /**
+     * Constructs a new IP network base object.
+     * 
+     * Initializes a new instance of the ip_network_base class with the maximum prefix length
+     * for the IP address type, effectively setting the network address to the default address
+     * and the netmask to the maximum value.
+     */
     IPADDRESS_CONSTEXPR ip_network_base() IPADDRESS_NOEXCEPT 
         : 
         _network_address(),
