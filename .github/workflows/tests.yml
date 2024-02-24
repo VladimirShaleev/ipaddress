@@ -56,7 +56,7 @@ jobs:
   # 
   #     - name: Configure CMake
   #       run: >
-  #         cmake -B ${{ steps.strings.outputs.build-output-dir }}
+  #         cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }}
   #         -DCMAKE_CXX_STANDARD=${{ matrix.standard }}
   #         -DCMAKE_CXX_FLAGS=-stdlib=${{ matrix.stdlib }}
   #         -DCMAKE_CXX_COMPILER=c++
@@ -64,7 +64,6 @@ jobs:
   #         -DIPADDRESS_BUILD_TESTS=ON
   #         -DIPADDRESS_BUILD_DOC=OFF
   #         -DIPADDRESS_BUILD_PACKAGES=OFF
-  #         -S ${{ github.workspace }}
 
   #     - name: Build
   #       run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
@@ -72,20 +71,60 @@ jobs:
   #     - name: Run tests
   #       run: ctest --output-on-failure --test-dir ${{ steps.strings.outputs.build-output-dir }}
   
-  gcc:
+  # gcc:
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       gcc: [ 7, 8, 9, 10, 11, 13 ]
+  #       standard: [ 11, 14, 17, 20, 23 ]
+  #   name: "GCC ${{ matrix.gcc }} [C++${{ matrix.standard }}]"
+  #   runs-on: ubuntu-20.04
+  #   steps:
+  #     - name: "Install GCC"
+  #       uses: egor-tensin/setup-gcc@v1
+  #       with:
+  #         version: ${{ matrix.gcc }}
+  #     
+  #     - uses: actions/checkout@v3
+  #     - run: c++ -v
+  #     - name: Set reusable strings
+  #       id: strings
+  #       shell: bash
+  #       run: |
+  #         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+  #     
+  #     - name: Configure CMake
+  #       run: >
+  #         cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }}
+  #         -DCMAKE_CXX_STANDARD=${{ matrix.standard }}
+  #         -DCMAKE_CXX_COMPILER=c++
+  #         -DCMAKE_BUILD_TYPE=Release
+  #         -DIPADDRESS_BUILD_TESTS=ON
+  #         -DIPADDRESS_BUILD_DOC=OFF
+  #         -DIPADDRESS_BUILD_PACKAGES=OFF
+  # 
+  #     - name: Build
+  #       run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
+  #     
+  #     - name: Run tests
+  #       run: ctest --output-on-failure --test-dir ${{ steps.strings.outputs.build-output-dir }}
+
+  msvc:
     strategy:
       fail-fast: false
       matrix:
-        gcc: [ 7, 8, 9, 10, 11, 13 ]
+        version: [14.29, ""]
         standard: [ 11, 14, 17, 20, 23 ]
-    name: "GCC ${{ matrix.gcc }} [C++${{ matrix.standard }}]"
-    runs-on: ubuntu-20.04
+    name: "MSVC ${{ matrix.version }} [C++${{ matrix.standard }}]"
+    runs-on: windows-2022
     steps:
-      - name: "Install GCC"
-        uses: egor-tensin/setup-gcc@v1
+      - name: Add MSVC ${{ matrix.version }} to PATH
+        uses: ilammy/msvc-dev-cmd@v1
         with:
-          version: ${{ matrix.gcc }}
-      
+          toolset: ${{ matrix.version }}
+      - name: "Install Ninja & CMake"
+        run: choco install ninja cmake
+
       - uses: actions/checkout@v3
       - run: c++ -v
       - name: Set reusable strings
@@ -93,20 +132,18 @@ jobs:
         shell: bash
         run: |
           echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
-      
+
       - name: Configure CMake
         run: >
-          cmake -B ${{ steps.strings.outputs.build-output-dir }}
+          cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }}
+          -G Ninja
           -DCMAKE_CXX_STANDARD=${{ matrix.standard }}
+          -DCMAKE_CXX_FLAGS=-stdlib=${{ matrix.stdlib }}
           -DCMAKE_CXX_COMPILER=c++
           -DCMAKE_BUILD_TYPE=Release
           -DIPADDRESS_BUILD_TESTS=ON
           -DIPADDRESS_BUILD_DOC=OFF
           -DIPADDRESS_BUILD_PACKAGES=OFF
-          -S ${{ github.workspace }}
-  
-      - name: Build
-        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
-      
+
       - name: Run tests
         run: ctest --output-on-failure --test-dir ${{ steps.strings.outputs.build-output-dir }}
