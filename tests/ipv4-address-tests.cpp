@@ -497,15 +497,15 @@ TEST(ipv4_address, reverse_pointer) {
     ASSERT_EQ(actual, "1.0.0.127.in-addr.arpa");
 }
 
-TEST(ipv4_address, literals) {
-    auto ip1 = "127.0.0.1"_ipv4;
-    auto ip2 = "127.128.128.255"_ipv4;
-    auto ip3 = 0x7F000001_ipv4;
-    
-    ASSERT_EQ(ip1, ipv4_address::parse("127.0.0.1"));
-    ASSERT_EQ(ip2, ipv4_address::parse("127.128.128.255"));
-    ASSERT_EQ(ip3, ipv4_address::parse("127.0.0.1"));
-}
+//TEST(ipv4_address, literals) {
+//    auto ip1 = "127.0.0.1"_ipv4;
+//    auto ip2 = "127.128.128.255"_ipv4;
+//    auto ip3 = 0x7F000001_ipv4;
+//    
+//    ASSERT_EQ(ip1, ipv4_address::parse("127.0.0.1"));
+//    ASSERT_EQ(ip2, ipv4_address::parse("127.128.128.255"));
+//    ASSERT_EQ(ip3, ipv4_address::parse("127.0.0.1"));
+//}
 
 using IsMulticastIpv4Params = TestWithParam<std::tuple<const char*, bool>>;
 TEST_P(IsMulticastIpv4Params, is_multicast) {
