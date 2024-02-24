@@ -510,17 +510,6 @@ TEST(uint128_t, FromString) {
     ASSERT_EQ(read11, uint128_t(0));
 }
 
-TEST(uint128_t, TypeTraits) {
-    ASSERT_TRUE(std::is_integral<uint128_t>::value);
-    ASSERT_TRUE(std::is_arithmetic<uint128_t>::value);
-    ASSERT_TRUE(std::is_unsigned<uint128_t>::value);
-    ASSERT_TRUE(std::is_fundamental<uint128_t>::value);
-    ASSERT_TRUE(std::is_scalar<uint128_t>::value);
-    ASSERT_TRUE(std::is_object<uint128_t>::value);
-    ASSERT_FALSE(std::is_signed<uint128_t>::value);
-    ASSERT_FALSE(std::is_floating_point<uint128_t>::value);
-}
-
 TEST(uint128_t, NumericLimits) {
     ASSERT_TRUE(std::numeric_limits<uint128_t>::is_integer);
     ASSERT_EQ(std::numeric_limits<uint128_t>::digits, 128);

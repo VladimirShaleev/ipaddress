@@ -990,14 +990,14 @@ TEST_P(AddressesCountIpv4NetworkParams, addresses_count) {
 INSTANTIATE_TEST_SUITE_P(
     ipv4_network, AddressesCountIpv4NetworkParams,
     Values(
-        std::make_tuple("192.168.1.0/24", 256),
-        std::make_tuple("192.168.1.0/32", 1),
-        std::make_tuple("1.2.3.0/24", 256),
-        std::make_tuple("10.0.0.0/30", 4),
-        std::make_tuple("0.0.0.0/0", 4294967296),
-        std::make_tuple("0.0.0.0/1", 2147483648),
-        std::make_tuple("0.0.0.0/32", 1),
-        std::make_tuple("0.0.0.0/31", 2)
+        std::make_tuple("192.168.1.0/24", (uint32_t) 256),
+        std::make_tuple("192.168.1.0/32", (uint32_t) 1),
+        std::make_tuple("1.2.3.0/24", (uint32_t) 256),
+        std::make_tuple("10.0.0.0/30", (uint32_t) 4),
+        std::make_tuple("0.0.0.0/0", (uint32_t) 4294967296),
+        std::make_tuple("0.0.0.0/1", (uint32_t) 2147483648),
+        std::make_tuple("0.0.0.0/32", (uint32_t) 1),
+        std::make_tuple("0.0.0.0/31", (uint32_t) 2)
     ));
 
 using HostsIpv4NetworkParams = TestWithParam<std::tuple<const char*, std::vector<const char*>>>;
@@ -1040,8 +1040,8 @@ TEST_P(HostsIpv4NetworkParams, hosts) {
     }
 
     for (size_t i = 0; i < actual.size(); ++i) {
-        ASSERT_EQ(actual[i], expected[i]);
-        ASSERT_EQ(actual.at(i), expected[i]);
+        ASSERT_EQ(actual[(uint32_t) i], expected[i]);
+        ASSERT_EQ(actual.at((uint32_t) i), expected[i]);
     }
 }
 INSTANTIATE_TEST_SUITE_P(
@@ -1157,8 +1157,8 @@ TEST_P(SubnetsIpv4NetworkParams, subnets) {
     }
 
     for (size_t i = 0; i < actual.size(); ++i) {
-        ASSERT_EQ(actual[i], expected[i]);
-        ASSERT_EQ(actual.at(i), expected[i]);
+        ASSERT_EQ(actual[(uint32_t) i], expected[i]);
+        ASSERT_EQ(actual.at((uint32_t) i), expected[i]);
     }
 }
 INSTANTIATE_TEST_SUITE_P(

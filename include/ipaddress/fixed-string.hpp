@@ -77,7 +77,7 @@ struct fixed_string {
         auto ended = false;
         for (size_t i = 0; i < N; ++i) {
             if (IPADDRESS_IS_CONST_EVALUATED(data) && data[i] > 127) {
-                size_t i = data[i] / (data[i] - data[i]); // invalid symbol for ip address
+                size_t err = data[i] / (data[i] - data[i]); // invalid symbol for ip address
             }
             _data[i] = char(data[i]);
             if (data[i] == '\0') {

@@ -27,44 +27,6 @@
 #include "hash.hpp"
 #include "optional.hpp"
 
-#ifndef IPADDRESS_NO_OVERLOAD_STD
-
-namespace IPADDRESS_NAMESPACE {
-
-class uint128_t;
-
-} // namespace IPADDRESS_NAMESPACE
-
-namespace std {
-
-template <>
-struct is_integral<IPADDRESS_NAMESPACE::uint128_t> : true_type {
-};
-
-template <>
-struct is_arithmetic<IPADDRESS_NAMESPACE::uint128_t> : true_type {
-};
-
-template <>
-struct is_unsigned<IPADDRESS_NAMESPACE::uint128_t> : true_type {
-};
-
-template <>
-struct is_fundamental<IPADDRESS_NAMESPACE::uint128_t> : true_type {
-};
-
-template <>
-struct is_scalar<IPADDRESS_NAMESPACE::uint128_t> : true_type {
-};
-
-template <>
-struct is_object<IPADDRESS_NAMESPACE::uint128_t> : true_type {
-};
-
-} // namespace std
-
-#endif // IPADDRESS_NO_OVERLOAD_STD
-
 namespace IPADDRESS_NAMESPACE {
 
 /**
