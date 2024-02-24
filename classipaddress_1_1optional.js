@@ -1,7 +1,7 @@
 var classipaddress_1_1optional =
 [
     [ "value_type", "classipaddress_1_1optional.html#afb9ded5f49336ae503bb9f2035ea902b", null ],
-    [ "optional", "classipaddress_1_1optional.html#a2e413e0648c3bfd5ddf4e996aab40e40", null ],
+    [ "optional", "classipaddress_1_1optional.html#a1fa0f820de56b17b48d7418e4c17f191", null ],
     [ "optional", "classipaddress_1_1optional.html#a2beb783daef9d8c16bdf9b68641d1a12", null ],
     [ "optional", "classipaddress_1_1optional.html#a124f00ffa4ea93b1ae6fcd24e80ae424", null ],
     [ "optional", "classipaddress_1_1optional.html#aa9625b82d69277958996f6250ebc49db", null ],
