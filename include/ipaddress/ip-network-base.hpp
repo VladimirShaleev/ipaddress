@@ -1091,20 +1091,49 @@ public:
         return ip_network_base<Base>::from_address(address, new_prefix);
     }
 
+    /**
+     * Converts the ip network object to a std::string.
+     * 
+     * @return A `std::string` representation of the ip network object.
+     */
     IPADDRESS_NODISCARD explicit operator std::string() const {
         return to_string();
     }
 
+    /**
+     * Equality comparison operator.
+     * 
+     * Compares this ip network object to another for equality based on the network address and netmask.
+     * 
+     * @param[in] rhs The other ip network object to compare with.
+     * @return `true` if both objects are equal, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator==(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
         return _network_address == rhs._network_address && _netmask == rhs._netmask;
     }
 
+    /**
+     * Inequality comparison operator.
+     * 
+     * Compares this ip network object to another for inequality.
+     * 
+     * @param[in] rhs The other ip network object to compare with.
+     * @return `true` if both objects are not equal, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator!=(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
         return !(*this == rhs);
     }
 
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
 
+    /**
+     * Three-way comparison operator (spaceship operator).
+     * 
+     * Compares this ip network object to another using three-way comparison.
+     * 
+     * @param[in] rhs The other ip network object to compare with.
+     * @return `std::strong_ordering` result of the comparison.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR std::strong_ordering operator<=>(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
         if (auto result = _network_address <=> rhs._network_address; result != std::strong_ordering::equivalent) {
             return result;
@@ -1114,6 +1143,14 @@ public:
 
 #else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
+    /**
+     * Less than comparison operator.
+     * 
+     * Determines if this ip network object is less than another by comparing network addresses and netmasks.
+     * 
+     * @param[in] rhs The other ip network object to compare with.
+     * @return `true` if this object is less than the other, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
         if (_network_address != rhs._network_address) {
             return _network_address < rhs._network_address;
@@ -1124,14 +1161,38 @@ public:
         return false;
     }
     
+    /**
+     * Greater than comparison operator.
+     * 
+     * Determines if this ip network object is greater than another.
+     * 
+     * @param[in] rhs The other ip network object to compare with.
+     * @return `true` if this object is greater than the other, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
         return rhs < *this;
     }
     
+    /**
+     * Less than or equal to comparison operator.
+     * 
+     * Determines if this ip network object is less than or equal to another.
+     * 
+     * @param[in] rhs The other ip network object to compare with.
+     * @return `true` if this object is less than or equal to the other, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<=(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
         return !(rhs < *this);
     }
     
+    /**
+     * Greater than or equal to comparison operator.
+     * 
+     * Determines if this ip network object is greater than or equal to another.
+     * 
+     * @param[in] rhs The other ip network object to compare with.
+     * @return `true` if this object is greater than or equal to the other, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>=(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
         return !(*this < rhs);
     }
