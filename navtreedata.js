@@ -55,8 +55,8 @@ var NAVTREEINDEX =
 [
 "annotated.html",
 "classipaddress_1_1ip__network__base.html#ab4ea6c821fe871e802647d69810a470d",
-"classipaddress_1_1uint128__t.html#a6ba26b3784c2ccd55a487127fade894c",
-"namespaceipaddress.html#a88a76ee847c844cc47b94caac600689daa278170404490de2776a5db76b560042"
+"classipaddress_1_1uint128__t.html#a5c00ce21ea397fa2b3f8045d28beb8b4",
+"namespaceipaddress.html#a88a76ee847c844cc47b94caac600689d"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
