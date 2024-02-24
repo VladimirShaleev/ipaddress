@@ -91,7 +91,7 @@ TEST(fixed_string, ConstexprCtorEmpty) {
 }
 
 TEST(fixed_string, ConstexprDefaultCtor) {
-#if IPADDRESS_CPP_VERSION >= 17
+#if IPADDRESS_CPP_VERSION >= 17 && (!defined(__clang_major__) || __clang_major__ >= 7)
     constexpr fixed_string str_default;
 #else
     constexpr fixed_string<0> str_default;
