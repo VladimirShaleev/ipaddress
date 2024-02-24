@@ -778,7 +778,7 @@ public:
     /**
      * Calculates the total number of addresses in the network.
      * 
-     * @return The total number of addresses in the network as a uint_type value.
+     * @return The total number of addresses in the network as a `uint_type` value.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint_type addresses_count() const IPADDRESS_NOEXCEPT {
         return broadcast_address().to_uint() - network_address().to_uint() + 1;

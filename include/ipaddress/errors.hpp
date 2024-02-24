@@ -274,7 +274,11 @@ public:
  * @note This function is marked [[noreturn]] as it always throws an exception.
  */
 template <typename T>
-[[noreturn]] IPADDRESS_CONSTEXPR inline void raise_error(error_code code, int index, const T* address, size_t length) {
+#ifndef IPADDRESS_NO_EXCEPTIONS 
+[[noreturn]] 
+#endif
+IPADDRESS_CONSTEXPR inline void raise_error(error_code code, int index, const T* address, size_t length) {
+#ifndef IPADDRESS_NO_EXCEPTIONS
     char str[101] = {};
     size_t max_len = length;
     if (length > 100) {
@@ -345,6 +349,7 @@ template <typename T>
         default:
             throw error(code, "unknown error");
     }
+#endif
 }
 
 } // namespace IPADDRESS_NAMESPACE

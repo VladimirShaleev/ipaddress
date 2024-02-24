@@ -75,14 +75,18 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        macos: [11, 12]
+        macos: [ 11, 12, 13 ]
         standard: [ 11, 14, 17, 20, 23 ]
         exceptions: [ "exceptions" ]
         include:
           - macos: 11
+            standard: 11
+            exceptions: "no-exceptions"
+          - macos: 11
+            standard: 23
             exceptions: "no-exceptions"
 
-    name: "AppleClang [C++${{ matrix.standard }}, MacOS ${{ matrix.macos }}, ${{ matrix.exceptions }}]"
+    name: "AppleClang MacOS ${{ matrix.macos }} [C++${{ matrix.standard }}, ${{ matrix.exceptions }}]"
     runs-on: macos-${{ matrix.macos }}
     steps:
       - uses: actions/checkout@v3
