@@ -71,6 +71,45 @@ jobs:
   #     - name: Run tests
   #       run: ctest --output-on-failure --test-dir ${{ steps.strings.outputs.build-output-dir }}
   
+  appleclang:
+    strategy:
+      fail-fast: false
+      matrix:
+        macos: [11, 23]
+        standard: [ 11, 14, 17, 20, 23 ]
+    name: "AppleClang [C++${{ matrix.standard }}, MacOS ${{ matrix.macos }}]"
+    runs-on: macos-${{ matrix.macos }}
+    steps:
+      - uses: actions/checkout@v3
+      - run: c++ -v
+      
+      - name: Set reusable strings
+        id: strings
+        shell: bash
+        run: |
+          echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+
+      - run: make CXX=c++ CXX_STANDARD=2a
+        if: ${{ matrix.standard == '20' }}
+      - run: make CXX=c++ CXX_STANDARD=17
+        if: ${{ matrix.standard == '17' }}
+
+      - name: Configure CMake
+        run: >
+          cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }}
+          -DCMAKE_CXX_STANDARD=${{ matrix.standard }}
+          -DCMAKE_CXX_COMPILER=c++
+          -DCMAKE_BUILD_TYPE=Release
+          -DIPADDRESS_BUILD_TESTS=ON
+          -DIPADDRESS_BUILD_DOC=OFF
+          -DIPADDRESS_BUILD_PACKAGES=OFF
+
+      - name: Build
+        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
+      
+      - name: Run tests
+        run: ctest --output-on-failure --test-dir ${{ steps.strings.outputs.build-output-dir }}
+  
   # gcc:
   #   strategy:
   #     fail-fast: false
@@ -113,7 +152,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: [ "14.1", "14.2", "14.29", "14.39" ]
+        version: [ "14.29", "14.39" ]
         standard: [ 11, 14, 17, 20, 23 ]
     name: "MSVC ${{ matrix.version }} [C++${{ matrix.standard }}]"
     runs-on: windows-2022
@@ -127,7 +166,6 @@ jobs:
         run: choco install ninja cmake
 
       - uses: actions/checkout@v3
-      - run: c++ -v
       - name: Set reusable strings
         id: strings
         shell: bash
