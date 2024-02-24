@@ -1209,7 +1209,7 @@ TEST_P(SubnetsIpv6NetworkParams, subnets) {
 INSTANTIATE_TEST_SUITE_P(
     ipv6_network, SubnetsIpv6NetworkParams,
     Values(
-        std::make_tuple("::1/0", 1, nullptr, std::vector<const char*>{"::/1", "8000::/1"}),
+        std::make_tuple("::/0", 1, nullptr, std::vector<const char*>{"::/1", "8000::/1"}),
         std::make_tuple("2001:658:22a:cafe::/120", 1, nullptr, std::vector<const char*>{"2001:658:22a:cafe::/121", "2001:658:22a:cafe::80/121" }),
         std::make_tuple("2001:658:22a:cafe::/120", 2, nullptr, std::vector<const char*>{"2001:658:22a:cafe::/122", "2001:658:22a:cafe::40/122", "2001:658:22a:cafe::80/122", "2001:658:22a:cafe::c0/122" }),
         std::make_tuple("2001:658:22a:cafe::/120", 1, 123, std::vector<const char*>{"2001:658:22a:cafe::/123", "2001:658:22a:cafe::20/123", "2001:658:22a:cafe::40/123", "2001:658:22a:cafe::60/123", "2001:658:22a:cafe::80/123", "2001:658:22a:cafe::a0/123", "2001:658:22a:cafe::c0/123", "2001:658:22a:cafe::e0/123" }),

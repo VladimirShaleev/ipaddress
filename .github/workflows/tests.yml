@@ -12,7 +12,7 @@ jobs:
       matrix:
         clang: [ 14 ]
         stdlib: [ "libc++", "libstdc++" ]
-        standard:  [11 ]
+        standard: [ 11, 14, 17, 20, 23 ]
     name: "Clang ${{ matrix.clang }} [C++${{ matrix.standard }}, ${{ matrix.stdlib }}]"
     runs-on: ubuntu-20.04
     steps:
@@ -35,7 +35,7 @@ jobs:
       - name: Configure CMake
         run: >
           cmake -B ${{ steps.strings.outputs.build-output-dir }}
-          -DCXX_STANDARD=${{ matrix.standard }}
+          -DCMAKE_CXX_STANDARD=${{ matrix.standard }}
           -DCMAKE_CXX_FLAGS=-stdlib=${{ matrix.stdlib }}
           -DCMAKE_CXX_COMPILER=c++
           -DCMAKE_BUILD_TYPE=Release
