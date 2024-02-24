@@ -138,12 +138,13 @@ jobs:
           cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }}
           -G Ninja
           -DCMAKE_CXX_STANDARD=${{ matrix.standard }}
-          -DCMAKE_CXX_FLAGS=-stdlib=${{ matrix.stdlib }}
-          -DCMAKE_CXX_COMPILER=c++
           -DCMAKE_BUILD_TYPE=Release
           -DIPADDRESS_BUILD_TESTS=ON
           -DIPADDRESS_BUILD_DOC=OFF
           -DIPADDRESS_BUILD_PACKAGES=OFF
 
+      - name: Build
+        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
+      
       - name: Run tests
         run: ctest --output-on-failure --test-dir ${{ steps.strings.outputs.build-output-dir }}
