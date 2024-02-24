@@ -173,11 +173,42 @@ public:
      * This constructor initializes a `uint128_t` instance using an unsigned integer,
      * setting it as the lower part of the `uint128_t` value.
      * 
-     * @tparam T An unsigned integral type.
      * @param[in] lower The unsigned integer to initialize the `uint128_t` instance with.
      */
-    template <typename T, typename std::enable_if<std::is_integral<T>::value && std::is_unsigned<T>::value, bool>::type = true>
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(T lower) IPADDRESS_NOEXCEPT : _lower(uint64_t(lower)) {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(unsigned long long lower) IPADDRESS_NOEXCEPT : _lower(uint64_t(lower)) {
+    }
+
+    /**
+     * Constructs a `uint128_t` instance from an unsigned integer.
+     *
+     * This constructor initializes a `uint128_t` instance using an unsigned integer,
+     * setting it as the lower part of the `uint128_t` value.
+     * 
+     * @param[in] lower The unsigned integer to initialize the `uint128_t` instance with.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(unsigned long lower) IPADDRESS_NOEXCEPT : uint128_t((unsigned long long) lower) {
+    }
+
+    /**
+     * Constructs a `uint128_t` instance from an unsigned integer.
+     *
+     * This constructor initializes a `uint128_t` instance using an unsigned integer,
+     * setting it as the lower part of the `uint128_t` value.
+     * 
+     * @param[in] lower The unsigned integer to initialize the `uint128_t` instance with.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(unsigned int lower) IPADDRESS_NOEXCEPT : uint128_t((unsigned long long) lower) {
+    }
+
+    /**
+     * Constructs a `uint128_t` instance from an unsigned integer.
+     *
+     * This constructor initializes a `uint128_t` instance using an unsigned integer,
+     * setting it as the lower part of the `uint128_t` value.
+     * 
+     * @param[in] lower The unsigned integer to initialize the `uint128_t` instance with.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(unsigned short lower) IPADDRESS_NOEXCEPT : uint128_t((unsigned long long) lower) {
     }
 
     /**
@@ -186,11 +217,9 @@ public:
      * This constructor initializes a `uint128_t` instance using a signed integer,
      * setting it as the lower part of the `uint128_t` value and extending the sign to the upper part.
      * 
-     * @tparam T A signed integral type.
      * @param[in] lower The signed integer to initialize the `uint128_t` instance with.
      */
-    template <typename T, typename std::enable_if<std::is_integral<T>::value && std::is_signed<T>::value, bool>::type = true>
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(T lower) IPADDRESS_NOEXCEPT
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(long long lower) IPADDRESS_NOEXCEPT
 
 #if IPADDRESS_ENDIAN == IPADDRESS_BIG_ENDIAN
 
@@ -204,19 +233,72 @@ public:
     { }
 
     /**
+     * Constructs a `uint128_t` instance from a signed integer.
+     *
+     * This constructor initializes a `uint128_t` instance using a signed integer,
+     * setting it as the lower part of the `uint128_t` value and extending the sign to the upper part.
+     * 
+     * @param[in] lower The signed integer to initialize the `uint128_t` instance with.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(long lower) IPADDRESS_NOEXCEPT : uint128_t((long long) lower) {
+    }
+
+    /**
+     * Constructs a `uint128_t` instance from a signed integer.
+     *
+     * This constructor initializes a `uint128_t` instance using a signed integer,
+     * setting it as the lower part of the `uint128_t` value and extending the sign to the upper part.
+     * 
+     * @param[in] lower The signed integer to initialize the `uint128_t` instance with.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(int lower) IPADDRESS_NOEXCEPT : uint128_t((long long) lower) {
+    }
+
+    /**
+     * Constructs a `uint128_t` instance from a signed integer.
+     *
+     * This constructor initializes a `uint128_t` instance using a signed integer,
+     * setting it as the lower part of the `uint128_t` value and extending the sign to the upper part.
+     * 
+     * @param[in] lower The signed integer to initialize the `uint128_t` instance with.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(short lower) IPADDRESS_NOEXCEPT : uint128_t((long long) lower) {
+    }
+
+    /**
      * Constructs a `uint128_t` instance from a floating-point value.
      * 
      * This constructor initializes a `uint128_t` instance by converting a floating-point value to its
      * 128-bit unsigned integer representation. The conversion is explicit to prevent unintended implicit conversions.
      * 
-     * @tparam T A floating-point type.
      * @param[in] value The floating-point value to convert.
      */
-    template <typename T, typename std::enable_if<std::is_floating_point<T>::value, bool>::type = true>
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit uint128_t(T value) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit uint128_t(double value) IPADDRESS_NOEXCEPT {
         const auto result = from_double(double(value));
         _upper = result._upper;
         _lower = result._lower;
+    }
+
+    /**
+     * Constructs a `uint128_t` instance from a floating-point value.
+     * 
+     * This constructor initializes a `uint128_t` instance by converting a floating-point value to its
+     * 128-bit unsigned integer representation. The conversion is explicit to prevent unintended implicit conversions.
+     * 
+     * @param[in] value The floating-point value to convert.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit uint128_t(long double value) IPADDRESS_NOEXCEPT : uint128_t((double) value) {
+    }
+
+    /**
+     * Constructs a `uint128_t` instance from a floating-point value.
+     * 
+     * This constructor initializes a `uint128_t` instance by converting a floating-point value to its
+     * 128-bit unsigned integer representation. The conversion is explicit to prevent unintended implicit conversions.
+     * 
+     * @param[in] value The floating-point value to convert.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit uint128_t(float value) IPADDRESS_NOEXCEPT : uint128_t((double) value) {
     }
 
     /**
@@ -262,7 +344,7 @@ public:
      * 
      * @param[in,out] other The other `uint128_t` instance to swap with.
      */
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE void swap(IPADDRESS_NAMESPACE::uint128_t& other) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE void swap(uint128_t& other) IPADDRESS_NOEXCEPT {
         const auto tmp = *this;
         *this = other;
         other = tmp;
@@ -342,12 +424,120 @@ public:
      *
      * This method allows for the explicit conversion of a `uint128_t` value to a specified integral type.
      *
-     * @tparam T The integral type to cast to.
      * @return The `uint128_t` value cast to the specified integral type.
      */
-    template <typename T, typename std::enable_if<std::is_integral<T>::value, bool>::type = true>
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit operator T() const IPADDRESS_NOEXCEPT {
-        return T(_lower);
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit operator unsigned long long() const IPADDRESS_NOEXCEPT {
+        return (unsigned long long) _lower;
+    }
+
+    /**
+     * Casts the `uint128_t` value to an integral type.
+     *
+     * This method allows for the explicit conversion of a `uint128_t` value to a specified integral type.
+     *
+     * @return The `uint128_t` value cast to the specified integral type.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit operator long long() const IPADDRESS_NOEXCEPT {
+        return (long long) _lower;
+    }
+
+    /**
+     * Casts the `uint128_t` value to an integral type.
+     *
+     * This method allows for the explicit conversion of a `uint128_t` value to a specified integral type.
+     *
+     * @return The `uint128_t` value cast to the specified integral type.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit operator unsigned long() const IPADDRESS_NOEXCEPT {
+        return (unsigned long) _lower;
+    }
+
+    /**
+     * Casts the `uint128_t` value to an integral type.
+     *
+     * This method allows for the explicit conversion of a `uint128_t` value to a specified integral type.
+     *
+     * @return The `uint128_t` value cast to the specified integral type.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit operator long() const IPADDRESS_NOEXCEPT {
+        return (long) _lower;
+    }
+
+    /**
+     * Casts the `uint128_t` value to an integral type.
+     *
+     * This method allows for the explicit conversion of a `uint128_t` value to a specified integral type.
+     *
+     * @return The `uint128_t` value cast to the specified integral type.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit operator unsigned int() const IPADDRESS_NOEXCEPT {
+        return (unsigned int) _lower;
+    }
+
+    /**
+     * Casts the `uint128_t` value to an integral type.
+     *
+     * This method allows for the explicit conversion of a `uint128_t` value to a specified integral type.
+     *
+     * @return The `uint128_t` value cast to the specified integral type.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit operator int() const IPADDRESS_NOEXCEPT {
+        return (int) _lower;
+    }
+
+    /**
+     * Casts the `uint128_t` value to an integral type.
+     *
+     * This method allows for the explicit conversion of a `uint128_t` value to a specified integral type.
+     *
+     * @return The `uint128_t` value cast to the specified integral type.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit operator unsigned short() const IPADDRESS_NOEXCEPT {
+        return (unsigned short) _lower;
+    }
+
+    /**
+     * Casts the `uint128_t` value to an integral type.
+     *
+     * This method allows for the explicit conversion of a `uint128_t` value to a specified integral type.
+     *
+     * @return The `uint128_t` value cast to the specified integral type.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit operator short() const IPADDRESS_NOEXCEPT {
+        return (short) _lower;
+    }
+
+    /**
+     * Casts the `uint128_t` value to an integral type.
+     *
+     * This method allows for the explicit conversion of a `uint128_t` value to a specified integral type.
+     *
+     * @return The `uint128_t` value cast to the specified integral type.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit operator unsigned char() const IPADDRESS_NOEXCEPT {
+        return (char) _lower;
+    }
+
+    /**
+     * Casts the `uint128_t` value to an integral type.
+     *
+     * This method allows for the explicit conversion of a `uint128_t` value to a specified integral type.
+     *
+     * @return The `uint128_t` value cast to the specified integral type.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit operator char() const IPADDRESS_NOEXCEPT {
+        return (char) _lower;
+    }
+
+    /**
+     * Casts the `uint128_t` value to an integral type.
+     *
+     * This method allows for the explicit conversion of a `uint128_t` value to a specified integral type.
+     *
+     * @return The `uint128_t` value cast to the specified integral type.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit operator signed char() const IPADDRESS_NOEXCEPT {
+        return (signed char) _lower;
     }
 
     /**
@@ -355,45 +545,32 @@ public:
      *
      * This method allows for the explicit conversion of a `uint128_t` value to a specified floating-point type.
      *
-     * @tparam T The floating-point type to cast to.
      * @return The `uint128_t` value cast to the specified floating-point type.
      */
-    template <typename T, typename std::enable_if<std::is_floating_point<T>::value, bool>::type = true>
-    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE explicit operator T() const IPADDRESS_NOEXCEPT {
-        return T(to_double(*this));
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE explicit operator long double() const IPADDRESS_NOEXCEPT {
+        return (long double) to_double(*this);
     }
 
     /**
-     * Assigns a lower unsigned integer to the `uint128_t` instance.
+     * Casts the `uint128_t` value to a floating-point type.
      *
-     * This method assigns an unsigned integer to the `uint128_t` instance, setting it as the lower part of the value.
+     * This method allows for the explicit conversion of a `uint128_t` value to a specified floating-point type.
      *
-     * @tparam T The unsigned integral type of the value to assign.
-     * @param[in] lower The unsigned integer to assign to the `uint128_t` instance.
-     * @return A reference to the `uint128_t` instance after assignment.
+     * @return The `uint128_t` value cast to the specified floating-point type.
      */
-    template <typename T, typename std::enable_if<std::is_integral<T>::value && std::is_unsigned<T>::value, bool>::type = true>
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator=(T lower) IPADDRESS_NOEXCEPT {
-        _upper = 0;
-        _lower = uint64_t(lower);
-        return *this;
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE explicit operator double() const IPADDRESS_NOEXCEPT {
+        return to_double(*this);
     }
 
     /**
-     * Assigns a lower signed integer to the `uint128_t` instance.
+     * Casts the `uint128_t` value to a floating-point type.
      *
-     * This method assigns a signed integer to the `uint128_t` instance, setting it as the lower part of the value
-     * and extending the sign to the upper part.
+     * This method allows for the explicit conversion of a `uint128_t` value to a specified floating-point type.
      *
-     * @tparam T The signed integral type of the value to assign.
-     * @param[in] lower The signed integer to assign to the `uint128_t` instance.
-     * @return A reference to the `uint128_t` instance after assignment.
+     * @return The `uint128_t` value cast to the specified floating-point type.
      */
-    template <typename T, typename std::enable_if<std::is_integral<T>::value && std::is_signed<T>::value, bool>::type = true>
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator=(T lower) IPADDRESS_NOEXCEPT {
-        _upper = uint64_t(int64_t(lower) >> 63);
-        _lower = uint64_t(lower);
-        return *this;
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE explicit operator float() const IPADDRESS_NOEXCEPT {
+        return (float) to_double(*this);
     }
 
     /**
@@ -567,20 +744,6 @@ public:
     }
 
     /**
-     * Addition operator with an integral type.
-     *
-     * Adds an integral value to this instance and returns a new `uint128_t` instance with the result.
-     *
-     * @tparam T An integral type to add to this instance.
-     * @param[in] lower The integral value to add.
-     * @return A new `uint128_t` instance representing the sum.
-     */
-    template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator+(T lower) const IPADDRESS_NOEXCEPT {
-        return *this + uint128_t(lower);
-    }
-
-    /**
      * Addition operator with another `uint128_t` instance.
      *
      * Adds the value of another `uint128_t` instance to this instance and returns a new `uint128_t` instance with the result.
@@ -595,20 +758,6 @@ public:
     }
     
     /**
-     * Subtraction operator with an integral type.
-     *
-     * Subtracts an integral value from this instance and returns a new `uint128_t` instance with the result.
-     *
-     * @tparam T An integral type to subtract from this instance.
-     * @param[in] lower The integral value to subtract.
-     * @return A new `uint128_t` instance representing the difference.
-     */
-    template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator-(T lower) const IPADDRESS_NOEXCEPT {
-        return *this - uint128_t(lower);
-    }
-
-    /**
      * Subtraction operator with another `uint128_t` instance.
      *
      * Subtracts the value of another `uint128_t` instance from this instance and returns a new `uint128_t` instance with the result.
@@ -620,20 +769,6 @@ public:
         const uint64_t lower = _lower - other._lower;
         const uint64_t borrow = lower > _lower ? 1 : 0;
         return { _upper - other._upper - borrow, lower };
-    }
-
-    /**
-     * Multiplication operator with an integral type.
-     *
-     * Multiplies this instance by an integral value and returns a new `uint128_t` instance with the result.
-     *
-     * @tparam T An integral type to multiply this instance by.
-     * @param[in] lower The integral value to multiply by.
-     * @return A new `uint128_t` instance representing the product.
-     */
-    template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator*(T lower) const IPADDRESS_NOEXCEPT {
-        return *this * uint128_t(lower);
     }
 
     /**
@@ -652,20 +787,6 @@ public:
     }
     
     /**
-     * Division operator with an integral type.
-     *
-     * Divides this instance by an integral value and returns a new `uint128_t` instance with the result.
-     *
-     * @tparam T An integral type to divide this instance by.
-     * @param[in] lower The integral value to divide by.
-     * @return A new `uint128_t` instance representing the quotient.
-     */
-    template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator/(T lower) const IPADDRESS_NOEXCEPT {
-        return *this / uint128_t(lower);
-    }
-
-    /**
      * Division operator with another `uint128_t` instance.
      *
      * Divides this instance by another `uint128_t` instance and returns a new `uint128_t` instance with the result.
@@ -675,20 +796,6 @@ public:
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator/(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return divide(*this, other);
-    }
-
-    /**
-     * Remainder operator with an integral type.
-     *
-     * Calculates the remainder of this instance divided by an integral value and returns a new `uint128_t` instance with the result.
-     *
-     * @tparam T An integral type to divide this instance by.
-     * @param[in] lower The integral value to divide by.
-     * @return A new `uint128_t` instance representing the remainder.
-     */
-    template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator%(T lower) const IPADDRESS_NOEXCEPT {
-        return *this % uint128_t(lower);
     }
 
     /**
@@ -705,20 +812,6 @@ public:
     }
 
     /**
-     * Bitwise AND operator with an integral type.
-     *
-     * Performs a bitwise AND operation between this instance and an integral value and returns a new `uint128_t` instance with the result.
-     *
-     * @tparam T An integral type to perform the bitwise AND with.
-     * @param[in] lower The integral value to perform the bitwise AND with.
-     * @return A new `uint128_t` instance representing the result of the bitwise AND operation.
-     */
-    template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator&(T lower) const IPADDRESS_NOEXCEPT {
-        return *this & uint128_t(lower);
-    }
-
-    /**
      * Bitwise AND operator with another `uint128_t` instance.
      *
      * Performs a bitwise AND operation between this instance and another `uint128_t` instance and returns a new `uint128_t` instance with the result.
@@ -731,20 +824,6 @@ public:
     }
 
     /**
-     * Bitwise OR operator with an integral type.
-     *
-     * Performs a bitwise OR operation between this instance and an integral value and returns a new `uint128_t` instance with the result.
-     *
-     * @tparam T An integral type to perform the bitwise OR with.
-     * @param[in] lower The integral value to perform the bitwise OR with.
-     * @return A new `uint128_t` instance representing the result of the bitwise OR operation.
-     */
-    template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator|(T lower) const IPADDRESS_NOEXCEPT {
-        return *this | uint128_t(lower);
-    }
-
-    /**
      * Bitwise OR operator with another `uint128_t` instance.
      *
      * Performs a bitwise OR operation between this instance and another `uint128_t` instance and returns a new `uint128_t` instance with the result.
@@ -754,20 +833,6 @@ public:
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator|(const uint128_t& other) const IPADDRESS_NOEXCEPT {
         return { _upper | other._upper, _lower | other._lower };
-    }
-
-    /**
-     * Bitwise XOR operator with an integral type.
-     *
-     * Performs a bitwise XOR operation between this instance and an integral value and returns a new `uint128_t` instance with the result.
-     *
-     * @tparam T An integral type to perform the bitwise XOR with.
-     * @param[in] lower The integral value to perform the bitwise XOR with.
-     * @return A new `uint128_t` instance representing the result of the bitwise XOR operation.
-     */
-    template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator^(T lower) const IPADDRESS_NOEXCEPT {
-        return *this ^ uint128_t(lower);
     }
 
     /**
