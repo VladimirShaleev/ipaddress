@@ -1,7 +1,7 @@
-<map id="ipaddress::ip_network_base&lt; Base &gt;" name="ipaddress::ip_network_base&lt; Base &gt;">
-<area shape="rect" id="Node000001" title="Template base class for representing a network of IP addresses." alt="" coords="5,37,171,77"/>
-<area shape="rect" id="Node000002" href="$classipaddress_1_1ip__network__base.html" title=" " alt="" coords="380,5,596,45"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="184,47,380,31,380,37,184,52"/>
-<area shape="rect" id="Node000003" href="$classipaddress_1_1ip__network__base.html" title=" " alt="" coords="380,69,596,109"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="185,66,195,67,380,81,380,86,194,72,184,71"/>
+<map id="ip_network_base&lt; Base &gt;" name="ip_network_base&lt; Base &gt;">
+<area shape="rect" id="Node000001" title="Template base class for representing a network of IP addresses." alt="" coords="94,5,289,31"/>
+<area shape="rect" id="Node000002" href="$classipaddress_1_1ip__network__base.html" title=" " alt="" coords="5,93,180,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="125,38,103,56,95,74,93,93,88,93,90,73,99,53,122,34"/>
+<area shape="rect" id="Node000003" href="$classipaddress_1_1ip__network__base.html" title=" " alt="" coords="204,93,379,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="238,35,264,53,278,72,288,92,283,94,274,75,260,57,235,39"/>
 </map>

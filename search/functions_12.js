@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['v4_0',['v4',['../classipaddress_1_1ip__address.html#a7f158559ed636c35ed7ed5d4e1ac1790',1,'ipaddress::ip_address']]],
-  ['v6_1',['v6',['../classipaddress_1_1ip__address.html#acb1a9b0d05a6b5bba4e0bcf635745532',1,'ipaddress::ip_address']]],
-  ['value_2',['value',['../classipaddress_1_1optional.html#a0b15e279a1ea600cc504ba8046a9c1ea',1,'ipaddress::optional::value() &amp;noexcept'],['../classipaddress_1_1optional.html#ab453889cefd6362a53a19662844737e3',1,'ipaddress::optional::value() const &amp;noexcept'],['../classipaddress_1_1optional.html#aaa58be9d2f21636dbb5e5fe0bd4bf4e0',1,'ipaddress::optional::value() &amp;&amp;noexcept'],['../classipaddress_1_1optional.html#a8b2993010f057e7834fee559ab1694ea',1,'ipaddress::optional::value() const &amp;&amp;noexcept']]],
-  ['version_3',['version',['../classipaddress_1_1base__v4.html#a1372c969328d3fbbb6e96a1f858c9465',1,'ipaddress::base_v4::version()'],['../classipaddress_1_1base__v6.html#aedb73b7802b034df47c1dcdd9e50e5e7',1,'ipaddress::base_v6::version()'],['../classipaddress_1_1ip__address.html#a16ec2076c50ef6211a3f776cb2cdd19a',1,'ipaddress::ip_address::version()']]]
+  ['v4_0',['v4',['../classipaddress_1_1ip__address.html#a913ec0e90e5c359ae371df2aa25e4630',1,'ipaddress::ip_address']]],
+  ['v6_1',['v6',['../classipaddress_1_1ip__address.html#aa45220e0d4dd24cdf823fd5106ac6f0d',1,'ipaddress::ip_address']]],
+  ['value_2',['value',['../classipaddress_1_1optional.html#a18fcc7239002c7ed62c67bd3a6f007f9',1,'ipaddress::optional::value() &amp;noexcept'],['../classipaddress_1_1optional.html#af5b960fb01a7360a8c818b90e6f72b09',1,'ipaddress::optional::value() const &amp;noexcept'],['../classipaddress_1_1optional.html#a0f8a32d02a94723181404c6b00bd096e',1,'ipaddress::optional::value() &amp;&amp;noexcept'],['../classipaddress_1_1optional.html#a11b09739eab474a38a8d1f3f3e5c6178',1,'ipaddress::optional::value() const &amp;&amp;noexcept']]],
+  ['version_3',['version',['../classipaddress_1_1base__v4.html#a841fbbfe98aa27a875d1e408bfaa461e',1,'ipaddress::base_v4::version()'],['../classipaddress_1_1base__v6.html#a841fbbfe98aa27a875d1e408bfaa461e',1,'ipaddress::base_v6::version()'],['../classipaddress_1_1ip__address.html#a841fbbfe98aa27a875d1e408bfaa461e',1,'ipaddress::ip_address::version()']]]
 ];

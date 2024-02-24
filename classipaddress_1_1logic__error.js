@@ -1,7 +1,7 @@
 var classipaddress_1_1logic__error =
 [
-    [ "logic_error", "classipaddress_1_1logic__error.html#a338a80ae91fe4eac7c5f8543a9c5cd4b", null ],
-    [ "logic_error", "classipaddress_1_1logic__error.html#a75914e37ed009f072baef6cfb2540ec0", null ],
-    [ "logic_error", "classipaddress_1_1logic__error.html#a343d42298f669a61ba868dd4046e75bc", null ],
-    [ "code", "classipaddress_1_1logic__error.html#a441ce9a1abee5e32c1e7d212d7fafc14", null ]
+    [ "logic_error", "classipaddress_1_1logic__error.html#af9cb321a672a2c741e1442ec7f0fa131", null ],
+    [ "logic_error", "classipaddress_1_1logic__error.html#a88d4b462fdf573f6fdc4c2c48b371607", null ],
+    [ "logic_error", "classipaddress_1_1logic__error.html#ac7c4119ba6540fc13e5b85da29bfaaad", null ],
+    [ "code", "classipaddress_1_1logic__error.html#a0a3e52ec175378c040619cbcb18226d5", null ]
 ];

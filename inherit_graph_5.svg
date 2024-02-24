@@ -13,8 +13,8 @@
 <title>Node0</title>
 <g id="a_Node000000"><a xlink:href="classipaddress_1_1base__v6.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="134,-30 0,-30 0,0 134,0 134,-30"/>
-<text text-anchor="start" x="8" y="-18" font-family="Helvetica,sans-Serif" font-size="10.00">ipaddress::base_v6</text>
-<text text-anchor="middle" x="67" y="-7" font-family="Helvetica,sans-Serif" font-size="10.00">&lt; ipv6_network_base &gt;</text>
+<text text-anchor="start" x="8" y="-18" font-family="Helvetica,sans-Serif" font-size="10.00">base_v6&lt; ipv6_network</text>
+<text text-anchor="middle" x="67" y="-7" font-family="Helvetica,sans-Serif" font-size="10.00">_base &gt;</text>
 </a>
 </g>
 </g>

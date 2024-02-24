@@ -1,5 +1,5 @@
-<map id="ipaddress::logic_error" name="ipaddress::logic_error">
-<area shape="rect" id="Node000001" title="Exception for logical errors in IP address operations." alt="" coords="5,79,168,104"/>
-<area shape="rect" id="Node000002" href="$classipaddress_1_1error.html" title="The primary exception class used by the IP address library." alt="" coords="25,5,149,31"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="89,44,89,79,84,79,84,44"/>
+<map id="logic_error" name="logic_error">
+<area shape="rect" id="Node000001" title="Exception for logical errors in IP address operations." alt="" coords="5,79,96,104"/>
+<area shape="rect" id="Node000002" href="$classipaddress_1_1error.html" title="The primary exception class used by the IP address library." alt="" coords="24,5,77,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="53,44,53,79,48,79,48,44"/>
 </map>

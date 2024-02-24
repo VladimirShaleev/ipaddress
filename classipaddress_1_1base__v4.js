@@ -1,5 +1,5 @@
 var classipaddress_1_1base__v4 =
 [
-    [ "version", "classipaddress_1_1base__v4.html#a1372c969328d3fbbb6e96a1f858c9465", null ],
-    [ "size", "classipaddress_1_1base__v4.html#a428879c8a8e45c494cf913261e72a1e3", null ]
+    [ "version", "classipaddress_1_1base__v4.html#a841fbbfe98aa27a875d1e408bfaa461e", null ],
+    [ "size", "classipaddress_1_1base__v4.html#ad8890d890b4f300bbfa21071f23760b4", null ]
 ];

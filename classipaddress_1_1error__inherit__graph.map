@@ -1,7 +1,7 @@
-<map id="ipaddress::error" name="ipaddress::error">
-<area shape="rect" id="Node000001" title="The primary exception class used by the IP address library." alt="" coords="119,5,243,31"/>
-<area shape="rect" id="Node000002" href="$classipaddress_1_1logic__error.html" title="Exception for logical errors in IP address operations." alt="" coords="5,79,168,104"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="157,41,104,81,101,76,154,37"/>
-<area shape="rect" id="Node000003" href="$classipaddress_1_1parse__error.html" title="Exception for errors encountered during IP address parsing." alt="" coords="193,79,359,104"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="209,37,262,76,259,81,206,41"/>
+<map id="error" name="error">
+<area shape="rect" id="Node000001" title="The primary exception class used by the IP address library." alt="" coords="83,5,136,31"/>
+<area shape="rect" id="Node000002" href="$classipaddress_1_1logic__error.html" title="Exception for logical errors in IP address operations." alt="" coords="5,79,96,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="93,43,62,80,58,77,89,40"/>
+<area shape="rect" id="Node000003" href="$classipaddress_1_1parse__error.html" title="Exception for errors encountered during IP address parsing." alt="" coords="120,79,216,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="130,40,161,77,156,80,126,43"/>
 </map>
