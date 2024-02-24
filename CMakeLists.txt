@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.8.0)
 
 option(IPADDRESS_NO_EXCEPTIONS "Disable handling cpp exception for" OFF)
+option(IPADDRESS_NO_IPV6_SCOPE "Disable scope id for IPv6 addresses" OFF)
 option(IPADDRESS_NO_OVERLOAD_STD "Do not overload std functions such as to_string, hash etc" OFF)
 set(IPADDRESS_IPV6_SCOPE_MAX_LENGTH "16" CACHE STRING "Maximum scope-id length for IPv6 addresses")
 
@@ -30,7 +31,9 @@ endif()
 if(IPADDRESS_NO_OVERLOAD_STD)
   target_compile_definitions(${PROJECT_NAME} INTERFACE IPADDRESS_NO_OVERLOAD_STD)
 endif()
-target_compile_definitions(${PROJECT_NAME} INTERFACE IPADDRESS_IPV6_SCOPE_MAX_LENGTH=${IPADDRESS_IPV6_SCOPE_MAX_LENGTH})
+if(NOT IPADDRESS_NO_IPV6_SCOPE)
+  target_compile_definitions(${PROJECT_NAME} INTERFACE IPADDRESS_IPV6_SCOPE_MAX_LENGTH=${IPADDRESS_IPV6_SCOPE_MAX_LENGTH})
+endif()
 target_compile_definitions(${PROJECT_NAME} INTERFACE $<BUILD_INTERFACE:IPADDRESS_ENDIAN=${IPADDRESS_BIG_ENDIAN}>)
 
 configure_package_config_file(

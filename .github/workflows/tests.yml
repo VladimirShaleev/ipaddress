@@ -75,9 +75,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        macos: [11, 23]
+        macos: [11, 12]
         standard: [ 11, 14, 17, 20, 23 ]
-    name: "AppleClang [C++${{ matrix.standard }}, MacOS ${{ matrix.macos }}]"
+        exceptions: [ "exceptions" ]
+        include:
+          - macos: 11
+            exceptions: "no-exceptions"
+
+    name: "AppleClang [C++${{ matrix.standard }}, MacOS ${{ matrix.macos }}, ${{ matrix.exceptions }}]"
     runs-on: macos-${{ matrix.macos }}
     steps:
       - uses: actions/checkout@v3
@@ -94,6 +99,7 @@ jobs:
           cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }}
           -DCMAKE_CXX_STANDARD=${{ matrix.standard }}
           -DCMAKE_CXX_COMPILER=c++
+          -DCMAKE_CXX_FLAGS=-f${{ matrix.exceptions }}
           -DCMAKE_BUILD_TYPE=Release
           -DIPADDRESS_BUILD_TESTS=ON
           -DIPADDRESS_BUILD_DOC=OFF
