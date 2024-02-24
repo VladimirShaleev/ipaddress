@@ -41,7 +41,7 @@ public:
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional() 
 
-#if !defined(__clang_major__) || __clang_major__ > 7
+#if !defined(__clang_major__) || __clang_major__ > 8
     IPADDRESS_NOEXCEPT
 #endif
 

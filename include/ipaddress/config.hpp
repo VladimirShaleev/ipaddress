@@ -126,7 +126,7 @@
 #  endif
 #endif
 
-#if __cpp_lib_is_constant_evaluated >= 201811L
+#if __cpp_lib_is_constant_evaluated >= 201811L && !(defined(__clang_major__) && __clang_major__ <= 8 && defined(_LIBCPP_VERSION))
 #  define IPADDRESS_IS_CONST_EVALUATED(x) std::is_constant_evaluated()
 #elif __GNUC__ >= 9
 #  define IPADDRESS_IS_CONST_EVALUATED(x) __builtin_is_constant_evaluated()
