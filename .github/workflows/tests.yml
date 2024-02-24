@@ -47,11 +47,8 @@ jobs:
       - name: Build
         run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
       
-      # - run: make CXX=c++ CXX_STANDARD=2a CXXFLAGS=-stdlib=${{ matrix.stdlib }}
-      #   if: ${{ matrix.standard == '20' }}
-      # - run: make CXX=c++ CXX_STANDARD=17 CXXFLAGS=-stdlib=${{ matrix.stdlib }}
-      #   if: ${{ matrix.standard == '17' }}
-      
+      - name: Run tests
+        run: ctest --test-dir ${{ steps.strings.outputs.build-output-dir }} --output-on-failure
 
 # jobs:
 #   build:
