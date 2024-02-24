@@ -31,7 +31,7 @@ static constexpr error_code test_error(const char(&str)[N]) noexcept {
 
 TEST(ipv4_network, CompileTime) {
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
-    auto net1 = ipv4_network::parse<"127.0.0.0/8">();
+    constexpr auto net1 = ipv4_network::parse<"127.0.0.0/8">();
     ASSERT_EQ(net1.network_address().to_uint(), 0x7F000000);
     ASSERT_EQ(net1.broadcast_address().to_uint(), 0x7FFFFFFF);
     ASSERT_EQ(net1.netmask().to_uint(), 0xFF000000);
@@ -773,8 +773,8 @@ TEST(ipv4_network, Swap) {
 }
 
 TEST(ipv4_network, literals) {
-    auto net1 = "127.0.0.0/16"_ipv4_net;
-    auto net2 = "127.128.128.255"_ipv4_net;
+    constexpr auto net1 = "127.0.0.0/16"_ipv4_net;
+    constexpr auto net2 = "127.128.128.255"_ipv4_net;
     
     ASSERT_EQ(net1, ipv4_network::parse("127.0.0.0/16"));
     ASSERT_EQ(net2, ipv4_network::parse("127.128.128.255/32"));

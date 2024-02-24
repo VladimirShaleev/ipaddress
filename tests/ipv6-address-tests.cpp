@@ -28,7 +28,7 @@ TEST(ipv6_address, CompileTime) {
     constexpr ipv6_address::base_type ip_bytes { 0x20, 0x01, 0x0D, 0xB8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 };
 
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
-    auto ip1 = ipv6_address::parse<"2001:db8::1">();
+    constexpr auto ip1 = ipv6_address::parse<"2001:db8::1">();
     ASSERT_EQ(ip1.bytes(), ip_bytes);
 
     constexpr auto ip2 = ipv6_address::parse<"2001:db8::1%1">();
@@ -825,8 +825,8 @@ TEST(ipv6_address, reverse_pointer) {
 }
 
 TEST(ipv6_address, literals) {
-    auto ip1 = "2001:db8::1"_ipv6;
-    auto ip2 = "0001:0002:0003:0004:0005:0006:0007:0008%123456789abcdefg"_ipv6;
+    constexpr auto ip1 = "2001:db8::1"_ipv6;
+    constexpr auto ip2 = "0001:0002:0003:0004:0005:0006:0007:0008%123456789abcdefg"_ipv6;
 
     ASSERT_EQ(ip1, ipv6_address::parse("2001:db8::1"));
     ASSERT_EQ(ip2, ipv6_address::parse("1:2:3:4:5:6:7:8%123456789abcdefg"));

@@ -17,157 +17,157 @@ static constexpr error_code get_parse_error(const char(&address)[N]) noexcept {
     return err;
 }
 
-// TEST(ipv4_address, CompileTime) {
-// #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
-//     auto ip1 = ipv4_address::parse<"127.0.0.1">();
-//     ASSERT_EQ(ip1.to_uint(), 0x7F000001);
-//     
-//     constexpr auto ip2 = ipv4_address::parse<"127.0.0.1">();
-//     constexpr auto ip2_uint32 = ip2.to_uint();
-//     constexpr auto ip2_bytes = ip2.bytes();
-//     constexpr auto ip2_byte_0 = ip2_bytes[0];
-//     constexpr auto ip2_byte_1 = ip2_bytes.at(1);
-//     constexpr auto ip2_byte_2 = *(ip2_bytes.begin() + 2);
-//     constexpr auto ip2_byte_3 = ip2_bytes.back();
-//     ASSERT_EQ(ip2_uint32, 0x7F000001);
-//     ASSERT_EQ(ip2_byte_0, 0x7F);
-//     ASSERT_EQ(ip2_byte_1, 0x00);
-//     ASSERT_EQ(ip2_byte_2, 0x00);
-//     ASSERT_EQ(ip2_byte_3, 0x01);
-// 
-//     constexpr auto ip4 = ipv4_address::from_uint<0x7F000002>();
-//     constexpr auto ip4_uint32 = ip4.to_uint();
-//     ASSERT_EQ(ip4_uint32, 0x7F000002);
-// 
-//     constexpr auto b1 = ip2 < ip4;
-//     constexpr auto b2 = ip2 > ip4;
-//     constexpr auto b3 = ip2 <= ip4;
-//     constexpr auto b4 = ip2 >= ip4;
-//     constexpr auto b5 = ip2 == ip4;
-//     constexpr auto b6 = ip2 != ip4;
-//     ASSERT_TRUE(b1);
-//     ASSERT_FALSE(b2);
-//     ASSERT_TRUE(b3);
-//     ASSERT_FALSE(b4);
-//     ASSERT_FALSE(b5);
-//     ASSERT_TRUE(b6);
-// 
-//     constexpr auto ip_wchar = ipv4_address::parse<L"127.0.0.1">();
-//     ASSERT_EQ(ip_wchar.to_uint(), 0x7F000001);
-// 
-//     constexpr auto ip_char16 = ipv4_address::parse<u"127.0.0.1">();
-//     ASSERT_EQ(ip_char16.to_uint(), 0x7F000001);
-// 
-//     constexpr auto ip_char32 = ipv4_address::parse<U"127.0.0.1">();
-//     ASSERT_EQ(ip_char32.to_uint(), 0x7F000001);
-// 
-// #if __cpp_char8_t >= 201811L
-//     constexpr auto ip_char8 = ipv4_address::parse<u8"127.0.0.1">();
-//     ASSERT_EQ(ip_char8.to_uint(), 0x7F000001);
-// #endif
-// #endif
-//     auto ip3 = ipv4_address::from_uint<0x7F000001>();
-//     ASSERT_EQ(ip3.to_uint(), 0x7F000001);
-// 
-//     constexpr auto ip5 = ipv4_address::parse("127.0.0.1");
-//     constexpr auto ip5_uint32 = ip5.to_uint();
-//     constexpr auto ip5_bytes = ip5.bytes();
-//     constexpr auto ip5_byte_0 = ip5_bytes[0];
-//     constexpr auto ip5_byte_1 = ip5_bytes.at(1);
-//     constexpr auto ip5_byte_2 = *(ip5_bytes.begin() + 2);
-//     constexpr auto ip5_byte_3 = ip5_bytes.back();
-//     ASSERT_EQ(ip5_uint32, 0x7F000001);
-//     ASSERT_EQ(ip5_byte_0, 0x7F);
-//     ASSERT_EQ(ip5_byte_1, 0x00);
-//     ASSERT_EQ(ip5_byte_2, 0x00);
-//     ASSERT_EQ(ip5_byte_3, 0x01);
-// 
-//     constexpr auto err = get_parse_error("127.0.0.256");
-//     ASSERT_EQ(err, error_code::OCTET_EXCEEDED_255);
-// 
-//     constexpr auto ip6 = ipv4_address::from_uint(0x7F000002);
-//     constexpr auto ip6_uint32 = ip6.to_uint();
-//     ASSERT_EQ(ip6_uint32, 0x7F000002);
-// 
-//     constexpr auto ip7 = ipv4_address::from_bytes({0xC0, 0xA8, 0x00, 0x01});
-//     constexpr auto ip7_uint32 = ip7.to_uint();
-//     ASSERT_EQ(ip7_uint32, 0xC0A80001);
-// 
-//     constexpr uint8_t bytes[] = {0xC0, 0xA8, 0x00, 0x01};
-//     constexpr auto ip8 = ipv4_address::from_bytes(bytes, 3);
-//     constexpr auto ip8_uint32 = ip8.to_uint();
-//     ASSERT_EQ(ip8_uint32, 0xC0A80000);
-// 
-//     constexpr auto b7 = ip5 < ip6;
-//     constexpr auto b8 = ip5 > ip6;
-//     constexpr auto b9 = ip5 <= ip6;
-//     constexpr auto b10 = ip5 >= ip6;
-//     constexpr auto b11 = ip5 == ip6;
-//     constexpr auto b12 = ip5 != ip6;
-//     
-//     ASSERT_TRUE(b7);
-//     ASSERT_FALSE(b8);
-//     ASSERT_TRUE(b9);
-//     ASSERT_FALSE(b10);
-//     ASSERT_FALSE(b11);
-//     ASSERT_TRUE(b12);
-// 
-//     constexpr auto ip9 = "127.0.0.1"_ipv4;
-//     constexpr auto ip10 = "127.128.128.255"_ipv4;
-//     constexpr auto ip9_1 = 0x7F000001_ipv4;
-//     ASSERT_EQ(ip9, ipv4_address::parse("127.0.0.1"));
-//     ASSERT_EQ(ip10, ipv4_address::parse("127.128.128.255"));
-//     ASSERT_EQ(ip9_1, ipv4_address::parse("127.0.0.1"));
-// 
-//     constexpr auto ip11 = ipv4_address::parse("224.1.1.1").is_multicast();
-//     constexpr auto ip12 = ipv4_address::parse("240.0.0.0").is_multicast();
-//     ASSERT_TRUE(ip11);
-//     ASSERT_FALSE(ip12);
-// 
-//     constexpr auto ip13 = ipv4_address::parse("192.168.1.1").is_private();
-//     constexpr auto ip14 = ipv4_address::parse("192.169.0.0").is_private();
-//     ASSERT_TRUE(ip13);
-//     ASSERT_FALSE(ip14);
-// 
-//     constexpr auto ip15 = ipv4_address::parse("192.0.7.1").is_global();
-//     constexpr auto ip16 = ipv4_address::parse("203.0.113.1").is_global();
-//     ASSERT_TRUE(ip15);
-//     ASSERT_FALSE(ip16);
-// 
-//     constexpr auto ip17 = ipv4_address::parse("240.0.0.1").is_reserved();
-//     constexpr auto ip18 = ipv4_address::parse("239.255.255.255").is_reserved();
-//     ASSERT_TRUE(ip17);
-//     ASSERT_FALSE(ip18);
-// 
-//     constexpr auto ip19 = ipv4_address::parse("127.100.200.254").is_loopback();
-//     constexpr auto ip20 = ipv4_address::parse("128.0.0.0").is_loopback();
-//     ASSERT_TRUE(ip19);
-//     ASSERT_FALSE(ip20);
-// 
-//     constexpr auto ip21 = ipv4_address::parse("169.254.100.200").is_link_local();
-//     constexpr auto ip22 = ipv4_address::parse("169.255.100.200").is_link_local();
-//     ASSERT_TRUE(ip21);
-//     ASSERT_FALSE(ip22);
-// 
-//     constexpr auto ip23 = ipv4_address::parse("0.0.0.0").is_unspecified();
-//     constexpr auto ip24 = ipv4_address::parse("169.255.100.200").is_unspecified();
-//     ASSERT_TRUE(ip23);
-//     ASSERT_FALSE(ip24);
-//     
-//     constexpr auto ip_wchar_2 = ipv4_address::parse(L"127.0.0.1");
-//     ASSERT_EQ(ip_wchar_2.to_uint(), 0x7F000001);
-// 
-//     constexpr auto ip_char16_2 = ipv4_address::parse(u"127.0.0.1");
-//     ASSERT_EQ(ip_char16_2.to_uint(), 0x7F000001);
-// 
-//     constexpr auto ip_char32_2 = ipv4_address::parse(U"127.0.0.1");
-//     ASSERT_EQ(ip_char32_2.to_uint(), 0x7F000001);
-// 
-// #if __cpp_char8_t >= 201811L
-//    constexpr auto ip_char8_2 = ipv4_address::parse(u8"127.0.0.1");
-//    ASSERT_EQ(ip_char8_2.to_uint(), 0x7F000001);
-// #endif
-// }
+TEST(ipv4_address, CompileTime) {
+#ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
+    constexpr auto ip1 = ipv4_address::parse<"127.0.0.1">();
+    ASSERT_EQ(ip1.to_uint(), 0x7F000001);
+    
+    constexpr auto ip2 = ipv4_address::parse<"127.0.0.1">();
+    constexpr auto ip2_uint32 = ip2.to_uint();
+    constexpr auto ip2_bytes = ip2.bytes();
+    constexpr auto ip2_byte_0 = ip2_bytes[0];
+    constexpr auto ip2_byte_1 = ip2_bytes.at(1);
+    constexpr auto ip2_byte_2 = *(ip2_bytes.begin() + 2);
+    constexpr auto ip2_byte_3 = ip2_bytes.back();
+    ASSERT_EQ(ip2_uint32, 0x7F000001);
+    ASSERT_EQ(ip2_byte_0, 0x7F);
+    ASSERT_EQ(ip2_byte_1, 0x00);
+    ASSERT_EQ(ip2_byte_2, 0x00);
+    ASSERT_EQ(ip2_byte_3, 0x01);
+
+    constexpr auto ip4 = ipv4_address::from_uint<0x7F000002>();
+    constexpr auto ip4_uint32 = ip4.to_uint();
+    ASSERT_EQ(ip4_uint32, 0x7F000002);
+
+    constexpr auto b1 = ip2 < ip4;
+    constexpr auto b2 = ip2 > ip4;
+    constexpr auto b3 = ip2 <= ip4;
+    constexpr auto b4 = ip2 >= ip4;
+    constexpr auto b5 = ip2 == ip4;
+    constexpr auto b6 = ip2 != ip4;
+    ASSERT_TRUE(b1);
+    ASSERT_FALSE(b2);
+    ASSERT_TRUE(b3);
+    ASSERT_FALSE(b4);
+    ASSERT_FALSE(b5);
+    ASSERT_TRUE(b6);
+
+    constexpr auto ip_wchar = ipv4_address::parse<L"127.0.0.1">();
+    ASSERT_EQ(ip_wchar.to_uint(), 0x7F000001);
+
+    constexpr auto ip_char16 = ipv4_address::parse<u"127.0.0.1">();
+    ASSERT_EQ(ip_char16.to_uint(), 0x7F000001);
+
+    constexpr auto ip_char32 = ipv4_address::parse<U"127.0.0.1">();
+    ASSERT_EQ(ip_char32.to_uint(), 0x7F000001);
+
+#if __cpp_char8_t >= 201811L
+    constexpr auto ip_char8 = ipv4_address::parse<u8"127.0.0.1">();
+    ASSERT_EQ(ip_char8.to_uint(), 0x7F000001);
+#endif
+#endif
+    auto ip3 = ipv4_address::from_uint<0x7F000001>();
+    ASSERT_EQ(ip3.to_uint(), 0x7F000001);
+
+    constexpr auto ip5 = ipv4_address::parse("127.0.0.1");
+    constexpr auto ip5_uint32 = ip5.to_uint();
+    constexpr auto ip5_bytes = ip5.bytes();
+    constexpr auto ip5_byte_0 = ip5_bytes[0];
+    constexpr auto ip5_byte_1 = ip5_bytes.at(1);
+    constexpr auto ip5_byte_2 = *(ip5_bytes.begin() + 2);
+    constexpr auto ip5_byte_3 = ip5_bytes.back();
+    ASSERT_EQ(ip5_uint32, 0x7F000001);
+    ASSERT_EQ(ip5_byte_0, 0x7F);
+    ASSERT_EQ(ip5_byte_1, 0x00);
+    ASSERT_EQ(ip5_byte_2, 0x00);
+    ASSERT_EQ(ip5_byte_3, 0x01);
+
+    constexpr auto err = get_parse_error("127.0.0.256");
+    ASSERT_EQ(err, error_code::OCTET_EXCEEDED_255);
+
+    constexpr auto ip6 = ipv4_address::from_uint(0x7F000002);
+    constexpr auto ip6_uint32 = ip6.to_uint();
+    ASSERT_EQ(ip6_uint32, 0x7F000002);
+
+    constexpr auto ip7 = ipv4_address::from_bytes({0xC0, 0xA8, 0x00, 0x01});
+    constexpr auto ip7_uint32 = ip7.to_uint();
+    ASSERT_EQ(ip7_uint32, 0xC0A80001);
+
+    constexpr uint8_t bytes[] = {0xC0, 0xA8, 0x00, 0x01};
+    constexpr auto ip8 = ipv4_address::from_bytes(bytes, 3);
+    constexpr auto ip8_uint32 = ip8.to_uint();
+    ASSERT_EQ(ip8_uint32, 0xC0A80000);
+
+    constexpr auto b7 = ip5 < ip6;
+    constexpr auto b8 = ip5 > ip6;
+    constexpr auto b9 = ip5 <= ip6;
+    constexpr auto b10 = ip5 >= ip6;
+    constexpr auto b11 = ip5 == ip6;
+    constexpr auto b12 = ip5 != ip6;
+    
+    ASSERT_TRUE(b7);
+    ASSERT_FALSE(b8);
+    ASSERT_TRUE(b9);
+    ASSERT_FALSE(b10);
+    ASSERT_FALSE(b11);
+    ASSERT_TRUE(b12);
+
+    constexpr auto ip9 = "127.0.0.1"_ipv4;
+    constexpr auto ip10 = "127.128.128.255"_ipv4;
+    constexpr auto ip9_1 = 0x7F000001_ipv4;
+    ASSERT_EQ(ip9, ipv4_address::parse("127.0.0.1"));
+    ASSERT_EQ(ip10, ipv4_address::parse("127.128.128.255"));
+    ASSERT_EQ(ip9_1, ipv4_address::parse("127.0.0.1"));
+
+    constexpr auto ip11 = ipv4_address::parse("224.1.1.1").is_multicast();
+    constexpr auto ip12 = ipv4_address::parse("240.0.0.0").is_multicast();
+    ASSERT_TRUE(ip11);
+    ASSERT_FALSE(ip12);
+
+    constexpr auto ip13 = ipv4_address::parse("192.168.1.1").is_private();
+    constexpr auto ip14 = ipv4_address::parse("192.169.0.0").is_private();
+    ASSERT_TRUE(ip13);
+    ASSERT_FALSE(ip14);
+
+    constexpr auto ip15 = ipv4_address::parse("192.0.7.1").is_global();
+    constexpr auto ip16 = ipv4_address::parse("203.0.113.1").is_global();
+    ASSERT_TRUE(ip15);
+    ASSERT_FALSE(ip16);
+
+    constexpr auto ip17 = ipv4_address::parse("240.0.0.1").is_reserved();
+    constexpr auto ip18 = ipv4_address::parse("239.255.255.255").is_reserved();
+    ASSERT_TRUE(ip17);
+    ASSERT_FALSE(ip18);
+
+    constexpr auto ip19 = ipv4_address::parse("127.100.200.254").is_loopback();
+    constexpr auto ip20 = ipv4_address::parse("128.0.0.0").is_loopback();
+    ASSERT_TRUE(ip19);
+    ASSERT_FALSE(ip20);
+
+    constexpr auto ip21 = ipv4_address::parse("169.254.100.200").is_link_local();
+    constexpr auto ip22 = ipv4_address::parse("169.255.100.200").is_link_local();
+    ASSERT_TRUE(ip21);
+    ASSERT_FALSE(ip22);
+
+    constexpr auto ip23 = ipv4_address::parse("0.0.0.0").is_unspecified();
+    constexpr auto ip24 = ipv4_address::parse("169.255.100.200").is_unspecified();
+    ASSERT_TRUE(ip23);
+    ASSERT_FALSE(ip24);
+    
+    constexpr auto ip_wchar_2 = ipv4_address::parse(L"127.0.0.1");
+    ASSERT_EQ(ip_wchar_2.to_uint(), 0x7F000001);
+
+    constexpr auto ip_char16_2 = ipv4_address::parse(u"127.0.0.1");
+    ASSERT_EQ(ip_char16_2.to_uint(), 0x7F000001);
+
+    constexpr auto ip_char32_2 = ipv4_address::parse(U"127.0.0.1");
+    ASSERT_EQ(ip_char32_2.to_uint(), 0x7F000001);
+
+#if __cpp_char8_t >= 201811L
+   constexpr auto ip_char8_2 = ipv4_address::parse(u8"127.0.0.1");
+   ASSERT_EQ(ip_char8_2.to_uint(), 0x7F000001);
+#endif
+}
 
 TEST(ipv4_address, DefaultCtor) {
     ipv4_address::base_type expected_empty { 0, 0, 0, 0};
@@ -497,15 +497,15 @@ TEST(ipv4_address, reverse_pointer) {
     ASSERT_EQ(actual, "1.0.0.127.in-addr.arpa");
 }
 
-//TEST(ipv4_address, literals) {
-//    auto ip1 = "127.0.0.1"_ipv4;
-//    auto ip2 = "127.128.128.255"_ipv4;
-//    auto ip3 = 0x7F000001_ipv4;
-//    
-//    ASSERT_EQ(ip1, ipv4_address::parse("127.0.0.1"));
-//    ASSERT_EQ(ip2, ipv4_address::parse("127.128.128.255"));
-//    ASSERT_EQ(ip3, ipv4_address::parse("127.0.0.1"));
-//}
+TEST(ipv4_address, literals) {
+    constexpr auto ip1 = "127.0.0.1"_ipv4;
+    constexpr auto ip2 = "127.128.128.255"_ipv4;
+    constexpr auto ip3 = 0x7F000001_ipv4;
+    
+    ASSERT_EQ(ip1, ipv4_address::parse("127.0.0.1"));
+    ASSERT_EQ(ip2, ipv4_address::parse("127.128.128.255"));
+    ASSERT_EQ(ip3, ipv4_address::parse("127.0.0.1"));
+}
 
 using IsMulticastIpv4Params = TestWithParam<std::tuple<const char*, bool>>;
 TEST_P(IsMulticastIpv4Params, is_multicast) {

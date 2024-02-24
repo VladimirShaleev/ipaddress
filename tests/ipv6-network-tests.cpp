@@ -31,7 +31,7 @@ static constexpr error_code test_error(const char(&str)[N]) noexcept {
 
 TEST(ipv6_network, CompileTime) {
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
-    auto net1 = ipv6_network::parse<"2001:db8::/96">();
+    constexpr auto net1 = ipv6_network::parse<"2001:db8::/96">();
     ASSERT_EQ(net1.network_address(), ipv6_address::parse("2001:db8::"));
     ASSERT_EQ(net1.broadcast_address(), ipv6_address::parse("2001:db8::ffff:ffff"));
     ASSERT_EQ(net1.netmask(), ipv6_address::parse("ffff:ffff:ffff:ffff:ffff:ffff::"));
@@ -785,8 +785,8 @@ TEST(ipv6_network, Swap) {
 }
 
 TEST(ipv6_network, literals) {
-    auto net1 = "2001:db8::/32"_ipv6_net;
-    auto net2 = "0001:0002:0003:0004:0005:0006:0007:0008%123456789abcdefg/128"_ipv6_net;
+    constexpr auto net1 = "2001:db8::/32"_ipv6_net;
+    constexpr auto net2 = "0001:0002:0003:0004:0005:0006:0007:0008%123456789abcdefg/128"_ipv6_net;
     
     ASSERT_EQ(net1, ipv6_network::parse("2001:db8::/32"));
     ASSERT_EQ(net2, ipv6_network::parse("1:2:3:4:5:6:7:8%123456789abcdefg"));

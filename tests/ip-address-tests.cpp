@@ -712,7 +712,7 @@ TEST(ip_address, literals) {
 
 TEST(ip_address, ScopeId) {
     auto ip1 = ip_address::parse("127.128.128.255");
-    auto ip2 = "2001:db8::1"_ip;
+    auto ip2 = ip_address::parse("2001:db8::1");
     
     ASSERT_FALSE(bool(ip1.get_scope_id()));
     ASSERT_FALSE(bool(ip2.get_scope_id()));
