@@ -178,12 +178,13 @@ struct byte_array {
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference at(size_t n) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         if (n >= 0 && n < N) {
             return _data[n];
+        } else {
+        #ifdef IPADDRESS_NO_EXCEPTIONS
+            return *_data;
+        #else
+            throw std::out_of_range("index out of array");
+        #endif
         }
-    #ifdef IPADDRESS_NO_EXCEPTIONS
-        return *_data;
-    #else
-        throw std::out_of_range("index out of array");
-    #endif
     }
 
     /**
@@ -194,13 +195,13 @@ struct byte_array {
      * @throw std::out_of_range When going beyond the bounds of the array.
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reference at(size_t n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        if (n >= 0 && n < N) {
+        //if (n >= 0 && n < N) {
             return _data[n];
-        }
+        //}
     #ifdef IPADDRESS_NO_EXCEPTIONS
         return *_data;
     #else
-        throw std::out_of_range("index out of array");
+        //throw std::out_of_range("index out of array");
     #endif
     }
 
