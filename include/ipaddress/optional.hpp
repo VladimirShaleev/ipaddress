@@ -39,7 +39,13 @@ public:
     /**
      * Default constructor that constructs an `optional` object without a contained value.
      */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional() IPADDRESS_NOEXCEPT = default;
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional() 
+
+#if !defined(__clang_major__) || __clang_major__ > 7
+    IPADDRESS_NOEXCEPT
+#endif
+
+     = default;
     
     /**
      * Constructs an `optional` object that does not contain a value.

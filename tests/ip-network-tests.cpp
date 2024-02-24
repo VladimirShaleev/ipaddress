@@ -7,9 +7,9 @@
 
 #include <ipaddress/ipaddress.hpp>
 
-#if IPADDRESS_CPP_VERSION >= 20
-#  include <ranges>
-#endif
+// #if IPADDRESS_CPP_VERSION >= 20
+// #  include <ranges>
+// #endif
 
 using namespace testing;
 using namespace ipaddress;
