@@ -512,7 +512,10 @@ public:
      * ip network object and another network, meaning if any part of one network lies within the other.
      * 
      * @code{.cpp}
-     *   constexpr auto overlaps = ipv4_network::parse("1.2.3.0/24").overlaps(ipv4_network::parse("1.2.3.0/30"));
+     *   constexpr auto a = ipv4_network::parse("1.2.3.0/24");
+     *   constexpr auto b = ipv4_network::parse("1.2.3.0/30");
+     *   constexpr auto overlaps = a.overlaps(b);
+     * 
      *   std::cout << std::boolalpha << overlaps << std::endl;
      * 
      *   // out:
@@ -904,8 +907,8 @@ public:
      * Generates a sequence of subnets from this network.
      * 
      * The subnets that join to make the current network definition, depending on the argument values. 
-     * prefixlen_diff is the amount our prefix length should be increased by. new_prefix is the desired 
-     * new prefix of the subnets; it must be larger than our prefix. One and only one of prefixlen_diff 
+     * \a prefixlen_diff is the amount our prefix length should be increased by. new_prefix is the desired 
+     * new prefix of the subnets; it must be larger than our prefix. One and only one of \a prefixlen_diff 
      * and new_prefix must be set.
      * 
      * @code{.cpp}
@@ -922,7 +925,7 @@ public:
      *   // 192.0.2.192/26
      * @endcode
      * @param[in] prefixlen_diff The difference in prefix length for the subnets. *Defaults to 1*.
-     * @param[in] new_prefixlen An optional new prefix length for the subnets. If not specified, the prefix length is determined by adding prefixlen_diff to the current prefix length.
+     * @param[in] new_prefixlen An optional new prefix length for the subnets. If not specified, the prefix length is determined by adding \a prefixlen_diff to the current prefix length.
      * @return A `subnets_sequence` object representing the sequence of subnets.
      * @throw logic_error Raised if the operation cannot be performed due to invalid parameters or prefix length.
      * @remark `subnets_sequence` uses lazy evaluation to iterate over the subnets.
@@ -945,8 +948,8 @@ public:
      * Generates a sequence of subnets from this network with error handling.
      * 
      * The subnets that join to make the current network definition, depending on the argument values. 
-     * prefixlen_diff is the amount our prefix length should be increased by. new_prefix is the desired 
-     * new prefix of the subnets; it must be larger than our prefix. One and only one of prefixlen_diff 
+     * \a prefixlen_diff is the amount our prefix length should be increased by. new_prefix is the desired 
+     * new prefix of the subnets; it must be larger than our prefix. One and only one of \a prefixlen_diff 
      * and new_prefix must be set.
      * 
      * @code{.cpp}
@@ -967,7 +970,7 @@ public:
      * @endcode
      * @param[out] code An error_code object that will be set if an error occurs during the operation.
      * @param[in] prefixlen_diff The difference in prefix length for the subnets. *Defaults to 1*.
-     * @param[in] new_prefixlen An optional new prefix length for the subnets. If not specified, the prefix length is determined by adding prefixlen_diff to the current prefix length.
+     * @param[in] new_prefixlen An optional new prefix length for the subnets. If not specified, the prefix length is determined by adding \a prefixlen_diff to the current prefix length.
      * @return A `subnets_sequence` object representing the sequence of subnets, or an empty sequence if an error occurs.
      * @remark `subnets_sequence` uses lazy evaluation to iterate over the subnets.
      */
@@ -1000,6 +1003,27 @@ public:
         return subnets_sequence<ip_network_base<Base>>(address, broadcast_address(), hostmask(), prefixlen_diff, new_prefix);
     }
 
+    /**
+     * Generates a supernet from this network.
+     * 
+     * The supernet containing this network definition, depending on the argument values. \a prefixlen_diff 
+     * is the amount our prefix length should be decreased by. new_prefix is the desired new prefix of the 
+     * supernet; it must be smaller than our prefix. One and only one of \a prefixlen_diff and new_prefix must 
+     * be set.
+     * 
+     * @code{.cpp}
+     *   constexpr auto supernet = ipv4_network::parse("192.0.2.0/24").supernet(2);
+     *   
+     *   std::cout << supernet << std::endl;
+     *   
+     *   // out:
+     *   // 192.0.0.0/22
+     * @endcode
+     * @param[in] prefixlen_diff The amount by which the prefix length should be decreased. *Defaults to 1*.
+     * @param[in] new_prefixlen An optional new prefix length for the supernet. If not specified, the prefix length is determined by subtracting \a prefixlen_diff from the current prefix length.
+     * @return An ip network object representing the supernet, or the current network if an error occurs.
+     * @throw logic_error Raised if the operation cannot be performed due to invalid parameters or prefix length.
+     */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base<Base> supernet(size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         error_code code = error_code::NO_ERROR;
         const auto result = supernet(code, prefixlen_diff, new_prefixlen);
@@ -1014,6 +1038,30 @@ public:
         return result;
     }
 
+    /**
+     * Generates a supernet from this network with error handling.
+     * 
+     * The supernet containing this network definition, depending on the argument values. \a prefixlen_diff 
+     * is the amount our prefix length should be decreased by. new_prefix is the desired new prefix of the 
+     * supernet; it must be smaller than our prefix. One and only one of \a prefixlen_diff and new_prefix must 
+     * be set.
+     * 
+     * @code{.cpp}
+     *   auto err = error_code::NO_ERROR;
+     *   auto supernet = ipv4_network::parse("192.0.2.0/24").supernet(err, 2);
+     *   
+     *   if (err == error_code::NO_ERROR) {
+     *       std::cout << supernet << std::endl;
+     *   }
+     *   
+     *   // out:
+     *   // 192.0.0.0/22
+     * @endcode
+     * @param[out] code An error_code object that will be set if an error occurs during the operation.
+     * @param[in] prefixlen_diff The amount by which the prefix length should be decreased. *Defaults to 1*.
+     * @param[in] new_prefixlen An optional new prefix length for the supernet. If not specified, the prefix length is determined by subtracting \a prefixlen_diff from the current prefix length.
+     * @return An ip network object representing the supernet, or the current network if an error occurs.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base<Base> supernet(error_code& code, size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT {
         code = error_code::NO_ERROR;
 
