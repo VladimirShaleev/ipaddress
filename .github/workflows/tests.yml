@@ -108,6 +108,7 @@ jobs:
           -DIPADDRESS_BUILD_TESTS=ON
           -DIPADDRESS_BUILD_DOC=OFF
           -DIPADDRESS_BUILD_PACKAGES=OFF
+          -DIPADDRESS_NO_EXCEPTIONS=${{ matrix.exceptions == 'no-exceptions' }}
 
       - name: Build
         run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
