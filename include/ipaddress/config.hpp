@@ -22,8 +22,10 @@
 
 #include <array>
 #include <tuple>
+#include <cmath>
 #include <cassert>
 #include <sstream>
+#include <cstring>
 #include <numeric>
 #include <iterator>
 #include <algorithm>

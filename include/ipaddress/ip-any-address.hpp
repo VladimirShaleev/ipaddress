@@ -25,6 +25,40 @@
 
 namespace IPADDRESS_NAMESPACE {
 
+namespace internal {
+
+// Parsing has been removed from the ip_address class due to a bug 
+// in the Clang compiler in version 14 and below
+// https://bugs.llvm.org/show_bug.cgi?id=18781
+template <typename T>
+struct ip_any_parser {
+    template <typename Str>
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T parse(const Str& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        auto code = error_code::NO_ERROR;
+        const auto ipv4 = ipv4_address::parse(address, code);
+        if (code == error_code::NO_ERROR) {
+            return T(ipv4);
+        }
+        return T(ipv6_address::parse(address));
+    }
+
+    template <typename Str>
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T parse(const Str& address, error_code& code) IPADDRESS_NOEXCEPT {
+        code = error_code::NO_ERROR;
+        const auto ipv4 = ipv4_address::parse(address, code);
+        if (code == error_code::NO_ERROR) {
+            return T(ipv4);
+        }
+        const auto ipv6 = ipv6_address::parse(address, code);
+        if (code == error_code::NO_ERROR) {
+            return T(ipv6);
+        }
+        return T();
+    }
+};
+
+} // namespace internal
+
 /**
  * A class that represents an IP address, supporting both IPv4 and IPv6 formats.
  * 
@@ -486,7 +520,7 @@ public:
      * @remark For C++ versions prior to C++17, member functions with `std::string` and C-strings will be used instead.
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(std::string_view address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        return parse_string(address);
+        return internal::ip_any_parser<ip_address>::parse(address);
     }
 
     /**
@@ -502,7 +536,7 @@ public:
      * @remark For C++ versions prior to C++17, member functions with `std::wstring` and C-strings will be used instead.
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(std::wstring_view address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        return parse_string(address);
+        return internal::ip_any_parser<ip_address>::parse(address);
     }
 
 #if __cpp_char8_t >= 201811L
@@ -519,7 +553,7 @@ public:
      * @note This method is available for C++20 and later versions where `char8_t` is supported.
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(std::u8string_view address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        return parse_string(address);
+        return internal::ip_any_parser<ip_address>::parse(address);
     }
 
 #endif // __cpp_char8_t
@@ -537,7 +571,7 @@ public:
      * @remark For C++ versions prior to C++17, member functions with `std::u16string` and C-strings will be used instead.
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(std::u16string_view address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        return parse_string(address);
+        return internal::ip_any_parser<ip_address>::parse(address);
     }
 
     /**
@@ -553,7 +587,7 @@ public:
      * @remark For C++ versions prior to C++17, member functions with `std::u32string` and C-strings will be used instead.
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(std::u32string_view address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        return parse_string(address);
+        return internal::ip_any_parser<ip_address>::parse(address);
     }
 
     /**
@@ -568,7 +602,7 @@ public:
      * @remark For C++ versions prior to C++17, member functions with `std::string` and C-strings will be used instead.
      */
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(std::string_view address, error_code& code) IPADDRESS_NOEXCEPT {
-        return parse_string(address, code);
+        return internal::ip_any_parser<ip_address>::parse(address, code);
     }
 
     /**
@@ -583,7 +617,7 @@ public:
      * @remark For C++ versions prior to C++17, member functions with `std::wstring` and C-strings will be used instead.
      */
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(std::wstring_view address, error_code& code) IPADDRESS_NOEXCEPT {
-        return parse_string(address, code);
+        return internal::ip_any_parser<ip_address>::parse(address, code);
     }
 
 #if __cpp_char8_t >= 201811L
@@ -599,7 +633,7 @@ public:
      * @note This method is available for C++20 and later versions where `char8_t` is supported.
      */
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(std::u8string_view address, error_code& code) IPADDRESS_NOEXCEPT {
-        return parse_string(address, code);
+        return internal::ip_any_parser<ip_address>::parse(address, code);
     }
 
 #endif // __cpp_char8_t
@@ -616,7 +650,7 @@ public:
      * @remark For C++ versions prior to C++17, member functions with `std::u16string` and C-strings will be used instead.
      */
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(std::u16string_view address, error_code& code) IPADDRESS_NOEXCEPT {
-        return parse_string(address, code);
+        return internal::ip_any_parser<ip_address>::parse(address, code);
     }
 
     /**
@@ -631,7 +665,7 @@ public:
      * @remark For C++ versions prior to C++17, member functions with `std::u32string` and C-strings will be used instead.
      */
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(std::u32string_view address, error_code& code) IPADDRESS_NOEXCEPT {
-        return parse_string(address, code);
+        return internal::ip_any_parser<ip_address>::parse(address, code);
     }
 
     /**
@@ -857,7 +891,7 @@ public:
      * @throw parse_error Exception caused by invalid input string.
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_address parse(const std::string& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        return parse_string(address);
+        return internal::ip_any_parser<ip_address>::parse(address);
     }
 
     /**
@@ -868,7 +902,7 @@ public:
      * @throw parse_error Exception caused by invalid input string.
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_address parse(const std::wstring& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        return parse_string(address);
+        return internal::ip_any_parser<ip_address>::parse(address);
     }
 
     /**
@@ -879,7 +913,7 @@ public:
      * @throw parse_error Exception caused by invalid input string.
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_address parse(const std::u16string& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        return parse_string(address);
+        return internal::ip_any_parser<ip_address>::parse(address);
     }
 
     /**
@@ -890,7 +924,7 @@ public:
      * @throw parse_error Exception caused by invalid input string.
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_address parse(const std::u32string& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        return parse_string(address);
+        return internal::ip_any_parser<ip_address>::parse(address);
     }
 
     /**
@@ -901,7 +935,7 @@ public:
      * @return An instance of ip address parsed from the string. If parsing fails, the returned object will be in an unspecified state.
      */
     static IPADDRESS_FORCE_INLINE ip_address parse(const std::string& address, error_code& code) IPADDRESS_NOEXCEPT {
-        return parse_string(address, code);
+        return internal::ip_any_parser<ip_address>::parse(address, code);
     }
 
     /**
@@ -912,7 +946,7 @@ public:
      * @return An instance of ip address parsed from the wide string. If parsing fails, the returned object will be in an unspecified state.
      */
     static IPADDRESS_FORCE_INLINE ip_address parse(const std::wstring& address, error_code& code) IPADDRESS_NOEXCEPT {
-        return parse_string(address, code);
+        return internal::ip_any_parser<ip_address>::parse(address, code);
     }
 
     /**
@@ -923,7 +957,7 @@ public:
      * @return An instance of ip address parsed from the UTF-16 string. If parsing fails, the returned object will be in an unspecified state.
      */
     static IPADDRESS_FORCE_INLINE ip_address parse(const std::u16string& address, error_code& code) IPADDRESS_NOEXCEPT {
-        return parse_string(address, code);
+        return internal::ip_any_parser<ip_address>::parse(address, code);
     }
 
     /**
@@ -934,7 +968,7 @@ public:
      * @return An instance of ip address parsed from the UTF-32 string. If parsing fails, the returned object will be in an unspecified state.
      */
     static IPADDRESS_FORCE_INLINE ip_address parse(const std::u32string& address, error_code& code) IPADDRESS_NOEXCEPT {
-        return parse_string(address, code);
+        return internal::ip_any_parser<ip_address>::parse(address, code);
     }
 
     /**
@@ -1050,7 +1084,7 @@ public:
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(const T(&address)[N]) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         internal::is_char_type<T>();
         auto code = error_code::NO_ERROR;
-        auto result = parse_string(address, code);
+        auto result = internal::ip_any_parser<ip_address>::parse(address, code);
         if (code != error_code::NO_ERROR) {
             if (IPADDRESS_IS_CONST_EVALUATED(code)) {
                 raise_error(code, 0, address, N);
@@ -1077,19 +1111,7 @@ public:
     template <typename T, size_t N>
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(const T(&address)[N], error_code& code) IPADDRESS_NOEXCEPT {
         internal::is_char_type<T>();
-        code = error_code::NO_ERROR;
-        
-        const auto ipv4 = ipv4_address::parse(address, code);
-        if (code == error_code::NO_ERROR) {
-            return ip_address(ipv4);
-        }
-        
-        const auto ipv6 = ipv6_address::parse(address, code);
-        if (code == error_code::NO_ERROR) {
-            return ip_address(ipv6);
-        }
-        
-        return ip_address();
+        return internal::ip_any_parser<ip_address>::parse(address, code);
     }
 
     /**
@@ -1268,31 +1290,34 @@ public:
 #endif // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
 private:
-    template <typename Str>
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse_string(const Str& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        auto code = error_code::NO_ERROR;
-        const auto ipv4 = ipv4_address::parse(address, code);
-        if (code == error_code::NO_ERROR) {
-            return ip_address(ipv4);
-        }
-        return ip_address(ipv6_address::parse(address));
-    }
-
-    template <typename Str>
-    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse_string(const Str& address, error_code& code) IPADDRESS_NOEXCEPT {
-        code = error_code::NO_ERROR;
-        const auto ipv4 = ipv4_address::parse(address, code);
-        if (code == error_code::NO_ERROR) {
-            return ip_address(ipv4);
-        }
-        
-        const auto ipv6 = ipv6_address::parse(address, code);
-        if (code == error_code::NO_ERROR) {
-            return ip_address(ipv6);
-        }
-        
-        return ip_address();
-    }
+    // not used due to clang bug in version 14 and below
+    // https://bugs.llvm.org/show_bug.cgi?id=18781
+    //
+    // template <typename Str>
+    // IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse_string(const Str& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    //     auto code = error_code::NO_ERROR;
+    //     const auto ipv4 = ipv4_address::parse(address, code);
+    //     if (code == error_code::NO_ERROR) {
+    //         return ip_address(ipv4);
+    //     }
+    //     return ip_address(ipv6_address::parse(address));
+    // }
+    //
+    // template <typename Str>
+    // static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse_string(const Str& address, error_code& code) IPADDRESS_NOEXCEPT {
+    //     code = error_code::NO_ERROR;
+    //     const auto ipv4 = ipv4_address::parse(address, code);
+    //     if (code == error_code::NO_ERROR) {
+    //         return ip_address(ipv4);
+    //     }
+    //     
+    //     const auto ipv6 = ipv6_address::parse(address, code);
+    //     if (code == error_code::NO_ERROR) {
+    //         return ip_address(ipv6);
+    //     }
+    //     
+    //     return ip_address();
+    // }
 
     union ip_any_address {
         IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_address() IPADDRESS_NOEXCEPT : ipv4() {

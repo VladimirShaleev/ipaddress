@@ -18,6 +18,43 @@
 
 namespace IPADDRESS_NAMESPACE {
 
+namespace internal {
+
+// Parsing has been removed from the ipv6_address class due to a bug 
+// in the Clang compiler in version 14 and below
+// https://bugs.llvm.org/show_bug.cgi?id=18781
+template <typename T>
+struct ipv6_set_scope {
+    template <typename Str>
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void change(fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>& result, const Str& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        error_code err = error_code::NO_ERROR;
+        change(result, scope_id, err);
+    #ifndef IPADDRESS_NO_EXCEPTIONS
+        if (err != error_code::NO_ERROR) {
+            raise_error(err, 0, "<bytes>", 7);
+        }
+    #endif
+    }
+
+    template <typename Str>
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void change(fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>& result, const Str& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
+        code = error_code::NO_ERROR;
+    #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH > 0
+        if (scope_id.size() > IPADDRESS_IPV6_SCOPE_MAX_LENGTH) {
+            code = error_code::SCOPE_ID_IS_TOO_LONG;
+            return;
+        }
+        char scope[IPADDRESS_IPV6_SCOPE_MAX_LENGTH + 1] = {};
+        for (size_t i = 0; i < scope_id.size(); ++i) {
+            scope[i] = char(scope_id[i]);
+        }
+        result = make_fixed_string(scope);
+    #endif // IPADDRESS_IPV6_SCOPE_MAX_LENGTH
+    }
+};
+
+} // namespace internal
+
 /**
  * Represents the scope identifier for an IPv6 address.
  * 
@@ -275,7 +312,7 @@ public:
      * @endparblock
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::string_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        change_scope_id(scope_id);
+        internal::ipv6_set_scope<ipv6_address_base>::change(_data.scope_id, scope_id);
     }
 
     /**
@@ -295,7 +332,7 @@ public:
      * @endparblock
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::wstring_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        change_scope_id(scope_id);
+        internal::ipv6_set_scope<ipv6_address_base>::change(_data.scope_id, scope_id);
     }
 
 #if __cpp_char8_t >= 201811L
@@ -312,7 +349,7 @@ public:
      * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect.
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u8string_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        change_scope_id(scope_id);
+        internal::ipv6_set_scope<ipv6_address_base>::change(_data.scope_id, scope_id);
     }
 
 #endif // __cpp_char8_t
@@ -334,7 +371,7 @@ public:
      * @endparblock
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u16string_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        change_scope_id(scope_id);
+        internal::ipv6_set_scope<ipv6_address_base>::change(_data.scope_id, scope_id);
     }
 
     /**
@@ -354,7 +391,7 @@ public:
      * @endparblock
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u32string_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        change_scope_id(scope_id);
+        internal::ipv6_set_scope<ipv6_address_base>::change(_data.scope_id, scope_id);
     }
 
     /**
@@ -373,7 +410,7 @@ public:
      * @endparblock
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
-        change_scope_id(scope_id, code);
+        internal::ipv6_set_scope<ipv6_address_base>::change(_data.scope_id, scope_id, code);
     }
 
     /**
@@ -392,7 +429,7 @@ public:
      * @endparblock
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::wstring_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
-        change_scope_id(scope_id, code);
+        internal::ipv6_set_scope<ipv6_address_base>::change(_data.scope_id, scope_id, code);
     }
 
 #if __cpp_char8_t >= 201811L
@@ -408,7 +445,7 @@ public:
      * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect.
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u8string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
-        change_scope_id(scope_id, code);
+        internal::ipv6_set_scope<ipv6_address_base>::change(_data.scope_id, scope_id, code);
     }
 
 #endif // __cpp_char8_t
@@ -429,7 +466,7 @@ public:
      * @endparblock
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u16string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
-        change_scope_id(scope_id, code);
+        internal::ipv6_set_scope<ipv6_address_base>::change(_data.scope_id, scope_id, code);
     }
 
     /**
@@ -448,7 +485,7 @@ public:
      * @endparblock
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u32string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
-        change_scope_id(scope_id, code);
+        internal::ipv6_set_scope<ipv6_address_base>::change(_data.scope_id, scope_id, code);
     }
 
 #else // IPADDRESS_CPP_VERSION < 17
@@ -460,7 +497,7 @@ public:
      * @throw parse_error Exception caused by invalid input string.
      */
     IPADDRESS_FORCE_INLINE void set_scope_id(const std::string& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        change_scope_id(scope_id);
+        internal::ipv6_set_scope<ipv6_address_base>::change(_data.scope_id, scope_id);
     }
 
     /**
@@ -470,7 +507,7 @@ public:
      * @throw parse_error Exception caused by invalid input wide string.
      */
     IPADDRESS_FORCE_INLINE void set_scope_id(const std::wstring& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        change_scope_id(scope_id);
+        internal::ipv6_set_scope<ipv6_address_base>::change(_data.scope_id, scope_id);
     }
 
     /**
@@ -480,7 +517,7 @@ public:
      * @throw parse_error Exception caused by invalid input UTF-16 string.
      */
     IPADDRESS_FORCE_INLINE void set_scope_id(const std::u16string& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        change_scope_id(scope_id);
+        internal::ipv6_set_scope<ipv6_address_base>::change(_data.scope_id, scope_id);
     }
 
     /**
@@ -490,7 +527,7 @@ public:
      * @throw parse_error Exception caused by invalid input UTF-32 string.
      */
     IPADDRESS_FORCE_INLINE void set_scope_id(const std::u32string& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        change_scope_id(scope_id);
+        internal::ipv6_set_scope<ipv6_address_base>::change(_data.scope_id, scope_id);
     }
 
     /**
@@ -500,7 +537,7 @@ public:
      * @param[out] code An error_code object that will store the result of the operation.
      */
     IPADDRESS_FORCE_INLINE void set_scope_id(const std::string& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
-        change_scope_id(scope_id, code);
+        internal::ipv6_set_scope<ipv6_address_base>::change(_data.scope_id, scope_id, code);
     }
 
     /**
@@ -510,7 +547,7 @@ public:
      * @param[out] code An error_code object that will store the result of the operation.
      */
     IPADDRESS_FORCE_INLINE void set_scope_id(const std::wstring& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
-        change_scope_id(scope_id, code);
+        internal::ipv6_set_scope<ipv6_address_base>::change(_data.scope_id, scope_id, code);
     }
 
     /**
@@ -520,7 +557,7 @@ public:
      * @param[out] code An error_code object that will store the result of the operation.
      */
     IPADDRESS_FORCE_INLINE void set_scope_id(const std::u16string& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
-        change_scope_id(scope_id, code);
+        internal::ipv6_set_scope<ipv6_address_base>::change(_data.scope_id, scope_id, code);
     }
 
     /**
@@ -530,7 +567,7 @@ public:
      * @param[out] code An error_code object that will store the result of the operation.
      */
     IPADDRESS_FORCE_INLINE void set_scope_id(const std::u32string& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
-        change_scope_id(scope_id, code);
+        internal::ipv6_set_scope<ipv6_address_base>::change(_data.scope_id, scope_id, code);
     }
 
 #endif // IPADDRESS_CPP_VERSION < 17
@@ -739,38 +776,35 @@ protected:
     }
 
 private:
-    template <typename Str>
-    #if !defined(__clang_major__) || __clang_major__ > 14
-    IPADDRESS_CONSTEXPR
-    #endif
-    IPADDRESS_FORCE_INLINE void change_scope_id(const Str& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        error_code err = error_code::NO_ERROR;
-        change_scope_id(scope_id, err);
-    #ifndef IPADDRESS_NO_EXCEPTIONS
-        if (err != error_code::NO_ERROR) {
-            raise_error(err, 0, "<bytes>", 7);
-        }
-    #endif
-    }
-
-    template <typename Str>
-    #if !defined(__clang_major__) || __clang_major__ > 14
-    IPADDRESS_CONSTEXPR
-    #endif
-    IPADDRESS_FORCE_INLINE void change_scope_id(const Str& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
-        code = error_code::NO_ERROR;
-    #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH > 0
-        if (scope_id.size() > IPADDRESS_IPV6_SCOPE_MAX_LENGTH) {
-            code = error_code::SCOPE_ID_IS_TOO_LONG;
-            return;
-        }
-        char scope[IPADDRESS_IPV6_SCOPE_MAX_LENGTH + 1] = {};
-        for (size_t i = 0; i < scope_id.size(); ++i) {
-            scope[i] = char(scope_id[i]);
-        }
-        _data.scope_id = make_fixed_string(scope);
-    #endif // IPADDRESS_IPV6_SCOPE_MAX_LENGTH
-    }
+    // not used due to clang bug in version 14 and below
+    // https://bugs.llvm.org/show_bug.cgi?id=18781
+    //
+    // template <typename Str>
+    // IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void change_scope_id(const Str& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    //     error_code err = error_code::NO_ERROR;
+    //     change_scope_id(scope_id, err);
+    // #ifndef IPADDRESS_NO_EXCEPTIONS
+    //     if (err != error_code::NO_ERROR) {
+    //         raise_error(err, 0, "<bytes>", 7);
+    //     }
+    // #endif
+    // }
+    //
+    // template <typename Str>
+    // IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void change_scope_id(const Str& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
+    //     code = error_code::NO_ERROR;
+    // #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH > 0
+    //     if (scope_id.size() > IPADDRESS_IPV6_SCOPE_MAX_LENGTH) {
+    //         code = error_code::SCOPE_ID_IS_TOO_LONG;
+    //         return;
+    //     }
+    //     char scope[IPADDRESS_IPV6_SCOPE_MAX_LENGTH + 1] = {};
+    //     for (size_t i = 0; i < scope_id.size(); ++i) {
+    //         scope[i] = char(scope_id[i]);
+    //     }
+    //     _data.scope_id = make_fixed_string(scope);
+    // #endif // IPADDRESS_IPV6_SCOPE_MAX_LENGTH
+    // }
     
     struct ipv6_data {
         base_type bytes{};

@@ -8,6 +8,40 @@
 
 namespace IPADDRESS_NAMESPACE {
 
+namespace internal {
+
+// Parsing has been removed from the ip_network class due to a bug 
+// in the Clang compiler in version 14 and below
+// https://bugs.llvm.org/show_bug.cgi?id=18781
+template <typename T>
+struct net_any_parser {
+    template <typename Str>
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T parse(const Str& address, bool strict) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        auto code = error_code::NO_ERROR;
+        const auto net4 = ipv4_network::parse(address, code, strict);
+        if (code == error_code::NO_ERROR) {
+            return T(net4);
+        }
+        return T(ipv6_network::parse(address, strict));
+    }
+
+    template <typename Str>
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T parse(const Str& address, error_code& code, bool strict) IPADDRESS_NOEXCEPT {
+        code = error_code::NO_ERROR;
+        const auto net4 = ipv4_network::parse(address, code, strict);
+        if (code == error_code::NO_ERROR) {
+            return T(net4);
+        }
+        const auto net6 = ipv6_network::parse(address, code, strict);
+        if (code == error_code::NO_ERROR) {
+            return T(net6);
+        }
+        return T();
+    }
+};
+
+}
+
 class ip_network {
 public:
     using ip_address_type = ip_address;
@@ -270,45 +304,45 @@ public:
 #if IPADDRESS_CPP_VERSION >= 17
 
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(std::string_view address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        return parse_string(address, strict);
+        return internal::net_any_parser<ip_network>::parse(address, strict);
     }
 
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(std::wstring_view address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        return parse_string(address, strict);
+        return internal::net_any_parser<ip_network>::parse(address, strict);
     }
 
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(std::u16string_view address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        return parse_string(address, strict);
+        return internal::net_any_parser<ip_network>::parse(address, strict);
     }
 
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(std::u32string_view address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        return parse_string(address, strict);
+        return internal::net_any_parser<ip_network>::parse(address, strict);
     }
 
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(std::string_view address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
-        return parse_string(address, code, strict);
+        return internal::net_any_parser<ip_network>::parse(address, code, strict);
     }
 
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(std::wstring_view address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
-        return parse_string(address, code, strict);
+        return internal::net_any_parser<ip_network>::parse(address, code, strict);
     }
 
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(std::u16string_view address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
-        return parse_string(address, code, strict);
+        return internal::net_any_parser<ip_network>::parse(address, code, strict);
     }
 
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(std::u32string_view address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
-        return parse_string(address, code, strict);
+        return internal::net_any_parser<ip_network>::parse(address, code, strict);
     }
 
 #if __cpp_char8_t >= 201811L
 
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(std::u8string_view address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        return parse_string(address, strict);
+        return internal::net_any_parser<ip_network>::parse(address, strict);
     }
 
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(std::u8string_view address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
-        return parse_string(address, code, strict);
+        return internal::net_any_parser<ip_network>::parse(address, code, strict);
     }
 
 #endif // __cpp_char8_t
@@ -316,45 +350,45 @@ public:
 #else // IPADDRESS_CPP_VERSION < 17
 
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_network parse(const std::string& address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        return parse_string(address, strict);
+        return internal::net_any_parser<ip_network>::parse(address, strict);
     }
 
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_network parse(const std::wstring& address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        return parse_string(address, strict);
+        return internal::net_any_parser<ip_network>::parse(address, strict);
     }
 
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_network parse(const std::u16string& address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        return parse_string(address, strict);
+        return internal::net_any_parser<ip_network>::parse(address, strict);
     }
 
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_network parse(const std::u32string& address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        return parse_string(address, strict);
+        return internal::net_any_parser<ip_network>::parse(address, strict);
     }
 
     static IPADDRESS_FORCE_INLINE ip_network parse(const std::string& address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
-        return parse_string(address, code, strict);
+        return internal::net_any_parser<ip_network>::parse(address, code, strict);
     }
 
     static IPADDRESS_FORCE_INLINE ip_network parse(const std::wstring& address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
-        return parse_string(address, code, strict);
+        return internal::net_any_parser<ip_network>::parse(address, code, strict);
     }
 
     static IPADDRESS_FORCE_INLINE ip_network parse(const std::u16string& address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
-        return parse_string(address, code, strict);
+        return internal::net_any_parser<ip_network>::parse(address, code, strict);
     }
 
     static IPADDRESS_FORCE_INLINE ip_network parse(const std::u32string& address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
-        return parse_string(address, code, strict);
+        return internal::net_any_parser<ip_network>::parse(address, code, strict);
     }
 
 #if __cpp_char8_t >= 201811L
 
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_network parse(const std::u8string& address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        return parse_string(address, strict);
+        return internal::net_any_parser<ip_network>::parse(address, strict);
     }
 
     static IPADDRESS_FORCE_INLINE ip_network parse(const std::u8string& address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
-        return parse_string(address, code, strict);
+        return internal::net_any_parser<ip_network>::parse(address, code, strict);
     }
 
 #endif // __cpp_char8_t
@@ -365,7 +399,7 @@ public:
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(const T(&address)[N], bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         internal::is_char_type<T>();
         auto code = error_code::NO_ERROR;
-        auto result = parse_string(address, code, strict);
+        auto result = internal::net_any_parser<ip_network>::parse(address, code, strict);
         if (code != error_code::NO_ERROR) {
             if (IPADDRESS_IS_CONST_EVALUATED(code)) {
                 raise_error(code, 0, address, N);
@@ -447,31 +481,34 @@ public:
 #endif // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
 private:
-    template <typename Str>
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse_string(const Str& address, bool strict) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        auto code = error_code::NO_ERROR;
-        const auto net4 = ipv4_network::parse(address, code, strict);
-        if (code == error_code::NO_ERROR) {
-            return ip_network(net4);
-        }
-        return ip_network(ipv6_network::parse(address, strict));
-    }
-
-    template <typename Str>
-    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse_string(const Str& address, error_code& code, bool strict) IPADDRESS_NOEXCEPT {
-        code = error_code::NO_ERROR;
-        const auto net4 = ipv4_network::parse(address, code, strict);
-        if (code == error_code::NO_ERROR) {
-            return ip_network(net4);
-        }
-        
-        const auto net6 = ipv6_network::parse(address, code, strict);
-        if (code == error_code::NO_ERROR) {
-            return ip_network(net6);
-        }
-        
-        return ip_network();
-    }
+    // not used due to clang bug in version 14 and below
+    // https://bugs.llvm.org/show_bug.cgi?id=18781
+    //
+    // template <typename Str>
+    // IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse_string(const Str& address, bool strict) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    //     auto code = error_code::NO_ERROR;
+    //     const auto net4 = ipv4_network::parse(address, code, strict);
+    //     if (code == error_code::NO_ERROR) {
+    //         return ip_network(net4);
+    //     }
+    //     return ip_network(ipv6_network::parse(address, strict));
+    // }
+    //
+    // template <typename Str>
+    // static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse_string(const Str& address, error_code& code, bool strict) IPADDRESS_NOEXCEPT {
+    //     code = error_code::NO_ERROR;
+    //     const auto net4 = ipv4_network::parse(address, code, strict);
+    //     if (code == error_code::NO_ERROR) {
+    //         return ip_network(net4);
+    //     }
+    //     
+    //     const auto net6 = ipv6_network::parse(address, code, strict);
+    //     if (code == error_code::NO_ERROR) {
+    //         return ip_network(net6);
+    //     }
+    //     
+    //     return ip_network();
+    // }
 
     union ip_any_network {
         IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_network() IPADDRESS_NOEXCEPT : ipv4() {
