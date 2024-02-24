@@ -26,8 +26,8 @@ public:
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_iterator(const ip_any_iterator&) IPADDRESS_NOEXCEPT = default;
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_iterator(ip_any_iterator&&) IPADDRESS_NOEXCEPT = default;
 
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_any_iterator& operator=(const ip_any_iterator&) IPADDRESS_NOEXCEPT = default;
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_any_iterator& operator=(ip_any_iterator&&) IPADDRESS_NOEXCEPT = default;
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_iterator& operator=(const ip_any_iterator&) IPADDRESS_NOEXCEPT = default;
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_iterator& operator=(ip_any_iterator&&) IPADDRESS_NOEXCEPT = default;
 
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_iterator(Ipv4Iter iter) IPADDRESS_NOEXCEPT : _iter(iter), _version(ip_version::V4), _current(*iter) {
     }
@@ -59,44 +59,44 @@ public:
         return _version == ip_version::V4 ? value_type(_iter.iter4[uint32_t(n)]) : value_type(_iter.iter6[n]);
     }
 
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_any_iterator& operator++() IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_iterator& operator++() IPADDRESS_NOEXCEPT {
         add(1);
         return *this;
     }
 
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_any_iterator operator++(int) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_iterator operator++(int) IPADDRESS_NOEXCEPT {
         auto tmp = *this;
         ++(*this);
         return tmp;
     }
 
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_any_iterator& operator--() IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_iterator& operator--() IPADDRESS_NOEXCEPT {
         sub(1);
         return *this;
     }
 
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_any_iterator operator--(int) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_iterator operator--(int) IPADDRESS_NOEXCEPT {
         auto tmp = *this;
         --(*this);
         return tmp;
     }
 
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_any_iterator& operator+=(difference_type n) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_iterator& operator+=(difference_type n) IPADDRESS_NOEXCEPT {
         add(n);
         return *this;
     }
 
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_any_iterator& operator+=(const uint128_t& n) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_iterator& operator+=(const uint128_t& n) IPADDRESS_NOEXCEPT {
         add(n);
         return *this;
     }
 
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_any_iterator& operator-=(difference_type n) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_iterator& operator-=(difference_type n) IPADDRESS_NOEXCEPT {
         sub(n);
         return *this;
     }
 
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE ip_any_iterator& operator-=(const uint128_t& n) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_iterator& operator-=(const uint128_t& n) IPADDRESS_NOEXCEPT {
         sub(n);
         return *this;
     }
@@ -252,8 +252,8 @@ public:
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_any_sequence(const hosts_any_sequence&) IPADDRESS_NOEXCEPT = default;
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_any_sequence(hosts_any_sequence&&) IPADDRESS_NOEXCEPT = default;
 
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE hosts_any_sequence& operator=(const hosts_any_sequence&) IPADDRESS_NOEXCEPT = default;
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE hosts_any_sequence& operator=(hosts_any_sequence&&) IPADDRESS_NOEXCEPT = default;
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_any_sequence& operator=(const hosts_any_sequence&) IPADDRESS_NOEXCEPT = default;
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_any_sequence& operator=(hosts_any_sequence&&) IPADDRESS_NOEXCEPT = default;
 
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_any_sequence(ip_address_iterator<ipv4_address> begin, ip_address_iterator<ipv4_address> end) IPADDRESS_NOEXCEPT : _begin(begin), _end(end) {
     }
@@ -342,8 +342,8 @@ public:
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_any_sequence(const subnets_any_sequence&) IPADDRESS_NOEXCEPT = default;
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_any_sequence(subnets_any_sequence&&) IPADDRESS_NOEXCEPT = default;
 
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE subnets_any_sequence& operator=(const subnets_any_sequence&) IPADDRESS_NOEXCEPT = default;
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE subnets_any_sequence& operator=(subnets_any_sequence&&) IPADDRESS_NOEXCEPT = default;
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_any_sequence& operator=(const subnets_any_sequence&) IPADDRESS_NOEXCEPT = default;
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_any_sequence& operator=(subnets_any_sequence&&) IPADDRESS_NOEXCEPT = default;
 
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_any_sequence(ip_network_iterator<ipv4_network> begin, ip_network_iterator<ipv4_network> end) IPADDRESS_NOEXCEPT : _begin(begin), _end(end) {
     }

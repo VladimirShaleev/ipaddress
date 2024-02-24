@@ -469,7 +469,7 @@ public:
      * 
      * @param[in] ip The other ip_address object to swap with.
      */
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE void swap(ip_address& ip) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void swap(ip_address& ip) IPADDRESS_NOEXCEPT {
         const auto tmp = *this;
         *this = ip;
         ip = tmp;
@@ -1126,7 +1126,7 @@ public:
      * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect.
      */
     template <typename T, size_t N>
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE void set_scope_id(const T(&scope_id)[N]) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(const T(&scope_id)[N]) IPADDRESS_NOEXCEPT {
         internal::is_char_type<T>();
         if (_version == ip_version::V6) {
             _ipv.ipv6.set_scope_id(scope_id);

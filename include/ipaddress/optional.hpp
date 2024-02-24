@@ -73,7 +73,7 @@ public:
      * 
      * @return A reference to the `optional` object.
      */
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE optional& operator=(std::nullptr_t) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional& operator=(std::nullptr_t) IPADDRESS_NOEXCEPT {
         _has_value = false;
         _value = value_type{};
         return *this;
@@ -85,7 +85,7 @@ public:
      * @param[in,out] val The value to move into the `optional` object.
      * @return A reference to the `optional` object.
      */
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE optional& operator=(value_type&& val) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional& operator=(value_type&& val) IPADDRESS_NOEXCEPT {
         _has_value = true;
         _value = val;
         return *this;
@@ -97,7 +97,7 @@ public:
      * @param[in] opt The `optional` object to copy from.
      * @return A reference to `*this`.
      */
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE optional& operator=(const optional<T>& opt) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional& operator=(const optional<T>& opt) IPADDRESS_NOEXCEPT {
         _has_value = opt._has_value;
         _value = opt._value;
         return *this;
@@ -111,7 +111,7 @@ public:
      * 
      * @return A pointer to the contained value.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE value_type* operator->() IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type* operator->() IPADDRESS_NOEXCEPT {
         return &_value;
     }
 
@@ -135,7 +135,7 @@ public:
      * 
      * @return A reference to the contained value.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE value_type& operator*() IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type& operator*() IPADDRESS_NOEXCEPT {
         return _value;
     }
 
@@ -181,7 +181,7 @@ public:
      * 
      * @return A reference to the contained value.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE value_type& value() & IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type& value() & IPADDRESS_NOEXCEPT {
         return _value;
     }
 
@@ -205,7 +205,7 @@ public:
      * 
      * @return The contained value, moved.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE value_type&& value() && IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type&& value() && IPADDRESS_NOEXCEPT {
         return std::move(_value);
     }
 

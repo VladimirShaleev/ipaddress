@@ -273,7 +273,7 @@ public:
         return is_v4() ? _ipv_net.ipv4.to_string(fmt) : _ipv_net.ipv6.to_string(fmt);
     }
 
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE void swap(ip_network& net) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void swap(ip_network& net) IPADDRESS_NOEXCEPT {
         const auto tmp = *this;
         *this = net;
         net = tmp;

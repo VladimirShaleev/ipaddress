@@ -344,7 +344,7 @@ public:
      * 
      * @param[in,out] other The other `uint128_t` instance to swap with.
      */
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE void swap(uint128_t& other) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void swap(uint128_t& other) IPADDRESS_NOEXCEPT {
         const auto tmp = *this;
         *this = other;
         other = tmp;
@@ -581,7 +581,7 @@ public:
      * @param[in] other The `uint128_t` instance to add.
      * @return A reference to this instance after addition.
      */
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator+=(const uint128_t& other) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t& operator+=(const uint128_t& other) IPADDRESS_NOEXCEPT {
         *this = *this + other;
         return *this;
     }
@@ -594,7 +594,7 @@ public:
      * @param[in] other The `uint128_t` instance to subtract.
      * @return A reference to this instance after subtraction.
      */
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator-=(const uint128_t& other) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t& operator-=(const uint128_t& other) IPADDRESS_NOEXCEPT {
         *this = *this - other;
         return *this;
     }
@@ -607,7 +607,7 @@ public:
      * @param[in] other The `uint128_t` instance to multiply by.
      * @return A reference to this instance after multiplication.
      */
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator*=(const uint128_t& other) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t& operator*=(const uint128_t& other) IPADDRESS_NOEXCEPT {
         *this = *this * other;
         return *this;
     }
@@ -620,7 +620,7 @@ public:
      * @param[in] other The `uint128_t` instance to divide by.
      * @return A reference to this instance after division.
      */
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator/=(const uint128_t& other) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t& operator/=(const uint128_t& other) IPADDRESS_NOEXCEPT {
         *this = *this / other;
         return *this;
     }
@@ -633,7 +633,7 @@ public:
      * @param[in] other The `uint128_t` instance to divide by.
      * @return A reference to this instance after calculating the remainder.
      */
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator%=(const uint128_t& other) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t& operator%=(const uint128_t& other) IPADDRESS_NOEXCEPT {
         *this = *this % other;
         return *this;
     }
@@ -646,7 +646,7 @@ public:
      * @param[in] other The `uint128_t` instance to perform the bitwise AND with.
      * @return A reference to this instance after the bitwise AND operation.
      */
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator&=(const uint128_t& other) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t& operator&=(const uint128_t& other) IPADDRESS_NOEXCEPT {
         _upper &= other._upper;
         _lower &= other._lower;
         return *this;
@@ -660,7 +660,7 @@ public:
      * @param[in] other The `uint128_t` instance to perform the bitwise OR with.
      * @return A reference to this instance after the bitwise OR operation.
      */
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator|=(const uint128_t& other) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t& operator|=(const uint128_t& other) IPADDRESS_NOEXCEPT {
         _upper |= other._upper;
         _lower |= other._lower;
         return *this;
@@ -674,7 +674,7 @@ public:
      * @param[in] other The `uint128_t` instance to perform the bitwise XOR with.
      * @return A reference to this instance after the bitwise XOR operation.
      */
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator^=(const uint128_t& other) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t& operator^=(const uint128_t& other) IPADDRESS_NOEXCEPT {
         _upper ^= other._upper;
         _lower ^= other._lower;
         return *this;
@@ -690,7 +690,7 @@ public:
      * @return A reference to this instance after the shift operation.
      */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator<<=(T shift) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t& operator<<=(T shift) IPADDRESS_NOEXCEPT {
         *this = *this << shift;
         return *this;
     }
@@ -705,7 +705,7 @@ public:
      * @return A reference to this instance after the shift operation.
      */
     template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator>>=(T shift) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t& operator>>=(T shift) IPADDRESS_NOEXCEPT {
         *this = *this >> shift;
         return *this;
     }
@@ -900,7 +900,7 @@ public:
      *
      * @return A reference to this instance after the increment.
      */
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator++() IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t& operator++() IPADDRESS_NOEXCEPT {
         *this += 1;
         return *this;
     }
@@ -912,7 +912,7 @@ public:
      *
      * @return A reference to this instance after the decrement.
      */
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t& operator--() IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t& operator--() IPADDRESS_NOEXCEPT {
         *this -= 1;
         return *this;
     }
@@ -924,7 +924,7 @@ public:
      *
      * @return The value of this instance before the increment.
      */
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t operator++(int) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator++(int) IPADDRESS_NOEXCEPT {
         auto tmp = *this;
         ++*this;
         return tmp;
@@ -937,7 +937,7 @@ public:
      *
      * @return The value of this instance before the decrement.
      */
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE uint128_t operator--(int) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator--(int) IPADDRESS_NOEXCEPT {
         auto tmp = *this;
         --*this;
         return tmp;

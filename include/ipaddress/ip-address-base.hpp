@@ -534,7 +534,7 @@ public:
      * 
      * @param[in] ip The other IP address to swap with.
      */
-    IPADDRESS_CONSTEXPR_14 IPADDRESS_FORCE_INLINE void swap(ip_address_base& ip) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void swap(ip_address_base& ip) IPADDRESS_NOEXCEPT {
         Base::swap(*this, ip);
     }
 

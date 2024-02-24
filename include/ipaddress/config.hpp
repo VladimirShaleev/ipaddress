@@ -56,11 +56,6 @@
 
 #ifdef __cpp_constexpr
 #  define IPADDRESS_CONSTEXPR constexpr
-#  if __cpp_constexpr >= 201304L
-#    define IPADDRESS_CONSTEXPR_14 constexpr
-#  else
-#    define IPADDRESS_CONSTEXPR_14
-#  endif
 #  if __cpp_constexpr >= 201603L
 #    define IPADDRESS_CONSTEXPR_17 constexpr
 #  else
