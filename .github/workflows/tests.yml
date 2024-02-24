@@ -1,13 +1,52 @@
-# # This starter workflow is for a CMake project running on multiple platforms. There is a different starter workflow if you just want a single platform.
-# # See: https://github.com/actions/starter-workflows/blob/main/ci/cmake-single-platform.yml
-# name: CMake on multiple platforms
-# 
-# on:
-#   push:
-#     branches: [ "main" ]
-#   pull_request:
-#     branches: [ "main" ]
-# 
+name: Tests
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  clang:
+    strategy:
+      fail-fast: true
+      matrix:
+        clang: [ 14 ]
+        stdlib: [ "libc++", "libstdc++" ]
+        standard:  [11 ]
+    name: "Clang ${{ matrix.clang }} [C++${{ matrix.standard }}, ${{ matrix.stdlib }}]"
+    runs-on: ubuntu-20.04
+    steps:
+      - name: "Install Clang"
+        uses: egor-tensin/setup-clang@v1
+        with:
+          version: ${{ matrix.clang }}
+      - name: "Install libc++"
+        if: ${{ matrix.stdlib == 'libc++' }}
+        run: sudo apt-get install libc++abi-${{ matrix.clang }}-dev libc++1-${{ matrix.clang }} libc++-${{ matrix.clang }}-dev
+      - uses: actions/checkout@v3
+      - run: c++ -v
+  
+      - name: Set reusable strings
+        id: strings
+        shell: bash
+        run: |
+          echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+  
+      - name: Configure CMake
+        run: >
+          cmake -B ${{ steps.strings.outputs.build-output-dir }}
+          -DCXX_STANDARD=matrix.standard
+          -DCMAKE_CXX_FLAGS=-stdlib=${{ matrix.stdlib }}
+          -DCMAKE_CXX_COMPILER=c++
+          -DCMAKE_BUILD_TYPE=Release
+          -S ${{ github.workspace }}
+
+      # - run: make CXX=c++ CXX_STANDARD=2a CXXFLAGS=-stdlib=${{ matrix.stdlib }}
+      #   if: ${{ matrix.standard == '20' }}
+      # - run: make CXX=c++ CXX_STANDARD=17 CXXFLAGS=-stdlib=${{ matrix.stdlib }}
+      #   if: ${{ matrix.standard == '17' }}
+      
+
 # jobs:
 #   build:
 #     runs-on: ${{ matrix.os }}
