@@ -199,7 +199,7 @@ $(function(){initNavTree('fixed-string_8hpp_source.html',''); initResizable(); }
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <span class="keyword">auto</span> ended = <span class="keyword">false</span>;</div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        <span class="keywordflow">for</span> (size_t i = 0; i &lt; N; ++i) {</div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            <span class="keywordflow">if</span> (<a class="code hl_define" href="config_8hpp.html#a9de2ca3f1627e4da4e0828f550b24660">IPADDRESS_IS_CONST_EVALUATED</a>(data) &amp;&amp; data[i] &gt; 127) {</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>                size_t i = data[i] / (data[i] - data[i]); <span class="comment">// invalid symbol for ip address</span></div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>                size_t err = data[i] / (data[i] - data[i]); <span class="comment">// invalid symbol for ip address</span></div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>            }</div>
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>            _data[i] = <span class="keywordtype">char</span>(data[i]);</div>
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>            <span class="keywordflow">if</span> (data[i] == <span class="stringliteral">&#39;\0&#39;</span>) {</div>
