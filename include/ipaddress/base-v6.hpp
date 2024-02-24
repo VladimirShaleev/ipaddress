@@ -56,6 +56,9 @@ public:
     }
 
 protected:
+    template <typename>
+    friend class ip_network_base;
+    
     static IPADDRESS_CONSTEXPR size_t _min_parts = 3;
     static IPADDRESS_CONSTEXPR size_t _max_parts = 8;
 

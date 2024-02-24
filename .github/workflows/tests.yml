@@ -76,7 +76,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        gcc: [ 5, 6, 7, 10, 13, 14 ]
+        gcc: [ 7, 8, 9, 10, 11, 12, 13 ]
         standard: [ 11, 14, 17, 20, 23 ]
     name: "GCC ${{ matrix.gcc }} [C++${{ matrix.standard }}]"
     runs-on: ubuntu-20.04
