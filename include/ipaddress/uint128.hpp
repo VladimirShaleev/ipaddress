@@ -273,7 +273,7 @@ public:
      * 
      * @param[in] value The floating-point value to convert.
      */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit uint128_t(double value) IPADDRESS_NOEXCEPT {
+    IPADDRESS_FORCE_INLINE explicit uint128_t(double value) IPADDRESS_NOEXCEPT {
         const auto result = from_double(double(value));
         _upper = result._upper;
         _lower = result._lower;
@@ -287,7 +287,7 @@ public:
      * 
      * @param[in] value The floating-point value to convert.
      */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit uint128_t(long double value) IPADDRESS_NOEXCEPT : uint128_t((double) value) {
+    IPADDRESS_FORCE_INLINE explicit uint128_t(long double value) IPADDRESS_NOEXCEPT : uint128_t((double) value) {
     }
 
     /**
@@ -298,7 +298,7 @@ public:
      * 
      * @param[in] value The floating-point value to convert.
      */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit uint128_t(float value) IPADDRESS_NOEXCEPT : uint128_t((double) value) {
+    IPADDRESS_FORCE_INLINE explicit uint128_t(float value) IPADDRESS_NOEXCEPT : uint128_t((double) value) {
     }
 
     /**

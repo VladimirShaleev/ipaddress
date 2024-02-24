@@ -40,7 +40,7 @@ struct net_any_parser {
     }
 };
 
-}
+} // namespace internal
 
 class ip_network {
 public:

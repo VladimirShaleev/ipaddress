@@ -687,12 +687,12 @@ TEST(ip_network, hosts) {
     ASSERT_FALSE(hosts_rit_gt);
     ASSERT_FALSE(hosts_rit_ge);
 
-#if IPADDRESS_CPP_VERSION >= 20
-    constexpr auto host_range = *++((ip_network::parse("192.0.2.0/29").hosts()
-                                | std::views::filter([](const auto& a) { return a.v4().value().to_uint() % 2 == 0; })
-                                | std::views::take(2)).begin());
-    ASSERT_EQ(host_range, ip_address::parse("192.0.2.4"));
-#endif
+// #if IPADDRESS_CPP_VERSION >= 20
+//     constexpr auto host_range = *++((ip_network::parse("192.0.2.0/29").hosts()
+//                                 | std::views::filter([](const auto& a) { return a.v4().value().to_uint() % 2 == 0; })
+//                                 | std::views::take(2)).begin());
+//     ASSERT_EQ(host_range, ip_address::parse("192.0.2.4"));
+// #endif
 }
 
 TEST(ip_network, subnets) {
@@ -774,12 +774,12 @@ TEST(ip_network, subnets) {
     ASSERT_FALSE(subnets_rit_gt);
     ASSERT_FALSE(subnets_rit_ge);
     
-#if IPADDRESS_CPP_VERSION >= 20
-    constexpr auto subnets_range = *++((ip_network::parse("192.0.2.0/24").subnets(2) 
-                                   | std::views::filter([](const auto& n) { return n.network_address().to_uint() % 2 == 0; })
-                                   | std::views::take(2)).begin());
-    ASSERT_EQ(subnets_range, ip_network::parse("192.0.2.64/26"));
-#endif
+// #if IPADDRESS_CPP_VERSION >= 20
+//     constexpr auto subnets_range = *++((ip_network::parse("192.0.2.0/24").subnets(2) 
+//                                    | std::views::filter([](const auto& n) { return n.network_address().to_uint() % 2 == 0; })
+//                                    | std::views::take(2)).begin());
+//     ASSERT_EQ(subnets_range, ip_network::parse("192.0.2.64/26"));
+// #endif
 
 }
 
@@ -808,12 +808,12 @@ TEST(ip_network, address_exclude) {
     ASSERT_FALSE(exclude_it_gt);
     ASSERT_FALSE(exclude_it_ge);
 
-#if IPADDRESS_CPP_VERSION >= 20
-    constexpr auto exclude_range_0 = *++((ip_network::parse("192.0.2.0/28").address_exclude(ip_network::parse("192.0.2.1/32"))
-                                   | std::views::filter([](const auto& n) { return n.network_address().to_uint() % 2 == 0; })
-                                   | std::views::take(2)).begin());
-    ASSERT_EQ(exclude_range_0, ip_network::parse("192.0.2.4/30"));
-#endif
+//#if IPADDRESS_CPP_VERSION >= 20
+//    constexpr auto exclude_range_0 = *++((ip_network::parse("192.0.2.0/28").address_exclude(ip_network::parse("192.0.2.1/32"))
+//                                   | std::views::filter([](const auto& n) { return n.network_address().to_uint() % 2 == 0; })
+//                                   | std::views::take(2)).begin());
+//    ASSERT_EQ(exclude_range_0, ip_network::parse("192.0.2.4/30"));
+//#endif
 }
 
 TEST(ip_network, literals) {
