@@ -14,6 +14,7 @@ include(CMakePackageConfigHelpers)
 include(CMakeDependentOption)
 include(GNUInstallDirs)
 include(TestBigEndian)
+include(CTest)
 test_big_endian(IPADDRESS_BIG_ENDIAN)
 
 add_library(${PROJECT_NAME} INTERFACE)
