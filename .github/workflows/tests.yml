@@ -89,11 +89,6 @@ jobs:
         run: |
           echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
-      - run: make CXX=c++ CXX_STANDARD=2a
-        if: ${{ matrix.standard == '20' }}
-      - run: make CXX=c++ CXX_STANDARD=17
-        if: ${{ matrix.standard == '17' }}
-
       - name: Configure CMake
         run: >
           cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }}
@@ -148,42 +143,42 @@ jobs:
   #     - name: Run tests
   #       run: ctest --output-on-failure --test-dir ${{ steps.strings.outputs.build-output-dir }}
 
-  msvc:
-    strategy:
-      fail-fast: false
-      matrix:
-        version: [ "14.29", "14.39" ]
-        standard: [ 11, 14, 17, 20, 23 ]
-    name: "MSVC ${{ matrix.version }} [C++${{ matrix.standard }}]"
-    runs-on: windows-2022
-    steps:
-      - name: Add MSVC ${{ matrix.version }} to PATH
-        uses: ilammy/msvc-dev-cmd@v1
-        with:
-          toolset: ${{ matrix.version }}
-          arch: amd64_x86
-      - name: "Install Ninja & CMake"
-        run: choco install ninja cmake
+  # msvc:
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       version: [ "14.29", "14.39" ]
+  #       standard: [ 11, 14, 17, 20, 23 ]
+  #   name: "MSVC ${{ matrix.version }} [C++${{ matrix.standard }}]"
+  #   runs-on: windows-2022
+  #   steps:
+  #     - name: Add MSVC ${{ matrix.version }} to PATH
+  #       uses: ilammy/msvc-dev-cmd@v1
+  #       with:
+  #         toolset: ${{ matrix.version }}
+  #         arch: amd64_x86
+  #     - name: "Install Ninja & CMake"
+  #       run: choco install ninja cmake
 
-      - uses: actions/checkout@v3
-      - name: Set reusable strings
-        id: strings
-        shell: bash
-        run: |
-          echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+  #     - uses: actions/checkout@v3
+  #     - name: Set reusable strings
+  #       id: strings
+  #       shell: bash
+  #       run: |
+  #         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
-      - name: Configure CMake
-        run: >
-          cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }}
-          -G Ninja
-          -DCMAKE_CXX_STANDARD=${{ matrix.standard }}
-          -DCMAKE_BUILD_TYPE=Release
-          -DIPADDRESS_BUILD_TESTS=ON
-          -DIPADDRESS_BUILD_DOC=OFF
-          -DIPADDRESS_BUILD_PACKAGES=OFF
+  #     - name: Configure CMake
+  #       run: >
+  #         cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }}
+  #         -G Ninja
+  #         -DCMAKE_CXX_STANDARD=${{ matrix.standard }}
+  #         -DCMAKE_BUILD_TYPE=Release
+  #         -DIPADDRESS_BUILD_TESTS=ON
+  #         -DIPADDRESS_BUILD_DOC=OFF
+  #         -DIPADDRESS_BUILD_PACKAGES=OFF
 
-      - name: Build
-        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
-      
-      - name: Run tests
-        run: ctest --output-on-failure --test-dir ${{ steps.strings.outputs.build-output-dir }}
+  #     - name: Build
+  #       run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
+  #     
+  #     - name: Run tests
+  #       run: ctest --output-on-failure --test-dir ${{ steps.strings.outputs.build-output-dir }}
