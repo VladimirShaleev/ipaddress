@@ -113,7 +113,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: [ 14.0, 14.13, 14.15, 14.17, 14.20, 14.29, "" ]
+        version: [ "16.0.0", "16.7", "16.11.27", "17.0.1", "17.9.1" ]
         standard: [ 11, 14, 17, 20, 23 ]
     name: "MSVC ${{ matrix.version }} [C++${{ matrix.standard }}]"
     runs-on: windows-2022
@@ -121,7 +121,7 @@ jobs:
       - name: Add MSVC ${{ matrix.version }} to PATH
         uses: ilammy/msvc-dev-cmd@v1
         with:
-          toolset: ${{ matrix.version }}
+          vsversion: ${{ matrix.version }}
           arch: amd64_x86
       - name: "Install Ninja & CMake"
         run: choco install ninja cmake
