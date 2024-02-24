@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        clang: [ 14 ]
+        clang: [ 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 ]
         stdlib: [ "libc++", "libstdc++" ]
         standard: [ 11, 14, 17, 20, 23 ]
     name: "Clang ${{ matrix.clang }} [C++${{ matrix.standard }}, ${{ matrix.stdlib }}]"
@@ -48,7 +48,7 @@ jobs:
         run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
       
       - name: Run tests
-        run: ctest --test-dir ${{ steps.strings.outputs.build-output-dir }} --output-on-failure
+        run: ctest --output-on-failure --test-dir ${{ steps.strings.outputs.build-output-dir }}
 
 # jobs:
 #   build:
