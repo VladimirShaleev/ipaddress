@@ -14,6 +14,7 @@ jobs:
   #       clang: [ 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 ]
   #       stdlib: [ "libc++", "libstdc++" ]
   #       standard: [ 11, 14, 17, 20, 23 ]
+  #       exception: [ "-fexceptions" ]
   #       exclude:
   #         - clang: 6
   #           stdlib: libc++
@@ -35,7 +36,16 @@ jobs:
   #           standard: 23
   #         - clang: 12
   #           stdlib: libc++
-  #   name: "Clang ${{ matrix.clang }} [C++${{ matrix.standard }}, ${{ matrix.stdlib }}]"
+  #       include:
+  #         - clang: 6
+  #           stdlib: "libc++"
+  #           standard: 11
+  #           exception: "-fno-exceptions"
+  #         - clang: 17
+  #           stdlib: "libstdc++"
+  #           standard: 23
+  #           exception: "-fno-exceptions"
+  #   name: "Clang ${{ matrix.clang }} [C++${{ matrix.standard }}, ${{ matrix.stdlib }}, ${{ matrix.exception }}]"
   #   runs-on: ubuntu-20.04
   #   steps:
   #     - name: "Install Clang"
@@ -58,12 +68,13 @@ jobs:
   #       run: >
   #         cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }}
   #         -DCMAKE_CXX_STANDARD=${{ matrix.standard }}
-  #         -DCMAKE_CXX_FLAGS=-stdlib=${{ matrix.stdlib }}
+  #         -DCMAKE_CXX_FLAGS="-stdlib=${{ matrix.stdlib }} ${{ matrix.exception }}"
   #         -DCMAKE_CXX_COMPILER=c++
   #         -DCMAKE_BUILD_TYPE=Release
   #         -DIPADDRESS_BUILD_TESTS=ON
   #         -DIPADDRESS_BUILD_DOC=OFF
   #         -DIPADDRESS_BUILD_PACKAGES=OFF
+  #         -DIPADDRESS_NO_EXCEPTIONS=${{ matrix.exception == '-fno-exceptions' }}
 
   #     - name: Build
   #       run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
@@ -71,50 +82,50 @@ jobs:
   #     - name: Run tests
   #       run: ctest --output-on-failure --test-dir ${{ steps.strings.outputs.build-output-dir }}
   
-  appleclang:
-    strategy:
-      fail-fast: false
-      matrix:
-        macos: [ 11, 12, 13 ]
-        standard: [ 11, 14, 17, 20, 23 ]
-        exceptions: [ "exceptions" ]
-        include:
-          - macos: 11
-            standard: 11
-            exceptions: "no-exceptions"
-          - macos: 11
-            standard: 23
-            exceptions: "no-exceptions"
+  # appleclang:
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       macos: [ 11, 12, 13 ]
+  #       standard: [ 11, 14, 17, 20, 23 ]
+  #       exception: [ "-fexceptions" ]
+  #       include:
+  #         - macos: 11
+  #           standard: 11
+  #           exception: "-fno-exceptions"
+  #         - macos: 11
+  #           standard: 23
+  #           exception: "-fno-exceptions"
 
-    name: "AppleClang MacOS ${{ matrix.macos }} [C++${{ matrix.standard }}, ${{ matrix.exceptions }}]"
-    runs-on: macos-${{ matrix.macos }}
-    steps:
-      - uses: actions/checkout@v3
-      - run: c++ -v
-      
-      - name: Set reusable strings
-        id: strings
-        shell: bash
-        run: |
-          echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+  #   name: "AppleClang MacOS ${{ matrix.macos }} [C++${{ matrix.standard }}, ${{ matrix.exception }}]"
+  #   runs-on: macos-${{ matrix.macos }}
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - run: c++ -v
+  #     
+  #     - name: Set reusable strings
+  #       id: strings
+  #       shell: bash
+  #       run: |
+  #         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
-      - name: Configure CMake
-        run: >
-          cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }}
-          -DCMAKE_CXX_STANDARD=${{ matrix.standard }}
-          -DCMAKE_CXX_COMPILER=c++
-          -DCMAKE_CXX_FLAGS=-f${{ matrix.exceptions }}
-          -DCMAKE_BUILD_TYPE=Release
-          -DIPADDRESS_BUILD_TESTS=ON
-          -DIPADDRESS_BUILD_DOC=OFF
-          -DIPADDRESS_BUILD_PACKAGES=OFF
-          -DIPADDRESS_NO_EXCEPTIONS=${{ matrix.exceptions == 'no-exceptions' }}
+  #     - name: Configure CMake
+  #       run: >
+  #         cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }}
+  #         -DCMAKE_CXX_STANDARD=${{ matrix.standard }}
+  #         -DCMAKE_CXX_COMPILER=c++
+  #         -DCMAKE_CXX_FLAGS=${{ matrix.exception }}
+  #         -DCMAKE_BUILD_TYPE=Release
+  #         -DIPADDRESS_BUILD_TESTS=ON
+  #         -DIPADDRESS_BUILD_DOC=OFF
+  #         -DIPADDRESS_BUILD_PACKAGES=OFF
+  #         -DIPADDRESS_NO_EXCEPTIONS=${{ matrix.exception == '-fno-exceptions' }}
 
-      - name: Build
-        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
-      
-      - name: Run tests
-        run: ctest --output-on-failure --test-dir ${{ steps.strings.outputs.build-output-dir }}
+  #     - name: Build
+  #       run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
+  #     
+  #     - name: Run tests
+  #       run: ctest --output-on-failure --test-dir ${{ steps.strings.outputs.build-output-dir }}
   
   # gcc:
   #   strategy:
@@ -122,7 +133,15 @@ jobs:
   #     matrix:
   #       gcc: [ 7, 8, 9, 10, 11, 13 ]
   #       standard: [ 11, 14, 17, 20, 23 ]
-  #   name: "GCC ${{ matrix.gcc }} [C++${{ matrix.standard }}]"
+  #       exception: [ "-fexceptions" ]
+  #       include:
+  #         - gcc: 7
+  #           standard: 11
+  #           exception: "-fno-exceptions"
+  #         - gcc: 13
+  #           standard: 23
+  #           exception: "-fno-exceptions"
+  #   name: "GCC ${{ matrix.gcc }} [C++${{ matrix.standard }}, ${{ matrix.exception }}]"
   #   runs-on: ubuntu-20.04
   #   steps:
   #     - name: "Install GCC"
@@ -143,10 +162,12 @@ jobs:
   #         cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }}
   #         -DCMAKE_CXX_STANDARD=${{ matrix.standard }}
   #         -DCMAKE_CXX_COMPILER=c++
+  #         -DCMAKE_CXX_FLAGS=${{ matrix.exception }}
   #         -DCMAKE_BUILD_TYPE=Release
   #         -DIPADDRESS_BUILD_TESTS=ON
   #         -DIPADDRESS_BUILD_DOC=OFF
   #         -DIPADDRESS_BUILD_PACKAGES=OFF
+  #         -DIPADDRESS_NO_EXCEPTIONS=${{ matrix.exception == '-fno-exceptions' }}
   # 
   #     - name: Build
   #       run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
@@ -154,42 +175,52 @@ jobs:
   #     - name: Run tests
   #       run: ctest --output-on-failure --test-dir ${{ steps.strings.outputs.build-output-dir }}
 
-  # msvc:
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       version: [ "14.29", "14.39" ]
-  #       standard: [ 11, 14, 17, 20, 23 ]
-  #   name: "MSVC ${{ matrix.version }} [C++${{ matrix.standard }}]"
-  #   runs-on: windows-2022
-  #   steps:
-  #     - name: Add MSVC ${{ matrix.version }} to PATH
-  #       uses: ilammy/msvc-dev-cmd@v1
-  #       with:
-  #         toolset: ${{ matrix.version }}
-  #         arch: amd64_x86
-  #     - name: "Install Ninja & CMake"
-  #       run: choco install ninja cmake
+  msvc:
+    strategy:
+      fail-fast: false
+      matrix:
+        version: [ "14.29", "14.39" ]
+        standard: [ 11, 14, 17, 20, 23 ]
+        exception: [ "" ]
+        include:
+          - version: "14.29"
+            standard: 11
+            exception: "/EHsc"
+          - version: "14.29"
+            standard: 23
+            exception: "/EHsc"
+    name: "MSVC ${{ matrix.version }} [C++${{ matrix.standard }}, ${{ matrix.exception }}]"
+    runs-on: windows-2022
+    steps:
+      - name: Add MSVC ${{ matrix.version }} to PATH
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          toolset: ${{ matrix.version }}
+          arch: amd64_x86
+      - name: "Install Ninja & CMake"
+        run: choco install ninja cmake
 
-  #     - uses: actions/checkout@v3
-  #     - name: Set reusable strings
-  #       id: strings
-  #       shell: bash
-  #       run: |
-  #         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@v3
+      - name: Set reusable strings
+        id: strings
+        shell: bash
+        run: |
+          echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
-  #     - name: Configure CMake
-  #       run: >
-  #         cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }}
-  #         -G Ninja
-  #         -DCMAKE_CXX_STANDARD=${{ matrix.standard }}
-  #         -DCMAKE_BUILD_TYPE=Release
-  #         -DIPADDRESS_BUILD_TESTS=ON
-  #         -DIPADDRESS_BUILD_DOC=OFF
-  #         -DIPADDRESS_BUILD_PACKAGES=OFF
+      - name: Configure CMake
+        run: >
+          cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }}
+          -G Ninja
+          -DCMAKE_CXX_STANDARD=${{ matrix.standard }}
+          -DCMAKE_CXX_FLAGS=${{ matrix.exception }}
+          -DCMAKE_BUILD_TYPE=Release
+          -DIPADDRESS_BUILD_TESTS=ON
+          -DIPADDRESS_BUILD_DOC=OFF
+          -DIPADDRESS_BUILD_PACKAGES=OFF
+          -DIPADDRESS_NO_EXCEPTIONS=${{ matrix.exception == '/EHsc' }}
 
-  #     - name: Build
-  #       run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
-  #     
-  #     - name: Run tests
-  #       run: ctest --output-on-failure --test-dir ${{ steps.strings.outputs.build-output-dir }}
+      - name: Build
+        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
+      
+      - name: Run tests
+        run: ctest --output-on-failure --test-dir ${{ steps.strings.outputs.build-output-dir }}
