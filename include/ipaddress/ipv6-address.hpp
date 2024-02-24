@@ -833,7 +833,7 @@ using ipv6_address = ip_address_base<ipv6_address_base>;
      * @return An ipv6_address object parsed from the fixed string.
      */
     template <fixed_string FixedString>
-    IPADDRESS_NODISCARD consteval IPADDRESS_FORCE_INLINE ipv6_address operator""_ipv6() IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE ipv6_address operator""_ipv6() IPADDRESS_NOEXCEPT {
         return ipv6_address::parse<FixedString>();
     }
 

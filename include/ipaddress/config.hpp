@@ -70,6 +70,12 @@
 #  error ipaddress needs at least C++ standard version 11
 #endif
 
+#if __GNUC__ <= 9 && !defined(__llvm__) && !defined(__INTEL_COMPILER)
+#  define IPADDRESS_CONSTEVAL IPADDRESS_CONSTEXPR
+#else
+#  define IPADDRESS_CONSTEVAL consteval
+#endif
+
 #if defined(_MSC_VER) && (_MSC_VER <= 1800)
 #  define IPADDRESS_NOEXCEPT
 #else

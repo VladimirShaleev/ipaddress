@@ -123,7 +123,7 @@ public:
      * @remark If parsing fails, an error will be raised at compile time.
      */
     template <fixed_string FixedString>
-    IPADDRESS_NODISCARD static consteval IPADDRESS_FORCE_INLINE ip_address_base<Base> parse() IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE ip_address_base<Base> parse() IPADDRESS_NOEXCEPT {
         constexpr auto str = FixedString;
         auto code = error_code::NO_ERROR;
         auto index = 0;

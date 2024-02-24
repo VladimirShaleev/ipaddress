@@ -62,7 +62,7 @@ public:
      * @return A consteval ip network object representing the parsed network.
      */
     template <fixed_string FixedString, bool Strict = true>
-    IPADDRESS_NODISCARD static consteval ip_network_base parse() IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEVAL ip_network_base parse() IPADDRESS_NOEXCEPT {
         constexpr auto str = FixedString;
         auto code = error_code::NO_ERROR;
         auto index = 0;

@@ -486,7 +486,7 @@ public:
      * @remark If parsing fails, an error will be raised at compile time.
      */
     template <fixed_string FixedString>
-    IPADDRESS_NODISCARD static consteval IPADDRESS_FORCE_INLINE ip_address parse() IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE ip_address parse() IPADDRESS_NOEXCEPT {
         constexpr auto str = FixedString;
         auto code = error_code::NO_ERROR;
 
@@ -1350,7 +1350,7 @@ private:
      * @return An ip_address object parsed from the fixed string.
      */
     template <fixed_string FixedString>
-    IPADDRESS_NODISCARD consteval IPADDRESS_FORCE_INLINE ip_address operator""_ip() IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE ip_address operator""_ip() IPADDRESS_NOEXCEPT {
         return ip_address::parse<FixedString>();
     }
 

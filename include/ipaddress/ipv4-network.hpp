@@ -25,7 +25,7 @@ using ipv4_network = ip_network_base<ipv4_network_base>;
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
     template <fixed_string FixedString>
-    IPADDRESS_NODISCARD consteval IPADDRESS_FORCE_INLINE ipv4_network operator""_ipv4_net() IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE ipv4_network operator""_ipv4_net() IPADDRESS_NOEXCEPT {
         return ipv4_network::parse<FixedString>();
     }
 

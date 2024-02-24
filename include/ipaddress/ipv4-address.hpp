@@ -124,7 +124,7 @@ using ipv4_address = ip_address_base<ipv4_address_base>;
      * @return An ipv4_address object parsed from the fixed string.
      */
     template <fixed_string FixedString>
-    IPADDRESS_NODISCARD consteval IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4() IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4() IPADDRESS_NOEXCEPT {
         return ipv4_address::parse<FixedString>();
     }
 
@@ -134,7 +134,7 @@ using ipv4_address = ip_address_base<ipv4_address_base>;
      * @param[in] value An unsigned long long integer representing the IPv4 address in *host byte order*.
      * @return An ipv4_address object created from the integer.
      */
-    IPADDRESS_NODISCARD consteval IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(unsigned long long value) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(unsigned long long value) IPADDRESS_NOEXCEPT {
         assert(value <= ipv4_address::base_all_ones && "literal integer is too long");
         return ipv4_address::from_uint(uint32_t(value));
     }

@@ -282,7 +282,7 @@ public:
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
     template <fixed_string FixedString, bool Strict = true>
-    IPADDRESS_NODISCARD static consteval IPADDRESS_FORCE_INLINE ip_network parse() IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE ip_network parse() IPADDRESS_NOEXCEPT {
         constexpr auto str = FixedString;
         auto code = error_code::NO_ERROR;
 
@@ -529,7 +529,7 @@ private:
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
     template <fixed_string FixedString>
-    IPADDRESS_NODISCARD consteval IPADDRESS_FORCE_INLINE ip_network operator""_net() IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE ip_network operator""_net() IPADDRESS_NOEXCEPT {
         return ip_network::parse<FixedString>();
     }
 
