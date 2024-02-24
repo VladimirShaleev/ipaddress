@@ -644,16 +644,18 @@ $(function(){initNavTree('byte-array_8hpp_source.html',''); initResizable(); });
 <div class="line"><span class="lineno">  522</span><span class="comment"> *       the ability to use constexpr if available.</span></div>
 <div class="line"><span class="lineno">  523</span><span class="comment"> */</span></div>
 <div class="line"><a id="l00524" name="l00524"></a><span class="lineno">  524</span><span class="keyword">template</span> &lt;std::size_t N&gt;</div>
-<div class="line"><a id="l00525" name="l00525"></a><span class="lineno"><a class="line" href="namespaceipaddress.html#adf41e7c845dbfc40b0f79688b6a78411">  525</a></span><span class="keyword">using</span> byte_array_type =</div>
-<div class="line"><a id="l00526" name="l00526"></a><span class="lineno">  526</span><span class="preprocessor">#</span><span class="preprocessor">if</span> IPADDRESS_CPP_VERSION <span class="preprocessor">&gt;=</span> 20</div>
-<div class="line"><a id="l00527" name="l00527"></a><span class="lineno">  527</span>    std::array&lt;uint8_t, N&gt;;</div>
-<div class="line"><a id="l00528" name="l00528"></a><span class="lineno">  528</span><span class="preprocessor">#</span><span class="preprocessor">else</span></div>
-<div class="line"><a id="l00529" name="l00529"></a><span class="lineno">  529</span>    <a class="code hl_struct" href="structipaddress_1_1byte__array.html">byte_array</a>&lt;N&gt;;</div>
-<div class="line"><a id="l00530" name="l00530"></a><span class="lineno">  530</span><span class="preprocessor">#</span><span class="preprocessor">endif</span></div>
-<div class="line"><a id="l00531" name="l00531"></a><span class="lineno">  531</span> </div>
-<div class="line"><a id="l00532" name="l00532"></a><span class="lineno">  532</span>} <span class="comment">// namespace IPADDRESS_NAMESPACE</span></div>
+<div class="line"><a id="l00525" name="l00525"></a><span class="lineno"><a class="line" href="namespaceipaddress.html#ac764b952eae819ae6f58e89817d46e83">  525</a></span><span class="keyword">using</span> byte_array_type = <a class="code hl_struct" href="structipaddress_1_1byte__array.html">byte_array</a>&lt;N&gt;;</div>
+<div class="line"><a id="l00526" name="l00526"></a><span class="lineno">  526</span><span class="comment">// template &lt;std::size_t N&gt;</span></div>
+<div class="line"><a id="l00527" name="l00527"></a><span class="lineno">  527</span><span class="comment">// using byte_array_type = </span></div>
+<div class="line"><a id="l00528" name="l00528"></a><span class="lineno">  528</span><span class="comment">// #if IPADDRESS_CPP_VERSION &gt;= 20 &amp;&amp; (!defined(__clang_major__) || __clang_major__ &gt; 10)</span></div>
+<div class="line"><a id="l00529" name="l00529"></a><span class="lineno">  529</span><span class="comment">//     std::array&lt;uint8_t, N&gt;;</span></div>
+<div class="line"><a id="l00530" name="l00530"></a><span class="lineno">  530</span><span class="comment">// #else</span></div>
+<div class="line"><a id="l00531" name="l00531"></a><span class="lineno">  531</span><span class="comment">//     byte_array&lt;N&gt;;</span></div>
+<div class="line"><a id="l00532" name="l00532"></a><span class="lineno">  532</span><span class="comment">// #endif</span></div>
 <div class="line"><a id="l00533" name="l00533"></a><span class="lineno">  533</span> </div>
-<div class="line"><a id="l00534" name="l00534"></a><span class="lineno">  534</span><span class="preprocessor">#</span><span class="preprocessor">endif</span> <span class="comment">// IPADDRESS_BYTE_ARRAY_HPP</span></div>
+<div class="line"><a id="l00534" name="l00534"></a><span class="lineno">  534</span>} <span class="comment">// namespace IPADDRESS_NAMESPACE</span></div>
+<div class="line"><a id="l00535" name="l00535"></a><span class="lineno">  535</span> </div>
+<div class="line"><a id="l00536" name="l00536"></a><span class="lineno">  536</span><span class="preprocessor">#</span><span class="preprocessor">endif</span> <span class="comment">// IPADDRESS_BYTE_ARRAY_HPP</span></div>
 <div class="ttc" id="aconfig_8hpp_html_a1ce8f0549cece9344e691fcfc4910a7d"><div class="ttname"><a href="config_8hpp.html#a1ce8f0549cece9344e691fcfc4910a7d">IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS</a></div><div class="ttdeci">#define IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS</div><div class="ttdef"><b>Definition</b> config.hpp:80</div></div>
 <div class="ttc" id="aconfig_8hpp_html_a7c6e8e32885550d898b7de8d1fd0e828"><div class="ttname"><a href="config_8hpp.html#a7c6e8e32885550d898b7de8d1fd0e828">IPADDRESS_NODISCARD</a></div><div class="ttdeci">#define IPADDRESS_NODISCARD</div><div class="ttdef"><b>Definition</b> config.hpp:85</div></div>
 <div class="ttc" id="aconfig_8hpp_html_aa38a708bf692a56b2b1f00cb14582617"><div class="ttname"><a href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a></div><div class="ttdeci">#define IPADDRESS_FORCE_INLINE</div><div class="ttdef"><b>Definition</b> config.hpp:99</div></div>

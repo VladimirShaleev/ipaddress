@@ -174,10 +174,10 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:adf41e7c845dbfc40b0f79688b6a78411" id="r_adf41e7c845dbfc40b0f79688b6a78411"><td class="memTemplParams" colspan="2">template&lt;std::size_t N&gt; </td></tr>
-<tr class="memitem:adf41e7c845dbfc40b0f79688b6a78411"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#adf41e7c845dbfc40b0f79688b6a78411">byte_array_type</a></td></tr>
-<tr class="memdesc:adf41e7c845dbfc40b0f79688b6a78411"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias template for a byte array type.  <br /></td></tr>
-<tr class="separator:adf41e7c845dbfc40b0f79688b6a78411"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac764b952eae819ae6f58e89817d46e83" id="r_ac764b952eae819ae6f58e89817d46e83"><td class="memTemplParams" colspan="2">template&lt;std::size_t N&gt; </td></tr>
+<tr class="memitem:ac764b952eae819ae6f58e89817d46e83"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ac764b952eae819ae6f58e89817d46e83">byte_array_type</a> = <a class="el" href="structipaddress_1_1byte__array.html">byte_array</a>&lt;N&gt;</td></tr>
+<tr class="memdesc:ac764b952eae819ae6f58e89817d46e83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias template for a byte array type.  <br /></td></tr>
+<tr class="separator:ac764b952eae819ae6f58e89817d46e83"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2314d590d36b6c502b50f1a5d0cf5bcf" id="r_a2314d590d36b6c502b50f1a5d0cf5bcf"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2314d590d36b6c502b50f1a5d0cf5bcf">ipv4_address</a> = <a class="el" href="classipaddress_1_1ip__address__base.html">ip_address_base</a>&lt;<a class="el" href="classipaddress_1_1ipv4__address__base.html">ipv4_address_base</a>&gt;</td></tr>
 <tr class="memdesc:a2314d590d36b6c502b50f1a5d0cf5bcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias for the base class specialized for IPv4 address manipulation.  <br /></td></tr>
 <tr class="separator:a2314d590d36b6c502b50f1a5d0cf5bcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -426,8 +426,8 @@ Functions</h2></td></tr>
 <div class="textblock"><p>Namespace dedicated to IP addresses and networks operations. </p>
 <p>This namespace contains all the classes, functions, and utilities necessary for handling both IPv4 and IPv6 addresses and networks. It provides a comprehensive suite of tools for various operations such as parsing, constructing, and manipulating IP addresses and networks. </p>
 </div><h2 class="groupheader">Typedef Documentation</h2>
-<a id="adf41e7c845dbfc40b0f79688b6a78411" name="adf41e7c845dbfc40b0f79688b6a78411"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adf41e7c845dbfc40b0f79688b6a78411">&#9670;&#160;</a></span>byte_array_type</h2>
+<a id="ac764b952eae819ae6f58e89817d46e83" name="ac764b952eae819ae6f58e89817d46e83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac764b952eae819ae6f58e89817d46e83">&#9670;&#160;</a></span>byte_array_type</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -435,14 +435,11 @@ Functions</h2></td></tr>
 template&lt;std::size_t N&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="#adf41e7c845dbfc40b0f79688b6a78411">byte_array_type</a></td>
+          <td class="memname">using <a class="el" href="#ac764b952eae819ae6f58e89817d46e83">byte_array_type</a> = <a class="el" href="structipaddress_1_1byte__array.html">byte_array</a>&lt;N&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line"> </div>
-<div class="line"> </div>
-<div class="line">    std::array&lt;uint8_t, N&gt;</div>
-</div><!-- fragment -->
+
 <p>Alias template for a byte array type. </p>
 <p>Defines an alias for a byte array type that is dependent on the C++ version being used. If C++20 or later is available, it aliases to std::array to utilize constexpr support. Otherwise, it falls back to a custom <a class="el" href="structipaddress_1_1byte__array.html" title="A template class for creating and managing a fixed-size array of bytes.">byte_array</a> implementation which supports constexpr.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>

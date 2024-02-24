@@ -15,7 +15,7 @@ var namespaceipaddress =
     [ "parse_error", "classipaddress_1_1parse__error.html", "classipaddress_1_1parse__error" ],
     [ "scope", "classipaddress_1_1scope.html", "classipaddress_1_1scope" ],
     [ "uint128_t", "classipaddress_1_1uint128__t.html", "classipaddress_1_1uint128__t" ],
-    [ "byte_array_type", "namespaceipaddress.html#adf41e7c845dbfc40b0f79688b6a78411", null ],
+    [ "byte_array_type", "namespaceipaddress.html#ac764b952eae819ae6f58e89817d46e83", null ],
     [ "ipv4_address", "namespaceipaddress.html#a2314d590d36b6c502b50f1a5d0cf5bcf", null ],
     [ "ipv6_address", "namespaceipaddress.html#a2e072776d657e0e660e387cd493b343f", null ],
     [ "error_code", "namespaceipaddress.html#a88a76ee847c844cc47b94caac600689d", [
