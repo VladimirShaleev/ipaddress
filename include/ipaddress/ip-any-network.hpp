@@ -250,26 +250,77 @@ public:
         return is_v4() ? false : _ipv_net.ipv6.is_site_local();
     }
 
+    /**
+     * Checks if the IP network is an IPv4 network.
+     * 
+     * @return `true` if the IP network is an IPv4 network, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_v4() const IPADDRESS_NOEXCEPT {
         return _version == ip_version::V4;
     }
 
+    /**
+     * Checks if the IP network is an IPv6 network.
+     * 
+     * @return `true` if the IP network is an IPv6 network, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_v6() const IPADDRESS_NOEXCEPT {
         return _version == ip_version::V6;
     }
 
+    /**
+     * Retrieves the size of the IP address.
+     * 
+     * Depending on the IP version, this function returns the size of the IPv4 or IPv6 address.
+     * 
+     * @return The size of the IP address in bytes.
+     * @remark This is the number of bytes of the IP address that represents the current network.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t size() const IPADDRESS_NOEXCEPT {
         return is_v4() ? _ipv_net.ipv4.size() : _ipv_net.ipv6.size();
     }
 
+    /**
+     * Computes a hash value for the IP address.
+     * 
+     * This function generates a hash value that can be used to uniquely identify the IP address.
+     * It can be useful when IP addresses are used as keys in hash tables.
+     * 
+     * @return A `size_t` hash value of the IP address.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t hash() const IPADDRESS_NOEXCEPT {
         return is_v4() ? _ipv_net.ipv4.hash() : _ipv_net.ipv6.hash();
     }
 
+    /**
+     * Calculates the total number of addresses in the network.
+     * 
+     * @return The total number of addresses in the network as a `uint128_t` value.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t addresses_count() const IPADDRESS_NOEXCEPT {
         return is_v4() ? uint128_t(_ipv_net.ipv4.addresses_count()) : _ipv_net.ipv6.addresses_count();
     }
 
+    /**
+     * Checks if the given IP address is contained within this network.
+     * 
+     * This method determines whether the provided IP address is part of the network
+     * represented by this ip network object, based on the network address and netmask.
+     * 
+     * @code{.cpp}
+     *   constexpr auto result1 = ip_network::parse("192.0.2.0/28").contains(ip_address::parse("192.0.2.6"));
+     *   constexpr auto result2 = ip_network::parse("192.0.2.0/28").contains(ip_address::parse("192.0.3.6"));
+     * 
+     *   std::cout << std::boolalpha << result1 << std::endl;
+     *   std::cout << std::boolalpha << result2 << std::endl;
+     * 
+     *   // out:
+     *   // true
+     *   // false
+     * @endcode
+     * @param[in] address The IP address to check.
+     * @return `true` if the address is part of the network, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool contains(const ip_address& address) const IPADDRESS_NOEXCEPT {
         if (_version == address.version()) {
             return is_v4() ? _ipv_net.ipv4.contains(address.v4().value()) : _ipv_net.ipv6.contains(address.v6().value());
@@ -278,6 +329,25 @@ public:
         }
     }
 
+    /**
+     * Determines if this network overlaps with another network.
+     * 
+     * This method checks if there is any overlap between the network represented by this
+     * ip network object and another network, meaning if any part of one network lies within the other.
+     * 
+     * @code{.cpp}
+     *   constexpr auto a = ip_network::parse("1.2.3.0/24");
+     *   constexpr auto b = ip_network::parse("1.2.3.0/30");
+     *   constexpr auto overlaps = a.overlaps(b);
+     * 
+     *   std::cout << std::boolalpha << overlaps << std::endl;
+     * 
+     *   // out:
+     *   // true
+     * @endcode
+     * @param[in] other The other ip network object to compare with.
+     * @return `true` if there is an overlap, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool overlaps(const ip_network& other) const IPADDRESS_NOEXCEPT {
         if (_version == other.version()) {
             return is_v4() ? _ipv_net.ipv4.overlaps(other.v4().value()) : _ipv_net.ipv6.overlaps(other.v6().value());

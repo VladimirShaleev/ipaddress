@@ -197,7 +197,7 @@ public:
     }
 
     /**
-     * Retrieves the size of the IPv4 address.
+     * Retrieves the size of the IP address.
      * 
      * Depending on the IP version, this function returns the size of the IPv4 or IPv6 address.
      * 
