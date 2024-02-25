@@ -1065,6 +1065,18 @@ public:
 
 #endif // IPADDRESS_CPP_VERSION < 17
 
+    /**
+     * Parses a network address and prefix from a character array.
+     * 
+     * This function parses an IP network address and prefix length from a character array of a 
+     * specified size. Can check and get the result at compile time.
+     * 
+     * @tparam T The character type of the array.
+     * @tparam N The size of the character array.
+     * @param[in] address The character array representing the IP network in "address/prefix" format.
+     * @param[in] strict A boolean flag indicating whether to perform strict validation of the address.
+     * @return An ip network object representing the parsed network.
+     */
     template <typename T, size_t N>
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(const T(&address)[N], bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         internal::is_char_type<T>();
@@ -1081,6 +1093,19 @@ public:
         return result;
     }
 
+    /**
+     * Parses a network address and prefix from a character array and reports errors through an error code.
+     * 
+     * This function parses an IP network address and prefix length from a character array of a specified size 
+     * and provides an error code if the parsing fails.
+     * 
+     * @tparam T The character type of the array.
+     * @tparam N The size of the character array.
+     * @param[in] address The character array representing the IP network in "address/prefix" format.
+     * @param[out] code An error_code object that will be set if an error occurs during parsing.
+     * @param[in] strict A boolean flag indicating whether to perform strict validation of the address.
+     * @return An ip network object representing the parsed network.
+     */
     template <typename T, size_t N>
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(const T(&address)[N], error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
         internal::is_char_type<T>();
@@ -1099,10 +1124,23 @@ public:
         return ip_network();
     }
 
+    /**
+     * Converts the ip network object to a std::string.
+     * 
+     * @return A `std::string` representation of the ip network object.
+     */
     IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE explicit operator std::string() const {
         return is_v4() ? _ipv_net.ipv4.to_string() : _ipv_net.ipv6.to_string();
     }
 
+    /**
+     * Equality comparison operator.
+     * 
+     * Compares this ip network object to another for equality based on the network address and netmask.
+     * 
+     * @param[in] rhs The other ip network object to compare with.
+     * @return `true` if both objects are equal, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(const ip_network& rhs) const IPADDRESS_NOEXCEPT {
         if (_version != rhs._version) {
             return false;
@@ -1110,12 +1148,28 @@ public:
         return _version == ip_version::V4 ? (_ipv_net.ipv4 == rhs._ipv_net.ipv4) : (_ipv_net.ipv6 == rhs._ipv_net.ipv6);
     }
 
+    /**
+     * Inequality comparison operator.
+     * 
+     * Compares this ip network object to another for inequality.
+     * 
+     * @param[in] rhs The other ip network object to compare with.
+     * @return `true` if both objects are not equal, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(const ip_network& rhs) const IPADDRESS_NOEXCEPT {
         return !(*this == rhs);
     }
 
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
 
+    /**
+     * Three-way comparison operator (spaceship operator).
+     * 
+     * Compares this ip network object to another using three-way comparison.
+     * 
+     * @param[in] rhs The other ip network object to compare with.
+     * @return `std::strong_ordering` result of the comparison.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const ip_network& rhs) const IPADDRESS_NOEXCEPT {
         if (const auto result = _version <=> rhs._version; result == std::strong_ordering::equivalent) {
             return _version == ip_version::V4 ? (_ipv_net.ipv4 <=> rhs._ipv_net.ipv4) : (_ipv_net.ipv6 <=> rhs._ipv_net.ipv6);
@@ -1126,6 +1180,14 @@ public:
 
 #else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
+    /**
+     * Less than comparison operator.
+     * 
+     * Determines if this ip network object is less than another by comparing network addresses and netmasks.
+     * 
+     * @param[in] rhs The other ip network object to compare with.
+     * @return `true` if this object is less than the other, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(const ip_network& rhs) const IPADDRESS_NOEXCEPT {
         if (_version < rhs._version) {
             return true;
@@ -1136,14 +1198,38 @@ public:
         return _version == ip_version::V4 ? (_ipv_net.ipv4 < rhs._ipv_net.ipv4) : (_ipv_net.ipv6 < rhs._ipv_net.ipv6);
     }
     
+    /**
+     * Greater than comparison operator.
+     * 
+     * Determines if this ip network object is greater than another.
+     * 
+     * @param[in] rhs The other ip network object to compare with.
+     * @return `true` if this object is greater than the other, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(const ip_network& rhs) const IPADDRESS_NOEXCEPT {
         return rhs < *this;
     }
     
+    /**
+     * Less than or equal to comparison operator.
+     * 
+     * Determines if this ip network object is less than or equal to another.
+     * 
+     * @param[in] rhs The other ip network object to compare with.
+     * @return `true` if this object is less than or equal to the other, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(const ip_network& rhs) const IPADDRESS_NOEXCEPT {
         return !(rhs < *this);
     }
     
+    /**
+     * Greater than or equal to comparison operator.
+     * 
+     * Determines if this ip network object is greater than or equal to another.
+     * 
+     * @param[in] rhs The other ip network object to compare with.
+     * @return `true` if this object is greater than or equal to the other, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(const ip_network& rhs) const IPADDRESS_NOEXCEPT {
         return !(*this < rhs);
     }
@@ -1198,6 +1284,15 @@ private:
 
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
+    /**
+     * User-defined literal operator for creating an ip_network object from a string literal.
+     * 
+     * This operator allows the creation of ip_network objects using a string literal with the
+     * `_net` suffix.
+     * 
+     * @tparam FixedString A string literal representing the IP network.
+     * @return An ip_network object representing the network specified by the string literal.
+     */
     template <fixed_string FixedString>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE ip_network operator""_net() IPADDRESS_NOEXCEPT {
         return ip_network::parse<FixedString>();
@@ -1205,9 +1300,76 @@ private:
 
 #else // !IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
+    /**
+     * User-defined literal operator for creating an ip_network object from a string literal.
+     * 
+     * This operator allows the creation of ip_network objects using a string literal with the
+     * `_net` suffix.
+     * 
+     * @param[in] address The string literal representing the IP network.
+     * @param[in] size The size of the string literal.
+     * @return An ip_network object representing the network specified by the string literal.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const char* address, std::size_t size) IPADDRESS_NOEXCEPT {
         assert(size <= ipv6_address::base_max_string_len * 2 + 1 && "literal string is too long");
         char str[ipv6_address::base_max_string_len * 2 + 2] = {};
+        for (size_t i = 0; i < size; ++i) {
+            str[i] = address[i];
+        }
+        return ip_network::parse(str);
+    }
+
+    /**
+     * User-defined literal operator for creating an ip_network object from a wide string literal.
+     * 
+     * This operator allows the creation of ip_network objects using a string literal with the
+     * `_net` suffix.
+     * 
+     * @param[in] address The string literal representing the IP network.
+     * @param[in] size The size of the string literal.
+     * @return An ip_network object representing the network specified by the string literal.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const wchar_t* address, std::size_t size) IPADDRESS_NOEXCEPT {
+        assert(size <= ipv6_address::base_max_string_len * 2 + 1 && "literal string is too long");
+        wchar_t str[ipv6_address::base_max_string_len * 2 + 2] = {};
+        for (size_t i = 0; i < size; ++i) {
+            str[i] = address[i];
+        }
+        return ip_network::parse(str);
+    }
+
+    /**
+     * User-defined literal operator for creating an ip_network object from UTF-16 string literal.
+     * 
+     * This operator allows the creation of ip_network objects using a string literal with the
+     * `_net` suffix.
+     * 
+     * @param[in] address The string literal representing the IP network.
+     * @param[in] size The size of the string literal.
+     * @return An ip_network object representing the network specified by the string literal.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const char16_t* address, std::size_t size) IPADDRESS_NOEXCEPT {
+        assert(size <= ipv6_address::base_max_string_len * 2 + 1 && "literal string is too long");
+        char16_t str[ipv6_address::base_max_string_len * 2 + 2] = {};
+        for (size_t i = 0; i < size; ++i) {
+            str[i] = address[i];
+        }
+        return ip_network::parse(str);
+    }
+
+    /**
+     * User-defined literal operator for creating an ip_network object from UTF-32 string literal.
+     * 
+     * This operator allows the creation of ip_network objects using a string literal with the
+     * `_net` suffix.
+     * 
+     * @param[in] address The string literal representing the IP network.
+     * @param[in] size The size of the string literal.
+     * @return An ip_network object representing the network specified by the string literal.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const char32_t* address, std::size_t size) IPADDRESS_NOEXCEPT {
+        assert(size <= ipv6_address::base_max_string_len * 2 + 1 && "literal string is too long");
+        char32_t str[ipv6_address::base_max_string_len * 2 + 2] = {};
         for (size_t i = 0; i < size; ++i) {
             str[i] = address[i];
         }

@@ -57,8 +57,8 @@ using ipv4_network = ip_network_base<ipv4_network_base>;
      * This operator allows the creation of ipv4_network objects using a string literal with the
      * `_ipv4_net` suffix.
      * 
-     * @tparam    FixedString A string literal representing the IPv4 network.
-     * @return    An ipv4_network object representing the network specified by the string literal.
+     * @tparam FixedString A string literal representing the IPv4 network.
+     * @return An ipv4_network object representing the network specified by the string literal.
      */
     template <fixed_string FixedString>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE ipv4_network operator""_ipv4_net() IPADDRESS_NOEXCEPT {

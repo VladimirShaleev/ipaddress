@@ -73,8 +73,8 @@ using ipv6_network = ip_network_base<ipv6_network_base>;
      * This operator allows the creation of ipv6_network objects using a string literal with the
      * `_ipv6_net` suffix.
      * 
-     * @tparam    FixedString A string literal representing the IPv6 network.
-     * @return    An ipv6_network object representing the network specified by the string literal.
+     * @tparam FixedString A string literal representing the IPv6 network.
+     * @return An ipv6_network object representing the network specified by the string literal.
      */
     template <fixed_string FixedString>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE ipv6_network operator""_ipv6_net() IPADDRESS_NOEXCEPT {
