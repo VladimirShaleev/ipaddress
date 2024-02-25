@@ -9,14 +9,9 @@
 <!--BEGIN PROJECT_NAME--><title>$projectname: $title</title><!--END PROJECT_NAME-->
 <!--BEGIN !PROJECT_NAME--><title>$title</title><!--END !PROJECT_NAME-->
 <!--BEGIN PROJECT_ICON-->
-<link rel="icon" href="$relpath^$projecticon" type="image/x-icon" />
+<link rel="icon" href="$relpath^$projecticon" type="image/svg+xml" />
 <!--END PROJECT_ICON-->
 <link href="$relpath^tabs.css" rel="stylesheet" type="text/css"/>
-<!--BEGIN DISABLE_INDEX-->
-  <!--BEGIN FULL_SIDEBAR-->
-<script type="text/javascript">var page_layout=1;</script>
-  <!--END FULL_SIDEBAR-->
-<!--END DISABLE_INDEX-->
 <script type="text/javascript" src="$relpath^jquery.js"></script>
 <script type="text/javascript" src="$relpath^dynsections.js"></script>
 <script type="text/javascript" src="$relpath^doxygen-awesome-darkmode-toggle.js"></script>
@@ -35,7 +30,6 @@
 $treeview
 $search
 $mathjax
-$darkmode
 <link href="$relpath^$stylesheet" rel="stylesheet" type="text/css" />
 $extrastylesheet
 </head>
@@ -77,11 +71,6 @@ $extrastylesheet
    <!--END SEARCHENGINE-->
   <!--END DISABLE_INDEX-->
  </tr>
-  <!--BEGIN SEARCHENGINE-->
-   <!--BEGIN FULL_SIDEBAR-->
-   <tr><td colspan="2">$searchbox</td></tr>
-   <!--END FULL_SIDEBAR-->
-  <!--END SEARCHENGINE-->
  </tbody>
 </table>
 </div>
