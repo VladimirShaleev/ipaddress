@@ -181,15 +181,15 @@ jobs:
       matrix:
         version: [ "14.29", "14.39" ]
         standard: [ 11, 14, 17, 20, 23 ]
-        exception: [ "" ]
+        exception: [ "/EHsc" ]
         include:
           - version: "14.29"
             standard: 11
-            exception: "/EHsc"
+            exception: "/EHa- /EHs- /EHc- /EHr- /EHsc"
           - version: "14.29"
             standard: 23
-            exception: "/EHsc"
-    name: "MSVC ${{ matrix.version }} [C++${{ matrix.standard }}, ${{ matrix.exception }}]"
+            exception: "/EHa- /EHs- /EHc- /EHr- /EHsc"
+    name: "MSVC ${{ matrix.version }} [C++${{ matrix.standard }} ${{ matrix.exception }}]"
     runs-on: windows-2022
     steps:
       - name: Add MSVC ${{ matrix.version }} to PATH
@@ -212,12 +212,12 @@ jobs:
           cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }}
           -G Ninja
           -DCMAKE_CXX_STANDARD=${{ matrix.standard }}
-          -DCMAKE_CXX_FLAGS=${{ matrix.exception }}
+          -DCMAKE_CXX_FLAGS="${{ matrix.exception }}"
           -DCMAKE_BUILD_TYPE=Release
           -DIPADDRESS_BUILD_TESTS=ON
           -DIPADDRESS_BUILD_DOC=OFF
           -DIPADDRESS_BUILD_PACKAGES=OFF
-          -DIPADDRESS_NO_EXCEPTIONS=${{ matrix.exception == '/EHsc' }}
+          -DIPADDRESS_NO_EXCEPTIONS=${{ matrix.exception != '/EHsc' }}
 
       - name: Build
         run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
