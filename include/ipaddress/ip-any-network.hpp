@@ -620,6 +620,13 @@ public:
         return exclude_network_sequence<ip_network>(lhs, rhs);
     }
 
+    /**
+     * Retrieves the IPv4 network.
+     * 
+     * If the IP network is an IPv4 network, this function returns the IPv4 network.
+     * 
+     * @return An optional containing the IPv4 network, or an empty optional if the IP network is not IPv4.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<ipv4_network> v4() const IPADDRESS_NOEXCEPT {
         if (_version == ip_version::V4) {
             auto net = _ipv_net.ipv4;
@@ -628,6 +635,13 @@ public:
         return optional<ipv4_network>();
     }
 
+    /**
+     * Retrieves the IPv6 network.
+     * 
+     * If the IP network is an IPv6 network, this function returns the IPv6 network.
+     * 
+     * @return An optional containing the IPv6 network, or an empty optional if the IP network is not IPv6.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<ipv6_network> v6() const IPADDRESS_NOEXCEPT {
         if (_version == ip_version::V6) {
             auto net = _ipv_net.ipv6;
