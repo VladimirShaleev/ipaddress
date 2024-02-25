@@ -775,20 +775,24 @@ public:
     }
 
     /**
-     * @brief   Equality operator.
-     * @details Compares two ip_address_iterators for equality.
-     * @param   other The ip_address_iterator to compare with.
-     * @return  `true` if the iterators are equal, `false` otherwise.
+     * Equality operator.
+     * 
+     * Compares two ip_address_iterators for equality.
+     * 
+     * @param[in] other The ip_address_iterator to compare with.
+     * @return `true` if the iterators are equal, `false` otherwise.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(const ip_address_iterator& other) const IPADDRESS_NOEXCEPT {
         return _carry == other._carry && _current == other._current;
     }
 
     /**
-     * @brief   Inequality operator.
-     * @details Compares two ip_address_iterators for inequality.
-     * @param   other The ip_address_iterator to compare with.
-     * @return  `true` if the iterators are not equal, `false` otherwise.
+     * Inequality operator.
+     * 
+     * Compares two ip_address_iterators for inequality.
+     * 
+     * @param[in] other The ip_address_iterator to compare with.
+     * @return `true` if the iterators are not equal, `false` otherwise.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(const ip_address_iterator& other) const IPADDRESS_NOEXCEPT {
         return !(*this == other);
@@ -797,10 +801,12 @@ public:
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
 
     /**
-     * @brief   Three-way comparison operator (spaceship operator).
-     * @details Compares two ip_address_iterators for ordering using the spaceship operator.
-     * @param   other The ip_address_iterator to compare with.
-     * @return  The result of the comparison as a std::strong_ordering value.
+     * Three-way comparison operator (spaceship operator).
+     * 
+     * Compares two ip_address_iterators for ordering using the spaceship operator.
+     * 
+     * @param[in] other The ip_address_iterator to compare with.
+     * @return The result of the comparison as a std::strong_ordering value.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const ip_address_iterator& other) const IPADDRESS_NOEXCEPT {
         if (const auto result = _carry <=> other._carry; result == std::strong_ordering::equivalent) {
@@ -924,29 +930,82 @@ private:
 template <typename>
 class hosts_sequence;
 
+/**
+ * A sequence of host IP addresses.
+ * 
+ * The hosts_sequence class template is specialized for `ip_address_base<Base>` to provide a container-like interface for IP address sequences.
+ * It allows for iteration over the host addresses in a network or subnet, excluding the network and broadcast addresses when appropriate.
+ * This specialization is essential for network-related operations that require processing of individual host addresses within a given range.
+ * 
+ * @tparam Base The base type from which the ip_address_base is derived, representing the underlying IP address type.
+ * @remark When iterating, obtaining addresses occurs through lazy calculations.
+ */
 template <typename Base>
 class hosts_sequence<ip_address_base<Base>> {
 public:
-    using value_type      = ip_address_base<Base>;
-    using size_type       = std::size_t;
-    using difference_type = typename value_type::uint_type;
-    using pointer         = value_type*;
-    using const_pointer   = const value_type*;
-    using reference       = value_type&;
-    using const_reference = const value_type&;
+    using value_type      = ip_address_base<Base>; /**< The type of the IP addresses in the sequence. */
+    using size_type       = std::size_t; /**< The type used for representing the size of the sequence. */
+    using difference_type = typename value_type::uint_type; /**< The type used for representing differences between iterators. */
+    using pointer         = value_type*; /**< The pointer type for the value_type. */
+    using const_pointer   = const value_type*; /**< The const pointer type for the value_type. */
+    using reference       = value_type&; /**< The reference type for the value_type. */
+    using const_reference = const value_type&; /**< The const reference type for the value_type. */
 
-    using iterator       = ip_address_iterator<value_type>;
-    using const_iterator = ip_address_iterator<value_type>;
+    using iterator       = ip_address_iterator<value_type>; /**< The iterator type for iterating over the sequence.  */
+    using const_iterator = ip_address_iterator<value_type>; /**< The const iterator type for iterating over the sequence.  */
 
-    using reverse_iterator       = ip_reverse_iterator<iterator>;
-    using const_reverse_iterator = ip_reverse_iterator<const_iterator>;
+    using reverse_iterator       = ip_reverse_iterator<iterator>;  /**< The reverse iterator type for iterating over the sequence in reverse.  */
+    using const_reverse_iterator = ip_reverse_iterator<const_iterator>; /**< The const reverse iterator type for iterating over the sequence in reverse.  */
 
+    /**
+     * Copy constructor.
+     * 
+     * Constructs a hosts_sequence as a copy of another hosts_sequence.
+     * 
+     * @param[in] other The hosts_sequence to copy.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_sequence(const hosts_sequence&) IPADDRESS_NOEXCEPT = default;
+    
+    /**
+     * Move constructor.
+     * 
+     * Constructs a hosts_sequence by moving another hosts_sequence.
+     * 
+     * @param[in] other The hosts_sequence to move.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_sequence(hosts_sequence&&) IPADDRESS_NOEXCEPT = default;
 
+    /**
+     * Copy assignment operator.
+     * 
+     * Assigns the value of one hosts_sequence to another.
+     * 
+     * @param[in] other The hosts_sequence to copy.
+     * @return A reference to the assigned hosts_sequence.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_sequence& operator=(const hosts_sequence&) IPADDRESS_NOEXCEPT = default;
+    
+    /**
+     * Move assignment operator.
+     * 
+     * Moves the value of one hosts_sequence to another.
+     * 
+     * @param[in] other The hosts_sequence to move.
+     * @return A reference to the moved hosts_sequence.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_sequence& operator=(hosts_sequence&&) IPADDRESS_NOEXCEPT = default;
 
+    /**
+     * Constructs a hosts_sequence with specified network parameters.
+     * 
+     * Initializes the sequence based on the provided network address, broadcast address, and prefix lengths.
+     * The sequence excludes the network and broadcast addresses when appropriate, according to the prefix length.
+     * 
+     * @param[in] network_address The network address of the subnet.
+     * @param[in] broadcast_address The broadcast address of the subnet.
+     * @param[in] prefixlen The prefix length of the subnet.
+     * @param[in] max_prefixlen The maximum prefix length possible for the IP version.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_sequence(const_reference network_address, const_reference broadcast_address, size_t prefixlen, size_t max_prefixlen) IPADDRESS_NOEXCEPT  {
         if (prefixlen == max_prefixlen - 1) {
             const auto begin = value_type::from_uint(network_address.to_uint());
@@ -966,58 +1025,130 @@ public:
         }
     }
 
+    /**
+     * Gets the beginning iterator of the sequence.
+     * 
+     * @return A const_iterator to the first element in the sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator begin() const IPADDRESS_NOEXCEPT {
         return _begin;
     }
 
+    /**
+     * Gets the end iterator of the sequence.
+     * 
+     * @return A const_iterator to the element following the last element in the sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator end() const IPADDRESS_NOEXCEPT {
         return _end;
     }
 
+    /**
+     * Gets the beginning reverse iterator of the sequence.
+     * 
+     * @return A const_reverse_iterator to the first element of the reversed sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reverse_iterator rbegin() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(end());
     }
 
+    /**
+     * Gets the end reverse iterator of the sequence.
+     * 
+     * @return A const_reverse_iterator to the element following the last element of the reversed sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reverse_iterator rend() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(begin());
     }
     
+    /**
+     * Gets the beginning const iterator of the sequence.
+     * 
+     * @return A const_iterator to the first element in the sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator cbegin() const IPADDRESS_NOEXCEPT {
         return begin();
     }
 
+    /**
+     * Gets the end const iterator of the sequence.
+     * 
+     * @return A const_iterator to the element following the last element in the sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator cend() const IPADDRESS_NOEXCEPT {
         return end();
     }
 
+    /**
+     * Gets the beginning const reverse iterator of the sequence.
+     * 
+     * @return A const_reverse_iterator to the first element of the reversed sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reverse_iterator crbegin() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(cend());
     }
 
+    /**
+     * Gets the end const reverse iterator of the sequence.
+     * 
+     * @return A const_reverse_iterator to the element following the last element of the reversed sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reverse_iterator crend() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(cbegin());
     }
 
+    /**
+     * Checks if the sequence is empty.
+     * 
+     * @return `true` if the sequence is empty, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool empty() const IPADDRESS_NOEXCEPT {
         return _begin == _end;
     }
     
+    /**
+     * Gets the size of the sequence.
+     * 
+     * @return The number of elements in the sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE difference_type size() const IPADDRESS_NOEXCEPT {
         return _end.uint_diff(_begin);
     }
 
+    /**
+     * Accesses an element by index.
+     * 
+     * @param[in] n The index of the element.
+     * @return The element at the specified index.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type operator[](difference_type n) const IPADDRESS_NOEXCEPT {
         return at(n);
     }
 
+    /**
+     * Accesses an element by index with bounds checking.
+     * 
+     * @param[in] n The index of the element.
+     * @return The element at the specified index.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type at(difference_type n) const IPADDRESS_NOEXCEPT {
         return *(_begin + n);
     }
 
+    /**
+     * Accesses the first element in the sequence.
+     * 
+     * @return A reference to the first element in the sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type front() const IPADDRESS_NOEXCEPT {
         return *_begin;
     }
 
+    /**
+     * Accesses the last element in the sequence.
+     * 
+     * @return A reference to the last element in the sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type back() const IPADDRESS_NOEXCEPT {
         return *(_end - 1U);
     }
