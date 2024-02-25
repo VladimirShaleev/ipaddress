@@ -29,7 +29,7 @@ namespace IPADDRESS_NAMESPACE {
 template <typename Ext>
 class base_v4 {
 public:
-    using base_type = byte_array_type<4>;
+    using base_type = byte_array<4>;
     using uint_type = uint32_t;
 
     static IPADDRESS_CONSTEXPR ip_version base_version = ip_version::V4;

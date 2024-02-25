@@ -29,7 +29,7 @@ namespace IPADDRESS_NAMESPACE {
 template <typename Ext>
 class base_v6 {
 public:
-    using base_type = byte_array_type<16>;
+    using base_type = byte_array<16>;
     using uint_type = ::IPADDRESS_NAMESPACE::uint128_t;
 
     static IPADDRESS_CONSTEXPR ip_version base_version = ip_version::V6;
