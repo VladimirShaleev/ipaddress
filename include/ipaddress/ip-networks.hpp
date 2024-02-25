@@ -1,3 +1,15 @@
+/**
+ * @file      ip-networks.hpp
+ * @brief     Defines constants for various reserved IP networks
+ * @author    Vladimir Shaleev
+ * @copyright MIT License
+ * 
+ * This file contains arrays of ipv4_network and ipv6_network objects representing
+ * reserved IP address ranges, such as private networks and multicast addresses.
+ * These constants are used to facilitate the identification and handling of these
+ * special address ranges in network-related operations.
+ */
+
 #ifndef IPADDRESS_IP_NETWORKS_HPP
 #define IPADDRESS_IP_NETWORKS_HPP
 
