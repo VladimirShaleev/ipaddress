@@ -650,12 +650,33 @@ public:
         return optional<ipv6_network>();
     }
 
+    /**
+     * Constructs a new IP network object.
+     * 
+     * Initializes a new instance of the ip_network class with the maximum prefix length
+     * for the IPv4 address, effectively setting the network address to the default address
+     * and the netmask to the maximum value.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network() IPADDRESS_NOEXCEPT {
     }
 
+    /**
+     * Constructor from an ipv4_network.
+     * 
+     * Constructs an ip_network object with the specified IPv4 network.
+     * 
+     * @param[in] net4 An ipv4_network object to initialize the ip_network.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network(const ipv4_network& net4) IPADDRESS_NOEXCEPT : _ipv_net(net4), _version(ip_version::V4) {
     }
 
+    /**
+     * Constructor from an ipv6_network.
+     * 
+     * Constructs an ip_network object with the specified IPv6 network.
+     * 
+     * @param[in] net6 An ipv6_network object to initialize the ip_network.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network(const ipv6_network& net6) IPADDRESS_NOEXCEPT : _ipv_net(net6), _version(ip_version::V6) {
     }
 
