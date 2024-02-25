@@ -126,7 +126,7 @@ public:
     /**
      * Returns a reference to the current element.
      * 
-     * @return  A reference to the element pointed to by the iterator.
+     * @return A reference to the element pointed to by the iterator.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference operator*() const IPADDRESS_NOEXCEPT {
         return *_it;
@@ -135,7 +135,7 @@ public:
     /**
      * Returns a pointer to the current element.
      * 
-     * @return  A pointer to the element pointed to by the iterator.
+     * @return A pointer to the element pointed to by the iterator.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE pointer operator->() const IPADDRESS_NOEXCEPT {
         return &*_it;
@@ -542,7 +542,7 @@ public:
     /**
      * Returns a reference to the current element.
      * 
-     * @return  A reference to the element pointed to by the iterator.
+     * @return A reference to the element pointed to by the iterator.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference operator*() const IPADDRESS_NOEXCEPT {
         return _current;
@@ -551,7 +551,7 @@ public:
     /**
      * Returns a pointer to the current element.
      * 
-     * @return  A pointer to the element pointed to by the iterator.
+     * @return A pointer to the element pointed to by the iterator.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE pointer operator->() const IPADDRESS_NOEXCEPT {
         return &_current;

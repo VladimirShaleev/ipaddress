@@ -105,7 +105,7 @@ public:
     /**
      * Returns a reference to the current element.
      * 
-     * @return  A reference to the element pointed to by the iterator.
+     * @return A reference to the element pointed to by the iterator.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference operator*() const IPADDRESS_NOEXCEPT {
         return _current;
@@ -114,7 +114,7 @@ public:
     /**
      * Returns a pointer to the current element.
      * 
-     * @return  A pointer to the element pointed to by the iterator.
+     * @return A pointer to the element pointed to by the iterator.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE pointer operator->() const IPADDRESS_NOEXCEPT {
         return &_current;
@@ -480,22 +480,66 @@ private:
     size_t _prefixlen{};
 }; // ip_network_iterator
 
+/**
+ * An iterator to traverse IP addresses within a network, excluding specified subnets.
+ * 
+ * This iterator advances through IP addresses within a specified network,
+ * skipping over those that belong to a subnet that should be excluded from
+ * the traversal. This is particularly useful for operations where certain
+ * ranges of IP addresses are reserved or otherwise should not be included.
+ * 
+ * @tparam T The type of IPv4 or IPv6 network to iterate over, excluding specified subnets.
+ */
 template <typename T>
 class ip_exclude_network_iterator {
 public:
-    using iterator_category = std::forward_iterator_tag;
-    using value_type        = T;
-    using difference_type   = std::int64_t;
-    using pointer           = const value_type*;
-    using reference         = const value_type&;
+    using iterator_category = std::forward_iterator_tag; /**< The category of the iterator. */
+    using value_type        = T; /**< The type of value iterated over. */
+    using difference_type   = std::int64_t; /**< Type to represent the difference between two iterators. */
+    using pointer           = const value_type*; /**< Pointer to the value type. */
+    using reference         = const value_type&; /**< Reference to the value type. */
 
+    /**
+     * Default constructor.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_exclude_network_iterator() IPADDRESS_NOEXCEPT = default;
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_exclude_network_iterator(const ip_exclude_network_iterator&) IPADDRESS_NOEXCEPT = default;
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_exclude_network_iterator(ip_exclude_network_iterator&&) IPADDRESS_NOEXCEPT = default;
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_exclude_network_iterator& operator=(const ip_exclude_network_iterator&) IPADDRESS_NOEXCEPT = default;
+    /**
+     * Copy constructor.
+     * 
+     * @param[in] other The ip_exclude_network_iterator to copy.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_exclude_network_iterator(const ip_exclude_network_iterator& other) IPADDRESS_NOEXCEPT = default;
+    
+    /**
+     * Move constructor.
+     * 
+     * @param[in] other The ip_exclude_network_iterator to move.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_exclude_network_iterator(ip_exclude_network_iterator&& other) IPADDRESS_NOEXCEPT = default;
+
+    /**
+     * Copy assignment operator.
+     * 
+     * @param[in] other The ip_exclude_network_iterator to copy.
+     * @return A reference to the assigned ip_exclude_network_iterator.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_exclude_network_iterator& operator=(const ip_exclude_network_iterator& other) IPADDRESS_NOEXCEPT = default;
+    
+    /**
+     * Move assignment operator.
+     * 
+     * @param[in] other The ip_exclude_network_iterator to move.
+     * @return A reference to the moved ip_exclude_network_iterator.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_exclude_network_iterator& operator=(ip_exclude_network_iterator&&) IPADDRESS_NOEXCEPT = default;
 
+    /**
+     * Constructs an iterator for a network, excluding addresses from another network.
+     * 
+     * @param[in] network The network to iterate over.
+     * @param[in] other The network whose addresses are to be excluded.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_exclude_network_iterator(reference network, reference other) IPADDRESS_NOEXCEPT : _other(other), _current(network) {
         const auto subnets = network.subnets();
         _s1 = subnets[0];
@@ -503,14 +547,29 @@ public:
         ++(*this);
     }
 
+    /**
+     * Returns a reference to the current element.
+     * 
+     * @return A reference to the element pointed to by the iterator.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference operator*() const IPADDRESS_NOEXCEPT {
         return _current;
     }
 
+    /**
+     * Returns a pointer to the current element.
+     * 
+     * @return A pointer to the element pointed to by the iterator.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE pointer operator->() const IPADDRESS_NOEXCEPT {
         return &_current;
     }
 
+    /**
+     * Pre-increment operator.
+     * 
+     * @return A reference to the incremented iterator.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_exclude_network_iterator& operator++() IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         if (_s1 != _other && _s2 != _other) {
             if (_other.subnet_of(_s1)) {
@@ -558,40 +617,101 @@ public:
         return *this;
     }
 
+    /**
+     * Post-increment operator.
+     * 
+     * @return The iterator before incrementing.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_exclude_network_iterator operator++(int) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         auto tmp = *this;
         ++(*this);
         return tmp;
     }
 
+    /**
+     * Equality operator.
+     * 
+     * Compares two ip_exclude_network_iterator for equality.
+     * 
+     * @param[in] other The ip_exclude_network_iterator to compare with.
+     * @return `true` if the iterators are equal, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(const ip_exclude_network_iterator& other) const IPADDRESS_NOEXCEPT {
         return _current == other._current;
     }
 
+    /**
+     * Inequality operator.
+     * 
+     * Compares two ip_exclude_network_iterator for inequality.
+     * 
+     * @param[in] other The ip_exclude_network_iterator to compare with.
+     * @return `true` if the iterators are not equal, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(const ip_exclude_network_iterator& other) const IPADDRESS_NOEXCEPT {
         return !(*this == other);
     }
 
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
 
+    /**
+     * Three-way comparison operator (spaceship operator).
+     * 
+     * Compares two ip_exclude_network_iterator for ordering.
+     * 
+     * @param[in] other The ip_exclude_network_iterator to compare with.
+     * @return The result of the comparison as a std::strong_ordering value.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const ip_exclude_network_iterator& other) const IPADDRESS_NOEXCEPT {
         return other._current <=> _current;
     }
 
 #else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
+    /**
+     * Less-than operator.
+     * 
+     * Compares two ip_exclude_network_iterator to determine if the left one is less than the right one.
+     * 
+     * @param[in] other The ip_exclude_network_iterator to compare with.
+     * @return `true` if the left iterator is less than the right iterator, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(const ip_exclude_network_iterator& other) const IPADDRESS_NOEXCEPT {
         return other._current < _current;
     }
 
+    /**
+     * Less-than-or-equal-to operator.
+     * 
+     * Compares two ip_exclude_network_iterator to determine if the left one is less than or equal to the right one.
+     * 
+     * @param[in] other The ip_exclude_network_iterator to compare with.
+     * @return `true` if the left iterator is less than or equal to the right iterator, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(const ip_exclude_network_iterator& other) const IPADDRESS_NOEXCEPT {
         return !(other < *this);
     }
 
+    /**
+     * Greater-than operator.
+     * 
+     * Compares two ip_exclude_network_iterator to determine if the left one is greater than the right one.
+     * 
+     * @param[in] other The ip_exclude_network_iterator to compare with.
+     * @return `true` if the left iterator is greater than the right iterator, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(const ip_exclude_network_iterator& other) const IPADDRESS_NOEXCEPT {
         return other < *this;
     }
 
+    /**
+     * Greater-than-or-equal-to operator.
+     * 
+     * Compares two ip_exclude_network_iterator to determine if the left one is greater than or equal to the right one.
+     * 
+     * @param[in] other The ip_exclude_network_iterator to compare with.
+     * @return `true` if the left iterator is greater than or equal to the right iterator, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(const ip_exclude_network_iterator& other) const IPADDRESS_NOEXCEPT {
         return !(*this < other);
     }
