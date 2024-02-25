@@ -135,7 +135,7 @@ $(function(){initNavTree('ip-network-base_8hpp_source.html',''); initResizable()
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#</span><span class="preprocessor">ifndef</span> <span class="preprocessor">IPADDRESS_IP_NETWORK_BASE_HPP</span></div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#</span><span class="preprocessor">define</span> <span class="preprocessor">IPADDRESS_IP_NETWORK_BASE_HPP</span></div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#</span><span class="preprocessor">include</span> <a class="code" href="ip-address-iterator_8hpp.html">&quot;ip-address-iterator.hpp&quot;</a></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#</span><span class="preprocessor">include</span> <a class="code" href="ip-address-iterator_8hpp.html" title="Provides iterator classes for sequential IP address traversal.">&quot;ip-address-iterator.hpp&quot;</a></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#</span><span class="preprocessor">include</span> <a class="code" href="ip-network-iterator_8hpp.html">&quot;ip-network-iterator.hpp&quot;</a></div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">namespace</span> <a class="code hl_define" href="config_8hpp.html#ad0b1f2a1113cf0f75cc8e7468bcf56db">IPADDRESS_NAMESPACE</a> {</div>
@@ -568,7 +568,7 @@ $(function(){initNavTree('ip-network-base_8hpp_source.html',''); initResizable()
 <div class="line"><span class="lineno">  445</span><span class="comment">     * It populates the provided error_code object instead of throwing.</span></div>
 <div class="line"><span class="lineno">  446</span><span class="comment">     * </span></div>
 <div class="line"><span class="lineno">  447</span><span class="comment">     * @param[in] address The IP address to use for creating the network.</span></div>
-<div class="line"><span class="lineno">  448</span><span class="comment">     * @param[in] code An error_code object that will be set if an error occurs.</span></div>
+<div class="line"><span class="lineno">  448</span><span class="comment">     * @param[out] code An error_code object that will be set if an error occurs.</span></div>
 <div class="line"><span class="lineno">  449</span><span class="comment">     * @param[in] prefixlen The prefix length for the network&#39;s netmask. Defaults to the maximum prefix length.</span></div>
 <div class="line"><span class="lineno">  450</span><span class="comment">     * @param[in] strict Whether to validate the address against the netmask.</span></div>
 <div class="line"><span class="lineno">  451</span><span class="comment">     * @return An ip network object representing the network, or an object in an error state if an error occurs.</span></div>

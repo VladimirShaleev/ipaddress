@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['reference_0',['reference',['../structipaddress_1_1byte__array.html#a74202cdd96628bc49a756e5fc87d22de',1,'ipaddress::byte_array']]],
-  ['reverse_5fiterator_1',['reverse_iterator',['../structipaddress_1_1byte__array.html#adb9a673a4271b497ef05158e05170942',1,'ipaddress::byte_array']]]
+  ['reference_0',['reference',['../structipaddress_1_1byte__array.html#a74202cdd96628bc49a756e5fc87d22de',1,'ipaddress::byte_array::reference'],['../classipaddress_1_1ip__reverse__iterator.html#a57d818f6bd24dee2a8803cb3be635373',1,'ipaddress::ip_reverse_iterator::reference'],['../classipaddress_1_1ip__address__iterator_3_01ip__address__base_3_01Base_01_4_01_4.html#ab20613740e68819fffc1e80755f2bcea',1,'ipaddress::ip_address_iterator&lt; ip_address_base&lt; Base &gt; &gt;::reference'],['../classipaddress_1_1hosts__sequence_3_01ip__address__base_3_01Base_01_4_01_4.html#a74202cdd96628bc49a756e5fc87d22de',1,'ipaddress::hosts_sequence&lt; ip_address_base&lt; Base &gt; &gt;::reference']]],
+  ['reverse_5fiterator_1',['reverse_iterator',['../structipaddress_1_1byte__array.html#adb9a673a4271b497ef05158e05170942',1,'ipaddress::byte_array::reverse_iterator'],['../classipaddress_1_1hosts__sequence_3_01ip__address__base_3_01Base_01_4_01_4.html#ae69dd0815008a12dcbc25c14d08882b1',1,'ipaddress::hosts_sequence&lt; ip_address_base&lt; Base &gt; &gt;::reverse_iterator']]]
 ];

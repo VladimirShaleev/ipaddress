@@ -1,7 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
 <area shape="rect" id="Node000000" href="$classipaddress_1_1error.html" title="The primary exception class used by the IP address library." alt="" coords="5,31,59,56"/>
 <area shape="rect" id="Node000001" href="$classipaddress_1_1logic__error.html" title="Exception for logical errors in IP address operations." alt="" coords="109,5,200,31"/>
-<area shape="poly" id="edge5_Node000000_Node000001" title=" " alt="" coords="71,33,108,25,110,30,72,38"/>
+<area shape="poly" id="edge9_Node000000_Node000001" title=" " alt="" coords="71,33,108,25,110,30,72,38"/>
 <area shape="rect" id="Node000002" href="$classipaddress_1_1parse__error.html" title="Exception for errors encountered during IP address parsing." alt="" coords="107,55,203,80"/>
-<area shape="poly" id="edge6_Node000000_Node000002" title=" " alt="" coords="73,48,107,55,106,61,71,54"/>
+<area shape="poly" id="edge10_Node000000_Node000002" title=" " alt="" coords="73,48,107,55,106,61,71,54"/>
 </map>

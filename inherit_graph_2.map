@@ -1,3 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
 <area shape="rect" id="Node000000" href="$classipaddress_1_1base__v4.html" title=" " alt="" coords="5,5,184,45"/>
+<area shape="rect" id="Node000001" href="$classipaddress_1_1ipv4__network__base.html" title="Base class for IPv4 network address manipulation." alt="" coords="232,13,380,38"/>
+<area shape="poly" id="edge3_Node000000_Node000001" title=" " alt="" coords="198,23,232,23,232,28,198,28"/>
+<area shape="rect" id="Node000002" href="$classipaddress_1_1ip__network__base.html" title=" " alt="" coords="428,5,603,45"/>
+<area shape="poly" id="edge4_Node000001_Node000002" title=" " alt="" coords="394,23,428,23,428,28,394,28"/>
 </map>
