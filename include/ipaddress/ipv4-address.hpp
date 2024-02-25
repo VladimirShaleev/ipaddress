@@ -102,6 +102,9 @@ protected:
 #endif // IPADDRESS_HAS_SPACESHIP_OPERATOR
 
 private:
+    template <typename>
+    friend class ip_network_base;
+    
     base_type _bytes{};
 }; // ipv4_address_base
 

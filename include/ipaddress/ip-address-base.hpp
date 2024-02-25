@@ -55,9 +55,6 @@ enum class format {
 template <typename Base>
 class ip_address_base : public Base {
 public:
-    template <typename>
-    friend class ip_network_base;
-
     using base_type = typename Base::base_type; /**< Type alias for the base storage type. */
     using uint_type = typename Base::uint_type; /**< Type alias for the underlying unsigned integer type. */
 
@@ -691,6 +688,9 @@ public:
 #endif // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
 private:
+    template <typename>
+    friend class ip_network_base;
+
     template <typename Str>
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse_string(const Str& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         auto code = error_code::NO_ERROR;

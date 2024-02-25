@@ -776,6 +776,9 @@ protected:
     }
 
 private:
+    template <typename>
+    friend class ip_network_base;
+    
     // not used due to clang bug in version 14 and below
     // https://bugs.llvm.org/show_bug.cgi?id=18781
     //
