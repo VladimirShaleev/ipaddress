@@ -356,6 +356,25 @@ public:
         }
     }
 
+    /**
+     * Checks if this network is a subnet of another network.
+     * 
+     * This method verifies if the network represented by this ip network object is a subnet
+     * of the provided network, meaning if this network is entirely contained within the other network.
+     * 
+     * @code{.cpp}
+     *   constexpr auto a = ip_network::parse("192.168.1.0/24");
+     *   constexpr auto b = ip_network::parse("192.168.1.128/30");
+     *   constexpr auto subnet_of = a.subnet_of(b);
+     * 
+     *   std::cout << std::boolalpha << subnet_of << std::endl;
+     * 
+     *   // out:
+     *   // false
+     * @endcode
+     * @param[in] other The other ip network object to compare with.
+     * @return `true` if this network is a subnet of the other network, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool subnet_of(const ip_network& other) const IPADDRESS_NOEXCEPT {
         if (_version == other.version()) {
             return is_v4() ? _ipv_net.ipv4.subnet_of(other.v4().value()) : _ipv_net.ipv6.subnet_of(other.v6().value());
@@ -364,6 +383,25 @@ public:
         }
     }
 
+    /**
+     * Checks if this network is a supernet of another network.
+     * 
+     * This method determines if the network represented by this ip network object is a supernet
+     * of the provided network, meaning if the other network is entirely contained within this network.
+     * 
+     * @code{.cpp}
+     *   constexpr auto a = ip_network::parse("192.168.1.0/24");
+     *   constexpr auto b = ip_network::parse("192.168.1.128/30");
+     *   constexpr auto supernet_of = a.supernet_of(b);
+     * 
+     *   std::cout << std::boolalpha << supernet_of << std::endl;
+     * 
+     *   // out:
+     *   // true
+     * @endcode
+     * @param[in] other The other ip network object to compare with.
+     * @return True if this network is a supernet of the other network, false otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool supernet_of(const ip_network& other) const IPADDRESS_NOEXCEPT {
         if (_version == other.version()) {
             return is_v4() ? _ipv_net.ipv4.supernet_of(other.v4().value()) : _ipv_net.ipv6.supernet_of(other.v6().value());
@@ -372,6 +410,41 @@ public:
         }
     }
 
+    /**
+     * Retrieves a sequence of host addresses in the network.
+     * 
+     * This method returns a sequence of host addresses within the network, excluding the network and
+     * broadcast addresses.
+     * 
+     * @code{.cpp}
+     *   constexpr auto hosts_sequence = ip_network::parse("192.0.2.0/29").hosts();
+     *   
+     *   for (const auto& addr : hosts_sequence) {
+     *      std::cout << addr << std::endl;
+     *   }
+     * 
+     *   // out:
+     *   // 192.0.2.1
+     *   // 192.0.2.2
+     *   // 192.0.2.3
+     *   // 192.0.2.4
+     *   // 192.0.2.5
+     *   // 192.0.2.6
+     * @endcode
+     * @return A `hosts_sequence` object representing the sequence of host addresses.
+     * @retval Ipv4 For ipv4 all the IP addresses that belong to the network, except the network 
+     *         address itself and the network broadcast address. For networks with a mask length of 31, 
+     *         the network address and network broadcast address are also included in the result. 
+     *         Networks with a mask of 32 will return a list containing the single host address.
+     * @retval Ipv6 For ipv6 all the IP addresses that belong to the network, except the 
+     *         Subnet-Router anycast address. For networks with a mask length of 127, the Subnet-Router 
+     *         anycast address is also included in the result. Networks with a mask of 128 will return a 
+     *         list containing the single host address.
+     * @warning Please note that with IPv6, the number of addresses can be so large that iterating through 
+     *          them all may be practically impossible. Therefore, use the hosts() method cautiously to 
+     *          avoid endlessly retrieving addresses.
+     * @remark `hosts_sequence` uses lazy evaluation to iterate addresses.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_any_sequence hosts() const IPADDRESS_NOEXCEPT {
         if (is_v4()) {
             const auto sequence = _ipv_net.ipv4.hosts();
