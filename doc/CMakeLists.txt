@@ -27,7 +27,24 @@ else()
     WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/../
   )
 
-  add_custom_target(doc ALL DEPENDS html)
+  # Hide sync button
+  file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/replace.cmake"
+    [=[
+    file(READ "${SOURCE}" TEXT)
+    string(REPLACE "n.html('<img src=\"'+relpath+'sync_off.png\" title=\"'+SYNCOFFMSG+'\"/>');" "" TEXT "${TEXT}")
+    string(REPLACE "n.html('<img src=\"'+relpath+'sync_on.png\" title=\"'+SYNCONMSG+'\"/>');" "" TEXT "${TEXT}")
+    file(WRITE "${TARGET}" "${TEXT}")
+    ]=])
+  add_custom_command(
+      OUTPUT navtree
+      COMMAND "${CMAKE_COMMAND}"
+          "-DSOURCE=${CMAKE_CURRENT_BINARY_DIR}/html/navtree.js"
+          "-DTARGET=${CMAKE_CURRENT_BINARY_DIR}/html/navtree.js"
+          -P "${CMAKE_CURRENT_BINARY_DIR}/replace.cmake"
+      DEPENDS html "${CMAKE_CURRENT_BINARY_DIR}/replace.cmake"
+  )
+  
+  add_custom_target(doc ALL DEPENDS html navtree)
   
   install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html DESTINATION doc COMPONENT doc)
 endif()
