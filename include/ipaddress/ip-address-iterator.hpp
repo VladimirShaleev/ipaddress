@@ -203,90 +203,236 @@ public:
         return tmp;
     }
 
+    /**
+     * Addition assignment operator.
+     * 
+     * Moves the iterator forward by \a n positions.
+     * 
+     * @param[in] n The number of positions to move the iterator forward.
+     * @return A reference to the updated iterator.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator& operator+=(difference_type n) IPADDRESS_NOEXCEPT {
         _it -= n;
         return *this;
     }
 
+    /**
+     * Addition assignment operator.
+     * 
+     * Moves the iterator forward by \a n positions.
+     * 
+     * @param[in] n The number of positions to move the iterator forward.
+     * @return A reference to the updated iterator.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator& operator+=(const uint_type& n) IPADDRESS_NOEXCEPT {
         _it -= n;
         return *this;
     }
 
+    /**
+     * Subtraction assignment operator.
+     * 
+     * Moves the iterator backward by \a n positions.
+     * 
+     * @param[in] n The number of positions to move the iterator backward.
+     * @return A reference to the updated iterator.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator& operator-=(difference_type n) IPADDRESS_NOEXCEPT {
         _it += n;
         return *this;
     }
 
+    /**
+     * Subtraction assignment operator.
+     * 
+     * Moves the iterator backward by \a n positions.
+     * 
+     * @param[in] n The number of positions to move the iterator backward.
+     * @return A reference to the updated iterator.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator& operator-=(const uint_type& n) IPADDRESS_NOEXCEPT {
         _it += n;
         return *this;
     }
 
+    /**
+     * Addition operator.
+     * 
+     * Creates a new iterator that is \a n positions ahead of the current one.
+     * 
+     * @param[in] n The number of positions to move ahead.
+     * @return A new iterator that is \a n positions ahead.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator operator+(difference_type n) const IPADDRESS_NOEXCEPT {
         auto tmp = *this;
         tmp += n;
         return tmp;
     }
 
+    /**
+     * Addition operator.
+     * 
+     * Creates a new iterator that is \a n positions ahead of the current one.
+     * 
+     * @param[in] n The number of positions to move ahead.
+     * @return A new iterator that is \a n positions ahead.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator operator+(const uint_type& n) const IPADDRESS_NOEXCEPT {
         auto tmp = *this;
         tmp += n;
         return tmp;
     }
 
+    /**
+     * Addition operator.
+     * 
+     * Creates a new iterator that is \a n positions ahead of the specified iterator.
+     * 
+     * @param[in] n The number of positions to move ahead.
+     * @param[in] it The iterator to move ahead from.
+     * @return A new iterator that is \a n positions ahead of it.
+     */
     IPADDRESS_NODISCARD friend IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator operator+(difference_type n, const ip_reverse_iterator& it) IPADDRESS_NOEXCEPT {
         return it + n;
     }
 
+    /**
+     * Addition operator.
+     * 
+     * Creates a new iterator that is \a n positions ahead of the specified iterator.
+     * 
+     * @param[in] n The number of positions to move ahead.
+     * @param[in] it The iterator to move ahead from.
+     * @return A new iterator that is \a n positions ahead of it.
+     */
     IPADDRESS_NODISCARD friend IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator operator+(const uint_type& n, const ip_reverse_iterator& it) IPADDRESS_NOEXCEPT {
         return it + n;
     }
 
+    /**
+     * Subtraction operator.
+     * 
+     * Creates a new iterator that is \a n positions behind the current one.
+     * 
+     * @param[in] n The number of positions to move behind.
+     * @return A new iterator that is \a n positions behind.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator operator-(difference_type n) const IPADDRESS_NOEXCEPT {
         auto tmp = *this;
         tmp -= n;
         return tmp;
     }
 
+    /**
+     * Subtraction operator.
+     * 
+     * Creates a new iterator that is \a n positions behind the current one.
+     * 
+     * @param[in] n The number of positions to move behind.
+     * @return A new iterator that is \a n positions behind.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator operator-(const uint_type& n) const IPADDRESS_NOEXCEPT {
         auto tmp = *this;
         tmp -= n;
         return tmp;
     }
 
+    /**
+     * Subtraction operator.
+     * 
+     * Calculates the difference in the number of elements between this and another ip_reverse_iterator.
+     * 
+     * @param[in] other The ip_reverse_iterator to compare with.
+     * @return The number of elements between this and the other iterator.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE difference_type operator-(const ip_reverse_iterator& other) const IPADDRESS_NOEXCEPT {
         return difference_type(other._it - _it);
     }
 
+    /**
+     * Equality operator.
+     * 
+     * Compares two ip_reverse_iterators for equality.
+     * 
+     * @param[in] other The ip_reverse_iterator to compare with.
+     * @return `true` if the iterators are equal, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(const ip_reverse_iterator& other) const IPADDRESS_NOEXCEPT {
         return  other._it == _it;
     }
 
+    /**
+     * Inequality operator.
+     * 
+     * Compares two ip_reverse_iterators for inequality.
+     * 
+     * @param[in] other The ip_reverse_iterator to compare with.
+     * @return `true` if the iterators are not equal, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(const ip_reverse_iterator& other) const IPADDRESS_NOEXCEPT {
         return !(*this == other);
     }
 
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
 
+    /**
+     * Three-way comparison operator (spaceship operator).
+     * 
+     * Compares two ip_reverse_iterators for ordering.
+     * 
+     * @param[in] other The ip_reverse_iterator to compare with.
+     * @return The result of the comparison as a std::strong_ordering value.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const ip_reverse_iterator& other) const IPADDRESS_NOEXCEPT {
         return other._it <=> _it;
     }
 
 #else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
+    /**
+     * Less-than operator.
+     * 
+     * Compares two ip_reverse_iterators to determine if the left one is less than the right one.
+     * 
+     * @param[in] other The ip_reverse_iterator to compare with.
+     * @return `true` if the left iterator is less than the right iterator, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(const ip_reverse_iterator& other) const IPADDRESS_NOEXCEPT {
         return other._it < _it;
     }
 
+    /**
+     * Less-than-or-equal-to operator.
+     * 
+     * Compares two ip_reverse_iterators to determine if the left one is less than or equal to the right one.
+     * 
+     * @param[in] other The ip_reverse_iterator to compare with.
+     * @return `true` if the left iterator is less than or equal to the right iterator, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(const ip_reverse_iterator& other) const IPADDRESS_NOEXCEPT {
         return !(other < *this);
     }
 
+    /**
+     * Greater-than operator.
+     * 
+     * Compares two ip_reverse_iterators to determine if the left one is greater than the right one.
+     * 
+     * @param[in] other The ip_reverse_iterator to compare with.
+     * @return `true` if the left iterator is greater than the right iterator, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(const ip_reverse_iterator& other) const IPADDRESS_NOEXCEPT {
         return other < *this;
     }
 
+    /**
+     * Greater-than-or-equal-to operator.
+     * 
+     * Compares two ip_reverse_iterators to determine if the left one is greater than or equal to the right one.
+     * 
+     * @param[in] other The ip_reverse_iterator to compare with.
+     * @return `true` if the left iterator is greater than or equal to the right iterator, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(const ip_reverse_iterator& other) const IPADDRESS_NOEXCEPT {
         return !(*this < other);
     }
