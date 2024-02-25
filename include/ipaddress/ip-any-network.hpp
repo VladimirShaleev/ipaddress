@@ -75,58 +75,177 @@ public:
     using ip_address_type = ip_address; /**< Type alias for ip_address, representing the IP address within the network. */
     using uint_type = uint128_t; /**< Type alias for a 128-bit unsigned integer type. */
 
+    /**
+     * Retrieves the IP version of the network.
+     * 
+     * @return The IP version as an enumeration (either V4 or V6).
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_version version() const IPADDRESS_NOEXCEPT {
         return _version;
     }
 
+    /**
+     * Retrieves the prefix length of this network.
+     * 
+     * This method returns the prefix length of the network. The prefix length is the number
+     * of bits in the network address portion of the IP address and is used to calculate the netmask.
+     * 
+     * @return The prefix length of the network as a size_t value.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t prefixlen() const IPADDRESS_NOEXCEPT {
         return is_v4() ? _ipv_net.ipv4.prefixlen() : _ipv_net.ipv6.prefixlen();
     }
     
+    /**
+     * Retrieves the network address of this network.
+     * 
+     * This method returns the network address component of the ip network object.
+     * 
+     * @return A reference to the network address.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address network_address() const IPADDRESS_NOEXCEPT {
         return is_v4() ? ip_address(_ipv_net.ipv4.network_address()) : ip_address(_ipv_net.ipv6.network_address());
     }
 
+    /**
+     * Retrieves the broadcast address of this network.
+     * 
+     * The broadcast address is the last address in the network and is used to communicate 
+     * with all hosts on this network.
+     * 
+     * @return The broadcast address of the network as an ip_address object.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address broadcast_address() const IPADDRESS_NOEXCEPT {
         return is_v4() ? ip_address(_ipv_net.ipv4.broadcast_address()) : ip_address(_ipv_net.ipv6.broadcast_address());
     }
 
+    /**
+     * Retrieves the netmask of this network.
+     * 
+     * This method returns the netmask of the network. The netmask is used to determine
+     * which portion of an IP address is the network portion and which is the host portion.
+     * 
+     * @return A reference to the netmask as an ip_address object.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address netmask() const IPADDRESS_NOEXCEPT {
         return is_v4() ? ip_address(_ipv_net.ipv4.netmask()) : ip_address(_ipv_net.ipv6.netmask());
     }
 
+    /**
+     * Retrieves the hostmask of this network.
+     * 
+     * The hostmask identifies the portion of the IP address that is allocated for host identifiers.
+     * 
+     * @return The hostmask of the network as an ip_address object.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address hostmask() const IPADDRESS_NOEXCEPT {
         return is_v4() ? ip_address(_ipv_net.ipv4.hostmask()) : ip_address(_ipv_net.ipv6.hostmask());
     }
 
+    /**
+     * Checks if the network is a multicast network.
+     * 
+     * This method determines whether the network is a multicast network by checking if both the network
+     * address and the broadcast address are multicast addresses.
+     * 
+     * @return `true` if the network is multicast, `false` otherwise.
+     * @see [RFC 3171](https://datatracker.ietf.org/doc/html/rfc3171.html) for IPv4.
+     * @see [RFC 2373](https://datatracker.ietf.org/doc/html/rfc2373.html) for IPv6.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_multicast() const IPADDRESS_NOEXCEPT {
         return is_v4() ? _ipv_net.ipv4.is_multicast() : _ipv_net.ipv6.is_multicast();
     }
 
+    /**
+     * Checks if the network is a private network.
+     * 
+     * This method determines whether the network is a private network. Private networks are not routed
+     * on the global internet.
+     * 
+     * @return `true` if the network is private, `false` otherwise.
+     * @see [iana-ipv4-special-registry](https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml).
+     * @see [iana-ipv6-special-registry](https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml).
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_private() const IPADDRESS_NOEXCEPT {
         return is_v4() ? _ipv_net.ipv4.is_private() : _ipv_net.ipv6.is_private();
     }
 
+    /**
+     * Checks if the network is a global network.
+     * 
+     * This method determines whether the network is a global network. Global networks are routable on the
+     * internet and are not private.
+     * 
+     * @return `true` if the network is global, `false` otherwise.
+     * @see [iana-ipv4-special-registry](https://www.iana.org/assignments/iana-ipv4-special-registry/iana-ipv4-special-registry.xhtml).
+     * @see [iana-ipv6-special-registry](https://www.iana.org/assignments/iana-ipv6-special-registry/iana-ipv6-special-registry.xhtml).
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_global() const IPADDRESS_NOEXCEPT {
         return is_v4() ? _ipv_net.ipv4.is_global() : _ipv_net.ipv6.is_global();
     }
 
+    /**
+     * Checks if the network is a reserved network.
+     * 
+     * This method determines whether the network is reserved by checking if both the network address and
+     * the broadcast address are reserved addresses.
+     * 
+     * @return `true` if the network is reserved, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_reserved() const IPADDRESS_NOEXCEPT {
         return is_v4() ? _ipv_net.ipv4.is_reserved() : _ipv_net.ipv6.is_reserved();
     }
 
+    /**
+     * Checks if the network is a loopback network.
+     * 
+     * This method determines whether the network is a loopback network by checking if both the network
+     * address and the broadcast address are loopback addresses.
+     * 
+     * @return `true` if the network is loopback, `false` otherwise.
+     * @see [RFC 3330](https://datatracker.ietf.org/doc/html/rfc3330.html) for IPv4.
+     * @see [RFC 2373](https://datatracker.ietf.org/doc/html/rfc2373.html) for IPv6.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_loopback() const IPADDRESS_NOEXCEPT {
         return is_v4() ? _ipv_net.ipv4.is_loopback() : _ipv_net.ipv6.is_loopback();
     }
 
+    /**
+     * Checks if the network is a link-local network.
+     * 
+     * This method determines whether the network is a link-local network by checking if both the network
+     * address and the broadcast address are link-local addresses.
+     * 
+     * @return `true` if the network is link-local, `false` otherwise.
+     * @see [RFC 3927](https://datatracker.ietf.org/doc/html/rfc3927.html).
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_link_local() const IPADDRESS_NOEXCEPT {
         return is_v4() ? _ipv_net.ipv4.is_link_local() : _ipv_net.ipv6.is_link_local();
     }
 
+    /**
+     * Checks if the network is an unspecified network.
+     * 
+     * This method determines whether the network is unspecified by checking if both the network address and
+     * the broadcast address are unspecified addresses.
+     * 
+     * @return `true` if the network is unspecified, `false` otherwise.
+     * @see [RFC 5735](https://datatracker.ietf.org/doc/html/rfc5735.html) for IPv4.
+     * @see [RFC 2373](https://datatracker.ietf.org/doc/html/rfc2373.html) for IPv6.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_unspecified() const IPADDRESS_NOEXCEPT {
         return is_v4() ? _ipv_net.ipv4.is_unspecified() : _ipv_net.ipv6.is_unspecified();
     }
 
+    /**
+     * Checks if the IPv6 network is site-local.
+     * 
+     * This method determines if both the network address and the broadcast address
+     * of the IPv6 network are site-local, which are addresses used within a particular
+     * organization's intranet and are not routable on the global internet.
+     * 
+     * @return A boolean value indicating whether the network is site-local.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_site_local() const IPADDRESS_NOEXCEPT {
         return is_v4() ? false : _ipv_net.ipv6.is_site_local();
     }
