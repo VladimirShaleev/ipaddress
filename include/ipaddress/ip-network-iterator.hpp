@@ -734,6 +734,7 @@ private:
  * smaller, manageable parts.
  * 
  * @tparam T The type of IP network to be divided into subnets.
+ * @remark When iterating, obtaining networks occurs through lazy calculations.
  */
 template <typename T>
 class subnets_sequence {
@@ -938,48 +939,122 @@ private:
     difference_type _size{};
 }; // subnets_sequence
 
+/**
+ * A sequence container for networks excluding specified subnets.
+ * 
+ * This class template represents a sequence of network ranges while
+ * excluding certain subnets. It provides iterators to traverse the
+ * network ranges that are not part of the excluded subnets, allowing
+ * for operations that require consideration of only certain parts of
+ * a network.
+ * 
+ * @tparam[in] T The type of IP network from which subnets are to be excluded.
+ * @remark When iterating, obtaining networks occurs through lazy calculations.
+ */
 template <typename T>
 class exclude_network_sequence {
 public:
-    using value_type      = T;
-    using size_type       = std::size_t;
-    using difference_type = typename value_type::uint_type;
-    using pointer         = value_type*;
-    using const_pointer   = const value_type*;
-    using reference       = value_type&;
-    using const_reference = const value_type&;
-    using iterator       = ip_exclude_network_iterator<value_type>;
-    using const_iterator = ip_exclude_network_iterator<value_type>;
+    using value_type      = T; /**< The type of network value. */
+    using size_type       = std::size_t; /**< An unsigned integral type. */
+    using difference_type = typename value_type::uint_type; /**< Unsigned integer type for differences. */
+    using pointer         = value_type*; /**< Pointer to the network type. */
+    using const_pointer   = const value_type*; /**< Const pointer to the network type. */
+    using reference       = value_type&; /**< Reference to the network type. */
+    using const_reference = const value_type&; /**< Const reference to the network type. */
+    using iterator       = ip_exclude_network_iterator<value_type>; /**< Iterator for excluded network traversal. */
+    using const_iterator = ip_exclude_network_iterator<value_type>; /**< Const iterator for excluded network traversal. */
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE exclude_network_sequence(const exclude_network_sequence&) IPADDRESS_NOEXCEPT = default;
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE exclude_network_sequence(exclude_network_sequence&&) IPADDRESS_NOEXCEPT = default;
+    /**
+     * Default constructor.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE exclude_network_sequence() IPADDRESS_NOEXCEPT = default
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE exclude_network_sequence& operator=(const exclude_network_sequence&) IPADDRESS_NOEXCEPT = default;
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE exclude_network_sequence& operator=(exclude_network_sequence&&) IPADDRESS_NOEXCEPT = default;
+    /**
+     * Copy constructor.
+     * 
+     * @param[in] other The exclude_network_sequence to copy.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE exclude_network_sequence(const exclude_network_sequence& other) IPADDRESS_NOEXCEPT = default;
+    
+    /**
+     * Move constructor.
+     * 
+     * @param[in] other The exclude_network_sequence to move.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE exclude_network_sequence(exclude_network_sequence&& other) IPADDRESS_NOEXCEPT = default;
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit exclude_network_sequence() IPADDRESS_NOEXCEPT {
-    }
+    /**
+     * Copy assignment operator.
+     * 
+     * @param[in] other The exclude_network_sequence to copy.
+     * @return A reference to the assigned exclude_network_sequence.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE exclude_network_sequence& operator=(const exclude_network_sequence& other) IPADDRESS_NOEXCEPT = default;
+    
+    /**
+     * Move assignment operator.
+     * 
+     * @param[in] other The exclude_network_sequence to move.
+     * @return A reference to the moved exclude_network_sequence.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE exclude_network_sequence& operator=(exclude_network_sequence&& other) IPADDRESS_NOEXCEPT = default;
 
+    /**
+     * Constructs a sequence for a network, excluding addresses from another network.
+     * 
+     * Initializes the sequence to represent the 'network' parameter while
+     * excluding addresses that fall within the 'other' network. This setup
+     * is useful for iterating over a larger network while skipping over
+     * a smaller, reserved subnet.
+     * 
+     * @param[in] network The network to iterate over.
+     * @param[in] other The network whose addresses are to be excluded.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE exclude_network_sequence(const_reference network, const_reference other) IPADDRESS_NOEXCEPT 
         : _begin(const_iterator(network, other)) {
     }
 
+    /**
+     * Gets the beginning iterator of the sequence.
+     * 
+     * @return A const_iterator to the first element in the sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator begin() const IPADDRESS_NOEXCEPT {
         return _begin;
     }
 
+    /**
+     * Gets the end iterator of the sequence.
+     * 
+     * @return A const_iterator to the element following the last element in the sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator end() const IPADDRESS_NOEXCEPT {
         return _end;
     }
 
+    /**
+     * Gets the beginning const iterator of the sequence.
+     * 
+     * @return A const_iterator to the first element in the sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator cbegin() const IPADDRESS_NOEXCEPT {
         return begin();
     }
 
+    /**
+     * Gets the end const iterator of the sequence.
+     * 
+     * @return A const_iterator to the element following the last element in the sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator cend() const IPADDRESS_NOEXCEPT {
         return end();
     }
 
+    /**
+     * Checks if the sequence is empty.
+     * 
+     * @return `true` if the sequence is empty, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool empty() const IPADDRESS_NOEXCEPT {
         return _begin == _end;
     }
