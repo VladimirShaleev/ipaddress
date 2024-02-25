@@ -1,3 +1,16 @@
+/**
+ * @file      ip-address-iterator.hpp
+ * @brief     Provides iterator classes for sequential IP address traversal
+ * @author    Vladimir Shaleev
+ * @copyright MIT License
+ * 
+ * This file defines iterator classes that enable sequential traversal over IP addresses within a network range.
+ * It includes the ip_reverse_iterator for reverse iteration, ip_address_iterator for forward iteration,
+ * and hosts_sequence for iterating over all host addresses in a network. These classes are essential for
+ * applications that perform operations on multiple IP addresses, such as network scanners, IP address management
+ * systems, and other network utilities. The iterators are designed to be flexible and work with both IPv4 and IPv6
+ */
+
 #ifndef IPADDRESS_IP_ADDRESS_ITERATOR_HPP
 #define IPADDRESS_IP_ADDRESS_ITERATOR_HPP
 
