@@ -47,6 +47,7 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="logo.svg"/></td>
   <td id="projectalign">
    <div id="projectname">ipaddress<span id="projectnumber">&#160;1.0.0</span>
    </div>
@@ -900,7 +901,7 @@ $(function(){initNavTree('ip-network-base_8hpp_source.html',''); initResizable()
 <div class="line"><a id="l00778" name="l00778"></a><span class="lineno">  778</span>    <span class="comment">/**</span></div>
 <div class="line"><span class="lineno">  779</span><span class="comment">     * Calculates the total number of addresses in the network.</span></div>
 <div class="line"><span class="lineno">  780</span><span class="comment">     * </span></div>
-<div class="line"><span class="lineno">  781</span><span class="comment">     * @return The total number of addresses in the network as a uint_type value.</span></div>
+<div class="line"><span class="lineno">  781</span><span class="comment">     * @return The total number of addresses in the network as a `uint_type` value.</span></div>
 <div class="line"><span class="lineno">  782</span><span class="comment">     */</span></div>
 <div class="line"><a id="l00783" name="l00783"></a><span class="lineno"><a class="line" href="classipaddress_1_1ip__network__base.html#a60ba25a33fe7de07c4fc1437697fc685">  783</a></span>    <a class="code hl_define" href="config_8hpp.html#a7c6e8e32885550d898b7de8d1fd0e828">IPADDRESS_NODISCARD</a> IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> uint_type <a class="code hl_function" href="classipaddress_1_1ip__network__base.html#a60ba25a33fe7de07c4fc1437697fc685">addresses_count</a>() <span class="keyword">const</span> <a class="code hl_define" href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a> {</div>
 <div class="line"><a id="l00784" name="l00784"></a><span class="lineno">  784</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="classipaddress_1_1ip__network__base.html#a48ce945b11159159d22168fe75fca109">broadcast_address</a><a class="code hl_function" href="classipaddress_1_1ip__network__base.html#a48ce945b11159159d22168fe75fca109">(</a><a class="code hl_function" href="classipaddress_1_1ip__network__base.html#a48ce945b11159159d22168fe75fca109">)</a>.to_uint() - <a class="code hl_function" href="classipaddress_1_1ip__network__base.html#aedf7228c6640584542c7f113cda4c73b">network_address</a><a class="code hl_function" href="classipaddress_1_1ip__network__base.html#aedf7228c6640584542c7f113cda4c73b">(</a><a class="code hl_function" href="classipaddress_1_1ip__network__base.html#aedf7228c6640584542c7f113cda4c73b">)</a>.to_uint() + 1;</div>
