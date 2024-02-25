@@ -1,3 +1,16 @@
+/**
+ * @file      ip-network-iterator.hpp
+ * @brief     Iterator utilities for IP network address ranges
+ * @author    Vladimir Shaleev
+ * @copyright MIT License
+ * 
+ * This header provides iterator classes for traversing and manipulating
+ * IP network address ranges. It includes iterators for iterating over individual
+ * IP addresses within a network, excluding certain subnets, and iterating over
+ * subnets within a larger network. These utilities are essential for applications
+ * that require detailed control over IP address management and enumeration.
+ */
+
 #ifndef IPADDRESS_IP_NETWORK_ITERATOR_HPP
 #define IPADDRESS_IP_NETWORK_ITERATOR_HPP
 
@@ -6,139 +19,359 @@
 
 namespace IPADDRESS_NAMESPACE {
 
+/**
+ * An iterator for traversing IP addresses within a network range.
+ * 
+ * This class template provides a random-access iterator that allows
+ * traversal over a range of IP addresses within a network. It supports
+ * operations typical of random-access iterators, such as increment,
+ * decrement, and direct access to elements at a specific offset.
+ * 
+ * @tparam T The type of IPv4 or IPv6 network to iterate over.
+ */
 template <typename T>
 class ip_network_iterator {
 public:
-    using iterator_category = std::random_access_iterator_tag;
-    using value_type        = T;
-    using difference_type   = std::int64_t;
-    using pointer           = const value_type*;
-    using reference         = const value_type&;
+    using iterator_category = std::random_access_iterator_tag; /**< The category of the iterator. */
+    using value_type        = T; /**< The type of value iterated over. */
+    using difference_type   = std::int64_t; /**< Type to represent the difference between two iterators. */
+    using pointer           = const value_type*; /**< Pointer to the value type. */
+    using reference         = const value_type&; /**< Reference to the value type. */
+ 
+    using ip_address_type   = typename value_type::ip_address_type; /**< The underlying IP address type. */
+    using uint_type         = typename value_type::uint_type; /**< Unsigned integer type used for addressing. */
 
-    using ip_address_type   = typename value_type::ip_address_type;
-    using uint_type         = typename value_type::uint_type;
-
+    /**
+     * Default constructor.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator() IPADDRESS_NOEXCEPT = default;
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator(const ip_network_iterator&) IPADDRESS_NOEXCEPT = default;
+
+    /**
+     * Copy constructor.
+     * 
+     * @param[in] other The ip_network_iterator to copy.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator(const ip_network_iterator& other) IPADDRESS_NOEXCEPT = default;
+
+    /**
+     * Move constructor.
+     * 
+     * @param[in] other The ip_network_iterator to move.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator(ip_network_iterator&&) IPADDRESS_NOEXCEPT = default;
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator& operator=(const ip_network_iterator&) IPADDRESS_NOEXCEPT = default;
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator& operator=(ip_network_iterator&&) IPADDRESS_NOEXCEPT = default;
+    /**
+     * Copy assignment operator.
+     * 
+     * @param[in] other The ip_network_iterator to copy.
+     * @return A reference to the assigned ip_network_iterator.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator& operator=(const ip_network_iterator& other) IPADDRESS_NOEXCEPT = default;
+    
+    /**
+     * Move assignment operator.
+     * 
+     * Moves the value of one ip_network_iterator to another.
+     * 
+     * @param[in] other The ip_network_iterator to move.
+     * @return A reference to the moved ip_network_iterator.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator& operator=(ip_network_iterator&& other) IPADDRESS_NOEXCEPT = default;
 
+    /**
+     * Constructs an iterator with a reference IP address, step size, prefix length, and carry.
+     * 
+     * @param[in] ref The reference IP address for the iterator.
+     * @param[in] step The step size for each iteration.
+     * @param[in] prefixlen The prefix length defining the network.
+     * @param[in] carry An optional carry value for overflow handling.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator(const ip_address_type& ref, const uint_type& step, size_t prefixlen, int carry = 0) IPADDRESS_NOEXCEPT
         : _current(value_type::from_address(ref, prefixlen)), _it(ip_address_iterator<ip_address_type>(ref, carry)), _step(step), _prefixlen(prefixlen) {
     }
 
+    /**
+     * Calculates the difference in the number of elements between this and another ip_network_iterator.
+     * 
+     * @param[in] other The ip_network_iterator to compare with.
+     * @return The number of elements between this and the other iterator.
+     * @remark This is a special function for calculate the difference between iterators, 
+     *         which can correctly represent all addresses using the integer number uint128_t
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint_type uint_diff(const ip_network_iterator& other) const IPADDRESS_NOEXCEPT {
         return _it.uint_diff(other._it) / _step;
     }
 
+    /**
+     * Returns a reference to the current element.
+     * 
+     * @return  A reference to the element pointed to by the iterator.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference operator*() const IPADDRESS_NOEXCEPT {
         return _current;
     }
 
+    /**
+     * Returns a pointer to the current element.
+     * 
+     * @return  A pointer to the element pointed to by the iterator.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE pointer operator->() const IPADDRESS_NOEXCEPT {
         return &_current;
     }
 
+    /**
+     * Accesses an element by index.
+     * 
+     * @param[in] n The index of the element.
+     * @return The element at the specified index.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type operator[](difference_type n) const IPADDRESS_NOEXCEPT {
         const auto& it = *this;
         return it[uint_type(n)];
     }
 
+    /**
+     * Accesses an element by index.
+     * 
+     * @param[in] n The index of the element.
+     * @return The element at the specified index.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type operator[](const uint_type& n) const IPADDRESS_NOEXCEPT {
         const auto address = _it + _step * n;
         return value_type::from_address(*address, _prefixlen);
     }
 
+    /**
+     * Pre-increment operator.
+     * 
+     * Increments the iterator to the next element.
+     * 
+     * @return A reference to the incremented iterator.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator& operator++() IPADDRESS_NOEXCEPT {
         add(1);
         return *this;
     }
 
+    /**
+     * Post-increment operator.
+     * 
+     * Increments the iterator to the next element and returns the iterator before the increment.
+     * 
+     * @return The iterator before the increment.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator operator++(int) IPADDRESS_NOEXCEPT {
         auto tmp = *this;
         ++(*this);
         return tmp;
     }
 
+    /**
+     * Pre-decrement operator.
+     * 
+     * Decrements the iterator to the previous element.
+     * 
+     * @return A reference to the decremented iterator.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator& operator--() IPADDRESS_NOEXCEPT {
         sub(1);
         return *this;
     }
 
+    /**
+     * Post-decrement operator.
+     * 
+     * Decrements the iterator to the previous element and returns the iterator before the decrement.
+     * 
+     * @return The iterator before the decrement.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator operator--(int) IPADDRESS_NOEXCEPT {
         auto tmp = *this;
         --(*this);
         return tmp;
     }
 
+    /**
+     * Addition assignment operator.
+     * 
+     * Adds a difference_type value to the iterator.
+     * 
+     * @param[in] n The number to add.
+     * @return A reference to the updated iterator.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator& operator+=(difference_type n) IPADDRESS_NOEXCEPT {
         add(n);
         return *this;
     }
 
+    /**
+     * Addition assignment operator.
+     * 
+     * Adds a uint_type value to the iterator.
+     * 
+     * @param[in] n The number to add.
+     * @return A reference to the updated iterator.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator& operator+=(const uint_type& n) IPADDRESS_NOEXCEPT {
         add(n);
         return *this;
     }
 
+    /**
+     * Subtraction assignment operator.
+     * 
+     * Subtracts a difference_type value from the iterator.
+     * 
+     * @param[in] n The number to subtract.
+     * @return A reference to the updated iterator.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator& operator-=(difference_type n) IPADDRESS_NOEXCEPT {
         sub(n);
         return *this;
     }
 
+    /**
+     * Subtraction assignment operator.
+     * 
+     * Subtracts a uint_type value from the iterator.
+     * 
+     * @param[in] n The number to subtract.
+     * @return A reference to the updated iterator.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator& operator-=(const uint_type& n) IPADDRESS_NOEXCEPT {
         sub(n);
         return *this;
     }
 
+    /**
+     * Addition operator.
+     * 
+     * Creates a new iterator that is the sum of the iterator and a difference_type value.
+     * 
+     * @param[in] n The number to add.
+     * @return A new iterator that is the sum of the iterator and the number.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator operator+(difference_type n) const IPADDRESS_NOEXCEPT {
         auto tmp = *this;
         tmp += n;
         return tmp;
     }
 
+    /**
+     * Addition operator.
+     * 
+     * Creates a new iterator that is the sum of the iterator and a uint_type value.
+     * 
+     * @param[in] n The number to add.
+     * @return A new iterator that is the sum of the iterator and the number.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator operator+(const uint_type& n) const IPADDRESS_NOEXCEPT {
         auto tmp = *this;
         tmp += n;
         return tmp;
     }
 
+    /**
+     * Addition operator.
+     * 
+     * Creates a new iterator that is the sum of a difference_type value and the iterator.
+     * 
+     * @param[in] n The number to add.
+     * @param[in] it The iterator to add the number to.
+     * @return A new iterator that is the sum of the number and the iterator.
+     */
     IPADDRESS_NODISCARD friend IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator operator+(difference_type n, const ip_network_iterator& it) IPADDRESS_NOEXCEPT {
         return it + n;
     }
 
+    /**
+     * Addition operator.
+     * 
+     * Creates a new iterator that is the sum of a uint_type value and the iterator.
+     * 
+     * @param[in] n The number to add.
+     * @param[in] it The iterator to add the number to.
+     * @return A new iterator that is the sum of the number and the iterator.
+     */
     IPADDRESS_NODISCARD friend IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator operator+(const uint_type& n, const ip_network_iterator& it) IPADDRESS_NOEXCEPT {
         return it + n;
     }
 
+    /**
+     * Subtraction operator.
+     * 
+     * Creates a new iterator that is the difference of the iterator and a difference_type value.
+     * 
+     * @param[in] n The number to subtract.
+     * @return A new iterator that is the difference of the iterator and the number.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator operator-(difference_type n) const IPADDRESS_NOEXCEPT {
         auto tmp = *this;
         tmp -= n;
         return tmp;
     }
 
+    /**
+     * Subtraction operator.
+     * 
+     * Creates a new iterator that is the difference of the iterator and a uint_type value.
+     * 
+     * @param[in] n The number to subtract.
+     * @return A new iterator that is the difference of the iterator and the number.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator operator-(const uint_type& n) const IPADDRESS_NOEXCEPT {
         auto tmp = *this;
         tmp -= n;
         return tmp;
     }
 
+    /**
+     * Subtraction operator.
+     * 
+     * Calculates the difference in the number of elements between this and another ip_network_iterator.
+     * 
+     * @param[in] other The ip_network_iterator to compare with.
+     * @return The number of elements between this and the other iterator.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE difference_type operator-(const ip_network_iterator& other) const IPADDRESS_NOEXCEPT {
         return difference_type(_it - other._it);
     }
 
+    /**
+     * Equality operator.
+     * 
+     * Compares two ip_network_iterators for equality.
+     * 
+     * @param[in] other The ip_network_iterator to compare with.
+     * @return `true` if the iterators are equal, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(const ip_network_iterator& other) const IPADDRESS_NOEXCEPT {
         return _it._carry == other._it._carry && _current == other._current;
     }
 
+    /**
+     * Inequality operator.
+     * 
+     * Compares two ip_network_iterators for inequality.
+     * 
+     * @param[in] other The ip_network_iterator to compare with.
+     * @return `true` if the iterators are not equal, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(const ip_network_iterator& other) const IPADDRESS_NOEXCEPT {
         return !(*this == other);
     }
 
 #ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
 
+    /**
+     * Three-way comparison operator (spaceship operator).
+     * 
+     * Compares two ip_network_iterators for ordering using the spaceship operator.
+     * 
+     * @param[in] other The ip_network_iterator to compare with.
+     * @return The result of the comparison as a std::strong_ordering value.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const ip_network_iterator& other) const IPADDRESS_NOEXCEPT {
         if (const auto result = _it._carry <=> other._it._carry; result == std::strong_ordering::equivalent) {
             return _current <=> other._current;
@@ -149,18 +382,50 @@ public:
 
 #else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
+    /**
+     * Less-than operator.
+     * 
+     * Compares two ip_network_iterators to determine if the left one is less than the right one.
+     * 
+     * @param[in] other The ip_network_iterator to compare with.
+     * @return `true` if the left iterator is less than the right iterator, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(const ip_network_iterator& other) const IPADDRESS_NOEXCEPT {
         return _it._carry < other._it._carry || (_it._carry == other._it._carry && _current < other._current);
     }
 
+    /**
+     * Less-than-or-equal-to operator.
+     * 
+     * Compares two ip_network_iterators to determine if the left one is less than or equal to the right one.
+     * 
+     * @param[in] other The ip_network_iterator to compare with.
+     * @return `true` if the left iterator is less than or equal to the right iterator, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(const ip_network_iterator& other) const IPADDRESS_NOEXCEPT {
         return !(other < *this);
     }
 
+    /**
+     * Greater-than operator.
+     * 
+     * Compares two ip_network_iterators to determine if the left one is greater than the right one.
+     * 
+     * @param[in] other The ip_network_iterator to compare with.
+     * @return `true` if the left iterator is greater than the right iterator, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(const ip_network_iterator& other) const IPADDRESS_NOEXCEPT {
         return other < *this;
     }
 
+    /**
+     * Greater-than-or-equal-to operator.
+     * 
+     * Compares two ip_network_iterators to determine if the left one is greater than or equal to the right one.
+     * 
+     * @param[in] other The ip_network_iterator to compare with.
+     * @return `true` if the left iterator is greater than or equal to the right iterator, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(const ip_network_iterator& other) const IPADDRESS_NOEXCEPT {
         return !(*this < other);
     }
