@@ -445,7 +445,7 @@ public:
      * It populates the provided error_code object instead of throwing.
      * 
      * @param[in] address The IP address to use for creating the network.
-     * @param[in] code An error_code object that will be set if an error occurs.
+     * @param[out] code An error_code object that will be set if an error occurs.
      * @param[in] prefixlen The prefix length for the network's netmask. Defaults to the maximum prefix length.
      * @param[in] strict Whether to validate the address against the netmask.
      * @return An ip network object representing the network, or an object in an error state if an error occurs.

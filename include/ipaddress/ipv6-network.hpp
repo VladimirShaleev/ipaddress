@@ -89,9 +89,9 @@ using ipv6_network = ip_network_base<ipv6_network_base>;
      * This operator allows the creation of ipv6_network objects using a string literal with the
      * `_ipv6_net` suffix.
      * 
-     * @param     address The string literal representing the IPv6 network.
-     * @param     size The size of the string literal.
-     * @return    An ipv6_network object representing the network specified by the string literal.
+     * @param[in] address The string literal representing the IPv6 network.
+     * @param[in] size The size of the string literal.
+     * @return An ipv6_network object representing the network specified by the string literal.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_network operator""_ipv6_net(const char* address, std::size_t size) IPADDRESS_NOEXCEPT {
         assert(size <= ipv6_network::base_max_string_len + 4 && "literal string is too long");
@@ -108,9 +108,9 @@ using ipv6_network = ip_network_base<ipv6_network_base>;
      * This operator allows the creation of ipv6_network objects using a string literal with the
      * `_ipv6_net` suffix.
      * 
-     * @param     address The string literal representing the IPv6 network.
-     * @param     size The size of the string literal.
-     * @return    An ipv6_network object representing the network specified by the string literal.
+     * @param[in] address The string literal representing the IPv6 network.
+     * @param[in] size The size of the string literal.
+     * @return An ipv6_network object representing the network specified by the string literal.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_network operator""_ipv6_net(const wchar_t* address, std::size_t size) IPADDRESS_NOEXCEPT {
         assert(size <= ipv6_network::base_max_string_len + 4 && "literal string is too long");
@@ -127,9 +127,9 @@ using ipv6_network = ip_network_base<ipv6_network_base>;
      * This operator allows the creation of ipv6_network objects using a string literal with the
      * `_ipv6_net` suffix.
      * 
-     * @param     address The string literal representing the IPv6 network.
-     * @param     size The size of the string literal.
-     * @return    An ipv6_network object representing the network specified by the string literal.
+     * @param[in] address The string literal representing the IPv6 network.
+     * @param[in] size The size of the string literal.
+     * @return An ipv6_network object representing the network specified by the string literal.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_network operator""_ipv6_net(const char32_t* address, std::size_t size) IPADDRESS_NOEXCEPT {
         assert(size <= ipv6_network::base_max_string_len + 4 && "literal string is too long");

@@ -73,9 +73,9 @@ using ipv4_network = ip_network_base<ipv4_network_base>;
      * This operator allows the creation of ipv4_network objects using a string literal with the
      * `_ipv4_net` suffix.
      * 
-     * @param     address The string literal representing the IPv4 network.
-     * @param     size The size of the string literal.
-     * @return    An ipv4_network object representing the network specified by the string literal.
+     * @param[in] address The string literal representing the IPv4 network.
+     * @param[in] size The size of the string literal.
+     * @return An ipv4_network object representing the network specified by the string literal.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_network operator""_ipv4_net(const char* address, std::size_t size) IPADDRESS_NOEXCEPT {
         assert(size <= ipv4_network::base_max_string_len * 2 + 1 && "literal string is too long");
@@ -92,9 +92,9 @@ using ipv4_network = ip_network_base<ipv4_network_base>;
      * This operator allows the creation of ipv4_network objects using a string literal with the
      * `_ipv4_net` suffix.
      * 
-     * @param     address The string literal representing the IPv4 network.
-     * @param     size The size of the string literal.
-     * @return    An ipv4_network object representing the network specified by the string literal.
+     * @param[in] address The string literal representing the IPv4 network.
+     * @param[in] size The size of the string literal.
+     * @return An ipv4_network object representing the network specified by the string literal.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_network operator""_ipv4_net(const wchar_t* address, std::size_t size) IPADDRESS_NOEXCEPT {
         assert(size <= ipv4_network::base_max_string_len * 2 + 1 && "literal string is too long");
@@ -111,9 +111,9 @@ using ipv4_network = ip_network_base<ipv4_network_base>;
      * This operator allows the creation of ipv4_network objects using a string literal with the
      * `_ipv4_net` suffix.
      * 
-     * @param     address The string literal representing the IPv4 network.
-     * @param     size The size of the string literal.
-     * @return    An ipv4_network object representing the network specified by the string literal.
+     * @param[in] address The string literal representing the IPv4 network.
+     * @param[in] size The size of the string literal.
+     * @return An ipv4_network object representing the network specified by the string literal.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_network operator""_ipv4_net(const char16_t* address, std::size_t size) IPADDRESS_NOEXCEPT {
         assert(size <= ipv4_network::base_max_string_len * 2 + 1 && "literal string is too long");
@@ -130,9 +130,9 @@ using ipv4_network = ip_network_base<ipv4_network_base>;
      * This operator allows the creation of ipv4_network objects using a string literal with the
      * `_ipv4_net` suffix.
      * 
-     * @param     address The string literal representing the IPv4 network.
-     * @param     size The size of the string literal.
-     * @return    An ipv4_network object representing the network specified by the string literal.
+     * @param[in] address The string literal representing the IPv4 network.
+     * @param[in] size The size of the string literal.
+     * @return An ipv4_network object representing the network specified by the string literal.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_network operator""_ipv4_net(const char32_t* address, std::size_t size) IPADDRESS_NOEXCEPT {
         assert(size <= ipv4_network::base_max_string_len * 2 + 1 && "literal string is too long");

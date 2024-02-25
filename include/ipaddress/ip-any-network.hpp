@@ -680,6 +680,20 @@ public:
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network(const ipv6_network& net6) IPADDRESS_NOEXCEPT : _ipv_net(net6), _version(ip_version::V6) {
     }
 
+    /**
+     * Creates an ip network object from a given IP address and prefix length.
+     * 
+     * This static method constructs an ip network object representing the network
+     * that includes the given IP address, with the specified prefix length. If 'strict' is true,
+     * the address is validated against the netmask.
+     * 
+     * @param[in] address The IP address to use for creating the network.
+     * @param[in] prefixlen The prefix length for the network's netmask. *Defaults to the maximum prefix length*.
+     * @param[in] strict Whether to validate the address against the netmask.
+     * @return An ip_network object representing the network.
+     * @throw parse_error Exception caused by invalid input string.
+     * @remark May throw an exception if the address does not conform to the netmask when \a strict is `true`.
+     */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network from_address(
         const ip_address& address, 
         size_t prefixlen, 
@@ -690,6 +704,18 @@ public:
             : ip_network(ipv6_network::from_address(address.v6().value(), prefixlen, strict));
     }
 
+    /**
+     * Creates an ip network object from a given IP address and prefix length, with error handling.
+     * 
+     * Similar to the from_address method above, but this version allows for error handling without exceptions.
+     * It populates the provided error_code object instead of throwing.
+     * 
+     * @param[in] address The IP address to use for creating the network.
+     * @param[out] code An error_code object that will be set if an error occurs.
+     * @param[in] prefixlen The prefix length for the network's netmask. Defaults to the maximum prefix length.
+     * @param[in] strict Whether to validate the address against the netmask.
+     * @return An ip_network object representing the network, or an object in an error state if an error occurs.
+     */
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network from_address(
         const ip_address& address, 
         error_code& code, 
@@ -701,10 +727,27 @@ public:
             : ip_network(ipv6_network::from_address(address.v6().value(), code, prefixlen, strict));
     }
 
+    /**
+     * Converts the network to a string representation.
+     * 
+     * This method returns a string representation of the network, combining the network address
+     * and the prefix length, formatted according to the specified format.
+     * 
+     * @param[in] fmt The format to use for the string representation. *Defaults to format::compressed*.
+     * @return A string representation of the network.
+     */
     IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string to_string(format fmt = format::compressed) const {
         return is_v4() ? _ipv_net.ipv4.to_string(fmt) : _ipv_net.ipv6.to_string(fmt);
     }
 
+    /**
+     * Swaps the contents of this network with another network.
+     * 
+     * This method exchanges the network address, netmask, and prefix length with those of another
+     * ip network object.
+     * 
+     * @param[in,out] network The other ip_network object to swap contents with.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void swap(ip_network& net) IPADDRESS_NOEXCEPT {
         const auto tmp = *this;
         *this = net;
