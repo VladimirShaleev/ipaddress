@@ -1,3 +1,22 @@
+/**
+ * @file      ip-any-network.hpp
+ * @brief     Defines the ip_network class for representing both IPv4 and IPv6 networks
+ * @author    Vladimir Shaleev
+ * @copyright MIT License
+ * 
+ * This file includes the definition of the ip_network class, which is a versatile
+ * representation of an IP network that can handle both IPv4 and IPv6 addresses.
+ * It provides methods to retrieve network properties such as the network and broadcast
+ * addresses, netmask, and hostmask, as well as to check for various types of networks
+ * like multicast, private, global, reserved, loopback, link-local, unspecified,
+ * site-local and etc.
+ * 
+ * It integrates the ipv4_network and 
+ * ipv6_network classes through a union, ensuring optimal space usage while maintaining 
+ * the ability to represent both IP networks versions. This file is part of a larger library 
+ * that aims to provide comprehensive support for network operations.
+ */
+
 #ifndef IPADDRESS_IP_ANY_NETWORK_HPP
 #define IPADDRESS_IP_ANY_NETWORK_HPP
 
@@ -42,10 +61,19 @@ struct net_any_parser {
 
 } // namespace internal
 
+/**
+ * A class that encapsulates both IPv4 and IPv6 network functionalities.
+ * 
+ * The ip_network class serves as a versatile tool for network address manipulation,
+ * capable of handling both IPv4 and IPv6 networks. It abstracts the complexities associated
+ * with the different IP versions and provides a consistent API for network operations.
+ * This class is essential for applications that require flexibility in dealing with
+ * various IP network types without concern for the underlying IP version.
+ */
 class ip_network {
 public:
-    using ip_address_type = ip_address;
-    using uint_type = uint128_t;
+    using ip_address_type = ip_address; /**< Type alias for ip_address, representing the IP address within the network. */
+    using uint_type = uint128_t; /**< Type alias for a 128-bit unsigned integer type. */
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_version version() const IPADDRESS_NOEXCEPT {
         return _version;
