@@ -20,72 +20,183 @@
 
 namespace IPADDRESS_NAMESPACE {
 
+/**
+ * A reverse iterator template class for IP addresses.
+ * 
+ * The ip_reverse_iterator class template provides reverse iteration capabilities over a range of IP addresses.
+ * It is designed to work with both IPv4 and IPv6 addresses, allowing for backward traversal of IP address sequences.
+ * This class template is particularly useful in scenarios where IP addresses need to be processed in reverse order,
+ * such as deallocating IP addresses in a network. The ip_reverse_iterator leverages underlying iterator functionality
+ * to provide a robust and flexible mechanism for reverse IP address iteration.
+ * 
+ * @tparam Iterator The underlying iterator type over which this reverse iterator operates.
+ */
 template <typename Iterator>
 class ip_reverse_iterator {
 public:
 #ifdef IPADDRESS_HAS_CONCEPTS
-    using iterator_concept  = std::random_access_iterator_tag;
+    using iterator_concept  = std::random_access_iterator_tag; /**< The iterator concept, defined if concepts are available. */
 #endif
-    using iterator_category = typename std::iterator_traits<Iterator>::iterator_category;
-    using iterator_type	    = Iterator;
-    using value_type        = typename std::iterator_traits<Iterator>::value_type;
-    using difference_type   = typename std::iterator_traits<Iterator>::difference_type;
-    using pointer           = typename std::iterator_traits<Iterator>::pointer;
-    using reference         = typename std::iterator_traits<Iterator>::reference;
+    using iterator_category = typename std::iterator_traits<Iterator>::iterator_category; /**< The category of the iterator. */
+    using iterator_type	    = Iterator; /**< The underlying iterator type. */
+    using value_type        = typename std::iterator_traits<Iterator>::value_type; /**< The type of the values iterated over. */
+    using difference_type   = typename std::iterator_traits<Iterator>::difference_type; /**< The type representing the difference between two iterators. */
+    using pointer           = typename std::iterator_traits<Iterator>::pointer; /**< The pointer type of the iterated values. */
+    using reference         = typename std::iterator_traits<Iterator>::reference; /**< The reference type of the iterated values. */
 
-    using uint_type         = typename Iterator::uint_type;
+    using uint_type         = typename Iterator::uint_type; /**< The unsigned integer type used by the iterator. */
 
+    /**
+     * Default constructor.
+     * 
+     * Constructs an ip_reverse_iterator that points to no object.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator() IPADDRESS_NOEXCEPT = default;
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator(const ip_reverse_iterator&) IPADDRESS_NOEXCEPT = default;
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator(ip_reverse_iterator&&) IPADDRESS_NOEXCEPT = default;
+    
+    /**
+     * Copy constructor.
+     * 
+     * Constructs an ip_reverse_iterator as a copy of another ip_reverse_iterator.
+     * 
+     * @param[in] other The ip_reverse_iterator to copy.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator(const ip_reverse_iterator& other) IPADDRESS_NOEXCEPT = default;
+    
+    /**
+     * Move constructor.
+     * 
+     * Constructs an ip_reverse_iterator by moving another ip_reverse_iterator.
+     * 
+     * @param[in] other The ip_reverse_iterator to move.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator(ip_reverse_iterator&& other) IPADDRESS_NOEXCEPT = default;
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator& operator=(const ip_reverse_iterator&) IPADDRESS_NOEXCEPT = default;
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator& operator=(ip_reverse_iterator&&) IPADDRESS_NOEXCEPT = default;
+    /**
+     * Copy assignment operator.
+     * 
+     * Assigns the value of one ip_reverse_iterator to another.
+     * 
+     * @param[in] other The ip_reverse_iterator to copy.
+     * @return A reference to the assigned ip_reverse_iterator.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator& operator=(const ip_reverse_iterator& other) IPADDRESS_NOEXCEPT = default;
+    
+    /**
+     * Move assignment operator.
+     * 
+     * Moves the value of one ip_reverse_iterator to another.
+     * 
+     * @param[in] other The ip_reverse_iterator to move.
+     * @return A reference to the moved ip_reverse_iterator.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator& operator=(ip_reverse_iterator&& other) IPADDRESS_NOEXCEPT = default;
 
+    /**
+     * Constructs an ip_reverse_iterator from an underlying iterator.
+     * 
+     * Creates an ip_reverse_iterator that is the reverse of the given iterator.
+     * 
+     * @param[in] it The underlying iterator to reverse.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit ip_reverse_iterator(Iterator it) IPADDRESS_NOEXCEPT
         : _it(it.reverse()) {
     }
 
+    /**
+     * Calculates the difference in the number of elements between this and another ip_reverse_iterator.
+     * 
+     * @param[in] other The ip_reverse_iterator to compare with.
+     * @return The number of elements between this and the other iterator.
+     * @remark This is a special function for calculate the difference between iterators, 
+     *         which can correctly represent all addresses using the integer number uint128_t
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint_type uint_diff(const ip_reverse_iterator& other) const IPADDRESS_NOEXCEPT {
         return other._it.uint_diff(_it);
     }
 
+    /**
+     * Returns the underlying base iterator.
+     * 
+     * @return The base iterator.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE iterator_type base() const IPADDRESS_NOEXCEPT {
         return _it.base();
     }
 
+    /**
+     * Returns a reference to the current element.
+     * 
+     * @return  A reference to the element pointed to by the iterator.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference operator*() const IPADDRESS_NOEXCEPT {
         return *_it;
     }
 
+    /**
+     * Returns a pointer to the current element.
+     * 
+     * @return  A pointer to the element pointed to by the iterator.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE pointer operator->() const IPADDRESS_NOEXCEPT {
         return &*_it;
     }
 
+    /**
+     * Accesses an element by index.
+     * 
+     * @param[in] n The index of the element.
+     * @return The element at the specified index.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type operator[](difference_type n) const IPADDRESS_NOEXCEPT {
         return *(_it - n);
     }
 
+    /**
+     * Accesses an element by index.
+     * 
+     * @param[in] n The index of the element.
+     * @return The element at the specified index.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type operator[](const uint_type& n) const IPADDRESS_NOEXCEPT {
         return *(_it - n);
     }
 
+    /**
+     * Pre-increment operator.
+     * 
+     * @return A reference to the incremented iterator.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator& operator++() IPADDRESS_NOEXCEPT {
         --_it;
         return *this;
     }
 
+    /**
+     * Post-increment operator.
+     * 
+     * @return The iterator before incrementing.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator operator++(int) IPADDRESS_NOEXCEPT {
         auto tmp = *this;
         ++(*this);
         return tmp;
     }
 
+    /**
+     * Pre-decrement operator.
+     * 
+     * @return A reference to the decremented iterator.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator& operator--() IPADDRESS_NOEXCEPT {
         ++_it;
         return *this;
     }
 
+    /**
+     * Post-decrement operator.
+     * 
+     * @return The iterator before decrementing.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator operator--(int) IPADDRESS_NOEXCEPT {
         auto tmp = *this;
         --(*this);

@@ -746,7 +746,7 @@ public:
      * This method exchanges the network address, netmask, and prefix length with those of another
      * ip network object.
      * 
-     * @param[in,out] network The other ip_network object to swap contents with.
+     * @param[in,out] net The other ip_network object to swap contents with.
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void swap(ip_network& net) IPADDRESS_NOEXCEPT {
         const auto tmp = *this;
