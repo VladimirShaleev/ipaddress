@@ -7,174 +7,178 @@ on:
 
 jobs:
 
-  # clang:
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       clang: [ 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 ]
-  #       stdlib: [ "libc++", "libstdc++" ]
-  #       standard: [ 11, 14, 17, 20, 23 ]
-  #       exception: [ "-fexceptions" ]
-  #       exclude:
-  #         - clang: 6
-  #           stdlib: libc++
-  #         - clang: 6
-  #           standard: 20
-  #         - clang: 6
-  #           standard: 23
-  #         - clang: 7
-  #           stdlib: libstdc++
-  #           standard: 20
-  #         - clang: 7
-  #           stdlib: libstdc++
-  #           standard: 23
-  #         - clang: 8
-  #           stdlib: libstdc++
-  #           standard: 20
-  #         - clang: 8
-  #           stdlib: libstdc++
-  #           standard: 23
-  #         - clang: 12
-  #           stdlib: libc++
-  #       include:
-  #         - clang: 6
-  #           stdlib: "libc++"
-  #           standard: 11
-  #           exception: "-fno-exceptions"
-  #         - clang: 17
-  #           stdlib: "libstdc++"
-  #           standard: 23
-  #           exception: "-fno-exceptions"
-  #   name: "Clang ${{ matrix.clang }} [C++${{ matrix.standard }}, ${{ matrix.stdlib }}, ${{ matrix.exception }}]"
-  #   runs-on: ubuntu-20.04
-  #   steps:
-  #     - name: "Install Clang"
-  #       uses: egor-tensin/setup-clang@v1
-  #       with:
-  #         version: ${{ matrix.clang }}
-  #     - name: "Install libc++"
-  #       if: ${{ matrix.stdlib == 'libc++' }}
-  #       run: sudo apt-get install libc++abi-${{ matrix.clang }}-dev libc++1-${{ matrix.clang }} libc++-${{ matrix.clang }}-dev
+  # Clang tests
+  clang:
+    strategy:
+      fail-fast: false
+      matrix:
+        clang: [ 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 ]
+        stdlib: [ "libc++", "libstdc++" ]
+        standard: [ 11, 14, 17, 20, 23 ]
+        exception: [ "-fexceptions" ]
+        exclude:
+          - clang: 6
+            stdlib: libc++
+          - clang: 6
+            standard: 20
+          - clang: 6
+            standard: 23
+          - clang: 7
+            stdlib: libstdc++
+            standard: 20
+          - clang: 7
+            stdlib: libstdc++
+            standard: 23
+          - clang: 8
+            stdlib: libstdc++
+            standard: 20
+          - clang: 8
+            stdlib: libstdc++
+            standard: 23
+          - clang: 12
+            stdlib: libc++
+        include:
+          - clang: 6
+            stdlib: "libc++"
+            standard: 11
+            exception: "-fno-exceptions"
+          - clang: 17
+            stdlib: "libstdc++"
+            standard: 23
+            exception: "-fno-exceptions"
+    name: "Clang ${{ matrix.clang }} [C++${{ matrix.standard }}, ${{ matrix.stdlib }}, ${{ matrix.exception }}]"
+    runs-on: ubuntu-20.04
+    steps:
+      - name: "Install Clang"
+        uses: egor-tensin/setup-clang@v1
+        with:
+          version: ${{ matrix.clang }}
+      - name: "Install libc++"
+        if: ${{ matrix.stdlib == 'libc++' }}
+        run: sudo apt-get install libc++abi-${{ matrix.clang }}-dev libc++1-${{ matrix.clang }} libc++-${{ matrix.clang }}-dev
 
-  #     - uses: actions/checkout@v3
-  #     - run: c++ -v
-  #     - name: Set reusable strings
-  #       id: strings
-  #       shell: bash
-  #       run: |
-  #         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
-  # 
-  #     - name: Configure CMake
-  #       run: >
-  #         cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }}
-  #         -DCMAKE_CXX_STANDARD=${{ matrix.standard }}
-  #         -DCMAKE_CXX_FLAGS="-stdlib=${{ matrix.stdlib }} ${{ matrix.exception }}"
-  #         -DCMAKE_CXX_COMPILER=c++
-  #         -DCMAKE_BUILD_TYPE=Release
-  #         -DIPADDRESS_BUILD_TESTS=ON
-  #         -DIPADDRESS_BUILD_DOC=OFF
-  #         -DIPADDRESS_BUILD_PACKAGES=OFF
-  #         -DIPADDRESS_NO_EXCEPTIONS=${{ matrix.exception == '-fno-exceptions' }}
-
-  #     - name: Build
-  #       run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
-  #     
-  #     - name: Run tests
-  #       run: ctest --output-on-failure --test-dir ${{ steps.strings.outputs.build-output-dir }}
+      - uses: actions/checkout@v3
+      - run: c++ -v
+      - name: Set reusable strings
+        id: strings
+        shell: bash
+        run: |
+          echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
   
-  # appleclang:
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       macos: [ 11, 12, 13 ]
-  #       standard: [ 11, 14, 17, 20, 23 ]
-  #       exception: [ "-fexceptions" ]
-  #       include:
-  #         - macos: 11
-  #           standard: 11
-  #           exception: "-fno-exceptions"
-  #         - macos: 11
-  #           standard: 23
-  #           exception: "-fno-exceptions"
+      - name: Configure CMake
+        run: >
+          cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }}
+          -DCMAKE_CXX_STANDARD=${{ matrix.standard }}
+          -DCMAKE_CXX_FLAGS="-stdlib=${{ matrix.stdlib }} ${{ matrix.exception }}"
+          -DCMAKE_CXX_COMPILER=c++
+          -DCMAKE_BUILD_TYPE=Release
+          -DIPADDRESS_BUILD_TESTS=ON
+          -DIPADDRESS_BUILD_DOC=OFF
+          -DIPADDRESS_BUILD_PACKAGES=OFF
+          -DIPADDRESS_NO_EXCEPTIONS=${{ matrix.exception == '-fno-exceptions' }}
 
-  #   name: "AppleClang MacOS ${{ matrix.macos }} [C++${{ matrix.standard }}, ${{ matrix.exception }}]"
-  #   runs-on: macos-${{ matrix.macos }}
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - run: c++ -v
-  #     
-  #     - name: Set reusable strings
-  #       id: strings
-  #       shell: bash
-  #       run: |
-  #         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
-
-  #     - name: Configure CMake
-  #       run: >
-  #         cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }}
-  #         -DCMAKE_CXX_STANDARD=${{ matrix.standard }}
-  #         -DCMAKE_CXX_COMPILER=c++
-  #         -DCMAKE_CXX_FLAGS=${{ matrix.exception }}
-  #         -DCMAKE_BUILD_TYPE=Release
-  #         -DIPADDRESS_BUILD_TESTS=ON
-  #         -DIPADDRESS_BUILD_DOC=OFF
-  #         -DIPADDRESS_BUILD_PACKAGES=OFF
-  #         -DIPADDRESS_NO_EXCEPTIONS=${{ matrix.exception == '-fno-exceptions' }}
-
-  #     - name: Build
-  #       run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
-  #     
-  #     - name: Run tests
-  #       run: ctest --output-on-failure --test-dir ${{ steps.strings.outputs.build-output-dir }}
+      - name: Build
+        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
+      
+      - name: Run tests
+        run: ctest --output-on-failure --test-dir ${{ steps.strings.outputs.build-output-dir }}
   
-  # gcc:
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       gcc: [ 7, 8, 9, 10, 11, 13 ]
-  #       standard: [ 11, 14, 17, 20, 23 ]
-  #       exception: [ "-fexceptions" ]
-  #       include:
-  #         - gcc: 7
-  #           standard: 11
-  #           exception: "-fno-exceptions"
-  #         - gcc: 13
-  #           standard: 23
-  #           exception: "-fno-exceptions"
-  #   name: "GCC ${{ matrix.gcc }} [C++${{ matrix.standard }}, ${{ matrix.exception }}]"
-  #   runs-on: ubuntu-20.04
-  #   steps:
-  #     - name: "Install GCC"
-  #       uses: egor-tensin/setup-gcc@v1
-  #       with:
-  #         version: ${{ matrix.gcc }}
-  #     
-  #     - uses: actions/checkout@v3
-  #     - run: c++ -v
-  #     - name: Set reusable strings
-  #       id: strings
-  #       shell: bash
-  #       run: |
-  #         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
-  #     
-  #     - name: Configure CMake
-  #       run: >
-  #         cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }}
-  #         -DCMAKE_CXX_STANDARD=${{ matrix.standard }}
-  #         -DCMAKE_CXX_COMPILER=c++
-  #         -DCMAKE_CXX_FLAGS=${{ matrix.exception }}
-  #         -DCMAKE_BUILD_TYPE=Release
-  #         -DIPADDRESS_BUILD_TESTS=ON
-  #         -DIPADDRESS_BUILD_DOC=OFF
-  #         -DIPADDRESS_BUILD_PACKAGES=OFF
-  #         -DIPADDRESS_NO_EXCEPTIONS=${{ matrix.exception == '-fno-exceptions' }}
-  # 
-  #     - name: Build
-  #       run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
-  #     
-  #     - name: Run tests
-  #       run: ctest --output-on-failure --test-dir ${{ steps.strings.outputs.build-output-dir }}
+  # Apple Clang tests
+  appleclang:
+    strategy:
+      fail-fast: false
+      matrix:
+        macos: [ 11, 12, 13 ]
+        standard: [ 11, 14, 17, 20, 23 ]
+        exception: [ "-fexceptions" ]
+        include:
+          - macos: 11
+            standard: 11
+            exception: "-fno-exceptions"
+          - macos: 11
+            standard: 23
+            exception: "-fno-exceptions"
 
+    name: "AppleClang MacOS ${{ matrix.macos }} [C++${{ matrix.standard }}, ${{ matrix.exception }}]"
+    runs-on: macos-${{ matrix.macos }}
+    steps:
+      - uses: actions/checkout@v3
+      - run: c++ -v
+      
+      - name: Set reusable strings
+        id: strings
+        shell: bash
+        run: |
+          echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+
+      - name: Configure CMake
+        run: >
+          cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }}
+          -DCMAKE_CXX_STANDARD=${{ matrix.standard }}
+          -DCMAKE_CXX_COMPILER=c++
+          -DCMAKE_CXX_FLAGS=${{ matrix.exception }}
+          -DCMAKE_BUILD_TYPE=Release
+          -DIPADDRESS_BUILD_TESTS=ON
+          -DIPADDRESS_BUILD_DOC=OFF
+          -DIPADDRESS_BUILD_PACKAGES=OFF
+          -DIPADDRESS_NO_EXCEPTIONS=${{ matrix.exception == '-fno-exceptions' }}
+
+      - name: Build
+        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
+      
+      - name: Run tests
+        run: ctest --output-on-failure --test-dir ${{ steps.strings.outputs.build-output-dir }}
+  
+  # GCC tests
+  gcc:
+    strategy:
+      fail-fast: false
+      matrix:
+        gcc: [ 7, 8, 9, 10, 11, 13 ]
+        standard: [ 11, 14, 17, 20, 23 ]
+        exception: [ "-fexceptions" ]
+        include:
+          - gcc: 7
+            standard: 11
+            exception: "-fno-exceptions"
+          - gcc: 13
+            standard: 23
+            exception: "-fno-exceptions"
+    name: "GCC ${{ matrix.gcc }} [C++${{ matrix.standard }}, ${{ matrix.exception }}]"
+    runs-on: ubuntu-20.04
+    steps:
+      - name: "Install GCC"
+        uses: egor-tensin/setup-gcc@v1
+        with:
+          version: ${{ matrix.gcc }}
+      
+      - uses: actions/checkout@v3
+      - run: c++ -v
+      - name: Set reusable strings
+        id: strings
+        shell: bash
+        run: |
+          echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+      
+      - name: Configure CMake
+        run: >
+          cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }}
+          -DCMAKE_CXX_STANDARD=${{ matrix.standard }}
+          -DCMAKE_CXX_COMPILER=c++
+          -DCMAKE_CXX_FLAGS=${{ matrix.exception }}
+          -DCMAKE_BUILD_TYPE=Release
+          -DIPADDRESS_BUILD_TESTS=ON
+          -DIPADDRESS_BUILD_DOC=OFF
+          -DIPADDRESS_BUILD_PACKAGES=OFF
+          -DIPADDRESS_NO_EXCEPTIONS=${{ matrix.exception == '-fno-exceptions' }}
+  
+      - name: Build
+        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
+      
+      - name: Run tests
+        run: ctest --output-on-failure --test-dir ${{ steps.strings.outputs.build-output-dir }}
+
+  # MSVC tests
   msvc:
     strategy:
       fail-fast: false
@@ -189,7 +193,7 @@ jobs:
           - version: "14.29"
             standard: 23
             exception: "/EHa- /EHs- /EHc- /EHr- /EHsc"
-    name: "MSVC ${{ matrix.version }} [C++${{ matrix.standard }} ${{ matrix.exception }}]"
+    name: "MSVC ${{ matrix.version }} [C++${{ matrix.standard }}, ${{ matrix.exception }}]"
     runs-on: windows-2022
     steps:
       - name: Add MSVC ${{ matrix.version }} to PATH
