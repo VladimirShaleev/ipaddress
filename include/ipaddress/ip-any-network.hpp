@@ -756,6 +756,17 @@ public:
 
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
+    /**
+     * Parses a network address and prefix from a fixed string at compile time.
+     * 
+     * This template function allows for the compile-time parsing of an IP network address
+     * and prefix length from a fixed string. It is enabled only when non-type template parameters
+     * are supported by the compiler.
+     * 
+     * @tparam FixedString A string literal representing the IP network in "address/prefix" format.
+     * @tparam Strict A boolean flag indicating whether to perform strict validation of the address.
+     * @return A consteval ip network object representing the parsed network.
+     */
     template <fixed_string FixedString, bool Strict = true>
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE ip_network parse() IPADDRESS_NOEXCEPT {
         constexpr auto str = FixedString;
@@ -778,95 +789,279 @@ public:
 
 #if IPADDRESS_CPP_VERSION >= 17
 
+    /**
+     * Parses a network address and prefix from a string view.
+     * 
+     * This function parses an IP network address and prefix length from a string view.
+     * It is available when the compiler supports C++17 or later.
+     * 
+     * @param[in] address A string view representing the IP network in "address/prefix" format.
+     * @param[in] strict A boolean flag indicating whether to perform strict validation of the address.
+     * @return An ip network object representing the parsed network.
+     * @throw parse_error Exception caused by invalid input string.
+     * @note This method is available for C++17 and later versions.
+     * @remark For C++ versions prior to C++17, member functions with `std::string` and C-strings will be used instead.
+     */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(std::string_view address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return internal::net_any_parser<ip_network>::parse(address, strict);
     }
 
+    /**
+     * Parses a network address and prefix from a wide string view.
+     * 
+     * This function parses an IP network address and prefix length from a wide string view.
+     * It is available when the compiler supports C++17 or later.
+     * 
+     * @param[in] address The wide string view representing the IP network in "address/prefix" format.
+     * @param[in] strict A boolean flag indicating whether to perform strict validation of the address.
+     * @return An ip network object representing the parsed network.
+     * @throw parse_error Exception caused by invalid input string.
+     * @note This method is available for C++17 and later versions.
+     * @remark For C++ versions prior to C++17, member functions with `std::wstring` and C-strings will be used instead.
+     */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(std::wstring_view address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return internal::net_any_parser<ip_network>::parse(address, strict);
     }
 
+#if __cpp_char8_t >= 201811L
+
+    /**
+     * Parses a network address and prefix from UTF-8 string view.
+     * 
+     * This function parses an IP network address and prefix length from UTF-8 string view. 
+     * It leverages the `char8_t` type introduced in C++20 to handle UTF-8 strings natively.
+     * 
+     * @param[in] address A UTF-8 string view representing the IP network in "address/prefix" format.
+     * @param[in] strict A boolean flag indicating whether to perform strict validation of the address.
+     * @return An ip network object representing the parsed network.
+     * @throw parse_error Exception caused by invalid input string.
+     * @note This method is available for C++20 and later versions where `char8_t` is supported.
+     */
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(std::u8string_view address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return internal::net_any_parser<ip_network>::parse(address, strict);
+    }
+
+#endif // __cpp_char8_t
+
+    /**
+     * Parses a network address and prefix from UTF-16 string view.
+     * 
+     * This function parses an IP network address and prefix length from UTF-16 string view.
+     * It is available when the compiler supports C++17 or later.
+     * 
+     * @param[in] address The UTF-16 string view representing the IP network in "address/prefix" format.
+     * @param[in] strict A boolean flag indicating whether to perform strict validation of the address.
+     * @return An ip network object representing the parsed network.
+     * @throw parse_error Exception caused by invalid input string.
+     * @note This method is available for C++17 and later versions.
+     * @remark For C++ versions prior to C++17, member functions with `std::u16string` and C-strings will be used instead.
+     */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(std::u16string_view address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return internal::net_any_parser<ip_network>::parse(address, strict);
     }
 
+    /**
+     * Parses a network address and prefix from UTF-32 string view.
+     * 
+     * This function parses an IP network address and prefix length from UTF-32 string view.
+     * It is available when the compiler supports C++17 or later.
+     * 
+     * @param[in] address The UTF-32 string view representing the IP network in "address/prefix" format.
+     * @param[in] strict A boolean flag indicating whether to perform strict validation of the address.
+     * @return An ip network object representing the parsed network.
+     * @throw parse_error Exception caused by invalid input string.
+     * @note This method is available for C++17 and later versions.
+     * @remark For C++ versions prior to C++17, member functions with `std::u32string` and C-strings will be used instead.
+     */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(std::u32string_view address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return internal::net_any_parser<ip_network>::parse(address, strict);
     }
 
+    /**
+     * Parses a network address and prefix from a string view with error handling.
+     * 
+     * This function parses an IP network address and prefix length from a string view,
+     * providing an error code for exception-free error handling.
+     * 
+     * @param[in] address The string view representing the IP network in "address/prefix" format.
+     * @param[out] code An error_code object that will be set if an error occurs during parsing.
+     * @param[in] strict A boolean flag indicating whether to perform strict validation of the address.
+     * @return An ip network object representing the parsed network.
+     * @note This method is available for C++17 and later versions.
+     * @remark For C++ versions prior to C++17, member functions with `std::string` and C-strings will be used instead.
+     */
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(std::string_view address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
         return internal::net_any_parser<ip_network>::parse(address, code, strict);
     }
 
+    /**
+     * Parses a network address and prefix from a wide string view with error handling.
+     * 
+     * This function parses an IP network address and prefix length from a wide string view,
+     * providing an error code for exception-free error handling.
+     * 
+     * @param[in] address The wide string view representing the IP network in "address/prefix" format.
+     * @param[out] code An error_code object that will be set if an error occurs during parsing.
+     * @param[in] strict A boolean flag indicating whether to perform strict validation of the address.
+     * @return An ip network object representing the parsed network.
+     * @note This method is available for C++17 and later versions.
+     * @remark For C++ versions prior to C++17, member functions with `std::wstring` and C-strings will be used instead.
+     */
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(std::wstring_view address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
-        return internal::net_any_parser<ip_network>::parse(address, code, strict);
-    }
-
-    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(std::u16string_view address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
-        return internal::net_any_parser<ip_network>::parse(address, code, strict);
-    }
-
-    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(std::u32string_view address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
         return internal::net_any_parser<ip_network>::parse(address, code, strict);
     }
 
 #if __cpp_char8_t >= 201811L
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(std::u8string_view address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        return internal::net_any_parser<ip_network>::parse(address, strict);
-    }
-
+    /**
+     * Parses a network address and prefix from UTF-8 string view with error handling.
+     * 
+     * This function parses an IP network address and prefix length from UTF-8 string view,
+     * providing an error code for exception-free error handling.
+     * 
+     * @param[in] address The UTF-8 string view representing the IP network in "address/prefix" format.
+     * @param[out] code An error_code object that will be set if an error occurs during parsing.
+     * @param[in] strict A boolean flag indicating whether to perform strict validation of the address.
+     * @return An ip network object representing the parsed network.
+     * @note This method is available for C++20 and later versions where `char8_t` is supported.
+     */
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(std::u8string_view address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
         return internal::net_any_parser<ip_network>::parse(address, code, strict);
     }
 
 #endif // __cpp_char8_t
 
+    /**
+     * Parses a network address and prefix from UTF-16 string view with error handling.
+     * 
+     * This function parses an IP network address and prefix length from UTF-16 string view,
+     * providing an error code for exception-free error handling.
+     * 
+     * @param[in] address The UTF-16 string view representing the IP network in "address/prefix" format.
+     * @param[out] code An error_code object that will be set if an error occurs during parsing.
+     * @param[in] strict A boolean flag indicating whether to perform strict validation of the address.
+     * @return An ip network object representing the parsed network.
+     * @note This method is available for C++17 and later versions.
+     * @remark For C++ versions prior to C++17, member functions with `std::u16string` and C-strings will be used instead.
+     */
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(std::u16string_view address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
+        return internal::net_any_parser<ip_network>::parse(address, code, strict);
+    }
+
+    /**
+     * Parses a network address and prefix from UTF-32 string view with error handling.
+     * 
+     * This function parses an IP network address and prefix length from UTF-32 string view,
+     * providing an error code for exception-free error handling.
+     * 
+     * @param[in] address The UTF-32 string view representing the IP network in "address/prefix" format.
+     * @param[out] code An error_code object that will be set if an error occurs during parsing.
+     * @param[in] strict A boolean flag indicating whether to perform strict validation of the address.
+     * @return An ip network object representing the parsed network.
+     * @note This method is available for C++17 and later versions.
+     * @remark For C++ versions prior to C++17, member functions with `std::u32string` and C-strings will be used instead.
+     */
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(std::u32string_view address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
+        return internal::net_any_parser<ip_network>::parse(address, code, strict);
+    }
+
 #else // IPADDRESS_CPP_VERSION < 17
 
+    /**
+     * Parses a network address and prefix from a `std::string`.
+     * 
+     * @param[in] address The `std::string` representing the IP network in "address/prefix" format.
+     * @param[in] strict A boolean flag indicating whether to perform strict validation of the address.
+     * @return An ip network object representing the parsed network.
+     * @throw parse_error Exception caused by invalid input string.
+     */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_network parse(const std::string& address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return internal::net_any_parser<ip_network>::parse(address, strict);
     }
 
+    /**
+     * Parses a network address and prefix from a `std::wstring`.
+     * 
+     * @param[in] address The `std::wstring` representing the IP network in "address/prefix" format.
+     * @param[in] strict A boolean flag indicating whether to perform strict validation of the address.
+     * @return An ip network object representing the parsed network.
+     * @throw parse_error Exception caused by invalid input string.
+     */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_network parse(const std::wstring& address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return internal::net_any_parser<ip_network>::parse(address, strict);
     }
 
+    /**
+     * Parses a network address and prefix from a `std::u16string`.
+     * 
+     * @param[in] address The `std::u16string` representing the IP network in "address/prefix" format.
+     * @param[in] strict A boolean flag indicating whether to perform strict validation of the address.
+     * @return An ip network object representing the parsed network.
+     * @throw parse_error Exception caused by invalid input string.
+     */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_network parse(const std::u16string& address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return internal::net_any_parser<ip_network>::parse(address, strict);
     }
 
+    /**
+     * Parses a network address and prefix from a `std::u32string`.
+     * 
+     * @param[in] address The `std::u32string` representing the IP network in "address/prefix" format.
+     * @param[in] strict A boolean flag indicating whether to perform strict validation of the address.
+     * @return An ip network object representing the parsed network.
+     * @throw parse_error Exception caused by invalid input string.
+     */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_network parse(const std::u32string& address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return internal::net_any_parser<ip_network>::parse(address, strict);
     }
 
+    /**
+     * Parses a network address and prefix from a `std::string` and reports errors through an error code.
+     * 
+     * @param[in] address The `std::string` representing the IP network in "address/prefix" format.
+     * @param[out] code An error_code object that will be set if an error occurs during parsing.
+     * @param[in] strict A boolean flag indicating whether to perform strict validation of the address.
+     * @return An ip network object representing the parsed network.
+     */
     static IPADDRESS_FORCE_INLINE ip_network parse(const std::string& address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
         return internal::net_any_parser<ip_network>::parse(address, code, strict);
     }
 
+    /**
+     * Parses a network address and prefix from a `std::wstring` and reports errors through an error code.
+     * 
+     * @param[in] address The `std::wstring` representing the IP network in "address/prefix" format.
+     * @param[out] code An error_code object that will be set if an error occurs during parsing.
+     * @param[in] strict A boolean flag indicating whether to perform strict validation of the address.
+     * @return An ip network object representing the parsed network.
+     */
     static IPADDRESS_FORCE_INLINE ip_network parse(const std::wstring& address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
         return internal::net_any_parser<ip_network>::parse(address, code, strict);
     }
 
+    /**
+     * Parses a network address and prefix from a `std::u16string` and reports errors through an error code.
+     * 
+     * @param[in] address The `std::u16string` representing the IP network in "address/prefix" format.
+     * @param[out] code An error_code object that will be set if an error occurs during parsing.
+     * @param[in] strict A boolean flag indicating whether to perform strict validation of the address.
+     * @return An ip network object representing the parsed network.
+     */
     static IPADDRESS_FORCE_INLINE ip_network parse(const std::u16string& address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
         return internal::net_any_parser<ip_network>::parse(address, code, strict);
     }
 
+    /**
+     * Parses a network address and prefix from a `std::u32string` and reports errors through an error code.
+     * 
+     * @param[in] address The `std::u32string` representing the IP network in "address/prefix" format.
+     * @param[out] code An error_code object that will be set if an error occurs during parsing.
+     * @param[in] strict A boolean flag indicating whether to perform strict validation of the address.
+     * @return An ip network object representing the parsed network.
+     */
     static IPADDRESS_FORCE_INLINE ip_network parse(const std::u32string& address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
         return internal::net_any_parser<ip_network>::parse(address, code, strict);
     }
-
-#if __cpp_char8_t >= 201811L
-
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_FORCE_INLINE ip_network parse(const std::u8string& address, bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        return internal::net_any_parser<ip_network>::parse(address, strict);
-    }
-
-    static IPADDRESS_FORCE_INLINE ip_network parse(const std::u8string& address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
-        return internal::net_any_parser<ip_network>::parse(address, code, strict);
-    }
-
-#endif // __cpp_char8_t
 
 #endif // IPADDRESS_CPP_VERSION < 17
 
