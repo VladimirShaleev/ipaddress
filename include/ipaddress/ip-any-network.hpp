@@ -455,6 +455,33 @@ public:
         }
     }
 
+    /**
+     * Generates a sequence of subnets from this network.
+     * 
+     * The subnets that join to make the current network definition, depending on the argument values. 
+     * \a prefixlen_diff is the amount our prefix length should be increased by. new_prefix is the desired 
+     * new prefix of the subnets; it must be larger than our prefix. One and only one of \a prefixlen_diff 
+     * and new_prefix must be set.
+     * 
+     * @code{.cpp}
+     *   constexpr auto subnets_sequence = ip_network::parse("192.0.2.0/24").subnets(2);
+     *   
+     *   for (const auto& net : subnets_sequence) {
+     *      std::cout << net << std::endl;
+     *   }
+     * 
+     *   // out:
+     *   // 192.0.2.0/26
+     *   // 192.0.2.64/26
+     *   // 192.0.2.128/26
+     *   // 192.0.2.192/26
+     * @endcode
+     * @param[in] prefixlen_diff The difference in prefix length for the subnets. *Defaults to 1*.
+     * @param[in] new_prefixlen An optional new prefix length for the subnets. If not specified, the prefix length is determined by adding \a prefixlen_diff to the current prefix length.
+     * @return A `subnets_any_sequence` object representing the sequence of subnets.
+     * @throw logic_error Raised if the operation cannot be performed due to invalid parameters or prefix length.
+     * @remark `subnets_any_sequence` uses lazy evaluation to iterate over the subnets.
+     */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_any_sequence<ip_network> subnets(size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         if (is_v4()) {
             const auto sequence = _ipv_net.ipv4.subnets(prefixlen_diff, new_prefixlen);
@@ -465,6 +492,36 @@ public:
         }
     }
 
+    /**
+     * Generates a sequence of subnets from this network with error handling.
+     * 
+     * The subnets that join to make the current network definition, depending on the argument values. 
+     * \a prefixlen_diff is the amount our prefix length should be increased by. new_prefix is the desired 
+     * new prefix of the subnets; it must be larger than our prefix. One and only one of \a prefixlen_diff 
+     * and new_prefix must be set.
+     * 
+     * @code{.cpp}
+     *   auto err = error_code::NO_ERROR;
+     *   auto subnets_sequence = ip_network::parse("192.0.2.0/24").subnets(err, 2);
+     *   
+     *   if (err == error_code::NO_ERROR) {
+     *       for (const auto& net : subnets_sequence) {
+     *          std::cout << net << std::endl;
+     *       }
+     *   }
+     * 
+     *   // out:
+     *   // 192.0.2.0/26
+     *   // 192.0.2.64/26
+     *   // 192.0.2.128/26
+     *   // 192.0.2.192/26
+     * @endcode
+     * @param[out] code An error_code object that will be set if an error occurs during the operation.
+     * @param[in] prefixlen_diff The difference in prefix length for the subnets. *Defaults to 1*.
+     * @param[in] new_prefixlen An optional new prefix length for the subnets. If not specified, the prefix length is determined by adding \a prefixlen_diff to the current prefix length.
+     * @return A `subnets_any_sequence` object representing the sequence of subnets, or an empty sequence if an error occurs.
+     * @remark `subnets_any_sequence` uses lazy evaluation to iterate over the subnets.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_any_sequence<ip_network> subnets(error_code& code, size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT {
         if (is_v4()) {
             const auto sequence = _ipv_net.ipv4.subnets(code, prefixlen_diff, new_prefixlen);
@@ -475,6 +532,29 @@ public:
         }
     }
 
+    /**
+     * Computes the network definitions resulting from removing the given network from this one.
+     * 
+     * @code{.cpp}
+     *   constexpr auto a = ip_network::parse("192.0.2.0/28");
+     *   constexpr auto b = ip_network::parse("192.0.2.1/32");
+     *   constexpr auto exclude_sequence = a.address_exclude(b);
+     *   
+     *   for (const auto& net : exclude_sequence) {
+     *      std::cout << net << std::endl;
+     *   }
+     * 
+     *   // out:
+     *   // 192.0.2.8/29
+     *   // 192.0.2.4/30
+     *   // 192.0.2.2/31
+     *   // 192.0.2.0/32
+     * @endcode
+     * @param[in] other The other network to exclude from this network.
+     * @return An `exclude_network_sequence` object representing the remaining address ranges.
+     * @throw logic_error Raise if network is not completely contained in this network.
+     * @remark `exclude_network_sequence` uses lazy evaluation to iterate networks.
+     */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE exclude_network_sequence<ip_network> address_exclude(const ip_network& other) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         error_code code = error_code::NO_ERROR;
         const auto result = address_exclude(other, code);
@@ -489,6 +569,33 @@ public:
         return result;
     }
 
+    /**
+     * Computes the network definitions resulting from removing the given network from this one, with error handling.
+     * 
+     * @code{.cpp}
+     *   constexpr auto a = ip_network::parse("192.0.2.0/28");
+     *   constexpr auto b = ip_network::parse("192.0.2.1/32");
+     * 
+     *   auto err = error_code::NO_ERROR;
+     *   auto exclude_sequence = a.address_exclude(b, err);
+     *   
+     *   if (err == error_code::NO_ERROR) {
+     *       for (const auto& net : exclude_sequence) {
+     *          std::cout << net << std::endl;
+     *       }
+     *   }
+     * 
+     *   // out:
+     *   // 192.0.2.8/29
+     *   // 192.0.2.4/30
+     *   // 192.0.2.2/31
+     *   // 192.0.2.0/32
+     * @endcode
+     * @param[in] other The other network to exclude from this network.
+     * @param[out] code An error_code object that will be set if an error occurs during the operation.
+     * @return An `exclude_network_sequence` object representing the remaining address ranges, or an empty sequence if an error occurs.
+     * @remark `exclude_network_sequence` uses lazy evaluation to iterate networks.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE exclude_network_sequence<ip_network> address_exclude(const ip_network& other, error_code& code) const IPADDRESS_NOEXCEPT {
         code = error_code::NO_ERROR;
         if (_version != other._version) {
