@@ -25,8 +25,8 @@ public:
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator& operator=(const ip_network_iterator&) IPADDRESS_NOEXCEPT = default;
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator& operator=(ip_network_iterator&&) IPADDRESS_NOEXCEPT = default;
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator(const ip_address_type& begin, const ip_address_type& end, const ip_address_type& ref, const uint_type& step, size_t prefixlen, int carry = 0) IPADDRESS_NOEXCEPT
-        : _current(value_type::from_address(ref, prefixlen)), _it(ip_address_iterator<ip_address_type>(begin, end, ref, carry)), _step(step), _prefixlen(prefixlen) {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator(const ip_address_type& ref, const uint_type& step, size_t prefixlen, int carry = 0) IPADDRESS_NOEXCEPT
+        : _current(value_type::from_address(ref, prefixlen)), _it(ip_address_iterator<ip_address_type>(ref, carry)), _step(step), _prefixlen(prefixlen) {
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint_type uint_diff(const ip_network_iterator& other) const IPADDRESS_NOEXCEPT {
@@ -371,8 +371,8 @@ public:
         const auto begin = ip_address_type::from_bytes(network_address.bytes());
         const auto end = ip_address_type::from_uint(network_address.to_uint() + 1);
         const auto step = difference_type(1);
-        _begin = const_iterator(begin, end, begin, step, new_prefixlen);
-        _end = const_iterator(begin, end, end, step, new_prefixlen, end < begin ? 1 : 0);
+        _begin = const_iterator(begin, step, new_prefixlen);
+        _end = const_iterator(end, step, new_prefixlen, end < begin ? 1 : 0);
         _size = 1U;
     }
 
@@ -382,8 +382,8 @@ public:
         const auto begin = ip_address_type::from_uint(begin_uint);
         const auto end = ip_address_type::from_uint(end_uint + 1);
         const auto step = (hostmask.to_uint() >> prefixlen_diff) + 1;
-        _begin = const_iterator(begin, end, begin, step, new_prefixlen);
-        _end = const_iterator(begin, end, end, step, new_prefixlen, begin == end ? 1 : 0);
+        _begin = const_iterator(begin, step, new_prefixlen);
+        _end = const_iterator(end, step, new_prefixlen, begin == end ? 1 : 0);
         _size = (end_uint - begin_uint) / step + 1;
     }
 
