@@ -853,13 +853,8 @@ using ipv6_address = ip_address_base<ipv6_address_base>;
      * @param[in] size The size of the character array.
      * @return An ipv6_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_address operator""_ipv6(const char* address, std::size_t size) IPADDRESS_NOEXCEPT {
-        assert(size <= ipv6_address::base_max_string_len && "literal string is too long");
-        char str[ipv6_address::base_max_string_len + 1] = {};
-        for (size_t i = 0; i < size; ++i) {
-            str[i] = address[i];
-        }
-        return ipv6_address::parse(str);
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_address operator""_ipv6(const char* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return internal::parse_ip_from_literal<ipv6_address_base, char, ipv6_address::base_max_string_len>(address, size);
     }
 
     /**
@@ -869,13 +864,8 @@ using ipv6_address = ip_address_base<ipv6_address_base>;
      * @param[in] size The size of the character array.
      * @return An ipv6_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_address operator""_ipv6(const wchar_t* address, std::size_t size) IPADDRESS_NOEXCEPT {
-        assert(size <= ipv6_address::base_max_string_len && "literal string is too long");
-        wchar_t str[ipv6_address::base_max_string_len + 1] = {};
-        for (size_t i = 0; i < size; ++i) {
-            str[i] = address[i];
-        }
-        return ipv6_address::parse(str);
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_address operator""_ipv6(const wchar_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return internal::parse_ip_from_literal<ipv6_address_base, wchar_t, ipv6_address::base_max_string_len>(address, size);
     }
 
     /**
@@ -885,13 +875,8 @@ using ipv6_address = ip_address_base<ipv6_address_base>;
      * @param[in] size The size of the character array.
      * @return An ipv6_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_address operator""_ipv6(const char16_t* address, std::size_t size) IPADDRESS_NOEXCEPT {
-        assert(size <= ipv6_address::base_max_string_len && "literal string is too long");
-        char16_t str[ipv6_address::base_max_string_len + 1] = {};
-        for (size_t i = 0; i < size; ++i) {
-            str[i] = address[i];
-        }
-        return ipv6_address::parse(str);
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_address operator""_ipv6(const char16_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return internal::parse_ip_from_literal<ipv6_address_base, char16_t, ipv6_address::base_max_string_len>(address, size);
     }
 
     /**
@@ -901,13 +886,8 @@ using ipv6_address = ip_address_base<ipv6_address_base>;
      * @param[in] size The size of the character array.
      * @return An ipv6_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_address operator""_ipv6(const char32_t* address, std::size_t size) IPADDRESS_NOEXCEPT {
-        assert(size <= ipv6_address::base_max_string_len && "literal string is too long");
-        char32_t str[ipv6_address::base_max_string_len + 1] = {};
-        for (size_t i = 0; i < size; ++i) {
-            str[i] = address[i];
-        }
-        return ipv6_address::parse(str);
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_address operator""_ipv6(const char32_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return internal::parse_ip_from_literal<ipv6_address_base, char32_t, ipv6_address::base_max_string_len>(address, size);
     }
 
 #endif // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER

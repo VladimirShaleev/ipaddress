@@ -107,8 +107,8 @@ TEST(ipv6_network, CompileTime) {
     ASSERT_FALSE(b5);
     ASSERT_TRUE(b6);
 
-    constexpr auto net6 = "2001:db8::/32"_ipv6_net;
-    constexpr auto net7 = "2001:db8::"_ipv6_net;
+    constexpr auto net6 = u"2001:db8::/32"_ipv6_net;
+    constexpr auto net7 = U"2001:db8::"_ipv6_net;
     ASSERT_EQ(net6, ipv6_network::parse("2001:db8::/32"));
     ASSERT_EQ(net7, ipv6_network::parse("2001:db8::/128"));
 
@@ -766,7 +766,7 @@ TEST(ipv6_network, Swap) {
 
 TEST(ipv6_network, literals) {
     IPADDRESS_CONSTEXPR auto net1 = "2001:db8::/32"_ipv6_net;
-    IPADDRESS_CONSTEXPR auto net2 = "0001:0002:0003:0004:0005:0006:0007:0008%123456789abcdefg/128"_ipv6_net;
+    IPADDRESS_CONSTEXPR auto net2 = L"0001:0002:0003:0004:0005:0006:0007:0008%123456789abcdefg/128"_ipv6_net;
     
     ASSERT_EQ(net1, ipv6_network::parse("2001:db8::/32"));
     ASSERT_EQ(net2, ipv6_network::parse("1:2:3:4:5:6:7:8%123456789abcdefg"));

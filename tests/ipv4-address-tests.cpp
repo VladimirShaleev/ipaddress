@@ -114,8 +114,8 @@ TEST(ipv4_address, CompileTime) {
     ASSERT_FALSE(b11);
     ASSERT_TRUE(b12);
 
-    constexpr auto ip9 = "127.0.0.1"_ipv4;
-    constexpr auto ip10 = "127.128.128.255"_ipv4;
+    constexpr auto ip9 = u"127.0.0.1"_ipv4;
+    constexpr auto ip10 = U"127.128.128.255"_ipv4;
     constexpr auto ip9_1 = 0x7F000001_ipv4;
     ASSERT_EQ(ip9, ipv4_address::parse("127.0.0.1"));
     ASSERT_EQ(ip10, ipv4_address::parse("127.128.128.255"));
@@ -505,7 +505,7 @@ TEST(ipv4_address, reverse_pointer) {
 
 TEST(ipv4_address, literals) {
     IPADDRESS_CONSTEXPR auto ip1 = "127.0.0.1"_ipv4;
-    IPADDRESS_CONSTEXPR auto ip2 = "127.128.128.255"_ipv4;
+    IPADDRESS_CONSTEXPR auto ip2 = L"127.128.128.255"_ipv4;
     IPADDRESS_CONSTEXPR auto ip3 = 0x7F000001_ipv4;
     
     ASSERT_EQ(ip1, ipv4_address::parse("127.0.0.1"));

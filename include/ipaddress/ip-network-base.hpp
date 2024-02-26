@@ -424,16 +424,9 @@ public:
         auto code = error_code::NO_ERROR;
         auto result = from_address(address, code, prefixlen, strict);
         if (code != error_code::NO_ERROR) {
-            if (IPADDRESS_IS_CONST_EVALUATED(code)) {
-                char str[ip_address_type::base_max_string_len + 1]{};
-                const auto len = address.ip_to_chars(address.bytes(), format::compressed, str);
-                raise_error(code, 0, str, len);
-            }
-        #ifndef IPADDRESS_NO_EXCEPTIONS
             char str[ip_address_type::base_max_string_len + 1]{};
             const auto len = address.ip_to_chars(address.bytes(), format::compressed, str);
             raise_error(code, 0, str, len);
-        #endif
         }
         return result;
     }
@@ -850,12 +843,7 @@ public:
         error_code code = error_code::NO_ERROR;
         const auto result = address_exclude(other, code);
         if (code != error_code::NO_ERROR) {
-            if (IPADDRESS_IS_CONST_EVALUATED(code)) {
-                raise_error(code, 0, "", 0);
-            }
-        #ifndef IPADDRESS_NO_EXCEPTIONS
             raise_error(code, 0, "", 0);
-        #endif
         }
         return result;
     }
@@ -934,12 +922,7 @@ public:
         error_code code = error_code::NO_ERROR;
         const auto result = subnets(code, prefixlen_diff, new_prefixlen);
         if (code != error_code::NO_ERROR) {
-            if (IPADDRESS_IS_CONST_EVALUATED(code)) {
-                raise_error(code, 0, "", 0);
-            }
-        #ifndef IPADDRESS_NO_EXCEPTIONS
             raise_error(code, 0, "", 0);
-        #endif
         }
         return result;
     }
@@ -1028,12 +1011,7 @@ public:
         error_code code = error_code::NO_ERROR;
         const auto result = supernet(code, prefixlen_diff, new_prefixlen);
         if (code != error_code::NO_ERROR) {
-            if (IPADDRESS_IS_CONST_EVALUATED(code)) {
-                raise_error(code, 0, "", 0);
-            }
-        #ifndef IPADDRESS_NO_EXCEPTIONS
             raise_error(code, 0, "", 0);
-        #endif
         }
         return result;
     }
@@ -1206,12 +1184,7 @@ private:
         auto index = 0;
         auto result = parse_address_with_prefix(str, strict, code, index);
         if (code != error_code::NO_ERROR) {
-            if (IPADDRESS_IS_CONST_EVALUATED(code)) {
-                raise_error(code, index, str.data(), str.size());
-            }
-        #ifndef IPADDRESS_NO_EXCEPTIONS
             raise_error(code, index, str.data(), str.size());
-        #endif
         }
         return result;
     }
@@ -1278,6 +1251,26 @@ private:
     ip_address_type _netmask;
     size_t _prefixlen;
 };
+
+#ifndef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
+
+namespace internal {
+
+template <typename Base, typename TChar, size_t MaxLen>
+IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base<Base> parse_net_from_literal(const TChar* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    if (size > MaxLen) {
+        raise_error(error_code::STRING_IS_TOO_LONG, 0, address, size);
+    }
+    TChar str[MaxLen + 1] = {};
+    for (size_t i = 0; i < size && i < MaxLen; ++i) {
+        str[i] = address[i];
+    }
+    return ip_network_base<Base>::parse(str);
+}
+
+} // namespace IPADDRESS_NAMESPACE::internal
+
+#endif // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
 #ifndef IPADDRESS_NO_OVERLOAD_STD
 

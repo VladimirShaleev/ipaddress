@@ -110,8 +110,8 @@ TEST(ipv4_network, CompileTime) {
     ASSERT_FALSE(b5);
     ASSERT_TRUE(b6);
 
-    constexpr auto net6 = "127.0.0.0/16"_ipv4_net;
-    constexpr auto net7 = "127.128.128.255"_ipv4_net;
+    constexpr auto net6 = u"127.0.0.0/16"_ipv4_net;
+    constexpr auto net7 = U"127.128.128.255"_ipv4_net;
     ASSERT_EQ(net6, ipv4_network::parse("127.0.0.0/16"));
     ASSERT_EQ(net7, ipv4_network::parse("127.128.128.255/32"));
 
@@ -754,7 +754,7 @@ TEST(ipv4_network, Swap) {
 
 TEST(ipv4_network, literals) {
     IPADDRESS_CONSTEXPR auto net1 = "127.0.0.0/16"_ipv4_net;
-    IPADDRESS_CONSTEXPR auto net2 = "127.128.128.255"_ipv4_net;
+    IPADDRESS_CONSTEXPR auto net2 = L"127.128.128.255"_ipv4_net;
     
     ASSERT_EQ(net1, ipv4_network::parse("127.0.0.0/16"));
     ASSERT_EQ(net2, ipv4_network::parse("127.128.128.255/32"));

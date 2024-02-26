@@ -77,13 +77,8 @@ using ipv4_network = ip_network_base<ipv4_network_base>;
      * @param[in] size The size of the string literal.
      * @return An ipv4_network object representing the network specified by the string literal.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_network operator""_ipv4_net(const char* address, std::size_t size) IPADDRESS_NOEXCEPT {
-        assert(size <= ipv4_network::base_max_string_len * 2 + 1 && "literal string is too long");
-        char str[ipv4_network::base_max_string_len * 2 + 2] = {};
-        for (size_t i = 0; i < size; ++i) {
-            str[i] = address[i];
-        }
-        return ipv4_network::parse(str);
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_network operator""_ipv4_net(const char* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return internal::parse_net_from_literal<ipv4_network_base, char, ipv4_network::base_max_string_len * 2 + 1>(address, size);
     }
 
     /**
@@ -96,13 +91,8 @@ using ipv4_network = ip_network_base<ipv4_network_base>;
      * @param[in] size The size of the string literal.
      * @return An ipv4_network object representing the network specified by the string literal.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_network operator""_ipv4_net(const wchar_t* address, std::size_t size) IPADDRESS_NOEXCEPT {
-        assert(size <= ipv4_network::base_max_string_len * 2 + 1 && "literal string is too long");
-        wchar_t str[ipv4_network::base_max_string_len * 2 + 2] = {};
-        for (size_t i = 0; i < size; ++i) {
-            str[i] = address[i];
-        }
-        return ipv4_network::parse(str);
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_network operator""_ipv4_net(const wchar_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return internal::parse_net_from_literal<ipv4_network_base, wchar_t, ipv4_network::base_max_string_len * 2 + 1>(address, size);
     }
 
     /**
@@ -115,13 +105,8 @@ using ipv4_network = ip_network_base<ipv4_network_base>;
      * @param[in] size The size of the string literal.
      * @return An ipv4_network object representing the network specified by the string literal.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_network operator""_ipv4_net(const char16_t* address, std::size_t size) IPADDRESS_NOEXCEPT {
-        assert(size <= ipv4_network::base_max_string_len * 2 + 1 && "literal string is too long");
-        char16_t str[ipv4_network::base_max_string_len * 2 + 2] = {};
-        for (size_t i = 0; i < size; ++i) {
-            str[i] = address[i];
-        }
-        return ipv4_network::parse(str);
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_network operator""_ipv4_net(const char16_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return internal::parse_net_from_literal<ipv4_network_base, char16_t, ipv4_network::base_max_string_len * 2 + 1>(address, size);
     }
 
     /**
@@ -134,13 +119,8 @@ using ipv4_network = ip_network_base<ipv4_network_base>;
      * @param[in] size The size of the string literal.
      * @return An ipv4_network object representing the network specified by the string literal.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_network operator""_ipv4_net(const char32_t* address, std::size_t size) IPADDRESS_NOEXCEPT {
-        assert(size <= ipv4_network::base_max_string_len * 2 + 1 && "literal string is too long");
-        char32_t str[ipv4_network::base_max_string_len * 2 + 2] = {};
-        for (size_t i = 0; i < size; ++i) {
-            str[i] = address[i];
-        }
-        return ipv4_network::parse(str);
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_network operator""_ipv4_net(const char32_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return internal::parse_net_from_literal<ipv4_network_base, char32_t, ipv4_network::base_max_string_len * 2 + 1>(address, size);
     }
 
 #endif // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER

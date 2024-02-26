@@ -57,6 +57,7 @@ enum class error_code {
     NETMASK_PATTERN_MIXES_ZEROES_AND_ONES, /**< The netmask contains an invalid pattern of zeroes and ones. */
     HAS_HOST_BITS_SET, /**< The address has host bits set when they are expected to be clear. */
     ONLY_ONE_SLASH_PERMITTED, /**< Only one slash character is permitted, used to separate the address from the netmask. */
+    STRING_IS_TOO_LONG, /**< Input string is too long. */
 
     // ipv4 errors
     EMPTY_OCTET, /**< An octet in the IPv4 address is empty when it should contain a numeric value. */
@@ -300,6 +301,8 @@ IPADDRESS_CONSTEXPR inline void raise_error(error_code code, int index, const T*
             throw parse_error(code, "has host bits set in address", str);
         case error_code::ONLY_ONE_SLASH_PERMITTED:
             throw parse_error(code, "only one '/' permitted in address", str);
+        case error_code::STRING_IS_TOO_LONG:
+            throw parse_error(code, "input string is too long", str);
         case error_code::EMPTY_OCTET:
             throw parse_error(code, "empty octet", index, "in address", str);
         case error_code::EXPECTED_4_OCTETS:
@@ -348,6 +351,10 @@ IPADDRESS_CONSTEXPR inline void raise_error(error_code code, int index, const T*
             throw logic_error(code, "network is not a subnet of other");
         default:
             throw error(code, "unknown error");
+    }
+#else
+    if (IPADDRESS_IS_CONST_EVALUATED(length)) {
+        const auto _err = int(code) / (int(code) - int(code)); // invalid input string
     }
 #endif
 }

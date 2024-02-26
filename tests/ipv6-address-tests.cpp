@@ -182,8 +182,8 @@ TEST(ipv6_address, CompileTime) {
     constexpr auto ip10_scope = ip10.get_scope_id().get_uint32();
     ASSERT_EQ(ip10_scope, 5);
 
-    constexpr auto ip11 = "2001:db8::1"_ipv6;
-    constexpr auto ip12 = "0001:0002:0003:0004:0005:0006:0007:0008%123456789abcdefg"_ipv6;
+    constexpr auto ip11 = u"2001:db8::1"_ipv6;
+    constexpr auto ip12 = U"0001:0002:0003:0004:0005:0006:0007:0008%123456789abcdefg"_ipv6;
     ASSERT_EQ(ip11, ipv6_address::parse("2001:db8::1"));
     ASSERT_EQ(ip12, ipv6_address::parse("1:2:3:4:5:6:7:8%123456789abcdefg"));
 
@@ -832,7 +832,7 @@ TEST(ipv6_address, reverse_pointer) {
 
 TEST(ipv6_address, literals) {
     IPADDRESS_CONSTEXPR auto ip1 = "2001:db8::1"_ipv6;
-    IPADDRESS_CONSTEXPR auto ip2 = "0001:0002:0003:0004:0005:0006:0007:0008%123456789abcdefg"_ipv6;
+    IPADDRESS_CONSTEXPR auto ip2 = L"0001:0002:0003:0004:0005:0006:0007:0008%123456789abcdefg"_ipv6;
 
     ASSERT_EQ(ip1, ipv6_address::parse("2001:db8::1"));
     ASSERT_EQ(ip2, ipv6_address::parse("1:2:3:4:5:6:7:8%123456789abcdefg"));

@@ -151,13 +151,8 @@ using ipv4_address = ip_address_base<ipv4_address_base>;
      * @param[in] size The size of the character array.
      * @return An ipv4_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(const char* address, std::size_t size) IPADDRESS_NOEXCEPT {
-        assert(size <= ipv4_address::base_max_string_len && "literal string is too long");
-        char str[ipv4_address::base_max_string_len + 1] = {};
-        for (size_t i = 0; i < size; ++i) {
-            str[i] = address[i];
-        }
-        return ipv4_address::parse(str);
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(const char* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return internal::parse_ip_from_literal<ipv4_address_base, char, ipv4_address::base_max_string_len>(address, size);
     }
 
     /**
@@ -167,13 +162,8 @@ using ipv4_address = ip_address_base<ipv4_address_base>;
      * @param[in] size The size of the character array.
      * @return An ipv4_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(const wchar_t* address, std::size_t size) IPADDRESS_NOEXCEPT {
-        assert(size <= ipv4_address::base_max_string_len && "literal string is too long");
-        wchar_t str[ipv4_address::base_max_string_len + 1] = {};
-        for (size_t i = 0; i < size; ++i) {
-            str[i] = address[i];
-        }
-        return ipv4_address::parse(str);
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(const wchar_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return internal::parse_ip_from_literal<ipv4_address_base, wchar_t, ipv4_address::base_max_string_len>(address, size);
     }
 
     /**
@@ -183,13 +173,8 @@ using ipv4_address = ip_address_base<ipv4_address_base>;
      * @param[in] size The size of the character array.
      * @return An ipv4_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(const char16_t* address, std::size_t size) IPADDRESS_NOEXCEPT {
-        assert(size <= ipv4_address::base_max_string_len && "literal string is too long");
-        char16_t str[ipv4_address::base_max_string_len + 1] = {};
-        for (size_t i = 0; i < size; ++i) {
-            str[i] = address[i];
-        }
-        return ipv4_address::parse(str);
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(const char16_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return internal::parse_ip_from_literal<ipv4_address_base, char16_t, ipv4_address::base_max_string_len>(address, size);
     }
 
     /**
@@ -199,13 +184,8 @@ using ipv4_address = ip_address_base<ipv4_address_base>;
      * @param[in] size The size of the character array.
      * @return An ipv4_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(const char32_t* address, std::size_t size) IPADDRESS_NOEXCEPT {
-        assert(size <= ipv4_address::base_max_string_len && "literal string is too long");
-        char32_t str[ipv4_address::base_max_string_len + 1] = {};
-        for (size_t i = 0; i < size; ++i) {
-            str[i] = address[i];
-        }
-        return ipv4_address::parse(str);
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(const char32_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return internal::parse_ip_from_literal<ipv4_address_base, char32_t, ipv4_address::base_max_string_len>(address, size);
     }
 
     /**
@@ -215,7 +195,6 @@ using ipv4_address = ip_address_base<ipv4_address_base>;
      * @return An ipv4_address object created from the integer.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(unsigned long long value) IPADDRESS_NOEXCEPT {
-        assert(value <= ipv4_address::base_all_ones && "literal integer is too long");
         return ipv4_address::from_uint(uint32_t(value));
     }
 

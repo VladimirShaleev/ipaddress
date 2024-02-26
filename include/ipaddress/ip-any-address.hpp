@@ -1086,12 +1086,7 @@ public:
         auto code = error_code::NO_ERROR;
         auto result = internal::ip_any_parser<ip_address>::parse(address, code);
         if (code != error_code::NO_ERROR) {
-            if (IPADDRESS_IS_CONST_EVALUATED(code)) {
-                raise_error(code, 0, address, N);
-            }
-        #ifndef IPADDRESS_NO_EXCEPTIONS
             raise_error(code, 0, address, N);
-        #endif
         }
         return result;
     }

@@ -94,12 +94,7 @@ using ipv6_network = ip_network_base<ipv6_network_base>;
      * @return An ipv6_network object representing the network specified by the string literal.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_network operator""_ipv6_net(const char* address, std::size_t size) IPADDRESS_NOEXCEPT {
-        assert(size <= ipv6_network::base_max_string_len + 4 && "literal string is too long");
-        char str[ipv6_network::base_max_string_len + 5] = {};
-        for (size_t i = 0; i < size; ++i) {
-            str[i] = address[i];
-        }
-        return ipv6_network::parse(str);
+        return internal::parse_net_from_literal<ipv6_network_base, char, ipv6_network::base_max_string_len + 4>(address, size);
     }
 
     /**
@@ -113,12 +108,21 @@ using ipv6_network = ip_network_base<ipv6_network_base>;
      * @return An ipv6_network object representing the network specified by the string literal.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_network operator""_ipv6_net(const wchar_t* address, std::size_t size) IPADDRESS_NOEXCEPT {
-        assert(size <= ipv6_network::base_max_string_len + 4 && "literal string is too long");
-        wchar_t str[ipv6_network::base_max_string_len + 5] = {};
-        for (size_t i = 0; i < size; ++i) {
-            str[i] = address[i];
-        }
-        return ipv6_network::parse(str);
+        return internal::parse_net_from_literal<ipv6_network_base, wchar_t, ipv6_network::base_max_string_len + 4>(address, size);
+    }
+
+    /**
+     * User-defined literal operator for creating an ipv6_network object from UTF-16 string literal.
+     * 
+     * This operator allows the creation of ipv6_network objects using a string literal with the
+     * `_ipv6_net` suffix.
+     * 
+     * @param[in] address The string literal representing the IPv6 network.
+     * @param[in] size The size of the string literal.
+     * @return An ipv6_network object representing the network specified by the string literal.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_network operator""_ipv6_net(const char16_t* address, std::size_t size) IPADDRESS_NOEXCEPT {
+        return internal::parse_net_from_literal<ipv6_network_base, char16_t, ipv6_network::base_max_string_len + 4>(address, size);
     }
 
     /**
@@ -132,12 +136,7 @@ using ipv6_network = ip_network_base<ipv6_network_base>;
      * @return An ipv6_network object representing the network specified by the string literal.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_network operator""_ipv6_net(const char32_t* address, std::size_t size) IPADDRESS_NOEXCEPT {
-        assert(size <= ipv6_network::base_max_string_len + 4 && "literal string is too long");
-        char32_t str[ipv6_network::base_max_string_len + 5] = {};
-        for (size_t i = 0; i < size; ++i) {
-            str[i] = address[i];
-        }
-        return ipv6_network::parse(str);
+        return internal::parse_net_from_literal<ipv6_network_base, char32_t, ipv6_network::base_max_string_len + 4>(address, size);
     }
 
 #endif // IPADDRESS_NONTYPE_TEMPLATE_PARAMETER

@@ -559,12 +559,7 @@ public:
         error_code code = error_code::NO_ERROR;
         const auto result = address_exclude(other, code);
         if (code != error_code::NO_ERROR) {
-            if (IPADDRESS_IS_CONST_EVALUATED(code)) {
-                raise_error(code, 0, "", 0);
-            }
-        #ifndef IPADDRESS_NO_EXCEPTIONS
             raise_error(code, 0, "", 0);
-        #endif
         }
         return result;
     }
@@ -1083,12 +1078,7 @@ public:
         auto code = error_code::NO_ERROR;
         auto result = internal::net_any_parser<ip_network>::parse(address, code, strict);
         if (code != error_code::NO_ERROR) {
-            if (IPADDRESS_IS_CONST_EVALUATED(code)) {
-                raise_error(code, 0, address, N);
-            }
-        #ifndef IPADDRESS_NO_EXCEPTIONS
             raise_error(code, 0, address, N);
-        #endif
         }
         return result;
     }
