@@ -32,7 +32,7 @@ IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void is_char_type() IPADDRESS_NOEXCEP
         , "Only character type supported");
 }
 
-} // namespace internal
+} // namespace IPADDRESS_NAMESPACE::internal
 
 /**
  * Fixed size string class.

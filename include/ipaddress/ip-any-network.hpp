@@ -59,7 +59,7 @@ struct net_any_parser {
     }
 };
 
-} // namespace internal
+} // namespace IPADDRESS_NAMESPACE::internal
 
 /**
  * A class that encapsulates both IPv4 and IPv6 network functionalities.

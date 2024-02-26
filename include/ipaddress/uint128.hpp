@@ -293,7 +293,7 @@ public:
      * @return A `std::size_t` representing the hash value of the `uint128_t` instance.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::size_t hash() const IPADDRESS_NOEXCEPT {
-        hash_combine<8> hasher{};
+        internal::hash_combine<8> hasher{};
         const auto seed = hasher(_upper);
         const auto hash = hasher(seed + 0x9e3779b9 + _lower);
         return hash;

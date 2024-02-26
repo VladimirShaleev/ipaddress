@@ -53,7 +53,7 @@ struct ipv6_set_scope {
     }
 };
 
-} // namespace internal
+} // namespace IPADDRESS_NAMESPACE::internal
 
 /**
  * Represents the scope identifier for an IPv6 address.
@@ -700,7 +700,7 @@ protected:
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::size_t hash(const base_type& bytes) const IPADDRESS_NOEXCEPT {
-        return calc_hash(
+        return internal::calc_hash(
         #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH > 0
             _data.scope_id.hash(),
         #else // IPADDRESS_IPV6_SCOPE_MAX_LENGTH <= 0

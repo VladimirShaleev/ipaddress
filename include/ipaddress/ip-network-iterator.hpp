@@ -967,7 +967,7 @@ public:
     /**
      * Default constructor.
      */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE exclude_network_sequence() IPADDRESS_NOEXCEPT = default
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE exclude_network_sequence() IPADDRESS_NOEXCEPT = default;
 
     /**
      * Copy constructor.

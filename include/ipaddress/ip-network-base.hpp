@@ -612,7 +612,7 @@ public:
      * @return A size_t value representing the hash of the network.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t hash() const IPADDRESS_NOEXCEPT {
-        return calc_hash(_network_address.hash(), _netmask.hash());
+        return internal::calc_hash(_network_address.hash(), _netmask.hash());
     }
 
     /**

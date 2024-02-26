@@ -57,7 +57,7 @@ struct ip_any_parser {
     }
 };
 
-} // namespace internal
+} // namespace IPADDRESS_NAMESPACE::internal
 
 /**
  * A class that represents an IP address, supporting both IPv4 and IPv6 formats.

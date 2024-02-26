@@ -21,6 +21,8 @@
 
 namespace IPADDRESS_NAMESPACE {
 
+namespace internal {
+
 template <std::size_t Size>
 struct hash_combine;
 
@@ -63,6 +65,8 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::size_t calc_
     seed = hash_sum(seed, std::size_t(arg));
     return calc_hash(seed, args...);
 }
+
+} // namespace IPADDRESS_NAMESPACE::internal
 
 } // namespace IPADDRESS_NAMESPACE
 
