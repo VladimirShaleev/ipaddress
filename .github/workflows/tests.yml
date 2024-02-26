@@ -15,7 +15,7 @@ jobs:
         clang: [ 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 ]
         stdlib: [ "libc++", "libstdc++" ]
         standard: [ 11, 14, 17, 20, 23 ]
-        exception: [ "-fexceptions" ]
+        exception: [ "exceptions" ]
         exclude:
           - clang: 6
             stdlib: libc++
@@ -41,11 +41,11 @@ jobs:
           - clang: 14
             stdlib: "libc++"
             standard: 11
-            exception: "-fno-exceptions"
+            exception: "no-exceptions"
           - clang: 17
             stdlib: "libstdc++"
             standard: 23
-            exception: "-fno-exceptions"
+            exception: "no-exceptions"
     name: "Clang ${{ matrix.clang }} [C++${{ matrix.standard }}, ${{ matrix.stdlib }}, ${{ matrix.exception }}]"
     runs-on: ubuntu-20.04
     steps:
@@ -69,16 +69,16 @@ jobs:
         run: >
           cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }}
           -DCMAKE_CXX_STANDARD=${{ matrix.standard }}
-          -DCMAKE_CXX_FLAGS="-stdlib=${{ matrix.stdlib }} ${{ matrix.exception }}"
+          -DCMAKE_CXX_FLAGS="-stdlib=${{ matrix.stdlib }} -f${{ matrix.exception }}"
           -DCMAKE_CXX_COMPILER=c++
           -DCMAKE_BUILD_TYPE=Release
           -DIPADDRESS_BUILD_TESTS=ON
           -DIPADDRESS_BUILD_DOC=OFF
           -DIPADDRESS_BUILD_PACKAGES=OFF
-          -DIPADDRESS_NO_EXCEPTIONS=${{ matrix.exception == '-fno-exceptions' }}
+          -DIPADDRESS_NO_EXCEPTIONS=${{ matrix.exception == 'no-exceptions' }}
 
       - name: Build
-        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
+        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release -j2
       
       - name: Run tests
         run: ctest --output-on-failure --test-dir ${{ steps.strings.outputs.build-output-dir }}
@@ -90,14 +90,14 @@ jobs:
       matrix:
         macos: [ 11, 12, 13 ]
         standard: [ 11, 14, 17, 20, 23 ]
-        exception: [ "-fexceptions" ]
+        exception: [ "exceptions" ]
         include:
           - macos: 11
             standard: 11
-            exception: "-fno-exceptions"
+            exception: "no-exceptions"
           - macos: 11
             standard: 23
-            exception: "-fno-exceptions"
+            exception: "no-exceptions"
 
     name: "AppleClang MacOS ${{ matrix.macos }} [C++${{ matrix.standard }}, ${{ matrix.exception }}]"
     runs-on: macos-${{ matrix.macos }}
@@ -116,15 +116,15 @@ jobs:
           cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }}
           -DCMAKE_CXX_STANDARD=${{ matrix.standard }}
           -DCMAKE_CXX_COMPILER=c++
-          -DCMAKE_CXX_FLAGS=${{ matrix.exception }}
+          -DCMAKE_CXX_FLAGS=-f${{ matrix.exception }}
           -DCMAKE_BUILD_TYPE=Release
           -DIPADDRESS_BUILD_TESTS=ON
           -DIPADDRESS_BUILD_DOC=OFF
           -DIPADDRESS_BUILD_PACKAGES=OFF
-          -DIPADDRESS_NO_EXCEPTIONS=${{ matrix.exception == '-fno-exceptions' }}
+          -DIPADDRESS_NO_EXCEPTIONS=${{ matrix.exception == 'no-exceptions' }}
 
       - name: Build
-        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
+        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release -j2
       
       - name: Run tests
         run: ctest --output-on-failure --test-dir ${{ steps.strings.outputs.build-output-dir }}
@@ -136,14 +136,14 @@ jobs:
       matrix:
         gcc: [ 7, 8, 9, 10, 11, 13 ]
         standard: [ 11, 14, 17, 20, 23 ]
-        exception: [ "-fexceptions" ]
+        exception: [ "exceptions" ]
         include:
           - gcc: 7
             standard: 11
-            exception: "-fno-exceptions"
+            exception: "no-exceptions"
           - gcc: 13
             standard: 23
-            exception: "-fno-exceptions"
+            exception: "no-exceptions"
     name: "GCC ${{ matrix.gcc }} [C++${{ matrix.standard }}, ${{ matrix.exception }}]"
     runs-on: ubuntu-20.04
     steps:
@@ -165,15 +165,15 @@ jobs:
           cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }}
           -DCMAKE_CXX_STANDARD=${{ matrix.standard }}
           -DCMAKE_CXX_COMPILER=c++
-          -DCMAKE_CXX_FLAGS=${{ matrix.exception }}
+          -DCMAKE_CXX_FLAGS=-f${{ matrix.exception }}
           -DCMAKE_BUILD_TYPE=Release
           -DIPADDRESS_BUILD_TESTS=ON
           -DIPADDRESS_BUILD_DOC=OFF
           -DIPADDRESS_BUILD_PACKAGES=OFF
-          -DIPADDRESS_NO_EXCEPTIONS=${{ matrix.exception == '-fno-exceptions' }}
+          -DIPADDRESS_NO_EXCEPTIONS=${{ matrix.exception == 'no-exceptions' }}
   
       - name: Build
-        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
+        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release -j2
       
       - name: Run tests
         run: ctest --output-on-failure --test-dir ${{ steps.strings.outputs.build-output-dir }}
@@ -185,14 +185,14 @@ jobs:
       matrix:
         version: [ "14.29", "14.39" ]
         standard: [ 14, 17, 20, 23 ]
-        exception: [ "/EHsc" ]
+        exception: [ "exceptions" ]
         include:
           - version: "14.29"
             standard: 14
-            exception: "/EHa- /EHs- /EHc- /EHr- /EHsc"
+            exception: "no-exceptions"
           - version: "14.29"
             standard: 23
-            exception: "/EHa- /EHs- /EHc- /EHr- /EHsc"
+            exception: "no-exceptions"
     name: "MSVC ${{ matrix.version }} [C++${{ matrix.standard }}, ${{ matrix.exception }}]"
     runs-on: windows-2022
     steps:
@@ -221,10 +221,10 @@ jobs:
           -DIPADDRESS_BUILD_TESTS=ON
           -DIPADDRESS_BUILD_DOC=OFF
           -DIPADDRESS_BUILD_PACKAGES=OFF
-          -DIPADDRESS_NO_EXCEPTIONS=${{ matrix.exception != '/EHsc' }}
+          -DIPADDRESS_NO_EXCEPTIONS=${{ matrix.exception == 'no-exceptions' }}
 
       - name: Build
-        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
+        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release -j2
       
       - name: Run tests
         run: ctest --output-on-failure --test-dir ${{ steps.strings.outputs.build-output-dir }}
