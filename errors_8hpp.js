@@ -11,6 +11,7 @@ var errors_8hpp =
       [ "NETMASK_PATTERN_MIXES_ZEROES_AND_ONES", "errors_8hpp.html#a88a76ee847c844cc47b94caac600689da40acce788b43717a3a283f7fdcc3fe6d", null ],
       [ "HAS_HOST_BITS_SET", "errors_8hpp.html#a88a76ee847c844cc47b94caac600689daceae5fc57d94a3e3dc8b7363f465bb30", null ],
       [ "ONLY_ONE_SLASH_PERMITTED", "errors_8hpp.html#a88a76ee847c844cc47b94caac600689da9b0dd645bae34eb17b79da5c94855dba", null ],
+      [ "STRING_IS_TOO_LONG", "errors_8hpp.html#a88a76ee847c844cc47b94caac600689dadfcb9b0dd7ffc6b92d16cb0861b8a440", null ],
       [ "EMPTY_OCTET", "errors_8hpp.html#a88a76ee847c844cc47b94caac600689dae0e39e65f3844f2ec223ef5f6e4da06a", null ],
       [ "EXPECTED_4_OCTETS", "errors_8hpp.html#a88a76ee847c844cc47b94caac600689da88e13ee3330b3ffb9385d77d2a9597d4", null ],
       [ "LEADING_0_ARE_NOT_PERMITTED", "errors_8hpp.html#a88a76ee847c844cc47b94caac600689da46e6c7ae8338fb954dffffe2cf6de430", null ],

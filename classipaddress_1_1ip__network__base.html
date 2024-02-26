@@ -1137,7 +1137,7 @@ template&lt;typename Base &gt; </div>
 <div class="line"><span class="comment">// false</span></div>
 <div class="ttc" id="aclassipaddress_1_1ip__address__base_html_a4b8772efdbcdd5c633c2aa31a97f3ed1"><div class="ttname"><a href="classipaddress_1_1ip__address__base.html#a4b8772efdbcdd5c633c2aa31a97f3ed1">ipaddress::ip_address_base&lt; ipv4_address_base &gt;::parse</a></div><div class="ttdeci">static consteval inline ip_address_base&lt; ipv4_address_base &gt; parse() noexcept</div><div class="ttdoc">Static method template to parse an IP address from a fixed string at compile time.</div><div class="ttdef"><b>Definition</b> ip-address-base.hpp:123</div></div>
 <div class="ttc" id="aclassipaddress_1_1ip__network__base_html_a1ff563ad415ed4e9179472b3ec80caee"><div class="ttname"><a href="#a1ff563ad415ed4e9179472b3ec80caee">ipaddress::ip_network_base&lt; ipv4_network_base &gt;::parse</a></div><div class="ttdeci">static consteval ip_network_base parse() noexcept</div><div class="ttdoc">Parses a network address and prefix from a fixed string at compile time.</div><div class="ttdef"><b>Definition</b> ip-network-base.hpp:65</div></div>
-<div class="ttc" id="aclassipaddress_1_1ip__network__base_html_a39a23ecb2b274686aea259a350dc659e"><div class="ttname"><a href="#a39a23ecb2b274686aea259a350dc659e">ipaddress::ip_network_base::contains</a></div><div class="ttdeci">constexpr inline bool contains(const ip_address_type &amp;address) const noexcept</div><div class="ttdoc">Checks if the given IP address is contained within this network.</div><div class="ttdef"><b>Definition</b> ip-network-base.hpp:495</div></div>
+<div class="ttc" id="aclassipaddress_1_1ip__network__base_html_a39a23ecb2b274686aea259a350dc659e"><div class="ttname"><a href="#a39a23ecb2b274686aea259a350dc659e">ipaddress::ip_network_base::contains</a></div><div class="ttdeci">constexpr inline bool contains(const ip_address_type &amp;address) const noexcept</div><div class="ttdoc">Checks if the given IP address is contained within this network.</div><div class="ttdef"><b>Definition</b> ip-network-base.hpp:488</div></div>
 </div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>The IP address to check. </td></tr>
@@ -1183,7 +1183,7 @@ template&lt;typename Base &gt; </div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// out:</span></div>
 <div class="line"><span class="comment">// true</span></div>
-<div class="ttc" id="aclassipaddress_1_1ip__network__base_html_a643558d92fd45671de7c87c1bc5b72e6"><div class="ttname"><a href="#a643558d92fd45671de7c87c1bc5b72e6">ipaddress::ip_network_base::overlaps</a></div><div class="ttdeci">constexpr inline bool overlaps(const ip_network_base &amp;other) const noexcept</div><div class="ttdoc">Determines if this network overlaps with another network.</div><div class="ttdef"><b>Definition</b> ip-network-base.hpp:527</div></div>
+<div class="ttc" id="aclassipaddress_1_1ip__network__base_html_a643558d92fd45671de7c87c1bc5b72e6"><div class="ttname"><a href="#a643558d92fd45671de7c87c1bc5b72e6">ipaddress::ip_network_base::overlaps</a></div><div class="ttdeci">constexpr inline bool overlaps(const ip_network_base &amp;other) const noexcept</div><div class="ttdoc">Determines if this network overlaps with another network.</div><div class="ttdef"><b>Definition</b> ip-network-base.hpp:520</div></div>
 </div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The other ip network object to compare with. </td></tr>
@@ -1229,7 +1229,7 @@ template&lt;typename Base &gt; </div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// out:</span></div>
 <div class="line"><span class="comment">// false</span></div>
-<div class="ttc" id="aclassipaddress_1_1ip__network__base_html_aeba001004b11a6378bea4fd75a72b79d"><div class="ttname"><a href="#aeba001004b11a6378bea4fd75a72b79d">ipaddress::ip_network_base::subnet_of</a></div><div class="ttdeci">constexpr inline bool subnet_of(const ip_network_base &amp;other) const noexcept</div><div class="ttdoc">Checks if this network is a subnet of another network.</div><div class="ttdef"><b>Definition</b> ip-network-base.hpp:550</div></div>
+<div class="ttc" id="aclassipaddress_1_1ip__network__base_html_aeba001004b11a6378bea4fd75a72b79d"><div class="ttname"><a href="#aeba001004b11a6378bea4fd75a72b79d">ipaddress::ip_network_base::subnet_of</a></div><div class="ttdeci">constexpr inline bool subnet_of(const ip_network_base &amp;other) const noexcept</div><div class="ttdoc">Checks if this network is a subnet of another network.</div><div class="ttdef"><b>Definition</b> ip-network-base.hpp:543</div></div>
 </div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The other ip network object to compare with. </td></tr>
@@ -1275,7 +1275,7 @@ template&lt;typename Base &gt; </div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// out:</span></div>
 <div class="line"><span class="comment">// true</span></div>
-<div class="ttc" id="aclassipaddress_1_1ip__network__base_html_aa9d0612a1a09c80958b4667496e38e29"><div class="ttname"><a href="#aa9d0612a1a09c80958b4667496e38e29">ipaddress::ip_network_base::supernet_of</a></div><div class="ttdeci">constexpr inline bool supernet_of(const ip_network_base &amp;other) const noexcept</div><div class="ttdoc">Checks if this network is a supernet of another network.</div><div class="ttdef"><b>Definition</b> ip-network-base.hpp:573</div></div>
+<div class="ttc" id="aclassipaddress_1_1ip__network__base_html_aa9d0612a1a09c80958b4667496e38e29"><div class="ttname"><a href="#aa9d0612a1a09c80958b4667496e38e29">ipaddress::ip_network_base::supernet_of</a></div><div class="ttdeci">constexpr inline bool supernet_of(const ip_network_base &amp;other) const noexcept</div><div class="ttdoc">Checks if this network is a supernet of another network.</div><div class="ttdef"><b>Definition</b> ip-network-base.hpp:566</div></div>
 </div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The other ip network object to compare with. </td></tr>
@@ -1848,7 +1848,7 @@ template&lt;typename Base &gt; </div>
 <div class="line"><span class="comment">// 192.0.2.4</span></div>
 <div class="line"><span class="comment">// 192.0.2.5</span></div>
 <div class="line"><span class="comment">// 192.0.2.6</span></div>
-<div class="ttc" id="aclassipaddress_1_1ip__network__base_html_a5c19443fa46e2546940326bbc2498947"><div class="ttname"><a href="#a5c19443fa46e2546940326bbc2498947">ipaddress::ip_network_base::hosts</a></div><div class="ttdeci">constexpr inline hosts_sequence&lt; ip_address_type &gt; hosts() const noexcept</div><div class="ttdoc">Retrieves a sequence of host addresses in the network.</div><div class="ttdef"><b>Definition</b> ip-network-base.hpp:822</div></div>
+<div class="ttc" id="aclassipaddress_1_1ip__network__base_html_a5c19443fa46e2546940326bbc2498947"><div class="ttname"><a href="#a5c19443fa46e2546940326bbc2498947">ipaddress::ip_network_base::hosts</a></div><div class="ttdeci">constexpr inline hosts_sequence&lt; ip_address_type &gt; hosts() const noexcept</div><div class="ttdoc">Retrieves a sequence of host addresses in the network.</div><div class="ttdef"><b>Definition</b> ip-network-base.hpp:815</div></div>
 </div><!-- fragment --> <dl class="section return"><dt>Returns</dt><dd>A <code>hosts_sequence</code> object representing the sequence of host addresses. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
@@ -2020,7 +2020,7 @@ template&lt;typename Base &gt; </div>
 <div class="line"><span class="comment">// 192.0.2.64/26</span></div>
 <div class="line"><span class="comment">// 192.0.2.128/26</span></div>
 <div class="line"><span class="comment">// 192.0.2.192/26</span></div>
-<div class="ttc" id="aclassipaddress_1_1ip__network__base_html_a6aaaf38fa1199c9b5a4831bbde619ac4"><div class="ttname"><a href="#a6aaaf38fa1199c9b5a4831bbde619ac4">ipaddress::ip_network_base::subnets</a></div><div class="ttdeci">constexpr inline subnets_sequence&lt; ip_network_base&lt; Base &gt; &gt; subnets(size_t prefixlen_diff=1, optional&lt; size_t &gt; new_prefixlen=nullptr) const</div><div class="ttdoc">Generates a sequence of subnets from this network.</div><div class="ttdef"><b>Definition</b> ip-network-base.hpp:933</div></div>
+<div class="ttc" id="aclassipaddress_1_1ip__network__base_html_a6aaaf38fa1199c9b5a4831bbde619ac4"><div class="ttname"><a href="#a6aaaf38fa1199c9b5a4831bbde619ac4">ipaddress::ip_network_base::subnets</a></div><div class="ttdeci">constexpr inline subnets_sequence&lt; ip_network_base&lt; Base &gt; &gt; subnets(size_t prefixlen_diff=1, optional&lt; size_t &gt; new_prefixlen=nullptr) const</div><div class="ttdoc">Generates a sequence of subnets from this network.</div><div class="ttdef"><b>Definition</b> ip-network-base.hpp:921</div></div>
 <div class="ttc" id="aclassipaddress_1_1subnets__sequence_html"><div class="ttname"><a href="classipaddress_1_1subnets__sequence.html">ipaddress::subnets_sequence</a></div><div class="ttdoc">A sequence container for subnet ranges within a network.</div><div class="ttdef"><b>Definition</b> ip-network-iterator.hpp:740</div></div>
 </div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -2140,7 +2140,7 @@ template&lt;typename Base &gt; </div>
 <div class="line"> </div>
 <div class="line"><span class="comment">// out:</span></div>
 <div class="line"><span class="comment">// 192.0.0.0/22</span></div>
-<div class="ttc" id="aclassipaddress_1_1ip__network__base_html_a44d5d205e66991dde943eaf77e8671ad"><div class="ttname"><a href="#a44d5d205e66991dde943eaf77e8671ad">ipaddress::ip_network_base::supernet</a></div><div class="ttdeci">constexpr inline ip_network_base&lt; Base &gt; supernet(size_t prefixlen_diff=1, optional&lt; size_t &gt; new_prefixlen=nullptr) const</div><div class="ttdoc">Generates a supernet from this network.</div><div class="ttdef"><b>Definition</b> ip-network-base.hpp:1027</div></div>
+<div class="ttc" id="aclassipaddress_1_1ip__network__base_html_a44d5d205e66991dde943eaf77e8671ad"><div class="ttname"><a href="#a44d5d205e66991dde943eaf77e8671ad">ipaddress::ip_network_base::supernet</a></div><div class="ttdeci">constexpr inline ip_network_base&lt; Base &gt; supernet(size_t prefixlen_diff=1, optional&lt; size_t &gt; new_prefixlen=nullptr) const</div><div class="ttdoc">Generates a supernet from this network.</div><div class="ttdef"><b>Definition</b> ip-network-base.hpp:1010</div></div>
 </div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">prefixlen_diff</td><td>The amount by which the prefix length should be decreased. <em>Defaults to 1</em>. </td></tr>
