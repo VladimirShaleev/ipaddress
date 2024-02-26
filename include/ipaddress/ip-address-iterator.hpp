@@ -964,7 +964,7 @@ public:
      * 
      * @param[in] other The hosts_sequence to copy.
      */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_sequence(const hosts_sequence&) IPADDRESS_NOEXCEPT = default;
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_sequence(const hosts_sequence& other) IPADDRESS_NOEXCEPT = default;
     
     /**
      * Move constructor.
@@ -973,7 +973,7 @@ public:
      * 
      * @param[in] other The hosts_sequence to move.
      */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_sequence(hosts_sequence&&) IPADDRESS_NOEXCEPT = default;
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_sequence(hosts_sequence&& other) IPADDRESS_NOEXCEPT = default;
 
     /**
      * Copy assignment operator.
@@ -983,7 +983,7 @@ public:
      * @param[in] other The hosts_sequence to copy.
      * @return A reference to the assigned hosts_sequence.
      */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_sequence& operator=(const hosts_sequence&) IPADDRESS_NOEXCEPT = default;
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_sequence& operator=(const hosts_sequence& other) IPADDRESS_NOEXCEPT = default;
     
     /**
      * Move assignment operator.
@@ -993,7 +993,7 @@ public:
      * @param[in] other The hosts_sequence to move.
      * @return A reference to the moved hosts_sequence.
      */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_sequence& operator=(hosts_sequence&&) IPADDRESS_NOEXCEPT = default;
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_sequence& operator=(hosts_sequence&& other) IPADDRESS_NOEXCEPT = default;
 
     /**
      * Constructs a hosts_sequence with specified network parameters.

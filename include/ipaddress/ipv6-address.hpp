@@ -575,7 +575,7 @@ public:
     /**
      * Creates an IPv6 address from an unsigned integer using a template parameter.
      * 
-     * @tparam Ip The unsigned integer representing the IPv6 address.
+     * @param[in] ip The unsigned integer representing the IPv6 address.
      * @return An instance of ip address representing the IPv6 address.
      */
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<ipv6_address_base> from_uint(uint_type ip) IPADDRESS_NOEXCEPT {

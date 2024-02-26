@@ -58,7 +58,7 @@ public:
      * 
      * @param[in] other The ip_network_iterator to move.
      */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator(ip_network_iterator&&) IPADDRESS_NOEXCEPT = default;
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator(ip_network_iterator&& other) IPADDRESS_NOEXCEPT = default;
 
     /**
      * Copy assignment operator.
@@ -532,7 +532,7 @@ public:
      * @param[in] other The ip_exclude_network_iterator to move.
      * @return A reference to the moved ip_exclude_network_iterator.
      */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_exclude_network_iterator& operator=(ip_exclude_network_iterator&&) IPADDRESS_NOEXCEPT = default;
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_exclude_network_iterator& operator=(ip_exclude_network_iterator&& other) IPADDRESS_NOEXCEPT = default;
 
     /**
      * Constructs an iterator for a network, excluding addresses from another network.
@@ -948,7 +948,7 @@ private:
  * for operations that require consideration of only certain parts of
  * a network.
  * 
- * @tparam[in] T The type of IP network from which subnets are to be excluded.
+ * @tparam T The type of IP network from which subnets are to be excluded.
  * @remark When iterating, obtaining networks occurs through lazy calculations.
  */
 template <typename T>
