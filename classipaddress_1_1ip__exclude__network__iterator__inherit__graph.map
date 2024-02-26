@@ -1,0 +1,5 @@
+<map id="ip_exclude_network_iterator&lt; T &gt;" name="ip_exclude_network_iterator&lt; T &gt;">
+<area shape="rect" id="Node000001" title="An iterator to traverse IP addresses within a network, excluding specified subnets." alt="" coords="19,5,171,45"/>
+<area shape="rect" id="Node000002" href="$classipaddress_1_1ip__exclude__network__iterator.html" title=" " alt="" coords="5,108,184,148"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,59,97,108,92,108,92,59"/>
+</map>

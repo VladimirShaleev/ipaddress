@@ -107,10 +107,16 @@
     <loc>https://vladimirshaleev.github.io/ipaddress/ip-any-address_8hpp.html</loc>
   </url>
   <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/ip-any-iterator_8hpp.html</loc>
+  </url>
+  <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/ip-any-network_8hpp.html</loc>
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/ip-network-base_8hpp.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/ip-network-iterator_8hpp.html</loc>
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/ip-networks_8hpp.html</loc>
@@ -164,10 +170,22 @@
     <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1error-members.html</loc>
   </url>
   <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1exclude__network__sequence.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1exclude__network__sequence-members.html</loc>
+  </url>
+  <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/structipaddress_1_1fixed__string.html</loc>
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/structipaddress_1_1fixed__string-members.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1hosts__any__sequence.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1hosts__any__sequence-members.html</loc>
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1hosts__sequence_3_01ip__address__base_3_01Base_01_4_01_4.html</loc>
@@ -194,6 +212,18 @@
     <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1ip__address__iterator_3_01ip__address__base_3_01Base_01_4_01_4-members.html</loc>
   </url>
   <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1ip__any__iterator.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1ip__any__iterator-members.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1ip__exclude__network__iterator.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1ip__exclude__network__iterator-members.html</loc>
+  </url>
+  <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1ip__network.html</loc>
   </url>
   <url>
@@ -204,6 +234,12 @@
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1ip__network__base-members.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1ip__network__iterator.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1ip__network__iterator-members.html</loc>
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1ip__reverse__iterator.html</loc>
@@ -258,6 +294,18 @@
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1scope-members.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1subnets__any__sequence.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1subnets__any__sequence-members.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1subnets__sequence.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1subnets__sequence-members.html</loc>
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1uint128__t.html</loc>

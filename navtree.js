@@ -402,11 +402,11 @@ function initNavTree(toroot,relpath) {
   }
 
   const showSyncOff = function(n,relpath) {
-    n.html('<img src="'+relpath+'sync_off.png" title="'+SYNCOFFMSG+'"/>');
+    
   }
 
   const showSyncOn = function(n,relpath) {
-    n.html('<img src="'+relpath+'sync_on.png" title="'+SYNCONMSG+'"/>');
+    
   }
 
   const o = {
