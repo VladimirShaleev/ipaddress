@@ -49,7 +49,7 @@ struct fixed_string {
     using const_iterator         = const_pointer; /**< Type of constant iterator for traversing the string. */
     using const_reverse_iterator = std::reverse_iterator<const_iterator>; /**< Type of constant reverse iterator for traversing the string in reverse. */
 
-    static IPADDRESS_CONSTEXPR size_t max_length = N;
+    static constexpr size_t max_length = N;
 
     size_t length = 0;
 
@@ -387,9 +387,9 @@ struct fixed_string<0> {
     using const_iterator         = const_pointer;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
-    static IPADDRESS_CONSTEXPR size_t max_length = 0;
+    static constexpr size_t max_length = 0;
 
-    static IPADDRESS_CONSTEXPR size_t length = 0;
+    static constexpr size_t length = 0;
 
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string() IPADDRESS_NOEXCEPT = default;
 

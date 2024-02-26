@@ -32,10 +32,10 @@ public:
     using base_type = byte_array<16>;
     using uint_type = ::IPADDRESS_NAMESPACE::uint128_t;
 
-    static IPADDRESS_CONSTEXPR ip_version base_version = ip_version::V6;
-    static IPADDRESS_CONSTEXPR size_t base_size = 16;
-    static IPADDRESS_CONSTEXPR size_t base_max_string_len = 41 + IPADDRESS_IPV6_SCOPE_MAX_LENGTH;
-    static IPADDRESS_CONSTEXPR size_t base_max_prefixlen = base_size * 8;
+    static constexpr ip_version base_version = ip_version::V6;
+    static constexpr size_t base_size = 16;
+    static constexpr size_t base_max_string_len = 41 + IPADDRESS_IPV6_SCOPE_MAX_LENGTH;
+    static constexpr size_t base_max_prefixlen = base_size * 8;
 
     /**
      * Retrieves the IP version of the address.
@@ -56,8 +56,8 @@ public:
     }
 
 protected:
-    static IPADDRESS_CONSTEXPR size_t _min_parts = 3;
-    static IPADDRESS_CONSTEXPR size_t _max_parts = 8;
+    static constexpr size_t _min_parts = 3;
+    static constexpr size_t _max_parts = 8;
 
     template <typename Iter>
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<Ext> ip_from_string(Iter begin, Iter end, error_code& code, int& parts_count) IPADDRESS_NOEXCEPT {
@@ -219,7 +219,7 @@ protected:
         const auto len = ip_to_chars(bytes, scope_id, format::full, result);
         auto ip = std::string(result, len);
         ip.erase(std::remove(ip.begin(), ip.end(), ':'), ip.end());
-        auto res = std::accumulate(std::next(ip.rbegin()), ip.rend(), std::string{ip.back()}, [](auto a, auto b) {
+        auto res = std::accumulate(std::next(ip.rbegin()), ip.rend(), std::string{ip.back()}, [](std::string a, char b) {
             return std::move(a) + '.' + b;
         });
         return res + ".ip6.arpa";
@@ -551,22 +551,22 @@ private:
 };
 
 template <typename Ext>
-IPADDRESS_CONSTEXPR ip_version base_v6<Ext>::base_version;
+constexpr ip_version base_v6<Ext>::base_version;
 
 template <typename Ext>
-IPADDRESS_CONSTEXPR size_t base_v6<Ext>::base_size;
+constexpr size_t base_v6<Ext>::base_size;
 
 template <typename Ext>
-IPADDRESS_CONSTEXPR size_t base_v6<Ext>::base_max_string_len;
+constexpr size_t base_v6<Ext>::base_max_string_len;
 
 template <typename Ext>
-IPADDRESS_CONSTEXPR size_t base_v6<Ext>::base_max_prefixlen;
+constexpr size_t base_v6<Ext>::base_max_prefixlen;
 
 template <typename Ext>
-IPADDRESS_CONSTEXPR size_t base_v6<Ext>::_min_parts;
+constexpr size_t base_v6<Ext>::_min_parts;
 
 template <typename Ext>
-IPADDRESS_CONSTEXPR size_t base_v6<Ext>::_max_parts;
+constexpr size_t base_v6<Ext>::_max_parts;
 
 } // namespace IPADDRESS_NAMESPACE
 

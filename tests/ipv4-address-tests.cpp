@@ -10,6 +10,8 @@
 using namespace testing;
 using namespace ipaddress;
 
+#if IPADDRESS_CPP_VERSION >= 14
+
 template <size_t N>
 static constexpr error_code get_parse_error(const char(&address)[N]) noexcept {
     error_code err = error_code::NO_ERROR;
@@ -169,6 +171,8 @@ TEST(ipv4_address, CompileTime) {
 #endif
 }
 
+#endif
+
 TEST(ipv4_address, DefaultCtor) {
     ipv4_address::base_type expected_empty { 0, 0, 0, 0};
 
@@ -310,13 +314,15 @@ TEST_P(InvalidAddressIpv4Params, parse) {
     EXPECT_EQ(error_ip.bytes(), expected_empty);
     ASSERT_EQ(error_ip.to_uint(), 0);
     EXPECT_EQ(uint32_t(error_ip), 0);
-#else
+#elif IPADDRESS_CPP_VERSION >= 14
     EXPECT_THAT(
         [address=expected_address]() { ipv4_address::parse(address); },
         ThrowsMessage<parse_error>(StrEq(get<2>(GetParam()))));
     EXPECT_THAT(
         [address=expected_address]() { ipv4_address::parse(address); },
         Throws<parse_error>(Property(&parse_error::code, Eq(expected_error_code))));
+#else
+    ASSERT_THROW(ipv4_address::parse(expected_address), parse_error);
 #endif
 }
 INSTANTIATE_TEST_SUITE_P(
@@ -498,9 +504,9 @@ TEST(ipv4_address, reverse_pointer) {
 }
 
 TEST(ipv4_address, literals) {
-    constexpr auto ip1 = "127.0.0.1"_ipv4;
-    constexpr auto ip2 = "127.128.128.255"_ipv4;
-    constexpr auto ip3 = 0x7F000001_ipv4;
+    IPADDRESS_CONSTEXPR auto ip1 = "127.0.0.1"_ipv4;
+    IPADDRESS_CONSTEXPR auto ip2 = "127.128.128.255"_ipv4;
+    IPADDRESS_CONSTEXPR auto ip3 = 0x7F000001_ipv4;
     
     ASSERT_EQ(ip1, ipv4_address::parse("127.0.0.1"));
     ASSERT_EQ(ip2, ipv4_address::parse("127.128.128.255"));

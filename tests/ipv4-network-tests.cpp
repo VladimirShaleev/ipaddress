@@ -10,6 +10,8 @@
 using namespace testing;
 using namespace ipaddress;
 
+#if IPADDRESS_CPP_VERSION >= 14
+
 template <size_t N1, size_t N2>
 static constexpr ipv4_network test_swap(const char(&str1)[N1], const char(&str2)[N2]) {
     auto net1 = ipv4_network::parse(str1);
@@ -366,6 +368,8 @@ TEST(ipv4_network, CompileTime) {
 #endif // __cpp_char8_t >= 201811L
 }
 
+#endif
+
 TEST(ipv4_network, DefaultCtor) {
     ipv4_network net;
     
@@ -558,10 +562,12 @@ TEST(ipv4_network, from_address_error) {
     ASSERT_EQ(error_network.netmask(), ipv4_address::parse("255.255.255.255"));
     ASSERT_EQ(error_network.hostmask(), ipv4_address::parse("0.0.0.0"));
     ASSERT_EQ(error_network.prefixlen(), 32);
-#else
+#elif IPADDRESS_CPP_VERSION >= 14
     EXPECT_THAT(
         []() { ipv4_network::from_address(ipv4_address::parse("127.0.0.1"), 24); },
         ThrowsMessage<parse_error>(StrEq("has host bits set in address 127.0.0.1")));
+#else
+    ASSERT_THROW((ipv4_network::from_address(ipv4_address::parse("127.0.0.1"), 24)), parse_error);
 #endif
 }
 
@@ -581,13 +587,15 @@ TEST_P(InvalidNetworkIpv4Params, parse) {
     ASSERT_EQ(error_network.netmask().to_uint(), 0xFFFFFFFF);
     ASSERT_EQ(error_network.hostmask().to_uint(), 0x00000000);
     ASSERT_EQ(error_network.prefixlen(), 32);
-#else
+#elif IPADDRESS_CPP_VERSION >= 14
     EXPECT_THAT(
         [network=expected_network]() { ipv4_network::parse(network); },
         ThrowsMessage<parse_error>(StrEq(get<2>(GetParam()))));
     EXPECT_THAT(
         [network=expected_network]() { ipv4_network::parse(network); },
         Throws<parse_error>(Property(&parse_error::code, Eq(expected_error_code))));
+#else
+    ASSERT_THROW(ipv4_network::parse(expected_network), parse_error);
 #endif
 }
 INSTANTIATE_TEST_SUITE_P(
@@ -745,8 +753,8 @@ TEST(ipv4_network, Swap) {
 }
 
 TEST(ipv4_network, literals) {
-    constexpr auto net1 = "127.0.0.0/16"_ipv4_net;
-    constexpr auto net2 = "127.128.128.255"_ipv4_net;
+    IPADDRESS_CONSTEXPR auto net1 = "127.0.0.0/16"_ipv4_net;
+    IPADDRESS_CONSTEXPR auto net2 = "127.128.128.255"_ipv4_net;
     
     ASSERT_EQ(net1, ipv4_network::parse("127.0.0.0/16"));
     ASSERT_EQ(net2, ipv4_network::parse("127.128.128.255/32"));
@@ -1070,10 +1078,12 @@ TEST_P(SupernetErrorIpv4NetworkParams, supernet) {
     ASSERT_EQ(error_network.netmask(), ipv4_address::parse("255.255.255.255"));
     ASSERT_EQ(error_network.hostmask(), ipv4_address::parse("0.0.0.0"));
     ASSERT_EQ(error_network.prefixlen(), 32);
-#else
+#elif IPADDRESS_CPP_VERSION >= 14
     EXPECT_THAT(
         ([&network, prefixlen_diff, new_prefix]() { network.supernet(prefixlen_diff, new_prefix); }),
         ThrowsMessage<logic_error>(StrEq(expected_error_str)));
+#else
+    ASSERT_THROW((network.supernet(prefixlen_diff, new_prefix)), logic_error);
 #endif
 }
 INSTANTIATE_TEST_SUITE_P(
@@ -1162,10 +1172,12 @@ TEST_P(SubnetsErrorIpv4NetworkParams, subnets) {
 #ifdef IPADDRESS_NO_EXCEPTIONS
     auto error_subnets = network.subnets(prefixlen_diff, new_prefix);
     ASSERT_TRUE(error_subnets.empty());
-#else
+#elif IPADDRESS_CPP_VERSION >= 14
     EXPECT_THAT(
         ([&network, prefixlen_diff, new_prefix]() { network.subnets(prefixlen_diff, new_prefix); }),
         ThrowsMessage<logic_error>(StrEq(expected_error_str)));
+#else
+    ASSERT_THROW((network.subnets(prefixlen_diff, new_prefix)), logic_error);
 #endif
 }
 INSTANTIATE_TEST_SUITE_P(
@@ -1220,10 +1232,12 @@ TEST_P(AddressExcludeErrorIpv4NetworkParams, address_exclude) {
 #ifdef IPADDRESS_NO_EXCEPTIONS
     auto error_address_exclude = network1.address_exclude(network2);
     ASSERT_TRUE(error_address_exclude.empty());
-#else
+#elif IPADDRESS_CPP_VERSION >= 14
     EXPECT_THAT(
         ([&network1, &network2]() { network1.address_exclude(network2); }),
         ThrowsMessage<logic_error>(StrEq(expected_error_str)));
+#else
+    ASSERT_THROW(network1.address_exclude(network2), logic_error);
 #endif
 }
 INSTANTIATE_TEST_SUITE_P(

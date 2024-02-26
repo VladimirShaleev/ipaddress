@@ -11,9 +11,9 @@ using namespace testing;
 using namespace ipaddress;
 
 TEST(ip_address, DefaultCtor) {
-    constexpr ip_address ip;
+    IPADDRESS_CONSTEXPR ip_address ip;
 
-    constexpr auto actual = ip.v4();
+    IPADDRESS_CONSTEXPR auto actual = ip.v4();
 
     EXPECT_EQ(ip.version(), ip_version::V4);
     EXPECT_EQ(ip.size(), 4);
@@ -21,16 +21,16 @@ TEST(ip_address, DefaultCtor) {
     EXPECT_FALSE(ip.is_v6());
     EXPECT_TRUE(actual.has_value());
 
-    constexpr auto value = actual.value();
+    IPADDRESS_CONSTEXPR auto value = actual.value();
     EXPECT_EQ(value.to_uint(), 0);
 }
 
 TEST(ip_address, CopyCtor) {
-    constexpr auto ip = ip_address::parse("127.0.0.1");
-    constexpr auto ip_copy = ip;
+    IPADDRESS_CONSTEXPR auto ip = ip_address::parse("127.0.0.1");
+    IPADDRESS_CONSTEXPR auto ip_copy = ip;
 
-    constexpr auto actual_ip = ip.v4();
-    constexpr auto actual_ip_copy = ip_copy.v4();
+    IPADDRESS_CONSTEXPR auto actual_ip = ip.v4();
+    IPADDRESS_CONSTEXPR auto actual_ip_copy = ip_copy.v4();
 
     EXPECT_EQ(ip.version(), ip_version::V4);
     EXPECT_EQ(ip.size(), 4);
@@ -44,14 +44,14 @@ TEST(ip_address, CopyCtor) {
     EXPECT_FALSE(ip_copy.is_v6());
     EXPECT_TRUE(actual_ip_copy.has_value());
 
-    constexpr auto value_ip = actual_ip.value();
-    constexpr auto value_ip_copy = actual_ip_copy.value();
+    IPADDRESS_CONSTEXPR auto value_ip = actual_ip.value();
+    IPADDRESS_CONSTEXPR auto value_ip_copy = actual_ip_copy.value();
     EXPECT_EQ(value_ip.to_uint(), 0x7F000001);
     EXPECT_EQ(value_ip_copy.to_uint(), 0x7F000001);
 }
 
 TEST(ip_address, CopyOperator) {
-    constexpr auto ip = 
+    IPADDRESS_CONSTEXPR auto ip = 
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
     ip_address::parse<"::ffff:0:0">();
 #else
@@ -84,8 +84,8 @@ TEST(ip_address, CopyOperator) {
 }
 
 TEST(ip_address, Ctors) {
-    constexpr auto ipv4 = ipv4_address::parse("192.168.0.1");
-    constexpr auto ipv6 = ipv6_address::parse("2002:ac1d:2d64::1");
+    IPADDRESS_CONSTEXPR auto ipv4 = ipv4_address::parse("192.168.0.1");
+    IPADDRESS_CONSTEXPR auto ipv6 = ipv6_address::parse("2002:ac1d:2d64::1");
     constexpr ipv4_address::base_type ipv4_bytes {0xC0, 0xA8, 0x00, 0x01};
     constexpr ipv6_address::base_type ipv6_bytes { 
         0, 0, 0, 0,
@@ -94,10 +94,10 @@ TEST(ip_address, Ctors) {
         0, 0, 0, 0
     };
 
-    constexpr ip_address actual1(ipv4);
-    constexpr ip_address actual2(ipv6);
-    constexpr ip_address actual3(ipv4_bytes);
-    constexpr ip_address actual4(ipv6_bytes);
+    IPADDRESS_CONSTEXPR ip_address actual1(ipv4);
+    IPADDRESS_CONSTEXPR ip_address actual2(ipv6);
+    IPADDRESS_CONSTEXPR ip_address actual3(ipv4_bytes);
+    IPADDRESS_CONSTEXPR ip_address actual4(ipv6_bytes);
     
     auto actual1_ip = actual1.v4();
     EXPECT_EQ(actual1.version(), ip_version::V4);
@@ -141,10 +141,10 @@ TEST(ip_address, from_bytes) {
         0, 0, 0, 0
     };
 
-    constexpr auto actual1 = ip_address::from_bytes(ipv4_bytes);
-    constexpr auto actual2 = ip_address::from_bytes(ipv6_bytes);
-    constexpr auto actual3 = ip_address::from_bytes(ipv4_bytes.data(), 3, ip_version::V4);
-    constexpr auto actual4 = ip_address::from_bytes(ipv6_bytes.data(), 11, ip_version::V6);
+    IPADDRESS_CONSTEXPR auto actual1 = ip_address::from_bytes(ipv4_bytes);
+    IPADDRESS_CONSTEXPR auto actual2 = ip_address::from_bytes(ipv6_bytes);
+    IPADDRESS_CONSTEXPR auto actual3 = ip_address::from_bytes(ipv4_bytes.data(), 3, ip_version::V4);
+    IPADDRESS_CONSTEXPR auto actual4 = ip_address::from_bytes(ipv6_bytes.data(), 11, ip_version::V6);
     
     auto actual1_ip = actual1.v4();
     EXPECT_EQ(actual1.version(), ip_version::V4);
@@ -181,10 +181,10 @@ TEST(ip_address, from_bytes) {
 
 TEST(ip_address, from_uint) {
     constexpr ipv4_address::uint_type ip1 = 0xC0A80001;
-    constexpr ipv6_address::uint_type ip2 = 281470681743360ULL;
+    IPADDRESS_CONSTEXPR ipv6_address::uint_type ip2 = 281470681743360ULL;
 
-    constexpr auto actual1 = ip_address::from_uint(ip1);
-    constexpr auto actual2 = ip_address::from_uint(ip2);
+    IPADDRESS_CONSTEXPR auto actual1 = ip_address::from_uint(ip1);
+    IPADDRESS_CONSTEXPR auto actual2 = ip_address::from_uint(ip2);
     
     auto actual1_ip = actual1.v4();
     EXPECT_EQ(actual1.version(), ip_version::V4);
@@ -204,19 +204,19 @@ TEST(ip_address, from_uint) {
 }
 
 TEST(ip_address, to_uint) {
-    constexpr auto expected1 = 0xC0A80001;
-    constexpr auto expected2 = uint128_t(2306595200482672640, 1);
-    constexpr auto expected3 = 1;
+    IPADDRESS_CONSTEXPR auto expected1 = 0xC0A80001;
+    IPADDRESS_CONSTEXPR auto expected2 = uint128_t(2306595200482672640, 1);
+    IPADDRESS_CONSTEXPR auto expected3 = 1;
 
-    constexpr auto ip1 = ip_address::parse("192.168.0.1");
-    constexpr auto ip2 = ip_address::parse("2002:ac1d:2d64::1");
+    IPADDRESS_CONSTEXPR auto ip1 = ip_address::parse("192.168.0.1");
+    IPADDRESS_CONSTEXPR auto ip2 = ip_address::parse("2002:ac1d:2d64::1");
 
-    constexpr auto actual1 = ip1.to_uint();
-    constexpr auto actual2 = (uint128_t) ip1;
-    constexpr auto actual3 = (uint32_t) ip1;
-    constexpr auto actual4 = ip2.to_uint();
-    constexpr auto actual5 = (uint128_t) ip2;
-    constexpr auto actual6 = (uint32_t) ip2;
+    IPADDRESS_CONSTEXPR auto actual1 = ip1.to_uint();
+    IPADDRESS_CONSTEXPR auto actual2 = (uint128_t) ip1;
+    IPADDRESS_CONSTEXPR auto actual3 = (uint32_t) ip1;
+    IPADDRESS_CONSTEXPR auto actual4 = ip2.to_uint();
+    IPADDRESS_CONSTEXPR auto actual5 = (uint128_t) ip2;
+    IPADDRESS_CONSTEXPR auto actual6 = (uint32_t) ip2;
 
     EXPECT_EQ(actual1, expected1);
     EXPECT_EQ(actual2, expected1);
@@ -235,11 +235,11 @@ TEST(ip_address, data) {
         0, 0, 0, 0x01 
     };
 
-    static constexpr auto ip1 = ip_address::parse("192.168.0.1");
-    static constexpr auto ip2 = ip_address::parse("2002:ac1d:2d64::1");
+    static IPADDRESS_CONSTEXPR auto ip1 = ip_address::parse("192.168.0.1");
+    static IPADDRESS_CONSTEXPR auto ip2 = ip_address::parse("2002:ac1d:2d64::1");
 
-    constexpr auto data1 = ip1.data();
-    constexpr auto data2 = ip2.data();
+    IPADDRESS_CONSTEXPR auto data1 = ip1.data();
+    IPADDRESS_CONSTEXPR auto data2 = ip2.data();
 
     byte_array<4> actual1 = { data1[0], data1[1], data1[2], data1[3] };
     byte_array<16> actual2 = { 
@@ -290,8 +290,8 @@ TEST(ip_address, parse) {
     auto str1 = "100.64.0.0";
     auto str2 = "2001:0db8:85a3:0000:0000:8a2e:0370:7334";
 
-    constexpr auto actual1 = ip_address::parse("192.168.1.1");
-    constexpr auto actual2 = ip_address::parse("fe80::1ff:fe23:4567:890a");
+    IPADDRESS_CONSTEXPR auto actual1 = ip_address::parse("192.168.1.1");
+    IPADDRESS_CONSTEXPR auto actual2 = ip_address::parse("fe80::1ff:fe23:4567:890a");
     auto actual3 = ip_address::parse(str1);
     auto actual4 = ip_address::parse(str2);
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
@@ -308,7 +308,7 @@ TEST(ip_address, parse) {
     ss1 >> s1 >> actual7 >> s2;
     ss2 >> s1 >> actual8 >> s2;
 
-    constexpr auto actual1_ip = actual1.v4();
+    IPADDRESS_CONSTEXPR auto actual1_ip = actual1.v4();
     EXPECT_EQ(actual1.version(), ip_version::V4);
     EXPECT_EQ(actual1.size(), 4);
     EXPECT_TRUE(actual1.is_v4());
@@ -316,7 +316,7 @@ TEST(ip_address, parse) {
     EXPECT_TRUE(actual1_ip.has_value());
     EXPECT_EQ(actual1_ip.value().to_uint(), 0xC0A80101);
 
-    constexpr auto actual2_ip = actual2.v6();
+    IPADDRESS_CONSTEXPR auto actual2_ip = actual2.v6();
     EXPECT_EQ(actual2.version(), ip_version::V6);
     EXPECT_EQ(actual2.size(), 16);
     EXPECT_FALSE(actual2.is_v4());
@@ -388,13 +388,15 @@ TEST_P(InvalidAddressParams, parse) {
     auto error_ip = ip_address::parse(expected_address);
 
     EXPECT_EQ(error_ip.v4().value().to_uint(), 0);
-#else
+#elif IPADDRESS_CPP_VERSION >= 14
     EXPECT_THAT(
         [address=expected_address]() { ip_address::parse(address); },
         ThrowsMessage<parse_error>(StrEq(get<2>(GetParam()))));
     EXPECT_THAT(
         [address=expected_address]() { ip_address::parse(address); },
         Throws<parse_error>(Property(&parse_error::code, Eq(expected_error_code))));
+#else
+    ASSERT_THROW(ip_address::parse(expected_address), parse_error);
 #endif
 }
 INSTANTIATE_TEST_SUITE_P(
@@ -422,9 +424,9 @@ INSTANTIATE_TEST_SUITE_P(
     ));
 
 TEST(ip_address, Comparison) {
-    constexpr auto ip1 = ip_address::parse("127.240.0.1");
-    constexpr auto ip2 = ip_address::parse("2001:db8::1");
-    constexpr auto ip3 = ip_address::parse("2001:db8::2");
+    IPADDRESS_CONSTEXPR auto ip1 = ip_address::parse("127.240.0.1");
+    IPADDRESS_CONSTEXPR auto ip2 = ip_address::parse("2001:db8::1");
+    IPADDRESS_CONSTEXPR auto ip3 = ip_address::parse("2001:db8::2");
 
     ASSERT_TRUE(ip1 < ip2);
     ASSERT_TRUE(ip1 <= ip2);
@@ -449,8 +451,8 @@ TEST(ip_address, Comparison) {
 }
 
 TEST(ip_address, to_string) {
-    constexpr auto ip1 = ip_address::parse("127.240.0.1");
-    constexpr auto ip2 = ip_address::parse("fe80::1ff:fe23:4567:890a%eth2");
+    IPADDRESS_CONSTEXPR auto ip1 = ip_address::parse("127.240.0.1");
+    IPADDRESS_CONSTEXPR auto ip2 = ip_address::parse("fe80::1ff:fe23:4567:890a%eth2");
 
     const std::string expected_address = "127.240.0.1";
     const auto expected_full_2 = "fe80:0000:0000:0000:01ff:fe23:4567:890a%eth2";
@@ -498,13 +500,13 @@ TEST(ip_address, to_string) {
 TEST(ip_address, Hash) {
     constexpr auto hash_functor = std::hash<ip_address>{};
 
-    constexpr auto ip1 = ip_address::parse("127.0.0.1");
-    constexpr auto ip2 = ip_address::parse("2001:db8::1");
+    IPADDRESS_CONSTEXPR auto ip1 = ip_address::parse("127.0.0.1");
+    IPADDRESS_CONSTEXPR auto ip2 = ip_address::parse("2001:db8::1");
 
-    constexpr auto hash1 = ip1.hash();
-    constexpr auto hash2 = ip2.hash();
-    constexpr auto hash3 = hash_functor(ip1);
-    constexpr auto hash4 = hash_functor(ip2);
+    IPADDRESS_CONSTEXPR auto hash1 = ip1.hash();
+    IPADDRESS_CONSTEXPR auto hash2 = ip2.hash();
+    IPADDRESS_CONSTEXPR auto hash3 = hash_functor(ip1);
+    IPADDRESS_CONSTEXPR auto hash4 = hash_functor(ip2);
 
     ASSERT_EQ(hash1, sizeof(size_t) == 8 ? 2753421670903790749ULL : 4009513643U);
     ASSERT_EQ(hash2, sizeof(size_t) == 8 ? 6222153021643990098ULL : 1539407693U);
@@ -513,9 +515,9 @@ TEST(ip_address, Hash) {
 }
 
 TEST(ip_address, Containers) {
-    constexpr auto ip1 = ip_address::parse("127.0.0.1");
-    constexpr auto ip2 = ip_address::parse("2001:db8::1");
-    constexpr auto ip3 = ip_address::parse("2001:db8::2");
+    IPADDRESS_CONSTEXPR auto ip1 = ip_address::parse("127.0.0.1");
+    IPADDRESS_CONSTEXPR auto ip2 = ip_address::parse("2001:db8::1");
+    IPADDRESS_CONSTEXPR auto ip3 = ip_address::parse("2001:db8::2");
 
     std::vector<ip_address> vec;
     vec.push_back(ip1);
@@ -560,8 +562,8 @@ TEST(ip_address, Swap) {
 }
 
 TEST(ip_address, reverse_pointer) {
-    constexpr auto ip1 = ip_address::parse("127.0.0.1");
-    constexpr auto ip2 = ip_address::parse("2001:db8::1");
+    IPADDRESS_CONSTEXPR auto ip1 = ip_address::parse("127.0.0.1");
+    IPADDRESS_CONSTEXPR auto ip2 = ip_address::parse("2001:db8::1");
     
     const auto actual1 = ip1.reverse_pointer();
     const auto actual2 = ip2.reverse_pointer();
@@ -571,100 +573,100 @@ TEST(ip_address, reverse_pointer) {
 }
 
 TEST(ip_address, ipv4_mapped) {
-    constexpr auto ip1 = ip_address::parse("127.0.0.1");
-    constexpr auto ip2 = ip_address::parse("::ffff:192.168.1.1%test");
-    constexpr auto ip3 = ip_address::parse("::c0a8:101");
+    IPADDRESS_CONSTEXPR auto ip1 = ip_address::parse("127.0.0.1");
+    IPADDRESS_CONSTEXPR auto ip2 = ip_address::parse("::ffff:192.168.1.1%test");
+    IPADDRESS_CONSTEXPR auto ip3 = ip_address::parse("::c0a8:101");
 
-    constexpr auto actual1 = ip1.ipv4_mapped();
-    constexpr auto actual2 = ip2.ipv4_mapped();
-    constexpr auto actual3 = ip3.ipv4_mapped();
+    IPADDRESS_CONSTEXPR auto actual1 = ip1.ipv4_mapped();
+    IPADDRESS_CONSTEXPR auto actual2 = ip2.ipv4_mapped();
+    IPADDRESS_CONSTEXPR auto actual3 = ip3.ipv4_mapped();
 
-    constexpr auto actual_has_value1 = actual1.has_value();
-    constexpr auto actual_has_value2 = actual2.has_value();
-    constexpr auto actual_has_value3 = actual3.has_value();
+    IPADDRESS_CONSTEXPR auto actual_has_value1 = actual1.has_value();
+    IPADDRESS_CONSTEXPR auto actual_has_value2 = actual2.has_value();
+    IPADDRESS_CONSTEXPR auto actual_has_value3 = actual3.has_value();
     ASSERT_FALSE(actual_has_value1);
     ASSERT_TRUE(actual_has_value2);
     ASSERT_FALSE(actual_has_value3);
 
-    constexpr ip_address ipv4 = actual2.value();
+    IPADDRESS_CONSTEXPR ip_address ipv4 = actual2.value();
     ASSERT_EQ(ipv4, ip_address::parse("192.168.1.1"));
 }
 
 TEST(ip_address, sixtofour) {
-    constexpr auto ip1 = ip_address::parse("127.0.0.1");
-    constexpr auto ip2 = ip_address::parse("2002:ac1d:2d64::1");
-    constexpr auto ip3 = ip_address::parse("2000:ac1d:2d64::1");
+    IPADDRESS_CONSTEXPR auto ip1 = ip_address::parse("127.0.0.1");
+    IPADDRESS_CONSTEXPR auto ip2 = ip_address::parse("2002:ac1d:2d64::1");
+    IPADDRESS_CONSTEXPR auto ip3 = ip_address::parse("2000:ac1d:2d64::1");
 
-    constexpr auto actual1 = ip1.sixtofour();
-    constexpr auto actual2 = ip2.sixtofour();
-    constexpr auto actual3 = ip3.sixtofour();
+    IPADDRESS_CONSTEXPR auto actual1 = ip1.sixtofour();
+    IPADDRESS_CONSTEXPR auto actual2 = ip2.sixtofour();
+    IPADDRESS_CONSTEXPR auto actual3 = ip3.sixtofour();
 
-    constexpr auto actual_has_value1 = actual1.has_value();
-    constexpr auto actual_has_value2 = actual2.has_value();
-    constexpr auto actual_has_value3 = actual3.has_value();
+    IPADDRESS_CONSTEXPR auto actual_has_value1 = actual1.has_value();
+    IPADDRESS_CONSTEXPR auto actual_has_value2 = actual2.has_value();
+    IPADDRESS_CONSTEXPR auto actual_has_value3 = actual3.has_value();
     ASSERT_FALSE(actual_has_value1);
     ASSERT_TRUE(actual_has_value2);
     ASSERT_FALSE(actual_has_value3);
 
-    constexpr ip_address ipv4 = actual2.value();
+    IPADDRESS_CONSTEXPR ip_address ipv4 = actual2.value();
     ASSERT_EQ(ipv4, ip_address::parse("172.29.45.100"));
 }
 
 TEST(ip_address, teredo) {
-    constexpr auto ip1 = ip_address::parse("127.0.0.1");
-    constexpr auto ip2 = ip_address::parse("2001:0000:4136:e378:8000:63bf:3fff:fdd2");
-    constexpr auto ip3 = ip_address::parse("2000::4136:e378:8000:63bf:3fff:fdd2");
+    IPADDRESS_CONSTEXPR auto ip1 = ip_address::parse("127.0.0.1");
+    IPADDRESS_CONSTEXPR auto ip2 = ip_address::parse("2001:0000:4136:e378:8000:63bf:3fff:fdd2");
+    IPADDRESS_CONSTEXPR auto ip3 = ip_address::parse("2000::4136:e378:8000:63bf:3fff:fdd2");
 
-    constexpr auto actual1 = ip1.teredo();
-    constexpr auto actual2 = ip2.teredo();
-    constexpr auto actual3 = ip3.teredo();
+    IPADDRESS_CONSTEXPR auto actual1 = ip1.teredo();
+    IPADDRESS_CONSTEXPR auto actual2 = ip2.teredo();
+    IPADDRESS_CONSTEXPR auto actual3 = ip3.teredo();
 
-    constexpr auto actual_has_value1 = actual1.has_value();
-    constexpr auto actual_has_value2 = actual2.has_value();
-    constexpr auto actual_has_value3 = actual3.has_value();
+    IPADDRESS_CONSTEXPR auto actual_has_value1 = actual1.has_value();
+    IPADDRESS_CONSTEXPR auto actual_has_value2 = actual2.has_value();
+    IPADDRESS_CONSTEXPR auto actual_has_value3 = actual3.has_value();
     ASSERT_FALSE(actual_has_value1);
     ASSERT_TRUE(actual_has_value2);
     ASSERT_FALSE(actual_has_value3);
 
-    constexpr ip_address server = actual2.value().first;
-    constexpr ip_address client = actual2.value().second;
+    IPADDRESS_CONSTEXPR ip_address server = actual2.value().first;
+    IPADDRESS_CONSTEXPR ip_address client = actual2.value().second;
     ASSERT_EQ(server, ip_address::parse("65.54.227.120"));
     ASSERT_EQ(client, ip_address::parse("192.0.2.45"));
 }
 
 TEST(ip_address, is_prop) {
-    constexpr auto ip1 = ip_address::parse("224.1.1.1").is_multicast();
-    constexpr auto ip2 = ip_address::parse("240.0.0.0").is_multicast();
-    constexpr auto ip3 = ip_address::parse("ffff::").is_multicast();
-    constexpr auto ip4 = ip_address::parse("fdff::").is_multicast();
-    constexpr auto ip5 = ip_address::parse("192.168.1.1").is_private();
-    constexpr auto ip6 = ip_address::parse("192.169.0.0").is_private();
-    constexpr auto ip7 = ip_address::parse("fc00::").is_private();
-    constexpr auto ip8 = ip_address::parse("fbff:ffff::").is_private();
-    constexpr auto ip9 = ip_address::parse("192.0.7.1").is_global();
-    constexpr auto ip10 = ip_address::parse("203.0.113.1").is_global();
-    constexpr auto ip11 = ip_address::parse("200::1").is_global();
-    constexpr auto ip12 = ip_address::parse("fc00::").is_global();
-    constexpr auto ip13 = ip_address::parse("240.0.0.1").is_reserved();
-    constexpr auto ip14 = ip_address::parse("239.255.255.255").is_reserved();
-    constexpr auto ip15 = ip_address::parse("100::").is_reserved();
-    constexpr auto ip16 = ip_address::parse("ffff::").is_reserved();
-    constexpr auto ip17 = ip_address::parse("127.42.0.0").is_loopback();
-    constexpr auto ip18 = ip_address::parse("128.0.0.0").is_loopback();
-    constexpr auto ip19 = ip_address::parse("::1").is_loopback();
-    constexpr auto ip20 = ip_address::parse("::2").is_loopback();
-    constexpr auto ip21 = ip_address::parse("169.254.100.200").is_link_local();
-    constexpr auto ip22 = ip_address::parse("169.255.100.200").is_link_local();
-    constexpr auto ip23 = ip_address::parse("fea0::").is_link_local();
-    constexpr auto ip24 = ip_address::parse("fe7f:ffff::").is_link_local();
-    constexpr auto ip25 = ip_address::parse("0.0.0.0").is_unspecified();
-    constexpr auto ip26 = ip_address::parse("127.0.0.1").is_unspecified();
-    constexpr auto ip27 = ip_address::parse("::").is_unspecified();
-    constexpr auto ip28 = ip_address::parse("::1").is_unspecified();
-    constexpr auto ip29 = ip_address::parse("127.0.0.1").is_site_local();
-    constexpr auto ip30 = ip_address::parse("0.0.0.0").is_site_local();
-    constexpr auto ip31 = ip_address::parse("fecf::").is_site_local();
-    constexpr auto ip32 = ip_address::parse("fbf:ffff::").is_site_local();
+    IPADDRESS_CONSTEXPR auto ip1 = ip_address::parse("224.1.1.1").is_multicast();
+    IPADDRESS_CONSTEXPR auto ip2 = ip_address::parse("240.0.0.0").is_multicast();
+    IPADDRESS_CONSTEXPR auto ip3 = ip_address::parse("ffff::").is_multicast();
+    IPADDRESS_CONSTEXPR auto ip4 = ip_address::parse("fdff::").is_multicast();
+    IPADDRESS_CONSTEXPR auto ip5 = ip_address::parse("192.168.1.1").is_private();
+    IPADDRESS_CONSTEXPR auto ip6 = ip_address::parse("192.169.0.0").is_private();
+    IPADDRESS_CONSTEXPR auto ip7 = ip_address::parse("fc00::").is_private();
+    IPADDRESS_CONSTEXPR auto ip8 = ip_address::parse("fbff:ffff::").is_private();
+    IPADDRESS_CONSTEXPR auto ip9 = ip_address::parse("192.0.7.1").is_global();
+    IPADDRESS_CONSTEXPR auto ip10 = ip_address::parse("203.0.113.1").is_global();
+    IPADDRESS_CONSTEXPR auto ip11 = ip_address::parse("200::1").is_global();
+    IPADDRESS_CONSTEXPR auto ip12 = ip_address::parse("fc00::").is_global();
+    IPADDRESS_CONSTEXPR auto ip13 = ip_address::parse("240.0.0.1").is_reserved();
+    IPADDRESS_CONSTEXPR auto ip14 = ip_address::parse("239.255.255.255").is_reserved();
+    IPADDRESS_CONSTEXPR auto ip15 = ip_address::parse("100::").is_reserved();
+    IPADDRESS_CONSTEXPR auto ip16 = ip_address::parse("ffff::").is_reserved();
+    IPADDRESS_CONSTEXPR auto ip17 = ip_address::parse("127.42.0.0").is_loopback();
+    IPADDRESS_CONSTEXPR auto ip18 = ip_address::parse("128.0.0.0").is_loopback();
+    IPADDRESS_CONSTEXPR auto ip19 = ip_address::parse("::1").is_loopback();
+    IPADDRESS_CONSTEXPR auto ip20 = ip_address::parse("::2").is_loopback();
+    IPADDRESS_CONSTEXPR auto ip21 = ip_address::parse("169.254.100.200").is_link_local();
+    IPADDRESS_CONSTEXPR auto ip22 = ip_address::parse("169.255.100.200").is_link_local();
+    IPADDRESS_CONSTEXPR auto ip23 = ip_address::parse("fea0::").is_link_local();
+    IPADDRESS_CONSTEXPR auto ip24 = ip_address::parse("fe7f:ffff::").is_link_local();
+    IPADDRESS_CONSTEXPR auto ip25 = ip_address::parse("0.0.0.0").is_unspecified();
+    IPADDRESS_CONSTEXPR auto ip26 = ip_address::parse("127.0.0.1").is_unspecified();
+    IPADDRESS_CONSTEXPR auto ip27 = ip_address::parse("::").is_unspecified();
+    IPADDRESS_CONSTEXPR auto ip28 = ip_address::parse("::1").is_unspecified();
+    IPADDRESS_CONSTEXPR auto ip29 = ip_address::parse("127.0.0.1").is_site_local();
+    IPADDRESS_CONSTEXPR auto ip30 = ip_address::parse("0.0.0.0").is_site_local();
+    IPADDRESS_CONSTEXPR auto ip31 = ip_address::parse("fecf::").is_site_local();
+    IPADDRESS_CONSTEXPR auto ip32 = ip_address::parse("fbf:ffff::").is_site_local();
     
     ASSERT_TRUE(ip1);
     ASSERT_FALSE(ip2);
@@ -701,8 +703,8 @@ TEST(ip_address, is_prop) {
 }
 
 TEST(ip_address, literals) {
-    constexpr auto ip1 = "127.128.128.255"_ip;
-    constexpr auto ip2 = "2001:db8::1"_ip;
+    IPADDRESS_CONSTEXPR auto ip1 = "127.128.128.255"_ip;
+    IPADDRESS_CONSTEXPR auto ip2 = "2001:db8::1"_ip;
     
     ASSERT_TRUE(ip1.is_v4());
     ASSERT_TRUE(ip2.is_v6());

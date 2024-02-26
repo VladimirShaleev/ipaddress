@@ -10,6 +10,8 @@
 using namespace testing;
 using namespace ipaddress;
 
+#if IPADDRESS_CPP_VERSION >= 14
+
 template <size_t N>
 static constexpr error_code get_parse_error(const char(&address)[N]) noexcept {
     error_code err = error_code::NO_ERROR;
@@ -277,6 +279,8 @@ TEST(ipv6_address, CompileTime) {
 #endif
 }
 
+#endif
+
 TEST(ipv6_address, DefaultCtor) {
     ipv6_address::base_type expected_empty {
          0, 0, 0, 0, 
@@ -479,13 +483,15 @@ TEST_P(InvalidAddressIpv6Params, parse) {
     auto error_ip = ipv6_address::parse(expected_address);
 
     EXPECT_EQ(error_ip.bytes(), expected_empty);
-#else
+#elif IPADDRESS_CPP_VERSION >= 14
     EXPECT_THAT(
         [address=expected_address]() { ipv6_address::parse(address); },
         ThrowsMessage<parse_error>(StrEq(get<2>(GetParam()))));
     EXPECT_THAT(
         [address=expected_address]() { ipv6_address::parse(address); },
         Throws<parse_error>(Property(&parse_error::code, Eq(expected_error_code))));
+#else
+    ASSERT_THROW(ipv6_address::parse(expected_address), parse_error);
 #endif
 }
 INSTANTIATE_TEST_SUITE_P(
@@ -825,8 +831,8 @@ TEST(ipv6_address, reverse_pointer) {
 }
 
 TEST(ipv6_address, literals) {
-    constexpr auto ip1 = "2001:db8::1"_ipv6;
-    constexpr auto ip2 = "0001:0002:0003:0004:0005:0006:0007:0008%123456789abcdefg"_ipv6;
+    IPADDRESS_CONSTEXPR auto ip1 = "2001:db8::1"_ipv6;
+    IPADDRESS_CONSTEXPR auto ip2 = "0001:0002:0003:0004:0005:0006:0007:0008%123456789abcdefg"_ipv6;
 
     ASSERT_EQ(ip1, ipv6_address::parse("2001:db8::1"));
     ASSERT_EQ(ip2, ipv6_address::parse("1:2:3:4:5:6:7:8%123456789abcdefg"));

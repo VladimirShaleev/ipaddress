@@ -4,6 +4,8 @@
 
 using namespace ipaddress;
 
+#if IPADDRESS_CPP_VERSION >= 14
+
 TEST(uint128_t, CompileTime) {
     constexpr uint128_t value1 = { 1, 0 };
     constexpr uint128_t value2 = value1 << 2;
@@ -14,15 +16,17 @@ TEST(uint128_t, CompileTime) {
     ASSERT_EQ(value5.lower(), 0xAAAAAAAAAAAAAAAA);
 }
 
+#endif
+
 TEST(uint128_t, Ctors) {
-    constexpr uint128_t value1;
-    constexpr uint128_t value2{};
-    constexpr uint128_t value3 = 1;
-    constexpr uint128_t value4(1, 2);
-    constexpr uint128_t value5 { 1, 2 };
-    constexpr uint128_t value6 = { 1, 2 };
-    constexpr uint128_t value7 { 1 };
-    constexpr uint128_t value8 = { 1 };
+    IPADDRESS_CONSTEXPR uint128_t value1;
+    IPADDRESS_CONSTEXPR uint128_t value2{};
+    IPADDRESS_CONSTEXPR uint128_t value3 = 1;
+    IPADDRESS_CONSTEXPR uint128_t value4(1, 2);
+    IPADDRESS_CONSTEXPR uint128_t value5 { 1, 2 };
+    IPADDRESS_CONSTEXPR uint128_t value6 = { 1, 2 };
+    IPADDRESS_CONSTEXPR uint128_t value7 { 1 };
+    IPADDRESS_CONSTEXPR uint128_t value8 = { 1 };
     uint128_t value9 = (uint128_t) 457.3f;
     uint128_t value10 = (uint128_t) 4.32e+20;
 
@@ -49,9 +53,9 @@ TEST(uint128_t, Ctors) {
 }
 
 TEST(uint128_t, Copy) {
-    constexpr uint128_t value = 5;
+    IPADDRESS_CONSTEXPR uint128_t value = 5;
 
-    constexpr uint128_t copy_ctor = value;
+    IPADDRESS_CONSTEXPR uint128_t copy_ctor = value;
     uint128_t copy_operator;
     copy_operator = value;
 
@@ -73,30 +77,30 @@ TEST(uint128_t, Move) {
 }
 
 TEST(uint128_t, OperatorBool) {
-    constexpr uint128_t value1 = 0;
-    constexpr uint128_t value2 = 5;
+    IPADDRESS_CONSTEXPR uint128_t value1 = 0;
+    IPADDRESS_CONSTEXPR uint128_t value2 = 5;
     
-    constexpr auto actual1 = (bool) value1;
-    constexpr auto actual2 = (bool) value2;
+    IPADDRESS_CONSTEXPR auto actual1 = (bool) value1;
+    IPADDRESS_CONSTEXPR auto actual2 = (bool) value2;
 
     ASSERT_FALSE(actual1);
     ASSERT_TRUE(actual2);
 }
 
 TEST(uint128_t, OperatorT) {
-    constexpr uint128_t value { 4, 140185576636287 };
+    IPADDRESS_CONSTEXPR uint128_t value { 4, 140185576636287 };
     
-    constexpr auto actual1 = (char) value;
-    constexpr auto actual2 = (signed char) value;
-    constexpr auto actual3 = (unsigned char) value;
-    constexpr auto actual4 = (short) value;
-    constexpr auto actual5 = (unsigned short) value;
-    constexpr auto actual6 = (int) value;
-    constexpr auto actual7 = (unsigned int) value;
-    constexpr auto actual8 = (long) value;
-    constexpr auto actual9 = (unsigned long) value;
-    constexpr auto actual10 = (long long) value;
-    constexpr auto actual11 = (unsigned long long) value;
+    IPADDRESS_CONSTEXPR auto actual1 = (char) value;
+    IPADDRESS_CONSTEXPR auto actual2 = (signed char) value;
+    IPADDRESS_CONSTEXPR auto actual3 = (unsigned char) value;
+    IPADDRESS_CONSTEXPR auto actual4 = (short) value;
+    IPADDRESS_CONSTEXPR auto actual5 = (unsigned short) value;
+    IPADDRESS_CONSTEXPR auto actual6 = (int) value;
+    IPADDRESS_CONSTEXPR auto actual7 = (unsigned int) value;
+    IPADDRESS_CONSTEXPR auto actual8 = (long) value;
+    IPADDRESS_CONSTEXPR auto actual9 = (unsigned long) value;
+    IPADDRESS_CONSTEXPR auto actual10 = (long long) value;
+    IPADDRESS_CONSTEXPR auto actual11 = (unsigned long long) value;
     auto actual12 = (float) value;
     auto actual13 = (double) value;
     auto actual14 = (long double) value;
@@ -122,13 +126,13 @@ TEST(uint128_t, OperatorT) {
 }
 
 TEST(uint128_t, Arithmetic) {
-    constexpr uint128_t value1 { 4, 5 };
-    constexpr uint128_t value2 { 4, 0xFFFFFFFFFFFFFFFFULL - 1 };
-    constexpr uint128_t value3 { 4, 0xFFFFFFFFFFFFFFFFULL };
+    IPADDRESS_CONSTEXPR uint128_t value1 { 4, 5 };
+    IPADDRESS_CONSTEXPR uint128_t value2 { 4, 0xFFFFFFFFFFFFFFFFULL - 1 };
+    IPADDRESS_CONSTEXPR uint128_t value3 { 4, 0xFFFFFFFFFFFFFFFFULL };
 
-    constexpr auto plus1 = +value1;
-    constexpr auto plus2 = +value2;
-    constexpr auto plus3 = +value3;
+    IPADDRESS_CONSTEXPR auto plus1 = +value1;
+    IPADDRESS_CONSTEXPR auto plus2 = +value2;
+    IPADDRESS_CONSTEXPR auto plus3 = +value3;
     ASSERT_EQ(plus1.upper(), 4);
     ASSERT_EQ(plus1.lower(), 5);
     ASSERT_EQ(plus2.upper(), 4);
@@ -136,9 +140,9 @@ TEST(uint128_t, Arithmetic) {
     ASSERT_EQ(plus3.upper(), 4);
     ASSERT_EQ(plus3.lower(), 0xFFFFFFFFFFFFFFFFULL);
 
-    constexpr auto minus1 = -value1;
-    constexpr auto minus2 = -value2;
-    constexpr auto minus3 = -value3;
+    IPADDRESS_CONSTEXPR auto minus1 = -value1;
+    IPADDRESS_CONSTEXPR auto minus2 = -value2;
+    IPADDRESS_CONSTEXPR auto minus3 = -value3;
     ASSERT_EQ(minus1.upper(), 0xFFFFFFFFFFFFFFFFULL - 4);
     ASSERT_EQ(minus1.lower(), 0xFFFFFFFFFFFFFFFFULL - 4);
     ASSERT_EQ(minus2.upper(), 0xFFFFFFFFFFFFFFFFULL - 4);
@@ -146,9 +150,9 @@ TEST(uint128_t, Arithmetic) {
     ASSERT_EQ(minus3.upper(), 0xFFFFFFFFFFFFFFFFULL - 4);
     ASSERT_EQ(minus3.lower(), 1);
     
-    constexpr auto inv1 = ~value1;
-    constexpr auto inv2 = ~value2;
-    constexpr auto inv3 = ~value3;
+    IPADDRESS_CONSTEXPR auto inv1 = ~value1;
+    IPADDRESS_CONSTEXPR auto inv2 = ~value2;
+    IPADDRESS_CONSTEXPR auto inv3 = ~value3;
     ASSERT_EQ(inv1.upper(), 0xFFFFFFFFFFFFFFFFULL - 4);
     ASSERT_EQ(inv1.lower(), 0xFFFFFFFFFFFFFFFFULL - 5);
     ASSERT_EQ(inv2.upper(), 0xFFFFFFFFFFFFFFFFULL - 4);
@@ -156,11 +160,11 @@ TEST(uint128_t, Arithmetic) {
     ASSERT_EQ(inv3.upper(), 0xFFFFFFFFFFFFFFFFULL - 4);
     ASSERT_EQ(inv3.lower(), 0);
     
-    constexpr auto sum1 = value1 + 1;
-    constexpr auto sum2 = value2 + 1;
-    constexpr auto sum3 = value3 + 1;
-    constexpr auto sum4 = value1 + uint128_t(10, 0xFFFFFFFFFFFFFFFFULL - 2);
-    constexpr auto sum5 = 1 + value1;
+    IPADDRESS_CONSTEXPR auto sum1 = value1 + 1;
+    IPADDRESS_CONSTEXPR auto sum2 = value2 + 1;
+    IPADDRESS_CONSTEXPR auto sum3 = value3 + 1;
+    IPADDRESS_CONSTEXPR auto sum4 = value1 + uint128_t(10, 0xFFFFFFFFFFFFFFFFULL - 2);
+    IPADDRESS_CONSTEXPR auto sum5 = 1 + value1;
     ASSERT_EQ(sum1.upper(), 4);
     ASSERT_EQ(sum1.lower(), 6);
     ASSERT_EQ(sum2.upper(), 4);
@@ -172,11 +176,11 @@ TEST(uint128_t, Arithmetic) {
     ASSERT_EQ(sum5.upper(), 4);
     ASSERT_EQ(sum5.lower(), 6);
     
-    constexpr auto sub1 = value1 - 6;
-    constexpr auto sub2 = value2 - 7;
-    constexpr auto sub3 = value3 - 1;
-    constexpr auto sub4 = value1 - uint128_t(2, 0xFFFFFFFFFFFFFFFFULL - 2);
-    constexpr auto sub5 = 10 - uint128_t(7);
+    IPADDRESS_CONSTEXPR auto sub1 = value1 - 6;
+    IPADDRESS_CONSTEXPR auto sub2 = value2 - 7;
+    IPADDRESS_CONSTEXPR auto sub3 = value3 - 1;
+    IPADDRESS_CONSTEXPR auto sub4 = value1 - uint128_t(2, 0xFFFFFFFFFFFFFFFFULL - 2);
+    IPADDRESS_CONSTEXPR auto sub5 = 10 - uint128_t(7);
     ASSERT_EQ(sub1.upper(), 3);
     ASSERT_EQ(sub1.lower(), 0xFFFFFFFFFFFFFFFFULL);
     ASSERT_EQ(sub2.upper(), 4);
@@ -188,10 +192,10 @@ TEST(uint128_t, Arithmetic) {
     ASSERT_EQ(sub5.upper(), 0);
     ASSERT_EQ(sub5.lower(), 3);
     
-    constexpr auto mul1 = value1 * 6;
-    constexpr auto mul2 = value2 * 7;
-    constexpr auto mul3 = value3 * 1;
-    constexpr auto mul4 = 1000 * uint128_t(2, 0xFFFFFFFFFFFFFFFFULL - 2);
+    IPADDRESS_CONSTEXPR auto mul1 = value1 * 6;
+    IPADDRESS_CONSTEXPR auto mul2 = value2 * 7;
+    IPADDRESS_CONSTEXPR auto mul3 = value3 * 1;
+    IPADDRESS_CONSTEXPR auto mul4 = 1000 * uint128_t(2, 0xFFFFFFFFFFFFFFFFULL - 2);
     ASSERT_EQ(mul1.upper(), 24);
     ASSERT_EQ(mul1.lower(), 30);
     ASSERT_EQ(mul2.upper(), 34);
@@ -519,7 +523,7 @@ TEST(uint128_t, NumericLimits) {
 }
 
 TEST(uint128_t, Abs) {
-    constexpr auto actual1 = std::abs(uint128_t(5));
+    IPADDRESS_CONSTEXPR auto actual1 = std::abs(uint128_t(5));
 
     ASSERT_EQ(actual1, uint128_t(5));
 }

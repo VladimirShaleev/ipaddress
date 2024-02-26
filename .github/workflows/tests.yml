@@ -184,11 +184,11 @@ jobs:
       fail-fast: false
       matrix:
         version: [ "14.29", "14.39" ]
-        standard: [ 11, 14, 17, 20, 23 ]
+        standard: [ 14, 17, 20, 23 ]
         exception: [ "/EHsc" ]
         include:
           - version: "14.29"
-            standard: 11
+            standard: 14
             exception: "/EHa- /EHs- /EHc- /EHr- /EHsc"
           - version: "14.29"
             standard: 23

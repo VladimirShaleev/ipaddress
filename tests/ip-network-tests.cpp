@@ -11,14 +11,14 @@ using namespace testing;
 using namespace ipaddress;
 
 TEST(ip_network, DefaultCtor) {
-    constexpr ip_network net;
+    IPADDRESS_CONSTEXPR ip_network net;
 
-    constexpr auto actual = net.v4();
-    constexpr auto version = net.version();
-    constexpr auto size = net.size();
-    constexpr auto is_v4 = net.is_v4();
-    constexpr auto is_v6 = net.is_v6();
-    constexpr auto has_value = actual.has_value();
+    IPADDRESS_CONSTEXPR auto actual = net.v4();
+    IPADDRESS_CONSTEXPR auto version = net.version();
+    IPADDRESS_CONSTEXPR auto size = net.size();
+    IPADDRESS_CONSTEXPR auto is_v4 = net.is_v4();
+    IPADDRESS_CONSTEXPR auto is_v6 = net.is_v6();
+    IPADDRESS_CONSTEXPR auto has_value = actual.has_value();
 
     EXPECT_EQ(version, ip_version::V4);
     EXPECT_EQ(size, 4);
@@ -26,13 +26,13 @@ TEST(ip_network, DefaultCtor) {
     EXPECT_FALSE(is_v6);
     EXPECT_TRUE(has_value);
 
-    constexpr auto value = actual.value();
-    constexpr auto network_address = value.network_address().to_uint();
-    constexpr auto broadcast_address = value.broadcast_address().to_uint();
-    constexpr auto netmask = value.netmask().to_uint();
-    constexpr auto hostmask = value.hostmask().to_uint();
-    constexpr auto prefixlen = value.prefixlen();
-    constexpr auto ipv4_version = value.version();
+    IPADDRESS_CONSTEXPR auto value = actual.value();
+    IPADDRESS_CONSTEXPR auto network_address = value.network_address().to_uint();
+    IPADDRESS_CONSTEXPR auto broadcast_address = value.broadcast_address().to_uint();
+    IPADDRESS_CONSTEXPR auto netmask = value.netmask().to_uint();
+    IPADDRESS_CONSTEXPR auto hostmask = value.hostmask().to_uint();
+    IPADDRESS_CONSTEXPR auto prefixlen = value.prefixlen();
+    IPADDRESS_CONSTEXPR auto ipv4_version = value.version();
     EXPECT_EQ(network_address, 0);
     EXPECT_EQ(broadcast_address, 0);
     EXPECT_EQ(netmask, 0xFFFFFFFF);
@@ -42,11 +42,11 @@ TEST(ip_network, DefaultCtor) {
 }
 
 TEST(ip_network, CopyCtor) {
-    constexpr auto net = ip_network::parse("127.0.0.0/24");
-    constexpr auto net_copy = net;
+    IPADDRESS_CONSTEXPR auto net = ip_network::parse("127.0.0.0/24");
+    IPADDRESS_CONSTEXPR auto net_copy = net;
 
-    constexpr auto actual_net = net.v4();
-    constexpr auto actual_net_copy = net_copy.v4();
+    IPADDRESS_CONSTEXPR auto actual_net = net.v4();
+    IPADDRESS_CONSTEXPR auto actual_net_copy = net_copy.v4();
 
     EXPECT_EQ(net.version(), ip_version::V4);
     EXPECT_EQ(net.size(), 4);
@@ -60,8 +60,8 @@ TEST(ip_network, CopyCtor) {
     EXPECT_FALSE(net_copy.is_v6());
     EXPECT_TRUE(actual_net_copy.has_value());
 
-    constexpr auto value_net = actual_net.value();
-    constexpr auto value_net_copy = actual_net_copy.value();
+    IPADDRESS_CONSTEXPR auto value_net = actual_net.value();
+    IPADDRESS_CONSTEXPR auto value_net_copy = actual_net_copy.value();
     EXPECT_EQ(value_net.network_address().to_uint(), 0x7F000000);
     EXPECT_EQ(value_net.broadcast_address().to_uint(), 0x7F0000FF);
     EXPECT_EQ(value_net.netmask().to_uint(), 0xFFFFFF00);
@@ -78,7 +78,7 @@ TEST(ip_network, CopyCtor) {
 }
 
 TEST(ip_network, CopyOperator) {
-    constexpr auto net = 
+    IPADDRESS_CONSTEXPR auto net = 
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
     ip_network::parse<"::ffff:0:0">();
 #else
@@ -111,11 +111,11 @@ TEST(ip_network, CopyOperator) {
 }
 
 TEST(ip_network, Ctors) {
-    constexpr auto net4 = ipv4_network::parse("192.168.0.1");
-    constexpr auto net6 = ipv6_network::parse("2002:ac1d:2d64::1");
+    IPADDRESS_CONSTEXPR auto net4 = ipv4_network::parse("192.168.0.1");
+    IPADDRESS_CONSTEXPR auto net6 = ipv6_network::parse("2002:ac1d:2d64::1");
 
-    constexpr ip_network actual1(net4);
-    constexpr ip_network actual2(net6);
+    IPADDRESS_CONSTEXPR ip_network actual1(net4);
+    IPADDRESS_CONSTEXPR ip_network actual2(net6);
     
     auto actual1_net = actual1.v4();
     EXPECT_EQ(actual1.version(), ip_version::V4);
@@ -143,11 +143,11 @@ TEST(ip_network, Ctors) {
 }
 
 TEST(ip_network, from_address) {
-    constexpr auto ip4 = ipv4_address::parse("192.168.0.1");
-    constexpr auto ip6 = ip_address::parse("2002:ac1d:2d64::1");
+    IPADDRESS_CONSTEXPR auto ip4 = ipv4_address::parse("192.168.0.1");
+    IPADDRESS_CONSTEXPR auto ip6 = ip_address::parse("2002:ac1d:2d64::1");
 
-    constexpr ip_network actual1 = ip_network::from_address(ip4, 24, false);
-    constexpr ip_network actual2 = ip_network::from_address(ip6, 128);
+    IPADDRESS_CONSTEXPR ip_network actual1 = ip_network::from_address(ip4, 24, false);
+    IPADDRESS_CONSTEXPR ip_network actual2 = ip_network::from_address(ip6, 128);
     
     auto actual1_net = actual1.v4();
     EXPECT_EQ(actual1.version(), ip_version::V4);
@@ -211,8 +211,8 @@ TEST(ip_network, parse) {
     auto str1 = "100.64.0.0";
     auto str2 = "2001:0db8:85a3:0000:0000:8a2e:0370:7334";
 
-    constexpr auto actual1 = ip_network::parse("192.168.1.1");
-    constexpr auto actual2 = ip_network::parse("fe80::1ff:fe23:4567:890a");
+    IPADDRESS_CONSTEXPR auto actual1 = ip_network::parse("192.168.1.1");
+    IPADDRESS_CONSTEXPR auto actual2 = ip_network::parse("fe80::1ff:fe23:4567:890a");
     auto actual3 = ip_network::parse(str1);
     auto actual4 = ip_network::parse(str2);
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
@@ -229,7 +229,7 @@ TEST(ip_network, parse) {
     ss1 >> s1 >> non_strict >> actual7 >> s2;
     ss2 >> s1 >> actual8 >> s2;
 
-    constexpr auto actual1_ip = actual1.v4();
+    IPADDRESS_CONSTEXPR auto actual1_ip = actual1.v4();
     EXPECT_EQ(actual1.version(), ip_version::V4);
     EXPECT_EQ(actual1.size(), 4);
     EXPECT_TRUE(actual1.is_v4());
@@ -237,7 +237,7 @@ TEST(ip_network, parse) {
     EXPECT_TRUE(actual1_ip.has_value());
     EXPECT_EQ(actual1_ip.value().network_address().to_uint(), 0xC0A80101);
 
-    constexpr auto actual2_ip = actual2.v6();
+    IPADDRESS_CONSTEXPR auto actual2_ip = actual2.v6();
     EXPECT_EQ(actual2.version(), ip_version::V6);
     EXPECT_EQ(actual2.size(), 16);
     EXPECT_FALSE(actual2.is_v4());
@@ -309,13 +309,15 @@ TEST_P(InvalidNetworkParams, parse) {
     auto error_net = ip_network::parse(expected_address);
 
     EXPECT_EQ(error_net.network_address().v4().value().to_uint(), 0);
-#else
+#elif IPADDRESS_CPP_VERSION >= 14
     EXPECT_THAT(
         [address=expected_address]() { ip_network::parse(address); },
         ThrowsMessage<parse_error>(StrEq(get<2>(GetParam()))));
     EXPECT_THAT(
         [address=expected_address]() { ip_network::parse(address); },
         Throws<parse_error>(Property(&parse_error::code, Eq(expected_error_code))));
+#else
+    ASSERT_THROW(ip_network::parse(expected_address), parse_error);
 #endif
 }
 INSTANTIATE_TEST_SUITE_P(
@@ -343,9 +345,9 @@ INSTANTIATE_TEST_SUITE_P(
     ));
 
 TEST(ip_network, Comparison) {
-    constexpr auto net1 = ip_network::parse("127.240.0.0/32");
-    constexpr auto net2 = ip_network::parse("2001:db8::/64");
-    constexpr auto net3 = ip_network::parse("2001:db8::/65");
+    IPADDRESS_CONSTEXPR auto net1 = ip_network::parse("127.240.0.0/32");
+    IPADDRESS_CONSTEXPR auto net2 = ip_network::parse("2001:db8::/64");
+    IPADDRESS_CONSTEXPR auto net3 = ip_network::parse("2001:db8::/65");
 
     ASSERT_TRUE(net1 < net2);
     ASSERT_TRUE(net1 <= net2);
@@ -370,8 +372,8 @@ TEST(ip_network, Comparison) {
 }
 
 TEST(ip_network, to_string) {
-    constexpr auto net1 = ip_network::parse("127.240.0.0/24");
-    constexpr auto net2 = ip_network::parse("fe80::1ff:fe23:4567:890a%eth2");
+    IPADDRESS_CONSTEXPR auto net1 = ip_network::parse("127.240.0.0/24");
+    IPADDRESS_CONSTEXPR auto net2 = ip_network::parse("fe80::1ff:fe23:4567:890a%eth2");
 
     const std::string expected_address = "127.240.0.0/24";
     const auto expected_full_2 = "fe80:0000:0000:0000:01ff:fe23:4567:890a%eth2/128";
@@ -417,15 +419,15 @@ TEST(ip_network, to_string) {
 }
 
 TEST(ip_network, Hash) {
-    constexpr auto hash_functor = std::hash<ip_network>{};
+    IPADDRESS_CONSTEXPR auto hash_functor = std::hash<ip_network>{};
 
-    constexpr auto net1 = ip_network::parse("127.0.0.0/24");
-    constexpr auto net2 = ip_network::parse("2001:db8::/64");
+    IPADDRESS_CONSTEXPR auto net1 = ip_network::parse("127.0.0.0/24");
+    IPADDRESS_CONSTEXPR auto net2 = ip_network::parse("2001:db8::/64");
 
-    constexpr auto hash1 = net1.hash();
-    constexpr auto hash2 = net2.hash();
-    constexpr auto hash3 = hash_functor(net1);
-    constexpr auto hash4 = hash_functor(net2);
+    IPADDRESS_CONSTEXPR auto hash1 = net1.hash();
+    IPADDRESS_CONSTEXPR auto hash2 = net2.hash();
+    IPADDRESS_CONSTEXPR auto hash3 = hash_functor(net1);
+    IPADDRESS_CONSTEXPR auto hash4 = hash_functor(net2);
 
     ASSERT_EQ(hash1, sizeof(size_t) == 8 ? 7623195473821216247ULL : 546525844U);
     ASSERT_EQ(hash2, sizeof(size_t) == 8 ? 9261008770321846004ULL : 3598479863U);
@@ -434,9 +436,9 @@ TEST(ip_network, Hash) {
 }
 
 TEST(ip_network, Containers) {
-    constexpr auto net1 = ip_network::parse("127.0.0.0/24");
-    constexpr auto net2 = ip_network::parse("2001:db8::/64");
-    constexpr auto net3 = ip_network::parse("2001:db8::/65");
+    IPADDRESS_CONSTEXPR auto net1 = ip_network::parse("127.0.0.0/24");
+    IPADDRESS_CONSTEXPR auto net2 = ip_network::parse("2001:db8::/64");
+    IPADDRESS_CONSTEXPR auto net3 = ip_network::parse("2001:db8::/65");
 
     std::vector<ip_network> vec;
     vec.push_back(net1);
@@ -481,38 +483,38 @@ TEST(ip_network, Swap) {
 }
 
 TEST(ip_network, is_prop) {
-    constexpr auto net1 = ip_network::parse("224.1.1.1").is_multicast();
-    constexpr auto net2 = ip_network::parse("240.0.0.0").is_multicast();
-    constexpr auto net3 = ip_network::parse("ffff::").is_multicast();
-    constexpr auto net4 = ip_network::parse("fdff::").is_multicast();
-    constexpr auto net5 = ip_network::parse("192.168.1.1").is_private();
-    constexpr auto net6 = ip_network::parse("192.169.0.0").is_private();
-    constexpr auto net7 = ip_network::parse("fc00::").is_private();
-    constexpr auto net8 = ip_network::parse("fbff:ffff::").is_private();
-    constexpr auto net9 = ip_network::parse("192.0.7.1").is_global();
-    constexpr auto net10 = ip_network::parse("203.0.113.1").is_global();
-    constexpr auto net11 = ip_network::parse("200::1").is_global();
-    constexpr auto net12 = ip_network::parse("fc00::").is_global();
-    constexpr auto net13 = ip_network::parse("240.0.0.1").is_reserved();
-    constexpr auto net14 = ip_network::parse("239.255.255.255").is_reserved();
-    constexpr auto net15 = ip_network::parse("100::").is_reserved();
-    constexpr auto net16 = ip_network::parse("ffff::").is_reserved();
-    constexpr auto net17 = ip_network::parse("127.42.0.0").is_loopback();
-    constexpr auto net18 = ip_network::parse("128.0.0.0").is_loopback();
-    constexpr auto net19 = ip_network::parse("::1").is_loopback();
-    constexpr auto net20 = ip_network::parse("::2").is_loopback();
-    constexpr auto net21 = ip_network::parse("169.254.100.200").is_link_local();
-    constexpr auto net22 = ip_network::parse("169.255.100.200").is_link_local();
-    constexpr auto net23 = ip_network::parse("fea0::").is_link_local();
-    constexpr auto net24 = ip_network::parse("fe7f:ffff::").is_link_local();
-    constexpr auto net25 = ip_network::parse("0.0.0.0").is_unspecified();
-    constexpr auto net26 = ip_network::parse("127.0.0.1").is_unspecified();
-    constexpr auto net27 = ip_network::parse("::").is_unspecified();
-    constexpr auto net28 = ip_network::parse("::1").is_unspecified();
-    constexpr auto net29 = ip_network::parse("127.0.0.1").is_site_local();
-    constexpr auto net30 = ip_network::parse("0.0.0.0").is_site_local();
-    constexpr auto net31 = ip_network::parse("fecf::").is_site_local();
-    constexpr auto net32 = ip_network::parse("fbf:ffff::").is_site_local();
+    IPADDRESS_CONSTEXPR auto net1 = ip_network::parse("224.1.1.1").is_multicast();
+    IPADDRESS_CONSTEXPR auto net2 = ip_network::parse("240.0.0.0").is_multicast();
+    IPADDRESS_CONSTEXPR auto net3 = ip_network::parse("ffff::").is_multicast();
+    IPADDRESS_CONSTEXPR auto net4 = ip_network::parse("fdff::").is_multicast();
+    IPADDRESS_CONSTEXPR auto net5 = ip_network::parse("192.168.1.1").is_private();
+    IPADDRESS_CONSTEXPR auto net6 = ip_network::parse("192.169.0.0").is_private();
+    IPADDRESS_CONSTEXPR auto net7 = ip_network::parse("fc00::").is_private();
+    IPADDRESS_CONSTEXPR auto net8 = ip_network::parse("fbff:ffff::").is_private();
+    IPADDRESS_CONSTEXPR auto net9 = ip_network::parse("192.0.7.1").is_global();
+    IPADDRESS_CONSTEXPR auto net10 = ip_network::parse("203.0.113.1").is_global();
+    IPADDRESS_CONSTEXPR auto net11 = ip_network::parse("200::1").is_global();
+    IPADDRESS_CONSTEXPR auto net12 = ip_network::parse("fc00::").is_global();
+    IPADDRESS_CONSTEXPR auto net13 = ip_network::parse("240.0.0.1").is_reserved();
+    IPADDRESS_CONSTEXPR auto net14 = ip_network::parse("239.255.255.255").is_reserved();
+    IPADDRESS_CONSTEXPR auto net15 = ip_network::parse("100::").is_reserved();
+    IPADDRESS_CONSTEXPR auto net16 = ip_network::parse("ffff::").is_reserved();
+    IPADDRESS_CONSTEXPR auto net17 = ip_network::parse("127.42.0.0").is_loopback();
+    IPADDRESS_CONSTEXPR auto net18 = ip_network::parse("128.0.0.0").is_loopback();
+    IPADDRESS_CONSTEXPR auto net19 = ip_network::parse("::1").is_loopback();
+    IPADDRESS_CONSTEXPR auto net20 = ip_network::parse("::2").is_loopback();
+    IPADDRESS_CONSTEXPR auto net21 = ip_network::parse("169.254.100.200").is_link_local();
+    IPADDRESS_CONSTEXPR auto net22 = ip_network::parse("169.255.100.200").is_link_local();
+    IPADDRESS_CONSTEXPR auto net23 = ip_network::parse("fea0::").is_link_local();
+    IPADDRESS_CONSTEXPR auto net24 = ip_network::parse("fe7f:ffff::").is_link_local();
+    IPADDRESS_CONSTEXPR auto net25 = ip_network::parse("0.0.0.0").is_unspecified();
+    IPADDRESS_CONSTEXPR auto net26 = ip_network::parse("127.0.0.1").is_unspecified();
+    IPADDRESS_CONSTEXPR auto net27 = ip_network::parse("::").is_unspecified();
+    IPADDRESS_CONSTEXPR auto net28 = ip_network::parse("::1").is_unspecified();
+    IPADDRESS_CONSTEXPR auto net29 = ip_network::parse("127.0.0.1").is_site_local();
+    IPADDRESS_CONSTEXPR auto net30 = ip_network::parse("0.0.0.0").is_site_local();
+    IPADDRESS_CONSTEXPR auto net31 = ip_network::parse("fecf::").is_site_local();
+    IPADDRESS_CONSTEXPR auto net32 = ip_network::parse("fbf:ffff::").is_site_local();
     
     ASSERT_TRUE(net1);
     ASSERT_FALSE(net2);
@@ -549,18 +551,18 @@ TEST(ip_network, is_prop) {
 }
 
 TEST(ip_network, addresses_count) {
-    constexpr auto actual1 = ip_network::parse("10.0.0.0/30").addresses_count();
-    constexpr auto actual2 = ip_network::parse("2001:658:22a:cafe::/64").addresses_count();
+    IPADDRESS_CONSTEXPR auto actual1 = ip_network::parse("10.0.0.0/30").addresses_count();
+    IPADDRESS_CONSTEXPR auto actual2 = ip_network::parse("2001:658:22a:cafe::/64").addresses_count();
 
     ASSERT_EQ(actual1, 4);
     ASSERT_EQ(actual2, uint128_t::from_string("18446744073709551616").value());
 }
 
 TEST(ip_network, contains) {
-    constexpr auto actual1 = ip_network::parse("192.0.2.0/28").contains(ip_address::parse("192.0.2.6"));
-    constexpr auto actual2 = ip_network::parse("192.0.2.0/28").contains(ip_address::parse("192.0.3.6"));
-    constexpr auto actual3 = ip_network::parse("2001:db8::/32").contains(ip_address::parse("2001:db8::1"));
-    constexpr auto actual4 = ip_network::parse("2001:db8::/32").contains(ip_address::parse("2001:dbc::"));
+    IPADDRESS_CONSTEXPR auto actual1 = ip_network::parse("192.0.2.0/28").contains(ip_address::parse("192.0.2.6"));
+    IPADDRESS_CONSTEXPR auto actual2 = ip_network::parse("192.0.2.0/28").contains(ip_address::parse("192.0.3.6"));
+    IPADDRESS_CONSTEXPR auto actual3 = ip_network::parse("2001:db8::/32").contains(ip_address::parse("2001:db8::1"));
+    IPADDRESS_CONSTEXPR auto actual4 = ip_network::parse("2001:db8::/32").contains(ip_address::parse("2001:dbc::"));
 
     ASSERT_TRUE(actual1);
     ASSERT_FALSE(actual2);
@@ -569,10 +571,10 @@ TEST(ip_network, contains) {
 }
 
 TEST(ip_network, overlaps) {
-    constexpr auto actual1 = ip_network::parse("1.2.3.0/24").overlaps(ip_network::parse("1.2.3.0/30"));
-    constexpr auto actual2 = ip_network::parse("1.2.3.0/24").overlaps(ip_network::parse("1.2.2.0/24"));
-    constexpr auto actual3 = ip_network::parse("2001:db8::/32").overlaps(ip_network::parse("2001:db8::/128"));
-    constexpr auto actual4 = ip_network::parse("2001:dbc::/32").overlaps(ip_network::parse("2001:db8::/32"));
+    IPADDRESS_CONSTEXPR auto actual1 = ip_network::parse("1.2.3.0/24").overlaps(ip_network::parse("1.2.3.0/30"));
+    IPADDRESS_CONSTEXPR auto actual2 = ip_network::parse("1.2.3.0/24").overlaps(ip_network::parse("1.2.2.0/24"));
+    IPADDRESS_CONSTEXPR auto actual3 = ip_network::parse("2001:db8::/32").overlaps(ip_network::parse("2001:db8::/128"));
+    IPADDRESS_CONSTEXPR auto actual4 = ip_network::parse("2001:dbc::/32").overlaps(ip_network::parse("2001:db8::/32"));
 
     ASSERT_TRUE(actual1);
     ASSERT_FALSE(actual2);
@@ -581,10 +583,10 @@ TEST(ip_network, overlaps) {
 }
 
 TEST(ip_network, subnet_of) {
-    constexpr auto actual1 = ip_network::parse("10.0.0.0/30").subnet_of(ip_network::parse("10.0.0.0/24"));
-    constexpr auto actual2 = ip_network::parse("10.0.0.0/30").subnet_of(ip_network::parse("10.0.1.0/24"));
-    constexpr auto actual3 = ip_network::parse("2000:aaa::/56").subnet_of(ip_network::parse("2000:aaa::/48"));
-    constexpr auto actual4 = ip_network::parse("2000:bbb::/56").subnet_of(ip_network::parse("2000:aaa::/48"));
+    IPADDRESS_CONSTEXPR auto actual1 = ip_network::parse("10.0.0.0/30").subnet_of(ip_network::parse("10.0.0.0/24"));
+    IPADDRESS_CONSTEXPR auto actual2 = ip_network::parse("10.0.0.0/30").subnet_of(ip_network::parse("10.0.1.0/24"));
+    IPADDRESS_CONSTEXPR auto actual3 = ip_network::parse("2000:aaa::/56").subnet_of(ip_network::parse("2000:aaa::/48"));
+    IPADDRESS_CONSTEXPR auto actual4 = ip_network::parse("2000:bbb::/56").subnet_of(ip_network::parse("2000:aaa::/48"));
 
     ASSERT_TRUE(actual1);
     ASSERT_FALSE(actual2);
@@ -593,10 +595,10 @@ TEST(ip_network, subnet_of) {
 }
 
 TEST(ip_network, supernet_of) {
-    constexpr auto actual1 = ip_network::parse("192.168.1.0/24").supernet_of(ip_network::parse("192.168.1.128/30"));
-    constexpr auto actual2 = ip_network::parse("10.0.0.0/30").supernet_of(ip_network::parse("10.0.1.0/24"));
-    constexpr auto actual3 = ip_network::parse("2000:aaa::/48").supernet_of(ip_network::parse("2000:aaa::/56"));
-    constexpr auto actual4 = ip_network::parse("2000:aaa::/56").supernet_of(ip_network::parse("2000:aaa::/48"));
+    IPADDRESS_CONSTEXPR auto actual1 = ip_network::parse("192.168.1.0/24").supernet_of(ip_network::parse("192.168.1.128/30"));
+    IPADDRESS_CONSTEXPR auto actual2 = ip_network::parse("10.0.0.0/30").supernet_of(ip_network::parse("10.0.1.0/24"));
+    IPADDRESS_CONSTEXPR auto actual3 = ip_network::parse("2000:aaa::/48").supernet_of(ip_network::parse("2000:aaa::/56"));
+    IPADDRESS_CONSTEXPR auto actual4 = ip_network::parse("2000:aaa::/56").supernet_of(ip_network::parse("2000:aaa::/48"));
 
     ASSERT_TRUE(actual1);
     ASSERT_FALSE(actual2);
@@ -605,47 +607,47 @@ TEST(ip_network, supernet_of) {
 }
 
 TEST(ip_network, hosts) {
-    constexpr auto hosts_sequence = ip_network::parse("192.0.2.0/29").hosts();
-    constexpr auto hosts_empty = hosts_sequence.empty();
-    constexpr auto hosts_size = hosts_sequence.size();
-    constexpr auto hosts_front = hosts_sequence.front();
-    constexpr auto hosts_back = hosts_sequence.back();
-    constexpr auto hosts_at_0 = hosts_sequence.at(0);
-    constexpr auto hosts_at_1 = hosts_sequence[1];
-    constexpr auto hosts_at_2 = hosts_sequence.at(2);
-    constexpr auto hosts_at_3 = hosts_sequence[3];
-    constexpr auto hosts_begin = hosts_sequence.begin();
-    constexpr auto hosts_end = hosts_sequence.end();
-    constexpr auto hosts_rbegin = hosts_sequence.rbegin();
-    constexpr auto hosts_rend = hosts_sequence.rend();
-    constexpr auto hosts_diff = hosts_end.uint_diff(hosts_begin);
-    constexpr auto hosts_begin_0 = *hosts_begin;
-    constexpr auto hosts_begin_0_uint = hosts_begin->v4().value().to_uint();
-    constexpr auto hosts_begin_at_0 = hosts_begin[0U];
-    constexpr auto hosts_begin_at_1 = hosts_begin[1U];
-    constexpr auto hosts_begin_at_2 = hosts_begin[2U];
-    constexpr auto hosts_begin_at_3 = hosts_begin[3U];
-    constexpr auto hosts_it = *(--(++hosts_sequence.begin()++ + 2U) -= 1U);
-    constexpr auto hosts_it_eq = hosts_begin == hosts_end;
-    constexpr auto hosts_it_ne = hosts_begin != hosts_end;
-    constexpr auto hosts_it_ls = hosts_begin < hosts_end;
-    constexpr auto hosts_it_le = hosts_begin <= hosts_end;
-    constexpr auto hosts_it_gt = hosts_begin > hosts_end;
-    constexpr auto hosts_it_ge = hosts_begin >= hosts_end;
-    constexpr auto hosts_rdiff = hosts_rend.uint_diff(hosts_rbegin);
-    constexpr auto hosts_rbegin_0 = *hosts_rbegin;
-    constexpr auto hosts_rbegin_0_uint = hosts_rbegin->v4().value().to_uint();
-    constexpr auto hosts_rbegin_at_0 = hosts_rbegin[0U];
-    constexpr auto hosts_rbegin_at_1 = hosts_rbegin[1U];
-    constexpr auto hosts_rbegin_at_2 = hosts_rbegin[2U];
-    constexpr auto hosts_rbegin_at_3 = hosts_rbegin[3U];
-    constexpr auto hosts_rit = *(--(++hosts_sequence.rbegin()++ + 2U) -= 1U);
-    constexpr auto hosts_rit_eq = hosts_rbegin == hosts_rend;
-    constexpr auto hosts_rit_ne = hosts_rbegin != hosts_rend;
-    constexpr auto hosts_rit_ls = hosts_rbegin < hosts_rend;
-    constexpr auto hosts_rit_le = hosts_rbegin <= hosts_rend;
-    constexpr auto hosts_rit_gt = hosts_rbegin > hosts_rend;
-    constexpr auto hosts_rit_ge = hosts_rbegin >= hosts_rend;
+    IPADDRESS_CONSTEXPR auto hosts_sequence = ip_network::parse("192.0.2.0/29").hosts();
+    IPADDRESS_CONSTEXPR auto hosts_empty = hosts_sequence.empty();
+    IPADDRESS_CONSTEXPR auto hosts_size = hosts_sequence.size();
+    IPADDRESS_CONSTEXPR auto hosts_front = hosts_sequence.front();
+    IPADDRESS_CONSTEXPR auto hosts_back = hosts_sequence.back();
+    IPADDRESS_CONSTEXPR auto hosts_at_0 = hosts_sequence.at(0);
+    IPADDRESS_CONSTEXPR auto hosts_at_1 = hosts_sequence[1];
+    IPADDRESS_CONSTEXPR auto hosts_at_2 = hosts_sequence.at(2);
+    IPADDRESS_CONSTEXPR auto hosts_at_3 = hosts_sequence[3];
+    IPADDRESS_CONSTEXPR auto hosts_begin = hosts_sequence.begin();
+    IPADDRESS_CONSTEXPR auto hosts_end = hosts_sequence.end();
+    IPADDRESS_CONSTEXPR auto hosts_rbegin = hosts_sequence.rbegin();
+    IPADDRESS_CONSTEXPR auto hosts_rend = hosts_sequence.rend();
+    IPADDRESS_CONSTEXPR auto hosts_diff = hosts_end.uint_diff(hosts_begin);
+    IPADDRESS_CONSTEXPR auto hosts_begin_0 = *hosts_begin;
+    IPADDRESS_CONSTEXPR auto hosts_begin_0_uint = hosts_begin->v4().value().to_uint();
+    IPADDRESS_CONSTEXPR auto hosts_begin_at_0 = hosts_begin[0U];
+    IPADDRESS_CONSTEXPR auto hosts_begin_at_1 = hosts_begin[1U];
+    IPADDRESS_CONSTEXPR auto hosts_begin_at_2 = hosts_begin[2U];
+    IPADDRESS_CONSTEXPR auto hosts_begin_at_3 = hosts_begin[3U];
+    IPADDRESS_CONSTEXPR auto hosts_it = *(--(++hosts_sequence.begin()++ + 2U) -= 1U);
+    IPADDRESS_CONSTEXPR auto hosts_it_eq = hosts_begin == hosts_end;
+    IPADDRESS_CONSTEXPR auto hosts_it_ne = hosts_begin != hosts_end;
+    IPADDRESS_CONSTEXPR auto hosts_it_ls = hosts_begin < hosts_end;
+    IPADDRESS_CONSTEXPR auto hosts_it_le = hosts_begin <= hosts_end;
+    IPADDRESS_CONSTEXPR auto hosts_it_gt = hosts_begin > hosts_end;
+    IPADDRESS_CONSTEXPR auto hosts_it_ge = hosts_begin >= hosts_end;
+    IPADDRESS_CONSTEXPR auto hosts_rdiff = hosts_rend.uint_diff(hosts_rbegin);
+    IPADDRESS_CONSTEXPR auto hosts_rbegin_0 = *hosts_rbegin;
+    IPADDRESS_CONSTEXPR auto hosts_rbegin_0_uint = hosts_rbegin->v4().value().to_uint();
+    IPADDRESS_CONSTEXPR auto hosts_rbegin_at_0 = hosts_rbegin[0U];
+    IPADDRESS_CONSTEXPR auto hosts_rbegin_at_1 = hosts_rbegin[1U];
+    IPADDRESS_CONSTEXPR auto hosts_rbegin_at_2 = hosts_rbegin[2U];
+    IPADDRESS_CONSTEXPR auto hosts_rbegin_at_3 = hosts_rbegin[3U];
+    IPADDRESS_CONSTEXPR auto hosts_rit = *(--(++hosts_sequence.rbegin()++ + 2U) -= 1U);
+    IPADDRESS_CONSTEXPR auto hosts_rit_eq = hosts_rbegin == hosts_rend;
+    IPADDRESS_CONSTEXPR auto hosts_rit_ne = hosts_rbegin != hosts_rend;
+    IPADDRESS_CONSTEXPR auto hosts_rit_ls = hosts_rbegin < hosts_rend;
+    IPADDRESS_CONSTEXPR auto hosts_rit_le = hosts_rbegin <= hosts_rend;
+    IPADDRESS_CONSTEXPR auto hosts_rit_gt = hosts_rbegin > hosts_rend;
+    IPADDRESS_CONSTEXPR auto hosts_rit_ge = hosts_rbegin >= hosts_rend;
     ASSERT_FALSE(hosts_empty);
     ASSERT_EQ(hosts_size, 6);
     ASSERT_EQ(hosts_front, ip_address::parse("192.0.2.1"));
@@ -685,47 +687,47 @@ TEST(ip_network, hosts) {
 }
 
 TEST(ip_network, subnets) {
-    constexpr auto subnets_sequence = ip_network::parse("192.0.2.0/24").subnets(2);
-    constexpr auto subnets_empty = subnets_sequence.empty();
-    constexpr auto subnets_size = subnets_sequence.size();
-    constexpr auto subnets_front = subnets_sequence.front();
-    constexpr auto subnets_back = subnets_sequence.back();
-    constexpr auto subnets_at_0 = subnets_sequence.at(0);
-    constexpr auto subnets_at_1 = subnets_sequence[1];
-    constexpr auto subnets_at_2 = subnets_sequence.at(2);
-    constexpr auto subnets_at_3 = subnets_sequence[3];
-    constexpr auto subnets_begin = subnets_sequence.begin();
-    constexpr auto subnets_end = subnets_sequence.end();
-    constexpr auto subnets_rbegin = subnets_sequence.rbegin();
-    constexpr auto subnets_rend = subnets_sequence.rend();
-    constexpr auto subnets_diff = subnets_end.uint_diff(subnets_begin);
-    constexpr auto subnets_begin_0 = *subnets_begin;
-    constexpr auto subnets_begin_0_uint = subnets_begin->network_address().to_uint();
-    constexpr auto subnets_begin_at_0 = subnets_begin[0U];
-    constexpr auto subnets_begin_at_1 = subnets_begin[1U];
-    constexpr auto subnets_begin_at_2 = subnets_begin[2U];
-    constexpr auto subnets_begin_at_3 = subnets_begin[3U];
-    constexpr auto subnets_it = *(--(++subnets_sequence.begin()++ + 2U) -= 1U);
-    constexpr auto subnets_it_eq = subnets_begin == subnets_end;
-    constexpr auto subnets_it_ne = subnets_begin != subnets_end;
-    constexpr auto subnets_it_ls = subnets_begin < subnets_end;
-    constexpr auto subnets_it_le = subnets_begin <= subnets_end;
-    constexpr auto subnets_it_gt = subnets_begin > subnets_end;
-    constexpr auto subnets_it_ge = subnets_begin >= subnets_end;
-    constexpr auto subnets_rdiff = subnets_rend.uint_diff(subnets_rbegin);
-    constexpr auto subnets_rbegin_0 = *subnets_rbegin;
-    constexpr auto subnets_rbegin_0_uint = subnets_rbegin->network_address().to_uint();
-    constexpr auto subnets_rbegin_at_0 = subnets_rbegin[0U];
-    constexpr auto subnets_rbegin_at_1 = subnets_rbegin[1U];
-    constexpr auto subnets_rbegin_at_2 = subnets_rbegin[2U];
-    constexpr auto subnets_rbegin_at_3 = subnets_rbegin[3U];
-    constexpr auto subnets_rit = *(--(++subnets_sequence.rbegin()++ + 2U) -= 1U);
-    constexpr auto subnets_rit_eq = subnets_rbegin == subnets_rend;
-    constexpr auto subnets_rit_ne = subnets_rbegin != subnets_rend;
-    constexpr auto subnets_rit_ls = subnets_rbegin < subnets_rend;
-    constexpr auto subnets_rit_le = subnets_rbegin <= subnets_rend;
-    constexpr auto subnets_rit_gt = subnets_rbegin > subnets_rend;
-    constexpr auto subnets_rit_ge = subnets_rbegin >= subnets_rend;
+    IPADDRESS_CONSTEXPR auto subnets_sequence = ip_network::parse("192.0.2.0/24").subnets(2);
+    IPADDRESS_CONSTEXPR auto subnets_empty = subnets_sequence.empty();
+    IPADDRESS_CONSTEXPR auto subnets_size = subnets_sequence.size();
+    IPADDRESS_CONSTEXPR auto subnets_front = subnets_sequence.front();
+    IPADDRESS_CONSTEXPR auto subnets_back = subnets_sequence.back();
+    IPADDRESS_CONSTEXPR auto subnets_at_0 = subnets_sequence.at(0);
+    IPADDRESS_CONSTEXPR auto subnets_at_1 = subnets_sequence[1];
+    IPADDRESS_CONSTEXPR auto subnets_at_2 = subnets_sequence.at(2);
+    IPADDRESS_CONSTEXPR auto subnets_at_3 = subnets_sequence[3];
+    IPADDRESS_CONSTEXPR auto subnets_begin = subnets_sequence.begin();
+    IPADDRESS_CONSTEXPR auto subnets_end = subnets_sequence.end();
+    IPADDRESS_CONSTEXPR auto subnets_rbegin = subnets_sequence.rbegin();
+    IPADDRESS_CONSTEXPR auto subnets_rend = subnets_sequence.rend();
+    IPADDRESS_CONSTEXPR auto subnets_diff = subnets_end.uint_diff(subnets_begin);
+    IPADDRESS_CONSTEXPR auto subnets_begin_0 = *subnets_begin;
+    IPADDRESS_CONSTEXPR auto subnets_begin_0_uint = subnets_begin->network_address().to_uint();
+    IPADDRESS_CONSTEXPR auto subnets_begin_at_0 = subnets_begin[0U];
+    IPADDRESS_CONSTEXPR auto subnets_begin_at_1 = subnets_begin[1U];
+    IPADDRESS_CONSTEXPR auto subnets_begin_at_2 = subnets_begin[2U];
+    IPADDRESS_CONSTEXPR auto subnets_begin_at_3 = subnets_begin[3U];
+    IPADDRESS_CONSTEXPR auto subnets_it = *(--(++subnets_sequence.begin()++ + 2U) -= 1U);
+    IPADDRESS_CONSTEXPR auto subnets_it_eq = subnets_begin == subnets_end;
+    IPADDRESS_CONSTEXPR auto subnets_it_ne = subnets_begin != subnets_end;
+    IPADDRESS_CONSTEXPR auto subnets_it_ls = subnets_begin < subnets_end;
+    IPADDRESS_CONSTEXPR auto subnets_it_le = subnets_begin <= subnets_end;
+    IPADDRESS_CONSTEXPR auto subnets_it_gt = subnets_begin > subnets_end;
+    IPADDRESS_CONSTEXPR auto subnets_it_ge = subnets_begin >= subnets_end;
+    IPADDRESS_CONSTEXPR auto subnets_rdiff = subnets_rend.uint_diff(subnets_rbegin);
+    IPADDRESS_CONSTEXPR auto subnets_rbegin_0 = *subnets_rbegin;
+    IPADDRESS_CONSTEXPR auto subnets_rbegin_0_uint = subnets_rbegin->network_address().to_uint();
+    IPADDRESS_CONSTEXPR auto subnets_rbegin_at_0 = subnets_rbegin[0U];
+    IPADDRESS_CONSTEXPR auto subnets_rbegin_at_1 = subnets_rbegin[1U];
+    IPADDRESS_CONSTEXPR auto subnets_rbegin_at_2 = subnets_rbegin[2U];
+    IPADDRESS_CONSTEXPR auto subnets_rbegin_at_3 = subnets_rbegin[3U];
+    IPADDRESS_CONSTEXPR auto subnets_rit = *(--(++subnets_sequence.rbegin()++ + 2U) -= 1U);
+    IPADDRESS_CONSTEXPR auto subnets_rit_eq = subnets_rbegin == subnets_rend;
+    IPADDRESS_CONSTEXPR auto subnets_rit_ne = subnets_rbegin != subnets_rend;
+    IPADDRESS_CONSTEXPR auto subnets_rit_ls = subnets_rbegin < subnets_rend;
+    IPADDRESS_CONSTEXPR auto subnets_rit_le = subnets_rbegin <= subnets_rend;
+    IPADDRESS_CONSTEXPR auto subnets_rit_gt = subnets_rbegin > subnets_rend;
+    IPADDRESS_CONSTEXPR auto subnets_rit_ge = subnets_rbegin >= subnets_rend;
     ASSERT_FALSE(subnets_empty);
     ASSERT_EQ(subnets_size, 4);
     ASSERT_EQ(subnets_front, ip_network::parse("192.0.2.0/26"));
@@ -765,23 +767,24 @@ TEST(ip_network, subnets) {
 }
 
 TEST(ip_network, address_exclude) {
-    constexpr auto exclude_sequence = ip_network::parse("192.0.2.0/28").address_exclude(ip_network::parse("192.0.2.1/32"));
-    constexpr auto exclude_empty = exclude_sequence.empty();
-    constexpr auto exclude_begin = exclude_sequence.begin();
-    constexpr auto exclude_end = exclude_sequence.end();
-    constexpr auto exclude_begin_0 = *exclude_begin;
-    constexpr auto exclude_begin_0_uint = exclude_begin->network_address().to_uint();
-    constexpr auto exclude_begin_1 = *++exclude_sequence.begin();
+    IPADDRESS_CONSTEXPR auto exclude_sequence = ip_network::parse("192.0.2.0/28").address_exclude(ip_network::parse("192.0.2.1/32"));
+    IPADDRESS_CONSTEXPR auto exclude_empty = exclude_sequence.empty();
+    IPADDRESS_CONSTEXPR auto exclude_begin = exclude_sequence.begin();
+    IPADDRESS_CONSTEXPR auto exclude_end = exclude_sequence.end();
+    IPADDRESS_CONSTEXPR auto exclude_begin_0 = *exclude_begin;
+    IPADDRESS_CONSTEXPR auto exclude_begin_0_uint = exclude_begin->network_address().to_uint();
+    IPADDRESS_CONSTEXPR auto exclude_begin_1 = *++exclude_sequence.begin();
     ASSERT_FALSE(exclude_empty);
     ASSERT_EQ(exclude_begin_0, ip_network::parse("192.0.2.8/29"));
     ASSERT_EQ(exclude_begin_0_uint, 0xC0000208);
     ASSERT_EQ(exclude_begin_1, ip_network::parse("192.0.2.4/30"));
-    constexpr auto exclude_it_eq = exclude_begin == exclude_end;
-    constexpr auto exclude_it_ne = exclude_begin != exclude_end;
-    constexpr auto exclude_it_ls = exclude_begin < exclude_end;
-    constexpr auto exclude_it_le = exclude_begin <= exclude_end;
-    constexpr auto exclude_it_gt = exclude_begin > exclude_end;
-    constexpr auto exclude_it_ge = exclude_begin >= exclude_end;
+
+    IPADDRESS_CONSTEXPR auto exclude_it_eq = exclude_begin == exclude_end;
+    IPADDRESS_CONSTEXPR auto exclude_it_ne = exclude_begin != exclude_end;
+    IPADDRESS_CONSTEXPR auto exclude_it_ls = exclude_begin < exclude_end;
+    IPADDRESS_CONSTEXPR auto exclude_it_le = exclude_begin <= exclude_end;
+    IPADDRESS_CONSTEXPR auto exclude_it_gt = exclude_begin > exclude_end;
+    IPADDRESS_CONSTEXPR auto exclude_it_ge = exclude_begin >= exclude_end;
     ASSERT_FALSE(exclude_it_eq);
     ASSERT_TRUE(exclude_it_ne);
     ASSERT_TRUE(exclude_it_ls);
@@ -791,8 +794,8 @@ TEST(ip_network, address_exclude) {
 }
 
 TEST(ip_network, literals) {
-    constexpr auto net1 = "127.128.128.255"_net;
-    constexpr auto net2 = "2001:db8::1"_net;
+    IPADDRESS_CONSTEXPR auto net1 = "127.128.128.255"_net;
+    IPADDRESS_CONSTEXPR auto net2 = "2001:db8::1"_net;
     
     ASSERT_TRUE(net1.is_v4());
     ASSERT_TRUE(net2.is_v6());

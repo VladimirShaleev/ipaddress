@@ -689,7 +689,7 @@ public:
 protected:
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_address_base() IPADDRESS_NOEXCEPT = default;
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit ipv6_address_base(const base_type& bytes) IPADDRESS_NOEXCEPT : _data({ bytes }) {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit ipv6_address_base(const base_type& bytes) IPADDRESS_NOEXCEPT : _data(bytes) {
     }
 
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void swap(ip_address_base<ipv6_address_base>& lhs, ip_address_base<ipv6_address_base>& rhs) IPADDRESS_NOEXCEPT {
@@ -810,6 +810,10 @@ private:
     // }
     
     struct ipv6_data {
+        IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_data() IPADDRESS_NOEXCEPT = default;
+        IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_data(const base_type& b) IPADDRESS_NOEXCEPT : bytes(b) {
+        }
+
         base_type bytes{};
     #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH > 0
         fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH> scope_id;

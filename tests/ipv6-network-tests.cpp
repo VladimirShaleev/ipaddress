@@ -10,6 +10,8 @@
 using namespace testing;
 using namespace ipaddress;
 
+#if IPADDRESS_CPP_VERSION >= 14
+
 template <size_t N1, size_t N2>
 static constexpr ipv6_network test_swap(const char(&str1)[N1], const char(&str2)[N2]) {
     auto net1 = ipv6_network::parse(str1);
@@ -368,6 +370,8 @@ TEST(ipv6_network, CompileTime) {
 #endif // __cpp_char8_t >= 201811L
 }
 
+#endif
+
 TEST(ipv6_network, DefaultCtor) {
     ipv6_network net;
     
@@ -559,10 +563,12 @@ TEST(ipv6_network, from_address_error) {
     ASSERT_EQ(error_network.netmask(), ipv6_address::parse("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"));
     ASSERT_EQ(error_network.hostmask(), ipv6_address::parse("::"));
     ASSERT_EQ(error_network.prefixlen(), 128);
-#else
+#elif IPADDRESS_CPP_VERSION >= 14
     EXPECT_THAT(
         []() { ipv6_network::from_address(ipv6_address::parse("2001:db8::"), 16); },
         ThrowsMessage<parse_error>(StrEq("has host bits set in address 2001:db8::")));
+#else
+    ASSERT_THROW((ipv6_network::from_address(ipv6_address::parse("2001:db8::"), 16)), parse_error);
 #endif
 }
 
@@ -582,13 +588,15 @@ TEST_P(InvalidNetworkIpv6Params, parse) {
     ASSERT_EQ(error_network.netmask(), ipv6_address::parse("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"));
     ASSERT_EQ(error_network.hostmask(), ipv6_address::parse("::"));
     ASSERT_EQ(error_network.prefixlen(), 128);
-#else
+#elif IPADDRESS_CPP_VERSION >= 14
     EXPECT_THAT(
         [network=expected_network]() { ipv6_network::parse(network); },
         ThrowsMessage<parse_error>(StrEq(get<2>(GetParam()))));
     EXPECT_THAT(
         [network=expected_network]() { ipv6_network::parse(network); },
         Throws<parse_error>(Property(&parse_error::code, Eq(expected_error_code))));
+#else
+    ASSERT_THROW(ipv6_network::parse(expected_network), parse_error);
 #endif
 }
 INSTANTIATE_TEST_SUITE_P(
@@ -757,8 +765,8 @@ TEST(ipv6_network, Swap) {
 }
 
 TEST(ipv6_network, literals) {
-    constexpr auto net1 = "2001:db8::/32"_ipv6_net;
-    constexpr auto net2 = "0001:0002:0003:0004:0005:0006:0007:0008%123456789abcdefg/128"_ipv6_net;
+    IPADDRESS_CONSTEXPR auto net1 = "2001:db8::/32"_ipv6_net;
+    IPADDRESS_CONSTEXPR auto net2 = "0001:0002:0003:0004:0005:0006:0007:0008%123456789abcdefg/128"_ipv6_net;
     
     ASSERT_EQ(net1, ipv6_network::parse("2001:db8::/32"));
     ASSERT_EQ(net2, ipv6_network::parse("1:2:3:4:5:6:7:8%123456789abcdefg"));
@@ -1115,10 +1123,12 @@ TEST_P(SupernetErrorIpv6NetworkParams, supernet) {
     ASSERT_EQ(error_network.netmask(), ipv6_address::parse("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"));
     ASSERT_EQ(error_network.hostmask(), ipv6_address::parse("::"));
     ASSERT_EQ(error_network.prefixlen(), 128);
-#else
+#elif IPADDRESS_CPP_VERSION >= 14
     EXPECT_THAT(
         ([&network, prefixlen_diff, new_prefix]() { network.supernet(prefixlen_diff, new_prefix); }),
         ThrowsMessage<logic_error>(StrEq(expected_error_str)));
+#else
+    ASSERT_THROW((network.supernet(prefixlen_diff, new_prefix)), logic_error);
 #endif
 }
 INSTANTIATE_TEST_SUITE_P(
@@ -1206,10 +1216,12 @@ TEST_P(SubnetsErrorIpv6NetworkParams, subnets) {
 #ifdef IPADDRESS_NO_EXCEPTIONS
     auto error_subnets = network.subnets(prefixlen_diff, new_prefix);
     ASSERT_TRUE(error_subnets.empty());
-#else
+#elif IPADDRESS_CPP_VERSION >= 14
     EXPECT_THAT(
         ([&network, prefixlen_diff, new_prefix]() { network.subnets(prefixlen_diff, new_prefix); }),
         ThrowsMessage<logic_error>(StrEq(expected_error_str)));
+#else
+    ASSERT_THROW((network.subnets(prefixlen_diff, new_prefix)), logic_error);
 #endif
 }
 INSTANTIATE_TEST_SUITE_P(
@@ -1264,10 +1276,12 @@ TEST_P(AddressExcludeErrorIpv6NetworkParams, address_exclude) {
 #ifdef IPADDRESS_NO_EXCEPTIONS
     auto error_address_exclude = network1.address_exclude(network2);
     ASSERT_TRUE(error_address_exclude.empty());
-#else
+#elif IPADDRESS_CPP_VERSION >= 14
     EXPECT_THAT(
         ([&network1, &network2]() { network1.address_exclude(network2); }),
         ThrowsMessage<logic_error>(StrEq(expected_error_str)));
+#else
+    ASSERT_THROW(network1.address_exclude(network2), logic_error);
 #endif
 }
 INSTANTIATE_TEST_SUITE_P(

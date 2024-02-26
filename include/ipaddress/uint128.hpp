@@ -1730,29 +1730,29 @@ namespace std {
 
 template <typename T>
 struct __numeric_limits_uint128 {
-    static IPADDRESS_CONSTEXPR bool is_bounded               = true;
-    static IPADDRESS_CONSTEXPR bool is_exact                 = true;
-    static IPADDRESS_CONSTEXPR bool is_integer               = true;
-    static IPADDRESS_CONSTEXPR bool is_modulo                = true;
-    static IPADDRESS_CONSTEXPR bool is_specialized           = true;
-    static IPADDRESS_CONSTEXPR bool is_iec559                = false;
-    static IPADDRESS_CONSTEXPR bool is_signed                = false;
-    static IPADDRESS_CONSTEXPR bool has_denorm_loss          = false;
-    static IPADDRESS_CONSTEXPR bool has_infinity             = false;
-    static IPADDRESS_CONSTEXPR bool has_quiet_NaN            = false;
-    static IPADDRESS_CONSTEXPR bool has_signaling_NaN        = false;
-    static IPADDRESS_CONSTEXPR bool tinyness_before          = false;
-    static IPADDRESS_CONSTEXPR bool traps                    = false;
-    static IPADDRESS_CONSTEXPR int max_digits10              = 0;
-    static IPADDRESS_CONSTEXPR int max_exponent              = 0;
-    static IPADDRESS_CONSTEXPR int max_exponent10            = 0;
-    static IPADDRESS_CONSTEXPR int min_exponent              = 0;
-    static IPADDRESS_CONSTEXPR int min_exponent10            = 0;
-    static IPADDRESS_CONSTEXPR int digits                    = 128;
-    static IPADDRESS_CONSTEXPR int digits10                  = 38;
-    static IPADDRESS_CONSTEXPR int radix                     = 2;
-    static IPADDRESS_CONSTEXPR float_denorm_style has_denorm = denorm_absent;
-    static IPADDRESS_CONSTEXPR float_round_style round_style = round_toward_zero;
+    static constexpr bool is_bounded               = true;
+    static constexpr bool is_exact                 = true;
+    static constexpr bool is_integer               = true;
+    static constexpr bool is_modulo                = true;
+    static constexpr bool is_specialized           = true;
+    static constexpr bool is_iec559                = false;
+    static constexpr bool is_signed                = false;
+    static constexpr bool has_denorm_loss          = false;
+    static constexpr bool has_infinity             = false;
+    static constexpr bool has_quiet_NaN            = false;
+    static constexpr bool has_signaling_NaN        = false;
+    static constexpr bool tinyness_before          = false;
+    static constexpr bool traps                    = false;
+    static constexpr int max_digits10              = 0;
+    static constexpr int max_exponent              = 0;
+    static constexpr int max_exponent10            = 0;
+    static constexpr int min_exponent              = 0;
+    static constexpr int min_exponent10            = 0;
+    static constexpr int digits                    = 128;
+    static constexpr int digits10                  = 38;
+    static constexpr int radix                     = 2;
+    static constexpr float_denorm_style has_denorm = denorm_absent;
+    static constexpr float_round_style round_style = round_toward_zero;
 
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T (min)() IPADDRESS_NOEXCEPT {
         return 0;
@@ -1792,73 +1792,73 @@ struct __numeric_limits_uint128 {
 };
 
 template <typename T>
-IPADDRESS_CONSTEXPR bool __numeric_limits_uint128<T>::is_bounded;
+constexpr bool __numeric_limits_uint128<T>::is_bounded;
 
 template <typename T>
-IPADDRESS_CONSTEXPR bool __numeric_limits_uint128<T>::is_exact;
+constexpr bool __numeric_limits_uint128<T>::is_exact;
 
 template <typename T>
-IPADDRESS_CONSTEXPR bool __numeric_limits_uint128<T>::is_integer;
+constexpr bool __numeric_limits_uint128<T>::is_integer;
 
 template <typename T>
-IPADDRESS_CONSTEXPR bool __numeric_limits_uint128<T>::is_modulo;
+constexpr bool __numeric_limits_uint128<T>::is_modulo;
 
 template <typename T>
-IPADDRESS_CONSTEXPR bool __numeric_limits_uint128<T>::is_specialized;
+constexpr bool __numeric_limits_uint128<T>::is_specialized;
 
 template <typename T>
-IPADDRESS_CONSTEXPR bool __numeric_limits_uint128<T>::is_iec559;
+constexpr bool __numeric_limits_uint128<T>::is_iec559;
 
 template <typename T>
-IPADDRESS_CONSTEXPR bool __numeric_limits_uint128<T>::is_signed;
+constexpr bool __numeric_limits_uint128<T>::is_signed;
 
 template <typename T>
-IPADDRESS_CONSTEXPR bool __numeric_limits_uint128<T>::has_denorm_loss;
+constexpr bool __numeric_limits_uint128<T>::has_denorm_loss;
 
 template <typename T>
-IPADDRESS_CONSTEXPR bool __numeric_limits_uint128<T>::has_infinity;
+constexpr bool __numeric_limits_uint128<T>::has_infinity;
 
 template <typename T>
-IPADDRESS_CONSTEXPR bool __numeric_limits_uint128<T>::has_quiet_NaN;
+constexpr bool __numeric_limits_uint128<T>::has_quiet_NaN;
 
 template <typename T>
-IPADDRESS_CONSTEXPR bool __numeric_limits_uint128<T>::has_signaling_NaN;
+constexpr bool __numeric_limits_uint128<T>::has_signaling_NaN;
 
 template <typename T>
-IPADDRESS_CONSTEXPR bool __numeric_limits_uint128<T>::tinyness_before;
+constexpr bool __numeric_limits_uint128<T>::tinyness_before;
 
 template <typename T>
-IPADDRESS_CONSTEXPR bool __numeric_limits_uint128<T>::traps;
+constexpr bool __numeric_limits_uint128<T>::traps;
 
 template <typename T>
-IPADDRESS_CONSTEXPR int __numeric_limits_uint128<T>::max_digits10;
+constexpr int __numeric_limits_uint128<T>::max_digits10;
 
 template <typename T>
-IPADDRESS_CONSTEXPR int __numeric_limits_uint128<T>::max_exponent;
+constexpr int __numeric_limits_uint128<T>::max_exponent;
 
 template <typename T>
-IPADDRESS_CONSTEXPR int __numeric_limits_uint128<T>::max_exponent10;
+constexpr int __numeric_limits_uint128<T>::max_exponent10;
 
 template <typename T>
-IPADDRESS_CONSTEXPR int __numeric_limits_uint128<T>::min_exponent;
+constexpr int __numeric_limits_uint128<T>::min_exponent;
 
 template <typename T>
-IPADDRESS_CONSTEXPR int __numeric_limits_uint128<T>::min_exponent10;
+constexpr int __numeric_limits_uint128<T>::min_exponent10;
 
 template <typename T>
-IPADDRESS_CONSTEXPR int __numeric_limits_uint128<T>::digits;
+constexpr int __numeric_limits_uint128<T>::digits;
 
 template <typename T>
-IPADDRESS_CONSTEXPR int __numeric_limits_uint128<T>::digits10;
+constexpr int __numeric_limits_uint128<T>::digits10;
 
 template <typename T>
-IPADDRESS_CONSTEXPR int __numeric_limits_uint128<T>::radix;
+constexpr int __numeric_limits_uint128<T>::radix;
 
 template <typename T>
-IPADDRESS_CONSTEXPR float_denorm_style __numeric_limits_uint128<T>::has_denorm;
+constexpr float_denorm_style __numeric_limits_uint128<T>::has_denorm;
 
 template <typename T>
-IPADDRESS_CONSTEXPR float_round_style __numeric_limits_uint128<T>::round_style;
+constexpr float_round_style __numeric_limits_uint128<T>::round_style;
 
 #ifdef __clang__
   _Pragma("clang diagnostic pop")
@@ -1902,7 +1902,7 @@ IPADDRESS_FORCE_INLINE std::ostream& operator<<(std::ostream& stream, const IPAD
     }
     auto str = value.to_string(fmt);
     if (stream.flags() & ios_base::uppercase) {
-        std::transform(str.cbegin(), str.cend(), str.begin(), [](auto c){
+        std::transform(str.cbegin(), str.cend(), str.begin(), [](char c){
             return std::toupper(c);
         });
     }

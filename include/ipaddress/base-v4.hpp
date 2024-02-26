@@ -32,11 +32,11 @@ public:
     using base_type = byte_array<4>;
     using uint_type = uint32_t;
 
-    static IPADDRESS_CONSTEXPR ip_version base_version = ip_version::V4;
-    static IPADDRESS_CONSTEXPR size_t base_size = 4;
-    static IPADDRESS_CONSTEXPR size_t base_max_string_len = 15;
-    static IPADDRESS_CONSTEXPR size_t base_max_prefixlen = base_size * 8;
-    static IPADDRESS_CONSTEXPR uint_type base_all_ones = std::numeric_limits<uint_type>::max();
+    static constexpr ip_version base_version = ip_version::V4;
+    static constexpr size_t base_size = 4;
+    static constexpr size_t base_max_string_len = 15;
+    static constexpr size_t base_max_prefixlen = base_size * 8;
+    static constexpr uint_type base_all_ones = std::numeric_limits<uint_type>::max();
 
     /**
      * Retrieves the IP version of the address.
@@ -277,19 +277,19 @@ private:
 };
 
 template <typename Ext>
-IPADDRESS_CONSTEXPR ip_version base_v4<Ext>::base_version;
+constexpr ip_version base_v4<Ext>::base_version;
 
 template <typename Ext>
-IPADDRESS_CONSTEXPR size_t base_v4<Ext>::base_size;
+constexpr size_t base_v4<Ext>::base_size;
 
 template <typename Ext>
-IPADDRESS_CONSTEXPR size_t base_v4<Ext>::base_max_string_len;
+constexpr size_t base_v4<Ext>::base_max_string_len;
 
 template <typename Ext>
-IPADDRESS_CONSTEXPR size_t base_v4<Ext>::base_max_prefixlen;
+constexpr size_t base_v4<Ext>::base_max_prefixlen;
 
 template <typename Ext>
-IPADDRESS_CONSTEXPR typename base_v4<Ext>::uint_type base_v4<Ext>::base_all_ones;
+constexpr typename base_v4<Ext>::uint_type base_v4<Ext>::base_all_ones;
 
 } // namespace IPADDRESS_NAMESPACE
 

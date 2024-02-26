@@ -1408,7 +1408,7 @@ IPADDRESS_FORCE_INLINE std::ostream& operator<<(std::ostream& stream, const IPAD
     auto str = network.to_string(fmt);
     if (stream.flags() & ios_base::uppercase) {
         auto end = std::find(str.cbegin(), str.cend(), '%');
-        std::transform(str.cbegin(), end, str.begin(), [](auto c){
+        std::transform(str.cbegin(), end, str.begin(), [](char c){
             return std::toupper(c);
         });
     }
