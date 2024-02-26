@@ -1358,10 +1358,12 @@ private:
      * @param[in] size The size of the character array.
      * @return An ip_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const char* address, std::size_t size) IPADDRESS_NOEXCEPT {
-        assert(size <= ipv6_address::base_max_string_len && "literal string is too long");
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const char* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        if (size > ipv6_address::base_max_string_len) {
+            raise_error(error_code::STRING_IS_TOO_LONG, 0, address, size);
+        }
         char str[ipv6_address::base_max_string_len + 1] = {};
-        for (size_t i = 0; i < size; ++i) {
+        for (size_t i = 0; i < size && i < ipv6_address::base_max_string_len; ++i) {
             str[i] = address[i];
         }
         return ip_address::parse(str);
@@ -1374,10 +1376,12 @@ private:
      * @param[in] size The size of the character array.
      * @return An ip_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const wchar_t* address, std::size_t size) IPADDRESS_NOEXCEPT {
-        assert(size <= ipv6_address::base_max_string_len && "literal string is too long");
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const wchar_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        if (size > ipv6_address::base_max_string_len) {
+            raise_error(error_code::STRING_IS_TOO_LONG, 0, address, size);
+        }
         wchar_t str[ipv6_address::base_max_string_len + 1] = {};
-        for (size_t i = 0; i < size; ++i) {
+        for (size_t i = 0; i < size && i < ipv6_address::base_max_string_len; ++i) {
             str[i] = address[i];
         }
         return ip_address::parse(str);
@@ -1390,10 +1394,12 @@ private:
      * @param[in] size The size of the character array.
      * @return An ip_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const char16_t* address, std::size_t size) IPADDRESS_NOEXCEPT {
-        assert(size <= ipv6_address::base_max_string_len && "literal string is too long");
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const char16_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        if (size > ipv6_address::base_max_string_len) {
+            raise_error(error_code::STRING_IS_TOO_LONG, 0, address, size);
+        }
         char16_t str[ipv6_address::base_max_string_len + 1] = {};
-        for (size_t i = 0; i < size; ++i) {
+        for (size_t i = 0; i < size && i < ipv6_address::base_max_string_len; ++i) {
             str[i] = address[i];
         }
         return ip_address::parse(str);
@@ -1406,10 +1412,12 @@ private:
      * @param[in] size The size of the character array.
      * @return An ip_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const char32_t* address, std::size_t size) IPADDRESS_NOEXCEPT {
-        assert(size <= ipv6_address::base_max_string_len && "literal string is too long");
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const char32_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        if (size > ipv6_address::base_max_string_len) {
+            raise_error(error_code::STRING_IS_TOO_LONG, 0, address, size);
+        }
         char32_t str[ipv6_address::base_max_string_len + 1] = {};
-        for (size_t i = 0; i < size; ++i) {
+        for (size_t i = 0; i < size && i < ipv6_address::base_max_string_len; ++i) {
             str[i] = address[i];
         }
         return ip_address::parse(str);

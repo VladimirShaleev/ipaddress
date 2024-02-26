@@ -1300,10 +1300,13 @@ private:
      * @param[in] size The size of the string literal.
      * @return An ip_network object representing the network specified by the string literal.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const char* address, std::size_t size) IPADDRESS_NOEXCEPT {
-        assert(size <= ipv6_address::base_max_string_len * 2 + 1 && "literal string is too long");
-        char str[ipv6_address::base_max_string_len * 2 + 2] = {};
-        for (size_t i = 0; i < size; ++i) {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const char* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        const auto max_len = ipv6_address::base_max_string_len * 2 + 1;
+        if (size > max_len) {
+            raise_error(error_code::STRING_IS_TOO_LONG, 0, address, size);
+        }
+        char str[max_len + 1] = {};
+        for (size_t i = 0; i < size && i < max_len; ++i) {
             str[i] = address[i];
         }
         return ip_network::parse(str);
@@ -1319,10 +1322,13 @@ private:
      * @param[in] size The size of the string literal.
      * @return An ip_network object representing the network specified by the string literal.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const wchar_t* address, std::size_t size) IPADDRESS_NOEXCEPT {
-        assert(size <= ipv6_address::base_max_string_len * 2 + 1 && "literal string is too long");
-        wchar_t str[ipv6_address::base_max_string_len * 2 + 2] = {};
-        for (size_t i = 0; i < size; ++i) {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const wchar_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        const auto max_len = ipv6_address::base_max_string_len * 2 + 1;
+        if (size > max_len) {
+            raise_error(error_code::STRING_IS_TOO_LONG, 0, address, size);
+        }
+        wchar_t str[max_len + 1] = {};
+        for (size_t i = 0; i < size && i < max_len; ++i) {
             str[i] = address[i];
         }
         return ip_network::parse(str);
@@ -1338,10 +1344,13 @@ private:
      * @param[in] size The size of the string literal.
      * @return An ip_network object representing the network specified by the string literal.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const char16_t* address, std::size_t size) IPADDRESS_NOEXCEPT {
-        assert(size <= ipv6_address::base_max_string_len * 2 + 1 && "literal string is too long");
-        char16_t str[ipv6_address::base_max_string_len * 2 + 2] = {};
-        for (size_t i = 0; i < size; ++i) {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const char16_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        const auto max_len = ipv6_address::base_max_string_len * 2 + 1;
+        if (size > max_len) {
+            raise_error(error_code::STRING_IS_TOO_LONG, 0, address, size);
+        }
+        char16_t str[max_len + 1] = {};
+        for (size_t i = 0; i < size && i < max_len; ++i) {
             str[i] = address[i];
         }
         return ip_network::parse(str);
@@ -1357,10 +1366,13 @@ private:
      * @param[in] size The size of the string literal.
      * @return An ip_network object representing the network specified by the string literal.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const char32_t* address, std::size_t size) IPADDRESS_NOEXCEPT {
-        assert(size <= ipv6_address::base_max_string_len * 2 + 1 && "literal string is too long");
-        char32_t str[ipv6_address::base_max_string_len * 2 + 2] = {};
-        for (size_t i = 0; i < size; ++i) {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const char32_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        const auto max_len = ipv6_address::base_max_string_len * 2 + 1;
+        if (size > max_len) {
+            raise_error(error_code::STRING_IS_TOO_LONG, 0, address, size);
+        }
+        char32_t str[max_len + 1] = {};
+        for (size_t i = 0; i < size && i < max_len; ++i) {
             str[i] = address[i];
         }
         return ip_network::parse(str);
