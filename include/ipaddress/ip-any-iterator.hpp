@@ -499,86 +499,204 @@ private:
     value_type _current {};
 }; // ip_any_iterator
 
+/**
+ * A sequence of host IP addresses.
+ * 
+ * The subnets_any_sequence class template to provide a container-like interface for IP address sequences.
+ * It allows for iteration over the host addresses in a network or subnet, excluding the network and broadcast addresses when appropriate.
+ * This specialization is essential for network-related operations that require processing of individual host addresses within a given range.
+ * 
+ * @tparam Base The base type from which the ip_address_base is derived, representing the underlying IP address type.
+ * @remark When iterating, obtaining addresses occurs through lazy calculations.
+ */
 class hosts_any_sequence {
 public:
-    using value_type      = ip_address;
-    using size_type       = std::size_t;
-    using difference_type = uint128_t;
-    using pointer         = value_type*;
-    using const_pointer   = const value_type*;
-    using reference       = value_type&;
-    using const_reference = const value_type&;
+    using value_type      = ip_address; /**< The type of the IP addresses in the sequence. */
+    using size_type       = std::size_t; /**< The type used for representing the size of the sequence. */
+    using difference_type = uint128_t; /**< The type used for representing differences between iterators. */
+    using pointer         = value_type*; /**< The pointer type for the value_type. */
+    using const_pointer   = const value_type*; /**< The const pointer type for the value_type. */
+    using reference       = value_type&; /**< The reference type for the value_type. */
+    using const_reference = const value_type&; /**< The const reference type for the value_type. */
 
-    using iterator       = ip_any_iterator<value_type, ip_address_iterator<ipv4_address>, ip_address_iterator<ipv6_address>>;
-    using const_iterator = iterator;
+    using iterator       = ip_any_iterator<value_type, ip_address_iterator<ipv4_address>, ip_address_iterator<ipv6_address>>; /**< The iterator type for iterating over the sequence.  */
+    using const_iterator = iterator; /**< The const iterator type for iterating over the sequence.  */
 
-    using reverse_iterator       = ip_reverse_iterator<iterator>;
-    using const_reverse_iterator = ip_reverse_iterator<const_iterator>;
+    using reverse_iterator       = ip_reverse_iterator<iterator>; /**< The reverse iterator type for iterating over the sequence in reverse. */
+    using const_reverse_iterator = ip_reverse_iterator<const_iterator>; /**< The const reverse iterator type for iterating over the sequence in reverse. */
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_any_sequence(const hosts_any_sequence&) IPADDRESS_NOEXCEPT = default;
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_any_sequence(hosts_any_sequence&&) IPADDRESS_NOEXCEPT = default;
+    /**
+     * Copy constructor.
+     * 
+     * @param[in] other The hosts_any_sequence to copy.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_any_sequence(const hosts_any_sequence& other) IPADDRESS_NOEXCEPT = default;
+    
+    /**
+     * Move constructor.
+     * 
+     * @param[in] other The hosts_any_sequence to move.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_any_sequence(hosts_any_sequence&& other) IPADDRESS_NOEXCEPT = default;
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_any_sequence& operator=(const hosts_any_sequence&) IPADDRESS_NOEXCEPT = default;
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_any_sequence& operator=(hosts_any_sequence&&) IPADDRESS_NOEXCEPT = default;
+    /**
+     * Copy assignment operator.
+     * 
+     * @param[in] other The hosts_any_sequence to copy.
+     * @return A reference to the assigned hosts_any_sequence.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_any_sequence& operator=(const hosts_any_sequence& other) IPADDRESS_NOEXCEPT = default;
+    
+    /**
+     * Move assignment operator.
+     * 
+     * @param[in] other The hosts_any_sequence to move.
+     * @return A reference to the moved hosts_any_sequence.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_any_sequence& operator=(hosts_any_sequence&& other) IPADDRESS_NOEXCEPT = default;
 
+    /**
+     * Constructs a hosts_any_sequence with specified network parameters.
+     * 
+     * @param[in] begin The begin ipv4 address iterator.
+     * @param[in] end The end ipv4 address iterator.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_any_sequence(ip_address_iterator<ipv4_address> begin, ip_address_iterator<ipv4_address> end) IPADDRESS_NOEXCEPT : _begin(begin), _end(end) {
     }
 
+    /**
+     * Constructs a hosts_any_sequence with specified network parameters.
+     * 
+     * @param[in] begin The begin ipv6 address iterator.
+     * @param[in] end The end ipv6 address iterator.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_any_sequence(ip_address_iterator<ipv6_address> begin, ip_address_iterator<ipv6_address> end) IPADDRESS_NOEXCEPT : _begin(begin), _end(end) {
     }
 
+    /**
+     * Gets the beginning iterator of the sequence.
+     * 
+     * @return A const_iterator to the first element in the sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator begin() const IPADDRESS_NOEXCEPT {
         return _begin;
     }
 
+    /**
+     * Gets the end iterator of the sequence.
+     * 
+     * @return A const_iterator to the element following the last element in the sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator end() const IPADDRESS_NOEXCEPT {
         return _end;
     }
 
+    /**
+     * Gets the beginning reverse iterator of the sequence.
+     * 
+     * @return A const_reverse_iterator to the first element of the reversed sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reverse_iterator rbegin() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(end());
     }
 
+    /**
+     * Gets the end reverse iterator of the sequence.
+     * 
+     * @return A const_reverse_iterator to the element following the last element of the reversed sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reverse_iterator rend() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(begin());
     }
     
+    /**
+     * Gets the beginning const iterator of the sequence.
+     * 
+     * @return A const_iterator to the first element in the sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator cbegin() const IPADDRESS_NOEXCEPT {
         return begin();
     }
 
+    /**
+     * Gets the end const iterator of the sequence.
+     * 
+     * @return A const_iterator to the element following the last element in the sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator cend() const IPADDRESS_NOEXCEPT {
         return end();
     }
 
+    /**
+     * Gets the beginning const reverse iterator of the sequence.
+     * 
+     * @return A const_reverse_iterator to the first element of the reversed sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reverse_iterator crbegin() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(cend());
     }
 
+    /**
+     * Gets the end const reverse iterator of the sequence.
+     * 
+     * @return A const_reverse_iterator to the element following the last element of the reversed sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reverse_iterator crend() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(cbegin());
     }
 
+    /**
+     * Checks if the sequence is empty.
+     * 
+     * @return `true` if the sequence is empty, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool empty() const IPADDRESS_NOEXCEPT {
         return _begin == _end;
     }
     
+    /**
+     * Gets the size of the sequence.
+     * 
+     * @return The number of elements in the sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE difference_type size() const IPADDRESS_NOEXCEPT {
         return _end.uint_diff(_begin);
     }
 
+    /**
+     * Accesses an element by index.
+     * 
+     * @param[in] n The index of the element.
+     * @return The element at the specified index.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type operator[](difference_type n) const IPADDRESS_NOEXCEPT {
         return at(n);
     }
 
+    /**
+     * Accesses an element by index with bounds checking.
+     * 
+     * @param[in] n The index of the element.
+     * @return The element at the specified index.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type at(difference_type n) const IPADDRESS_NOEXCEPT {
         return *(_begin + n);
     }
 
+    /**
+     * Accesses the first element in the sequence.
+     * 
+     * @return A reference to the first element in the sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type front() const IPADDRESS_NOEXCEPT {
         return *_begin;
     }
 
+    /**
+     * Accesses the last element in the sequence.
+     * 
+     * @return A reference to the last element in the sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type back() const IPADDRESS_NOEXCEPT {
         return *(_end - 1U);
     }
@@ -588,87 +706,206 @@ private:
     const_iterator _end{};
 }; // hosts_any_sequence
 
+/**
+ * A sequence container for subnet ranges within a network.
+ * 
+ * This class template represents a sequence of subnets within a network.
+ * It provides forward and reverse iterators to traverse the subnets and
+ * offers insight into the structure of a network by breaking it down into
+ * smaller, manageable parts.
+ * 
+ * @tparam T The type of IP network to be divided into subnets.
+ * @remark When iterating, obtaining networks occurs through lazy calculations.
+ */
 template <typename T>
 class subnets_any_sequence {
 public:
-    using value_type      = T;
-    using size_type       = std::size_t;
-    using difference_type = uint128_t;
-    using pointer         = value_type*;
-    using const_pointer   = const value_type*;
-    using reference       = value_type&;
-    using const_reference = const value_type&;
+    using value_type      = T; /**< The type of subnet value. */
+    using size_type       = std::size_t; /**< An unsigned integral type. */
+    using difference_type = uint128_t; /**< Unsigned integer type for differences. */
+    using pointer         = value_type*; /**< Pointer to the subnet type. */
+    using const_pointer   = const value_type*; /**< Const pointer to the subnet type. */
+    using reference       = value_type&; /**< Reference to the subnet type. */
+    using const_reference = const value_type&; /**< Const reference to the subnet type. */
 
-    using iterator       = ip_any_iterator<value_type, ip_network_iterator<ipv4_network>, ip_network_iterator<ipv6_network>>;
-    using const_iterator = iterator;
+    using iterator       = ip_any_iterator<value_type, ip_network_iterator<ipv4_network>, ip_network_iterator<ipv6_network>>; /**< Forward iterator for subnet traversal. */
+    using const_iterator = iterator; /**< Const forward iterator for subnet traversal. */
 
-    using reverse_iterator       = ip_reverse_iterator<iterator>;
-    using const_reverse_iterator = ip_reverse_iterator<const_iterator>;
+    using reverse_iterator       = ip_reverse_iterator<iterator>; /**< Reverse iterator for subnet traversal. */
+    using const_reverse_iterator = ip_reverse_iterator<const_iterator>; /**< Const reverse iterator for subnet */
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_any_sequence(const subnets_any_sequence&) IPADDRESS_NOEXCEPT = default;
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_any_sequence(subnets_any_sequence&&) IPADDRESS_NOEXCEPT = default;
+    /**
+     * Copy constructor.
+     * 
+     * @param[in] other The subnets_any_sequence to copy.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_any_sequence(const subnets_any_sequence& other) IPADDRESS_NOEXCEPT = default;
+    
+    /**
+     * Move constructor.
+     * 
+     * @param[in] other The subnets_any_sequence to move.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_any_sequence(subnets_any_sequence&& other) IPADDRESS_NOEXCEPT = default;
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_any_sequence& operator=(const subnets_any_sequence&) IPADDRESS_NOEXCEPT = default;
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_any_sequence& operator=(subnets_any_sequence&&) IPADDRESS_NOEXCEPT = default;
+    /**
+     * Copy assignment operator.
+     * 
+     * @param[in] other The subnets_any_sequence to copy.
+     * @return A reference to the assigned subnets_any_sequence.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_any_sequence& operator=(const subnets_any_sequence& other) IPADDRESS_NOEXCEPT = default;
+    
+    /**
+     * Move assignment operator.
+     * 
+     * @param[in] other The subnets_any_sequence to move.
+     * @return A reference to the moved subnets_any_sequence.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_any_sequence& operator=(subnets_any_sequence&& other) IPADDRESS_NOEXCEPT = default;
 
+    /**
+     * Constructs a subnets_any_sequence with specified network parameters.
+     * 
+     * @param[in] begin The begin ipv4 network iterator.
+     * @param[in] end The end ipv4 network iterator.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_any_sequence(ip_network_iterator<ipv4_network> begin, ip_network_iterator<ipv4_network> end) IPADDRESS_NOEXCEPT : _begin(begin), _end(end) {
     }
 
+    /**
+     * Constructs a subnets_any_sequence with specified network parameters.
+     * 
+     * @param[in] begin The begin ipv6 network iterator.
+     * @param[in] end The end ipv6 network iterator.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_any_sequence(ip_network_iterator<ipv6_network> begin, ip_network_iterator<ipv6_network> end) IPADDRESS_NOEXCEPT : _begin(begin), _end(end) {
     }
 
+    /**
+     * Gets the beginning iterator of the sequence.
+     * 
+     * @return A const_iterator to the first element in the sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator begin() const IPADDRESS_NOEXCEPT {
         return _begin;
     }
 
+    /**
+     * Gets the end iterator of the sequence.
+     * 
+     * @return A const_iterator to the element following the last element in the sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator end() const IPADDRESS_NOEXCEPT {
         return _end;
     }
 
+    /**
+     * Gets the beginning reverse iterator of the sequence.
+     * 
+     * @return A const_reverse_iterator to the first element of the reversed sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reverse_iterator rbegin() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(end());
     }
 
+    /**
+     * Gets the end reverse iterator of the sequence.
+     * 
+     * @return A const_reverse_iterator to the element following the last element of the reversed sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reverse_iterator rend() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(begin());
     }
     
+    /**
+     * Gets the beginning const iterator of the sequence.
+     * 
+     * @return A const_iterator to the first element in the sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator cbegin() const IPADDRESS_NOEXCEPT {
         return begin();
     }
 
+    /**
+     * Gets the end const iterator of the sequence.
+     * 
+     * @return A const_iterator to the element following the last element in the sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator cend() const IPADDRESS_NOEXCEPT {
         return end();
     }
 
+    /**
+     * Gets the beginning const reverse iterator of the sequence.
+     * 
+     * @return A const_reverse_iterator to the first element of the reversed sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reverse_iterator crbegin() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(cend());
     }
 
+    /**
+     * Gets the end const reverse iterator of the sequence.
+     * 
+     * @return A const_reverse_iterator to the element following the last element of the reversed sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reverse_iterator crend() const IPADDRESS_NOEXCEPT {
         return const_reverse_iterator(cbegin());
     }
 
+    /**
+     * Checks if the sequence is empty.
+     * 
+     * @return `true` if the sequence is empty, `false` otherwise.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool empty() const IPADDRESS_NOEXCEPT {
         return _begin == _end;
     }
     
+    /**
+     * Gets the size of the sequence.
+     * 
+     * @return The number of elements in the sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE difference_type size() const IPADDRESS_NOEXCEPT {
         return _end.uint_diff(_begin);
     }
 
+    /**
+     * Accesses an element by index.
+     * 
+     * @param[in] n The index of the element.
+     * @return The element at the specified index.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type operator[](difference_type n) const IPADDRESS_NOEXCEPT {
         return at(n);
     }
 
+    /**
+     * Accesses an element by index with bounds checking.
+     * 
+     * @param[in] n The index of the element.
+     * @return The element at the specified index.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type at(difference_type n) const IPADDRESS_NOEXCEPT {
         return *(_begin + n);
     }
 
+    /**
+     * Accesses the first element in the sequence.
+     * 
+     * @return A reference to the first element in the sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type front() const IPADDRESS_NOEXCEPT {
         return *_begin;
     }
 
+    /**
+     * Accesses the last element in the sequence.
+     * 
+     * @return A reference to the last element in the sequence.
+     */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE value_type back() const IPADDRESS_NOEXCEPT {
         return *(_end - 1U);
     }

@@ -951,11 +951,11 @@ public:
     using reference       = value_type&; /**< The reference type for the value_type. */
     using const_reference = const value_type&; /**< The const reference type for the value_type. */
 
-    using iterator       = ip_address_iterator<value_type>; /**< The iterator type for iterating over the sequence.  */
-    using const_iterator = ip_address_iterator<value_type>; /**< The const iterator type for iterating over the sequence.  */
+    using iterator       = ip_address_iterator<value_type>; /**< The iterator type for iterating over the sequence. */
+    using const_iterator = ip_address_iterator<value_type>; /**< The const iterator type for iterating over the sequence. */
 
-    using reverse_iterator       = ip_reverse_iterator<iterator>;  /**< The reverse iterator type for iterating over the sequence in reverse.  */
-    using const_reverse_iterator = ip_reverse_iterator<const_iterator>; /**< The const reverse iterator type for iterating over the sequence in reverse.  */
+    using reverse_iterator       = ip_reverse_iterator<iterator>; /**< The reverse iterator type for iterating over the sequence in reverse. */
+    using const_reverse_iterator = ip_reverse_iterator<const_iterator>; /**< The const reverse iterator type for iterating over the sequence in reverse. */
 
     /**
      * Copy constructor.
