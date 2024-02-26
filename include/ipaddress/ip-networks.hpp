@@ -43,6 +43,7 @@ struct networks {
 };
 #endif
 
+// Private networks
 #if __cpp_constexpr >= 201304L
 static constexpr ipv4_network
 #else
@@ -70,7 +71,7 @@ static constexpr ipv6_network
 #else
 template <typename T> const ipv6_network networks<T>::
 #endif
-        ipv6_private_networks[] = {
+    ipv6_private_networks[] = {
         ipv6_network::parse("::1/128"),
         ipv6_network::parse("::/128"),
         ipv6_network::parse("::ffff:0:0/96"),
@@ -83,6 +84,7 @@ template <typename T> const ipv6_network networks<T>::
         ipv6_network::parse("fe80::/10")
     };
 
+// Global networks
 #if __cpp_constexpr >= 201304L
 static constexpr ipv4_network
 #else
@@ -90,6 +92,7 @@ template <typename T> const ipv4_network networks<T>::
 #endif
     ipv4_is_global = ipv4_network::parse("100.64.0.0/10");
 
+// Reserved networks
 #if __cpp_constexpr >= 201304L
 static constexpr ipv4_network
 #else
@@ -120,6 +123,7 @@ template <typename T> const ipv6_network networks<T>::
         ipv6_network::parse("FE00::/9")
     };
 
+// Multicast networks
 #if __cpp_constexpr >= 201304L
 static constexpr ipv4_network
 #else
@@ -134,6 +138,7 @@ template <typename T> const ipv6_network networks<T>::
 #endif
     ipv6_is_multicast = ipv6_network::parse("ff00::/8");
 
+// Loopback networks
 #if __cpp_constexpr >= 201304L
 static constexpr ipv4_network
 #else
@@ -141,6 +146,7 @@ template <typename T> const ipv4_network networks<T>::
 #endif
     ipv4_is_loopback = ipv4_network::parse("127.0.0.0/8");
 
+// Link local networks
 #if __cpp_constexpr >= 201304L
 static constexpr ipv4_network
 #else
@@ -155,6 +161,7 @@ template <typename T> const ipv6_network networks<T>::
 #endif
     ipv6_is_link_local = ipv6_network::parse("fe80::/10");
 
+// Site local networks
 #if __cpp_constexpr >= 201304L
 static constexpr ipv6_network
 #else
@@ -164,7 +171,43 @@ template <typename T> const ipv6_network networks<T>::
 
 #if __cpp_constexpr >= 201304L
 };
+
+template <typename T>
+constexpr ipv4_network networks<T>::ipv4_private_networks[];
+
+template <typename T>
+constexpr ipv6_network networks<T>::ipv6_private_networks[];
+
+template <typename T>
+constexpr ipv4_network networks<T>::ipv4_is_global;
+
+template <typename T>
+constexpr ipv4_network networks<T>::ipv4_reserved_network;
+
+template <typename T>
+constexpr ipv6_network networks<T>::ipv6_reserved_networks[];
+
+template <typename T>
+constexpr ipv4_network networks<T>::ipv4_is_multicast;
+
+template <typename T>
+constexpr ipv6_network networks<T>::ipv6_is_multicast;
+
+template <typename T>
+constexpr ipv4_network networks<T>::ipv4_is_loopback;
+
+template <typename T>
+constexpr ipv4_network networks<T>::ipv4_is_link_local;
+
+template <typename T>
+constexpr ipv6_network networks<T>::ipv6_is_link_local;
+
+template <typename T>
+constexpr ipv6_network networks<T>::ipv6_is_site_local;
+
 #endif
+
+using nets = networks<int>;
 
 } // namespace IPADDRESS_NAMESPACE::internal
 
@@ -172,7 +215,7 @@ template<>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv4_network::is_private() const IPADDRESS_NOEXCEPT {
     const auto& address = network_address();
     const auto broadcast = broadcast_address();
-    for (const auto& private_network : internal::networks<int>::ipv4_private_networks) {
+    for (const auto& private_network : internal::nets::ipv4_private_networks) {
         if (private_network.contains(address) && private_network.contains(broadcast)) {
             return true;
         }
@@ -184,7 +227,7 @@ template<>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv6_network::is_private() const IPADDRESS_NOEXCEPT {
     const auto& address = network_address();
     const auto broadcast = broadcast_address();
-    for (const auto& private_network : internal::networks<int>::ipv6_private_networks) {
+    for (const auto& private_network : internal::nets::ipv6_private_networks) {
         if (private_network.contains(address) && private_network.contains(broadcast)) {
             return true;
         }
@@ -194,7 +237,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv6_network
 
 template<>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv4_network::is_global() const IPADDRESS_NOEXCEPT {
-    const auto& network = internal::networks<int>::ipv4_is_global;
+    const auto& network = internal::nets::ipv4_is_global;
     const auto& address = network_address();
     const auto broadcast = broadcast_address();
     return !(network.contains(address) && network.contains(broadcast)) && !is_private();
@@ -207,17 +250,17 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv6_network
 
 template<>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv4_address::is_multicast() const IPADDRESS_NOEXCEPT {
-    return internal::networks<int>::ipv4_is_multicast.contains(*this);
+    return internal::nets::ipv4_is_multicast.contains(*this);
 }
 
 template<>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv6_address::is_multicast() const IPADDRESS_NOEXCEPT {
-    return internal::networks<int>::ipv6_is_multicast.contains(*this);
+    return internal::nets::ipv6_is_multicast.contains(*this);
 }
 
 template<>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv4_address::is_private() const IPADDRESS_NOEXCEPT {
-    for (const auto& private_network : internal::networks<int>::ipv4_private_networks) {
+    for (const auto& private_network : internal::nets::ipv4_private_networks) {
         if (private_network.contains(*this)) {
             return true;
         }
@@ -233,7 +276,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv6_address
         return ipv4->is_private();
     }
 
-    for (const auto& private_network : internal::networks<int>::ipv6_private_networks) {
+    for (const auto& private_network : internal::nets::ipv6_private_networks) {
         if (private_network.contains(*this)) {
             return true;
         }
@@ -244,7 +287,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv6_address
 
 template<>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv4_address::is_global() const IPADDRESS_NOEXCEPT {
-    return !internal::networks<int>::ipv4_is_global.contains(*this) && !is_private();
+    return !internal::nets::ipv4_is_global.contains(*this) && !is_private();
 }
 
 template<>
@@ -254,12 +297,12 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv6_address
 
 template<>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv4_address::is_reserved() const IPADDRESS_NOEXCEPT {
-    return internal::networks<int>::ipv4_reserved_network.contains(*this);
+    return internal::nets::ipv4_reserved_network.contains(*this);
 }
 
 template<>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv6_address::is_reserved() const IPADDRESS_NOEXCEPT {
-    for (const auto& reserved_network : internal::networks<int>::ipv6_reserved_networks) {
+    for (const auto& reserved_network : internal::nets::ipv6_reserved_networks) {
         if (reserved_network.contains(*this)) {
             return true;
         }
@@ -269,7 +312,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv6_address
 
 template<>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv4_address::is_loopback() const IPADDRESS_NOEXCEPT {
-    return internal::networks<int>::ipv4_is_loopback.contains(*this);
+    return internal::nets::ipv4_is_loopback.contains(*this);
 }
 
 template<>
@@ -283,17 +326,17 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv6_address
 
 template<>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv4_address::is_link_local() const IPADDRESS_NOEXCEPT {
-    return internal::networks<int>::ipv4_is_link_local.contains(*this);
+    return internal::nets::ipv4_is_link_local.contains(*this);
 }
 
 template<>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv6_address::is_link_local() const IPADDRESS_NOEXCEPT {
-    return internal::networks<int>::ipv6_is_link_local.contains(*this);
+    return internal::nets::ipv6_is_link_local.contains(*this);
 }
 
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv6_address_base::is_site_local() const IPADDRESS_NOEXCEPT {
     ipv6_address address(this->bytes());
-    return internal::networks<int>::ipv6_is_site_local.contains(address);
+    return internal::nets::ipv6_is_site_local.contains(address);
 }
 
 } // namespace IPADDRESS_NAMESPACE
