@@ -11,22 +11,6 @@ else()
   )
   FetchContent_MakeAvailable(doxygen-awesome-css)
 
-  # Copy README
-  file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/getstarted.cmake"
-    [=[
-    file(READ "${SOURCE}" TEXT)
-    string(REPLACE "# ipaddress" "@mainpage Get Started\n\n@tableofcontents" TEXT "${TEXT}")
-    file(WRITE "${TARGET}" "${TEXT}")
-    ]=])
-  add_custom_command(
-      OUTPUT getstarted
-      COMMAND "${CMAKE_COMMAND}"
-          "-DSOURCE=${CMAKE_CURRENT_LIST_DIR}/../README.md"
-          "-DTARGET=\"${CMAKE_CURRENT_BINARY_DIR}/get-started.md\""
-          -P "${CMAKE_CURRENT_BINARY_DIR}/getstarted.cmake"
-      DEPENDS ${CMAKE_CURRENT_LIST_DIR}/../README.md
-  )
-
   file(GLOB IPADDRESS_DOC_SOURCES ${CMAKE_CURRENT_LIST_DIR}/../include/ipaddress/*)
   file(GLOB IPADDRESS_DOC_MARKDOWN ${CMAKE_CURRENT_LIST_DIR}/*.md)
 
@@ -38,7 +22,7 @@ else()
   add_custom_command(OUTPUT html
     COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
     COMMAND ${CMAKE_COMMAND} -E touch ${CMAKE_CURRENT_BINARY_DIR}/html
-    DEPENDS Doxyfile getstarted ${IPADDRESS_DOC_SOURCES} ${IPADDRESS_DOC_MARKDOWN}
+    DEPENDS Doxyfile ${IPADDRESS_DOC_SOURCES} ${IPADDRESS_DOC_MARKDOWN}
     WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/../
   )
 

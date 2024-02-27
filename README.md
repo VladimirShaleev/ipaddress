@@ -16,11 +16,14 @@ differences between IP versions (IPv4 and IPv6). This design choice eliminates t
 For instance, an instance of the **ipv4_address** class will be represented by 4 bytes.
 
 The library leverages modern C++ features, ensuring that all IP address and network operations support constant expressions. 
-For more details on constant expressions, refer to the relevant section **TODO**.
 
 ![Constexpr](doc/img/constexpr.png "Errors are known at Compile Time")
 
-### Compatibility
+## Documentation
+
+For details on installation, configuration and use, please refer to the full [documentation](https://vladimirshaleev.github.io/ipaddress/).
+
+## Compatibility
 
 The library has been tested on the following compilers:
 
@@ -29,11 +32,11 @@ The library has been tested on the following compilers:
 * GCC 7.5.0 and newer;
 * MSVC 14.29 (Visual Studio 16.11) and newer
 
-### Installation
+## Installation
 
 
 
-### Small code example
+## Quick Start
 
 The library provides capabilities for creating, analyzing and managing IPv4 and IPv6 addresses and networks using classes such 
 as **ipv4_address**, **ipv6_address**, **ip_address** (any IP version), **ipv4_network**, **ipv6_network** and **ip_network** 
@@ -102,27 +105,8 @@ int main() {
 }
 ```
 
-> [!note]
-> Note that to support the **Literal Classes as Non-type Template Parameters** syntax, a compiler 
-> with support for **C++20** or higher is required
+## Contributing
 
-> [!note]
-> Also note that the library uses relaxed constexpr for its operations, so they are not available in **C++11**
->
-> ```cpp
-> // C++14 and higher support constexpr
-> constexpr auto ip = ipv6_address::parse("fec0::1ff:fe23:4567:890a%eth2");
-> 
-> // C++11 doesn't support relaxed constexpr, so they can't be used
-> auto ip = ipv6_address::parse("fec0::1ff:fe23:4567:890a%eth2");
-> ```
+### Issues
 
-### Contributing
-
-#### Issues
-
-#### Workflow
-
-### Documentation
-
-For details on installation, configuration and use, please refer to the full [documentation](https://vladimirshaleev.github.io/ipaddress/).
+### Workflow
