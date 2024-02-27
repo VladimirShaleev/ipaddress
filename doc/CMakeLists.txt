@@ -63,13 +63,13 @@ else()
     file(WRITE "${TARGET}" "${TEXT}")
     ]=])
   add_custom_command(
-      OUTPUT getstarted
+      OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/get-started.md"
       COMMAND "${CMAKE_COMMAND}"
-          "-DLICENSE=${CMAKE_CURRENT_LIST_DIR}/../LICENSE"
-          "-DSOURCE=${CMAKE_CURRENT_LIST_DIR}/../README.md"
+          "-DLICENSE=${PROJECT_SOURCE_DIR}/LICENSE"
+          "-DSOURCE=${PROJECT_SOURCE_DIR}/README.md"
           "-DTARGET=\"${CMAKE_CURRENT_BINARY_DIR}/get-started.md\""
           -P "${CMAKE_CURRENT_BINARY_DIR}/getstarted.cmake"
-      DEPENDS ${CMAKE_CURRENT_LIST_DIR}/../README.md
+      DEPENDS ${PROJECT_SOURCE_DIR}/README.md
   )
 
   file(GLOB IPADDRESS_DOC_SOURCES ${CMAKE_CURRENT_LIST_DIR}/../include/ipaddress/*)
@@ -81,16 +81,11 @@ else()
   set(IPADDRESS_DOC_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/share/doc/${PROJECT_NAME}" CACHE PATH "Path to the documentation")
 
   configure_file(Doxyfile.in Doxyfile @ONLY)
-  foreach(FULL_PATH ${IPADDRESS_DOC_ICONS})
-    get_filename_component(FILE ${FULL_PATH} NAME) 
-    configure_file(${FULL_PATH} ${CMAKE_CURRENT_BINARY_DIR}/html/${FILE} COPYONLY)
-    set(IPADDRESS_DOC_COPY_ICONS ${IPADDRESS_DOC_COPY_ICONS} ${CMAKE_CURRENT_BINARY_DIR}/html/${FILE})
-  endforeach()
 
   add_custom_command(OUTPUT html
     COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
     COMMAND ${CMAKE_COMMAND} -E touch ${CMAKE_CURRENT_BINARY_DIR}/html
-    DEPENDS Doxyfile ${IPADDRESS_DOC_COPY_ICONS} getstarted ${IPADDRESS_DOC_SOURCES} ${IPADDRESS_DOC_MARKDOWN}
+    DEPENDS Doxyfile ${IPADDRESS_DOC_SOURCES} ${IPADDRESS_DOC_MARKDOWN} "${CMAKE_CURRENT_BINARY_DIR}/get-started.md"
     WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/../
   )
 
@@ -111,7 +106,13 @@ else()
       DEPENDS html "${CMAKE_CURRENT_BINARY_DIR}/replace.cmake"
   )
   
-  add_custom_target(doc ALL DEPENDS html navtree)
+  foreach(FULL_PATH ${IPADDRESS_DOC_ICONS})
+    get_filename_component(FILE ${FULL_PATH} NAME) 
+    configure_file(${FULL_PATH} ${CMAKE_CURRENT_BINARY_DIR}/html/${FILE} COPYONLY)
+    set(IPADDRESS_DOC_COPY_ICONS ${IPADDRESS_DOC_COPY_ICONS} ${CMAKE_CURRENT_BINARY_DIR}/html/${FILE})
+  endforeach()
+  
+  add_custom_target(doc ALL DEPENDS html navtree ${IPADDRESS_DOC_COPY_ICONS})
   
   install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html DESTINATION doc COMPONENT doc)
 endif()
