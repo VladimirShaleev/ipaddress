@@ -7,7 +7,7 @@
 <meta name="generator" content="Doxygen 1.10.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>ipaddress: ipaddress</title>
-<link rel="icon" type="image/svg+xml" href="logo.svg"/>
+<link rel="icon" href="logo.svg" type="image/svg+xml" />
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -117,21 +117,45 @@ $(function(){initNavTree('index.html',''); initResizable(); });
   <div class="headertitle"><div class="title">ipaddress </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_README"></a> <a href="https://github.com/VladimirShaleev/ipaddress/releases"><img src="https://img.shields.io/github/v/release/vladimirshaleev/ipaddress?sort=semver&amp;display_name=tag" alt="GitHub Release" class="inline"/></a> <a href="https://github.com/VladimirShaleev/ipaddress/blob/main/LICENSE"><img src="https://img.shields.io/github/license/vladimirshaleev/ipaddress" alt="GitHub License" class="inline"/></a> <a href="https://github.com/VladimirShaleev/ipaddress/actions/workflows/tests.yml"><img src="https://img.shields.io/github/actions/workflow/status/vladimirshaleev/ipaddress/tests.yml?branch=main&amp;logo=github&amp;label=tests" alt="GitHub Actions Workflow Status" class="inline"/></a></p>
-<p>A library for working and manipulating IPv4/IPv6 addresses and networks</p>
-<blockquote class="doxtable">
-<p>&zwj;THE LIBRARY IS CURRENTLY UNDER ACTIVE DEVELOPMENT AND NOT YET READY FOR USE! </p>
-</blockquote>
+<div class="toc"><h3>Table of Contents</h3>
+<ul><li class="level1"><a href="#autotoc_md1">Introduction</a><ul><li class="level2"><a href="#autotoc_md2">Compatibility</a></li>
+<li class="level2"><a href="#autotoc_md3">Installation</a></li>
+<li class="level2"><a href="#autotoc_md4">Quick Start</a></li>
+<li class="level2"><a href="#autotoc_md5">Contributing</a><ul><li class="level3"><a href="#autotoc_md6">Issues</a></li>
+<li class="level3"><a href="#autotoc_md7">Workflow</a></li>
+<li class="level3"><a href="#autotoc_md8">Licensing</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="textblock"><p><a class="anchor" id="md_README"></a></p>
+<p><a href="https://github.com/VladimirShaleev/ipaddress/releases"><img src="https://img.shields.io/github/v/release/vladimirshaleev/ipaddress?sort=semver&amp;display_name=tag" alt="GitHub Release" class="inline"/></a> <a href="https://github.com/VladimirShaleev/ipaddress/blob/main/LICENSE"><img src="https://img.shields.io/github/license/vladimirshaleev/ipaddress" alt="GitHub License" class="inline"/></a> <a href="https://github.com/VladimirShaleev/ipaddress/actions/workflows/tests.yml"><img src="https://img.shields.io/github/actions/workflow/status/vladimirshaleev/ipaddress/tests.yml?branch=main&amp;logo=github&amp;label=tests" alt="GitHub Actions Workflow Status" class="inline"/></a></p>
+<p>A library for working and manipulating IPv4/IPv6 addresses and networks in modern C++.</p>
+<h1><a class="anchor" id="autotoc_md1"></a>
+Introduction</h1>
 <p>This cross-platfrom <b>header-only</b> library is inspired by the <a href="https://docs.python.org/3.12/library/ipaddress.html">ipaddress API in Python</a>, from which it derives its name. It aims to be simpler to use due to its familiar interface. However, the C++ implementation takes a different approach: it uses <b>static polymorphism</b> through the strategy pattern instead of dynamic polymorphism to handle differences between IP versions (IPv4 and IPv6). This design choice eliminates the overhead of dynamic calls and virtual tables. For instance, an instance of the <b>ipv4_address</b> class will be represented by 4 bytes.</p>
 <p>The library leverages modern C++ features, ensuring that all IP address and network operations support constant expressions. For more details on constant expressions, refer to the relevant section <b>TODO</b>.</p>
 <div class="image">
 <img src="constexpr.png" alt=""/>
 <div class="caption">
 Errors are known at Compile Time</div></div>
-    <h1><a class="anchor" id="autotoc_md1"></a>
-Quick Start</h1>
+    <h2><a class="anchor" id="autotoc_md2"></a>
+Compatibility</h2>
+<p>The library has been tested on the following compilers:</p>
+<ul>
+<li>Clang 6.0.1 and newer;</li>
+<li>Apple Clang 13.0.0 and newer;</li>
+<li>GCC 7.5.0 and newer;</li>
+<li>MSVC 14.29 (Visual Studio 16.11) and newer</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md3"></a>
+Installation</h2>
+<h2><a class="anchor" id="autotoc_md4"></a>
+Quick Start</h2>
 <p>The library provides capabilities for creating, analyzing and managing IPv4 and IPv6 addresses and networks using classes such as <b>ipv4_address</b>, <b>ipv6_address</b>, <b>ip_address</b> (any IP version), <b>ipv4_network</b>, <b>ipv6_network</b> and <b>ip_network</b> (any IP version). It also offers error handling methods with or without exceptions if for some reason exceptions are not used or disabled in your project.</p>
-<p>To start using the library, simply include the header <a class="el" href="ipaddress_8hpp.html" title="The main include file for the ipaddress library.">ipaddress/ipaddress.hpp</a>, and you’re ready to begin your work!</p>
+<p>To start using the library, simply include the header <code><a class="el" href="ipaddress_8hpp.html" title="The main include file for the ipaddress library.">ipaddress/ipaddress.hpp</a></code>, and you’re ready to begin your work!</p>
 <p>Here is an example demonstrating some of the library's features (this example also demonstrates the new C++20 syntax for <b>Literal Classes as Non-type Template Parameters</b>, so a compiler with at least C++20 support is required to compile this example):</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
@@ -189,16 +213,7 @@ Quick Start</h1>
 <div class="line">}</div>
 <div class="ttc" id="aipaddress_8hpp_html"><div class="ttname"><a href="ipaddress_8hpp.html">ipaddress.hpp</a></div><div class="ttdoc">The main include file for the ipaddress library.</div></div>
 <div class="ttc" id="anamespaceipaddress_html"><div class="ttname"><a href="namespaceipaddress.html">ipaddress</a></div><div class="ttdoc">Namespace dedicated to IP addresses and networks operations.</div><div class="ttdef"><b>Definition</b> base-v4.hpp:18</div></div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md2"></a>
-Compatibility</h1>
-<p>The library has been tested on the following compilers:</p>
-<ul>
-<li>Clang 6.0.1 and newer;</li>
-<li>Apple Clang 13.0.0 and newer;</li>
-<li>GCC 7.5.0 and newer;</li>
-<li>MSVC 14.29 (Visual Studio 16.11) and newer</li>
-</ul>
-<blockquote class="doxtable">
+</div><!-- fragment --><blockquote class="doxtable">
 <p>&zwj;[!note] Note that to support the <b>Literal Classes as Non-type Template Parameters</b> syntax, a compiler with support for <b>C++20</b> or higher is required </p>
 </blockquote>
 <blockquote class="doxtable">
@@ -209,6 +224,15 @@ Compatibility</h1>
 <div class="line"><span class="comment">// C++11 doesn&#39;t support relaxed constexpr, so they can&#39;t be used</span></div>
 <div class="line"><span class="keyword">auto</span> ip = ipv6_address::parse(<span class="stringliteral">&quot;fec0::1ff:fe23:4567:890a%eth2&quot;</span>);</div>
 </div><!-- fragment --> </blockquote>
+<h2><a class="anchor" id="autotoc_md5"></a>
+Contributing</h2>
+<h3><a class="anchor" id="autotoc_md6"></a>
+Issues</h3>
+<h3><a class="anchor" id="autotoc_md7"></a>
+Workflow</h3>
+<h3><a class="anchor" id="autotoc_md8"></a>
+Licensing</h3>
+<p>ipaddress is licensed under the <b>MIT License</b>. See <a href="https://github.com/VladimirShaleev/ipaddress/blob/main/LICENSE">LICENSE</a> for the full license text. </p>
 </div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"/>
 </div><!-- contents -->

@@ -1,10 +1,9 @@
 var searchData=
 [
-  ['netmask_0',['netmask',['../classipaddress_1_1ip__network.html#a359d9dd848ad160c0cda59cd1eebb416',1,'ipaddress::ip_network::netmask()'],['../classipaddress_1_1ip__network__base.html#a7814fc154e2054cc8caea2f97996bc9a',1,'ipaddress::ip_network_base::netmask()']]],
-  ['netmask_5fpattern_5fmixes_5fzeroes_5fand_5fones_1',['NETMASK_PATTERN_MIXES_ZEROES_AND_ONES',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689da40acce788b43717a3a283f7fdcc3fe6d',1,'ipaddress']]],
-  ['network_5faddress_2',['network_address',['../classipaddress_1_1ip__network.html#a5427d434a57be5e6ec7b3f46fff02851',1,'ipaddress::ip_network::network_address()'],['../classipaddress_1_1ip__network__base.html#aedf7228c6640584542c7f113cda4c73b',1,'ipaddress::ip_network_base::network_address()']]],
-  ['new_5fprefix_5fmust_5fbe_5flonger_3',['NEW_PREFIX_MUST_BE_LONGER',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689dadbc879e336113690f7251a9cb59b8519',1,'ipaddress']]],
-  ['new_5fprefix_5fmust_5fbe_5fshorter_4',['NEW_PREFIX_MUST_BE_SHORTER',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689da200869afe81a28a43dc0e1013b1505ba',1,'ipaddress']]],
-  ['no_5ferror_5',['NO_ERROR',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689dad306b6fdee05fe87455110ddf6501e6c',1,'ipaddress']]],
-  ['not_5fcontained_5fnetwork_6',['NOT_CONTAINED_NETWORK',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689da55989913f931071ab5b76da3b3d3bb69',1,'ipaddress']]]
+  ['leading_5f0_5fare_5fnot_5fpermitted_0',['LEADING_0_ARE_NOT_PERMITTED',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689da46e6c7ae8338fb954dffffe2cf6de430',1,'ipaddress']]],
+  ['leading_5fcolon_5fonly_5fpermitted_5fas_5fpart_5fof_5fdouble_5fcolon_1',['LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689da38f075bd82c0db96e8a8e1b51f41c5cf',1,'ipaddress']]],
+  ['least_5f3_5fparts_2',['LEAST_3_PARTS',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689da6b20b278f4a47ea1933c41afcc6315f0',1,'ipaddress']]],
+  ['licensing_3',['Licensing',['../index.html#autotoc_md8',1,'']]],
+  ['logic_5ferror_4',['logic_error',['../classipaddress_1_1logic__error.html',1,'logic_error'],['../classipaddress_1_1logic__error.html#af9cb321a672a2c741e1442ec7f0fa131',1,'ipaddress::logic_error::logic_error(error_code code, const FirstArg &amp;arg, const Args &amp;... args)'],['../classipaddress_1_1logic__error.html#a88d4b462fdf573f6fdc4c2c48b371607',1,'ipaddress::logic_error::logic_error(error_code code, const std::string &amp;message)'],['../classipaddress_1_1logic__error.html#ac7c4119ba6540fc13e5b85da29bfaaad',1,'ipaddress::logic_error::logic_error(error_code code, const char *message)']]],
+  ['lower_5',['lower',['../classipaddress_1_1uint128__t.html#a14c0f16a519119e8e89fd6000888cdc2',1,'ipaddress::uint128_t']]]
 ];
