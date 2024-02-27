@@ -9,7 +9,7 @@ A library for working and manipulating IPv4/IPv6 addresses and networks
 
 > THE LIBRARY IS CURRENTLY UNDER ACTIVE DEVELOPMENT AND NOT YET READY FOR USE!
 
-This **header-only** library is inspired by the [ipaddress API in Python](https://docs.python.org/3.12/library/ipaddress.html), 
+This cross-platfrom **header-only** library is inspired by the [ipaddress API in Python](https://docs.python.org/3.12/library/ipaddress.html), 
 from which it derives its name. It aims to be simpler to use due to its familiar interface. However, the C++ implementation takes 
 a different approach: it uses **static polymorphism** through the strategy pattern instead of dynamic polymorphism to handle 
 differences between IP versions (IPv4 and IPv6). This design choice eliminates the overhead of dynamic calls and virtual tables. 
@@ -89,3 +89,27 @@ int main() {
     return 0;
 }
 ```
+
+## Compatibility
+
+The library has been tested on the following compilers:
+
+* Clang 6.0.1 and newer;
+* Apple Clang 13.0.0 and newer;
+* GCC 7.5.0 and newer;
+* MSVC 14.29 (Visual Studio 16.11) and newer
+
+> [!note]
+> Note that to support the **Literal Classes as Non-type Template Parameters** syntax, a compiler 
+> with support for **C++20** or higher is required
+
+> [!note]
+> Also note that the library uses relaxed constexpr for its operations, so they are not available in **C++11**
+>
+> ```cpp
+> // C++14 and higher support constexpr
+> constexpr auto ip = ipv6_address::parse("fec0::1ff:fe23:4567:890a%eth2");
+> 
+> // C++11 doesn't support relaxed constexpr, so they can't be used
+> auto ip = ipv6_address::parse("fec0::1ff:fe23:4567:890a%eth2");
+> ```
