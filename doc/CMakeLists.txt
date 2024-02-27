@@ -11,18 +11,21 @@ else()
   )
   FetchContent_MakeAvailable(doxygen-awesome-css)
 
-  # Copy README
+  # Generate Get Started from README
   file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/getstarted.cmake"
     [=[
     file(READ "${SOURCE}" TEXT)
+    file(READ "${LICENSE}" LICENSE)
     string(REPLACE "# ipaddress" "@mainpage Get Started\n\n@tableofcontents" TEXT "${TEXT}")
     string(REPLACE "## Documentation" "" TEXT "${TEXT}")
     string(REPLACE "For more details on setup, usage and code examples can be found in the full [documentation](https://vladimirshaleev.github.io/ipaddress/)." "" TEXT "${TEXT}")
+    string(CONCAT TEXT "${TEXT}" "\n\n## Licensing\n\n```\n${LICENSE}\n```")
     file(WRITE "${TARGET}" "${TEXT}")
     ]=])
   add_custom_command(
       OUTPUT getstarted
       COMMAND "${CMAKE_COMMAND}"
+          "-DLICENSE=${CMAKE_CURRENT_LIST_DIR}/../LICENSE"
           "-DSOURCE=${CMAKE_CURRENT_LIST_DIR}/../README.md"
           "-DTARGET=\"${CMAKE_CURRENT_BINARY_DIR}/get-started.md\""
           -P "${CMAKE_CURRENT_BINARY_DIR}/getstarted.cmake"
