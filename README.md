@@ -5,9 +5,9 @@
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/vladimirshaleev/ipaddress/tests.yml?branch=main&logo=github&label=tests)
 ](https://github.com/VladimirShaleev/ipaddress/actions/workflows/tests.yml)
 
-A library for working and manipulating IPv4/IPv6 addresses and networks
+A library for working and manipulating IPv4/IPv6 addresses and networks in modern C++.
 
-> THE LIBRARY IS CURRENTLY UNDER ACTIVE DEVELOPMENT AND NOT YET READY FOR USE!
+## Introduction
 
 This cross-platfrom **header-only** library is inspired by the [ipaddress API in Python](https://docs.python.org/3.12/library/ipaddress.html), 
 from which it derives its name. It aims to be simpler to use due to its familiar interface. However, the C++ implementation takes 
@@ -20,6 +20,18 @@ For more details on constant expressions, refer to the relevant section **TODO**
 
 ![Constexpr](doc/img/constexpr.png "Errors are known at Compile Time")
 
+## Compatibility
+
+The library has been tested on the following compilers:
+
+* Clang 6.0.1 and newer;
+* Apple Clang 13.0.0 and newer;
+* GCC 7.5.0 and newer;
+* MSVC 14.29 (Visual Studio 16.11) and newer
+
+## Installation
+
+
 
 ## Quick Start
 
@@ -28,7 +40,7 @@ as **ipv4_address**, **ipv6_address**, **ip_address** (any IP version), **ipv4_n
 (any IP version). It also offers error handling methods with or without exceptions if for some reason exceptions are not used 
 or disabled in your project.
 
-To start using the library, simply include the header ipaddress/ipaddress.hpp, and you’re ready to begin your work!
+To start using the library, simply include the header `ipaddress/ipaddress.hpp`, and you’re ready to begin your work!
 
 Here is an example demonstrating some of the library's features (this example also demonstrates the new C++20 syntax for 
 **Literal Classes as Non-type Template Parameters**, so a compiler with at least C++20 support is required to compile this example):
@@ -90,15 +102,6 @@ int main() {
 }
 ```
 
-## Compatibility
-
-The library has been tested on the following compilers:
-
-* Clang 6.0.1 and newer;
-* Apple Clang 13.0.0 and newer;
-* GCC 7.5.0 and newer;
-* MSVC 14.29 (Visual Studio 16.11) and newer
-
 > [!note]
 > Note that to support the **Literal Classes as Non-type Template Parameters** syntax, a compiler 
 > with support for **C++20** or higher is required
@@ -113,3 +116,13 @@ The library has been tested on the following compilers:
 > // C++11 doesn't support relaxed constexpr, so they can't be used
 > auto ip = ipv6_address::parse("fec0::1ff:fe23:4567:890a%eth2");
 > ```
+
+## Contributing
+
+### Issues
+
+### Workflow
+
+### Licensing
+
+ipaddress is licensed under the **MIT License**. See [LICENSE](https://github.com/VladimirShaleev/ipaddress/blob/main/LICENSE) for the full license text.
