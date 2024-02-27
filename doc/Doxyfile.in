@@ -950,7 +950,10 @@ WARN_LOGFILE           =
 # Note: If this tag is empty the current directory is searched.
 
 INPUT                  = "@CMAKE_CURRENT_BINARY_DIR@/get-started.md" \
-                         ./doc/installation.md \
+                         ./doc/tutorial.md \
+                         ./doc/network-operations.md \
+                         ./doc/error-handling.md \
+                         ./doc/build-guide.md \
                          ./include/ipaddress
 
 # This tag can be used to specify the character encoding of the source files
@@ -1411,7 +1414,8 @@ HTML_EXTRA_STYLESHEET  = @IPADDRESS_DOC_CSS@/doxygen-awesome.css \
                          @IPADDRESS_DOC_CSS@/doxygen-custom/custom.css \
                          @IPADDRESS_DOC_CSS@/doxygen-awesome-sidebar-only.css \
                          @IPADDRESS_DOC_CSS@/doxygen-awesome-sidebar-only-darkmode-toggle.css \
-                         @IPADDRESS_DOC_CSS@/doxygen-custom/custom-alternative.css
+                         @IPADDRESS_DOC_CSS@/doxygen-custom/custom-alternative.css \
+                         @IPADDRESS_DOC_CARDS_CSS@/doxygen/cards.css
 
 # The HTML_EXTRA_FILES tag can be used to specify one or more extra images or
 # other source files which should be copied to the HTML output directory. Note
