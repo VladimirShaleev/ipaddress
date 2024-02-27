@@ -6,7 +6,18 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.10.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ipaddress: ipaddress</title>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="ipaddress" />
+<meta property="og:image" content="https://vladimirshaleev.github.io/ipaddress/constexpr.png" />
+<meta property="og:description" content="A library for working and manipulating IPv4/IPv6 addresses and networks in modern C++." />
+<meta property="og:url" content="https://vladimirshaleev.github.io/ipaddress/" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="https://vladimirshaleev.github.io/ipaddress/constexpr.png" />
+<meta name="twitter:title" content="ipaddress" />
+<meta name="twitter:description" content="A library for working and manipulating IPv4/IPv6 addresses and networks in modern C++." />
+<!-- END twitter metadata -->
+<title>ipaddress: Get Started</title>
 <link rel="icon" href="logo.svg" type="image/svg+xml" />
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
@@ -114,34 +125,26 @@ $(function(){initNavTree('index.html',''); initResizable(); });
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">ipaddress </div></div>
+  <div class="headertitle"><div class="title">Get Started </div></div>
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><li class="level1"><a href="#autotoc_md1">Introduction</a><ul><li class="level2"><a href="#autotoc_md2">Compatibility</a></li>
-<li class="level2"><a href="#autotoc_md3">Installation</a></li>
-<li class="level2"><a href="#autotoc_md4">Quick Start</a></li>
-<li class="level2"><a href="#autotoc_md5">Contributing</a><ul><li class="level3"><a href="#autotoc_md6">Issues</a></li>
-<li class="level3"><a href="#autotoc_md7">Workflow</a></li>
-<li class="level3"><a href="#autotoc_md8">Licensing</a></li>
+<ul><ul><li class="level2"><a href="#autotoc_md0">Introduction</a></li>
+<li class="level2"><a href="#autotoc_md1">Compatibility</a></li>
+<li class="level2"><a href="#autotoc_md2">Licensing</a></li>
 </ul>
-</li>
-</ul>
-</li>
 </ul>
 </div>
-<div class="textblock"><p><a class="anchor" id="md_README"></a></p>
-<p><a href="https://github.com/VladimirShaleev/ipaddress/releases"><img src="https://img.shields.io/github/v/release/vladimirshaleev/ipaddress?sort=semver&amp;display_name=tag" alt="GitHub Release" class="inline"/></a> <a href="https://github.com/VladimirShaleev/ipaddress/blob/main/LICENSE"><img src="https://img.shields.io/github/license/vladimirshaleev/ipaddress" alt="GitHub License" class="inline"/></a> <a href="https://github.com/VladimirShaleev/ipaddress/actions/workflows/tests.yml"><img src="https://img.shields.io/github/actions/workflow/status/vladimirshaleev/ipaddress/tests.yml?branch=main&amp;logo=github&amp;label=tests" alt="GitHub Actions Workflow Status" class="inline"/></a></p>
-<p>A library for working and manipulating IPv4/IPv6 addresses and networks in modern C++.</p>
-<h1><a class="anchor" id="autotoc_md1"></a>
-Introduction</h1>
+<div class="textblock"><p><a href="https://github.com/VladimirShaleev/ipaddress/releases"><img src="https://img.shields.io/github/v/release/vladimirshaleev/ipaddress?sort=semver&amp;display_name=tag" alt="GitHub Release" class="inline"/></a> <a href="https://github.com/VladimirShaleev/ipaddress/blob/main/LICENSE"><img src="https://img.shields.io/github/license/vladimirshaleev/ipaddress" alt="GitHub License" class="inline"/></a> <a href="https://github.com/VladimirShaleev/ipaddress/actions/workflows/tests.yml"><img src="https://img.shields.io/github/actions/workflow/status/vladimirshaleev/ipaddress/tests.yml?branch=main&amp;logo=github&amp;label=tests" alt="GitHub Actions Workflow Status" class="inline"/></a></p>
+<h2><a class="anchor" id="autotoc_md0"></a>
+Introduction</h2>
 <p>This cross-platfrom <b>header-only</b> library is inspired by the <a href="https://docs.python.org/3.12/library/ipaddress.html">ipaddress API in Python</a>, from which it derives its name. It aims to be simpler to use due to its familiar interface. However, the C++ implementation takes a different approach: it uses <b>static polymorphism</b> through the strategy pattern instead of dynamic polymorphism to handle differences between IP versions (IPv4 and IPv6). This design choice eliminates the overhead of dynamic calls and virtual tables. For instance, an instance of the <b>ipv4_address</b> class will be represented by 4 bytes.</p>
 <p>The library leverages modern C++ features, ensuring that all IP address and network operations support constant expressions. For more details on constant expressions, refer to the relevant section <b>TODO</b>.</p>
 <div class="image">
 <img src="constexpr.png" alt=""/>
 <div class="caption">
 Errors are known at Compile Time</div></div>
-    <h2><a class="anchor" id="autotoc_md2"></a>
+    <h2><a class="anchor" id="autotoc_md1"></a>
 Compatibility</h2>
 <p>The library has been tested on the following compilers:</p>
 <ul>
@@ -150,90 +153,30 @@ Compatibility</h2>
 <li>GCC 7.5.0 and newer;</li>
 <li>MSVC 14.29 (Visual Studio 16.11) and newer</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md3"></a>
-Installation</h2>
-<h2><a class="anchor" id="autotoc_md4"></a>
-Quick Start</h2>
-<p>The library provides capabilities for creating, analyzing and managing IPv4 and IPv6 addresses and networks using classes such as <b>ipv4_address</b>, <b>ipv6_address</b>, <b>ip_address</b> (any IP version), <b>ipv4_network</b>, <b>ipv6_network</b> and <b>ip_network</b> (any IP version). It also offers error handling methods with or without exceptions if for some reason exceptions are not used or disabled in your project.</p>
-<p>To start using the library, simply include the header <code><a class="el" href="ipaddress_8hpp.html" title="The main include file for the ipaddress library.">ipaddress/ipaddress.hpp</a></code>, and you’re ready to begin your work!</p>
-<p>Here is an example demonstrating some of the library's features (this example also demonstrates the new C++20 syntax for <b>Literal Classes as Non-type Template Parameters</b>, so a compiler with at least C++20 support is required to compile this example):</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<h2><a class="anchor" id="autotoc_md2"></a>
+Licensing</h2>
+<div class="fragment"><div class="line">MIT License</div>
 <div class="line"> </div>
-<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="ipaddress_8hpp.html">ipaddress/ipaddress.hpp</a>&gt;</span></div>
+<div class="line">Copyright (c) 2024 Vladimir Shaleev</div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">using namespace </span><a class="code hl_namespace" href="namespaceipaddress.html">ipaddress</a>;</div>
+<div class="line">Permission is hereby granted, free of charge, to any person obtaining a copy</div>
+<div class="line">of this software and associated documentation files (the &quot;Software&quot;), to deal</div>
+<div class="line">in the Software without restriction, including without limitation the rights</div>
+<div class="line">to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</div>
+<div class="line">copies of the Software, and to permit persons to whom the Software is</div>
+<div class="line">furnished to do so, subject to the following conditions:</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> parse_ip_sample() {</div>
-<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip = ipv6_address::parse(<span class="stringliteral">&quot;fec0::1ff:fe23:4567:890a%eth2&quot;</span>);</div>
-<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> is_site_local = ip.is_site_local();</div>
+<div class="line">The above copyright notice and this permission notice shall be included in all</div>
+<div class="line">copies or substantial portions of the Software.</div>
 <div class="line"> </div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;ip &quot;</span> &lt;&lt; ip &lt;&lt; <span class="stringliteral">&quot; is local: &quot;</span> &lt;&lt; std::boolalpha &lt;&lt; is_site_local &lt;&lt; std::endl;</div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;DNS PTR &quot;</span> &lt;&lt; ip.reverse_pointer() &lt;&lt; std::endl &lt;&lt; std::endl;</div>
-<div class="line">    </div>
-<div class="line">    <span class="comment">// ipv4_address parser examples</span></div>
-<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> sample1 = ipv4_address::parse(<span class="stringliteral">&quot;127.0.0.1&quot;</span>);</div>
-<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> sample2 = ipv4_address::parse&lt;<span class="stringliteral">&quot;127.0.0.1&quot;</span>&gt;();</div>
-<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> sample3 = <span class="stringliteral">&quot;127.0.0.1&quot;</span>_ipv4;</div>
-<div class="line"> </div>
-<div class="line">    <span class="comment">// ipv6_address parser examples</span></div>
-<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> sample4 = ipv6_address::parse(<span class="stringliteral">&quot;::&quot;</span>);</div>
-<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> sample5 = ipv6_address::parse&lt;<span class="stringliteral">&quot;::&quot;</span>&gt;();</div>
-<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> sample6 = <span class="stringliteral">&quot;::&quot;</span>_ipv6;</div>
-<div class="line"> </div>
-<div class="line">    <span class="comment">// ip_address parser examples</span></div>
-<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> sample7 = ip_address::parse(<span class="stringliteral">&quot;127.0.0.1&quot;</span>);</div>
-<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> sample8 = ip_address::parse&lt;<span class="stringliteral">&quot;::&quot;</span>&gt;();</div>
-<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> sample9 = <span class="stringliteral">&quot;127.0.0.1&quot;</span>_ip;</div>
-<div class="line">}</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> terade_sample() {</div>
-<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> teredo_ip = <span class="stringliteral">&quot;2001:0000:4136:e378:8000:63bf:3fff:fdd2&quot;</span>_ipv6;</div>
-<div class="line">    <span class="keyword">auto</span> [server, client] = teredo_ip.teredo().value();</div>
-<div class="line"> </div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;server: &quot;</span> &lt;&lt; server &lt;&lt; <span class="stringliteral">&quot; and client: &quot;</span> &lt;&lt; client &lt;&lt; <span class="stringliteral">&quot; for &quot;</span> &lt;&lt; teredo_ip &lt;&lt; std::endl &lt;&lt; std::endl;</div>
-<div class="line">}</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> subnets_sample() {</div>
-<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> net = ipv4_network::parse(<span class="stringliteral">&quot;192.0.2.0/24&quot;</span>);</div>
-<div class="line"> </div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;subnets for &quot;</span> &lt;&lt; net &lt;&lt; <span class="charliteral">&#39;:&#39;</span> &lt;&lt; std::endl;</div>
-<div class="line">    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> subnet : net.subnets(2)) {</div>
-<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;  &quot;</span> &lt;&lt; subnet &lt;&lt; std::endl;</div>
-<div class="line">    }</div>
-<div class="line"> </div>
-<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> last_subnet = net.subnets(2).back();</div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;last subnet &quot;</span> &lt;&lt; last_subnet &lt;&lt; std::endl;</div>
-<div class="line">}</div>
-<div class="line"> </div>
-<div class="line"><span class="keywordtype">int</span> main() {</div>
-<div class="line">    parse_ip_sample();</div>
-<div class="line">    terade_sample();</div>
-<div class="line">    subnets_sample();</div>
-<div class="line">    <span class="keywordflow">return</span> 0;</div>
-<div class="line">}</div>
-<div class="ttc" id="aipaddress_8hpp_html"><div class="ttname"><a href="ipaddress_8hpp.html">ipaddress.hpp</a></div><div class="ttdoc">The main include file for the ipaddress library.</div></div>
-<div class="ttc" id="anamespaceipaddress_html"><div class="ttname"><a href="namespaceipaddress.html">ipaddress</a></div><div class="ttdoc">Namespace dedicated to IP addresses and networks operations.</div><div class="ttdef"><b>Definition</b> base-v4.hpp:18</div></div>
-</div><!-- fragment --><blockquote class="doxtable">
-<p>&zwj;[!note] Note that to support the <b>Literal Classes as Non-type Template Parameters</b> syntax, a compiler with support for <b>C++20</b> or higher is required </p>
-</blockquote>
-<blockquote class="doxtable">
-<p>&zwj;[!note] Also note that the library uses relaxed constexpr for its operations, so they are not available in <b>C++11</b></p>
-<div class="fragment"><div class="line"><span class="comment">// C++14 and higher support constexpr</span></div>
-<div class="line"><span class="keyword">constexpr</span> <span class="keyword">auto</span> ip = ipv6_address::parse(<span class="stringliteral">&quot;fec0::1ff:fe23:4567:890a%eth2&quot;</span>);</div>
-<div class="line"> </div>
-<div class="line"><span class="comment">// C++11 doesn&#39;t support relaxed constexpr, so they can&#39;t be used</span></div>
-<div class="line"><span class="keyword">auto</span> ip = ipv6_address::parse(<span class="stringliteral">&quot;fec0::1ff:fe23:4567:890a%eth2&quot;</span>);</div>
-</div><!-- fragment --> </blockquote>
-<h2><a class="anchor" id="autotoc_md5"></a>
-Contributing</h2>
-<h3><a class="anchor" id="autotoc_md6"></a>
-Issues</h3>
-<h3><a class="anchor" id="autotoc_md7"></a>
-Workflow</h3>
-<h3><a class="anchor" id="autotoc_md8"></a>
-Licensing</h3>
-<p>ipaddress is licensed under the <b>MIT License</b>. See <a href="https://github.com/VladimirShaleev/ipaddress/blob/main/LICENSE">LICENSE</a> for the full license text. </p>
-</div></div><!-- PageDoc -->
+<div class="line">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</div>
+<div class="line">IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</div>
+<div class="line">FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</div>
+<div class="line">AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</div>
+<div class="line">LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</div>
+<div class="line">OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</div>
+<div class="line">SOFTWARE.</div>
+</div><!-- fragment --> </div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"/>
 </div><!-- contents -->
 </div><!-- doc-content -->
