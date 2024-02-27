@@ -1,7 +1,5 @@
 # ipaddress
 
-[TOC]
-
 [![GitHub Release](https://img.shields.io/github/v/release/vladimirshaleev/ipaddress?sort=semver&display_name=tag)](https://github.com/VladimirShaleev/ipaddress/releases)
 [![GitHub License](https://img.shields.io/github/license/vladimirshaleev/ipaddress)](https://github.com/VladimirShaleev/ipaddress/blob/main/LICENSE)
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/vladimirshaleev/ipaddress/tests.yml?branch=main&logo=github&label=tests)
@@ -35,7 +33,7 @@ The library has been tested on the following compilers:
 
 
 
-### Quick Start
+### Small code example
 
 The library provides capabilities for creating, analyzing and managing IPv4 and IPv6 addresses and networks using classes such 
 as **ipv4_address**, **ipv6_address**, **ip_address** (any IP version), **ipv4_network**, **ipv6_network** and **ip_network** 
@@ -125,6 +123,6 @@ int main() {
 
 #### Workflow
 
-#### Licensing
+### Documentation
 
-ipaddress is licensed under the **MIT License**. See [LICENSE](https://github.com/VladimirShaleev/ipaddress/blob/main/LICENSE) for the full license text.
+For details on installation, configuration and use, please refer to the full [documentation](https://vladimirshaleev.github.io/ipaddress/).
