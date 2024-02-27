@@ -7,6 +7,9 @@
 
 A library for working and manipulating IPv4/IPv6 addresses and networks in modern C++.
 
+> [!IMPORTANT]
+> THE LIBRARY IS CURRENTLY UNDER ACTIVE DEVELOPMENT AND NOT YET READY FOR USE!
+
 ## Introduction
 
 This cross-platfrom **header-only** library is inspired by the [ipaddress API in Python](https://docs.python.org/3.12/library/ipaddress.html), 
@@ -19,10 +22,6 @@ The library leverages modern C++ features, ensuring that all IP address and netw
 
 ![Constexpr](doc/img/constexpr.png "Errors are known at Compile Time")
 
-## Documentation
-
-For details on installation, configuration and use, please refer to the full [documentation](https://vladimirshaleev.github.io/ipaddress/).
-
 ## Compatibility
 
 The library has been tested on the following compilers:
@@ -34,7 +33,71 @@ The library has been tested on the following compilers:
 
 ## Installation
 
+You can install in one of the following ways
 
+### Use package managers
+
+> [!IMPORTANT]
+> Packages have not been published yet
+> 
+> #### Vcpk
+> 
+> #### Conan
+> 
+> #### Snapcraft
+
+Then, if you use CMake for build, you need to link the target:
+
+```cmake
+cmake_minimum_required(VERSION 3.8.0)
+
+project(my-project LANGUAGES CXX)
+
+find_package(ipaddress CONFIG REQUIRED)
+
+add_executable(my_project main.cpp)
+target_link_libraries(my_project ipaddress::ipaddress) # add the library to your target
+```
+
+### Use as a Submodule with CMake
+
+Go to your project directory and add a submodule:
+
+```bash
+cd my_project
+git submodule add https://github.com/VladimirShaleev/ipaddress.git third-party/ipaddress/
+```
+then in the CMake project add it to the directory:
+
+```cmake
+cmake_minimum_required(VERSION 3.8.0)
+
+project(my_project LANGUAGES CXX)
+
+add_subdirectory(third-party/ipaddress)
+
+add_executable(my_project main.cpp)
+target_link_libraries(my_project ipaddress::ipaddress) # add the library to your target
+```
+
+### Use CMake FetchContent
+
+```cmake
+cmake_minimum_required(VERSION 3.8.0)
+
+project(my_project LANGUAGES CXX)
+
+include(FetchContent)
+FetchContent_Declare(
+  ipaddress
+  GIT_REPOSITORY https://github.com/VladimirShaleev/ipaddress
+  GIT_TAG v1.0.0
+)
+FetchContent_MakeAvailable(ipaddress)
+
+add_executable(my_project main.cpp)
+target_link_libraries(my_project ipaddress::ipaddress) # add the library to your target
+```
 
 ## Quick Start
 
@@ -61,21 +124,6 @@ void parse_ip_sample() {
 
     std::cout << "ip " << ip << " is local: " << std::boolalpha << is_site_local << std::endl;
     std::cout << "DNS PTR " << ip.reverse_pointer() << std::endl << std::endl;
-    
-    // ipv4_address parser examples
-    constexpr auto sample1 = ipv4_address::parse("127.0.0.1");
-    constexpr auto sample2 = ipv4_address::parse<"127.0.0.1">();
-    constexpr auto sample3 = "127.0.0.1"_ipv4;
-
-    // ipv6_address parser examples
-    constexpr auto sample4 = ipv6_address::parse("::");
-    constexpr auto sample5 = ipv6_address::parse<"::">();
-    constexpr auto sample6 = "::"_ipv6;
-
-    // ip_address parser examples
-    constexpr auto sample7 = ip_address::parse("127.0.0.1");
-    constexpr auto sample8 = ip_address::parse<"::">();
-    constexpr auto sample9 = "127.0.0.1"_ip;
 }
 
 void terade_sample() {
@@ -89,7 +137,7 @@ void subnets_sample() {
     constexpr auto net = ipv4_network::parse("192.0.2.0/24");
 
     std::cout << "subnets for " << net << ':' << std::endl;
-    for (const auto subnet : net.subnets(2)) {
+    for (const auto& subnet : net.subnets(2)) {
         std::cout << "  " << subnet << std::endl;
     }
 
@@ -104,6 +152,10 @@ int main() {
     return 0;
 }
 ```
+
+## Documentation
+
+For more details on setup, usage and code examples can be found in the full [documentation](https://vladimirshaleev.github.io/ipaddress/).
 
 ## Contributing
 
