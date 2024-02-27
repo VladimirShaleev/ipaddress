@@ -49,6 +49,7 @@
 <link href="doxygen-awesome-sidebar-only.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen-awesome-sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
 <link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+<link href="cards.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <a href="https://github.com/VladimirShaleev/ipaddress" class="github-corner" title="View source on GitHub" target="_blank" rel="noopener noreferrer">
@@ -131,15 +132,33 @@ $(function(){initNavTree('index.html',''); initResizable(); });
 <div class="toc"><h3>Table of Contents</h3>
 <ul><ul><li class="level2"><a href="#autotoc_md0">Introduction</a></li>
 <li class="level2"><a href="#autotoc_md1">Compatibility</a></li>
-<li class="level2"><a href="#autotoc_md2">Licensing</a></li>
+<li class="level2"><a href="#autotoc_md2">Installation</a><ul><li class="level3"><a href="#autotoc_md3">Use package managers</a><ul><li class="level4"><a href="#autotoc_md4">Vcpk</a></li>
+<li class="level4"><a href="#autotoc_md5">Conan</a></li>
+<li class="level4"><a href="#autotoc_md6">Snapcraft</a></li>
+</ul>
+</li>
+<li class="level3"><a href="#autotoc_md7">Use as a Submodule with CMake</a></li>
+<li class="level3"><a href="#autotoc_md8">Use CMake FetchContent</a></li>
+</ul>
+</li>
+<li class="level2"><a href="#autotoc_md9">Quick Start</a></li>
+<li class="level2"><a href="#autotoc_md10">Contributing</a><ul><li class="level3"><a href="#autotoc_md11">Issues</a></li>
+<li class="level3"><a href="#autotoc_md12">Pull Requests</a></li>
+</ul>
+</li>
+<li class="level2"><a href="#autotoc_md13">Licensing</a></li>
 </ul>
 </ul>
 </div>
 <div class="textblock"><p><a href="https://github.com/VladimirShaleev/ipaddress/releases"><img src="https://img.shields.io/github/v/release/vladimirshaleev/ipaddress?sort=semver&amp;display_name=tag" alt="GitHub Release" class="inline"/></a> <a href="https://github.com/VladimirShaleev/ipaddress/blob/main/LICENSE"><img src="https://img.shields.io/github/license/vladimirshaleev/ipaddress" alt="GitHub License" class="inline"/></a> <a href="https://github.com/VladimirShaleev/ipaddress/actions/workflows/tests.yml"><img src="https://img.shields.io/github/actions/workflow/status/vladimirshaleev/ipaddress/tests.yml?branch=main&amp;logo=github&amp;label=tests" alt="GitHub Actions Workflow Status" class="inline"/></a></p>
+<p>A library for working and manipulating IPv4/IPv6 addresses and networks in modern C++.</p>
+<blockquote class="doxtable">
+<p>&zwj;[!IMPORTANT] THE LIBRARY IS CURRENTLY UNDER ACTIVE DEVELOPMENT AND NOT YET READY FOR USE! </p>
+</blockquote>
 <h2><a class="anchor" id="autotoc_md0"></a>
 Introduction</h2>
 <p>This cross-platfrom <b>header-only</b> library is inspired by the <a href="https://docs.python.org/3.12/library/ipaddress.html">ipaddress API in Python</a>, from which it derives its name. It aims to be simpler to use due to its familiar interface. However, the C++ implementation takes a different approach: it uses <b>static polymorphism</b> through the strategy pattern instead of dynamic polymorphism to handle differences between IP versions (IPv4 and IPv6). This design choice eliminates the overhead of dynamic calls and virtual tables. For instance, an instance of the <b>ipv4_address</b> class will be represented by 4 bytes.</p>
-<p>The library leverages modern C++ features, ensuring that all IP address and network operations support constant expressions. For more details on constant expressions, refer to the relevant section <b>TODO</b>.</p>
+<p>The library leverages modern C++ features, ensuring that all IP address and network operations support constant expressions.</p>
 <div class="image">
 <img src="constexpr.png" alt=""/>
 <div class="caption">
@@ -154,6 +173,126 @@ Compatibility</h2>
 <li>MSVC 14.29 (Visual Studio 16.11) and newer</li>
 </ul>
 <h2><a class="anchor" id="autotoc_md2"></a>
+Installation</h2>
+<p>You can install in one of the following ways</p>
+<h3><a class="anchor" id="autotoc_md3"></a>
+Use package managers</h3>
+<blockquote class="doxtable">
+<p>&zwj;[!IMPORTANT] Packages have not been published yet</p>
+<p></p>
+</blockquote>
+<h4><a class="anchor" id="autotoc_md4"></a>
+Vcpk</h4>
+<h4><a class="anchor" id="autotoc_md5"></a>
+Conan</h4>
+<h4><a class="anchor" id="autotoc_md6"></a>
+Snapcraft</h4>
+<p>Then, if you use CMake for build, you need to link the target:</p>
+<div class="fragment"><div class="line">cmake_minimum_required(VERSION 3.8.0)</div>
+<div class="line"> </div>
+<div class="line">project(my-project LANGUAGES CXX)</div>
+<div class="line"> </div>
+<div class="line">find_package(ipaddress CONFIG REQUIRED)</div>
+<div class="line"> </div>
+<div class="line">add_executable(my_project main.cpp)</div>
+<div class="line">target_link_libraries(my_project ipaddress::ipaddress) # add the library to your target</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md7"></a>
+Use as a Submodule with CMake</h3>
+<p>Go to your project directory and add a submodule:</p>
+<div class="fragment"><div class="line">cd my_project</div>
+<div class="line">git submodule add https://github.com/VladimirShaleev/ipaddress.git third-party/ipaddress/</div>
+</div><!-- fragment --><p> then in the CMake project add it to the directory:</p>
+<div class="fragment"><div class="line">cmake_minimum_required(VERSION 3.8.0)</div>
+<div class="line"> </div>
+<div class="line">project(my_project LANGUAGES CXX)</div>
+<div class="line"> </div>
+<div class="line">add_subdirectory(third-party/ipaddress)</div>
+<div class="line"> </div>
+<div class="line">add_executable(my_project main.cpp)</div>
+<div class="line">target_link_libraries(my_project ipaddress::ipaddress) # add the library to your target</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md8"></a>
+Use CMake FetchContent</h3>
+<div class="fragment"><div class="line">cmake_minimum_required(VERSION 3.8.0)</div>
+<div class="line"> </div>
+<div class="line">project(my_project LANGUAGES CXX)</div>
+<div class="line"> </div>
+<div class="line">include(FetchContent)</div>
+<div class="line">FetchContent_Declare(</div>
+<div class="line">  ipaddress</div>
+<div class="line">  GIT_REPOSITORY https://github.com/VladimirShaleev/ipaddress</div>
+<div class="line">  GIT_TAG v1.0.0</div>
+<div class="line">)</div>
+<div class="line">FetchContent_MakeAvailable(ipaddress)</div>
+<div class="line"> </div>
+<div class="line">add_executable(my_project main.cpp)</div>
+<div class="line">target_link_libraries(my_project ipaddress::ipaddress) # add the library to your target</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md9"></a>
+Quick Start</h2>
+<p>The library provides capabilities for creating, analyzing and managing IPv4 and IPv6 addresses and networks using classes such as <b>ipv4_address</b>, <b>ipv6_address</b>, <b>ip_address</b> (any IP version), <b>ipv4_network</b>, <b>ipv6_network</b> and <b>ip_network</b> (any IP version). It also offers error handling methods with or without exceptions if for some reason exceptions are not used or disabled in your project.</p>
+<p>To start using the library, simply include the header <code><a class="el" href="ipaddress_8hpp.html" title="The main include file for the ipaddress library.">ipaddress/ipaddress.hpp</a></code>, and you’re ready to begin your work!</p>
+<p>Here is an example demonstrating some of the library's features (this example also demonstrates the new C++20 syntax for <b>Literal Classes as Non-type Template Parameters</b>, so a compiler with at least C++20 support is required to compile this example):</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="ipaddress_8hpp.html">ipaddress/ipaddress.hpp</a>&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using namespace </span><a class="code hl_namespace" href="namespaceipaddress.html">ipaddress</a>;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> parse_ip_sample() {</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip = ipv6_address::parse(<span class="stringliteral">&quot;fec0::1ff:fe23:4567:890a%eth2&quot;</span>);</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> is_site_local = ip.is_site_local();</div>
+<div class="line"> </div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;ip &quot;</span> &lt;&lt; ip &lt;&lt; <span class="stringliteral">&quot; is local: &quot;</span> &lt;&lt; std::boolalpha &lt;&lt; is_site_local &lt;&lt; std::endl;</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;DNS PTR &quot;</span> &lt;&lt; ip.reverse_pointer() &lt;&lt; std::endl &lt;&lt; std::endl;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> terade_sample() {</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> teredo_ip = <span class="stringliteral">&quot;2001:0000:4136:e378:8000:63bf:3fff:fdd2&quot;</span>_ipv6;</div>
+<div class="line">    <span class="keyword">auto</span> [server, client] = teredo_ip.teredo().value();</div>
+<div class="line"> </div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;server: &quot;</span> &lt;&lt; server &lt;&lt; <span class="stringliteral">&quot; and client: &quot;</span> &lt;&lt; client &lt;&lt; <span class="stringliteral">&quot; for &quot;</span> &lt;&lt; teredo_ip &lt;&lt; std::endl &lt;&lt; std::endl;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">void</span> subnets_sample() {</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> net = ipv4_network::parse(<span class="stringliteral">&quot;192.0.2.0/24&quot;</span>);</div>
+<div class="line"> </div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;subnets for &quot;</span> &lt;&lt; net &lt;&lt; <span class="charliteral">&#39;:&#39;</span> &lt;&lt; std::endl;</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; subnet : net.subnets(2)) {</div>
+<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;  &quot;</span> &lt;&lt; subnet &lt;&lt; std::endl;</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> last_subnet = net.subnets(2).back();</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;last subnet &quot;</span> &lt;&lt; last_subnet &lt;&lt; std::endl;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    parse_ip_sample();</div>
+<div class="line">    terade_sample();</div>
+<div class="line">    subnets_sample();</div>
+<div class="line">    <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="ttc" id="aipaddress_8hpp_html"><div class="ttname"><a href="ipaddress_8hpp.html">ipaddress.hpp</a></div><div class="ttdoc">The main include file for the ipaddress library.</div></div>
+<div class="ttc" id="anamespaceipaddress_html"><div class="ttname"><a href="namespaceipaddress.html">ipaddress</a></div><div class="ttdoc">Namespace dedicated to IP addresses and networks operations.</div><div class="ttdef"><b>Definition</b> base-v4.hpp:18</div></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md10"></a>
+Contributing</h2>
+<p>ipaddress welcomes contributions and appreciates contributions from the community. Please follow the code below.</p>
+<h3><a class="anchor" id="autotoc_md11"></a>
+Issues</h3>
+<p>We welcome you to submit any issues or enhancement requests. When doing so, please provide minimal reproducible examples, as source code is often more effective in helping others understand the issue. If you encounter crash problems on specific platforms, please include operating system and compiler information.</p>
+<h3><a class="anchor" id="autotoc_md12"></a>
+Pull Requests</h3>
+<p>We welcome pull requests for fixes and features. To avoid any unnecessary time investment, we strongly recommend opening an issue to discuss whether the proposed PR aligns with our guidelines.</p>
+<p>To do this, follow these steps:</p>
+<ol type="1">
+<li><b>Fork</b> the repository on GitHub.</li>
+<li><b>Clone</b> the project to your local machine and create a new branch within your fork. Start your development work on this branch.</li>
+<li><b>Test</b> your changes. If possible, include unit tests for IPv4 addresses, IPv6 addresses, IP addresses, IPv4 networks, IPv6 networks, or IP networks, depending on the modifications you’ve made.</li>
+<li><b>Commit</b> your changes to your branch.</li>
+<li><b>Push</b> your work back to your fork on GitHub.</li>
+<li>Finally, <b>submit a pull request</b> so that we can review your changes.</li>
+</ol>
+<p>NOTE: Be sure to merge the latest from "upstream" before making a pull request!</p>
+<p>Currently, I am the sole maintainer of this project. Therefore, I will monitor questions, suggestions, as well as community activity and interest in this project to the best of my abilities.</p>
+<h2><a class="anchor" id="autotoc_md13"></a>
 Licensing</h2>
 <div class="fragment"><div class="line">MIT License</div>
 <div class="line"> </div>
@@ -176,7 +315,34 @@ Licensing</h2>
 <div class="line">LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</div>
 <div class="line">OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</div>
 <div class="line">SOFTWARE.</div>
-</div><!-- fragment --> </div></div><!-- PageDoc -->
+</div><!-- fragment --><p> 
+
+<div class="cards">
+
+<div class="card">
+  <a href="https://github.com/VladimirShaleev/ipaddress">
+  <div class="card_container">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>github</title> <rect width="24" height="24" fill="none"></rect> <path d="M12,2A10,10,0,0,0,8.84,21.5c.5.08.66-.23.66-.5V19.31C6.73,19.91,6.14,18,6.14,18A2.69,2.69,0,0,0,5,16.5c-.91-.62.07-.6.07-.6a2.1,2.1,0,0,1,1.53,1,2.15,2.15,0,0,0,2.91.83,2.16,2.16,0,0,1,.63-1.34C8,16.17,5.62,15.31,5.62,11.5a3.87,3.87,0,0,1,1-2.71,3.58,3.58,0,0,1,.1-2.64s.84-.27,2.75,1a9.63,9.63,0,0,1,5,0c1.91-1.29,2.75-1,2.75-1a3.58,3.58,0,0,1,.1,2.64,3.87,3.87,0,0,1,1,2.71c0,3.82-2.34,4.66-4.57,4.91a2.39,2.39,0,0,1,.69,1.85V21c0,.27.16.59.67.5A10,10,0,0,0,12,2Z"></path> </g></svg>
+    <h2>GitHub</h2>
+    <p>Go to the project's GitHub repository.</p>
+  </div>
+  </a>
+</div>
+
+<div class="card">
+  <a href="tutorial.html">
+  <div class="card_container">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Arrow / Arrow_Circle_Right"> <path id="Vector" d="M13 15L16 12M16 12L13 9M16 12H8M21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21C16.9706 21 21 16.9706 21 12Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g></svg>
+    <h2>Tutorial</h2>
+    <p>Learn the library for applied use, as well as how to configure the library to suit your needs.</p>
+  </div>
+  </a>
+</div>
+
+</div>
+
+ </p>
+</div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"/>
 </div><!-- contents -->
 </div><!-- doc-content -->

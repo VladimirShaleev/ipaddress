@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['installation_20guide_0',['Installation Guide',['../installation.html',1,'']]]
+  ['error_20handling_0',['Error Handling',['../errors.html',1,'']]]
 ];
