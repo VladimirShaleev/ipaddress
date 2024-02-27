@@ -74,17 +74,23 @@ else()
 
   file(GLOB IPADDRESS_DOC_SOURCES ${CMAKE_CURRENT_LIST_DIR}/../include/ipaddress/*)
   file(GLOB IPADDRESS_DOC_MARKDOWN ${CMAKE_CURRENT_LIST_DIR}/*.md)
+  file(GLOB IPADDRESS_DOC_ICONS ${CMAKE_CURRENT_LIST_DIR}/icons/*)
 
   set(IPADDRESS_DOC_CSS "${doxygen-awesome-css_SOURCE_DIR}" CACHE STRING "doxygen-awesome")
   set(IPADDRESS_DOC_CARDS_CSS "${doxygen-cards_SOURCE_DIR}" CACHE STRING "doxygen-cards")
   set(IPADDRESS_DOC_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/share/doc/${PROJECT_NAME}" CACHE PATH "Path to the documentation")
 
-  CONFIGURE_FILE(Doxyfile.in Doxyfile @ONLY)
+  configure_file(Doxyfile.in Doxyfile @ONLY)
+  foreach(FULL_PATH ${IPADDRESS_DOC_ICONS})
+    get_filename_component(FILE ${FULL_PATH} NAME) 
+    configure_file(${FULL_PATH} ${CMAKE_CURRENT_BINARY_DIR}/html/${FILE} COPYONLY)
+    set(IPADDRESS_DOC_COPY_ICONS ${IPADDRESS_DOC_COPY_ICONS} ${CMAKE_CURRENT_BINARY_DIR}/html/${FILE})
+  endforeach()
 
   add_custom_command(OUTPUT html
     COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
     COMMAND ${CMAKE_COMMAND} -E touch ${CMAKE_CURRENT_BINARY_DIR}/html
-    DEPENDS Doxyfile getstarted ${IPADDRESS_DOC_SOURCES} ${IPADDRESS_DOC_MARKDOWN}
+    DEPENDS Doxyfile ${IPADDRESS_DOC_COPY_ICONS} getstarted ${IPADDRESS_DOC_SOURCES} ${IPADDRESS_DOC_MARKDOWN}
     WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/../
   )
 
