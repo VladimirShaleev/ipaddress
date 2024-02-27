@@ -1,5 +1,7 @@
 # ipaddress
 
+[TOC]
+
 [![GitHub Release](https://img.shields.io/github/v/release/vladimirshaleev/ipaddress?sort=semver&display_name=tag)](https://github.com/VladimirShaleev/ipaddress/releases)
 [![GitHub License](https://img.shields.io/github/license/vladimirshaleev/ipaddress)](https://github.com/VladimirShaleev/ipaddress/blob/main/LICENSE)
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/vladimirshaleev/ipaddress/tests.yml?branch=main&logo=github&label=tests)
@@ -20,7 +22,7 @@ For more details on constant expressions, refer to the relevant section **TODO**
 
 ![Constexpr](doc/img/constexpr.png "Errors are known at Compile Time")
 
-## Compatibility
+### Compatibility
 
 The library has been tested on the following compilers:
 
@@ -29,11 +31,11 @@ The library has been tested on the following compilers:
 * GCC 7.5.0 and newer;
 * MSVC 14.29 (Visual Studio 16.11) and newer
 
-## Installation
+### Installation
 
 
 
-## Quick Start
+### Quick Start
 
 The library provides capabilities for creating, analyzing and managing IPv4 and IPv6 addresses and networks using classes such 
 as **ipv4_address**, **ipv6_address**, **ip_address** (any IP version), **ipv4_network**, **ipv6_network** and **ip_network** 
@@ -117,12 +119,12 @@ int main() {
 > auto ip = ipv6_address::parse("fec0::1ff:fe23:4567:890a%eth2");
 > ```
 
-## Contributing
+### Contributing
 
-### Issues
+#### Issues
 
-### Workflow
+#### Workflow
 
-### Licensing
+#### Licensing
 
 ipaddress is licensed under the **MIT License**. See [LICENSE](https://github.com/VladimirShaleev/ipaddress/blob/main/LICENSE) for the full license text.
