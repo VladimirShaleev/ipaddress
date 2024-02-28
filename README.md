@@ -12,7 +12,7 @@ A library for working and manipulating IPv4/IPv6 addresses and networks in moder
 
 ## Introduction
 
-This cross-platfrom **header-only** library is inspired by the [ipaddress API in Python](https://docs.python.org/3.12/library/ipaddress.html), 
+This cross-platfrom **header-only** library for C++11 and newer is inspired by the [ipaddress API in Python](https://docs.python.org/3.12/library/ipaddress.html), 
 from which it derives its name. It aims to be simpler to use due to its familiar interface. However, the C++ implementation takes 
 a different approach: it uses **static polymorphism** through the strategy pattern instead of dynamic polymorphism to handle 
 differences between IP versions (IPv4 and IPv6). This design choice eliminates the overhead of dynamic calls and virtual tables. 
@@ -40,7 +40,7 @@ You can install in one of the following ways
 > [!IMPORTANT]
 > Packages have not been published yet
 > 
-> #### Vcpk
+> #### Vcpkg
 > 
 > #### Conan
 > 
@@ -126,7 +126,7 @@ void parse_ip_sample() {
     std::cout << "DNS PTR " << ip.reverse_pointer() << std::endl << std::endl;
 }
 
-void terade_sample() {
+void teredo_sample() {
     constexpr auto teredo_ip = "2001:0000:4136:e378:8000:63bf:3fff:fdd2"_ipv6;
     auto [server, client] = teredo_ip.teredo().value();
 
@@ -147,7 +147,7 @@ void subnets_sample() {
 
 int main() {
     parse_ip_sample();
-    terade_sample();
+    teredo_sample();
     subnets_sample();
     return 0;
 }
