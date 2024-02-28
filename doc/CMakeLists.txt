@@ -23,11 +23,12 @@ else()
   file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/getstarted.cmake"
     [=[
     file(READ "${SOURCE}" TEXT)
+    file(READ "${CONTRIBUTING}" CONTRIBUTING)
     file(READ "${LICENSE}" LICENSE)
     string(REPLACE "# ipaddress" "@mainpage Get Started\n\n@tableofcontents" TEXT "${TEXT}")
     string(REPLACE "## Documentation" "" TEXT "${TEXT}")
     string(REPLACE "For more details on setup, usage and code examples can be found in the full [documentation](https://vladimirshaleev.github.io/ipaddress/)." "" TEXT "${TEXT}")
-    string(CONCAT TEXT "${TEXT}" "\n\n## Licensing\n\n```\n${LICENSE}\n```\n"
+    string(CONCAT TEXT "${TEXT}" "\n${CONTRIBUTING}\n\n" "\n\n## Licensing\n\n```\n${LICENSE}\n```\n"
     [==[
     
 @htmlonly
@@ -66,6 +67,7 @@ else()
       OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/get-started.md"
       COMMAND "${CMAKE_COMMAND}"
           "-DLICENSE=${PROJECT_SOURCE_DIR}/LICENSE"
+          "-DCONTRIBUTING=${PROJECT_SOURCE_DIR}/CONTRIBUTING.md"
           "-DSOURCE=${PROJECT_SOURCE_DIR}/README.md"
           "-DTARGET=\"${CMAKE_CURRENT_BINARY_DIR}/get-started.md\""
           -P "${CMAKE_CURRENT_BINARY_DIR}/getstarted.cmake"
