@@ -2,9 +2,101 @@
 
 @tableofcontents
 
-## Header 2
+Here describes various ways to operate with networks and addresses, for example how to get all hosts on a given network, or exclude one network from another, etc.
 
-### Header 3
+@note All iteration operations in this library are implemented with lazy evaluation. That is, the list is not generated in advance; instead, each element is generated upon request.
+
+## Enumerating network addresses
+
+Below is a demonstration of how to get all hosts on a given network
+
+```cpp
+#include <iostream>
+ 
+#include <ipaddress/ipaddress.hpp>
+ 
+using namespace ipaddress;
+ 
+int main() {
+    for (const auto& addr : ip_network::parse("192.0.2.0/29").hosts()) {
+        std::cout << addr << std::endl;
+    }
+    // 192.0.2.1
+    // 192.0.2.2
+    // 192.0.2.3
+    // 192.0.2.4
+    // 192.0.2.5
+    // 192.0.2.6
+
+    // All operations in this library support constexpr
+    constexpr auto hosts_sequence = ip_network::parse("192.0.2.0/29").hosts();
+    constexpr auto last_host = hosts_sequence.back(); // can even iterate through it in a loop
+    std::cout << last_host << std::endl; // 192.0.2.6
+
+    return 0;
+}
+```
+
+@warning Please note that with IPv6, the number of addresses can be so large that iterating through them all may be practically impossible. Therefore, use the `hosts()` method cautiously to avoid endlessly retrieving addresses.
+
+@note For ipv4 all the IP addresses that belong to the network, except the network address itself and the network broadcast address. For networks with a mask length of 31, the network address and network broadcast address are also included in the result. Networks with a mask of 32 will return a list containing the single host address. <br> For ipv6 all the IP addresses that belong to the network, except the Subnet-Router anycast address. For networks with a mask length of 127, the Subnet-Router anycast address is also included in the result. Networks with a mask of 128 will return a list containing the single host address.
+
+## Supernet and Subnets
+
+Get the subnets that are combined to create the current network definition.
+
+```cpp
+#include <iostream>
+ 
+#include <ipaddress/ipaddress.hpp>
+ 
+using namespace ipaddress;
+ 
+int main() {
+    std::cout << ip_network::parse("192.0.2.0/24").supernet(2) << std::endl; // 192.0.0.0/22
+
+    for (const auto& subnet : ip_network::parse("192.0.2.0/24").subnets(2)) {
+        std::cout << subnet << std::endl;
+    }
+    // 192.0.2.0/26
+    // 192.0.2.64/26
+    // 192.0.2.128/26
+    // 192.0.2.192/26
+
+    return 0;
+}
+```
+
+## Removing one network from another network
+
+Calculates the network definitions that arise from subtracting the specified network from the current one.
+
+```cpp
+#include <iostream>
+ 
+#include <ipaddress/ipaddress.hpp>
+ 
+using namespace ipaddress;
+ 
+int main() {
+    constexpr auto a = ip_network::parse("192.0.2.0/28");
+    constexpr auto b = ip_network::parse("192.0.2.1/32");
+
+    for (const auto& net : a.address_exclude(b)) {
+       std::cout << net << std::endl;
+    }
+    // 192.0.2.8/29
+    // 192.0.2.4/30
+    // 192.0.2.2/31
+    // 192.0.2.0/32
+ 
+    return 0;
+}
+```
+
+## Header
+
+In this library, arithmetic operators for IP addresses and networks are not overloaded. But what if you need them to increase addresses to solve your task?
 
 @htmlonly
 
