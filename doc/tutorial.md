@@ -7,7 +7,7 @@
 For working with IP addresses, the library provides three classes:
 
 - **ipv4_address** — A class for working with IPv4 addresses, where the instance size is always 4 bytes.
-- **ipv6_address** — A class for working with IPv6 addresses, where the instance size includes both the space allocated for the IPv6 address itself and the scope id (zone index). As a result, the instance size will be 16 bytes plus the maximum length of the scope id. Read about scope ids below.
+- **ipv6_address** — A class for working with IPv6 addresses, where the instance size includes both the space allocated for the IPv6 address itself and the scope id (zone index). As a result, the instance size will be 16 bytes plus the maximum length of the scope id (plus aligned bytes if any). Read about scope ids below.
 - **ip_address** — Combines the `ipv4_address` and `ipv6_address` classes via a union. This ensures version-independent IP address manipulation. It has implicit constructors for converting from `ipv4_address` and `ipv6_address`. The instance size is the same as that of `ipv6_address`.
 
 @parblock
@@ -40,7 +40,7 @@ int main() {
     //        {{{}, {{(unsigned char)192U, (unsigned char)168U, (unsigned char)1U, (unsigned char)1U}}}};
     //
     constexpr auto ip1 = ipv4_address::parse("192.168.1.1");
-    constexpr auto ip2 = ipv6_address::parse("fe80::1ff:fe23:4567:890a%eth2");
+    constexpr auto ip2 = ipv6_address::parse("64:ff9b::192.0.2.128");
     constexpr auto ip3 =   ip_address::parse("fe80::1ff:fe23:4567:890a%eth2"); // any version address
 
     // Parsing string literals for IPv4 and IPv6 with the new syntax starting from C++20
@@ -293,6 +293,88 @@ int main() {
     auto str6 = ip2.to_string(format::full);       // fe80:0000:0000:0000:01ff:fe23:4567:890a%eth2
     auto str7 = ip2.to_string(format::compact);    // fe80:0:0:0:1ff:fe23:4567:890a%eth2
     auto str8 = ip2.to_string(format::compressed); // fe80::1ff:fe23:4567:890a%eth2
+
+    return 0;
+}
+```
+
+## IP networks
+
+- **ipv4_network** — A class for working with IPv4 networks.
+- **ipv6_network** — A class for working with IPv6 networks.
+- **ip_network** — Combines the `ipv4_network` and `ipv6_network` classes via a union. This ensures version-independent IP address manipulation. It has implicit constructors for converting from `ipv4_network` and `ipv6_network`. The instance size is the same as that of `ipv6_network`.
+
+Networks store two IP addresses (network address and netmask), as well as the prefix length. This means that the size of a network instance will be `2 * sizeof(<ip_type>) + sizeof(size_t)`.
+
+Working with networks is similar to working with addresses. So let's get straight to the examples.
+
+### Parsing ip network strings
+
+Let's look at examples of obtaining networks from string literals and strings.
+
+```cpp
+#include <ipaddress/ipaddress.hpp>
+
+using namespace ipaddress;
+
+int main() {
+    // Parsing string literals for IPv4 and IPv6
+    constexpr auto net1 = ipv4_network::parse("1.2.3.0/24");
+    constexpr auto net2 = ipv6_network::parse("2001:db8::/32");
+    constexpr auto net3 =   ip_network::parse("1.2.3.4/255.255.255.255"); // any version address
+
+    // Parsing string literals for IPv4 and IPv6 with the new syntax starting from C++20
+    // (Literal Classes as Non-type Template Parameters)
+    constexpr auto net4 = ipv4_network::parse<"1.2.3.0/24">();
+    constexpr auto net5 = ipv6_network::parse<"2001:db8::/32">();
+    constexpr auto net6 =   ip_network::parse<"1.2.3.4/255.255.255.255">(); // any version address
+
+    // Parsing with User-defined literals
+    constexpr auto net7 = "1.2.3.0/24"_ipv4_net;
+    constexpr auto net8 = "2001:db8::/32"_ipv6_net;
+    constexpr auto net9 = "1.2.3.4/255.255.255.255"_net; // any version address
+
+    // Parsing at runtime. For example, when a string comes from an input 
+    // field during execution or from any other source.
+    const char*       str1 = "1.2.3.0/24";
+    const std::string str2 = "2001:db8::/32";
+    auto net10 = ipv4_network::parse(str1);
+    auto net11 = ipv6_network::parse(str2);
+    auto net12 =   ip_network::parse(str2); // any version address
+
+    return 0;
+}
+```
+
+We can request various network parameters.
+
+```cpp
+#include <ipaddress/ipaddress.hpp>
+
+using namespace ipaddress;
+
+int main() {
+    constexpr auto net1 = ip_network::parse("2001:db8::/32");
+    constexpr auto network_address1 = net1.network_address(); // 2001:db8::
+    constexpr auto broadcast_address1 = net1.broadcast_address(); // 2001:db8:ffff:ffff:ffff:ffff:ffff:ffff
+    constexpr auto netmask1 = net1.netmask(); // ffff:ffff::
+    constexpr auto hostmask1 = net1.hostmask(); // ::ffff:ffff:ffff:ffff:ffff:ffff
+    constexpr auto prefixlen1 = net1.prefixlen(); // 32
+
+    constexpr auto net2 = ip_network::parse("1.2.3.0/255.255.255.0");
+    constexpr auto network_address2 = net2.network_address(); // 1.2.3.0
+    constexpr auto broadcast_address2 = net2.broadcast_address(); // 1.2.3.255
+    constexpr auto netmask2 = net2.netmask(); // 255.255.255.0
+    constexpr auto hostmask2 = net2.hostmask(); // 0.0.0.255
+    constexpr auto prefixlen2 = net2.prefixlen(); // 24
+
+    // Non strict mode sample
+    constexpr auto net3 = ip_network::parse("1.2.3.0/16", false);
+    constexpr auto network_address3 = net3.network_address(); // 1.2.0.0
+    constexpr auto broadcast_address3 = net3.broadcast_address(); // 1.2.255.255
+    constexpr auto netmask3 = net3.netmask(); // 255.255.0.0
+    constexpr auto hostmask3 = net3.hostmask(); // 0.0.255.255
+    constexpr auto prefixlen3 = net3.prefixlen(); // 16
 
     return 0;
 }
