@@ -391,6 +391,8 @@ int main() {
 }
 ```
 
+@note If, for some reason, you don't want the library to overload standard functions, you can define `IPADDRESS_NO_OVERLOAD_STD` during compilation.
+
 @htmlonly
 
 <div class="cards">
