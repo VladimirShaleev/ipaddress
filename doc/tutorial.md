@@ -70,6 +70,53 @@ int main() {
 
 @remark For compile-time computations, the **ipaddress** library uses relaxed `constexpr`, which was introduced only in C++14. Therefore, for C++11, the **ipaddress** library does not support constant expressions. It is recommended to use the C++14 language standard or newer versions.
 
+Access to specific versions of IP addresses for ip_address is demonstrated below.
+
+```cpp
+#include <iostream>
+
+#include <ipaddress/ipaddress.hpp>
+
+using namespace ipaddress;
+
+int main() {
+    // With ipv4_address and ipv6_address everything is clear, 
+    // everything is known from their types
+    constexpr auto ipv4 = ipv4_address::parse("192.168.1.1");
+    constexpr auto ipv6 = ipv6_address::parse("fe80::1ff:fe23:4567:890a%eth2");
+    constexpr auto ipv4_version = ipv4.version(); // V4
+    constexpr auto ipv6_version = ipv6.version(); // V6
+    constexpr auto ipv4_size    = ipv4.size(); // 4
+    constexpr auto ipv6_size    = ipv6.size(); // 16
+
+    // But that's not the case for ip_address
+    constexpr auto ip1 = ip_address::parse("192.168.1.1");
+    constexpr auto ip2 = ip_address::parse("fe80::1ff:fe23:4567:890a%eth2");
+
+    // Below is how to distinguish between different versions of IP
+    constexpr auto ip1_version = ip1.version(); // V4
+    constexpr auto ip2_version = ip2.version(); // V6
+    constexpr auto ip1_size    = ip1.size(); // 4
+    constexpr auto ip2_size    = ip2.size(); // 16
+
+    // Check which IP version is stored in ip_address for ip2
+    constexpr auto ip2_is_v4 = ip2.is_v4(); // false
+    constexpr auto ip2_is_v6 = ip2.is_v6(); // true
+
+    // Access to specific versions of IP addresses for ip2
+    constexpr auto ip2_get_ipv4 = ip2.v4();
+    constexpr auto ip2_get_ipv6 = ip2.v6();
+
+    if (ip2_get_ipv4) { // false
+        constexpr auto result = ip2_get_ipv4.value();
+    }
+    if (ip2_get_ipv6.has_value()) { // true
+        constexpr auto result = ip2_get_ipv6.value(); // get ipv6
+    }
+    return 0;
+}
+```
+
 ### From uint/To uint
 
 Below is code demonstrating how to create IP addresses from unsigned integers and convert them back to unsigned integers.
