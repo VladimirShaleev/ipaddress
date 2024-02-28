@@ -152,17 +152,48 @@ $(function(){initNavTree('build.html',''); initResizable(); });
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><ul><li class="level2"><a href="#autotoc_md35">Header 2</a><ul><li class="level3"><a href="#autotoc_md36">Header 3</a></li>
-</ul>
-</li>
+<ul><ul><li class="level2"><a href="#autotoc_md36">Set up a project</a></li>
 </ul>
 </ul>
 </div>
-<div class="textblock"><h2><a class="anchor" id="autotoc_md35"></a>
-Header 2</h2>
-<h3><a class="anchor" id="autotoc_md36"></a>
-Header 3</h3>
-<p> 
+<div class="textblock"><p>Here's how to build the library locally. Technically, this is a header-only library and does not need to be compiled, but for development you will have to collect unit tests and documentation.</p>
+<p>To work you will need:</p>
+<ul>
+<li>A compatible operating system (e.g. Linux, macOS, Windows);</li>
+<li>Compatible C++ compiler supporting C++11 or later (if you cannot test on all versions of the standard, then it’s okay, this <a href="https://github.com/VladimirShaleev/ipaddress/actions/workflows/tests.yml">project runs tests</a> for all versions of the C++ standard and various versions of compilers);</li>
+<li><a href="https://cmake.org/">CMake</a> and a compatible build tool for building the project.</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md36"></a>
+Set up a project</h2>
+<div class="fragment"><div class="line">git clone https://github.com/VladimirShaleev/ipaddress.git</div>
+<div class="line">cd ipaddress</div>
+</div><!-- fragment --><p>Once the repository is clone, you can configure it using CMake.</p>
+<div class="fragment"><div class="line">cmake -B build -S . \</div>
+<div class="line">  -DCMAKE_CXX_STANDARD=17 \</div>
+<div class="line">  -DCMAKE_BUILD_TYPE=Debug/Release \</div>
+<div class="line">  -DIPADDRESS_BUILD_TESTS=ON \</div>
+<div class="line">  -DIPADDRESS_BUILD_DOC=OFF \</div>
+<div class="line">  -DIPADDRESS_BUILD_PACKAGES=OFF \</div>
+<div class="line">  -DIPADDRESS_NO_EXCEPTIONS=OFF \</div>
+<div class="line">  -DIPADDRESS_NO_IPV6_SCOPE=OFF \</div>
+<div class="line">  -DIPADDRESS_NO_OVERLOAD_STD=OFF \</div>
+<div class="line">  -DIPADDRESS_IPV6_SCOPE_MAX_LENGTH=16</div>
+</div><!-- fragment --><p>Where:</p>
+<ul>
+<li><code>CMAKE_CXX_STANDARD</code> — The selected standard with which unit tests will be collected. If not specified, the default one in the current build tools will be used.</li>
+<li><code>IPADDRESS_BUILD_TESTS</code> — Build unit tests (ON by default).</li>
+<li><code>IPADDRESS_BUILD_DOC</code> — Build doc (ON by default).</li>
+<li><code>IPADDRESS_BUILD_PACKAGES</code> — Create targets for building packages deb, rpm, etc. (ON by default).</li>
+<li><code>IPADDRESS_NO_EXCEPTIONS</code> — Disable exceptions throwing (OFF by default).</li>
+<li><code>IPADDRESS_NO_IPV6_SCOPE</code> — Disable scope if for ipv6 (OFF by default).</li>
+<li><code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH</code> — scope id max length (16 by default).</li>
+</ul>
+<p>Once configured, you can build.</p>
+<div class="fragment"><div class="line">cmake --build build --config Release -j4</div>
+</div><!-- fragment --><p>Running unit tests.</p>
+<div class="fragment"><div class="line">cd build</div>
+<div class="line">ctest --output-on-failure</div>
+</div><!-- fragment --><p> 
 
 <div class="cards">
 
