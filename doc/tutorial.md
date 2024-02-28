@@ -245,7 +245,7 @@ int main() {
 }
 ```
 
-### IP Address Properties
+### Properties
 
 The library provides many properties for determining certain features of an IP address. Let's look at the example below (all possible properties are not presented here; for a more complete picture, see the [documentation for the code](classipaddress_1_1ip__address.html#pub-methods)).
 
@@ -321,6 +321,14 @@ using namespace ipaddress;
 
 int main() {
     // Parsing string literals for IPv4 and IPv6
+    //
+    // For ipv4: 
+    //    if the mask (portion after the / in the argument) is provided in dotted 
+    //    quad form, it is considered a netmask if it begins with a non-zero field 
+    //    (e.g., /255.0.0.0 corresponds to a /8 netmask). Conversely, if it starts 
+    //    with a zero field (e.g., 0.255.255.255), it is treated as a hostmask for 
+    //    the /8 prefix. The only exception is an all-zero mask, which is treated 
+    //    as a netmask equivalent to /0. If no mask is specified, the default is /32
     constexpr auto net1 = ipv4_network::parse("1.2.3.0/24");
     constexpr auto net2 = ipv6_network::parse("2001:db8::/32");
     constexpr auto net3 =   ip_network::parse("1.2.3.4/255.255.255.255"); // any version address
@@ -448,6 +456,52 @@ int main() {
 }
 ```
 
+### Properties
+
+The library provides many properties for determining certain features of an IP network. Let's look at the example below (all possible properties are not presented here; for a more complete picture, see the [documentation for the code](classipaddress_1_1ip__network.html#pub-methods)).
+
+As you can see, getting network properties is not much different from getting address properties.
+
+```cpp
+#include <ipaddress/ipaddress.hpp>
+ 
+using namespace ipaddress;
+ 
+int main() {
+    constexpr auto test1 = ipv6_network::parse("ffff::").is_multicast(); // true
+    constexpr auto test2 =   ip_network::parse("fdff::").is_multicast(); // false
+ 
+    constexpr auto test3 = ipv4_network::parse("240.0.0.1").is_reserved(); // true
+    constexpr auto test4 =   ip_network::parse("239.255.255.255").is_reserved(); // false
+ 
+    return 0;
+}
+```
+
+### Convert to string
+
+There are three different formats for converting IP networks to strings as you can see below.
+
+```cpp
+#include <ipaddress/ipaddress.hpp>
+ 
+using namespace ipaddress;
+ 
+int main() {
+    // For IP addresses version 4, the format has no effect
+    constexpr auto net1 = ip_network::parse("1.2.3.0/0.0.0.255");
+    auto str1 = net1.to_string(); // 1.2.3.0/24
+
+    constexpr auto net2 = ip_network::parse("2001:db8::/32");
+    auto str2 = net2.to_string();                   // equivalent to format::compressed
+    auto str3 = net2.to_string(format::full);       // 2001:0db8:0000:0000:0000:0000:0000:0000/32
+    auto str4 = net2.to_string(format::compact);    // 2001:db8:0:0:0:0:0:0/32
+    auto str5 = net2.to_string(format::compressed); // 2001:db8::/32
+ 
+    return 0;
+}
+```
+
 ## Scope Id
 
 The library supports **Scope Id** both as numeric values and as strings.
@@ -498,6 +552,8 @@ int main() {
 
 ## Std overrides
 
+@note If, for some reason, you don't want the library to overload standard functions, you can define `IPADDRESS_NO_OVERLOAD_STD` during compilation.
+
 The library overloads some functions from the standard library so that IP addresses (`ipv4_address`, `ipv6_address`, `ip_address`) can be used in hash tables and other standard operations on `swap`, etc.
 
 ```cpp
@@ -540,8 +596,6 @@ int main() {
     return 0;
 }
 ```
-
-@note If, for some reason, you don't want the library to overload standard functions, you can define `IPADDRESS_NO_OVERLOAD_STD` during compilation.
 
 @htmlonly
 
