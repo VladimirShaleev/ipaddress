@@ -94,9 +94,41 @@ int main() {
 }
 ```
 
-## Header
+## Other operations
 
-In this library, arithmetic operators for IP addresses and networks are not overloaded. But what if you need them to increase addresses to solve your task?
+This library does not overload arithmetic operators for IP addresses and networks. But what if they need address arithmetic to resolve your problems? You can use integer arithmetic for this.
+
+```cpp
+#include <iostream>
+ 
+#include <ipaddress/ipaddress.hpp>
+ 
+using namespace ipaddress;
+ 
+int main() {
+    constexpr auto ip1 = ipv4_address::parse("192.0.2.0");
+    constexpr auto ip2 = ipv6_address::parse("2001:db8::");
+    constexpr auto ip3 =   ip_address::parse("2001:db8::");
+
+    // Convert to and from unsigned integer.
+    // 
+    // Please also note that if the original IPv6 has a scope id 
+    // and you need it, it will need to be copied separately
+    //
+    // Also don't forget to account for integer overflow if it 
+    // might arise in your situation
+    //
+    constexpr auto new_ip1 = ipv4_address::from_uint((std::uint32_t) ip1 + 1000);
+    constexpr auto new_ip2 = ipv6_address::from_uint((    uint128_t) ip2 + 1);
+    constexpr auto new_ip3 =   ip_address::from_uint((    uint128_t) ip3 + 1);
+
+    std::cout << new_ip1 << std::endl; // 192.0.5.232
+    std::cout << new_ip2 << std::endl; // 2001:db8::1
+    std::cout << new_ip3 << std::endl; // 2001:db8::1
+
+    return 0;
+}
+```
 
 @htmlonly
 
