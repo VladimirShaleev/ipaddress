@@ -593,6 +593,15 @@ int main() {
     std::cout << r1 << std::endl; // 255.0.42.42
     std::cout << r2 << std::endl; // 2001:db8::1%scope
 
+    ip_network n1, n2;
+    std::istringstream ss3("1.2.3.0/16 non strict mode sample");
+    std::istringstream ss4("2001:db8::/32 test");
+    ss3 >> non_strict >> n1; // non strict mode sample
+    ss4 >> n2;
+    std::cout << "has errors: " << std::boolalpha << (ss3.fail() || ss4.fail()) << std::endl; // has errors: false
+    std::cout << n1 << std::endl; // 1.2.0.0/16
+    std::cout << n2 << std::endl; // 2001:db8::/32
+
     return 0;
 }
 ```
