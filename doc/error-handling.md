@@ -55,7 +55,7 @@ int main() {
 }
 ```
 
-### Configuring Exception Throwing
+## Configuring Exception Throwing
 
 Also, your compiler may have exceptions disabled. In this case, you can also disable exceptions in the library.
 

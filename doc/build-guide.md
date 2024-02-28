@@ -2,9 +2,58 @@
 
 @tableofcontents
 
-## Header 2
+Here's how to build the library locally. Technically, this is a header-only library and does not need to be compiled, but for development you will have to collect unit tests and documentation.
 
-### Header 3
+To work you will need:
+
+* A compatible operating system (e.g. Linux, macOS, Windows);
+* Compatible C++ compiler supporting C++11 or later (if you cannot test on all versions of the standard, then it’s okay, this [project runs tests](https://github.com/VladimirShaleev/ipaddress/actions/workflows/tests.yml) for all versions of the C++ standard and various versions of compilers);
+* [CMake](https://cmake.org/) and a compatible build tool for building the project.
+
+## Set up a project
+
+```bash
+git clone https://github.com/VladimirShaleev/ipaddress.git
+cd ipaddress
+```
+
+Once the repository is clone, you can configure it using CMake.
+
+```bash
+cmake -B build -S . \
+  -DCMAKE_CXX_STANDARD=17 \
+  -DCMAKE_BUILD_TYPE=Debug/Release \
+  -DIPADDRESS_BUILD_TESTS=ON \
+  -DIPADDRESS_BUILD_DOC=OFF \
+  -DIPADDRESS_BUILD_PACKAGES=OFF \
+  -DIPADDRESS_NO_EXCEPTIONS=OFF \
+  -DIPADDRESS_NO_IPV6_SCOPE=OFF \
+  -DIPADDRESS_NO_OVERLOAD_STD=OFF \
+  -DIPADDRESS_IPV6_SCOPE_MAX_LENGTH=16
+```
+
+Where:
+
+* `CMAKE_CXX_STANDARD` — The selected standard with which unit tests will be collected. If not specified, the default one in the current build tools will be used.
+* `IPADDRESS_BUILD_TESTS` — Build unit tests (ON by default).
+* `IPADDRESS_BUILD_DOC` — Build doc (ON by default).
+* `IPADDRESS_BUILD_PACKAGES` — Create targets for building packages deb, rpm, etc. (ON by default).
+* `IPADDRESS_NO_EXCEPTIONS` — Disable exceptions throwing (OFF by default).
+* `IPADDRESS_NO_IPV6_SCOPE` — Disable scope if for ipv6 (OFF by default).
+* `IPADDRESS_IPV6_SCOPE_MAX_LENGTH` — scope id max length (16 by default).
+
+Once configured, you can build.
+
+```bash
+cmake --build build --config Release -j4
+```
+
+Running unit tests.
+
+```bash
+cd build
+ctest --output-on-failure
+```
 
 @htmlonly
 
