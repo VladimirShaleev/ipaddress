@@ -108,6 +108,63 @@ int main() {
 
 ### Working with bytes
 
+Below is an example of working with bytes and pointers to bytes directly.
+
+```cpp
+#include <iostream>
+
+#include <ipaddress/ipaddress.hpp>
+
+using namespace ipaddress;
+
+int main() {
+    constexpr ipv6_address::base_type ipv6_bytes { 
+        0, 0, 0, 0,
+        0, 0, 0, 0,
+        0, 0, 255, 255,
+        0, 0, 0, 0
+    };
+
+    // Creating IP addresses from byte arrays of a fixed size
+    constexpr auto ip1 = ipv4_address::from_bytes({ 0xC0, 0xA8, 0x00, 0x01 });
+    constexpr auto ip2 = ipv6_address::from_bytes(ipv6_bytes);
+    constexpr auto ip3 =   ip_address::from_bytes(ipv6_bytes); // any version address
+
+    // Creation from a pointer to bytes. 
+    //
+    //    If the number of bytes is less than the target number  of bytes to represent 
+    //    the IP address, the missing bytes will be filled with zeros.
+    //    
+    //    If the number of bytes is greater than the target number of bytes represented 
+    //    by the IP address, then the extra bytes will be ignored.
+    // 
+    constexpr std::uint8_t ipv4_bytes[] = { 0xC0, 0xA8, 0x00, 0x01 };
+    constexpr auto iv4 = ipv4_address::from_bytes(ipv4_bytes, 3);
+    constexpr auto iv5 = ipv6_address::from_bytes(ipv4_bytes, 3);
+    constexpr auto ip6 =   ip_address::from_bytes(ipv4_bytes, 3,  ip_version::V4);
+    constexpr auto ip7 =   ip_address::from_bytes(ipv6_bytes.data(), 11, ip_version::V6);
+
+    // bytes() provides read access to fixed-length byte arrays
+    // 
+    //    A fixed-size byte array is represented by the byte_array type.
+    //    It provides full functionality for byte access and iterators.
+    //    std::array is not used because before C++17 it was not able to work 
+    //    with constant expressions for iterators, etc.
+    constexpr auto ip1_byte_count = ip1.bytes().size(); // 4
+    constexpr auto ip2_byte_count = ip2.bytes().size(); // 16
+    constexpr auto ip3_byte_count = ip3.is_v4() 
+        ? ip3.v4().value().bytes().size() 
+        : ip3.v6().value().bytes().size();
+
+    // data() provides a constant pointer to a byte array
+    constexpr auto test1 = *(ip1.data() + 1);  // 168
+    constexpr auto test2 = *(ip2.data() + 10); // 255
+    constexpr auto test3 = *(ip3.data() + 11); // 255
+    
+    return 0;
+}
+```
+
 ### Comparison
 
 ## Scope Id
