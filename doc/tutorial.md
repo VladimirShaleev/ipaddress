@@ -22,8 +22,6 @@ For working with IP addresses, the library provides three classes:
 Let's look at examples of obtaining IP addresses from string literals and strings.
 
 ```cpp
-#include <iostream>
-
 #include <ipaddress/ipaddress.hpp>
 
 using namespace ipaddress;
@@ -73,8 +71,6 @@ int main() {
 Access to specific versions of IP addresses for ip_address is demonstrated below.
 
 ```cpp
-#include <iostream>
-
 #include <ipaddress/ipaddress.hpp>
 
 using namespace ipaddress;
@@ -122,8 +118,6 @@ int main() {
 Below is code demonstrating how to create IP addresses from unsigned integers and convert them back to unsigned integers.
 
 ```cpp
-#include <iostream>
-
 #include <ipaddress/ipaddress.hpp>
 
 using namespace ipaddress;
@@ -158,8 +152,6 @@ int main() {
 Below is an example of working with bytes and pointers to bytes directly.
 
 ```cpp
-#include <iostream>
-
 #include <ipaddress/ipaddress.hpp>
 
 using namespace ipaddress;
@@ -217,8 +209,6 @@ int main() {
 For classes for working with IP addresses, comparison operators and spaceship operator (for C++20 and newer) have been redefined.
 
 ```cpp
-#include <iostream>
-
 #include <ipaddress/ipaddress.hpp>
 
 using namespace ipaddress;
@@ -260,8 +250,6 @@ int main() {
 The library provides many properties for determining certain features of an IP address. Let's look at the example below (all possible properties are not presented here; for a more complete picture, see the [documentation for the code](classipaddress_1_1ip__address.html#pub-methods)).
 
 ```cpp
-#include <iostream>
-
 #include <ipaddress/ipaddress.hpp>
 
 using namespace ipaddress;
@@ -285,6 +273,31 @@ int main() {
 
 ### Convert to string
 
+There are three different formats for converting IP addresses to strings as you can see below.
+
+```cpp
+#include <ipaddress/ipaddress.hpp>
+
+using namespace ipaddress;
+
+int main() {
+    // For IP addresses version 4, the format has no effect
+    constexpr auto ip1 = ipv4_address::parse("127.240.0.1");
+    auto str1 = ip1.to_string();                   // equivalent to format::compressed
+    auto str2 = ip1.to_string(format::full);       // 127.240.0.1
+    auto str3 = ip1.to_string(format::compact);    // 127.240.0.1
+    auto str4 = ip1.to_string(format::compressed); // 127.240.0.1
+
+    constexpr auto ip2 = ipv6_address::parse("fe80::1ff:fe23:4567:890a%eth2");
+    auto str5 = ip2.to_string();                   // equivalent to format::compressed 
+    auto str6 = ip2.to_string(format::full);       // fe80:0000:0000:0000:01ff:fe23:4567:890a%eth2
+    auto str7 = ip2.to_string(format::compact);    // fe80:0:0:0:1ff:fe23:4567:890a%eth2
+    auto str8 = ip2.to_string(format::compressed); // fe80::1ff:fe23:4567:890a%eth2
+
+    return 0;
+}
+```
+
 ## Scope Id
 
 The library supports **Scope Id** both as numeric values and as strings.
@@ -293,9 +306,90 @@ By default, **Scope Id** are enabled, and their maximum size is 16 characters (d
 
 @note If you are certain that you don't need **Scope Id**, you can completely disable them to avoid any overhead related to their maintenance. This can be done by defining `IPADDRESS_NO_IPV6_SCOPE` during compilation. In this case, the instance size of `ipv6_address` and `ip_address` will be 16 bytes, and all operations related to retrieving or modifying the **scope id** will have no effect.
 
+For IP addresses `ipv6_address` and `ip_address`, functionality is supported for obtaining and changing scope id.
+
+```cpp
+#include <iostream>
+
+#include <ipaddress/ipaddress.hpp>
+
+using namespace ipaddress;
+
+int main() {
+    constexpr auto ip1 = ipv6_address::parse("fe80::1ff:fe23:4567:890a%eth2");
+    constexpr auto scope_id = ip1.get_scope_id();
+
+    if (scope_id) {
+        constexpr auto is_integer = scope_id.has_uint32(); // false
+        constexpr auto is_string = scope_id.has_string(); // false
+        std::cout << "scope id is integer for ip1: " << std::boolalpha << is_integer << std::endl;
+        std::cout << "scope id is string for ip1: " << std::boolalpha << is_string << std::endl;
+        std::cout << "scope id for ip1: " << scope_id.get_string() << std::endl;
+    }
+
+    // If IPv4 is stored in ip_address, then methods for working with the scope id have no effect
+    auto ip2 = ip_address::parse("fe80::1ff:fe23:4567:890a");
+    std::cout << "has scope id for ip2: " << std::boolalpha << (bool) ip2.get_scope_id() << std::endl;
+
+    ip2.set_scope_id("123");
+    auto test_scope_id = ip2.get_scope_id();
+
+    if (test_scope_id) {
+        auto is_integer = test_scope_id.has_uint32();
+        auto is_string = test_scope_id.has_string();
+        std::cout << "scope id is integer for ip2: " << std::boolalpha << is_integer << std::endl;
+        std::cout << "scope id is string for ip2: " << std::boolalpha << is_string << std::endl;
+        std::cout << "scope id for ip2: " << test_scope_id.get_uint32() << std::endl;
+    }
+
+    return 0;
+}
+```
+
 ## Std overrides
 
-TODO
+The library overloads some functions from the standard library so that IP addresses (`ipv4_address`, `ipv6_address`, `ip_address`) can be used in hash tables and other standard operations on `swap`, etc.
+
+```cpp
+#include <iostream>
+#include <unordered_map>
+
+#include <ipaddress/ipaddress.hpp>
+
+using namespace ipaddress;
+
+int main() {
+    constexpr auto ip1 = ip_address::parse("127.0.0.1");
+    constexpr auto ip2 = ip_address::parse("2001:db8::1");
+    constexpr auto ip3 = ip_address::parse("2001:db8::1%scope");
+
+    // Added partial specialization for hash calculation
+    std::unordered_map<ip_address, int> container;
+    container[ip1] = 1;
+    container[ip2] = 2;
+    container[ip3] = 3;
+    for (const auto& [key, value] : container) {
+        std::cout << key << ": " << value << std::endl;
+    }
+
+    // Overloaded operators for parsing and writing to streams (char type only)
+    std::cout << ip2 << std::endl; // 2001:db8::1
+    std::cout << full << ip2 << std::endl; // 2001:0db8:0000:0000:0000:0000:0000:0001
+    std::cout << compact << ip2 << std::endl; // 2001:db8:0:0:0:0:0:1
+    std::cout << compressed << ip2 << std::endl; // 2001:db8::1
+
+    ip_address r1, r2;
+    std::istringstream ss1("255.0.42.42 test");
+    std::istringstream ss2("2001:db8:0:0:0:0:0:1%scope test");
+    ss1 >> r1;
+    ss2 >> r2;
+    std::cout << "has errors: " << std::boolalpha << (ss1.fail() || ss2.fail()) << std::endl; // has errors: false
+    std::cout << r1 << std::endl; // 255.0.42.42
+    std::cout << r2 << std::endl; // 2001:db8::1%scope
+
+    return 0;
+}
+```
 
 @htmlonly
 
