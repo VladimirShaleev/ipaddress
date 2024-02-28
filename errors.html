@@ -38,6 +38,7 @@
 <meta name="msapplication-square150x150logo" content="mstile-150x150.png">
 <meta name="msapplication-wide310x150logo" content="mstile-310x310.png">
 <meta name="msapplication-square310x310logo" content="mstile-310x150.png">
+<meta name="msapplication-config" content="browserconfig.xml">
 <meta name="application-name" content="ipaddress">
 <link rel="manifest" href="site.webmanifest">
 <meta name="theme-color" content="#ffffff">
@@ -154,7 +155,7 @@ $(function(){initNavTree('errors.html',''); initResizable(); });
 <div class="toc"><h3>Table of Contents</h3>
 <ul><ul><li class="level2"><a href="#autotoc_md33">Exception Handling</a></li>
 <li class="level2"><a href="#autotoc_md34">Handling Error Codes</a></li>
-<li class="level2"><a href="#autotoc_md35">Configuring Exception Throwing</a></li>
+<li class="level2"><a href="#autotoc_md35">Disable Exceptions</a></li>
 </ul>
 </ul>
 </div>
@@ -205,7 +206,7 @@ Handling Error Codes</h2>
 <div class="line">}</div>
 <div class="ttc" id="anamespaceipaddress_html_a88a76ee847c844cc47b94caac600689d"><div class="ttname"><a href="namespaceipaddress.html#a88a76ee847c844cc47b94caac600689d">ipaddress::error_code</a></div><div class="ttdeci">error_code</div><div class="ttdoc">Enumeration of error codes for IP address parsing and validation.</div><div class="ttdef"><b>Definition</b> errors.hpp:52</div></div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md35"></a>
-Configuring Exception Throwing</h2>
+Disable Exceptions</h2>
 <p>Also, your compiler may have exceptions disabled. In this case, you can also disable exceptions in the library.</p>
 <dl class="section note"><dt>Note</dt><dd>The library supports the work without any exceptions, if necessary. To disable code that may throw exceptions, pass the <code>IPADDRESS_NO_EXCEPTIONS</code> definition when building.</dd></dl>
 <p>After this, the library will not throw exceptions when errors occur. It is recommended in this case to use error codes to handle errors.</p>

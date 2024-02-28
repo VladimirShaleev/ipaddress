@@ -38,6 +38,7 @@
 <meta name="msapplication-square150x150logo" content="mstile-150x150.png">
 <meta name="msapplication-wide310x150logo" content="mstile-310x310.png">
 <meta name="msapplication-square310x310logo" content="mstile-310x150.png">
+<meta name="msapplication-config" content="browserconfig.xml">
 <meta name="application-name" content="ipaddress">
 <link rel="manifest" href="site.webmanifest">
 <meta name="theme-color" content="#ffffff">
@@ -153,6 +154,7 @@ $(function(){initNavTree('build.html',''); initResizable(); });
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
 <ul><ul><li class="level2"><a href="#autotoc_md36">Set up a project</a></li>
+<li class="level2"><a href="#autotoc_md37">Build the Documentation</a></li>
 </ul>
 </ul>
 </div>
@@ -193,6 +195,16 @@ Set up a project</h2>
 </div><!-- fragment --><p>Running unit tests.</p>
 <div class="fragment"><div class="line">cd build</div>
 <div class="line">ctest --output-on-failure</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md37"></a>
+Build the Documentation</h2>
+<p>To assemble the documentation, you need to install the following tools on the system:</p>
+<ul>
+<li><a href="https://www.doxygen.nl">Doxygen</a> for documentation assembly.</li>
+<li><a href="https://graphviz.org/">graphviz</a> for creating charts</li>
+</ul>
+<p>After which you can enable the documentation build in the configuration and run build.</p>
+<div class="fragment"><div class="line">cmake -B build -S . -DIPADDRESS_BUILD_DOC=ON </div>
+<div class="line">cmake --build build</div>
 </div><!-- fragment --><p> 
 
 <div class="cards">
