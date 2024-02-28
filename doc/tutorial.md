@@ -346,6 +346,8 @@ int main() {
 }
 ```
 
+@note If the prefixlen is not present in the input string, then the length of the prefix will be equal to the maximum length (for ipv4 it is 32, and for ipv6 it is 128)
+
 We can request various network parameters.
 
 ```cpp
@@ -375,6 +377,70 @@ int main() {
     constexpr auto netmask3 = net3.netmask(); // 255.255.0.0
     constexpr auto hostmask3 = net3.hostmask(); // 0.0.255.255
     constexpr auto prefixlen3 = net3.prefixlen(); // 16
+
+    return 0;
+}
+```
+
+### Create from address
+
+A network can be created from an IP address and a prefixlen.
+
+```cpp
+#include <ipaddress/ipaddress.hpp>
+
+using namespace ipaddress;
+
+int main() {
+    constexpr auto ip4 = ipv4_address::parse("192.168.0.1");
+    constexpr auto ip6 = ipv6_address::parse("2002:ac1d:2d64::");
+    constexpr auto ip_any = ip_address::parse("2002:ac1d:2d64::");
+
+    constexpr ipv4_network net1 = ipv4_network::from_address(ip4, 24, false); // non strict mode sample
+    constexpr ipv6_network net2 = ipv6_network::from_address(ip6, 64);
+    constexpr   ip_network net3 =   ip_network::from_address(ip4, 32);
+    constexpr   ip_network net4 =   ip_network::from_address(ip6, 64);
+    constexpr   ip_network net5 =   ip_network::from_address(ip_any, 64);
+    
+    return 0;
+}
+```
+
+### Comparison
+
+For classes for working with IP networks, comparison operators and spaceship operator (for C++20 and newer) have been redefined.
+
+```cpp
+#include <ipaddress/ipaddress.hpp>
+
+using namespace ipaddress;
+
+int main() {
+    constexpr auto net1 = ip_network::parse("2002:ac1d:2d64::/64");
+    constexpr auto net2 = ip_network::parse("2002:ac1d:2d64::"); // this is the same as 2002:ac1d:2d64::/128
+
+    constexpr auto test1 = net1 == net2; // false
+    constexpr auto test2 = net1 != net2; // true
+    constexpr auto test3 = net1 <  net2; // true
+    constexpr auto test4 = net1 <= net2; // true
+    constexpr auto test5 = net1 >= net2; // false
+    constexpr auto test6 = net1 >  net2; // false
+
+    constexpr auto net3 = ip_network::parse("2002:ac1d:2d64::/64");
+    constexpr auto net4 = ip_network::parse("2002:ac1d:2d64::%1/64");
+    
+    constexpr auto test7  = net2 == net3; // false
+    constexpr auto test8  = net2 != net3; // true
+    constexpr auto test9  = net2 <  net3; // false
+    constexpr auto test10 = net2 <= net3; // false
+    constexpr auto test11 = net2 >= net3; // true
+    constexpr auto test12 = net2 >  net3; // true
+    constexpr auto test13 = net3 == net4; // false
+    constexpr auto test14 = net3 != net4; // true
+    constexpr auto test15 = net3 <  net4; // true
+    constexpr auto test16 = net3 <= net4; // true
+    constexpr auto test17 = net3 >= net4; // false
+    constexpr auto test18 = net3 >  net4; // false
 
     return 0;
 }
