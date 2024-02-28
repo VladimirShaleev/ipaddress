@@ -55,6 +55,20 @@ cd build
 ctest --output-on-failure
 ```
 
+## Build the Documentation
+
+To assemble the documentation, you need to install the following tools on the system:
+
+* [Doxygen](https://www.doxygen.nl) for documentation assembly.
+* [graphviz](https://graphviz.org/) for creating charts
+
+After which you can enable the documentation build in the configuration and run build.
+
+```bash
+cmake -B build -S . -DIPADDRESS_BUILD_DOC=ON 
+cmake --build build
+```
+
 @htmlonly
 
 <div class="cards">
