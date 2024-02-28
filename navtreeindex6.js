@@ -1,5 +1,9 @@
 var NAVTREEINDEX6 =
 {
+"ipv6-address_8hpp_source.html":[7,0,0,0,19],
+"ipv6-network_8hpp.html":[7,0,0,0,20],
+"ipv6-network_8hpp.html#a4e653376242842495c4c74d56d5ecc95":[7,0,0,0,20,2],
+"ipv6-network_8hpp.html#ac01850d9afb3ea15e8abd25747f61f68":[7,0,0,0,20,1],
 "ipv6-network_8hpp_source.html":[7,0,0,0,20],
 "namespaceipaddress.html":[5,0,0],
 "namespaceipaddress.html#a18c5dec8ed16e157eab5a1417d70b190":[5,0,0,36],

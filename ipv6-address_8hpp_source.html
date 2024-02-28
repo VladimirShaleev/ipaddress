@@ -910,149 +910,138 @@ $(function(){initNavTree('ipv6-address_8hpp_source.html',''); initResizable(); }
 <div class="line"><a id="l00752" name="l00752"></a><span class="lineno">  752</span> </div>
 <div class="line"><a id="l00753" name="l00753"></a><span class="lineno">  753</span><span class="preprocessor">#</span><span class="preprocessor">endif</span> <span class="comment">// IPADDRESS_HAS_SPACESHIP_OPERATOR</span></div>
 <div class="line"><a id="l00754" name="l00754"></a><span class="lineno">  754</span> </div>
-<div class="line"><a id="l00755" name="l00755"></a><span class="lineno">  755</span>    <a class="code hl_define" href="config_8hpp.html#a7c6e8e32885550d898b7de8d1fd0e828">IPADDRESS_NODISCARD</a> std::string <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> ip_reverse_pointer(<span class="keyword">const</span> base_type&amp; bytes) <span class="keyword">const</span> {</div>
-<div class="line"><a id="l00756" name="l00756"></a><span class="lineno">  756</span>        <span class="keywordflow">return</span> base_v6&lt;ipv6_address_base&gt;::ip_reverse_pointer(bytes,</div>
+<div class="line"><a id="l00755" name="l00755"></a><span class="lineno">  755</span>    <a class="code hl_define" href="config_8hpp.html#a7c6e8e32885550d898b7de8d1fd0e828">IPADDRESS_NODISCARD</a> IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> size_t ip_to_chars(<span class="keyword">const</span> base_type&amp; bytes, format fmt, <span class="keywordtype">char</span> (&amp;result)[base_max_string_len + 1]) <span class="keyword">const</span> <a class="code hl_define" href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a> {</div>
+<div class="line"><a id="l00756" name="l00756"></a><span class="lineno">  756</span>        <span class="keywordflow">return</span> base_v6&lt;ipv6_address_base&gt;::ip_to_chars(bytes,</div>
 <div class="line"><a id="l00757" name="l00757"></a><span class="lineno">  757</span> </div>
 <div class="line"><a id="l00758" name="l00758"></a><span class="lineno">  758</span>        <span class="preprocessor">#</span><span class="preprocessor">if</span> IPADDRESS_IPV6_SCOPE_MAX_LENGTH <span class="preprocessor">&gt;</span> 0</div>
-<div class="line"><a id="l00759" name="l00759"></a><span class="lineno">  759</span>            _data.scope_id</div>
+<div class="line"><a id="l00759" name="l00759"></a><span class="lineno">  759</span>            _data.scope_id,</div>
 <div class="line"><a id="l00760" name="l00760"></a><span class="lineno">  760</span>        <span class="preprocessor">#</span><span class="preprocessor">else</span> <span class="comment">// IPADDRESS_IPV6_SCOPE_MAX_LENGTH &lt;= 0</span></div>
-<div class="line"><a id="l00761" name="l00761"></a><span class="lineno">  761</span>            make_fixed_string(<span class="stringliteral">&quot;&quot;</span>)</div>
+<div class="line"><a id="l00761" name="l00761"></a><span class="lineno">  761</span>            make_fixed_string(<span class="stringliteral">&quot;&quot;</span>),</div>
 <div class="line"><a id="l00762" name="l00762"></a><span class="lineno">  762</span>        <span class="preprocessor">#</span><span class="preprocessor">endif</span> <span class="comment">// IPADDRESS_IPV6_SCOPE_MAX_LENGTH &lt;= 0</span></div>
-<div class="line"><a id="l00763" name="l00763"></a><span class="lineno">  763</span>        );</div>
-<div class="line"><a id="l00764" name="l00764"></a><span class="lineno">  764</span>    }</div>
-<div class="line"><a id="l00765" name="l00765"></a><span class="lineno">  765</span> </div>
-<div class="line"><a id="l00766" name="l00766"></a><span class="lineno">  766</span>    <a class="code hl_define" href="config_8hpp.html#a7c6e8e32885550d898b7de8d1fd0e828">IPADDRESS_NODISCARD</a> IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> size_t ip_to_chars(<span class="keyword">const</span> base_type&amp; bytes, format fmt, <span class="keywordtype">char</span> (&amp;result)[base_max_string_len + 1]) <span class="keyword">const</span> <a class="code hl_define" href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a> {</div>
-<div class="line"><a id="l00767" name="l00767"></a><span class="lineno">  767</span>        <span class="keywordflow">return</span> base_v6&lt;ipv6_address_base&gt;::ip_to_chars(bytes,</div>
-<div class="line"><a id="l00768" name="l00768"></a><span class="lineno">  768</span> </div>
-<div class="line"><a id="l00769" name="l00769"></a><span class="lineno">  769</span>        <span class="preprocessor">#</span><span class="preprocessor">if</span> IPADDRESS_IPV6_SCOPE_MAX_LENGTH <span class="preprocessor">&gt;</span> 0</div>
-<div class="line"><a id="l00770" name="l00770"></a><span class="lineno">  770</span>            _data.scope_id,</div>
-<div class="line"><a id="l00771" name="l00771"></a><span class="lineno">  771</span>        <span class="preprocessor">#</span><span class="preprocessor">else</span> <span class="comment">// IPADDRESS_IPV6_SCOPE_MAX_LENGTH &lt;= 0</span></div>
-<div class="line"><a id="l00772" name="l00772"></a><span class="lineno">  772</span>            make_fixed_string(<span class="stringliteral">&quot;&quot;</span>),</div>
-<div class="line"><a id="l00773" name="l00773"></a><span class="lineno">  773</span>        <span class="preprocessor">#</span><span class="preprocessor">endif</span> <span class="comment">// IPADDRESS_IPV6_SCOPE_MAX_LENGTH &lt;= 0</span></div>
-<div class="line"><a id="l00774" name="l00774"></a><span class="lineno">  774</span>            fmt,</div>
-<div class="line"><a id="l00775" name="l00775"></a><span class="lineno">  775</span>            result);</div>
-<div class="line"><a id="l00776" name="l00776"></a><span class="lineno">  776</span>    }</div>
-<div class="line"><a id="l00777" name="l00777"></a><span class="lineno">  777</span> </div>
-<div class="line"><a id="l00778" name="l00778"></a><span class="lineno">  778</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00779" name="l00779"></a><span class="lineno">  779</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span>&gt;</div>
-<div class="line"><a id="l00780" name="l00780"></a><span class="lineno">  780</span>    <span class="keyword">friend</span> <span class="keyword">class</span> <a class="code hl_class" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>;</div>
-<div class="line"><a id="l00781" name="l00781"></a><span class="lineno">  781</span> </div>
-<div class="line"><a id="l00782" name="l00782"></a><span class="lineno">  782</span>    <span class="comment">// not used due to clang bug in version 14 and below</span></div>
-<div class="line"><a id="l00783" name="l00783"></a><span class="lineno">  783</span>    <span class="comment">// https://bugs.llvm.org/show_bug.cgi?id=18781</span></div>
+<div class="line"><a id="l00763" name="l00763"></a><span class="lineno">  763</span>            fmt,</div>
+<div class="line"><a id="l00764" name="l00764"></a><span class="lineno">  764</span>            result);</div>
+<div class="line"><a id="l00765" name="l00765"></a><span class="lineno">  765</span>    }</div>
+<div class="line"><a id="l00766" name="l00766"></a><span class="lineno">  766</span> </div>
+<div class="line"><a id="l00767" name="l00767"></a><span class="lineno">  767</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00768" name="l00768"></a><span class="lineno">  768</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span>&gt;</div>
+<div class="line"><a id="l00769" name="l00769"></a><span class="lineno">  769</span>    <span class="keyword">friend</span> <span class="keyword">class</span> <a class="code hl_class" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>;</div>
+<div class="line"><a id="l00770" name="l00770"></a><span class="lineno">  770</span> </div>
+<div class="line"><a id="l00771" name="l00771"></a><span class="lineno">  771</span>    <span class="comment">// not used due to clang bug in version 14 and below</span></div>
+<div class="line"><a id="l00772" name="l00772"></a><span class="lineno">  772</span>    <span class="comment">// https://bugs.llvm.org/show_bug.cgi?id=18781</span></div>
+<div class="line"><a id="l00773" name="l00773"></a><span class="lineno">  773</span>    <span class="comment">//</span></div>
+<div class="line"><a id="l00774" name="l00774"></a><span class="lineno">  774</span>    <span class="comment">// template &lt;typename Str&gt;</span></div>
+<div class="line"><a id="l00775" name="l00775"></a><span class="lineno">  775</span>    <span class="comment">// IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void change_scope_id(const Str&amp; scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {</span></div>
+<div class="line"><a id="l00776" name="l00776"></a><span class="lineno">  776</span>    <span class="comment">//     error_code err = error_code::NO_ERROR;</span></div>
+<div class="line"><a id="l00777" name="l00777"></a><span class="lineno">  777</span>    <span class="comment">//     change_scope_id(scope_id, err);</span></div>
+<div class="line"><a id="l00778" name="l00778"></a><span class="lineno">  778</span>    <span class="comment">// #ifndef IPADDRESS_NO_EXCEPTIONS</span></div>
+<div class="line"><a id="l00779" name="l00779"></a><span class="lineno">  779</span>    <span class="comment">//     if (err != error_code::NO_ERROR) {</span></div>
+<div class="line"><a id="l00780" name="l00780"></a><span class="lineno">  780</span>    <span class="comment">//         raise_error(err, 0, &quot;&lt;bytes&gt;&quot;, 7);</span></div>
+<div class="line"><a id="l00781" name="l00781"></a><span class="lineno">  781</span>    <span class="comment">//     }</span></div>
+<div class="line"><a id="l00782" name="l00782"></a><span class="lineno">  782</span>    <span class="comment">// #endif</span></div>
+<div class="line"><a id="l00783" name="l00783"></a><span class="lineno">  783</span>    <span class="comment">// }</span></div>
 <div class="line"><a id="l00784" name="l00784"></a><span class="lineno">  784</span>    <span class="comment">//</span></div>
 <div class="line"><a id="l00785" name="l00785"></a><span class="lineno">  785</span>    <span class="comment">// template &lt;typename Str&gt;</span></div>
-<div class="line"><a id="l00786" name="l00786"></a><span class="lineno">  786</span>    <span class="comment">// IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void change_scope_id(const Str&amp; scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {</span></div>
-<div class="line"><a id="l00787" name="l00787"></a><span class="lineno">  787</span>    <span class="comment">//     error_code err = error_code::NO_ERROR;</span></div>
-<div class="line"><a id="l00788" name="l00788"></a><span class="lineno">  788</span>    <span class="comment">//     change_scope_id(scope_id, err);</span></div>
-<div class="line"><a id="l00789" name="l00789"></a><span class="lineno">  789</span>    <span class="comment">// #ifndef IPADDRESS_NO_EXCEPTIONS</span></div>
-<div class="line"><a id="l00790" name="l00790"></a><span class="lineno">  790</span>    <span class="comment">//     if (err != error_code::NO_ERROR) {</span></div>
-<div class="line"><a id="l00791" name="l00791"></a><span class="lineno">  791</span>    <span class="comment">//         raise_error(err, 0, &quot;&lt;bytes&gt;&quot;, 7);</span></div>
+<div class="line"><a id="l00786" name="l00786"></a><span class="lineno">  786</span>    <span class="comment">// IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void change_scope_id(const Str&amp; scope_id, error_code&amp; code) IPADDRESS_NOEXCEPT {</span></div>
+<div class="line"><a id="l00787" name="l00787"></a><span class="lineno">  787</span>    <span class="comment">//     code = error_code::NO_ERROR;</span></div>
+<div class="line"><a id="l00788" name="l00788"></a><span class="lineno">  788</span>    <span class="comment">// #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH &gt; 0</span></div>
+<div class="line"><a id="l00789" name="l00789"></a><span class="lineno">  789</span>    <span class="comment">//     if (scope_id.size() &gt; IPADDRESS_IPV6_SCOPE_MAX_LENGTH) {</span></div>
+<div class="line"><a id="l00790" name="l00790"></a><span class="lineno">  790</span>    <span class="comment">//         code = error_code::SCOPE_ID_IS_TOO_LONG;</span></div>
+<div class="line"><a id="l00791" name="l00791"></a><span class="lineno">  791</span>    <span class="comment">//         return;</span></div>
 <div class="line"><a id="l00792" name="l00792"></a><span class="lineno">  792</span>    <span class="comment">//     }</span></div>
-<div class="line"><a id="l00793" name="l00793"></a><span class="lineno">  793</span>    <span class="comment">// #endif</span></div>
-<div class="line"><a id="l00794" name="l00794"></a><span class="lineno">  794</span>    <span class="comment">// }</span></div>
-<div class="line"><a id="l00795" name="l00795"></a><span class="lineno">  795</span>    <span class="comment">//</span></div>
-<div class="line"><a id="l00796" name="l00796"></a><span class="lineno">  796</span>    <span class="comment">// template &lt;typename Str&gt;</span></div>
-<div class="line"><a id="l00797" name="l00797"></a><span class="lineno">  797</span>    <span class="comment">// IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void change_scope_id(const Str&amp; scope_id, error_code&amp; code) IPADDRESS_NOEXCEPT {</span></div>
-<div class="line"><a id="l00798" name="l00798"></a><span class="lineno">  798</span>    <span class="comment">//     code = error_code::NO_ERROR;</span></div>
-<div class="line"><a id="l00799" name="l00799"></a><span class="lineno">  799</span>    <span class="comment">// #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH &gt; 0</span></div>
-<div class="line"><a id="l00800" name="l00800"></a><span class="lineno">  800</span>    <span class="comment">//     if (scope_id.size() &gt; IPADDRESS_IPV6_SCOPE_MAX_LENGTH) {</span></div>
-<div class="line"><a id="l00801" name="l00801"></a><span class="lineno">  801</span>    <span class="comment">//         code = error_code::SCOPE_ID_IS_TOO_LONG;</span></div>
-<div class="line"><a id="l00802" name="l00802"></a><span class="lineno">  802</span>    <span class="comment">//         return;</span></div>
-<div class="line"><a id="l00803" name="l00803"></a><span class="lineno">  803</span>    <span class="comment">//     }</span></div>
-<div class="line"><a id="l00804" name="l00804"></a><span class="lineno">  804</span>    <span class="comment">//     char scope[IPADDRESS_IPV6_SCOPE_MAX_LENGTH + 1] = {};</span></div>
-<div class="line"><a id="l00805" name="l00805"></a><span class="lineno">  805</span>    <span class="comment">//     for (size_t i = 0; i &lt; scope_id.size(); ++i) {</span></div>
-<div class="line"><a id="l00806" name="l00806"></a><span class="lineno">  806</span>    <span class="comment">//         scope[i] = char(scope_id[i]);</span></div>
-<div class="line"><a id="l00807" name="l00807"></a><span class="lineno">  807</span>    <span class="comment">//     }</span></div>
-<div class="line"><a id="l00808" name="l00808"></a><span class="lineno">  808</span>    <span class="comment">//     _data.scope_id = make_fixed_string(scope);</span></div>
-<div class="line"><a id="l00809" name="l00809"></a><span class="lineno">  809</span>    <span class="comment">// #endif // IPADDRESS_IPV6_SCOPE_MAX_LENGTH</span></div>
-<div class="line"><a id="l00810" name="l00810"></a><span class="lineno">  810</span>    <span class="comment">// }</span></div>
-<div class="line"><a id="l00811" name="l00811"></a><span class="lineno">  811</span> </div>
-<div class="line"><a id="l00812" name="l00812"></a><span class="lineno">  812</span>    <span class="keyword">struct</span> ipv6_data {</div>
-<div class="line"><a id="l00813" name="l00813"></a><span class="lineno">  813</span>        IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> ipv6_data() <a class="code hl_define" href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a> = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00814" name="l00814"></a><span class="lineno">  814</span>        IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> ipv6_data(<span class="keyword">const</span> base_type&amp; b) <a class="code hl_define" href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a> : bytes(b) {</div>
-<div class="line"><a id="l00815" name="l00815"></a><span class="lineno">  815</span>        }</div>
-<div class="line"><a id="l00816" name="l00816"></a><span class="lineno">  816</span> </div>
-<div class="line"><a id="l00817" name="l00817"></a><span class="lineno">  817</span>        base_type bytes{};</div>
-<div class="line"><a id="l00818" name="l00818"></a><span class="lineno">  818</span>    <span class="preprocessor">#</span><span class="preprocessor">if</span> IPADDRESS_IPV6_SCOPE_MAX_LENGTH <span class="preprocessor">&gt;</span> 0</div>
-<div class="line"><a id="l00819" name="l00819"></a><span class="lineno">  819</span>        <a class="code hl_struct" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt;IPADDRESS_IPV6_SCOPE_MAX_LENGTH&gt; scope_id;</div>
-<div class="line"><a id="l00820" name="l00820"></a><span class="lineno">  820</span>    <span class="preprocessor">#</span><span class="preprocessor">endif</span> <span class="comment">// IPADDRESS_IPV6_SCOPE_MAX_LENGTH</span></div>
-<div class="line"><a id="l00821" name="l00821"></a><span class="lineno">  821</span>    } _data;</div>
-<div class="line"><a id="l00822" name="l00822"></a><span class="lineno">  822</span>}; <span class="comment">// ipv6_address_base</span></div>
-<div class="line"><a id="l00823" name="l00823"></a><span class="lineno">  823</span> </div>
-<div class="line"><a id="l00824" name="l00824"></a><span class="lineno">  824</span><span class="comment">/**</span></div>
-<div class="line"><span class="lineno">  825</span><span class="comment"> * Alias for the base class specialized for IPv6 address manipulation.</span></div>
-<div class="line"><span class="lineno">  826</span><span class="comment"> * </span></div>
-<div class="line"><span class="lineno">  827</span><span class="comment"> * This alias provides a convenient shorthand for the specialized `ip_address_base` class</span></div>
-<div class="line"><span class="lineno">  828</span><span class="comment"> * tailored for IPv6 address handling. It inherits all functionalities from the `ipv6_address_base`</span></div>
-<div class="line"><span class="lineno">  829</span><span class="comment"> * class, allowing for operations such as conversion, comparison, and property querying</span></div>
-<div class="line"><span class="lineno">  830</span><span class="comment"> * specific to IPv6 addresses.</span></div>
-<div class="line"><span class="lineno">  831</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00832" name="l00832"></a><span class="lineno"><a class="line" href="namespaceipaddress.html#a2e072776d657e0e660e387cd493b343f">  832</a></span><span class="keyword">using</span> ipv6_address = <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">ip_address_base</a>&lt;<a class="code hl_class" href="classipaddress_1_1ipv6__address__base.html">ipv6_address_base</a>&gt;;</div>
-<div class="line"><a id="l00833" name="l00833"></a><span class="lineno">  833</span> </div>
-<div class="line"><a id="l00834" name="l00834"></a><span class="lineno">  834</span><span class="preprocessor">#</span><span class="preprocessor">ifdef</span> <span class="preprocessor">IPADDRESS_NONTYPE_TEMPLATE_PARAMETER</span></div>
+<div class="line"><a id="l00793" name="l00793"></a><span class="lineno">  793</span>    <span class="comment">//     char scope[IPADDRESS_IPV6_SCOPE_MAX_LENGTH + 1] = {};</span></div>
+<div class="line"><a id="l00794" name="l00794"></a><span class="lineno">  794</span>    <span class="comment">//     for (size_t i = 0; i &lt; scope_id.size(); ++i) {</span></div>
+<div class="line"><a id="l00795" name="l00795"></a><span class="lineno">  795</span>    <span class="comment">//         scope[i] = char(scope_id[i]);</span></div>
+<div class="line"><a id="l00796" name="l00796"></a><span class="lineno">  796</span>    <span class="comment">//     }</span></div>
+<div class="line"><a id="l00797" name="l00797"></a><span class="lineno">  797</span>    <span class="comment">//     _data.scope_id = make_fixed_string(scope);</span></div>
+<div class="line"><a id="l00798" name="l00798"></a><span class="lineno">  798</span>    <span class="comment">// #endif // IPADDRESS_IPV6_SCOPE_MAX_LENGTH</span></div>
+<div class="line"><a id="l00799" name="l00799"></a><span class="lineno">  799</span>    <span class="comment">// }</span></div>
+<div class="line"><a id="l00800" name="l00800"></a><span class="lineno">  800</span> </div>
+<div class="line"><a id="l00801" name="l00801"></a><span class="lineno">  801</span>    <span class="keyword">struct</span> ipv6_data {</div>
+<div class="line"><a id="l00802" name="l00802"></a><span class="lineno">  802</span>        IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> ipv6_data() <a class="code hl_define" href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a> = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00803" name="l00803"></a><span class="lineno">  803</span>        IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> ipv6_data(<span class="keyword">const</span> base_type&amp; b) <a class="code hl_define" href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a> : bytes(b) {</div>
+<div class="line"><a id="l00804" name="l00804"></a><span class="lineno">  804</span>        }</div>
+<div class="line"><a id="l00805" name="l00805"></a><span class="lineno">  805</span> </div>
+<div class="line"><a id="l00806" name="l00806"></a><span class="lineno">  806</span>        base_type bytes{};</div>
+<div class="line"><a id="l00807" name="l00807"></a><span class="lineno">  807</span>    <span class="preprocessor">#</span><span class="preprocessor">if</span> IPADDRESS_IPV6_SCOPE_MAX_LENGTH <span class="preprocessor">&gt;</span> 0</div>
+<div class="line"><a id="l00808" name="l00808"></a><span class="lineno">  808</span>        <a class="code hl_struct" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt;IPADDRESS_IPV6_SCOPE_MAX_LENGTH&gt; scope_id;</div>
+<div class="line"><a id="l00809" name="l00809"></a><span class="lineno">  809</span>    <span class="preprocessor">#</span><span class="preprocessor">endif</span> <span class="comment">// IPADDRESS_IPV6_SCOPE_MAX_LENGTH</span></div>
+<div class="line"><a id="l00810" name="l00810"></a><span class="lineno">  810</span>    } _data;</div>
+<div class="line"><a id="l00811" name="l00811"></a><span class="lineno">  811</span>}; <span class="comment">// ipv6_address_base</span></div>
+<div class="line"><a id="l00812" name="l00812"></a><span class="lineno">  812</span> </div>
+<div class="line"><a id="l00813" name="l00813"></a><span class="lineno">  813</span><span class="comment">/**</span></div>
+<div class="line"><span class="lineno">  814</span><span class="comment"> * Alias for the base class specialized for IPv6 address manipulation.</span></div>
+<div class="line"><span class="lineno">  815</span><span class="comment"> * </span></div>
+<div class="line"><span class="lineno">  816</span><span class="comment"> * This alias provides a convenient shorthand for the specialized `ip_address_base` class</span></div>
+<div class="line"><span class="lineno">  817</span><span class="comment"> * tailored for IPv6 address handling. It inherits all functionalities from the `ipv6_address_base`</span></div>
+<div class="line"><span class="lineno">  818</span><span class="comment"> * class, allowing for operations such as conversion, comparison, and property querying</span></div>
+<div class="line"><span class="lineno">  819</span><span class="comment"> * specific to IPv6 addresses.</span></div>
+<div class="line"><span class="lineno">  820</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00821" name="l00821"></a><span class="lineno"><a class="line" href="namespaceipaddress.html#a2e072776d657e0e660e387cd493b343f">  821</a></span><span class="keyword">using</span> ipv6_address = <a class="code hl_class" href="classipaddress_1_1ip__address__base.html">ip_address_base</a>&lt;<a class="code hl_class" href="classipaddress_1_1ipv6__address__base.html">ipv6_address_base</a>&gt;;</div>
+<div class="line"><a id="l00822" name="l00822"></a><span class="lineno">  822</span> </div>
+<div class="line"><a id="l00823" name="l00823"></a><span class="lineno">  823</span><span class="preprocessor">#</span><span class="preprocessor">ifdef</span> <span class="preprocessor">IPADDRESS_NONTYPE_TEMPLATE_PARAMETER</span></div>
+<div class="line"><a id="l00824" name="l00824"></a><span class="lineno">  824</span> </div>
+<div class="line"><a id="l00825" name="l00825"></a><span class="lineno">  825</span>    <span class="comment">/**</span></div>
+<div class="line"><span class="lineno">  826</span><span class="comment">     * User-defined literal for creating an ipv6_address from a fixed string at compile time.</span></div>
+<div class="line"><span class="lineno">  827</span><span class="comment">     * </span></div>
+<div class="line"><span class="lineno">  828</span><span class="comment">     * @tparam FixedString A compile-time fixed string representing the IPv6 address.</span></div>
+<div class="line"><span class="lineno">  829</span><span class="comment">     * @return An ipv6_address object parsed from the fixed string.</span></div>
+<div class="line"><span class="lineno">  830</span><span class="comment">     */</span></div>
+<div class="line"><a id="l00831" name="l00831"></a><span class="lineno">  831</span>    <span class="keyword">template</span> &lt;<a class="code hl_function" href="namespaceipaddress.html#aff00fe84d95c3b275ffacf39ee81df34">fixed_string</a> <a class="code hl_function" href="namespaceipaddress.html#aff00fe84d95c3b275ffacf39ee81df34">FixedString</a>&gt;</div>
+<div class="line"><a id="l00832" name="l00832"></a><span class="lineno"><a class="line" href="namespaceipaddress.html#a745a7ca990af72b116c12f6b5e4a0537">  832</a></span>    <a class="code hl_function" href="namespaceipaddress.html#aff00fe84d95c3b275ffacf39ee81df34">IPADDRESS_NODISCARD</a> <a class="code hl_function" href="namespaceipaddress.html#aff00fe84d95c3b275ffacf39ee81df34">IPADDRESS_CONSTEVAL</a> <a class="code hl_function" href="namespaceipaddress.html#aff00fe84d95c3b275ffacf39ee81df34">IPADDRESS_FORCE_INLINE</a> <a class="code hl_function" href="namespaceipaddress.html#aff00fe84d95c3b275ffacf39ee81df34">ipv6_address</a> <a class="code hl_function" href="namespaceipaddress.html#aff00fe84d95c3b275ffacf39ee81df34">operator</a><span class="stringliteral">&quot;&quot;_ipv6</span>() <a class="code hl_function" href="namespaceipaddress.html#aff00fe84d95c3b275ffacf39ee81df34">IPADDRESS_NOEXCEPT</a> {</div>
+<div class="line"><a id="l00833" name="l00833"></a><span class="lineno">  833</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="namespaceipaddress.html#aff00fe84d95c3b275ffacf39ee81df34">ipv6_address</a>::<a class="code hl_function" href="namespaceipaddress.html#aff00fe84d95c3b275ffacf39ee81df34">parse</a>&lt;<a class="code hl_function" href="namespaceipaddress.html#aff00fe84d95c3b275ffacf39ee81df34">FixedString</a>&gt;();</div>
+<div class="line"><a id="l00834" name="l00834"></a><span class="lineno">  834</span>    }</div>
 <div class="line"><a id="l00835" name="l00835"></a><span class="lineno">  835</span> </div>
-<div class="line"><a id="l00836" name="l00836"></a><span class="lineno">  836</span>    <span class="comment">/**</span></div>
-<div class="line"><span class="lineno">  837</span><span class="comment">     * User-defined literal for creating an ipv6_address from a fixed string at compile time.</span></div>
-<div class="line"><span class="lineno">  838</span><span class="comment">     * </span></div>
-<div class="line"><span class="lineno">  839</span><span class="comment">     * @tparam FixedString A compile-time fixed string representing the IPv6 address.</span></div>
-<div class="line"><span class="lineno">  840</span><span class="comment">     * @return An ipv6_address object parsed from the fixed string.</span></div>
-<div class="line"><span class="lineno">  841</span><span class="comment">     */</span></div>
-<div class="line"><a id="l00842" name="l00842"></a><span class="lineno">  842</span>    <span class="keyword">template</span> &lt;<a class="code hl_function" href="namespaceipaddress.html#aff00fe84d95c3b275ffacf39ee81df34">fixed_string</a> <a class="code hl_function" href="namespaceipaddress.html#aff00fe84d95c3b275ffacf39ee81df34">FixedString</a>&gt;</div>
-<div class="line"><a id="l00843" name="l00843"></a><span class="lineno"><a class="line" href="namespaceipaddress.html#a745a7ca990af72b116c12f6b5e4a0537">  843</a></span>    <a class="code hl_function" href="namespaceipaddress.html#aff00fe84d95c3b275ffacf39ee81df34">IPADDRESS_NODISCARD</a> <a class="code hl_function" href="namespaceipaddress.html#aff00fe84d95c3b275ffacf39ee81df34">IPADDRESS_CONSTEVAL</a> <a class="code hl_function" href="namespaceipaddress.html#aff00fe84d95c3b275ffacf39ee81df34">IPADDRESS_FORCE_INLINE</a> <a class="code hl_function" href="namespaceipaddress.html#aff00fe84d95c3b275ffacf39ee81df34">ipv6_address</a> <a class="code hl_function" href="namespaceipaddress.html#aff00fe84d95c3b275ffacf39ee81df34">operator</a><span class="stringliteral">&quot;&quot;_ipv6</span>() <a class="code hl_function" href="namespaceipaddress.html#aff00fe84d95c3b275ffacf39ee81df34">IPADDRESS_NOEXCEPT</a> {</div>
-<div class="line"><a id="l00844" name="l00844"></a><span class="lineno">  844</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="namespaceipaddress.html#aff00fe84d95c3b275ffacf39ee81df34">ipv6_address</a>::<a class="code hl_function" href="namespaceipaddress.html#aff00fe84d95c3b275ffacf39ee81df34">parse</a>&lt;<a class="code hl_function" href="namespaceipaddress.html#aff00fe84d95c3b275ffacf39ee81df34">FixedString</a>&gt;();</div>
-<div class="line"><a id="l00845" name="l00845"></a><span class="lineno">  845</span>    }</div>
-<div class="line"><a id="l00846" name="l00846"></a><span class="lineno">  846</span> </div>
-<div class="line"><a id="l00847" name="l00847"></a><span class="lineno">  847</span><span class="preprocessor">#</span><span class="preprocessor">else</span> <span class="comment">// IPADDRESS_NONTYPE_TEMPLATE_PARAMETER</span></div>
+<div class="line"><a id="l00836" name="l00836"></a><span class="lineno">  836</span><span class="preprocessor">#</span><span class="preprocessor">else</span> <span class="comment">// IPADDRESS_NONTYPE_TEMPLATE_PARAMETER</span></div>
+<div class="line"><a id="l00837" name="l00837"></a><span class="lineno">  837</span> </div>
+<div class="line"><a id="l00838" name="l00838"></a><span class="lineno">  838</span>    <span class="comment">/**</span></div>
+<div class="line"><span class="lineno">  839</span><span class="comment">     * User-defined literal for creating an ipv6_address from a string literal.</span></div>
+<div class="line"><span class="lineno">  840</span><span class="comment">     * </span></div>
+<div class="line"><span class="lineno">  841</span><span class="comment">     * @param[in] address A pointer to a character array representing the IPv6 address.</span></div>
+<div class="line"><span class="lineno">  842</span><span class="comment">     * @param[in] size The size of the character array.</span></div>
+<div class="line"><span class="lineno">  843</span><span class="comment">     * @return An ipv6_address object parsed from the string literal.</span></div>
+<div class="line"><span class="lineno">  844</span><span class="comment">     */</span></div>
+<div class="line"><a id="l00845" name="l00845"></a><span class="lineno">  845</span>    <a class="code hl_define" href="config_8hpp.html#af94b0f511ece16353195a8b260aba20a">IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS</a> IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> ipv6_address operator<span class="stringliteral">&quot;&quot;_ipv6</span>(<span class="keyword">const</span> <span class="keywordtype">char</span>* address, std::size_t size) <a class="code hl_define" href="config_8hpp.html#a1ce8f0549cece9344e691fcfc4910a7d">IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS</a> {</div>
+<div class="line"><a id="l00846" name="l00846"></a><span class="lineno">  846</span>        <span class="keywordflow">return</span> internal::parse_ip_from_literal&lt;ipv6_address_base, <span class="keywordtype">char</span>, ipv6_address::base_max_string_len&gt;(address, size);</div>
+<div class="line"><a id="l00847" name="l00847"></a><span class="lineno">  847</span>    }</div>
 <div class="line"><a id="l00848" name="l00848"></a><span class="lineno">  848</span> </div>
 <div class="line"><a id="l00849" name="l00849"></a><span class="lineno">  849</span>    <span class="comment">/**</span></div>
-<div class="line"><span class="lineno">  850</span><span class="comment">     * User-defined literal for creating an ipv6_address from a string literal.</span></div>
+<div class="line"><span class="lineno">  850</span><span class="comment">     * User-defined literal for creating an ipv6_address from a wide string literal.</span></div>
 <div class="line"><span class="lineno">  851</span><span class="comment">     * </span></div>
 <div class="line"><span class="lineno">  852</span><span class="comment">     * @param[in] address A pointer to a character array representing the IPv6 address.</span></div>
 <div class="line"><span class="lineno">  853</span><span class="comment">     * @param[in] size The size of the character array.</span></div>
 <div class="line"><span class="lineno">  854</span><span class="comment">     * @return An ipv6_address object parsed from the string literal.</span></div>
 <div class="line"><span class="lineno">  855</span><span class="comment">     */</span></div>
-<div class="line"><a id="l00856" name="l00856"></a><span class="lineno">  856</span>    <a class="code hl_define" href="config_8hpp.html#af94b0f511ece16353195a8b260aba20a">IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS</a> IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> ipv6_address operator<span class="stringliteral">&quot;&quot;_ipv6</span>(<span class="keyword">const</span> <span class="keywordtype">char</span>* address, std::size_t size) <a class="code hl_define" href="config_8hpp.html#a1ce8f0549cece9344e691fcfc4910a7d">IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS</a> {</div>
-<div class="line"><a id="l00857" name="l00857"></a><span class="lineno">  857</span>        <span class="keywordflow">return</span> internal::parse_ip_from_literal&lt;ipv6_address_base, <span class="keywordtype">char</span>, ipv6_address::base_max_string_len&gt;(address, size);</div>
+<div class="line"><a id="l00856" name="l00856"></a><span class="lineno">  856</span>    <a class="code hl_define" href="config_8hpp.html#af94b0f511ece16353195a8b260aba20a">IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS</a> IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> ipv6_address operator<span class="stringliteral">&quot;&quot;_ipv6</span>(<span class="keyword">const</span> <span class="keywordtype">wchar_t</span>* address, std::size_t size) <a class="code hl_define" href="config_8hpp.html#a1ce8f0549cece9344e691fcfc4910a7d">IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS</a> {</div>
+<div class="line"><a id="l00857" name="l00857"></a><span class="lineno">  857</span>        <span class="keywordflow">return</span> internal::parse_ip_from_literal&lt;ipv6_address_base, <span class="keywordtype">wchar_t</span>, ipv6_address::base_max_string_len&gt;(address, size);</div>
 <div class="line"><a id="l00858" name="l00858"></a><span class="lineno">  858</span>    }</div>
 <div class="line"><a id="l00859" name="l00859"></a><span class="lineno">  859</span> </div>
 <div class="line"><a id="l00860" name="l00860"></a><span class="lineno">  860</span>    <span class="comment">/**</span></div>
-<div class="line"><span class="lineno">  861</span><span class="comment">     * User-defined literal for creating an ipv6_address from a wide string literal.</span></div>
+<div class="line"><span class="lineno">  861</span><span class="comment">     * User-defined literal for creating an ipv6_address from a UTF-16 string literal.</span></div>
 <div class="line"><span class="lineno">  862</span><span class="comment">     * </span></div>
 <div class="line"><span class="lineno">  863</span><span class="comment">     * @param[in] address A pointer to a character array representing the IPv6 address.</span></div>
 <div class="line"><span class="lineno">  864</span><span class="comment">     * @param[in] size The size of the character array.</span></div>
 <div class="line"><span class="lineno">  865</span><span class="comment">     * @return An ipv6_address object parsed from the string literal.</span></div>
 <div class="line"><span class="lineno">  866</span><span class="comment">     */</span></div>
-<div class="line"><a id="l00867" name="l00867"></a><span class="lineno">  867</span>    <a class="code hl_define" href="config_8hpp.html#af94b0f511ece16353195a8b260aba20a">IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS</a> IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> ipv6_address operator<span class="stringliteral">&quot;&quot;_ipv6</span>(<span class="keyword">const</span> <span class="keywordtype">wchar_t</span>* address, std::size_t size) <a class="code hl_define" href="config_8hpp.html#a1ce8f0549cece9344e691fcfc4910a7d">IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS</a> {</div>
-<div class="line"><a id="l00868" name="l00868"></a><span class="lineno">  868</span>        <span class="keywordflow">return</span> internal::parse_ip_from_literal&lt;ipv6_address_base, <span class="keywordtype">wchar_t</span>, ipv6_address::base_max_string_len&gt;(address, size);</div>
+<div class="line"><a id="l00867" name="l00867"></a><span class="lineno">  867</span>    <a class="code hl_define" href="config_8hpp.html#af94b0f511ece16353195a8b260aba20a">IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS</a> IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> ipv6_address operator<span class="stringliteral">&quot;&quot;_ipv6</span>(<span class="keyword">const</span> <span class="keyword">char16_t</span>* address, std::size_t size) <a class="code hl_define" href="config_8hpp.html#a1ce8f0549cece9344e691fcfc4910a7d">IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS</a> {</div>
+<div class="line"><a id="l00868" name="l00868"></a><span class="lineno">  868</span>        <span class="keywordflow">return</span> internal::parse_ip_from_literal&lt;ipv6_address_base, <span class="keyword">char16_t</span>, ipv6_address::base_max_string_len&gt;(address, size);</div>
 <div class="line"><a id="l00869" name="l00869"></a><span class="lineno">  869</span>    }</div>
 <div class="line"><a id="l00870" name="l00870"></a><span class="lineno">  870</span> </div>
 <div class="line"><a id="l00871" name="l00871"></a><span class="lineno">  871</span>    <span class="comment">/**</span></div>
-<div class="line"><span class="lineno">  872</span><span class="comment">     * User-defined literal for creating an ipv6_address from a UTF-16 string literal.</span></div>
+<div class="line"><span class="lineno">  872</span><span class="comment">     * User-defined literal for creating an ipv6_address from a UTF-32 string literal.</span></div>
 <div class="line"><span class="lineno">  873</span><span class="comment">     * </span></div>
 <div class="line"><span class="lineno">  874</span><span class="comment">     * @param[in] address A pointer to a character array representing the IPv6 address.</span></div>
 <div class="line"><span class="lineno">  875</span><span class="comment">     * @param[in] size The size of the character array.</span></div>
 <div class="line"><span class="lineno">  876</span><span class="comment">     * @return An ipv6_address object parsed from the string literal.</span></div>
 <div class="line"><span class="lineno">  877</span><span class="comment">     */</span></div>
-<div class="line"><a id="l00878" name="l00878"></a><span class="lineno">  878</span>    <a class="code hl_define" href="config_8hpp.html#af94b0f511ece16353195a8b260aba20a">IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS</a> IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> ipv6_address operator<span class="stringliteral">&quot;&quot;_ipv6</span>(<span class="keyword">const</span> <span class="keyword">char16_t</span>* address, std::size_t size) <a class="code hl_define" href="config_8hpp.html#a1ce8f0549cece9344e691fcfc4910a7d">IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS</a> {</div>
-<div class="line"><a id="l00879" name="l00879"></a><span class="lineno">  879</span>        <span class="keywordflow">return</span> internal::parse_ip_from_literal&lt;ipv6_address_base, <span class="keyword">char16_t</span>, ipv6_address::base_max_string_len&gt;(address, size);</div>
+<div class="line"><a id="l00878" name="l00878"></a><span class="lineno">  878</span>    <a class="code hl_define" href="config_8hpp.html#af94b0f511ece16353195a8b260aba20a">IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS</a> IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> ipv6_address operator<span class="stringliteral">&quot;&quot;_ipv6</span>(<span class="keyword">const</span> <span class="keyword">char32_t</span>* address, std::size_t size) <a class="code hl_define" href="config_8hpp.html#a1ce8f0549cece9344e691fcfc4910a7d">IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS</a> {</div>
+<div class="line"><a id="l00879" name="l00879"></a><span class="lineno">  879</span>        <span class="keywordflow">return</span> internal::parse_ip_from_literal&lt;ipv6_address_base, <span class="keyword">char32_t</span>, ipv6_address::base_max_string_len&gt;(address, size);</div>
 <div class="line"><a id="l00880" name="l00880"></a><span class="lineno">  880</span>    }</div>
 <div class="line"><a id="l00881" name="l00881"></a><span class="lineno">  881</span> </div>
-<div class="line"><a id="l00882" name="l00882"></a><span class="lineno">  882</span>    <span class="comment">/**</span></div>
-<div class="line"><span class="lineno">  883</span><span class="comment">     * User-defined literal for creating an ipv6_address from a UTF-32 string literal.</span></div>
-<div class="line"><span class="lineno">  884</span><span class="comment">     * </span></div>
-<div class="line"><span class="lineno">  885</span><span class="comment">     * @param[in] address A pointer to a character array representing the IPv6 address.</span></div>
-<div class="line"><span class="lineno">  886</span><span class="comment">     * @param[in] size The size of the character array.</span></div>
-<div class="line"><span class="lineno">  887</span><span class="comment">     * @return An ipv6_address object parsed from the string literal.</span></div>
-<div class="line"><span class="lineno">  888</span><span class="comment">     */</span></div>
-<div class="line"><a id="l00889" name="l00889"></a><span class="lineno">  889</span>    <a class="code hl_define" href="config_8hpp.html#af94b0f511ece16353195a8b260aba20a">IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS</a> IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> ipv6_address operator<span class="stringliteral">&quot;&quot;_ipv6</span>(<span class="keyword">const</span> <span class="keyword">char32_t</span>* address, std::size_t size) <a class="code hl_define" href="config_8hpp.html#a1ce8f0549cece9344e691fcfc4910a7d">IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS</a> {</div>
-<div class="line"><a id="l00890" name="l00890"></a><span class="lineno">  890</span>        <span class="keywordflow">return</span> internal::parse_ip_from_literal&lt;ipv6_address_base, <span class="keyword">char32_t</span>, ipv6_address::base_max_string_len&gt;(address, size);</div>
-<div class="line"><a id="l00891" name="l00891"></a><span class="lineno">  891</span>    }</div>
-<div class="line"><a id="l00892" name="l00892"></a><span class="lineno">  892</span> </div>
-<div class="line"><a id="l00893" name="l00893"></a><span class="lineno">  893</span><span class="preprocessor">#</span><span class="preprocessor">endif</span> <span class="comment">// IPADDRESS_NONTYPE_TEMPLATE_PARAMETER</span></div>
-<div class="line"><a id="l00894" name="l00894"></a><span class="lineno">  894</span> </div>
-<div class="line"><a id="l00895" name="l00895"></a><span class="lineno">  895</span>} <span class="comment">// namespace IPADDRESS_NAMESPACE</span></div>
-<div class="line"><a id="l00896" name="l00896"></a><span class="lineno">  896</span> </div>
-<div class="line"><a id="l00897" name="l00897"></a><span class="lineno">  897</span><span class="preprocessor">#</span><span class="preprocessor">endif</span> <span class="comment">// IPADDRESS_IPV6_ADDRESS_HPP</span></div>
+<div class="line"><a id="l00882" name="l00882"></a><span class="lineno">  882</span><span class="preprocessor">#</span><span class="preprocessor">endif</span> <span class="comment">// IPADDRESS_NONTYPE_TEMPLATE_PARAMETER</span></div>
+<div class="line"><a id="l00883" name="l00883"></a><span class="lineno">  883</span> </div>
+<div class="line"><a id="l00884" name="l00884"></a><span class="lineno">  884</span>} <span class="comment">// namespace IPADDRESS_NAMESPACE</span></div>
+<div class="line"><a id="l00885" name="l00885"></a><span class="lineno">  885</span> </div>
+<div class="line"><a id="l00886" name="l00886"></a><span class="lineno">  886</span><span class="preprocessor">#</span><span class="preprocessor">endif</span> <span class="comment">// IPADDRESS_IPV6_ADDRESS_HPP</span></div>
 <div class="ttc" id="aclassipaddress_1_1ip__address__base_html"><div class="ttname"><a href="classipaddress_1_1ip__address__base.html">ipaddress::ip_address_base</a></div><div class="ttdoc">A template base class for IP address representations.</div><div class="ttdef"><b>Definition</b> ip-address-base.hpp:56</div></div>
 <div class="ttc" id="aclassipaddress_1_1ip__network__base_html"><div class="ttname"><a href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base</a></div><div class="ttdoc">Template base class for representing a network of IP addresses.</div><div class="ttdef"><b>Definition</b> ip-network-base.hpp:32</div></div>
 <div class="ttc" id="aclassipaddress_1_1ipv6__address__base_html"><div class="ttname"><a href="classipaddress_1_1ipv6__address__base.html">ipaddress::ipv6_address_base</a></div><div class="ttdoc">Represents the base class for IPv6 address manipulation.</div><div class="ttdef"><b>Definition</b> ipv6-address.hpp:248</div></div>

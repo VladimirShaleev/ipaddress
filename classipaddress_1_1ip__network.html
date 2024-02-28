@@ -244,6 +244,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9a37309e62e498d68811df908904c328" id="r_a9a37309e62e498d68811df908904c328"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9a37309e62e498d68811df908904c328">supernet_of</a> (const <a class="el" href="classipaddress_1_1ip__network.html">ip_network</a> &amp;other) const noexcept</td></tr>
 <tr class="memdesc:a9a37309e62e498d68811df908904c328"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if this network is a supernet of another network.  <br /></td></tr>
 <tr class="separator:a9a37309e62e498d68811df908904c328"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcee05dd7cf5bdc3388d6738353b0488" id="r_afcee05dd7cf5bdc3388d6738353b0488"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1ip__network.html">ip_network</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afcee05dd7cf5bdc3388d6738353b0488">supernet</a> (size_t prefixlen_diff=1, <a class="el" href="classipaddress_1_1optional.html">optional</a>&lt; size_t &gt; new_prefixlen=nullptr) const</td></tr>
+<tr class="memdesc:afcee05dd7cf5bdc3388d6738353b0488"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a supernet from this network.  <br /></td></tr>
+<tr class="separator:afcee05dd7cf5bdc3388d6738353b0488"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd17f7fb7f1606ad30e2febc0061ace8" id="r_acd17f7fb7f1606ad30e2febc0061ace8"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1ip__network.html">ip_network</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acd17f7fb7f1606ad30e2febc0061ace8">supernet</a> (<a class="el" href="namespaceipaddress.html#a88a76ee847c844cc47b94caac600689d">error_code</a> &amp;code, size_t prefixlen_diff=1, <a class="el" href="classipaddress_1_1optional.html">optional</a>&lt; size_t &gt; new_prefixlen=nullptr) const noexcept</td></tr>
+<tr class="memdesc:acd17f7fb7f1606ad30e2febc0061ace8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a supernet from this network with error handling.  <br /></td></tr>
+<tr class="separator:acd17f7fb7f1606ad30e2febc0061ace8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab1288f457a02658d5bc47c121b7a2d6b" id="r_ab1288f457a02658d5bc47c121b7a2d6b"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1hosts__any__sequence.html">hosts_any_sequence</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab1288f457a02658d5bc47c121b7a2d6b">hosts</a> () const noexcept</td></tr>
 <tr class="memdesc:ab1288f457a02658d5bc47c121b7a2d6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves a sequence of host addresses in the network.  <br /></td></tr>
 <tr class="separator:ab1288f457a02658d5bc47c121b7a2d6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1053,7 +1059,7 @@ Static Public Member Functions</h2></td></tr>
 <div class="line"><span class="comment">// true</span></div>
 <div class="line"><span class="comment">// false</span></div>
 <div class="ttc" id="aclassipaddress_1_1ip__address_html_aa734f67f653b6979f7c359ead8202fdf"><div class="ttname"><a href="classipaddress_1_1ip__address.html#aa734f67f653b6979f7c359ead8202fdf">ipaddress::ip_address::parse</a></div><div class="ttdeci">static consteval inline ip_address parse() noexcept</div><div class="ttdoc">Static method template to parse an IP address from a fixed string at compile time.</div><div class="ttdef"><b>Definition</b> ip-any-address.hpp:503</div></div>
-<div class="ttc" id="aclassipaddress_1_1ip__network_html_a1680eeca5814f1e58ee81fc3de5d20df"><div class="ttname"><a href="#a1680eeca5814f1e58ee81fc3de5d20df">ipaddress::ip_network::parse</a></div><div class="ttdeci">static consteval inline ip_network parse() noexcept</div><div class="ttdoc">Parses a network address and prefix from a fixed string at compile time.</div><div class="ttdef"><b>Definition</b> ip-any-network.hpp:766</div></div>
+<div class="ttc" id="aclassipaddress_1_1ip__network_html_a1680eeca5814f1e58ee81fc3de5d20df"><div class="ttname"><a href="#a1680eeca5814f1e58ee81fc3de5d20df">ipaddress::ip_network::parse</a></div><div class="ttdeci">static consteval inline ip_network parse() noexcept</div><div class="ttdoc">Parses a network address and prefix from a fixed string at compile time.</div><div class="ttdef"><b>Definition</b> ip-any-network.hpp:819</div></div>
 <div class="ttc" id="aclassipaddress_1_1ip__network_html_a947263a137b931017d2c3b1012d7d831"><div class="ttname"><a href="#a947263a137b931017d2c3b1012d7d831">ipaddress::ip_network::contains</a></div><div class="ttdeci">constexpr inline bool contains(const ip_address &amp;address) const noexcept</div><div class="ttdoc">Checks if the given IP address is contained within this network.</div><div class="ttdef"><b>Definition</b> ip-any-network.hpp:324</div></div>
 </div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1197,6 +1203,115 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="afcee05dd7cf5bdc3388d6738353b0488" name="afcee05dd7cf5bdc3388d6738353b0488"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afcee05dd7cf5bdc3388d6738353b0488">&#9670;&#160;</a></span>supernet() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline <a class="el" href="classipaddress_1_1ip__network.html">ip_network</a> supernet </td>
+          <td>(</td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>prefixlen_diff</em><span class="paramdefsep"> = </span><span class="paramdefval">1</span>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classipaddress_1_1optional.html">optional</a>&lt; size_t &gt;</td>          <td class="paramname"><span class="paramname"><em>new_prefixlen</em><span class="paramdefsep"> = </span><span class="paramdefval">nullptr</span></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Generates a supernet from this network. </p>
+<p>The supernet containing this network definition, depending on the argument values. <em>prefixlen_diff</em> is the amount our prefix length should be decreased by. new_prefix is the desired new prefix of the supernet; it must be smaller than our prefix. One and only one of <em>prefixlen_diff</em> and new_prefix must be set.</p>
+<div class="fragment"><div class="line"><span class="keyword">constexpr</span> <span class="keyword">auto</span> <a class="code hl_function" href="#afcee05dd7cf5bdc3388d6738353b0488">supernet</a> = <a class="code hl_function" href="#a1680eeca5814f1e58ee81fc3de5d20df">ip_network::parse</a>(<span class="stringliteral">&quot;192.0.2.0/24&quot;</span>).<a class="code hl_function" href="#afcee05dd7cf5bdc3388d6738353b0488">supernet</a>(2);</div>
+<div class="line"> </div>
+<div class="line">std::cout &lt;&lt; <a class="code hl_function" href="#afcee05dd7cf5bdc3388d6738353b0488">supernet</a> &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// out:</span></div>
+<div class="line"><span class="comment">// 192.0.0.0/22</span></div>
+<div class="ttc" id="aclassipaddress_1_1ip__network_html_afcee05dd7cf5bdc3388d6738353b0488"><div class="ttname"><a href="#afcee05dd7cf5bdc3388d6738353b0488">ipaddress::ip_network::supernet</a></div><div class="ttdeci">constexpr inline ip_network supernet(size_t prefixlen_diff=1, optional&lt; size_t &gt; new_prefixlen=nullptr) const</div><div class="ttdoc">Generates a supernet from this network.</div><div class="ttdef"><b>Definition</b> ip-any-network.hpp:434</div></div>
+</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">prefixlen_diff</td><td>The amount by which the prefix length should be decreased. <em>Defaults to 1</em>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">new_prefixlen</td><td>An optional new prefix length for the supernet. If not specified, the prefix length is determined by subtracting <em>prefixlen_diff</em> from the current prefix length. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An ip network object representing the supernet, or the current network if an error occurs. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classipaddress_1_1logic__error.html" title="Exception for logical errors in IP address operations.">logic_error</a></td><td>Raised if the operation cannot be performed due to invalid parameters or prefix length. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="acd17f7fb7f1606ad30e2febc0061ace8" name="acd17f7fb7f1606ad30e2febc0061ace8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd17f7fb7f1606ad30e2febc0061ace8">&#9670;&#160;</a></span>supernet() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline <a class="el" href="classipaddress_1_1ip__network.html">ip_network</a> supernet </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceipaddress.html#a88a76ee847c844cc47b94caac600689d">error_code</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>code</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>prefixlen_diff</em><span class="paramdefsep"> = </span><span class="paramdefval">1</span>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classipaddress_1_1optional.html">optional</a>&lt; size_t &gt;</td>          <td class="paramname"><span class="paramname"><em>new_prefixlen</em><span class="paramdefsep"> = </span><span class="paramdefval">nullptr</span></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Generates a supernet from this network with error handling. </p>
+<p>The supernet containing this network definition, depending on the argument values. <em>prefixlen_diff</em> is the amount our prefix length should be decreased by. new_prefix is the desired new prefix of the supernet; it must be smaller than our prefix. One and only one of <em>prefixlen_diff</em> and new_prefix must be set.</p>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> err = <a class="code hl_enumvalue" href="namespaceipaddress.html#a88a76ee847c844cc47b94caac600689dad306b6fdee05fe87455110ddf6501e6c">error_code::NO_ERROR</a>;</div>
+<div class="line"><span class="keyword">auto</span> <a class="code hl_function" href="#afcee05dd7cf5bdc3388d6738353b0488">supernet</a> = <a class="code hl_function" href="#a1680eeca5814f1e58ee81fc3de5d20df">ip_network::parse</a>(<span class="stringliteral">&quot;192.0.2.0/24&quot;</span>).<a class="code hl_function" href="#afcee05dd7cf5bdc3388d6738353b0488">supernet</a>(err, 2);</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">if</span> (err == <a class="code hl_enumvalue" href="namespaceipaddress.html#a88a76ee847c844cc47b94caac600689dad306b6fdee05fe87455110ddf6501e6c">error_code::NO_ERROR</a>) {</div>
+<div class="line">    std::cout &lt;&lt; <a class="code hl_function" href="#afcee05dd7cf5bdc3388d6738353b0488">supernet</a> &lt;&lt; std::endl;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// out:</span></div>
+<div class="line"><span class="comment">// 192.0.0.0/22</span></div>
+<div class="ttc" id="anamespaceipaddress_html_a88a76ee847c844cc47b94caac600689dad306b6fdee05fe87455110ddf6501e6c"><div class="ttname"><a href="namespaceipaddress.html#a88a76ee847c844cc47b94caac600689dad306b6fdee05fe87455110ddf6501e6c">ipaddress::error_code::NO_ERROR</a></div><div class="ttdeci">@ NO_ERROR</div><div class="ttdoc">Indicates the absence of any errors.</div></div>
+</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>An error_code object that will be set if an error occurs during the operation. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">prefixlen_diff</td><td>The amount by which the prefix length should be decreased. <em>Defaults to 1</em>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">new_prefixlen</td><td>An optional new prefix length for the supernet. If not specified, the prefix length is determined by subtracting <em>prefixlen_diff</em> from the current prefix length. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An ip network object representing the supernet, or the current network if an error occurs. </dd></dl>
+
+</div>
+</div>
 <a id="ab1288f457a02658d5bc47c121b7a2d6b" name="ab1288f457a02658d5bc47c121b7a2d6b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab1288f457a02658d5bc47c121b7a2d6b">&#9670;&#160;</a></span>hosts()</h2>
 
@@ -1235,7 +1350,7 @@ Static Public Member Functions</h2></td></tr>
 <div class="line"><span class="comment">// 192.0.2.4</span></div>
 <div class="line"><span class="comment">// 192.0.2.5</span></div>
 <div class="line"><span class="comment">// 192.0.2.6</span></div>
-<div class="ttc" id="aclassipaddress_1_1ip__network_html_ab1288f457a02658d5bc47c121b7a2d6b"><div class="ttname"><a href="#ab1288f457a02658d5bc47c121b7a2d6b">ipaddress::ip_network::hosts</a></div><div class="ttdeci">constexpr inline hosts_any_sequence hosts() const noexcept</div><div class="ttdoc">Retrieves a sequence of host addresses in the network.</div><div class="ttdef"><b>Definition</b> ip-any-network.hpp:448</div></div>
+<div class="ttc" id="aclassipaddress_1_1ip__network_html_ab1288f457a02658d5bc47c121b7a2d6b"><div class="ttname"><a href="#ab1288f457a02658d5bc47c121b7a2d6b">ipaddress::ip_network::hosts</a></div><div class="ttdeci">constexpr inline hosts_any_sequence hosts() const noexcept</div><div class="ttdoc">Retrieves a sequence of host addresses in the network.</div><div class="ttdef"><b>Definition</b> ip-any-network.hpp:501</div></div>
 </div><!-- fragment --> <dl class="section return"><dt>Returns</dt><dd>A <code>hosts_sequence</code> object representing the sequence of host addresses. </dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
@@ -1289,7 +1404,7 @@ Static Public Member Functions</h2></td></tr>
 <div class="line"><span class="comment">// 192.0.2.64/26</span></div>
 <div class="line"><span class="comment">// 192.0.2.128/26</span></div>
 <div class="line"><span class="comment">// 192.0.2.192/26</span></div>
-<div class="ttc" id="aclassipaddress_1_1ip__network_html_a7607994f130363d19b51aa5aa661c24a"><div class="ttname"><a href="#a7607994f130363d19b51aa5aa661c24a">ipaddress::ip_network::subnets</a></div><div class="ttdeci">constexpr inline subnets_any_sequence&lt; ip_network &gt; subnets(size_t prefixlen_diff=1, optional&lt; size_t &gt; new_prefixlen=nullptr) const</div><div class="ttdoc">Generates a sequence of subnets from this network.</div><div class="ttdef"><b>Definition</b> ip-any-network.hpp:485</div></div>
+<div class="ttc" id="aclassipaddress_1_1ip__network_html_a7607994f130363d19b51aa5aa661c24a"><div class="ttname"><a href="#a7607994f130363d19b51aa5aa661c24a">ipaddress::ip_network::subnets</a></div><div class="ttdeci">constexpr inline subnets_any_sequence&lt; ip_network &gt; subnets(size_t prefixlen_diff=1, optional&lt; size_t &gt; new_prefixlen=nullptr) const</div><div class="ttdoc">Generates a sequence of subnets from this network.</div><div class="ttdef"><b>Definition</b> ip-any-network.hpp:538</div></div>
 <div class="ttc" id="aclassipaddress_1_1subnets__sequence_html"><div class="ttname"><a href="classipaddress_1_1subnets__sequence.html">ipaddress::subnets_sequence</a></div><div class="ttdoc">A sequence container for subnet ranges within a network.</div><div class="ttdef"><b>Definition</b> ip-network-iterator.hpp:740</div></div>
 </div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -1357,7 +1472,6 @@ Static Public Member Functions</h2></td></tr>
 <div class="line"><span class="comment">// 192.0.2.64/26</span></div>
 <div class="line"><span class="comment">// 192.0.2.128/26</span></div>
 <div class="line"><span class="comment">// 192.0.2.192/26</span></div>
-<div class="ttc" id="anamespaceipaddress_html_a88a76ee847c844cc47b94caac600689dad306b6fdee05fe87455110ddf6501e6c"><div class="ttname"><a href="namespaceipaddress.html#a88a76ee847c844cc47b94caac600689dad306b6fdee05fe87455110ddf6501e6c">ipaddress::error_code::NO_ERROR</a></div><div class="ttdeci">@ NO_ERROR</div><div class="ttdoc">Indicates the absence of any errors.</div></div>
 </div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>An error_code object that will be set if an error occurs during the operation. </td></tr>

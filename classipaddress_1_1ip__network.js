@@ -28,6 +28,8 @@ var classipaddress_1_1ip__network =
     [ "overlaps", "classipaddress_1_1ip__network.html#ab4ddaec67a3a14e19371900f207d753d", null ],
     [ "subnet_of", "classipaddress_1_1ip__network.html#a3388c3cd2b15e9d6800eeae91f4d0797", null ],
     [ "supernet_of", "classipaddress_1_1ip__network.html#a9a37309e62e498d68811df908904c328", null ],
+    [ "supernet", "classipaddress_1_1ip__network.html#afcee05dd7cf5bdc3388d6738353b0488", null ],
+    [ "supernet", "classipaddress_1_1ip__network.html#acd17f7fb7f1606ad30e2febc0061ace8", null ],
     [ "hosts", "classipaddress_1_1ip__network.html#ab1288f457a02658d5bc47c121b7a2d6b", null ],
     [ "subnets", "classipaddress_1_1ip__network.html#a7607994f130363d19b51aa5aa661c24a", null ],
     [ "subnets", "classipaddress_1_1ip__network.html#a1f48ce59958e8eee935eb1196edce2fa", null ],
