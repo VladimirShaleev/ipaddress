@@ -19,6 +19,28 @@
 <!-- END twitter metadata -->
 <title>ipaddress: ip_address Class Reference</title>
 <link rel="icon" href="logo.svg" type="image/svg+xml" />
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+<link rel="icon" sizes="16x16" href="favicon-16x16.png" type="image/png">
+<link rel="icon" sizes="32x32" href="favicon-32x32.png" type="image/png">
+<link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="apple-touch-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180x180.png">
+<link rel="mask-icon" color="#5f8893" href="safari-pinned-tab.svg">
+<meta name="msapplication-TileColor" content="#4a9cf8">
+<meta name="msapplication-TileImage" content="mstile-144x144.png">
+<meta name="msapplication-square70x70logo" content="mstile-70x70.png">
+<meta name="msapplication-square150x150logo" content="mstile-150x150.png">
+<meta name="msapplication-wide310x150logo" content="mstile-310x310.png">
+<meta name="msapplication-square310x310logo" content="mstile-310x150.png">
+<meta name="application-name" content="ipaddress">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#ffffff">
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -233,9 +255,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a80616159ca91ae952ef4950517c723ff" id="r_a80616159ca91ae952ef4950517c723ff"><td class="memItemLeft" align="right" valign="top">constexpr inline&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a80616159ca91ae952ef4950517c723ff">ip_address</a> (const <a class="el" href="#ad613b804e970db0376da4b026c62141e">base_type_ipv6</a> &amp;bytes) noexcept</td></tr>
 <tr class="memdesc:a80616159ca91ae952ef4950517c723ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor from byte array for IPv6.  <br /></td></tr>
 <tr class="separator:a80616159ca91ae952ef4950517c723ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7dc6c0d47f2e9793eae978b50ca34619" id="r_a7dc6c0d47f2e9793eae978b50ca34619"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1uint128__t.html">uint128_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7dc6c0d47f2e9793eae978b50ca34619">to_uint</a> () const noexcept</td></tr>
-<tr class="memdesc:a7dc6c0d47f2e9793eae978b50ca34619"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the IP address to a <a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a>.  <br /></td></tr>
-<tr class="separator:a7dc6c0d47f2e9793eae978b50ca34619"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5db02fa21102e9ef485ad6d91311dd9d" id="r_a5db02fa21102e9ef485ad6d91311dd9d"><td class="memItemLeft" align="right" valign="top">constexpr inline uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5db02fa21102e9ef485ad6d91311dd9d">to_uint32</a> () const noexcept</td></tr>
+<tr class="memdesc:a5db02fa21102e9ef485ad6d91311dd9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the IP address to a uint32_t.  <br /></td></tr>
+<tr class="separator:a5db02fa21102e9ef485ad6d91311dd9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76ea2e368ffffda24b3f2c8ad0188c77" id="r_a76ea2e368ffffda24b3f2c8ad0188c77"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1uint128__t.html">uint128_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a76ea2e368ffffda24b3f2c8ad0188c77">to_uint128</a> () const noexcept</td></tr>
+<tr class="memdesc:a76ea2e368ffffda24b3f2c8ad0188c77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the IP address to a <a class="el" href="classipaddress_1_1uint128__t.html" title="Class for representing a 128-bit unsigned integer.">uint128_t</a>.  <br /></td></tr>
+<tr class="separator:a76ea2e368ffffda24b3f2c8ad0188c77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae5c89e293118ded7cd33e0f0395cbd62" id="r_ae5c89e293118ded7cd33e0f0395cbd62"><td class="memItemLeft" align="right" valign="top">inline std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae5c89e293118ded7cd33e0f0395cbd62">to_string</a> (<a class="el" href="namespaceipaddress.html#a387137c43ed9616d39ba90e890d181eb">format</a> fmt=<a class="el" href="namespaceipaddress.html#a387137c43ed9616d39ba90e890d181eba2b98a4ad988a18c42682f388901f2672">format::compressed</a>) const</td></tr>
 <tr class="memdesc:ae5c89e293118ded7cd33e0f0395cbd62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the IP address to a string.  <br /></td></tr>
 <tr class="separator:ae5c89e293118ded7cd33e0f0395cbd62"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -1296,8 +1321,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a7dc6c0d47f2e9793eae978b50ca34619" name="a7dc6c0d47f2e9793eae978b50ca34619"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7dc6c0d47f2e9793eae978b50ca34619">&#9670;&#160;</a></span>to_uint()</h2>
+<a id="a5db02fa21102e9ef485ad6d91311dd9d" name="a5db02fa21102e9ef485ad6d91311dd9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5db02fa21102e9ef485ad6d91311dd9d">&#9670;&#160;</a></span>to_uint32()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1306,7 +1331,37 @@ Static Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr inline <a class="el" href="classipaddress_1_1uint128__t.html">uint128_t</a> to_uint </td>
+          <td class="memname">constexpr inline uint32_t to_uint32 </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Converts the IP address to a uint32_t. </p>
+<p>This function returns the numeric representation of the IP address as a uint32_t. For IPv6 addresses, it returns the least significant 32 bits of the address.</p>
+<dl class="section return"><dt>Returns</dt><dd>A uint32_t representing the IPv4 address or the least significant 32 bits of the IPv6 address. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>Bytes in integer are presented in <b>host byte order</b>. </dd></dl>
+
+</div>
+</div>
+<a id="a76ea2e368ffffda24b3f2c8ad0188c77" name="a76ea2e368ffffda24b3f2c8ad0188c77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a76ea2e368ffffda24b3f2c8ad0188c77">&#9670;&#160;</a></span>to_uint128()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline <a class="el" href="classipaddress_1_1uint128__t.html">uint128_t</a> to_uint128 </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"></span></td><td>)</td>
           <td> const</td>
@@ -1392,8 +1447,8 @@ Static Public Member Functions</h2></td></tr>
 <div class="line"><span class="comment">// out:</span></div>
 <div class="line"><span class="comment">// 1.0.0.127.in-addr.arpa</span></div>
 <div class="line"><span class="comment">// 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.b.d.0.1.0.0.2.ip6.arpa</span></div>
-<div class="ttc" id="aclassipaddress_1_1ip__address_html_a2541b1106a227bd73721e52a31302774"><div class="ttname"><a href="#a2541b1106a227bd73721e52a31302774">ipaddress::ip_address::reverse_pointer</a></div><div class="ttdeci">inline std::string reverse_pointer() const</div><div class="ttdoc">Generates a reverse DNS lookup pointer for the IP address.</div><div class="ttdef"><b>Definition</b> ip-any-address.hpp:461</div></div>
-<div class="ttc" id="aclassipaddress_1_1ip__address_html_aa734f67f653b6979f7c359ead8202fdf"><div class="ttname"><a href="#aa734f67f653b6979f7c359ead8202fdf">ipaddress::ip_address::parse</a></div><div class="ttdeci">static consteval inline ip_address parse() noexcept</div><div class="ttdoc">Static method template to parse an IP address from a fixed string at compile time.</div><div class="ttdef"><b>Definition</b> ip-any-address.hpp:489</div></div>
+<div class="ttc" id="aclassipaddress_1_1ip__address_html_a2541b1106a227bd73721e52a31302774"><div class="ttname"><a href="#a2541b1106a227bd73721e52a31302774">ipaddress::ip_address::reverse_pointer</a></div><div class="ttdeci">inline std::string reverse_pointer() const</div><div class="ttdoc">Generates a reverse DNS lookup pointer for the IP address.</div><div class="ttdef"><b>Definition</b> ip-any-address.hpp:475</div></div>
+<div class="ttc" id="aclassipaddress_1_1ip__address_html_aa734f67f653b6979f7c359ead8202fdf"><div class="ttname"><a href="#aa734f67f653b6979f7c359ead8202fdf">ipaddress::ip_address::parse</a></div><div class="ttdeci">static consteval inline ip_address parse() noexcept</div><div class="ttdoc">Static method template to parse an IP address from a fixed string at compile time.</div><div class="ttdef"><b>Definition</b> ip-any-address.hpp:503</div></div>
 </div><!-- fragment --> <dl class="section return"><dt>Returns</dt><dd>A <code>std::string</code> that is the reverse DNS lookup pointer of the IP address. </dd></dl>
 
 </div>

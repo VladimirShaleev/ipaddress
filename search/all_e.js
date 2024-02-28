@@ -68,5 +68,6 @@ var searchData=
   ['operator_7e_65',['operator~',['../classipaddress_1_1uint128__t.html#a059ac2395e9aec94ccd574adbb3a206d',1,'ipaddress::uint128_t']]],
   ['optional_66',['optional',['../classipaddress_1_1optional.html',1,'optional&lt; T &gt;'],['../classipaddress_1_1optional.html#a1fa0f820de56b17b48d7418e4c17f191',1,'ipaddress::optional::optional() noexcept(noexcept(T()))=default'],['../classipaddress_1_1optional.html#a2beb783daef9d8c16bdf9b68641d1a12',1,'ipaddress::optional::optional(std::nullptr_t) noexcept'],['../classipaddress_1_1optional.html#a124f00ffa4ea93b1ae6fcd24e80ae424',1,'ipaddress::optional::optional(value_type &amp;&amp;val) noexcept'],['../classipaddress_1_1optional.html#aa9625b82d69277958996f6250ebc49db',1,'ipaddress::optional::optional(const optional&lt; T &gt; &amp;opt) noexcept']]],
   ['optional_2ehpp_67',['optional.hpp',['../optional_8hpp.html',1,'']]],
-  ['overlaps_68',['overlaps',['../classipaddress_1_1ip__network.html#ab4ddaec67a3a14e19371900f207d753d',1,'ipaddress::ip_network::overlaps()'],['../classipaddress_1_1ip__network__base.html#a643558d92fd45671de7c87c1bc5b72e6',1,'ipaddress::ip_network_base::overlaps()']]]
+  ['overlaps_68',['overlaps',['../classipaddress_1_1ip__network.html#ab4ddaec67a3a14e19371900f207d753d',1,'ipaddress::ip_network::overlaps()'],['../classipaddress_1_1ip__network__base.html#a643558d92fd45671de7c87c1bc5b72e6',1,'ipaddress::ip_network_base::overlaps()']]],
+  ['overrides_69',['Std overrides',['../tutorial.html#autotoc_md22',1,'']]]
 ];

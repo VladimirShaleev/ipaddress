@@ -19,6 +19,28 @@
 <!-- END twitter metadata -->
 <title>ipaddress: Tutorial</title>
 <link rel="icon" href="logo.svg" type="image/svg+xml" />
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+<link rel="icon" sizes="16x16" href="favicon-16x16.png" type="image/png">
+<link rel="icon" sizes="32x32" href="favicon-32x32.png" type="image/png">
+<link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="apple-touch-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180x180.png">
+<link rel="mask-icon" color="#5f8893" href="safari-pinned-tab.svg">
+<meta name="msapplication-TileColor" content="#4a9cf8">
+<meta name="msapplication-TileImage" content="mstile-144x144.png">
+<meta name="msapplication-square70x70logo" content="mstile-70x70.png">
+<meta name="msapplication-square150x150logo" content="mstile-150x150.png">
+<meta name="msapplication-wide310x150logo" content="mstile-310x310.png">
+<meta name="msapplication-square310x310logo" content="mstile-310x150.png">
+<meta name="application-name" content="ipaddress">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#ffffff">
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -130,17 +152,369 @@ $(function(){initNavTree('tutorial.html',''); initResizable(); });
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><ul><li class="level2"><a href="#autotoc_md14">Header 2</a><ul><li class="level3"><a href="#autotoc_md15">Header 3</a></li>
+<ul><ul><li class="level2"><a href="#autotoc_md14">IP addresses</a><ul><li class="level3"><a href="#autotoc_md15">Parsing ip strings</a></li>
+<li class="level3"><a href="#autotoc_md16">From uint/To uint</a></li>
+<li class="level3"><a href="#autotoc_md17">Working with bytes</a></li>
+<li class="level3"><a href="#autotoc_md18">Comparison</a></li>
+<li class="level3"><a href="#autotoc_md19">IP Address Properties</a></li>
+<li class="level3"><a href="#autotoc_md20">Convert to string</a></li>
 </ul>
 </li>
+<li class="level2"><a href="#autotoc_md21">Scope Id</a></li>
+<li class="level2"><a href="#autotoc_md22">Std overrides</a></li>
 </ul>
 </ul>
 </div>
 <div class="textblock"><h2><a class="anchor" id="autotoc_md14"></a>
-Header 2</h2>
+IP addresses</h2>
+<p>For working with IP addresses, the library provides three classes:</p>
+<ul>
+<li><b>ipv4_address</b> — A class for working with IPv4 addresses, where the instance size is always 4 bytes.</li>
+<li><b>ipv6_address</b> — A class for working with IPv6 addresses, where the instance size includes both the space allocated for the IPv6 address itself and the scope id (zone index). As a result, the instance size will be 16 bytes plus the maximum length of the scope id. Read about scope ids below.</li>
+<li><b>ip_address</b> — Combines the <code>ipv4_address</code> and <code>ipv6_address</code> classes via a union. This ensures version-independent IP address manipulation. It has implicit constructors for converting from <code>ipv4_address</code> and <code>ipv6_address</code>. The instance size is the same as that of <code>ipv6_address</code>.</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>Regardless of which class you use, the internal address is stored as an array of bytes, not as an unsigned integer. This design choice ensures that the address is stored in network byte order (big-endian) regardless of the platform. This is convenient because ultimately, this address can be used in sockets or similar libraries that require passing addresses in network byte order. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>All operations on addresses support compile-time computations. If an address is specified as a constant, during compilation, we get: errors if the address was entered incorrectly, the resulting IP address represented as bytes, and any other operations on addresses. </dd></dl>
 <h3><a class="anchor" id="autotoc_md15"></a>
-Header 3</h3>
-<p> 
+Parsing ip strings</h3>
+<p>Let's look at examples of obtaining IP addresses from string literals and strings.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="ipaddress_8hpp.html">ipaddress/ipaddress.hpp</a>&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using namespace </span><a class="code hl_namespace" href="namespaceipaddress.html">ipaddress</a>;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="comment">// Parsing string literals for IPv4 and IPv6. Note that IPv6 addresses</span></div>
+<div class="line">    <span class="comment">// in string form can be specified in various formats. The following addresses are equivalent:</span></div>
+<div class="line">    <span class="comment">//    - fe80::1ff:fe23:4567:890a%eth2</span></div>
+<div class="line">    <span class="comment">//    - FE80::1FF:FE23:4567:890A%eth2</span></div>
+<div class="line">    <span class="comment">//    - fe80:0:0:0:1ff:fe23:4567:890a%eth2</span></div>
+<div class="line">    <span class="comment">//    - fe80:0000:0000:0000:01ff:fe23:4567:890a%eth2</span></div>
+<div class="line">    <span class="comment">//</span></div>
+<div class="line">    <span class="comment">// Thanks to constexpr, for example, ip1 will be expanded into an array of bytes during compilation,</span></div>
+<div class="line">    <span class="comment">// and parsing will not occur at runtime. It can be presented like this for clarity:</span></div>
+<div class="line">    <span class="comment">//    constexpr const ipaddress::ipv4_address ip1 =</span></div>
+<div class="line">    <span class="comment">//        {{{}, {{(unsigned char)192U, (unsigned char)168U, (unsigned char)1U, (unsigned char)1U}}}};</span></div>
+<div class="line">    <span class="comment">//</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip1 = ipv4_address::parse(<span class="stringliteral">&quot;192.168.1.1&quot;</span>);</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip2 = ipv6_address::parse(<span class="stringliteral">&quot;fe80::1ff:fe23:4567:890a%eth2&quot;</span>);</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip3 =   ip_address::parse(<span class="stringliteral">&quot;fe80::1ff:fe23:4567:890a%eth2&quot;</span>); <span class="comment">// any version address</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Parsing string literals for IPv4 and IPv6 with the new syntax starting from C++20</span></div>
+<div class="line">    <span class="comment">// (Literal Classes as Non-type Template Parameters)</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip4 = ipv4_address::parse&lt;<span class="stringliteral">&quot;192.168.1.1&quot;</span>&gt;();</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip5 = ipv6_address::parse&lt;<span class="stringliteral">&quot;fe80::1ff:fe23:4567:890a%eth2&quot;</span>&gt;();</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip6 =   ip_address::parse&lt;<span class="stringliteral">&quot;192.168.1.1&quot;</span>&gt;(); <span class="comment">// any version address</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Parsing with User-defined literals</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip7 = <span class="stringliteral">&quot;192.168.1.1&quot;</span>_ipv4;</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip8 = <span class="stringliteral">&quot;fe80::1ff:fe23:4567:890a%eth2&quot;</span>_ipv6;</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip9 = <span class="stringliteral">&quot;fe80::1ff:fe23:4567:890a%eth2&quot;</span>_ip; <span class="comment">// any version address</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Parsing at runtime. For example, when a string comes from an input </span></div>
+<div class="line">    <span class="comment">// field during execution or from any other source.</span></div>
+<div class="line">    <span class="keyword">const</span> <span class="keywordtype">char</span>*       str1 = <span class="stringliteral">&quot;192.168.1.1&quot;</span>;</div>
+<div class="line">    <span class="keyword">const</span> std::string str2 = <span class="stringliteral">&quot;fe80::1ff:fe23:4567:890a%eth2&quot;</span>;</div>
+<div class="line">    <span class="keyword">auto</span> ip10 = ipv4_address::parse(str1);</div>
+<div class="line">    <span class="keyword">auto</span> ip11 = ipv6_address::parse(str2);</div>
+<div class="line">    <span class="keyword">auto</span> ip12 =   ip_address::parse(str2); <span class="comment">// any version address</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="ttc" id="aipaddress_8hpp_html"><div class="ttname"><a href="ipaddress_8hpp.html">ipaddress.hpp</a></div><div class="ttdoc">The main include file for the ipaddress library.</div></div>
+<div class="ttc" id="anamespaceipaddress_html"><div class="ttname"><a href="namespaceipaddress.html">ipaddress</a></div><div class="ttdoc">Namespace dedicated to IP addresses and networks operations.</div><div class="ttdef"><b>Definition</b> base-v4.hpp:18</div></div>
+</div><!-- fragment --><dl class="section remark"><dt>Remarks</dt><dd>For compile-time computations, the <b>ipaddress</b> library uses relaxed <code>constexpr</code>, which was introduced only in C++14. Therefore, for C++11, the <b>ipaddress</b> library does not support constant expressions. It is recommended to use the C++14 language standard or newer versions.</dd></dl>
+<p>Access to specific versions of IP addresses for ip_address is demonstrated below.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="ipaddress_8hpp.html">ipaddress/ipaddress.hpp</a>&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using namespace </span><a class="code hl_namespace" href="namespaceipaddress.html">ipaddress</a>;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="comment">// With ipv4_address and ipv6_address everything is clear, </span></div>
+<div class="line">    <span class="comment">// everything is known from their types</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ipv4 = ipv4_address::parse(<span class="stringliteral">&quot;192.168.1.1&quot;</span>);</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ipv6 = ipv6_address::parse(<span class="stringliteral">&quot;fe80::1ff:fe23:4567:890a%eth2&quot;</span>);</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ipv4_version = ipv4.version(); <span class="comment">// V4</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ipv6_version = ipv6.version(); <span class="comment">// V6</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ipv4_size    = ipv4.size(); <span class="comment">// 4</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ipv6_size    = ipv6.size(); <span class="comment">// 16</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// But that&#39;s not the case for ip_address</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip1 = ip_address::parse(<span class="stringliteral">&quot;192.168.1.1&quot;</span>);</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip2 = ip_address::parse(<span class="stringliteral">&quot;fe80::1ff:fe23:4567:890a%eth2&quot;</span>);</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Below is how to distinguish between different versions of IP</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip1_version = ip1.version(); <span class="comment">// V4</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip2_version = ip2.version(); <span class="comment">// V6</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip1_size    = ip1.size(); <span class="comment">// 4</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip2_size    = ip2.size(); <span class="comment">// 16</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Check which IP version is stored in ip_address for ip2</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip2_is_v4 = ip2.is_v4(); <span class="comment">// false</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip2_is_v6 = ip2.is_v6(); <span class="comment">// true</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Access to specific versions of IP addresses for ip2</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip2_get_ipv4 = ip2.v4();</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip2_get_ipv6 = ip2.v6();</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">if</span> (ip2_get_ipv4) { <span class="comment">// false</span></div>
+<div class="line">        <span class="keyword">constexpr</span> <span class="keyword">auto</span> result = ip2_get_ipv4.value();</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">if</span> (ip2_get_ipv6.has_value()) { <span class="comment">// true</span></div>
+<div class="line">        <span class="keyword">constexpr</span> <span class="keyword">auto</span> result = ip2_get_ipv6.value(); <span class="comment">// get ipv6</span></div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md16"></a>
+From uint/To uint</h3>
+<p>Below is code demonstrating how to create IP addresses from unsigned integers and convert them back to unsigned integers.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="ipaddress_8hpp.html">ipaddress/ipaddress.hpp</a>&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using namespace </span><a class="code hl_namespace" href="namespaceipaddress.html">ipaddress</a>;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="comment">// Unsigned integers in host endianness</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <a class="code hl_typedef" href="classipaddress_1_1ip__address__base.html#a5332dae176bf5fd604530b9f8aac1b36">ipv4_address::uint_type</a> u1 = 0xC0A80001;         <span class="comment">// std::uint32_t</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <a class="code hl_typedef" href="classipaddress_1_1ip__address__base.html#a5332dae176bf5fd604530b9f8aac1b36">ipv6_address::uint_type</a> u2 = 281470681743360ULL; <span class="comment">// ipaddress::uint128_t</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip1 = ipv4_address::from_uint(u1);</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip2 = ipv6_address::from_uint(u2);</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip3 =   ip_address::from_uint(u1); <span class="comment">// any version address</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Get unsigned integers in host endianness</span></div>
+<div class="line">    <span class="comment">//</span></div>
+<div class="line">    <span class="comment">// Explicit conversions are also available:</span></div>
+<div class="line">    <span class="comment">//   - constexpr auto value1 =        (std::uint32_t) ip1;</span></div>
+<div class="line">    <span class="comment">//   - constexpr auto value2 = (ipaddress::uint128_t) ip2;</span></div>
+<div class="line">    <span class="comment">//   - constexpr auto value3 =        (std::uint32_t) ip3;</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> value1 = ip1.to_uint();</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> value2 = ip2.to_uint();</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> value3 = ip3.to_uint32(); <span class="comment">// ip_address does not define to_uint to avoid accidental errors</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassipaddress_1_1ip__address__base_html_a5332dae176bf5fd604530b9f8aac1b36"><div class="ttname"><a href="classipaddress_1_1ip__address__base.html#a5332dae176bf5fd604530b9f8aac1b36">ipaddress::ip_address_base&lt; ipv4_address_base &gt;::uint_type</a></div><div class="ttdeci">typename Base::uint_type uint_type</div><div class="ttdoc">Type alias for the underlying unsigned integer type.</div><div class="ttdef"><b>Definition</b> ip-address-base.hpp:59</div></div>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd><code>ipaddress</code> defines its type <code>uint128_t</code> to work with 128-bit unsigned integers. It is designed to fill the gap in the C++ standard, which does not natively support 128-bit integers across all platforms. Unlike compiler-specific extensions like <code>__int128</code>, <code>uint128_t</code> ensures compatibility and portability across different compilers and architectures. <br  />
+ The implementation is inspired by the algorithms used in the .NET framework's <a href="https://source.dot.net/#System.Private.CoreLib/src/libraries/System.Private.CoreLib/src/System/UInt128.cs">UInt128</a>, providing a reliable foundation for arithmetic operations and other integer-related functionalities.</dd></dl>
+<h3><a class="anchor" id="autotoc_md17"></a>
+Working with bytes</h3>
+<p>Below is an example of working with bytes and pointers to bytes directly.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="ipaddress_8hpp.html">ipaddress/ipaddress.hpp</a>&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using namespace </span><a class="code hl_namespace" href="namespaceipaddress.html">ipaddress</a>;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="keyword">constexpr</span> <a class="code hl_typedef" href="classipaddress_1_1ip__address__base.html#a1be7cee0334a10989321732568ff4e23">ipv6_address::base_type</a> ipv6_bytes { </div>
+<div class="line">        0, 0, 0, 0,</div>
+<div class="line">        0, 0, 0, 0,</div>
+<div class="line">        0, 0, 255, 255,</div>
+<div class="line">        0, 0, 0, 0</div>
+<div class="line">    };</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Creating IP addresses from byte arrays of a fixed size</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip1 = ipv4_address::from_bytes({ 0xC0, 0xA8, 0x00, 0x01 });</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip2 = ipv6_address::from_bytes(ipv6_bytes);</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip3 =   ip_address::from_bytes(ipv6_bytes); <span class="comment">// any version address</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Creation from a pointer to bytes. </span></div>
+<div class="line">    <span class="comment">//</span></div>
+<div class="line">    <span class="comment">//    If the number of bytes is less than the target number  of bytes to represent </span></div>
+<div class="line">    <span class="comment">//    the IP address, the missing bytes will be filled with zeros.</span></div>
+<div class="line">    <span class="comment">//    </span></div>
+<div class="line">    <span class="comment">//    If the number of bytes is greater than the target number of bytes represented </span></div>
+<div class="line">    <span class="comment">//    by the IP address, then the extra bytes will be ignored.</span></div>
+<div class="line">    <span class="comment">// </span></div>
+<div class="line">    <span class="keyword">constexpr</span> std::uint8_t ipv4_bytes[] = { 0xC0, 0xA8, 0x00, 0x01 };</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> iv4 = ipv4_address::from_bytes(ipv4_bytes, 3);</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> iv5 = ipv6_address::from_bytes(ipv4_bytes, 3);</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip6 =   ip_address::from_bytes(ipv4_bytes, 3,  ip_version::V4);</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip7 =   ip_address::from_bytes(ipv6_bytes.data(), 11, ip_version::V6);</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// bytes() provides read access to fixed-length byte arrays</span></div>
+<div class="line">    <span class="comment">// </span></div>
+<div class="line">    <span class="comment">//    A fixed-size byte array is represented by the byte_array type.</span></div>
+<div class="line">    <span class="comment">//    It provides full functionality for byte access and iterators.</span></div>
+<div class="line">    <span class="comment">//    std::array is not used because before C++17 it was not able to work </span></div>
+<div class="line">    <span class="comment">//    with constant expressions for iterators, etc.</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip1_byte_count = ip1.bytes().size(); <span class="comment">// 4</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip2_byte_count = ip2.bytes().size(); <span class="comment">// 16</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip3_byte_count = ip3.is_v4() </div>
+<div class="line">        ? ip3.v4().value().bytes().size() </div>
+<div class="line">        : ip3.v6().value().bytes().size();</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// data() provides a constant pointer to a byte array</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> test1 = *(ip1.data() + 1);  <span class="comment">// 168</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> test2 = *(ip2.data() + 10); <span class="comment">// 255</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> test3 = *(ip3.data() + 11); <span class="comment">// 255</span></div>
+<div class="line">    </div>
+<div class="line">    <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassipaddress_1_1ip__address__base_html_a1be7cee0334a10989321732568ff4e23"><div class="ttname"><a href="classipaddress_1_1ip__address__base.html#a1be7cee0334a10989321732568ff4e23">ipaddress::ip_address_base&lt; ipv6_address_base &gt;::base_type</a></div><div class="ttdeci">typename Base::base_type base_type</div><div class="ttdoc">Type alias for the base storage type.</div><div class="ttdef"><b>Definition</b> ip-address-base.hpp:58</div></div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md18"></a>
+Comparison</h3>
+<p>For classes for working with IP addresses, comparison operators and spaceship operator (for C++20 and newer) have been redefined.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="ipaddress_8hpp.html">ipaddress/ipaddress.hpp</a>&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using namespace </span><a class="code hl_namespace" href="namespaceipaddress.html">ipaddress</a>;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip1 = ipv6_address::parse(<span class="stringliteral">&quot;fe80::1ff:fe23:4567:890a&quot;</span>);</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip2 = ipv6_address::parse(<span class="stringliteral">&quot;fe80::1ff:fe23:4567:890b&quot;</span>);</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> test1 = ip1 == ip2; <span class="comment">// false</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> test2 = ip1 != ip2; <span class="comment">// true</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> test3 = ip1 &lt;  ip2; <span class="comment">// true</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> test4 = ip1 &lt;= ip2; <span class="comment">// true</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> test5 = ip1 &gt;= ip2; <span class="comment">// false</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> test6 = ip1 &gt;  ip2; <span class="comment">// false</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// If scope id is specified, it will also be taken into account when comparing</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip3 = ipv6_address::parse(<span class="stringliteral">&quot;fe80::1ff:fe23:4567:890a%eth2&quot;</span>);</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip4 = ipv6_address::parse(<span class="stringliteral">&quot;fe80::1ff:fe23:4567:890a%eth1&quot;</span>);</div>
+<div class="line">    </div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> test7  = ip2 == ip3; <span class="comment">// false</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> test8  = ip2 != ip3; <span class="comment">// true</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> test9  = ip2 &lt;  ip3; <span class="comment">// false</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> test10 = ip2 &lt;= ip3; <span class="comment">// false</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> test11 = ip2 &gt;= ip3; <span class="comment">// true</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> test12 = ip2 &gt;  ip3; <span class="comment">// true</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> test13 = ip3 == ip4; <span class="comment">// false</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> test14 = ip3 != ip4; <span class="comment">// true</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> test15 = ip3 &lt;  ip4; <span class="comment">// false</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> test16 = ip3 &lt;= ip4; <span class="comment">// false</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> test17 = ip3 &gt;= ip4; <span class="comment">// true</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> test18 = ip3 &gt;  ip4; <span class="comment">// true</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md19"></a>
+IP Address Properties</h3>
+<p>The library provides many properties for determining certain features of an IP address. Let's look at the example below (all possible properties are not presented here; for a more complete picture, see the <a href="classipaddress_1_1ip__address.html#pub-methods">documentation for the code</a>).</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="ipaddress_8hpp.html">ipaddress/ipaddress.hpp</a>&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using namespace </span><a class="code hl_namespace" href="namespaceipaddress.html">ipaddress</a>;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> test1 = ipv6_address::parse(<span class="stringliteral">&quot;ffff::&quot;</span>).is_multicast(); <span class="comment">// true</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> test2 =   ip_address::parse(<span class="stringliteral">&quot;fdff::&quot;</span>).is_multicast(); <span class="comment">// false</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> test3 = ipv4_address::parse(<span class="stringliteral">&quot;240.0.0.1&quot;</span>).is_reserved(); <span class="comment">// true</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> test4 =   ip_address::parse(<span class="stringliteral">&quot;239.255.255.255&quot;</span>).is_reserved(); <span class="comment">// false</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip = ip_address::parse(<span class="stringliteral">&quot;2002:ac1d:2d64::1&quot;</span>);</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> sixtofour = ip.sixtofour(); <span class="comment">// get sixtofour</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">if</span> (sixtofour) { <span class="comment">// true</span></div>
+<div class="line">        <span class="keyword">constexpr</span> <span class="keyword">auto</span> result = sixtofour.value();</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md20"></a>
+Convert to string</h3>
+<p>There are three different formats for converting IP addresses to strings as you can see below.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="ipaddress_8hpp.html">ipaddress/ipaddress.hpp</a>&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using namespace </span><a class="code hl_namespace" href="namespaceipaddress.html">ipaddress</a>;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="comment">// For IP addresses version 4, the format has no effect</span></div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip1 = ipv4_address::parse(<span class="stringliteral">&quot;127.240.0.1&quot;</span>);</div>
+<div class="line">    <span class="keyword">auto</span> str1 = ip1.to_string();                   <span class="comment">// equivalent to format::compressed</span></div>
+<div class="line">    <span class="keyword">auto</span> str2 = ip1.to_string(format::full);       <span class="comment">// 127.240.0.1</span></div>
+<div class="line">    <span class="keyword">auto</span> str3 = ip1.to_string(format::compact);    <span class="comment">// 127.240.0.1</span></div>
+<div class="line">    <span class="keyword">auto</span> str4 = ip1.to_string(format::compressed); <span class="comment">// 127.240.0.1</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip2 = ipv6_address::parse(<span class="stringliteral">&quot;fe80::1ff:fe23:4567:890a%eth2&quot;</span>);</div>
+<div class="line">    <span class="keyword">auto</span> str5 = ip2.to_string();                   <span class="comment">// equivalent to format::compressed </span></div>
+<div class="line">    <span class="keyword">auto</span> str6 = ip2.to_string(format::full);       <span class="comment">// fe80:0000:0000:0000:01ff:fe23:4567:890a%eth2</span></div>
+<div class="line">    <span class="keyword">auto</span> str7 = ip2.to_string(format::compact);    <span class="comment">// fe80:0:0:0:1ff:fe23:4567:890a%eth2</span></div>
+<div class="line">    <span class="keyword">auto</span> str8 = ip2.to_string(format::compressed); <span class="comment">// fe80::1ff:fe23:4567:890a%eth2</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md21"></a>
+Scope Id</h2>
+<p>The library supports <b>Scope Id</b> both as numeric values and as strings.</p>
+<p>By default, <b>Scope Id</b> are enabled, and their maximum size is 16 characters (defined by <code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH</code> during compilation). Yes, the <b>scope id</b> is internally represented as a fixed-size array, and its maximum size cannot be changed dynamically. This means that you cannot store a <b>scope id</b> longer than <code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH</code>. There are several reasons for this design choice: simplicity in storing <b>scope id</b>, avoiding additional allocations (all data for the IP address will be as local as possible in memory), and enabling working with <b>scope id</b> in a <b>constexpr</b> manner.</p>
+<dl class="section note"><dt>Note</dt><dd>If you are certain that you don't need <b>Scope Id</b>, you can completely disable them to avoid any overhead related to their maintenance. This can be done by defining <code>IPADDRESS_NO_IPV6_SCOPE</code> during compilation. In this case, the instance size of <code>ipv6_address</code> and <code>ip_address</code> will be 16 bytes, and all operations related to retrieving or modifying the <b>scope id</b> will have no effect.</dd></dl>
+<p>For IP addresses <code>ipv6_address</code> and <code>ip_address</code>, functionality is supported for obtaining and changing scope id.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="ipaddress_8hpp.html">ipaddress/ipaddress.hpp</a>&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using namespace </span><a class="code hl_namespace" href="namespaceipaddress.html">ipaddress</a>;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip1 = ipv6_address::parse(<span class="stringliteral">&quot;fe80::1ff:fe23:4567:890a%eth2&quot;</span>);</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> scope_id = ip1.get_scope_id();</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">if</span> (scope_id) {</div>
+<div class="line">        <span class="keyword">constexpr</span> <span class="keyword">auto</span> is_integer = scope_id.has_uint32(); <span class="comment">// false</span></div>
+<div class="line">        <span class="keyword">constexpr</span> <span class="keyword">auto</span> is_string = scope_id.has_string(); <span class="comment">// false</span></div>
+<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;scope id is integer for ip1: &quot;</span> &lt;&lt; std::boolalpha &lt;&lt; is_integer &lt;&lt; std::endl;</div>
+<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;scope id is string for ip1: &quot;</span> &lt;&lt; std::boolalpha &lt;&lt; is_string &lt;&lt; std::endl;</div>
+<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;scope id for ip1: &quot;</span> &lt;&lt; scope_id.get_string() &lt;&lt; std::endl;</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// If IPv4 is stored in ip_address, then methods for working with the scope id have no effect</span></div>
+<div class="line">    <span class="keyword">auto</span> ip2 = ip_address::parse(<span class="stringliteral">&quot;fe80::1ff:fe23:4567:890a&quot;</span>);</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;has scope id for ip2: &quot;</span> &lt;&lt; std::boolalpha &lt;&lt; (bool) ip2.get_scope_id() &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line">    ip2.set_scope_id(<span class="stringliteral">&quot;123&quot;</span>);</div>
+<div class="line">    <span class="keyword">auto</span> test_scope_id = ip2.get_scope_id();</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">if</span> (test_scope_id) {</div>
+<div class="line">        <span class="keyword">auto</span> is_integer = test_scope_id.has_uint32();</div>
+<div class="line">        <span class="keyword">auto</span> is_string = test_scope_id.has_string();</div>
+<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;scope id is integer for ip2: &quot;</span> &lt;&lt; std::boolalpha &lt;&lt; is_integer &lt;&lt; std::endl;</div>
+<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;scope id is string for ip2: &quot;</span> &lt;&lt; std::boolalpha &lt;&lt; is_string &lt;&lt; std::endl;</div>
+<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;scope id for ip2: &quot;</span> &lt;&lt; test_scope_id.get_uint32() &lt;&lt; std::endl;</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md22"></a>
+Std overrides</h2>
+<p>The library overloads some functions from the standard library so that IP addresses (<code>ipv4_address</code>, <code>ipv6_address</code>, <code>ip_address</code>) can be used in hash tables and other standard operations on <code>swap</code>, etc.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;unordered_map&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="ipaddress_8hpp.html">ipaddress/ipaddress.hpp</a>&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using namespace </span><a class="code hl_namespace" href="namespaceipaddress.html">ipaddress</a>;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip1 = ip_address::parse(<span class="stringliteral">&quot;127.0.0.1&quot;</span>);</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip2 = ip_address::parse(<span class="stringliteral">&quot;2001:db8::1&quot;</span>);</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip3 = ip_address::parse(<span class="stringliteral">&quot;2001:db8::1%scope&quot;</span>);</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Added partial specialization for hash calculation</span></div>
+<div class="line">    std::unordered_map&lt;ip_address, int&gt; container;</div>
+<div class="line">    container[ip1] = 1;</div>
+<div class="line">    container[ip2] = 2;</div>
+<div class="line">    container[ip3] = 3;</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; [key, value] : container) {</div>
+<div class="line">        std::cout &lt;&lt; key &lt;&lt; <span class="stringliteral">&quot;: &quot;</span> &lt;&lt; value &lt;&lt; std::endl;</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Overloaded operators for parsing and writing to streams (char type only)</span></div>
+<div class="line">    std::cout &lt;&lt; ip2 &lt;&lt; std::endl; <span class="comment">// 2001:db8::1</span></div>
+<div class="line">    std::cout &lt;&lt; full &lt;&lt; ip2 &lt;&lt; std::endl; <span class="comment">// 2001:0db8:0000:0000:0000:0000:0000:0001</span></div>
+<div class="line">    std::cout &lt;&lt; compact &lt;&lt; ip2 &lt;&lt; std::endl; <span class="comment">// 2001:db8:0:0:0:0:0:1</span></div>
+<div class="line">    std::cout &lt;&lt; compressed &lt;&lt; ip2 &lt;&lt; std::endl; <span class="comment">// 2001:db8::1</span></div>
+<div class="line"> </div>
+<div class="line">    <a class="code hl_class" href="classipaddress_1_1ip__address.html">ip_address</a> r1, r2;</div>
+<div class="line">    std::istringstream ss1(<span class="stringliteral">&quot;255.0.42.42 test&quot;</span>);</div>
+<div class="line">    std::istringstream ss2(<span class="stringliteral">&quot;2001:db8:0:0:0:0:0:1%scope test&quot;</span>);</div>
+<div class="line">    ss1 &gt;&gt; r1;</div>
+<div class="line">    ss2 &gt;&gt; r2;</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;has errors: &quot;</span> &lt;&lt; std::boolalpha &lt;&lt; (ss1.fail() || ss2.fail()) &lt;&lt; std::endl; <span class="comment">// has errors: false</span></div>
+<div class="line">    std::cout &lt;&lt; r1 &lt;&lt; std::endl; <span class="comment">// 255.0.42.42</span></div>
+<div class="line">    std::cout &lt;&lt; r2 &lt;&lt; std::endl; <span class="comment">// 2001:db8::1%scope</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassipaddress_1_1ip__address_html"><div class="ttname"><a href="classipaddress_1_1ip__address.html">ipaddress::ip_address</a></div><div class="ttdoc">A class that represents an IP address, supporting both IPv4 and IPv6 formats.</div><div class="ttdef"><b>Definition</b> ip-any-address.hpp:76</div></div>
+</div><!-- fragment --><p> 
 
 <div class="cards">
 

@@ -18,5 +18,6 @@ var searchData=
   ['build_20guide_15',['Build Guide',['../build.html',1,'']]],
   ['byte_2darray_2ehpp_16',['byte-array.hpp',['../byte-array_8hpp.html',1,'']]],
   ['byte_5farray_17',['byte_array',['../structipaddress_1_1byte__array.html',1,'ipaddress']]],
-  ['bytes_18',['bytes',['../classipaddress_1_1ipv4__address__base.html#a5f2cc8513329088b2a21f38b2f36fcc1',1,'ipaddress::ipv4_address_base::bytes()'],['../classipaddress_1_1ipv6__address__base.html#a5f2cc8513329088b2a21f38b2f36fcc1',1,'ipaddress::ipv6_address_base::bytes()']]]
+  ['bytes_18',['bytes',['../classipaddress_1_1ipv4__address__base.html#a5f2cc8513329088b2a21f38b2f36fcc1',1,'ipaddress::ipv4_address_base::bytes()'],['../classipaddress_1_1ipv6__address__base.html#a5f2cc8513329088b2a21f38b2f36fcc1',1,'ipaddress::ipv6_address_base::bytes()']]],
+  ['bytes_19',['Working with bytes',['../tutorial.html#autotoc_md17',1,'']]]
 ];

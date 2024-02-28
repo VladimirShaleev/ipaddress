@@ -19,6 +19,28 @@
 <!-- END twitter metadata -->
 <title>ipaddress: Get Started</title>
 <link rel="icon" href="logo.svg" type="image/svg+xml" />
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+<link rel="icon" sizes="16x16" href="favicon-16x16.png" type="image/png">
+<link rel="icon" sizes="32x32" href="favicon-32x32.png" type="image/png">
+<link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="apple-touch-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon-180x180.png">
+<link rel="mask-icon" color="#5f8893" href="safari-pinned-tab.svg">
+<meta name="msapplication-TileColor" content="#4a9cf8">
+<meta name="msapplication-TileImage" content="mstile-144x144.png">
+<meta name="msapplication-square70x70logo" content="mstile-70x70.png">
+<meta name="msapplication-square150x150logo" content="mstile-150x150.png">
+<meta name="msapplication-wide310x150logo" content="mstile-310x310.png">
+<meta name="msapplication-square310x310logo" content="mstile-310x150.png">
+<meta name="application-name" content="ipaddress">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#ffffff">
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -132,7 +154,7 @@ $(function(){initNavTree('index.html',''); initResizable(); });
 <div class="toc"><h3>Table of Contents</h3>
 <ul><ul><li class="level2"><a href="#autotoc_md0">Introduction</a></li>
 <li class="level2"><a href="#autotoc_md1">Compatibility</a></li>
-<li class="level2"><a href="#autotoc_md2">Installation</a><ul><li class="level3"><a href="#autotoc_md3">Use package managers</a><ul><li class="level4"><a href="#autotoc_md4">Vcpk</a></li>
+<li class="level2"><a href="#autotoc_md2">Installation</a><ul><li class="level3"><a href="#autotoc_md3">Use package managers</a><ul><li class="level4"><a href="#autotoc_md4">Vcpkg</a></li>
 <li class="level4"><a href="#autotoc_md5">Conan</a></li>
 <li class="level4"><a href="#autotoc_md6">Snapcraft</a></li>
 </ul>
@@ -157,7 +179,7 @@ $(function(){initNavTree('index.html',''); initResizable(); });
 </blockquote>
 <h2><a class="anchor" id="autotoc_md0"></a>
 Introduction</h2>
-<p>This cross-platfrom <b>header-only</b> library is inspired by the <a href="https://docs.python.org/3.12/library/ipaddress.html">ipaddress API in Python</a>, from which it derives its name. It aims to be simpler to use due to its familiar interface. However, the C++ implementation takes a different approach: it uses <b>static polymorphism</b> through the strategy pattern instead of dynamic polymorphism to handle differences between IP versions (IPv4 and IPv6). This design choice eliminates the overhead of dynamic calls and virtual tables. For instance, an instance of the <b>ipv4_address</b> class will be represented by 4 bytes.</p>
+<p>This cross-platfrom <b>header-only</b> library for C++11 and newer is inspired by the <a href="https://docs.python.org/3.12/library/ipaddress.html">ipaddress API in Python</a>, from which it derives its name. It aims to be simpler to use due to its familiar interface. However, the C++ implementation takes a different approach: it uses <b>static polymorphism</b> through the strategy pattern instead of dynamic polymorphism to handle differences between IP versions (IPv4 and IPv6). This design choice eliminates the overhead of dynamic calls and virtual tables. For instance, an instance of the <b>ipv4_address</b> class will be represented by 4 bytes.</p>
 <p>The library leverages modern C++ features, ensuring that all IP address and network operations support constant expressions.</p>
 <div class="image">
 <img src="constexpr.png" alt=""/>
@@ -182,7 +204,7 @@ Use package managers</h3>
 <p></p>
 </blockquote>
 <h4><a class="anchor" id="autotoc_md4"></a>
-Vcpk</h4>
+Vcpkg</h4>
 <h4><a class="anchor" id="autotoc_md5"></a>
 Conan</h4>
 <h4><a class="anchor" id="autotoc_md6"></a>
@@ -245,7 +267,7 @@ Quick Start</h2>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;DNS PTR &quot;</span> &lt;&lt; ip.reverse_pointer() &lt;&lt; std::endl &lt;&lt; std::endl;</div>
 <div class="line">}</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> terade_sample() {</div>
+<div class="line"><span class="keywordtype">void</span> teredo_sample() {</div>
 <div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> teredo_ip = <span class="stringliteral">&quot;2001:0000:4136:e378:8000:63bf:3fff:fdd2&quot;</span>_ipv6;</div>
 <div class="line">    <span class="keyword">auto</span> [server, client] = teredo_ip.teredo().value();</div>
 <div class="line"> </div>
@@ -266,7 +288,7 @@ Quick Start</h2>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main() {</div>
 <div class="line">    parse_ip_sample();</div>
-<div class="line">    terade_sample();</div>
+<div class="line">    teredo_sample();</div>
 <div class="line">    subnets_sample();</div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
