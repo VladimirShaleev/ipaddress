@@ -211,10 +211,10 @@ TEST(ip_address, to_uint) {
     IPADDRESS_CONSTEXPR auto ip1 = ip_address::parse("192.168.0.1");
     IPADDRESS_CONSTEXPR auto ip2 = ip_address::parse("2002:ac1d:2d64::1");
 
-    IPADDRESS_CONSTEXPR auto actual1 = ip1.to_uint();
+    IPADDRESS_CONSTEXPR auto actual1 = ip1.to_uint128();
     IPADDRESS_CONSTEXPR auto actual2 = (uint128_t) ip1;
     IPADDRESS_CONSTEXPR auto actual3 = (uint32_t) ip1;
-    IPADDRESS_CONSTEXPR auto actual4 = ip2.to_uint();
+    IPADDRESS_CONSTEXPR auto actual4 = ip2.to_uint128();
     IPADDRESS_CONSTEXPR auto actual5 = (uint128_t) ip2;
     IPADDRESS_CONSTEXPR auto actual6 = (uint32_t) ip2;
 

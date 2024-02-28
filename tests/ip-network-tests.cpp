@@ -702,7 +702,7 @@ TEST(ip_network, subnets) {
     IPADDRESS_CONSTEXPR auto subnets_rend = subnets_sequence.rend();
     IPADDRESS_CONSTEXPR auto subnets_diff = subnets_end.uint_diff(subnets_begin);
     IPADDRESS_CONSTEXPR auto subnets_begin_0 = *subnets_begin;
-    IPADDRESS_CONSTEXPR auto subnets_begin_0_uint = subnets_begin->network_address().to_uint();
+    IPADDRESS_CONSTEXPR auto subnets_begin_0_uint = subnets_begin->network_address().to_uint32();
     IPADDRESS_CONSTEXPR auto subnets_begin_at_0 = subnets_begin[0U];
     IPADDRESS_CONSTEXPR auto subnets_begin_at_1 = subnets_begin[1U];
     IPADDRESS_CONSTEXPR auto subnets_begin_at_2 = subnets_begin[2U];
@@ -716,7 +716,7 @@ TEST(ip_network, subnets) {
     IPADDRESS_CONSTEXPR auto subnets_it_ge = subnets_begin >= subnets_end;
     IPADDRESS_CONSTEXPR auto subnets_rdiff = subnets_rend.uint_diff(subnets_rbegin);
     IPADDRESS_CONSTEXPR auto subnets_rbegin_0 = *subnets_rbegin;
-    IPADDRESS_CONSTEXPR auto subnets_rbegin_0_uint = subnets_rbegin->network_address().to_uint();
+    IPADDRESS_CONSTEXPR auto subnets_rbegin_0_uint = subnets_rbegin->network_address().to_uint32();
     IPADDRESS_CONSTEXPR auto subnets_rbegin_at_0 = subnets_rbegin[0U];
     IPADDRESS_CONSTEXPR auto subnets_rbegin_at_1 = subnets_rbegin[1U];
     IPADDRESS_CONSTEXPR auto subnets_rbegin_at_2 = subnets_rbegin[2U];
@@ -772,7 +772,7 @@ TEST(ip_network, address_exclude) {
     IPADDRESS_CONSTEXPR auto exclude_begin = exclude_sequence.begin();
     IPADDRESS_CONSTEXPR auto exclude_end = exclude_sequence.end();
     IPADDRESS_CONSTEXPR auto exclude_begin_0 = *exclude_begin;
-    IPADDRESS_CONSTEXPR auto exclude_begin_0_uint = exclude_begin->network_address().to_uint();
+    IPADDRESS_CONSTEXPR auto exclude_begin_0_uint = exclude_begin->network_address().to_uint32();
     IPADDRESS_CONSTEXPR auto exclude_begin_1 = *++exclude_sequence.begin();
     ASSERT_FALSE(exclude_empty);
     ASSERT_EQ(exclude_begin_0, ip_network::parse("192.0.2.8/29"));

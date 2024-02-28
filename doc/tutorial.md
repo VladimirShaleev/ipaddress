@@ -62,11 +62,53 @@ int main() {
     const std::string str2 = "fe80::1ff:fe23:4567:890a%eth2";
     auto ip10 = ipv4_address::parse(str1);
     auto ip11 = ipv6_address::parse(str2);
-    auto ip12 = ip_address::parse(str2); // any version address
+    auto ip12 =   ip_address::parse(str2); // any version address
 
     return 0;
 }
 ```
+
+@remark For compile-time computations, the **ipaddress** library uses relaxed `constexpr`, which was introduced only in C++14. Therefore, for C++11, the **ipaddress** library does not support constant expressions. It is recommended to use the C++14 language standard or newer versions.
+
+### From uint/To uint
+
+Below is code demonstrating how to create IP addresses from unsigned integers and convert them back to unsigned integers.
+
+```cpp
+#include <iostream>
+
+#include <ipaddress/ipaddress.hpp>
+
+using namespace ipaddress;
+
+int main() {
+    // Unsigned integers in host endianness
+    constexpr ipv4_address::uint_type u1 = 0xC0A80001;         // std::uint32_t
+    constexpr ipv6_address::uint_type u2 = 281470681743360ULL; // ipaddress::uint128_t
+
+    constexpr auto ip1 = ipv4_address::from_uint(u1);
+    constexpr auto ip2 = ipv6_address::from_uint(u2);
+    constexpr auto ip3 =   ip_address::from_uint(u1); // any version address
+
+    // Get unsigned integers in host endianness
+    //
+    // Explicit conversions are also available:
+    //   - constexpr auto value1 =        (std::uint32_t) ip1;
+    //   - constexpr auto value2 = (ipaddress::uint128_t) ip2;
+    //   - constexpr auto value3 =        (std::uint32_t) ip3;
+    constexpr auto value1 = ip1.to_uint();
+    constexpr auto value2 = ip2.to_uint();
+    constexpr auto value3 = ip3.to_uint32(); // ip_address does not define to_uint to avoid accidental errors
+
+    return 0;
+}
+```
+
+@note `ipaddress` defines its type `uint128_t` to work with 128-bit unsigned integers. It is designed to fill the gap in the C++ standard, which does not natively support 128-bit integers across all platforms. Unlike compiler-specific extensions like `__int128`, `uint128_t` ensures compatibility and portability across different compilers and architectures. <br> The implementation is inspired by the algorithms used in the .NET framework's [UInt128](https://source.dot.net/#System.Private.CoreLib/src/libraries/System.Private.CoreLib/src/System/UInt128.cs), providing a reliable foundation for arithmetic operations and other integer-related functionalities.
+
+### Working with bytes
+
+### Comparison
 
 ## Scope Id
 

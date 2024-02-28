@@ -415,6 +415,20 @@ public:
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address from_uint(const uint_type_ipv6& ip) IPADDRESS_NOEXCEPT {
         return ip_address(ipv6_address::from_uint(ip));
     }
+
+    /**
+     * Converts the IP address to a uint32_t.
+     * 
+     * This function returns the numeric representation of the IP address as a uint32_t. For IPv6 addresses, 
+     * it returns the least significant 32 bits of the address.
+     * 
+     * @return A uint32_t representing the IPv4 address or the least significant 32 bits of the IPv6 address.
+     * @remark Bytes in integer are presented in **host byte order**.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint32_t to_uint32() const IPADDRESS_NOEXCEPT {
+        return _version == ip_version::V4 ? _ipv.ipv4.to_uint() : uint32_t(_ipv.ipv6.to_uint());
+    }
+
     /**
      * Converts the IP address to a uint128_t.
      * 
@@ -424,7 +438,7 @@ public:
      * @return A uint128_t representing the numeric value of the IP address.
      * @remark Bytes in integer are presented in **host byte order**.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t to_uint() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t to_uint128() const IPADDRESS_NOEXCEPT {
         return _version == ip_version::V4 ? uint128_t(_ipv.ipv4.to_uint()) : _ipv.ipv6.to_uint();
     }
 
@@ -1154,7 +1168,7 @@ public:
      * @remark Bytes in integer are presented in **host byte order**.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit operator uint32_t() const IPADDRESS_NOEXCEPT {
-        return _version == ip_version::V4 ? _ipv.ipv4.to_uint() : uint32_t(_ipv.ipv6.to_uint());
+        return to_uint32();
     }
 
     /**
@@ -1167,7 +1181,7 @@ public:
      * @remark Bytes in integer are presented in **host byte order**.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit operator uint128_t() const IPADDRESS_NOEXCEPT {
-        return to_uint();
+        return to_uint128();
     }
 
     /**
