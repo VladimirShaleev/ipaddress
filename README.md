@@ -108,8 +108,7 @@ or disabled in your project.
 
 To start using the library, simply include the header `ipaddress/ipaddress.hpp`, and you’re ready to begin your work!
 
-Here is an example demonstrating some of the library's features (this example also demonstrates the new C++20 syntax for 
-**Literal Classes as Non-type Template Parameters**, so a compiler with at least C++20 support is required to compile this example):
+Here is an example demonstrating some of the library's features (this example can be compiled with C++14 or higher):
 
 ```cpp
 #include <iostream>
