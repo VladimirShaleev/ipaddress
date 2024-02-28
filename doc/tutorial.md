@@ -214,6 +214,77 @@ int main() {
 
 ### Comparison
 
+For classes for working with IP addresses, comparison operators and spaceship operator (for C++20 and newer) have been redefined.
+
+```cpp
+#include <iostream>
+
+#include <ipaddress/ipaddress.hpp>
+
+using namespace ipaddress;
+
+int main() {
+    constexpr auto ip1 = ipv6_address::parse("fe80::1ff:fe23:4567:890a");
+    constexpr auto ip2 = ipv6_address::parse("fe80::1ff:fe23:4567:890b");
+
+    constexpr auto test1 = ip1 == ip2; // false
+    constexpr auto test2 = ip1 != ip2; // true
+    constexpr auto test3 = ip1 <  ip2; // true
+    constexpr auto test4 = ip1 <= ip2; // true
+    constexpr auto test5 = ip1 >= ip2; // false
+    constexpr auto test6 = ip1 >  ip2; // false
+
+    // If scope id is specified, it will also be taken into account when comparing
+    constexpr auto ip3 = ipv6_address::parse("fe80::1ff:fe23:4567:890a%eth2");
+    constexpr auto ip4 = ipv6_address::parse("fe80::1ff:fe23:4567:890a%eth1");
+    
+    constexpr auto test7  = ip2 == ip3; // false
+    constexpr auto test8  = ip2 != ip3; // true
+    constexpr auto test9  = ip2 <  ip3; // false
+    constexpr auto test10 = ip2 <= ip3; // false
+    constexpr auto test11 = ip2 >= ip3; // true
+    constexpr auto test12 = ip2 >  ip3; // true
+    constexpr auto test13 = ip3 == ip4; // false
+    constexpr auto test14 = ip3 != ip4; // true
+    constexpr auto test15 = ip3 <  ip4; // false
+    constexpr auto test16 = ip3 <= ip4; // false
+    constexpr auto test17 = ip3 >= ip4; // true
+    constexpr auto test18 = ip3 >  ip4; // true
+
+    return 0;
+}
+```
+
+### IP Address Properties
+
+The library provides many properties for determining certain features of an IP address. Let's look at the example below (all possible properties are not presented here; for a more complete picture, see the [documentation for the code](classipaddress_1_1ip__address.html#pub-methods)).
+
+```cpp
+#include <iostream>
+
+#include <ipaddress/ipaddress.hpp>
+
+using namespace ipaddress;
+
+int main() {
+    constexpr auto test1 = ipv6_address::parse("ffff::").is_multicast(); // true
+    constexpr auto test2 =   ip_address::parse("fdff::").is_multicast(); // false
+
+    constexpr auto test3 = ipv4_address::parse("240.0.0.1").is_reserved(); // true
+    constexpr auto test4 =   ip_address::parse("239.255.255.255").is_reserved(); // false
+
+    constexpr auto ip = ip_address::parse("2002:ac1d:2d64::1");
+    constexpr auto sixtofour = ip.sixtofour(); // get sixtofour
+
+    if (sixtofour) { // true
+        constexpr auto result = sixtofour.value();
+    }
+    return 0;
+}
+```
+
+### Convert to string
+
 ## Scope Id
 
 The library supports **Scope Id** both as numeric values and as strings.
