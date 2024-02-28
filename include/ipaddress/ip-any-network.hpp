@@ -411,6 +411,59 @@ public:
     }
 
     /**
+     * Generates a supernet from this network.
+     * 
+     * The supernet containing this network definition, depending on the argument values. \a prefixlen_diff 
+     * is the amount our prefix length should be decreased by. new_prefix is the desired new prefix of the 
+     * supernet; it must be smaller than our prefix. One and only one of \a prefixlen_diff and new_prefix must 
+     * be set.
+     * 
+     * @code{.cpp}
+     *   constexpr auto supernet = ip_network::parse("192.0.2.0/24").supernet(2);
+     *   
+     *   std::cout << supernet << std::endl;
+     *   
+     *   // out:
+     *   // 192.0.0.0/22
+     * @endcode
+     * @param[in] prefixlen_diff The amount by which the prefix length should be decreased. *Defaults to 1*.
+     * @param[in] new_prefixlen An optional new prefix length for the supernet. If not specified, the prefix length is determined by subtracting \a prefixlen_diff from the current prefix length.
+     * @return An ip network object representing the supernet, or the current network if an error occurs.
+     * @throw logic_error Raised if the operation cannot be performed due to invalid parameters or prefix length.
+     */
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network supernet(size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+        return is_v4() ? ip_network(_ipv_net.ipv4.supernet(prefixlen_diff, new_prefixlen)) : ip_network(_ipv_net.ipv6.supernet(prefixlen_diff, new_prefixlen));
+    }
+
+    /**
+     * Generates a supernet from this network with error handling.
+     * 
+     * The supernet containing this network definition, depending on the argument values. \a prefixlen_diff 
+     * is the amount our prefix length should be decreased by. new_prefix is the desired new prefix of the 
+     * supernet; it must be smaller than our prefix. One and only one of \a prefixlen_diff and new_prefix must 
+     * be set.
+     * 
+     * @code{.cpp}
+     *   auto err = error_code::NO_ERROR;
+     *   auto supernet = ip_network::parse("192.0.2.0/24").supernet(err, 2);
+     *   
+     *   if (err == error_code::NO_ERROR) {
+     *       std::cout << supernet << std::endl;
+     *   }
+     *   
+     *   // out:
+     *   // 192.0.0.0/22
+     * @endcode
+     * @param[out] code An error_code object that will be set if an error occurs during the operation.
+     * @param[in] prefixlen_diff The amount by which the prefix length should be decreased. *Defaults to 1*.
+     * @param[in] new_prefixlen An optional new prefix length for the supernet. If not specified, the prefix length is determined by subtracting \a prefixlen_diff from the current prefix length.
+     * @return An ip network object representing the supernet, or the current network if an error occurs.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network supernet(error_code& code, size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT {
+        return is_v4() ? ip_network(_ipv_net.ipv4.supernet(code, prefixlen_diff, new_prefixlen)) : ip_network(_ipv_net.ipv6.supernet(code, prefixlen_diff, new_prefixlen));
+    }
+
+    /**
      * Retrieves a sequence of host addresses in the network.
      * 
      * This method returns a sequence of host addresses within the network, excluding the network and

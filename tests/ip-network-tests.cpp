@@ -606,6 +606,11 @@ TEST(ip_network, supernet_of) {
     ASSERT_FALSE(actual4);
 }
 
+TEST(ip_network, supernet) {
+    IPADDRESS_CONSTEXPR auto supernet = ip_network::parse("192.0.2.0/24").supernet();
+    ASSERT_EQ(supernet, ip_network::parse("192.0.2.0/23"));
+}
+
 TEST(ip_network, hosts) {
     IPADDRESS_CONSTEXPR auto hosts_sequence = ip_network::parse("192.0.2.0/29").hosts();
     IPADDRESS_CONSTEXPR auto hosts_empty = hosts_sequence.empty();
