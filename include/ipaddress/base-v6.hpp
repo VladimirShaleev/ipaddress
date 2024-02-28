@@ -214,9 +214,9 @@ protected:
         return offset;
     }
 
-    IPADDRESS_NODISCARD static IPADDRESS_FORCE_INLINE std::string ip_reverse_pointer(const base_type& bytes, const fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>& scope_id) {
+    IPADDRESS_NODISCARD static IPADDRESS_FORCE_INLINE std::string ip_reverse_pointer(const base_type& bytes) {
         char result[base_max_string_len + 1] {};
-        const auto len = ip_to_chars(bytes, scope_id, format::full, result);
+        const auto len = ip_to_chars(bytes, {}, format::full, result);
         auto ip = std::string(result, len);
         ip.erase(std::remove(ip.begin(), ip.end(), ':'), ip.end());
         auto res = std::accumulate(std::next(ip.rbegin()), ip.rend(), std::string{ip.back()}, [](std::string a, char b) {

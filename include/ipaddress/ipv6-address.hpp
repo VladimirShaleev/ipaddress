@@ -752,17 +752,6 @@ protected:
 
 #endif // IPADDRESS_HAS_SPACESHIP_OPERATOR
 
-    IPADDRESS_NODISCARD std::string IPADDRESS_FORCE_INLINE ip_reverse_pointer(const base_type& bytes) const {
-        return base_v6<ipv6_address_base>::ip_reverse_pointer(bytes, 
-        
-        #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH > 0
-            _data.scope_id
-        #else // IPADDRESS_IPV6_SCOPE_MAX_LENGTH <= 0
-            make_fixed_string("")
-        #endif // IPADDRESS_IPV6_SCOPE_MAX_LENGTH <= 0
-        );
-    }
-
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t ip_to_chars(const base_type& bytes, format fmt, char (&result)[base_max_string_len + 1]) const IPADDRESS_NOEXCEPT {
         return base_v6<ipv6_address_base>::ip_to_chars(bytes, 
 

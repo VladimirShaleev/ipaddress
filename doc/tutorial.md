@@ -294,6 +294,8 @@ int main() {
     auto str7 = ip2.to_string(format::compact);    // fe80:0:0:0:1ff:fe23:4567:890a%eth2
     auto str8 = ip2.to_string(format::compressed); // fe80::1ff:fe23:4567:890a%eth2
 
+    auto reverse_pointer = ip2.reverse_pointer(); // a.0.9.8.7.6.5.4.3.2.e.f.f.f.1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.e.f.ip6.arpa
+ 
     return 0;
 }
 ```
