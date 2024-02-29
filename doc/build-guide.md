@@ -55,7 +55,7 @@ cd build
 ctest --output-on-failure
 ```
 
-## Build the Documentation
+## Build a Documentation
 
 To assemble the documentation, you need to install the following tools on the system:
 
@@ -65,8 +65,8 @@ To assemble the documentation, you need to install the following tools on the sy
 After which you can enable the documentation build in the configuration and run build.
 
 ```bash
-cmake -B build -S . -DIPADDRESS_BUILD_DOC=ON 
-cmake --build build
+cmake -B build -S . -DIPADDRESS_BUILD_DOC=ON
+cmake --build build --target doc
 ```
 
 @htmlonly
