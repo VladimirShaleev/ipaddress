@@ -43,8 +43,6 @@ You can install in one of the following ways
 > #### Vcpkg
 > 
 > #### Conan
-> 
-> #### Snapcraft
 
 Then, if you use CMake for build, you need to link the target:
 

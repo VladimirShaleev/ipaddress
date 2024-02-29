@@ -93,6 +93,8 @@ int main() {
 }
 ```
 
+@note Keep in mind that if the `IPADDRESS_NO_EXCEPTIONS` flag is defined, then not all compilers can produce compile-time errors for constexpr **before** C++20 for parsing expressions like `constexpr auto ip = ipv4_address::parse("127.0.0.257");`
+
 @htmlonly
 
 <div class="cards">
