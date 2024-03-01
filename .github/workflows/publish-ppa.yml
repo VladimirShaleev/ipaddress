@@ -85,8 +85,10 @@ jobs:
         env:
           PPA_BUILD: ${{ vars.PPA_BUILD }}
           PUBLIC_KEY: ${{ vars.PUBLIC_KEY }}
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         run: |
           cd ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}
           debuild -S -sa -us -uc
           cd ${{ steps.strings.outputs.build-output-dir }}/ppa
+          echo -n "$PRIVATE_KEY" | base64 --decode | gpg --import
           debsign -p'gpg --passphrase "${{ secrets.LAUNCHPAD_PASSWORD }}" --batch --pinentry-mode loopback' -S -k$PUBLIC_KEY ipaddress_${{ steps.strings.outputs.version }}-${PPA_BUILD}_source.changes
