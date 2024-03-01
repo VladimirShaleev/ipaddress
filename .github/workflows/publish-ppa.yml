@@ -70,6 +70,7 @@ jobs:
           EDITOR=/bin/true dpkg-source -q --commit . changes
           debuild -S -sa -us -uc
           cd ${{ steps.strings.outputs.build-output-dir }}/ppa
+          export GPG_TTY=$(tty)
           echo -n "$PRIVATE_KEY" | base64 --decode | gpg --import
           debsign -p'gpg --passphrase "${{ secrets.LAUNCHPAD_PASSWORD }}" --batch --pinentry-mode loopback' -S -k$PUBLIC_KEY ipaddress_${{ steps.strings.outputs.version }}-${PPA_BUILD}_source.changes
           dput ppa:vladimirshaleev/ipaddress ipaddress_${{ steps.strings.outputs.version }}-${PPA_BUILD}_source.changes
