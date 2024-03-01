@@ -44,12 +44,43 @@ jobs:
           cp _CPack_Packages/Linux/DEB/ipaddress-${{ steps.strings.outputs.version }}/data.tar.gz ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress_${{ steps.strings.outputs.version }}.orig.tar.gz
 
       - name: Add debian/rules
-        run: >
+        run: |
           printf "#!/usr/bin/make -f
 
           %%:
-              dh \$@
+          	dh \$@
           " > build/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/rules
 
+      - name: Add changelog
+        run: |
+          printf "ipaddress (${{ steps.strings.outputs.version }}-${{ steps.strings.outputs.build }}) focal; urgency=low
+
+            * Release ${{ steps.strings.outputs.version }}.
+
+           -- Vladimir Shaleev <vladimirshaleev@gmail.com>  
+          " > build/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
+          date +"%a, %d %b %Y %H:%M:%S %z" >> build/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
+
+      - name: Add debian/control
+        run: |
+          printf "Source: ipaddress
+          Section: devel
+          Priority: optional
+          Maintainer: Vladimir Shaleev <vladimirshaleev@gmail.com>
+          Standards-Version: 4.5.0
+          Build-Depends: debhelper (>= 10)
+          
+          Package: libipaddress-dev
+          Depends: \${misc:Depends}
+          Architecture: all
+          Homepage: https://github.com/VladimirShaleev/ipaddress
+          Description: A library for working and manipulating IPv4/IPv6 addresses and networks
+          
+          " > build/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/control
+
       - name: test
-        run: cat build/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/rules
+        run: |
+          cat build/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/rules
+          cat build/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
+          cat build/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/control
+  
