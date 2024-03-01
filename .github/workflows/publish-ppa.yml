@@ -24,7 +24,7 @@ jobs:
         shell: bash
         run: |
           echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
-          echo "version=0.0.9" >> "$GITHUB_OUTPUT"
+          echo "version=0.0.10" >> "$GITHUB_OUTPUT"
 
       - name: Configure CMake
         run: >
@@ -58,7 +58,7 @@ jobs:
         run: |
           dyear=$(date '+%Y')
           printf "#!/usr/bin/make -f\n\n%%:\n	dh \$@\n" >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/rules
-          printf "ipaddress (${{ steps.strings.outputs.version }}-$PPA_BUILD) ${{ matrix.series }}; urgency=low\n\n  * Release ${{ steps.strings.outputs.version }}\n\n -- Vladimir Shaleev <vladimirshaleev@gmail.com>  " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
+          printf "ipaddress (${{ steps.strings.outputs.version }}-${PPA_BUILD}~${{ matrix.series }}) ${{ matrix.series }}; urgency=low\n\n  * Release ${{ steps.strings.outputs.version }}\n\n -- Vladimir Shaleev <vladimirshaleev@gmail.com>  " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
           date +"%a, %d %b %Y %H:%M:%S %z" >>  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
           echo 10 >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/compat
           echo "3.0 (quilt)" >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/source/format
@@ -107,5 +107,5 @@ jobs:
           cd ${{ steps.strings.outputs.build-output-dir }}/ppa
           export GPG_TTY=$(tty)
           echo -n "$PRIVATE_KEY" | base64 --decode | gpg --batch --import
-          debsign -p'gpg --passphrase ${{ secrets.LAUNCHPAD_PASSWORD }} --batch --pinentry-mode loopback' -S -k$PUBLIC_KEY ipaddress_${{ steps.strings.outputs.version }}-${PPA_BUILD}_source.changes
-          dput ppa:vladimirshaleev/ipaddress ipaddress_${{ steps.strings.outputs.version }}-${PPA_BUILD}_source.changes
+          debsign -p'gpg --passphrase ${{ secrets.LAUNCHPAD_PASSWORD }} --batch --pinentry-mode loopback' -S -k$PUBLIC_KEY ipaddress_${{ steps.strings.outputs.version }}-${PPA_BUILD}~${{ matrix.series }}_source.changes
+          dput ppa:vladimirshaleev/ipaddress ipaddress_${{ steps.strings.outputs.version }}-${PPA_BUILD}~${{ matrix.series }}_source.changes
