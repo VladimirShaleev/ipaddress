@@ -8,7 +8,10 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
-        
+
+      - name: Install Doxygen
+        run: sudo apt install -y debuild
+     
       - name: Set build output dir
         id: strings
         shell: bash
@@ -45,18 +48,18 @@ jobs:
 
       - name: Add debian/rules
         run: |
-          printf "#!/usr/bin/make -f
-          \n
+          printf "#!/usr/bin/make -f\n
+          
           %%:
-          	dh \$@
-          \n" >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/rules
+          	dh \$@\n
+          " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/rules
 
       - name: Add changelog
         run: |
-          printf "ipaddress (${{ steps.strings.outputs.version }}-${{ steps.strings.outputs.build }}) focal; urgency=low
-          \n
-            * Release ${{ steps.strings.outputs.version }}.
-          \n
+          printf "ipaddress (${{ steps.strings.outputs.version }}-${{ steps.strings.outputs.build }}) focal; urgency=low\n
+          
+            * Release ${{ steps.strings.outputs.version }}.\n
+          
            -- Vladimir Shaleev <vladimirshaleev@gmail.com>  " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
           date +"%a, %d %b %Y %H:%M:%S %z" >>  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
 
@@ -72,14 +75,13 @@ jobs:
           Priority: optional
           Maintainer: Vladimir Shaleev <vladimirshaleev@gmail.com>
           Standards-Version: 4.5.0
-          Build-Depends: debhelper (>= 10)
-          \n
+          Build-Depends: debhelper (>= 10)\n
+          
           Package: libipaddress-dev
           Depends: \${misc:Depends}
           Architecture: all
           Homepage: https://github.com/VladimirShaleev/ipaddress
-          Description: A library for working and manipulating IPv4/IPv6 addresses and networks
-          \n\n
+          Description: A library for working and manipulating IPv4/IPv6 addresses and networks\n\n
           " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/control
       - name: Add copyright
         run: printf "stup" > ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/copyright
