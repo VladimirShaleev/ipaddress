@@ -4,9 +4,9 @@ var searchData=
   ['octet_5fexceeded_5f255_1',['OCTET_EXCEEDED_255',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689da1435adbd5ad33d9489c6351da36eb143',1,'ipaddress']]],
   ['octet_5fhas_5finvalid_5fsymbol_2',['OCTET_HAS_INVALID_SYMBOL',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689dae5158f71e04b29e7ee269f95176890f4',1,'ipaddress']]],
   ['octet_5fmore_5f3_5fcharacters_3',['OCTET_MORE_3_CHARACTERS',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689da6dd88c745a2fa77cc8cbba26b4adfff6',1,'ipaddress']]],
-  ['one_20network_20from_20another_20network_4',['Removing one network from another network',['../operations.html#autotoc_md31',1,'']]],
+  ['one_20network_20from_20another_20network_4',['Removing one network from another network',['../operations.html#autotoc_md30',1,'']]],
   ['only_5fone_5fslash_5fpermitted_5',['ONLY_ONE_SLASH_PERMITTED',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689da9b0dd645bae34eb17b79da5c94855dba',1,'ipaddress']]],
-  ['operations_6',['Operations',['../operations.html',1,'Network Operations'],['../operations.html#autotoc_md32',1,'Other operations']]],
+  ['operations_6',['Operations',['../operations.html',1,'Network Operations'],['../operations.html#autotoc_md31',1,'Other operations']]],
   ['operator_20bool_7',['operator bool',['../classipaddress_1_1scope.html#ae4fa87dce1664735f6a6043898a37642',1,'ipaddress::scope::operator bool()'],['../classipaddress_1_1optional.html#ae4fa87dce1664735f6a6043898a37642',1,'ipaddress::optional::operator bool()'],['../classipaddress_1_1uint128__t.html#ae4fa87dce1664735f6a6043898a37642',1,'ipaddress::uint128_t::operator bool() const noexcept']]],
   ['operator_20char_8',['operator char',['../classipaddress_1_1uint128__t.html#a144b4a1a93a42ad9ceaec789bb216213',1,'ipaddress::uint128_t']]],
   ['operator_20double_9',['operator double',['../classipaddress_1_1uint128__t.html#a86f97fe8b7ccf6b457e57ce603dce5d8',1,'ipaddress::uint128_t']]],
@@ -69,7 +69,7 @@ var searchData=
   ['operator_7e_66',['operator~',['../classipaddress_1_1uint128__t.html#a059ac2395e9aec94ccd574adbb3a206d',1,'ipaddress::uint128_t']]],
   ['optional_67',['optional',['../classipaddress_1_1optional.html',1,'optional&lt; T &gt;'],['../classipaddress_1_1optional.html#a1fa0f820de56b17b48d7418e4c17f191',1,'ipaddress::optional::optional() noexcept(noexcept(T()))=default'],['../classipaddress_1_1optional.html#a2beb783daef9d8c16bdf9b68641d1a12',1,'ipaddress::optional::optional(std::nullptr_t) noexcept'],['../classipaddress_1_1optional.html#a124f00ffa4ea93b1ae6fcd24e80ae424',1,'ipaddress::optional::optional(value_type &amp;&amp;val) noexcept'],['../classipaddress_1_1optional.html#aa9625b82d69277958996f6250ebc49db',1,'ipaddress::optional::optional(const optional&lt; T &gt; &amp;opt) noexcept']]],
   ['optional_2ehpp_68',['optional.hpp',['../optional_8hpp.html',1,'']]],
-  ['other_20operations_69',['Other operations',['../operations.html#autotoc_md32',1,'']]],
+  ['other_20operations_69',['Other operations',['../operations.html#autotoc_md31',1,'']]],
   ['overlaps_70',['overlaps',['../classipaddress_1_1ip__network.html#ab4ddaec67a3a14e19371900f207d753d',1,'ipaddress::ip_network::overlaps()'],['../classipaddress_1_1ip__network__base.html#a643558d92fd45671de7c87c1bc5b72e6',1,'ipaddress::ip_network_base::overlaps()']]],
-  ['overrides_71',['Std overrides',['../tutorial.html#autotoc_md28',1,'']]]
+  ['overrides_71',['Std overrides',['../tutorial.html#autotoc_md27',1,'']]]
 ];

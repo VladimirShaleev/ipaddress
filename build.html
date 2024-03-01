@@ -153,8 +153,8 @@ $(function(){initNavTree('build.html',''); initResizable(); });
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><ul><li class="level2"><a href="#autotoc_md36">Set up a project</a></li>
-<li class="level2"><a href="#autotoc_md37">Build the Documentation</a></li>
+<ul><ul><li class="level2"><a href="#autotoc_md35">Set up a project</a></li>
+<li class="level2"><a href="#autotoc_md36">Build a Documentation</a></li>
 </ul>
 </ul>
 </div>
@@ -165,14 +165,14 @@ $(function(){initNavTree('build.html',''); initResizable(); });
 <li>Compatible C++ compiler supporting C++11 or later (if you cannot test on all versions of the standard, then it’s okay, this <a href="https://github.com/VladimirShaleev/ipaddress/actions/workflows/tests.yml">project runs tests</a> for all versions of the C++ standard and various versions of compilers);</li>
 <li><a href="https://cmake.org/">CMake</a> and a compatible build tool for building the project.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md36"></a>
+<h2><a class="anchor" id="autotoc_md35"></a>
 Set up a project</h2>
 <div class="fragment"><div class="line">git clone https://github.com/VladimirShaleev/ipaddress.git</div>
 <div class="line">cd ipaddress</div>
 </div><!-- fragment --><p>Once the repository is clone, you can configure it using CMake.</p>
 <div class="fragment"><div class="line">cmake -B build -S . \</div>
 <div class="line">  -DCMAKE_CXX_STANDARD=17 \</div>
-<div class="line">  -DCMAKE_BUILD_TYPE=Debug/Release \</div>
+<div class="line">  -DCMAKE_BUILD_TYPE=Debug \</div>
 <div class="line">  -DIPADDRESS_BUILD_TESTS=ON \</div>
 <div class="line">  -DIPADDRESS_BUILD_DOC=OFF \</div>
 <div class="line">  -DIPADDRESS_BUILD_PACKAGES=OFF \</div>
@@ -191,20 +191,20 @@ Set up a project</h2>
 <li><code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH</code> — scope id max length (16 by default).</li>
 </ul>
 <p>Once configured, you can build.</p>
-<div class="fragment"><div class="line">cmake --build build --config Release -j4</div>
+<div class="fragment"><div class="line">cmake --build build --config Debug -j4</div>
 </div><!-- fragment --><p>Running unit tests.</p>
 <div class="fragment"><div class="line">cd build</div>
 <div class="line">ctest --output-on-failure</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md37"></a>
-Build the Documentation</h2>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md36"></a>
+Build a Documentation</h2>
 <p>To assemble the documentation, you need to install the following tools on the system:</p>
 <ul>
-<li><a href="https://www.doxygen.nl">Doxygen</a> for documentation assembly.</li>
-<li><a href="https://graphviz.org/">graphviz</a> for creating charts</li>
+<li><a href="https://www.doxygen.nl">Doxygen</a> version 1.10.0 for documentation assembly;</li>
+<li><a href="https://graphviz.org/">graphviz</a> for creating charts.</li>
 </ul>
 <p>After which you can enable the documentation build in the configuration and run build.</p>
-<div class="fragment"><div class="line">cmake -B build -S . -DIPADDRESS_BUILD_DOC=ON </div>
-<div class="line">cmake --build build</div>
+<div class="fragment"><div class="line">cmake -B build -S . -DIPADDRESS_BUILD_DOC=ON</div>
+<div class="line">cmake --build build --target doc</div>
 </div><!-- fragment --><p> 
 
 <div class="cards">
