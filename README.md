@@ -43,13 +43,24 @@ You can install in one of the following ways
 > #### Vcpkg
 > 
 > #### Conan
+>
+> #### Homebrew
 
-Then, if you use CMake for build, you need to link the target:
+#### Ubuntu PPA
+
+```bash
+sudo add-apt-repository ppa:vladimirshaleev/ipaddress
+sudo apt update
+
+sudo apt install libipaddress-dev
+```
+
+Then, if you use **CMake** for build, you need to link the target (**regardless of how you installed the package**):
 
 ```cmake
 cmake_minimum_required(VERSION 3.8.0)
 
-project(my-project LANGUAGES CXX)
+project(my_project LANGUAGES CXX)
 
 find_package(ipaddress CONFIG REQUIRED)
 
