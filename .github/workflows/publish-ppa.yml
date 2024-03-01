@@ -49,20 +49,20 @@ jobs:
 
       - name: Add debian/rules
         run: |
-          printf "#!/usr/bin/make -f
+          printf "#!/usr/bin/make -f\n
           \n
           %%:
-          	dh \$@
+          	dh \$@\n
           \n
-          " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/rules
+          \n" >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/rules
 
       - name: Add changelog
         env:
             PPA_BUILD: ${{ vars.PPA_BUILD }}
         run: |
-          printf "ipaddress (${{ steps.strings.outputs.version }}-$PPA_BUILD focal; urgency=low
+          printf "ipaddress (${{ steps.strings.outputs.version }}-$PPA_BUILD focal; urgency=low\n
           \n
-            * Release ${{ steps.strings.outputs.version }}.
+            * Release ${{ steps.strings.outputs.version }}.\n
           \n
            -- Vladimir Shaleev <vladimirshaleev@gmail.com>  " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
           date +"%a, %d %b %Y %H:%M:%S %z" >>  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
@@ -79,13 +79,13 @@ jobs:
           Priority: optional
           Maintainer: Vladimir Shaleev <vladimirshaleev@gmail.com>
           Standards-Version: 4.5.0
-          Build-Depends: debhelper (>= 10)
+          Build-Depends: debhelper (>= 10)\n
           \n
           Package: libipaddress-dev
           Depends: \${misc:Depends}
           Architecture: all
           Homepage: https://github.com/VladimirShaleev/ipaddress
-          Description: A library for working and manipulating IPv4/IPv6 addresses and networks
+          Description: A library for working and manipulating IPv4/IPv6 addresses and networks\n
           \n
           \n
           " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/control
