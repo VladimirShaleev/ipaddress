@@ -39,31 +39,31 @@ jobs:
       - name: Pack Deb
         run: cpack --config ${{ steps.strings.outputs.build-output-dir }}/CPackConfig.cmake
 
-      - name: Add .orig.tar.gz
+      - name: Add source code
         run: |
           mkdir -p ${{ steps.strings.outputs.build-output-dir }}/ppa
           mkdir -p ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}
           mkdir -p ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian
           mkdir -p ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/source
           cp _CPack_Packages/Linux/DEB/ipaddress-${{ steps.strings.outputs.version }}/data.tar.gz ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress_${{ steps.strings.outputs.version }}.orig.tar.gz
+          cp -r _CPack_Packages/Linux/DEB/ipaddress-${{ steps.strings.outputs.version }}/usr ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress_${{ steps.strings.outputs.version }}/debian/
 
       - name: Add debian/rules
         run: |
-          printf "#!/usr/bin/make -f\
-          \
+          printf "#!/usr/bin/make -f
+           
           %%:
-          	dh \$@\
-          \
-          \" >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/rules
+          	dh \$@
+          " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/rules
 
       - name: Add changelog
         env:
             PPA_BUILD: ${{ vars.PPA_BUILD }}
         run: |
-          printf "ipaddress (${{ steps.strings.outputs.version }}-$PPA_BUILD) focal; urgency=low\
-          \
-            * Release ${{ steps.strings.outputs.version }}\
-          \
+          printf "ipaddress (${{ steps.strings.outputs.version }}-$PPA_BUILD) focal; urgency=low
+           
+            * Release ${{ steps.strings.outputs.version }}
+           
            -- Vladimir Shaleev <vladimirshaleev@gmail.com>  " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
           date +"%a, %d %b %Y %H:%M:%S %z" >>  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
 
@@ -79,15 +79,15 @@ jobs:
           Priority: optional
           Maintainer: Vladimir Shaleev <vladimirshaleev@gmail.com>
           Standards-Version: 4.5.0
-          Build-Depends: debhelper (>= 10)\
-          \
+          Build-Depends: debhelper (>= 10)
+           
           Package: libipaddress-dev
           Depends: \${misc:Depends}
           Architecture: all
           Homepage: https://github.com/VladimirShaleev/ipaddress
-          Description: A library for working and manipulating IPv4/IPv6 addresses and networks\
-          \
-          \
+          Description: A library for working and manipulating IPv4/IPv6 addresses and networks
+           
+           
           " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/control
       - name: Add copyright
         run: printf "stup" > ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/copyright
