@@ -50,18 +50,20 @@ jobs:
       - name: Add debian/rules
         run: |
           printf "#!/usr/bin/make -f
-          \
+          \n
           %%:
           	dh \$@
-          \
+          \n
           " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/rules
 
       - name: Add changelog
+        env:
+            PPA_BUILD: ${{ vars.PPA_BUILD }}
         run: |
-          printf "ipaddress (${{ steps.strings.outputs.version }}-${{ env.PPA_BUILD }}) focal; urgency=low
-          \
+          printf "ipaddress (${{ steps.strings.outputs.version }}-$PPA_BUILD focal; urgency=low
+          \n
             * Release ${{ steps.strings.outputs.version }}.
-          \
+          \n
            -- Vladimir Shaleev <vladimirshaleev@gmail.com>  " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
           date +"%a, %d %b %Y %H:%M:%S %z" >>  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
 
@@ -78,14 +80,14 @@ jobs:
           Maintainer: Vladimir Shaleev <vladimirshaleev@gmail.com>
           Standards-Version: 4.5.0
           Build-Depends: debhelper (>= 10)
-          \
+          \n
           Package: libipaddress-dev
           Depends: \${misc:Depends}
           Architecture: all
           Homepage: https://github.com/VladimirShaleev/ipaddress
           Description: A library for working and manipulating IPv4/IPv6 addresses and networks
-          \
-          \
+          \n
+          \n
           " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/control
       - name: Add copyright
         run: printf "stup" > ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/copyright
@@ -99,8 +101,11 @@ jobs:
           cat  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/control
   
       - name: Debuild
+        env:
+          PPA_BUILD: ${{ vars.PPA_BUILD }}
+          PUBLIC_KEY: ${{ vars.PUBLIC_KEY }}
         run: |
           cd ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}
           debuild -S -sa -us -uc
           cd ${{ steps.strings.outputs.build-output-dir }}/ppa
-          debsign -p'gpg --passphrase "${{ secrets.LAUNCHPAD_PASSWORD }}" --batch --pinentry-mode loopback' -S -k${{ env.PUBLIC_KEY }} ipaddress_${{ steps.strings.outputs.version }}-${{ env.PPA_BUILD }}_source.changes
+          debsign -p'gpg --passphrase "${{ secrets.LAUNCHPAD_PASSWORD }}" --batch --pinentry-mode loopback' -S -k$PUBLIC_KEY ipaddress_${{ steps.strings.outputs.version }}-$PPA_BUILD_source.changes
