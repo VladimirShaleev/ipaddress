@@ -10,15 +10,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Debuild
-        run: sudo apt install -y devscripts debhelper
+      # - name: Install Debuild
+      #   run: sudo apt install -y devscripts debhelper
      
       - name: Set build output dir
         id: strings
         shell: bash
         run: |
           echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
-          echo "version=0.0.6" >> "$GITHUB_OUTPUT"
+          echo "version=0.0.7" >> "$GITHUB_OUTPUT"
 
       - name: Configure CMake
         run: >
@@ -44,32 +44,33 @@ jobs:
           mkdir -p ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian
           mkdir -p ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/source
           cp _CPack_Packages/Linux/DEB/ipaddress-${{ steps.strings.outputs.version }}/data.tar.gz ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress_${{ steps.strings.outputs.version }}.orig.tar.gz
-          cp -r _CPack_Packages/Linux/DEB/ipaddress-${{ steps.strings.outputs.version }}/usr ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian
+          cp -r _CPack_Packages/Linux/DEB/ipaddress-${{ steps.strings.outputs.version }}/usr ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/
+          ls -l ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/usr
 
-      - name: Add debian package files
-        env:
-          PPA_BUILD: ${{ vars.PPA_BUILD }}
-        run: |
-          printf "#!/usr/bin/make -f\n\n%%:\n	dh \$@\n" >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/rules
-          printf "ipaddress (${{ steps.strings.outputs.version }}-$PPA_BUILD) focal; urgency=low\n\n  * Release ${{ steps.strings.outputs.version }}\n\n -- Vladimir Shaleev <vladimirshaleev@gmail.com>  " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
-          date +"%a, %d %b %Y %H:%M:%S %z" >>  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
-          echo 10 >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/compat
-          echo "3.0 (quilt)" >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/source/format
-          printf "Source: ipaddress\nSection: devel\nPriority: optional\nMaintainer: Vladimir Shaleev <vladimirshaleev@gmail.com>\nStandards-Version: 4.5.0\nBuild-Depends: debhelper (>= 10)\n\nPackage: libipaddress-dev\nDepends: \${misc:Depends}\nArchitecture: all\nHomepage: https://github.com/VladimirShaleev/ipaddress\nDescription: A library for working and manipulating IPv4/IPv6 addresses and networks\n\n" >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/control
-          printf "stub" > ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/copyright
-          printf "usr/include/ipaddress/*.hpp\nusr/share/cmake/ipaddress/*.cmake\nusr/share/pkgconfig/ipaddress.pc\n" > ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/libipaddress-dev.install
+     # - name: Add debian package files
+     #   env:
+     #     PPA_BUILD: ${{ vars.PPA_BUILD }}
+     #   run: |
+     #     printf "#!/usr/bin/make -f\n\n%%:\n	dh \$@\n" >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/rules
+     #     printf "ipaddress (${{ steps.strings.outputs.version }}-$PPA_BUILD) focal; urgency=low\n\n  * Release ${{ steps.strings.outputs.version }}\n\n -- Vladimir Shaleev <vladimirshaleev@gmail.com>  " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
+     #     date +"%a, %d %b %Y %H:%M:%S %z" >>  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
+     #     echo 10 >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/compat
+     #     echo "3.0 (quilt)" >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/source/format
+     #     printf "Source: ipaddress\nSection: devel\nPriority: optional\nMaintainer: Vladimir Shaleev <vladimirshaleev@gmail.com>\nStandards-Version: 4.5.0\nBuild-Depends: debhelper (>= 10)\n\nPackage: libipaddress-dev\nDepends: \${misc:Depends}\nArchitecture: all\nHomepage: https://github.com/VladimirShaleev/ipaddress\nDescription: A library for working and manipulating IPv4/IPv6 addresses and networks\n\n" >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/control
+     #     printf "stub" > ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/copyright
+     #     printf "usr/include/ipaddress/*.hpp\nusr/share/cmake/ipaddress/*.cmake\nusr/share/pkgconfig/ipaddress.pc\n" > ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/libipaddress-dev.install
 
-      - name: Debuild, Sign and Publish
-        env:
-          PPA_BUILD: ${{ vars.PPA_BUILD }}
-          PUBLIC_KEY: ${{ vars.PUBLIC_KEY }}
-          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-        run: |
-          cd ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}
-          EDITOR=/bin/true dpkg-source -q --commit . changes
-          debuild -S -sa -us -uc
-          cd ${{ steps.strings.outputs.build-output-dir }}/ppa
-          export GPG_TTY=$(tty)
-          echo -n "$PRIVATE_KEY" | base64 --decode | gpg --batch --import
-          debsign -p'gpg --passphrase ${{ secrets.LAUNCHPAD_PASSWORD }} --batch --pinentry-mode loopback' -S -k$PUBLIC_KEY ipaddress_${{ steps.strings.outputs.version }}-${PPA_BUILD}_source.changes
-          dput ppa:vladimirshaleev/ipaddress ipaddress_${{ steps.strings.outputs.version }}-${PPA_BUILD}_source.changes
+     # - name: Debuild, Sign and Publish
+     #   env:
+     #     PPA_BUILD: ${{ vars.PPA_BUILD }}
+     #     PUBLIC_KEY: ${{ vars.PUBLIC_KEY }}
+     #     PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+     #   run: |
+     #     cd ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}
+     #     EDITOR=/bin/true dpkg-source -q --commit . changes
+     #     debuild -S -sa -us -uc
+     #     cd ${{ steps.strings.outputs.build-output-dir }}/ppa
+     #     export GPG_TTY=$(tty)
+     #     echo -n "$PRIVATE_KEY" | base64 --decode | gpg --batch --import
+     #     debsign -p'gpg --passphrase ${{ secrets.LAUNCHPAD_PASSWORD }} --batch --pinentry-mode loopback' -S -k$PUBLIC_KEY ipaddress_${{ steps.strings.outputs.version }}-${PPA_BUILD}_source.changes
+     #     dput ppa:vladimirshaleev/ipaddress ipaddress_${{ steps.strings.outputs.version }}-${PPA_BUILD}_source.changes
