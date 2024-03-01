@@ -40,6 +40,7 @@ jobs:
         shell: bash
         run: |
           echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+          echo "origin=0.0.12" >> "$GITHUB_OUTPUT"
           echo "version=0.0.12.${{ matrix.sub }}" >> "$GITHUB_OUTPUT"
 
       - name: Configure CMake
@@ -65,8 +66,8 @@ jobs:
           mkdir -p ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}
           mkdir -p ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian
           mkdir -p ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/source
-          cp _CPack_Packages/Linux/DEB/ipaddress-${{ steps.strings.outputs.version }}/data.tar.gz ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress_${{ steps.strings.outputs.version }}.orig.tar.gz
-          cp -r _CPack_Packages/Linux/DEB/ipaddress-${{ steps.strings.outputs.version }}/usr ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/
+          cp _CPack_Packages/Linux/DEB/ipaddress-${{ steps.strings.outputs.origin }}/data.tar.gz ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress_${{ steps.strings.outputs.version }}.orig.tar.gz
+          cp -r _CPack_Packages/Linux/DEB/ipaddress-${{ steps.strings.outputs.origin }}/usr ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/
 
       - name: Add debian package files
         env:
