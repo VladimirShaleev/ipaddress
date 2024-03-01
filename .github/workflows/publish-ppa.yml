@@ -24,7 +24,7 @@ jobs:
         shell: bash
         run: |
           echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
-          echo "version=0.0.8" >> "$GITHUB_OUTPUT"
+          echo "version=0.0.9" >> "$GITHUB_OUTPUT"
 
       - name: Configure CMake
         run: >
