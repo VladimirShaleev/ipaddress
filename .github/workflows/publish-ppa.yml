@@ -32,11 +32,10 @@ jobs:
           -DIPADDRESS_BUILD_DEB_PACKAGE=ON
           -DIPADDRESS_BUILD_RPM_PACKAGE=OFF
 
-      - name: Build
-        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
-        
-      - name: Pack Deb
-        run: cpack --config ${{ steps.strings.outputs.build-output-dir }}/CPackConfig.cmake
+      - name: Pack
+        run: |
+          cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
+          cpack --config ${{ steps.strings.outputs.build-output-dir }}/CPackConfig.cmake
 
       - name: Add source code
         run: |
@@ -72,5 +71,5 @@ jobs:
           cd ${{ steps.strings.outputs.build-output-dir }}/ppa
           export GPG_TTY=$(tty)
           echo -n "$PRIVATE_KEY" | base64 --decode | gpg --batch --import
-          debsign -p'gpg --passphrase "${{ secrets.LAUNCHPAD_PASSWORD }}" --batch --pinentry-mode loopback' -S -k$PUBLIC_KEY ipaddress_${{ steps.strings.outputs.version }}-${PPA_BUILD}_source.changes
+          debsign -p'gpg --passphrase ${{ secrets.LAUNCHPAD_PASSWORD }} --batch --pinentry-mode loopback' -S -k$PUBLIC_KEY ipaddress_${{ steps.strings.outputs.version }}-${PPA_BUILD}_source.changes
           dput ppa:vladimirshaleev/ipaddress ipaddress_${{ steps.strings.outputs.version }}-${PPA_BUILD}_source.changes
