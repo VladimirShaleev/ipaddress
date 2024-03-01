@@ -81,12 +81,18 @@ jobs:
           Description: A library for working and manipulating IPv4/IPv6 addresses and networks
           \n\n
           " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/control
+      - name: Add copyright
+        run: printf "stup" > ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/copyright
 
       - name: test
         run: |
           cat  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/rules
           cat  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/compat
-          cat  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/format
-          cat  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/control
+          cat  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/source/format
           cat  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
+          cat  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/control
   
+      - name: Debuild
+        run: |
+          cd ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}
+          debuild -S -sa -us -uc
