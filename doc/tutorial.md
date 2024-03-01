@@ -525,7 +525,7 @@ int main() {
 
     if (scope_id) {
         constexpr auto is_integer = scope_id.has_uint32(); // false
-        constexpr auto is_string = scope_id.has_string(); // false
+        constexpr auto is_string = scope_id.has_string(); // true
         std::cout << "scope id is integer for ip1: " << std::boolalpha << is_integer << std::endl;
         std::cout << "scope id is string for ip1: " << std::boolalpha << is_string << std::endl;
         std::cout << "scope id for ip1: " << scope_id.get_string() << std::endl;
@@ -539,8 +539,8 @@ int main() {
     auto test_scope_id = ip2.get_scope_id();
 
     if (test_scope_id) {
-        auto is_integer = test_scope_id.has_uint32();
-        auto is_string = test_scope_id.has_string();
+        auto is_integer = test_scope_id.has_uint32(); // true
+        auto is_string = test_scope_id.has_string(); // true
         std::cout << "scope id is integer for ip2: " << std::boolalpha << is_integer << std::endl;
         std::cout << "scope id is string for ip2: " << std::boolalpha << is_string << std::endl;
         std::cout << "scope id for ip2: " << test_scope_id.get_uint32() << std::endl;
@@ -554,7 +554,7 @@ int main() {
 
 @note If, for some reason, you don't want the library to overload standard functions, you can define `IPADDRESS_NO_OVERLOAD_STD` during compilation.
 
-The library overloads some functions from the standard library so that IP addresses (`ipv4_address`, `ipv6_address`, `ip_address`) can be used in hash tables and other standard operations on `swap`, etc.
+The library overloads some functions from the standard library so that IP addresses and networks (`ipv4_address`, `ipv6_address`, `ip_address`, `ipv4_network`, `ipv6_network` and `ip_network`) can be used in hash tables and other standard operations on `std::swap`, etc.
 
 ```cpp
 #include <iostream>

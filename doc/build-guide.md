@@ -22,7 +22,7 @@ Once the repository is clone, you can configure it using CMake.
 ```bash
 cmake -B build -S . \
   -DCMAKE_CXX_STANDARD=17 \
-  -DCMAKE_BUILD_TYPE=Debug/Release \
+  -DCMAKE_BUILD_TYPE=Debug \
   -DIPADDRESS_BUILD_TESTS=ON \
   -DIPADDRESS_BUILD_DOC=OFF \
   -DIPADDRESS_BUILD_PACKAGES=OFF \
@@ -45,7 +45,7 @@ Where:
 Once configured, you can build.
 
 ```bash
-cmake --build build --config Release -j4
+cmake --build build --config Debug -j4
 ```
 
 Running unit tests.
