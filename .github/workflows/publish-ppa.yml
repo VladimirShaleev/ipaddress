@@ -35,10 +35,21 @@ jobs:
       - name: Pack Deb
         run: cpack --config ${{ steps.strings.outputs.build-output-dir }}/CPackConfig.cmake
 
-      - name: Add debian config
+      - name: Add .orig.tar.gz
         run: |
           mkdir -p ${{ steps.strings.outputs.build-output-dir }}/ppa
           mkdir -p ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}
           mkdir -p ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian
           mkdir -p ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/source
           cp _CPack_Packages/Linux/DEB/ipaddress-${{ steps.strings.outputs.version }}/data.tar.gz ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress_${{ steps.strings.outputs.version }}.orig.tar.gz
+
+      - name: Add debian/rules
+        run: >
+          printf "#!/usr/bin/make -f
+
+          %%:
+              dh \$@
+          " > build/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/rules
+
+      - name: test
+        run: cat build/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/rules
