@@ -1,0 +1,31 @@
+name: Publish to Launchpad PPA
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+        
+      - name: Set build output dir
+        id: strings
+        shell: bash
+        run: echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+
+      - name: Configure CMake
+        run: >
+          cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }}
+          -DCMAKE_CXX_COMPILER=clang++
+          -DCMAKE_C_COMPILER=clang
+          -DCMAKE_BUILD_TYPE=Release
+          -DIPADDRESS_BUILD_TESTS=OFF
+          -DIPADDRESS_BUILD_DOC=OFF
+          -DIPADDRESS_BUILD_PACKAGES=ON
+
+      - name: Build
+        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
+        
+      - name: Pack Deb
+        run: cpack --config ${{ steps.strings.outputs.build-output-dir }}/CPackConfig.cmake
