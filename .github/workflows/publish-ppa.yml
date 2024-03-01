@@ -89,4 +89,4 @@ jobs:
           cd ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}
           debuild -S -sa -us -uc
           cd ${{ steps.strings.outputs.build-output-dir }}/ppa
-          debsign -p'gpg --passphrase "${{ secrets.LAUNCHPAD_PASSWORD }}" --batch --pinentry-mode loopback' -S -k$PUBLIC_KEY ipaddress_${{ steps.strings.outputs.version }}-$PPA_BUILD_source.changes
+          debsign -p'gpg --passphrase "${{ secrets.LAUNCHPAD_PASSWORD }}" --batch --pinentry-mode loopback' -S -k$PUBLIC_KEY ipaddress_${{ steps.strings.outputs.version }}-${PPA_BUILD}_source.changes
