@@ -12,7 +12,7 @@ jobs:
       - name: Set build output dir
         id: strings
         shell: bash
-        run: >
+        run: |
           echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
           echo "version=0.0.3" >> "$GITHUB_OUTPUT"
           echo "build=1" >> "$GITHUB_OUTPUT"
@@ -36,7 +36,7 @@ jobs:
         run: cpack --config ${{ steps.strings.outputs.build-output-dir }}/CPackConfig.cmake
 
       - name: Add debian config
-        run: >
+        run: |
           mkdir -p ${{ steps.strings.outputs.build-output-dir }}/ppa
           mkdir -p ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}
           mkdir -p ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian
