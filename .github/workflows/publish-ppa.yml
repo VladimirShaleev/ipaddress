@@ -49,21 +49,13 @@ jobs:
 
       - name: Add debian/rules
         run: |
-          printf "#!/usr/bin/make -f
-           
-          %%:
-          	dh \$@
-          " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/rules
+          printf "#!/usr/bin/make -f\n\n%%:\n	dh \$@\n" >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/rules
 
       - name: Add changelog
         env:
             PPA_BUILD: ${{ vars.PPA_BUILD }}
         run: |
-          printf "ipaddress (${{ steps.strings.outputs.version }}-$PPA_BUILD) focal; urgency=low
-           
-            * Release ${{ steps.strings.outputs.version }}
-           
-           -- Vladimir Shaleev <vladimirshaleev@gmail.com>  " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
+          printf "ipaddress (${{ steps.strings.outputs.version }}-$PPA_BUILD) focal; urgency=low\n\n  * Release ${{ steps.strings.outputs.version }}\n\n -- Vladimir Shaleev <vladimirshaleev@gmail.com>  " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
           date +"%a, %d %b %Y %H:%M:%S %z" >>  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
 
       - name: Add debian/compat and debian/format
@@ -73,23 +65,12 @@ jobs:
 
       - name: Add debian/control
         run: |
-          printf "Source: ipaddress
-          Section: devel
-          Priority: optional
-          Maintainer: Vladimir Shaleev <vladimirshaleev@gmail.com>
-          Standards-Version: 4.4.1
-          Build-Depends: debhelper-compat (= 12)
-           
-          Package: libipaddress-dev
-          Depends: \${misc:Depends}
-          Architecture: all
-          Homepage: https://github.com/VladimirShaleev/ipaddress
-          Description: A library for working and manipulating IPv4/IPv6 addresses and networks
-           
-           
-          " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/control
+          printf "Source: ipaddress\nSection: devel\nPriority: optional\nMaintainer: Vladimir Shaleev <vladimirshaleev@gmail.com>\nStandards-Version: 4.5.0\nBuild-Depends: debhelper (>= 10)\n\nPackage: libipaddress-dev\nDepends: \${misc:Depends}\nArchitecture: all\nHomepage: https://github.com/VladimirShaleev/ipaddress\nDescription: A library for working and manipulating IPv4/IPv6 addresses and networks\n\n" >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/control
       - name: Add copyright
-        run: printf "stup" > ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/copyright
+        run: printf "stub" > ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/copyright
+
+      - name: Add install file
+        run: printf "usr/include/ipaddress/*.hpp\nusr/share/cmake/ipaddress/*.cmake\nusr/share/pkgconfig/ipaddress.pc\n" > ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/libipaddress-dev.install
 
       - name: test
         run: |
@@ -98,6 +79,7 @@ jobs:
           cat  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/source/format
           cat  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
           cat  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/control
+          cat  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/libipaddress-dev.install
   
       - name: Debuild
         env:
