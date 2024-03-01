@@ -77,8 +77,8 @@ jobs:
           Section: devel
           Priority: optional
           Maintainer: Vladimir Shaleev <vladimirshaleev@gmail.com>
-          Standards-Version: 4.5.0
-          Build-Depends: debhelper (>= 9)
+          Standards-Version: 4.4.1
+          Build-Depends: debhelper-compat (= 12)
            
           Package: libipaddress-dev
           Depends: \${misc:Depends}
