@@ -12,7 +12,10 @@ jobs:
       - name: Set build output dir
         id: strings
         shell: bash
-        run: echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+        run: >
+          echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+          echo "version=0.0.3" >> "$GITHUB_OUTPUT"
+          echo "build=1" >> "$GITHUB_OUTPUT"
 
       - name: Configure CMake
         run: >
@@ -23,9 +26,19 @@ jobs:
           -DIPADDRESS_BUILD_TESTS=OFF
           -DIPADDRESS_BUILD_DOC=OFF
           -DIPADDRESS_BUILD_PACKAGES=ON
+          -DIPADDRESS_BUILD_DEB_PACKAGE=ON
+          -DIPADDRESS_BUILD_RPM_PACKAGE=OFF
 
       - name: Build
         run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
         
       - name: Pack Deb
         run: cpack --config ${{ steps.strings.outputs.build-output-dir }}/CPackConfig.cmake
+
+      - name: Add debian config
+        run: >
+          mkdir -p ${{ steps.strings.outputs.build-output-dir }}/ppa
+          mkdir -p ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}
+          mkdir -p ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian
+          mkdir -p ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/source
+          cp _CPack_Packages/Linux/DEB/ipaddress-${{ steps.strings.outputs.version }}/data.tar.gz ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress_${{ steps.strings.outputs.version }}.orig.tar.gz
