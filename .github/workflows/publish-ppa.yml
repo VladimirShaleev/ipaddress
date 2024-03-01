@@ -5,7 +5,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-20.04
     environment: launchpad
     steps:
       - uses: actions/checkout@v4
@@ -18,8 +18,7 @@ jobs:
         shell: bash
         run: |
           echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
-          echo "version=0.0.3" >> "$GITHUB_OUTPUT"
-          echo "build=1" >> "$GITHUB_OUTPUT"
+          echo "version=0.0.6" >> "$GITHUB_OUTPUT"
 
       - name: Configure CMake
         run: >
@@ -79,7 +78,7 @@ jobs:
           Priority: optional
           Maintainer: Vladimir Shaleev <vladimirshaleev@gmail.com>
           Standards-Version: 4.5.0
-          Build-Depends: debhelper (>= 10)
+          Build-Depends: debhelper (>= 9)
            
           Package: libipaddress-dev
           Depends: \${misc:Depends}
