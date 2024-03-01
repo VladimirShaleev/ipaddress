@@ -71,6 +71,6 @@ jobs:
           debuild -S -sa -us -uc
           cd ${{ steps.strings.outputs.build-output-dir }}/ppa
           export GPG_TTY=$(tty)
-          echo -n "$PRIVATE_KEY" | base64 --decode | gpg --import
+          echo -n "$PRIVATE_KEY" | base64 --decode | gpg --batch --import
           debsign -p'gpg --passphrase "${{ secrets.LAUNCHPAD_PASSWORD }}" --batch --pinentry-mode loopback' -S -k$PUBLIC_KEY ipaddress_${{ steps.strings.outputs.version }}-${PPA_BUILD}_source.changes
           dput ppa:vladimirshaleev/ipaddress ipaddress_${{ steps.strings.outputs.version }}-${PPA_BUILD}_source.changes
