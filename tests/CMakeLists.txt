@@ -7,6 +7,13 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
+if(IPADDRESS_CLANG_TIDY)
+  set_target_properties(gtest PROPERTIES CXX_CLANG_TIDY "")
+  set_target_properties(gtest_main PROPERTIES CXX_CLANG_TIDY "")
+  set_target_properties(gmock PROPERTIES CXX_CLANG_TIDY "")
+  set_target_properties(gmock_main PROPERTIES CXX_CLANG_TIDY "")
+endif()
+
 if(CMAKE_CXX_STANDARD)
   message(STATUS "Select standatd C++${CMAKE_CXX_STANDARD}")
 endif()
