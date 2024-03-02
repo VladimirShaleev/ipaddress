@@ -39,7 +39,7 @@ public:
      * @return A boolean value indicating whether the network is site-local.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_site_local() const IPADDRESS_NOEXCEPT {
-        const auto& network = *static_cast<const ip_network_base<ipv6_network_base>*>(this);
+        const auto& network = *static_cast<const ip_network_base<ipv6_network_base>*>(this); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
         return network.network_address().is_site_local() && network.broadcast_address().is_site_local();
     }
 

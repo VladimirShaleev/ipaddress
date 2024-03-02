@@ -733,7 +733,7 @@ IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLIN
 #ifndef IPADDRESS_NO_OVERLOAD_STD
 
 IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE int stream_index() { 
-    static int i = std::ios_base::xalloc();
+    static const int i = std::ios_base::xalloc();
     return i;
 }
 
@@ -798,7 +798,7 @@ template <typename Base>
 IPADDRESS_FORCE_INLINE std::istream& operator>>(std::istream& stream, IPADDRESS_NAMESPACE::ip_address_base<Base>& ip) {
     std::string str;
     stream >> str;
-    IPADDRESS_NAMESPACE::error_code err;
+    IPADDRESS_NAMESPACE::error_code err = IPADDRESS_NAMESPACE::error_code::NO_ERROR;
     ip = IPADDRESS_NAMESPACE::ip_address_base<Base>::parse(str, err);
     if (err != IPADDRESS_NAMESPACE::error_code::NO_ERROR) {
         stream.setstate(std::ios_base::failbit);

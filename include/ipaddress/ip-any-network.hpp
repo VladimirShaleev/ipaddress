@@ -431,7 +431,7 @@ public:
      * @return An ip network object representing the supernet, or the current network if an error occurs.
      * @throw logic_error Raised if the operation cannot be performed due to invalid parameters or prefix length.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network supernet(size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network supernet(size_t prefixlen_diff = 1, const optional<size_t>& new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return is_v4() ? ip_network(_ipv_net.ipv4.supernet(prefixlen_diff, new_prefixlen)) : ip_network(_ipv_net.ipv6.supernet(prefixlen_diff, new_prefixlen));
     }
 
@@ -459,7 +459,7 @@ public:
      * @param[in] new_prefixlen An optional new prefix length for the supernet. If not specified, the prefix length is determined by subtracting \a prefixlen_diff from the current prefix length.
      * @return An ip network object representing the supernet, or the current network if an error occurs.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network supernet(error_code& code, size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network supernet(error_code& code, size_t prefixlen_diff = 1, const optional<size_t>& new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT {
         return is_v4() ? ip_network(_ipv_net.ipv4.supernet(code, prefixlen_diff, new_prefixlen)) : ip_network(_ipv_net.ipv6.supernet(code, prefixlen_diff, new_prefixlen));
     }
 
@@ -535,7 +535,7 @@ public:
      * @throw logic_error Raised if the operation cannot be performed due to invalid parameters or prefix length.
      * @remark `subnets_any_sequence` uses lazy evaluation to iterate over the subnets.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_any_sequence<ip_network> subnets(size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_any_sequence<ip_network> subnets(size_t prefixlen_diff = 1, const optional<size_t>& new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         if (is_v4()) {
             const auto sequence = _ipv_net.ipv4.subnets(prefixlen_diff, new_prefixlen);
             return subnets_any_sequence<ip_network>(sequence.begin(), sequence.end());
@@ -575,7 +575,7 @@ public:
      * @return A `subnets_any_sequence` object representing the sequence of subnets, or an empty sequence if an error occurs.
      * @remark `subnets_any_sequence` uses lazy evaluation to iterate over the subnets.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_any_sequence<ip_network> subnets(error_code& code, size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_any_sequence<ip_network> subnets(error_code& code, size_t prefixlen_diff = 1, const optional<size_t>& new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT {
         if (is_v4()) {
             const auto sequence = _ipv_net.ipv4.subnets(code, prefixlen_diff, new_prefixlen);
             return subnets_any_sequence<ip_network>(sequence.begin(), sequence.end());
@@ -677,8 +677,7 @@ public:
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<ipv4_network> v4() const IPADDRESS_NOEXCEPT {
         if (_version == ip_version::V4) {
-            auto net = _ipv_net.ipv4;
-            return optional<ipv4_network>(std::move(net));
+            return optional<ipv4_network>(_ipv_net.ipv4);
         }
         return optional<ipv4_network>();
     }
@@ -692,8 +691,7 @@ public:
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<ipv6_network> v6() const IPADDRESS_NOEXCEPT {
         if (_version == ip_version::V6) {
-            auto net = _ipv_net.ipv6;
-            return optional<ipv6_network>(std::move(net));
+            return optional<ipv6_network>(_ipv_net.ipv6);
         }
         return optional<ipv6_network>();
     }
@@ -705,8 +703,7 @@ public:
      * for the IPv4 address, effectively setting the network address to the default address
      * and the netmask to the maximum value.
      */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network() IPADDRESS_NOEXCEPT {
-    }
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network() IPADDRESS_NOEXCEPT = default;
 
     /**
      * Constructor from an ipv4_network.
@@ -715,7 +712,7 @@ public:
      * 
      * @param[in] net4 An ipv4_network object to initialize the ip_network.
      */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network(const ipv4_network& net4) IPADDRESS_NOEXCEPT : _ipv_net(net4), _version(ip_version::V4) {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network(const ipv4_network& net4) IPADDRESS_NOEXCEPT : _ipv_net(net4) {
     }
 
     /**
@@ -1477,7 +1474,7 @@ IPADDRESS_FORCE_INLINE std::istream& operator>>(std::istream& stream, IPADDRESS_
 
     std::string str;
     stream >> str;
-    IPADDRESS_NAMESPACE::error_code err;
+    IPADDRESS_NAMESPACE::error_code err = IPADDRESS_NAMESPACE::error_code::NO_ERROR;
     network = IPADDRESS_NAMESPACE::ip_network::parse(str, err, strict);
     if (err != IPADDRESS_NAMESPACE::error_code::NO_ERROR) {
         stream.setstate(std::ios_base::failbit);

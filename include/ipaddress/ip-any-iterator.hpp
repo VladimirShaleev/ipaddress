@@ -60,41 +60,11 @@ public:
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_iterator() IPADDRESS_NOEXCEPT = default;
     
     /**
-     * Copy constructor.
-     * 
-     * @param[in] other The ip_any_iterator to copy.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_iterator(const ip_any_iterator& other) IPADDRESS_NOEXCEPT = default;
-    
-    /**
-     * Move constructor.
-     * 
-     * @param[in] other The ip_any_iterator to move.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_iterator(ip_any_iterator&& other) IPADDRESS_NOEXCEPT = default;
-
-    /**
-     * Copy assignment operator.
-     * 
-     * @param[in] other The ip_any_iterator to copy.
-     * @return A reference to the assigned ip_any_iterator.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_iterator& operator=(const ip_any_iterator& other) IPADDRESS_NOEXCEPT = default;
-    
-    /**
-     * Move assignment operator.
-     * 
-     * @param[in] other The ip_any_iterator to move.
-     * @return A reference to the moved ip_any_iterator.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_iterator& operator=(ip_any_iterator&& other) IPADDRESS_NOEXCEPT = default;
-
-    /**
      * Constructs an ip_any_iterator from an Ipv4Iter iterator.
      * 
      * @param[in] iter The underlying iterator to reverse.
      */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_iterator(Ipv4Iter iter) IPADDRESS_NOEXCEPT : _iter(iter), _version(ip_version::V4), _current(*iter) {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_iterator(Ipv4Iter iter) IPADDRESS_NOEXCEPT : _iter(iter), _current(*iter) {
     }
 
     /**
@@ -526,36 +496,6 @@ public:
     using const_reverse_iterator = ip_reverse_iterator<const_iterator>; /**< The const reverse iterator type for iterating over the sequence in reverse. */
 
     /**
-     * Copy constructor.
-     * 
-     * @param[in] other The hosts_any_sequence to copy.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_any_sequence(const hosts_any_sequence& other) IPADDRESS_NOEXCEPT = default;
-    
-    /**
-     * Move constructor.
-     * 
-     * @param[in] other The hosts_any_sequence to move.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_any_sequence(hosts_any_sequence&& other) IPADDRESS_NOEXCEPT = default;
-
-    /**
-     * Copy assignment operator.
-     * 
-     * @param[in] other The hosts_any_sequence to copy.
-     * @return A reference to the assigned hosts_any_sequence.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_any_sequence& operator=(const hosts_any_sequence& other) IPADDRESS_NOEXCEPT = default;
-    
-    /**
-     * Move assignment operator.
-     * 
-     * @param[in] other The hosts_any_sequence to move.
-     * @return A reference to the moved hosts_any_sequence.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_any_sequence& operator=(hosts_any_sequence&& other) IPADDRESS_NOEXCEPT = default;
-
-    /**
      * Constructs a hosts_any_sequence with specified network parameters.
      * 
      * @param[in] begin The begin ipv4 address iterator.
@@ -733,36 +673,6 @@ public:
 
     using reverse_iterator       = ip_reverse_iterator<iterator>; /**< Reverse iterator for subnet traversal. */
     using const_reverse_iterator = ip_reverse_iterator<const_iterator>; /**< Const reverse iterator for subnet */
-
-    /**
-     * Copy constructor.
-     * 
-     * @param[in] other The subnets_any_sequence to copy.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_any_sequence(const subnets_any_sequence& other) IPADDRESS_NOEXCEPT = default;
-    
-    /**
-     * Move constructor.
-     * 
-     * @param[in] other The subnets_any_sequence to move.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_any_sequence(subnets_any_sequence&& other) IPADDRESS_NOEXCEPT = default;
-
-    /**
-     * Copy assignment operator.
-     * 
-     * @param[in] other The subnets_any_sequence to copy.
-     * @return A reference to the assigned subnets_any_sequence.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_any_sequence& operator=(const subnets_any_sequence& other) IPADDRESS_NOEXCEPT = default;
-    
-    /**
-     * Move assignment operator.
-     * 
-     * @param[in] other The subnets_any_sequence to move.
-     * @return A reference to the moved subnets_any_sequence.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_any_sequence& operator=(subnets_any_sequence&& other) IPADDRESS_NOEXCEPT = default;
 
     /**
      * Constructs a subnets_any_sequence with specified network parameters.

@@ -1332,7 +1332,7 @@ inline std::istream& operator>>(std::istream& stream, IPADDRESS_NAMESPACE::ip_ne
 
     std::string str;
     stream >> str;
-    IPADDRESS_NAMESPACE::error_code err;
+    IPADDRESS_NAMESPACE::error_code err = IPADDRESS_NAMESPACE::error_code::NO_ERROR;
     network = IPADDRESS_NAMESPACE::ip_network_base<Base>::parse(str, err, strict);
     if (err != IPADDRESS_NAMESPACE::error_code::NO_ERROR) {
         stream.setstate(std::ios_base::failbit);

@@ -77,7 +77,7 @@ struct fixed_string {
         auto ended = false;
         for (size_t i = 0; i < N; ++i) {
             if (IPADDRESS_IS_CONST_EVALUATED(data) && data[i] > 127) {
-                size_t err = data[i] / (data[i] - data[i]); // invalid symbol for ip address
+                const size_t err = data[i] / (data[i] - data[i]); // NOLINT(misc-redundant-expression): invalid symbol for ip address
             }
             _data[i] = char(data[i]);
             if (data[i] == '\0') {
@@ -458,7 +458,7 @@ struct fixed_string<0> {
         return at(n);
     }
 
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reference at(size_t n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reference at(size_t /*n*/) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return front();
     }
 

@@ -113,7 +113,7 @@ protected:
         char hextets[base_size >> 1][5] = {};
         const size_t max_hextets = base_size >> 1;
         for (size_t i = 0; i < max_hextets; ++i) {
-            uint16_t value = (uint16_t(bytes[i * 2]) << 8) | uint16_t(bytes[i * 2 + 1]);
+            const uint16_t value = (uint16_t(bytes[i * 2]) << 8) | uint16_t(bytes[i * 2 + 1]);
             to_hex(value, hextets[i]);
         }
         
@@ -122,9 +122,7 @@ protected:
         auto has_doublecolon_end = false;
 
         if (fmt == format::compact || fmt == format::compressed) {
-            for (size_t i = 0; i < max_hextets; ++i) {
-                auto& hextet = hextets[i];
-
+            for (auto& hextet : hextets) {
                 for (size_t h = 0; h < 3; ++h) {
                     if (hextet[0] != '0') {
                         break;
@@ -161,7 +159,7 @@ protected:
                 }
 
                 if (best_doublecolon_len > 1) {
-                    int best_doublecolon_end = best_doublecolon_start + best_doublecolon_len;
+                    const int best_doublecolon_end = best_doublecolon_start + best_doublecolon_len;
                     if (best_doublecolon_end == max_hextets) {
                         has_doublecolon_end = true;
                     }
@@ -227,6 +225,7 @@ protected:
 
     template <typename Iter>
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::tuple<ip_address_base<Ext>, size_t> parse_netmask(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT {
+        index = 0;
         size_t prefixlen = 0;
         auto has_prefixlen = false;
         for (auto it = begin; it != end; ++it) {
@@ -542,7 +541,7 @@ private:
     }
 
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void to_hex(uint16_t value, char(&result)[5]) IPADDRESS_NOEXCEPT {
-        char digits[] = "0123456789abcdef";
+        constexpr char digits[] = "0123456789abcdef";
         for (auto i = 0, j = (4 - 1) * 4; i < 4; ++i, j -= 4) {
             result[i] = digits[(value >> j) & 0x0f];
             result[i + 1] = '\0';

@@ -47,38 +47,6 @@ public:
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator() IPADDRESS_NOEXCEPT = default;
 
     /**
-     * Copy constructor.
-     * 
-     * @param[in] other The ip_network_iterator to copy.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator(const ip_network_iterator& other) IPADDRESS_NOEXCEPT = default;
-
-    /**
-     * Move constructor.
-     * 
-     * @param[in] other The ip_network_iterator to move.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator(ip_network_iterator&& other) IPADDRESS_NOEXCEPT = default;
-
-    /**
-     * Copy assignment operator.
-     * 
-     * @param[in] other The ip_network_iterator to copy.
-     * @return A reference to the assigned ip_network_iterator.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator& operator=(const ip_network_iterator& other) IPADDRESS_NOEXCEPT = default;
-    
-    /**
-     * Move assignment operator.
-     * 
-     * Moves the value of one ip_network_iterator to another.
-     * 
-     * @param[in] other The ip_network_iterator to move.
-     * @return A reference to the moved ip_network_iterator.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_iterator& operator=(ip_network_iterator&& other) IPADDRESS_NOEXCEPT = default;
-
-    /**
      * Constructs an iterator with a reference IP address, step size, prefix length, and carry.
      * 
      * @param[in] ref The reference IP address for the iterator.
@@ -505,36 +473,6 @@ public:
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_exclude_network_iterator() IPADDRESS_NOEXCEPT = default;
 
     /**
-     * Copy constructor.
-     * 
-     * @param[in] other The ip_exclude_network_iterator to copy.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_exclude_network_iterator(const ip_exclude_network_iterator& other) IPADDRESS_NOEXCEPT = default;
-    
-    /**
-     * Move constructor.
-     * 
-     * @param[in] other The ip_exclude_network_iterator to move.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_exclude_network_iterator(ip_exclude_network_iterator&& other) IPADDRESS_NOEXCEPT = default;
-
-    /**
-     * Copy assignment operator.
-     * 
-     * @param[in] other The ip_exclude_network_iterator to copy.
-     * @return A reference to the assigned ip_exclude_network_iterator.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_exclude_network_iterator& operator=(const ip_exclude_network_iterator& other) IPADDRESS_NOEXCEPT = default;
-    
-    /**
-     * Move assignment operator.
-     * 
-     * @param[in] other The ip_exclude_network_iterator to move.
-     * @return A reference to the moved ip_exclude_network_iterator.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_exclude_network_iterator& operator=(ip_exclude_network_iterator&& other) IPADDRESS_NOEXCEPT = default;
-
-    /**
      * Constructs an iterator for a network, excluding addresses from another network.
      * 
      * @param[in] network The network to iterate over.
@@ -755,13 +693,10 @@ public:
 
     using ip_address_type = typename value_type::ip_address_type; /**< The underlying IP address type. */
 
+    /**
+     * Default constructor.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_sequence() IPADDRESS_NOEXCEPT = default;
-
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_sequence(const subnets_sequence&) IPADDRESS_NOEXCEPT = default;
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_sequence(subnets_sequence&&) IPADDRESS_NOEXCEPT = default;
-
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_sequence& operator=(const subnets_sequence&) IPADDRESS_NOEXCEPT = default;
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_sequence& operator=(subnets_sequence&&) IPADDRESS_NOEXCEPT = default;
 
     /**
      * Constructs a sequence of subnets from a single network address with a new prefix length.
@@ -779,7 +714,7 @@ public:
         const auto step = difference_type(1);
         _begin = const_iterator(begin, step, new_prefixlen);
         _end = const_iterator(end, step, new_prefixlen, end < begin ? 1 : 0);
-        _size = 1U;
+        _size = 1U; // NOLINT(cppcoreguidelines-prefer-member-initializer)
     }
 
     /**
@@ -968,36 +903,6 @@ public:
      * Default constructor.
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE exclude_network_sequence() IPADDRESS_NOEXCEPT = default;
-
-    /**
-     * Copy constructor.
-     * 
-     * @param[in] other The exclude_network_sequence to copy.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE exclude_network_sequence(const exclude_network_sequence& other) IPADDRESS_NOEXCEPT = default;
-    
-    /**
-     * Move constructor.
-     * 
-     * @param[in] other The exclude_network_sequence to move.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE exclude_network_sequence(exclude_network_sequence&& other) IPADDRESS_NOEXCEPT = default;
-
-    /**
-     * Copy assignment operator.
-     * 
-     * @param[in] other The exclude_network_sequence to copy.
-     * @return A reference to the assigned exclude_network_sequence.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE exclude_network_sequence& operator=(const exclude_network_sequence& other) IPADDRESS_NOEXCEPT = default;
-    
-    /**
-     * Move assignment operator.
-     * 
-     * @param[in] other The exclude_network_sequence to move.
-     * @return A reference to the moved exclude_network_sequence.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE exclude_network_sequence& operator=(exclude_network_sequence&& other) IPADDRESS_NOEXCEPT = default;
 
     /**
      * Constructs a sequence for a network, excluding addresses from another network.

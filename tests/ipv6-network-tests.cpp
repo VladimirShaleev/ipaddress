@@ -577,7 +577,7 @@ TEST_P(InvalidNetworkIpv6Params, parse) {
     auto expected_network = get<0>(GetParam());
     auto expected_error_code = get<1>(GetParam());
 
-    error_code err;
+    error_code err = error_code::NO_ERROR;
     ipv6_network::parse(expected_network, err);
     ASSERT_EQ(err, expected_error_code);
 
@@ -1026,7 +1026,7 @@ TEST_P(HostsIpv6NetworkParams, hosts) {
     }
 
     auto expected_const_it = expected.cbegin();
-    for (auto it = actual.cbegin(); it != actual.cend(); ++it) {
+    for (auto it = actual.cbegin(); it != actual.cend(); ++it) { // NOLINT(modernize-loop-convert)
         ASSERT_EQ(*it, *expected_const_it++);
     }
 
@@ -1109,7 +1109,7 @@ TEST_P(SupernetErrorIpv6NetworkParams, supernet) {
     const auto prefixlen_diff = std::get<1>(GetParam());
     const auto new_prefix = std::get<2>(GetParam());
 
-    error_code err;
+    error_code err = error_code::NO_ERROR;
     auto actural = network.supernet(err, prefixlen_diff, new_prefix);
     ASSERT_EQ(err, expected_error);
     ASSERT_EQ(actural.network_address(), ipv6_address::parse("::"));
@@ -1163,7 +1163,7 @@ TEST_P(SubnetsIpv6NetworkParams, subnets) {
     }
 
     auto expected_const_it = expected.cbegin();
-    for (auto it = actual.cbegin(); it != actual.cend(); ++it) {
+    for (auto it = actual.cbegin(); it != actual.cend(); ++it) { // NOLINT(modernize-loop-convert)
         ASSERT_EQ(*it, *expected_const_it++);
     }
 
@@ -1208,7 +1208,7 @@ TEST_P(SubnetsErrorIpv6NetworkParams, subnets) {
     const auto prefixlen_diff = std::get<1>(GetParam());
     const auto new_prefix = std::get<2>(GetParam());
 
-    error_code err;
+    error_code err = error_code::NO_ERROR;
     const auto actual = network.subnets(err, prefixlen_diff, new_prefix);
     ASSERT_EQ(err, expected_error);
     ASSERT_TRUE(actual.empty());
@@ -1250,7 +1250,7 @@ TEST_P(AddressExcludeIpv6NetworkParams, address_exclude) {
     }
 
     auto expected_const_it = expected.cbegin();
-    for (auto it = actual.cbegin(); it != actual.cend(); ++it) {
+    for (auto it = actual.cbegin(); it != actual.cend(); ++it) { // NOLINT(modernize-loop-convert)
         ASSERT_EQ(*it, *expected_const_it++);
     }
 }
@@ -1268,7 +1268,7 @@ TEST_P(AddressExcludeErrorIpv6NetworkParams, address_exclude) {
     const auto network1 = ipv6_network::parse(std::get<0>(GetParam()));
     const auto network2 = ipv6_network::parse(std::get<1>(GetParam()));
     
-    error_code err;
+    error_code err = error_code::NO_ERROR;
     const auto actual = network1.address_exclude(network2, err);
     ASSERT_EQ(err, expected_error);
     ASSERT_TRUE(actual.empty());

@@ -68,9 +68,9 @@ TEST(uint128_t, Copy) {
 TEST(uint128_t, Move) {
     uint128_t value = 5;
 
-    uint128_t move_ctor = std::move(value);
+    uint128_t move_ctor = std::move(value); // NOLINT(performance-move-const-arg)
     uint128_t move_operator;
-    move_operator = std::move(move_ctor);
+    move_operator = std::move(move_ctor); // NOLINT(performance-move-const-arg)
 
     ASSERT_EQ(move_operator.upper(), 0);
     ASSERT_EQ(move_operator.lower(), 5);
@@ -355,10 +355,10 @@ TEST(uint128_t, IncDec) {
 }
 
 TEST(uint128_t, Logical) {
-    uint128_t value1 { 0, 0 };
-    uint128_t value2 { 0, 1 };
-    uint128_t value3 { 1, 0 };
-    uint128_t value4 { 1, 1 };
+    const uint128_t value1 { 0, 0 };
+    const uint128_t value2 { 0, 1 };
+    const uint128_t value3 { 1, 0 };
+    const uint128_t value4 { 1, 1 };
 
     ASSERT_FALSE((bool) value1);
     ASSERT_TRUE((bool) value2);
@@ -386,10 +386,10 @@ TEST(uint128_t, Logical) {
 }
 
 TEST(uint128_t, Comparison) {
-    uint128_t value1 { 0, 0 };
-    uint128_t value2 { 0, 1 };
-    uint128_t value3 { 1, 0 };
-    uint128_t value4 { 1, 1 };
+    const uint128_t value1 { 0, 0 };
+    const uint128_t value2 { 0, 1 };
+    const uint128_t value3 { 1, 0 };
+    const uint128_t value4 { 1, 1 };
 
     ASSERT_FALSE(value1 == value2);
     ASSERT_TRUE(value1 != value2);
@@ -435,7 +435,7 @@ TEST(uint128_t, Comparison) {
 }
 
 TEST(uint128_t, Hash) {
-    std::hash<uint128_t> hasher;
+    const std::hash<uint128_t> hasher;
 
     const auto hash1 = hasher(uint128_t(0, 0));
     const auto hash2 = hasher(uint128_t(4, 5));
@@ -484,9 +484,10 @@ TEST(uint128_t, ToString) {
 }
 
 TEST(uint128_t, FromString) {
-    uint128_t expected1 = 17852;
-    uint128_t expected2 = { 4, 17852 };
+    const uint128_t expected1 = 17852;
+    const uint128_t expected2 = { 4, 17852 };
 
+    // NOLINTNEXTLINE(readability-isolate-declaration)
     uint128_t read1, read2, read3, read4, read5, read6, read7, read8, read9, read10, read11;
     std::istringstream ss1("17852 test"); ss1 >> read1;
     std::istringstream ss2("17852 test"); ss2 >> std::dec >> read2;

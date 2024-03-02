@@ -380,7 +380,7 @@ TEST_P(InvalidAddressParams, parse) {
     auto expected_address = get<0>(GetParam());
     auto expected_error_code = get<1>(GetParam());
 
-    error_code err;
+    error_code err = error_code::NO_ERROR;
     ip_address::parse(expected_address, err);
     ASSERT_EQ(err, expected_error_code);
 
@@ -455,10 +455,10 @@ TEST(ip_address, to_string) {
     IPADDRESS_CONSTEXPR auto ip2 = ip_address::parse("fe80::1ff:fe23:4567:890a%eth2");
 
     const std::string expected_address = "127.240.0.1";
-    const auto expected_full_2 = "fe80:0000:0000:0000:01ff:fe23:4567:890a%eth2";
-    const auto expected_compact_2 = "fe80:0:0:0:1ff:fe23:4567:890a%eth2";
-    const auto expected_compressed_2 = "fe80::1ff:fe23:4567:890a%eth2";
-    const auto expected_compressed_upper_2 = "FE80::1FF:FE23:4567:890A%eth2";
+    const char* expected_full_2 = "fe80:0000:0000:0000:01ff:fe23:4567:890a%eth2";
+    const char* expected_compact_2 = "fe80:0:0:0:1ff:fe23:4567:890a%eth2";
+    const char* expected_compressed_2 = "fe80::1ff:fe23:4567:890a%eth2";
+    const char* expected_compressed_upper_2 = "FE80::1FF:FE23:4567:890A%eth2";
 
     std::ostringstream ss_full; ss_full << full << ip1;
     std::ostringstream ss_default; ss_default << ip1;

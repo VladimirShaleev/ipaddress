@@ -32,7 +32,7 @@ namespace IPADDRESS_NAMESPACE {
  * @tparam T The type of the value to manage initialization state for.
  */
 template <typename T>
-class optional {
+class optional { // NOLINT(cppcoreguidelines-special-member-functions)
 public:
     using value_type = T; /**< The type of the value to manage initialization state for */
 
@@ -44,7 +44,19 @@ public:
     /**
      * Constructs an `optional` object that does not contain a value.
      */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional(std::nullptr_t) IPADDRESS_NOEXCEPT { };
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional(std::nullptr_t) noexcept(noexcept(T())) {
+    }
+
+    /**
+     * Copy constructor that constructs an `optional` object with a contained value, initializing it with \a val.
+     * 
+     * @param[in] val The value to copy into the `optional` object.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional(const value_type& val) noexcept(noexcept(T(val)))
+        :
+        _has_value(true),
+        _value(val) {
+    }
 
     /**
      * Move constructor that constructs an `optional` object with a contained value, initializing it with \a val.
@@ -98,8 +110,10 @@ public:
      * @return A reference to `*this`.
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional& operator=(const optional<T>& opt) IPADDRESS_NOEXCEPT {
-        _has_value = opt._has_value;
-        _value = opt._value;
+        if (this != &opt) {
+            _has_value = opt._has_value;
+            _value = opt._value;
+        }
         return *this;
     }
 

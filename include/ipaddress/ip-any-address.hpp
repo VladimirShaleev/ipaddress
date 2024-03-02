@@ -271,8 +271,7 @@ public:
         if (_version == ip_version::V6) {
             return optional<ipv4_address>();
         }
-        auto ip = _ipv.ipv4;
-        return optional<ipv4_address>(std::move(ip));
+        return optional<ipv4_address>(_ipv.ipv4);
     }
 
     /**
@@ -286,8 +285,7 @@ public:
         if (_version == ip_version::V4) {
             return optional<ipv6_address>();
         }
-        auto ip = _ipv.ipv6;
-        return optional<ipv6_address>(std::move(ip));
+        return optional<ipv6_address>(_ipv.ipv6);
     }
 
     /**
@@ -307,8 +305,7 @@ public:
      * 
      * Constructs an ip_address object with an unspecified ip address with version IPv4.
      */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address() IPADDRESS_NOEXCEPT {
-    }
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address() IPADDRESS_NOEXCEPT = default;
 
     /**
      * Constructor from an ipv4_address.
@@ -317,7 +314,7 @@ public:
      * 
      * @param[in] ipv4 An ipv4_address object to initialize the ip_address.
      */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address(const ipv4_address& ipv4) IPADDRESS_NOEXCEPT : _ipv(ipv4), _version(ip_version::V4) {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address(const ipv4_address& ipv4) IPADDRESS_NOEXCEPT : _ipv(ipv4) {
     }
 
     /**
@@ -337,7 +334,7 @@ public:
      * 
      * @param[in] bytes A base_type_ipv4 object representing the byte array of the IPv4 address.
      */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit ip_address(const base_type_ipv4& bytes) IPADDRESS_NOEXCEPT : _ipv(bytes), _version(ip_version::V4) {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit ip_address(const base_type_ipv4& bytes) IPADDRESS_NOEXCEPT : _ipv(bytes) {
     }
 
     /**
@@ -1479,7 +1476,7 @@ IPADDRESS_FORCE_INLINE std::ostream& operator<<(std::ostream& stream, const IPAD
 IPADDRESS_FORCE_INLINE std::istream& operator>>(std::istream& stream, IPADDRESS_NAMESPACE::ip_address& ip) {
     std::string str;
     stream >> str;
-    IPADDRESS_NAMESPACE::error_code err;
+    IPADDRESS_NAMESPACE::error_code err = IPADDRESS_NAMESPACE::error_code::NO_ERROR;
     ip = IPADDRESS_NAMESPACE::ip_address::parse(str, err);
     if (err != IPADDRESS_NAMESPACE::error_code::NO_ERROR) {
         stream.setstate(std::ios_base::failbit);

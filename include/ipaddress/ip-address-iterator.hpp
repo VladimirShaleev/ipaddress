@@ -54,44 +54,6 @@ public:
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator() IPADDRESS_NOEXCEPT = default;
     
     /**
-     * Copy constructor.
-     * 
-     * Constructs an ip_reverse_iterator as a copy of another ip_reverse_iterator.
-     * 
-     * @param[in] other The ip_reverse_iterator to copy.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator(const ip_reverse_iterator& other) IPADDRESS_NOEXCEPT = default;
-    
-    /**
-     * Move constructor.
-     * 
-     * Constructs an ip_reverse_iterator by moving another ip_reverse_iterator.
-     * 
-     * @param[in] other The ip_reverse_iterator to move.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator(ip_reverse_iterator&& other) IPADDRESS_NOEXCEPT = default;
-
-    /**
-     * Copy assignment operator.
-     * 
-     * Assigns the value of one ip_reverse_iterator to another.
-     * 
-     * @param[in] other The ip_reverse_iterator to copy.
-     * @return A reference to the assigned ip_reverse_iterator.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator& operator=(const ip_reverse_iterator& other) IPADDRESS_NOEXCEPT = default;
-    
-    /**
-     * Move assignment operator.
-     * 
-     * Moves the value of one ip_reverse_iterator to another.
-     * 
-     * @param[in] other The ip_reverse_iterator to move.
-     * @return A reference to the moved ip_reverse_iterator.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_reverse_iterator& operator=(ip_reverse_iterator&& other) IPADDRESS_NOEXCEPT = default;
-
-    /**
      * Constructs an ip_reverse_iterator from an underlying iterator.
      * 
      * Creates an ip_reverse_iterator that is the reverse of the given iterator.
@@ -476,44 +438,6 @@ public:
      * Constructs an ip_address_iterator that points to no object.
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator() IPADDRESS_NOEXCEPT = default;
-
-    /**
-     * Copy constructor.
-     * 
-     * Constructs an ip_address_iterator as a copy of another ip_address_iterator.
-     * 
-     * @param[in] other The ip_address_iterator to copy.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator(const ip_address_iterator& other) IPADDRESS_NOEXCEPT = default;
-
-    /**
-     * Move constructor.
-     * 
-     * Constructs an ip_address_iterator by moving another ip_address_iterator.
-     * 
-     * @param[in] other The ip_address_iterator to move.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator(ip_address_iterator&& other) IPADDRESS_NOEXCEPT = default;
-
-    /**
-     * Copy assignment operator.
-     * 
-     * Assigns the value of one ip_address_iterator to another.
-     * 
-     * @param[in] other The ip_address_iterator to copy.
-     * @return A reference to the assigned ip_address_iterator.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator& operator=(const ip_address_iterator& other) IPADDRESS_NOEXCEPT = default;
-    
-    /**
-     * Move assignment operator.
-     * 
-     * Moves the value of one ip_address_iterator to another.
-     * 
-     * @param[in] other The ip_address_iterator to move.
-     * @return A reference to the moved ip_address_iterator.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_iterator& operator=(ip_address_iterator&& other) IPADDRESS_NOEXCEPT = default;
 
     /**
      * Constructs an ip_address_iterator with a specific range and reference point.
@@ -956,44 +880,6 @@ public:
 
     using reverse_iterator       = ip_reverse_iterator<iterator>; /**< The reverse iterator type for iterating over the sequence in reverse. */
     using const_reverse_iterator = ip_reverse_iterator<const_iterator>; /**< The const reverse iterator type for iterating over the sequence in reverse. */
-
-    /**
-     * Copy constructor.
-     * 
-     * Constructs a hosts_sequence as a copy of another hosts_sequence.
-     * 
-     * @param[in] other The hosts_sequence to copy.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_sequence(const hosts_sequence& other) IPADDRESS_NOEXCEPT = default;
-    
-    /**
-     * Move constructor.
-     * 
-     * Constructs a hosts_sequence by moving another hosts_sequence.
-     * 
-     * @param[in] other The hosts_sequence to move.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_sequence(hosts_sequence&& other) IPADDRESS_NOEXCEPT = default;
-
-    /**
-     * Copy assignment operator.
-     * 
-     * Assigns the value of one hosts_sequence to another.
-     * 
-     * @param[in] other The hosts_sequence to copy.
-     * @return A reference to the assigned hosts_sequence.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_sequence& operator=(const hosts_sequence& other) IPADDRESS_NOEXCEPT = default;
-    
-    /**
-     * Move assignment operator.
-     * 
-     * Moves the value of one hosts_sequence to another.
-     * 
-     * @param[in] other The hosts_sequence to move.
-     * @return A reference to the moved hosts_sequence.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE hosts_sequence& operator=(hosts_sequence&& other) IPADDRESS_NOEXCEPT = default;
 
     /**
      * Constructs a hosts_sequence with specified network parameters.

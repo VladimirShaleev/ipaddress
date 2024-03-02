@@ -177,12 +177,12 @@ TEST(ip_network, from_address) {
 TEST(ip_network, parse_utf) {
     constexpr ipv6_address::base_type ip_bytes { 0x20, 0x01, 0x0D, 0xB8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01 };
 
-    auto str1 = L"127.0.0.1";
-    auto str2 = L"2001:db8::1";
-    auto str3 = u"127.0.0.1";
-    auto str4 = u"2001:db8::1";
-    auto str5 = U"127.0.0.1";
-    auto str6 = U"2001:db8::1";
+    const auto* str1 = L"127.0.0.1";
+    const auto* str2 = L"2001:db8::1";
+    const auto* str3 = u"127.0.0.1";
+    const auto* str4 = u"2001:db8::1";
+    const auto* str5 = U"127.0.0.1";
+    const auto* str6 = U"2001:db8::1";
 
     auto ip_wchar_1 = ip_network::parse(str1);
     auto ip_wchar_2 = ip_network::parse(str2);
@@ -208,8 +208,8 @@ TEST(ip_network, parse_utf) {
 }
 
 TEST(ip_network, parse) {
-    auto str1 = "100.64.0.0";
-    auto str2 = "2001:0db8:85a3:0000:0000:8a2e:0370:7334";
+    const char* str1 = "100.64.0.0";
+    const char* str2 = "2001:0db8:85a3:0000:0000:8a2e:0370:7334";
 
     IPADDRESS_CONSTEXPR auto actual1 = ip_network::parse("192.168.1.1");
     IPADDRESS_CONSTEXPR auto actual2 = ip_network::parse("fe80::1ff:fe23:4567:890a");
@@ -301,7 +301,7 @@ TEST_P(InvalidNetworkParams, parse) {
     auto expected_address = get<0>(GetParam());
     auto expected_error_code = get<1>(GetParam());
 
-    error_code err;
+    error_code err = error_code::NO_ERROR;
     ip_network::parse(expected_address, err);
     ASSERT_EQ(err, expected_error_code);
 
@@ -376,10 +376,10 @@ TEST(ip_network, to_string) {
     IPADDRESS_CONSTEXPR auto net2 = ip_network::parse("fe80::1ff:fe23:4567:890a%eth2");
 
     const std::string expected_address = "127.240.0.0/24";
-    const auto expected_full_2 = "fe80:0000:0000:0000:01ff:fe23:4567:890a%eth2/128";
-    const auto expected_compact_2 = "fe80:0:0:0:1ff:fe23:4567:890a%eth2/128";
-    const auto expected_compressed_2 = "fe80::1ff:fe23:4567:890a%eth2/128";
-    const auto expected_compressed_upper_2 = "FE80::1FF:FE23:4567:890A%eth2/128";
+    const char* expected_full_2 = "fe80:0000:0000:0000:01ff:fe23:4567:890a%eth2/128";
+    const char* expected_compact_2 = "fe80:0:0:0:1ff:fe23:4567:890a%eth2/128";
+    const char* expected_compressed_2 = "fe80::1ff:fe23:4567:890a%eth2/128";
+    const char* expected_compressed_upper_2 = "FE80::1FF:FE23:4567:890A%eth2/128";
 
     std::ostringstream ss_full; ss_full << full << net1;
     std::ostringstream ss_default; ss_default << net1;

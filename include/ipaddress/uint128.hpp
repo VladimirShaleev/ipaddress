@@ -49,7 +49,7 @@ namespace IPADDRESS_NAMESPACE {
  * 
  * @see [UInt128](https://source.dot.net/#System.Private.CoreLib/src/libraries/System.Private.CoreLib/src/System/UInt128.cs) .NET Implementation.
  */
-class uint128_t final {
+class uint128_t final { // NOLINT(cppcoreguidelines-special-member-functions)
 public:
     /**
      * Enumerates the string formats available for `uint128_t`.
@@ -1134,10 +1134,10 @@ public:
 
 private:
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint64_t big_mul(uint64_t a, uint64_t b, uint64_t& lower) IPADDRESS_NOEXCEPT {
-        uint32_t al = uint32_t(a);
-        uint32_t ah = uint32_t(a >> 32);
-        uint32_t bl = uint32_t(b);
-        uint32_t bh = uint32_t(b >> 32);
+        auto al = uint32_t(a);
+        auto ah = uint32_t(a >> 32);
+        auto bl = uint32_t(b);
+        auto bh = uint32_t(b >> 32);
  
         uint64_t mull = uint64_t(al) * bl;
         uint64_t t = uint64_t(ah) * bl + (mull >> 32);
@@ -1193,8 +1193,8 @@ private:
         uint32_t div_hi = right[right_size - 1];
         uint32_t div_lo = right_size > 1 ? right[right_size - 2] : 0;
 
-        int32_t shift = leading_zero_count(div_hi);
-        int32_t back_shift = 32 - shift;
+        uint32_t shift = leading_zero_count(div_hi);
+        uint32_t back_shift = 32 - shift;
 
         if (shift > 0) {
             uint32_t div_nx = right_size > 2 ? right[right_size - 3] : 0;
@@ -1271,7 +1271,7 @@ private:
         for (int32_t i = 0; i < rs; ++i) {
             carry += right[i] * q;
 
-            uint32_t digit = uint32_t(carry);
+            auto digit = uint32_t(carry);
             carry >>= 32;
 
             uint32_t& left_item = left[i];
@@ -1349,13 +1349,13 @@ private:
     }
 
     IPADDRESS_NODISCARD static IPADDRESS_FORCE_INLINE double uint64_bits_to_double(uint64_t bits) IPADDRESS_NOEXCEPT {
-        double result;
+        double result; // NOLINT(cppcoreguidelines-init-variables)
         std::memcpy(&result, &bits, sizeof(double));
         return result;
     }
 
     IPADDRESS_NODISCARD static IPADDRESS_FORCE_INLINE uint64_t double_to_uint64_bits(double value) IPADDRESS_NOEXCEPT {
-        uint64_t result;
+        uint64_t result; // NOLINT(cppcoreguidelines-init-variables)
         std::memcpy(&result, &value, sizeof(uint64_t));
         return result;
     }
@@ -1729,7 +1729,7 @@ namespace std {
 #endif
 
 template <typename T>
-struct __numeric_limits_uint128 {
+struct _numeric_limits_uint128 {
     static constexpr bool is_bounded               = true;
     static constexpr bool is_exact                 = true;
     static constexpr bool is_integer               = true;
@@ -1792,73 +1792,73 @@ struct __numeric_limits_uint128 {
 };
 
 template <typename T>
-constexpr bool __numeric_limits_uint128<T>::is_bounded;
+constexpr bool _numeric_limits_uint128<T>::is_bounded;
 
 template <typename T>
-constexpr bool __numeric_limits_uint128<T>::is_exact;
+constexpr bool _numeric_limits_uint128<T>::is_exact;
 
 template <typename T>
-constexpr bool __numeric_limits_uint128<T>::is_integer;
+constexpr bool _numeric_limits_uint128<T>::is_integer;
 
 template <typename T>
-constexpr bool __numeric_limits_uint128<T>::is_modulo;
+constexpr bool _numeric_limits_uint128<T>::is_modulo;
 
 template <typename T>
-constexpr bool __numeric_limits_uint128<T>::is_specialized;
+constexpr bool _numeric_limits_uint128<T>::is_specialized;
 
 template <typename T>
-constexpr bool __numeric_limits_uint128<T>::is_iec559;
+constexpr bool _numeric_limits_uint128<T>::is_iec559;
 
 template <typename T>
-constexpr bool __numeric_limits_uint128<T>::is_signed;
+constexpr bool _numeric_limits_uint128<T>::is_signed;
 
 template <typename T>
-constexpr bool __numeric_limits_uint128<T>::has_denorm_loss;
+constexpr bool _numeric_limits_uint128<T>::has_denorm_loss;
 
 template <typename T>
-constexpr bool __numeric_limits_uint128<T>::has_infinity;
+constexpr bool _numeric_limits_uint128<T>::has_infinity;
 
 template <typename T>
-constexpr bool __numeric_limits_uint128<T>::has_quiet_NaN;
+constexpr bool _numeric_limits_uint128<T>::has_quiet_NaN;
 
 template <typename T>
-constexpr bool __numeric_limits_uint128<T>::has_signaling_NaN;
+constexpr bool _numeric_limits_uint128<T>::has_signaling_NaN;
 
 template <typename T>
-constexpr bool __numeric_limits_uint128<T>::tinyness_before;
+constexpr bool _numeric_limits_uint128<T>::tinyness_before;
 
 template <typename T>
-constexpr bool __numeric_limits_uint128<T>::traps;
+constexpr bool _numeric_limits_uint128<T>::traps;
 
 template <typename T>
-constexpr int __numeric_limits_uint128<T>::max_digits10;
+constexpr int _numeric_limits_uint128<T>::max_digits10;
 
 template <typename T>
-constexpr int __numeric_limits_uint128<T>::max_exponent;
+constexpr int _numeric_limits_uint128<T>::max_exponent;
 
 template <typename T>
-constexpr int __numeric_limits_uint128<T>::max_exponent10;
+constexpr int _numeric_limits_uint128<T>::max_exponent10;
 
 template <typename T>
-constexpr int __numeric_limits_uint128<T>::min_exponent;
+constexpr int _numeric_limits_uint128<T>::min_exponent;
 
 template <typename T>
-constexpr int __numeric_limits_uint128<T>::min_exponent10;
+constexpr int _numeric_limits_uint128<T>::min_exponent10;
 
 template <typename T>
-constexpr int __numeric_limits_uint128<T>::digits;
+constexpr int _numeric_limits_uint128<T>::digits;
 
 template <typename T>
-constexpr int __numeric_limits_uint128<T>::digits10;
+constexpr int _numeric_limits_uint128<T>::digits10;
 
 template <typename T>
-constexpr int __numeric_limits_uint128<T>::radix;
+constexpr int _numeric_limits_uint128<T>::radix;
 
 template <typename T>
-constexpr float_denorm_style __numeric_limits_uint128<T>::has_denorm;
+constexpr float_denorm_style _numeric_limits_uint128<T>::has_denorm;
 
 template <typename T>
-constexpr float_round_style __numeric_limits_uint128<T>::round_style;
+constexpr float_round_style _numeric_limits_uint128<T>::round_style;
 
 #ifdef __clang__
   _Pragma("clang diagnostic pop")
@@ -1869,7 +1869,7 @@ constexpr float_round_style __numeric_limits_uint128<T>::round_style;
 #pragma warning(pop)
 
 template <>
-struct numeric_limits<IPADDRESS_NAMESPACE::uint128_t> : __numeric_limits_uint128<IPADDRESS_NAMESPACE::uint128_t> {
+struct numeric_limits<IPADDRESS_NAMESPACE::uint128_t> : _numeric_limits_uint128<IPADDRESS_NAMESPACE::uint128_t> {
 };
 
 template <>

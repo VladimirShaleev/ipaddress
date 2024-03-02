@@ -303,7 +303,7 @@ TEST_P(InvalidAddressIpv4Params, parse) {
     auto expected_address = get<0>(GetParam());
     auto expected_error_code = get<1>(GetParam());
 
-    error_code err;
+    error_code err = error_code::NO_ERROR;
     ipv4_address::parse(expected_address, err);
     ASSERT_EQ(err, expected_error_code);
 

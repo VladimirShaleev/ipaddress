@@ -5,14 +5,14 @@
 using namespace ipaddress;
 
 #if IPADDRESS_CPP_VERSION >= 17
-#  define VAL_FIXED_STRING(name, str) fixed_string name = str
+#  define VAL_FIXED_STRING(name, str) fixed_string (name) = (str)
 #else
-#  define VAL_FIXED_STRING(name, str) auto name = make_fixed_string(str)
+#  define VAL_FIXED_STRING(name, str) auto (name) = make_fixed_string(str)
 #endif
 
 TEST(fixed_string, ConstexprCtor) {
     IPADDRESS_CONSTEXPR VAL_FIXED_STRING(str_11, "test string\0\0\0");
-    IPADDRESS_CONSTEXPR auto str_11_max_length = str_11.max_length;
+    IPADDRESS_CONSTEXPR auto str_11_max_length = str_11.capacity();
     IPADDRESS_CONSTEXPR auto str_11_length = str_11.length;
     IPADDRESS_CONSTEXPR auto str_11_size = str_11.size();
     IPADDRESS_CONSTEXPR auto str_11_empty = str_11.empty();
@@ -30,7 +30,7 @@ TEST(fixed_string, ConstexprCtor) {
     EXPECT_EQ(str_1_empty, false);
 
     IPADDRESS_CONSTEXPR VAL_FIXED_STRING(str_2, L"wide string");
-    IPADDRESS_CONSTEXPR auto str_2_max_length = str_2.max_length;
+    IPADDRESS_CONSTEXPR auto str_2_max_length = str_2.capacity();
     IPADDRESS_CONSTEXPR auto str_2_length = str_2.length;
     IPADDRESS_CONSTEXPR auto str_2_size = str_2.size();
     IPADDRESS_CONSTEXPR auto str_2_empty = str_2.empty();
@@ -42,7 +42,7 @@ TEST(fixed_string, ConstexprCtor) {
     EXPECT_EQ(str_2[10], 'g');
 
     IPADDRESS_CONSTEXPR VAL_FIXED_STRING(str_3, u"utf16 string");
-    IPADDRESS_CONSTEXPR auto str_3_max_length = str_3.max_length;
+    IPADDRESS_CONSTEXPR auto str_3_max_length = str_3.capacity();
     IPADDRESS_CONSTEXPR auto str_3_length = str_3.length;
     IPADDRESS_CONSTEXPR auto str_3_size = str_3.size();
     IPADDRESS_CONSTEXPR auto str_3_empty = str_3.empty();
@@ -54,7 +54,7 @@ TEST(fixed_string, ConstexprCtor) {
     EXPECT_EQ(str_3[11], 'g');
 
     IPADDRESS_CONSTEXPR VAL_FIXED_STRING(str_4, U"utf32 string");
-    IPADDRESS_CONSTEXPR auto str_4_max_length = str_4.max_length;
+    IPADDRESS_CONSTEXPR auto str_4_max_length = str_4.capacity();
     IPADDRESS_CONSTEXPR auto str_4_length = str_4.length;
     IPADDRESS_CONSTEXPR auto str_4_size = str_4.size();
     IPADDRESS_CONSTEXPR auto str_4_empty = str_4.empty();
@@ -67,7 +67,7 @@ TEST(fixed_string, ConstexprCtor) {
 
 #if IPADDRESS_CPP_VERSION >= 17
     constexpr VAL_FIXED_STRING(str_5, u8"utf8 string");
-    constexpr auto str_5_max_length = str_5.max_length;
+    constexpr auto str_5_max_length = str_5.capacity();
     constexpr auto str_5_length = str_5.length;
     constexpr auto str_5_size = str_5.size();
     constexpr auto str_5_empty = str_5.empty();
@@ -118,39 +118,39 @@ TEST(fixed_string, ConstexprCopyCtor) {
 
 template <typename Iter>
 IPADDRESS_CONSTEXPR bool test_iterator(Iter begin, Iter end) {
-    if (begin == end || *begin++ != 't') return false;
-    if (begin == end || *begin++ != 'e') return false;
-    if (begin == end || *begin++ != 's') return false;
-    if (begin == end || *begin++ != 't') return false;
-    if (begin == end || *begin++ != ' ') return false;
-    if (begin == end || *begin++ != 'i') return false;
-    if (begin == end || *begin++ != 't') return false;
-    if (begin == end || *begin++ != 'e') return false;
-    if (begin == end || *begin++ != 'r') return false;
-    if (begin == end || *begin++ != 'a') return false;
-    if (begin == end || *begin++ != 't') return false;
-    if (begin == end || *begin++ != 'o') return false;
-    if (begin == end || *begin++ != 'r') return false;
-    if (begin != end) return false;
+    if (begin == end || *begin++ != 't') { return false; }
+    if (begin == end || *begin++ != 'e') { return false; }
+    if (begin == end || *begin++ != 's') { return false; }
+    if (begin == end || *begin++ != 't') { return false; }
+    if (begin == end || *begin++ != ' ') { return false; }
+    if (begin == end || *begin++ != 'i') { return false; }
+    if (begin == end || *begin++ != 't') { return false; }
+    if (begin == end || *begin++ != 'e') { return false; }
+    if (begin == end || *begin++ != 'r') { return false; }
+    if (begin == end || *begin++ != 'a') { return false; }
+    if (begin == end || *begin++ != 't') { return false; }
+    if (begin == end || *begin++ != 'o') { return false; }
+    if (begin == end || *begin++ != 'r') { return false; }
+    if (begin != end) { return false; }
     return true;
 }
 
 template <typename Iter>
 IPADDRESS_CONSTEXPR bool test_reverse_iterator(Iter begin, Iter end) {
-    if (begin == end || *begin++ != 'r') return false;
-    if (begin == end || *begin++ != 'o') return false;
-    if (begin == end || *begin++ != 't') return false;
-    if (begin == end || *begin++ != 'a') return false;
-    if (begin == end || *begin++ != 'r') return false;
-    if (begin == end || *begin++ != 'e') return false;
-    if (begin == end || *begin++ != 't') return false;
-    if (begin == end || *begin++ != 'i') return false;
-    if (begin == end || *begin++ != ' ') return false;
-    if (begin == end || *begin++ != 't') return false;
-    if (begin == end || *begin++ != 's') return false;
-    if (begin == end || *begin++ != 'e') return false;
-    if (begin == end || *begin++ != 't') return false;
-    if (begin != end) return false;
+    if (begin == end || *begin++ != 'r') { return false; }
+    if (begin == end || *begin++ != 'o') { return false; }
+    if (begin == end || *begin++ != 't') { return false; }
+    if (begin == end || *begin++ != 'a') { return false; }
+    if (begin == end || *begin++ != 'r') { return false; }
+    if (begin == end || *begin++ != 'e') { return false; }
+    if (begin == end || *begin++ != 't') { return false; }
+    if (begin == end || *begin++ != 'i') { return false; }
+    if (begin == end || *begin++ != ' ') { return false; }
+    if (begin == end || *begin++ != 't') { return false; }
+    if (begin == end || *begin++ != 's') { return false; }
+    if (begin == end || *begin++ != 'e') { return false; }
+    if (begin == end || *begin++ != 't') { return false; }
+    if (begin != end) { return false; }
     return true;
 }
 
@@ -293,12 +293,12 @@ TEST(fixed_string, ConstexprCompare) {
     ASSERT_TRUE(b_23);
     ASSERT_FALSE(b_24);
     
-    IPADDRESS_CONSTEXPR auto b_25 = str_3 == str_3;
-    IPADDRESS_CONSTEXPR auto b_26 = str_3 != str_3;
-    IPADDRESS_CONSTEXPR auto b_27 = str_3 < str_3;
-    IPADDRESS_CONSTEXPR auto b_28 = str_3 > str_3;
-    IPADDRESS_CONSTEXPR auto b_29 = str_3 <= str_3;
-    IPADDRESS_CONSTEXPR auto b_30 = str_3 >= str_3;
+    IPADDRESS_CONSTEXPR auto b_25 = str_3 == str_3; // NOLINT(misc-redundant-expression)
+    IPADDRESS_CONSTEXPR auto b_26 = str_3 != str_3; // NOLINT(misc-redundant-expression)
+    IPADDRESS_CONSTEXPR auto b_27 = str_3 < str_3; // NOLINT(misc-redundant-expression)
+    IPADDRESS_CONSTEXPR auto b_28 = str_3 > str_3; // NOLINT(misc-redundant-expression)
+    IPADDRESS_CONSTEXPR auto b_29 = str_3 <= str_3; // NOLINT(misc-redundant-expression)
+    IPADDRESS_CONSTEXPR auto b_30 = str_3 >= str_3; // NOLINT(misc-redundant-expression)
     ASSERT_TRUE(b_25);
     ASSERT_FALSE(b_26);
     ASSERT_FALSE(b_27);
@@ -306,12 +306,12 @@ TEST(fixed_string, ConstexprCompare) {
     ASSERT_TRUE(b_29);
     ASSERT_TRUE(b_30);
     
-    IPADDRESS_CONSTEXPR auto b_31 = str_2 == str_2;
-    IPADDRESS_CONSTEXPR auto b_32 = str_2 != str_2;
-    IPADDRESS_CONSTEXPR auto b_33 = str_2 < str_2;
-    IPADDRESS_CONSTEXPR auto b_34 = str_2 > str_2;
-    IPADDRESS_CONSTEXPR auto b_35 = str_2 <= str_2;
-    IPADDRESS_CONSTEXPR auto b_36 = str_2 >= str_2;
+    IPADDRESS_CONSTEXPR auto b_31 = str_2 == str_2; // NOLINT(misc-redundant-expression)
+    IPADDRESS_CONSTEXPR auto b_32 = str_2 != str_2; // NOLINT(misc-redundant-expression)
+    IPADDRESS_CONSTEXPR auto b_33 = str_2 < str_2; // NOLINT(misc-redundant-expression)
+    IPADDRESS_CONSTEXPR auto b_34 = str_2 > str_2; // NOLINT(misc-redundant-expression)
+    IPADDRESS_CONSTEXPR auto b_35 = str_2 <= str_2; // NOLINT(misc-redundant-expression)
+    IPADDRESS_CONSTEXPR auto b_36 = str_2 >= str_2; // NOLINT(misc-redundant-expression)
     ASSERT_TRUE(b_31);
     ASSERT_FALSE(b_32);
     ASSERT_FALSE(b_33);
@@ -345,12 +345,12 @@ TEST(fixed_string, ConstexprCompare) {
     ASSERT_TRUE(b_47);
     ASSERT_TRUE(b_48);
 
-    IPADDRESS_CONSTEXPR auto b_49 = str_4 == str_4;
-    IPADDRESS_CONSTEXPR auto b_50 = str_4 != str_4;
-    IPADDRESS_CONSTEXPR auto b_51 = str_4 < str_4;
-    IPADDRESS_CONSTEXPR auto b_52 = str_4 > str_4;
-    IPADDRESS_CONSTEXPR auto b_53 = str_4 <= str_4;
-    IPADDRESS_CONSTEXPR auto b_54 = str_4 >= str_4;
+    IPADDRESS_CONSTEXPR auto b_49 = str_4 == str_4; // NOLINT(misc-redundant-expression)
+    IPADDRESS_CONSTEXPR auto b_50 = str_4 != str_4; // NOLINT(misc-redundant-expression)
+    IPADDRESS_CONSTEXPR auto b_51 = str_4 < str_4; // NOLINT(misc-redundant-expression)
+    IPADDRESS_CONSTEXPR auto b_52 = str_4 > str_4; // NOLINT(misc-redundant-expression)
+    IPADDRESS_CONSTEXPR auto b_53 = str_4 <= str_4; // NOLINT(misc-redundant-expression)
+    IPADDRESS_CONSTEXPR auto b_54 = str_4 >= str_4; // NOLINT(misc-redundant-expression)
     ASSERT_TRUE(b_49);
     ASSERT_FALSE(b_50);
     ASSERT_FALSE(b_51);

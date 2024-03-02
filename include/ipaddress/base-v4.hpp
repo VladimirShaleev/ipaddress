@@ -135,7 +135,7 @@ protected:
 
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<Ext> ip_from_prefix(size_t prefixlen) {
         return prefixlen != 0
-            ? ip_address_base<Ext>::ip_from_uint32(base_all_ones ^ (base_all_ones >> (prefixlen - 1) >> 1))
+            ? ip_address_base<Ext>::ip_from_uint32(base_all_ones ^ (base_all_ones >> (prefixlen - 1) >> 1)) // NOLINT
             : ip_address_base<Ext>::ip_from_uint32(0);
     }
 
@@ -148,11 +148,11 @@ protected:
         return is_little_endian() ? swap_bytes(ip) : ip;
     }
 
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t ip_to_chars(const base_type& bytes, format fmt, char (&result)[base_max_string_len + 1]) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t ip_to_chars(const base_type& bytes, format /*fmt*/, char (&result)[base_max_string_len + 1]) IPADDRESS_NOEXCEPT {
         size_t offset = 0;
         char buffer[4] {};
         for (size_t b = 0; b < 4; ++b) {
-            size_t length = byte_to_string(bytes[b], buffer);
+            const size_t length = byte_to_string(bytes[b], buffer);
             for (size_t i = 0; i < length; ++i) {
                 result[offset++] = buffer[i];
             }
@@ -229,7 +229,7 @@ private:
         auto trailing_zeroes = count_righthand_zero_bits(ip, base_max_prefixlen);
         auto prefixlen = base_max_prefixlen - trailing_zeroes;
         auto leading_ones = trailing_zeroes != 32 ? (ip >> trailing_zeroes) : 0;
-        auto all_ones = (uint_type(1) << (prefixlen - 1) << 1) - uint_type(1);
+        auto all_ones = (uint_type(1) << (prefixlen - 1) << 1) - uint_type(1); // NOLINT
         if (leading_ones != all_ones) {
             code = error_code::NETMASK_PATTERN_MIXES_ZEROES_AND_ONES;
             return 0;

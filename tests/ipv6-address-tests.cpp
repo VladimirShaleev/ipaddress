@@ -474,7 +474,7 @@ TEST_P(InvalidAddressIpv6Params, parse) {
     auto expected_address = get<0>(GetParam());
     auto expected_error_code = get<1>(GetParam());
 
-    error_code err;
+    error_code err = error_code::NO_ERROR;
     ipv6_address::parse(expected_address, err);
     ASSERT_EQ(err, expected_error_code);
 
@@ -701,11 +701,11 @@ TEST(ipv6_address, Comparison) {
 
 using ToStringIpv6Params = TestWithParam<std::tuple<const char*, const char*, const char*, const char*, const char*>>;
 TEST_P(ToStringIpv6Params, to_string) {
-    const auto expected_address = std::get<0>(GetParam());
-    const auto expected_full = std::get<1>(GetParam());
-    const auto expected_compact = std::get<2>(GetParam());
-    const auto expected_compressed = std::get<3>(GetParam());
-    const auto expected_compressed_upper = std::get<4>(GetParam());
+    const char* expected_address = std::get<0>(GetParam());
+    const char* expected_full = std::get<1>(GetParam());
+    const char* expected_compact = std::get<2>(GetParam());
+    const char* expected_compressed = std::get<3>(GetParam());
+    const char* expected_compressed_upper = std::get<4>(GetParam());
 
     const auto actual = ipv6_address::parse(expected_address);
 

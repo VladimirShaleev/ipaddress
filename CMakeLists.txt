@@ -67,12 +67,23 @@ install(
 )
 install(DIRECTORY include/ DESTINATION include)
 
+cmake_dependent_option(IPADDRESS_ENABLE_CLANG_TIDY "Enable clang-tidy checks" ON
+  "CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR" OFF)
 cmake_dependent_option(IPADDRESS_BUILD_TESTS "Build tests" ON
   "BUILD_TESTING;CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR" OFF)
 cmake_dependent_option(IPADDRESS_BUILD_DOC "Build doc" ON
   "CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR" OFF)
 cmake_dependent_option(IPADDRESS_BUILD_PACKAGES "Build packages" ON
   "CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR" OFF)
+
+if(IPADDRESS_ENABLE_CLANG_TIDY)
+  find_program(IPADDRESS_CLANG_TIDY clang-tidy)
+  if(IPADDRESS_CLANG_TIDY)
+    set(CMAKE_CXX_CLANG_TIDY ${IPADDRESS_CLANG_TIDY})
+  else()
+    message(WARNING "Could not find clang-tidy program")
+  endif()
+endif()
 
 if(IPADDRESS_BUILD_TESTS)
   add_subdirectory(tests)

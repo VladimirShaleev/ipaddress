@@ -51,7 +51,7 @@ struct hash_combine<8> {
 };
 
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::size_t hash_sum(std::size_t seed, std::size_t value) IPADDRESS_NOEXCEPT {
-    hash_combine<sizeof(std::size_t)> hash{};
+    const hash_combine<sizeof(std::size_t)> hash{};
     return hash(seed + 0x9e3779b9 + value);
 }
 

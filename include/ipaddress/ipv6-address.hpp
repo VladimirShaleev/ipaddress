@@ -71,9 +71,7 @@ public:
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE scope(const fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>& scope_id) IPADDRESS_NOEXCEPT
         : 
-        _scope_id(scope_id),
-        _scope_id_value(0),
-        _has_value(false) {
+        _scope_id(scope_id) {
         parse_value();
     }
 
@@ -234,8 +232,8 @@ private:
     }
 
     fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH> _scope_id;
-    uint32_t _scope_id_value;
-    bool _has_value;
+    uint32_t _scope_id_value = 0;
+    bool _has_value = false;
 }; // scope
 
 /**
