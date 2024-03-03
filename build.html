@@ -163,7 +163,8 @@ $(function(){initNavTree('build.html',''); initResizable(); });
 <ul>
 <li>A compatible operating system (e.g. Linux, macOS, Windows);</li>
 <li>Compatible C++ compiler supporting C++11 or later (if you cannot test on all versions of the standard, then it’s okay, this <a href="https://github.com/VladimirShaleev/ipaddress/actions/workflows/tests.yml">project runs tests</a> for all versions of the C++ standard and various versions of compilers);</li>
-<li><a href="https://cmake.org/">CMake</a> and a compatible build tool for building the project.</li>
+<li><a href="https://cmake.org/">CMake</a> and a compatible build tool for building the project;</li>
+<li><b>(optional)</b> clang-tidy 14+ for static analysis during build.</li>
 </ul>
 <h2><a class="anchor" id="autotoc_md37"></a>
 Set up a project</h2>
@@ -173,6 +174,7 @@ Set up a project</h2>
 <div class="fragment"><div class="line">cmake -B build -S . \</div>
 <div class="line">  -DCMAKE_CXX_STANDARD=17 \</div>
 <div class="line">  -DCMAKE_BUILD_TYPE=Debug \</div>
+<div class="line">  -DIPADDRESS_ENABLE_CLANG_TIDY=ON \</div>
 <div class="line">  -DIPADDRESS_BUILD_TESTS=ON \</div>
 <div class="line">  -DIPADDRESS_BUILD_DOC=OFF \</div>
 <div class="line">  -DIPADDRESS_BUILD_PACKAGES=OFF \</div>
@@ -183,12 +185,13 @@ Set up a project</h2>
 </div><!-- fragment --><p>Where:</p>
 <ul>
 <li><code>CMAKE_CXX_STANDARD</code> — The selected standard with which unit tests will be collected. If not specified, the default one in the current build tools will be used.</li>
-<li><code>IPADDRESS_BUILD_TESTS</code> — Build unit tests (ON by default).</li>
-<li><code>IPADDRESS_BUILD_DOC</code> — Build doc (ON by default).</li>
-<li><code>IPADDRESS_BUILD_PACKAGES</code> — Create targets for building packages deb, rpm, etc. (ON by default).</li>
-<li><code>IPADDRESS_NO_EXCEPTIONS</code> — Disable exceptions throwing (OFF by default).</li>
-<li><code>IPADDRESS_NO_IPV6_SCOPE</code> — Disable scope if for ipv6 (OFF by default).</li>
-<li><code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH</code> — scope id max length (16 by default).</li>
+<li><code>IPADDRESS_ENABLE_CLANG_TIDY</code> — Enable clang-tidy checks (<code>ON</code> by default).</li>
+<li><code>IPADDRESS_BUILD_TESTS</code> — Build unit tests (<code>ON</code> by default).</li>
+<li><code>IPADDRESS_BUILD_DOC</code> — Build doc (<code>ON</code> by default).</li>
+<li><code>IPADDRESS_BUILD_PACKAGES</code> — Create targets for building packages deb, rpm, etc. (<code>ON</code> by default).</li>
+<li><code>IPADDRESS_NO_EXCEPTIONS</code> — Disable exceptions throwing (<code>OFF</code> by default).</li>
+<li><code>IPADDRESS_NO_IPV6_SCOPE</code> — Disable scope if for ipv6 (<code>OFF</code> by default).</li>
+<li><code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH</code> — scope id max length (<code>16</code> by default).</li>
 </ul>
 <p>Once configured, you can build.</p>
 <div class="fragment"><div class="line">cmake --build build --config Debug -j4</div>
