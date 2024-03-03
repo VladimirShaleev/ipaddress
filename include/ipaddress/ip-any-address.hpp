@@ -305,7 +305,8 @@ public:
      * 
      * Constructs an ip_address object with an unspecified ip address with version IPv4.
      */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address() IPADDRESS_NOEXCEPT = default;
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address() IPADDRESS_NOEXCEPT { // NOLINT(modernize-use-equals-default): for C++11 support
+    }
 
     /**
      * Constructor from an ipv4_address.

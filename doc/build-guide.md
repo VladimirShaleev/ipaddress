@@ -8,7 +8,8 @@ To work you will need:
 
 * A compatible operating system (e.g. Linux, macOS, Windows);
 * Compatible C++ compiler supporting C++11 or later (if you cannot test on all versions of the standard, then it’s okay, this [project runs tests](https://github.com/VladimirShaleev/ipaddress/actions/workflows/tests.yml) for all versions of the C++ standard and various versions of compilers);
-* [CMake](https://cmake.org/) and a compatible build tool for building the project.
+* [CMake](https://cmake.org/) and a compatible build tool for building the project;
+* <b>(optional)</b> clang-tidy 14+ for static analysis during build.
 
 ## Set up a project
 
@@ -23,6 +24,7 @@ Once the repository is clone, you can configure it using CMake.
 cmake -B build -S . \
   -DCMAKE_CXX_STANDARD=17 \
   -DCMAKE_BUILD_TYPE=Debug \
+  -DIPADDRESS_ENABLE_CLANG_TIDY=ON \
   -DIPADDRESS_BUILD_TESTS=ON \
   -DIPADDRESS_BUILD_DOC=OFF \
   -DIPADDRESS_BUILD_PACKAGES=OFF \
@@ -35,12 +37,13 @@ cmake -B build -S . \
 Where:
 
 * `CMAKE_CXX_STANDARD` — The selected standard with which unit tests will be collected. If not specified, the default one in the current build tools will be used.
-* `IPADDRESS_BUILD_TESTS` — Build unit tests (ON by default).
-* `IPADDRESS_BUILD_DOC` — Build doc (ON by default).
-* `IPADDRESS_BUILD_PACKAGES` — Create targets for building packages deb, rpm, etc. (ON by default).
-* `IPADDRESS_NO_EXCEPTIONS` — Disable exceptions throwing (OFF by default).
-* `IPADDRESS_NO_IPV6_SCOPE` — Disable scope if for ipv6 (OFF by default).
-* `IPADDRESS_IPV6_SCOPE_MAX_LENGTH` — scope id max length (16 by default).
+* `IPADDRESS_ENABLE_CLANG_TIDY` — Enable clang-tidy checks (`ON` by default).
+* `IPADDRESS_BUILD_TESTS` — Build unit tests (`ON` by default).
+* `IPADDRESS_BUILD_DOC` — Build doc (`ON` by default).
+* `IPADDRESS_BUILD_PACKAGES` — Create targets for building packages deb, rpm, etc. (`ON` by default).
+* `IPADDRESS_NO_EXCEPTIONS` — Disable exceptions throwing (`OFF` by default).
+* `IPADDRESS_NO_IPV6_SCOPE` — Disable scope if for ipv6 (`OFF` by default).
+* `IPADDRESS_IPV6_SCOPE_MAX_LENGTH` — scope id max length (`16` by default).
 
 Once configured, you can build.
 

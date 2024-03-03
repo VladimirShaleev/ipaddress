@@ -703,7 +703,8 @@ public:
      * for the IPv4 address, effectively setting the network address to the default address
      * and the netmask to the maximum value.
      */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network() IPADDRESS_NOEXCEPT = default;
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network() IPADDRESS_NOEXCEPT { // NOLINT(modernize-use-equals-default): for C++11 support
+    }
 
     /**
      * Constructor from an ipv4_network.
