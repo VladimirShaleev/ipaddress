@@ -1262,7 +1262,7 @@ private:
         return (chk_hi > val_hi) || (chk_hi == val_hi && chk_lo > val_lo);
     }
 
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint32_t subtract_divisor(uint32_t* left, size_t ls, const uint32_t (&right)[4], size_t rs, uint64_t q) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint32_t subtract_divisor(uint32_t* left, int32_t ls, const uint32_t (&right)[4], int32_t rs, uint64_t q) IPADDRESS_NOEXCEPT {
         assert(ls >= rs);
         assert(q <= 0xFFFFFFFF);
 
@@ -1283,7 +1283,7 @@ private:
         return uint32_t(carry);
     }
 
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint32_t add_divisor(uint32_t* left, size_t ls, const uint32_t (&right)[4], size_t rs) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint32_t add_divisor(uint32_t* left, int32_t ls, const uint32_t (&right)[4], int32_t rs) IPADDRESS_NOEXCEPT {
         assert(ls >= rs);
 
         uint64_t carry = 0;
