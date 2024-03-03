@@ -85,7 +85,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="logo.svg"/></td>
   <td id="projectalign">
-   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.0.0</span>
+   <div id="projectname">ipaddress<span id="projectnumber">&#160;0.0.14</span>
    </div>
   </td>
  </tr>
@@ -241,9 +241,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0d9a729be6a18d533666b5a9f317c6bd" id="r_a0d9a729be6a18d533666b5a9f317c6bd"><td class="memItemLeft" align="right" valign="top">constexpr inline const uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0d9a729be6a18d533666b5a9f317c6bd">data</a> () const noexcept</td></tr>
 <tr class="memdesc:a0d9a729be6a18d533666b5a9f317c6bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the raw data of the IP address in <b>network byte order</b> (big-endian).  <br /></td></tr>
 <tr class="separator:a0d9a729be6a18d533666b5a9f317c6bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3bbb57329a440462093a783bc0e1116" id="r_aa3bbb57329a440462093a783bc0e1116"><td class="memItemLeft" align="right" valign="top">constexpr inline&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa3bbb57329a440462093a783bc0e1116">ip_address</a> () noexcept</td></tr>
-<tr class="memdesc:aa3bbb57329a440462093a783bc0e1116"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <br /></td></tr>
-<tr class="separator:aa3bbb57329a440462093a783bc0e1116"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae51251505a42d49e04df2e772c296535" id="r_ae51251505a42d49e04df2e772c296535"><td class="memItemLeft" align="right" valign="top">constexpr inline&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae51251505a42d49e04df2e772c296535">ip_address</a> () noexcept=default</td></tr>
+<tr class="memdesc:ae51251505a42d49e04df2e772c296535"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <br /></td></tr>
+<tr class="separator:ae51251505a42d49e04df2e772c296535"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a822bdd6245d0d2737bdfd84e6bd9bcb9" id="r_a822bdd6245d0d2737bdfd84e6bd9bcb9"><td class="memItemLeft" align="right" valign="top">constexpr inline&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a822bdd6245d0d2737bdfd84e6bd9bcb9">ip_address</a> (const <a class="el" href="namespaceipaddress.html#a2314d590d36b6c502b50f1a5d0cf5bcf">ipv4_address</a> &amp;ipv4) noexcept</td></tr>
 <tr class="memdesc:a822bdd6245d0d2737bdfd84e6bd9bcb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor from an ipv4_address.  <br /></td></tr>
 <tr class="separator:a822bdd6245d0d2737bdfd84e6bd9bcb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -401,8 +401,8 @@ Static Public Member Functions</h2></td></tr>
 <p>The <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> class is a union-type structure that encapsulates both ipv4_address and ipv6_address, allowing for the representation and manipulation of both IPv4 and IPv6 addresses. It provides a set of functions and type aliases that facilitate the handling of IP addresses in a network context, making it a versatile tool for developers working with IP-based communications.</p>
 <p>The class ensures that the size of its instances will always be large enough to store an IPv6 address, which is the larger of the two address types. This design guarantees that an <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> object can store any valid IP address, regardless of its version, without the need for separate storage mechanisms. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="aa3bbb57329a440462093a783bc0e1116" name="aa3bbb57329a440462093a783bc0e1116"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa3bbb57329a440462093a783bc0e1116">&#9670;&#160;</a></span>ip_address() <span class="overload">[1/5]</span></h2>
+<a id="ae51251505a42d49e04df2e772c296535" name="ae51251505a42d49e04df2e772c296535"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae51251505a42d49e04df2e772c296535">&#9670;&#160;</a></span>ip_address() <span class="overload">[1/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -419,7 +419,7 @@ Static Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">default</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1448,8 +1448,8 @@ Static Public Member Functions</h2></td></tr>
 <div class="line"><span class="comment">// out:</span></div>
 <div class="line"><span class="comment">// 1.0.0.127.in-addr.arpa</span></div>
 <div class="line"><span class="comment">// 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.b.d.0.1.0.0.2.ip6.arpa</span></div>
-<div class="ttc" id="aclassipaddress_1_1ip__address_html_a2541b1106a227bd73721e52a31302774"><div class="ttname"><a href="#a2541b1106a227bd73721e52a31302774">ipaddress::ip_address::reverse_pointer</a></div><div class="ttdeci">inline std::string reverse_pointer() const</div><div class="ttdoc">Generates a reverse DNS lookup pointer for the IP address.</div><div class="ttdef"><b>Definition</b> ip-any-address.hpp:475</div></div>
-<div class="ttc" id="aclassipaddress_1_1ip__address_html_aa734f67f653b6979f7c359ead8202fdf"><div class="ttname"><a href="#aa734f67f653b6979f7c359ead8202fdf">ipaddress::ip_address::parse</a></div><div class="ttdeci">static consteval inline ip_address parse() noexcept</div><div class="ttdoc">Static method template to parse an IP address from a fixed string at compile time.</div><div class="ttdef"><b>Definition</b> ip-any-address.hpp:503</div></div>
+<div class="ttc" id="aclassipaddress_1_1ip__address_html_a2541b1106a227bd73721e52a31302774"><div class="ttname"><a href="#a2541b1106a227bd73721e52a31302774">ipaddress::ip_address::reverse_pointer</a></div><div class="ttdeci">inline std::string reverse_pointer() const</div><div class="ttdoc">Generates a reverse DNS lookup pointer for the IP address.</div><div class="ttdef"><b>Definition</b> ip-any-address.hpp:472</div></div>
+<div class="ttc" id="aclassipaddress_1_1ip__address_html_aa734f67f653b6979f7c359ead8202fdf"><div class="ttname"><a href="#aa734f67f653b6979f7c359ead8202fdf">ipaddress::ip_address::parse</a></div><div class="ttdeci">static consteval inline ip_address parse() noexcept</div><div class="ttdoc">Static method template to parse an IP address from a fixed string at compile time.</div><div class="ttdef"><b>Definition</b> ip-any-address.hpp:500</div></div>
 </div><!-- fragment --> <dl class="section return"><dt>Returns</dt><dd>A <code>std::string</code> that is the reverse DNS lookup pointer of the IP address. </dd></dl>
 
 </div>

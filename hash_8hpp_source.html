@@ -85,7 +85,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="logo.svg"/></td>
   <td id="projectalign">
-   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.0.0</span>
+   <div id="projectname">ipaddress<span id="projectnumber">&#160;0.0.14</span>
    </div>
   </td>
  </tr>
@@ -210,7 +210,7 @@ $(function(){initNavTree('hash_8hpp_source.html',''); initResizable(); });
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>};</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><a class="code hl_define" href="config_8hpp.html#a7c6e8e32885550d898b7de8d1fd0e828">IPADDRESS_NODISCARD</a> IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> std::size_t hash_sum(std::size_t seed, std::size_t value) <a class="code hl_define" href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a> {</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    hash_combine&lt;<span class="keyword">sizeof</span>(std::size_t)&gt; hash{};</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="keyword">const</span> hash_combine&lt;<span class="keyword">sizeof</span>(std::size_t)&gt; hash{};</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="keywordflow">return</span> hash(seed + 0x9e3779b9 + value);</div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>}</div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>

@@ -60,12 +60,12 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"classipaddress_1_1ip__address.html#a5a28487ea14bc4f113e732b8a6453cf3",
-"classipaddress_1_1ip__any__iterator.html#abc32b243c2c2875801a77f7c2fd1a512",
-"classipaddress_1_1ip__network__iterator.html#a1c517e49db33e4953015547a4649591a",
-"classipaddress_1_1optional.html#a1fa0f820de56b17b48d7418e4c17f191",
-"classipaddress_1_1uint128__t.html#a49e4545232f7fe28a0b8a5c7e2a39f48",
-"ipv6-address_8hpp_source.html"
+"classipaddress_1_1ip__address.html#a8bfed15a9f11a663033a52142e71bc26",
+"classipaddress_1_1ip__exclude__network__iterator.html#a7118ae310a63e48e499848b551b0a8ea",
+"classipaddress_1_1ip__network__iterator.html#ac0f5a4caf84278ebb06c4d41cc502b9a",
+"classipaddress_1_1scope.html#adbfb44693a7cddf189e2e2bc304adb9f",
+"classipaddress_1_1uint128__t.html#abc64922ec1f6ea2a8a9513e7e972981b",
+"namespaceipaddress.html#a88a76ee847c844cc47b94caac600689dafdd90c35444d3fb876602516076b3587"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

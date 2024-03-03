@@ -15,10 +15,10 @@ var searchData=
   ['base_5fv6_3c_20ipv6_5fnetwork_5fbase_20_3e_12',['base_v6&lt; ipv6_network_base &gt;',['../classipaddress_1_1base__v6.html',1,'ipaddress']]],
   ['begin_13',['begin',['../structipaddress_1_1byte__array.html#a32007b8371564d1d4199e762a8df76b3',1,'ipaddress::byte_array::begin()'],['../structipaddress_1_1fixed__string.html#a32007b8371564d1d4199e762a8df76b3',1,'ipaddress::fixed_string::begin()'],['../classipaddress_1_1hosts__sequence_3_01ip__address__base_3_01Base_01_4_01_4.html#a32007b8371564d1d4199e762a8df76b3',1,'ipaddress::hosts_sequence&lt; ip_address_base&lt; Base &gt; &gt;::begin()'],['../classipaddress_1_1hosts__any__sequence.html#a32007b8371564d1d4199e762a8df76b3',1,'ipaddress::hosts_any_sequence::begin()'],['../classipaddress_1_1subnets__any__sequence.html#a32007b8371564d1d4199e762a8df76b3',1,'ipaddress::subnets_any_sequence::begin()'],['../classipaddress_1_1subnets__sequence.html#a32007b8371564d1d4199e762a8df76b3',1,'ipaddress::subnets_sequence::begin()'],['../classipaddress_1_1exclude__network__sequence.html#a32007b8371564d1d4199e762a8df76b3',1,'ipaddress::exclude_network_sequence::begin()']]],
   ['broadcast_5faddress_14',['broadcast_address',['../classipaddress_1_1ip__network.html#aa4fed18a953698a9741c679885e26d16',1,'ipaddress::ip_network::broadcast_address()'],['../classipaddress_1_1ip__network__base.html#a48ce945b11159159d22168fe75fca109',1,'ipaddress::ip_network_base::broadcast_address()']]],
-  ['build_20a_20documentation_15',['Build a Documentation',['../build.html#autotoc_md36',1,'']]],
+  ['build_20a_20documentation_15',['Build a Documentation',['../build.html#autotoc_md38',1,'']]],
   ['build_20guide_16',['Build Guide',['../build.html',1,'']]],
   ['byte_2darray_2ehpp_17',['byte-array.hpp',['../byte-array_8hpp.html',1,'']]],
   ['byte_5farray_18',['byte_array',['../structipaddress_1_1byte__array.html',1,'ipaddress']]],
   ['bytes_19',['bytes',['../classipaddress_1_1ipv4__address__base.html#a5f2cc8513329088b2a21f38b2f36fcc1',1,'ipaddress::ipv4_address_base::bytes()'],['../classipaddress_1_1ipv6__address__base.html#a5f2cc8513329088b2a21f38b2f36fcc1',1,'ipaddress::ipv6_address_base::bytes()']]],
-  ['bytes_20',['Working with bytes',['../tutorial.html#autotoc_md16',1,'']]]
+  ['bytes_20',['Working with bytes',['../tutorial.html#autotoc_md18',1,'']]]
 ];

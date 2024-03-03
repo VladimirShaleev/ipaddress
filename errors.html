@@ -85,7 +85,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="logo.svg"/></td>
   <td id="projectalign">
-   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.0.0</span>
+   <div id="projectname">ipaddress<span id="projectnumber">&#160;0.0.14</span>
    </div>
   </td>
  </tr>
@@ -153,14 +153,14 @@ $(function(){initNavTree('errors.html',''); initResizable(); });
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><ul><li class="level2"><a href="#autotoc_md32">Exception Handling</a></li>
-<li class="level2"><a href="#autotoc_md33">Handling Error Codes</a></li>
-<li class="level2"><a href="#autotoc_md34">Disable Exceptions</a></li>
+<ul><ul><li class="level2"><a href="#autotoc_md34">Exception Handling</a></li>
+<li class="level2"><a href="#autotoc_md35">Handling Error Codes</a></li>
+<li class="level2"><a href="#autotoc_md36">Disable Exceptions</a></li>
 </ul>
 </ul>
 </div>
 <div class="textblock"><p>The library provides two ways to handle errors: through exceptions and through returned error codes. Which method to choose depends on the task and policy of your project (not everywhere it is possible to use exceptions; moreover, they may even be disabled in your build).</p>
-<h2><a class="anchor" id="autotoc_md32"></a>
+<h2><a class="anchor" id="autotoc_md34"></a>
 Exception Handling</h2>
 <p>All methods not marked <code>noexcept</code> can throw exceptions; there are only a few such methods. The documentation labels them all, and also indicates the types of exceptions that can be thrown.</p>
 <p>These are mainly methods for parsing from a string and some operations with networks from the previous section.</p>
@@ -182,7 +182,7 @@ Exception Handling</h2>
 <div class="ttc" id="aipaddress_8hpp_html"><div class="ttname"><a href="ipaddress_8hpp.html">ipaddress.hpp</a></div><div class="ttdoc">The main include file for the ipaddress library.</div></div>
 <div class="ttc" id="anamespaceipaddress_html"><div class="ttname"><a href="namespaceipaddress.html">ipaddress</a></div><div class="ttdoc">Namespace dedicated to IP addresses and networks operations.</div><div class="ttdef"><b>Definition</b> base-v4.hpp:18</div></div>
 </div><!-- fragment --><p>That's basically all you need to know about exception handling. The only thing I’ll clarify is that universal classes for addresses and networks (with union IPv4 and IPv6) first attempt to parse for IPv4, and then IPv6, which is why the error will contain information about the non-corect IPv6 (in case of exception).</p>
-<h2><a class="anchor" id="autotoc_md33"></a>
+<h2><a class="anchor" id="autotoc_md35"></a>
 Handling Error Codes</h2>
 <p>If you do not use exceptions, then for all methods that can throw exceptions there are alternative methods that return an error code.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -205,7 +205,7 @@ Handling Error Codes</h2>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="anamespaceipaddress_html_a88a76ee847c844cc47b94caac600689d"><div class="ttname"><a href="namespaceipaddress.html#a88a76ee847c844cc47b94caac600689d">ipaddress::error_code</a></div><div class="ttdeci">error_code</div><div class="ttdoc">Enumeration of error codes for IP address parsing and validation.</div><div class="ttdef"><b>Definition</b> errors.hpp:52</div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md34"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md36"></a>
 Disable Exceptions</h2>
 <p>Also, your compiler may have exceptions disabled. In this case, you can also disable exceptions in the library.</p>
 <dl class="section note"><dt>Note</dt><dd>The library supports the work without any exceptions, if necessary. To disable code that may throw exceptions, pass the <code>IPADDRESS_NO_EXCEPTIONS</code> definition when building.</dd></dl>

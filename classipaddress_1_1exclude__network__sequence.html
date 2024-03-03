@@ -85,7 +85,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="logo.svg"/></td>
   <td id="projectalign">
-   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.0.0</span>
+   <div id="projectname">ipaddress<span id="projectnumber">&#160;0.0.14</span>
    </div>
   </td>
  </tr>
@@ -207,18 +207,6 @@ Public Member Functions</h2></td></tr>
 constexpr inline&#160;</td><td class="memItemRight" valign="bottom"><b>exclude_network_sequence</b> () noexcept=default</td></tr>
 <tr class="memdesc:a97a8e79775f74fed49e6ea409abe9696"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br /></td></tr>
 <tr class="separator:a97a8e79775f74fed49e6ea409abe9696"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a515db522db8155d299c91e1ea460c343" id="r_a515db522db8155d299c91e1ea460c343"><td class="memItemLeft" align="right" valign="top">constexpr inline&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a515db522db8155d299c91e1ea460c343">exclude_network_sequence</a> (const <a class="el" href="classipaddress_1_1exclude__network__sequence.html">exclude_network_sequence</a> &amp;other) noexcept=default</td></tr>
-<tr class="memdesc:a515db522db8155d299c91e1ea460c343"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy constructor.  <br /></td></tr>
-<tr class="separator:a515db522db8155d299c91e1ea460c343"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae62983629c2311823588f1f74ce0126e" id="r_ae62983629c2311823588f1f74ce0126e"><td class="memItemLeft" align="right" valign="top">constexpr inline&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae62983629c2311823588f1f74ce0126e">exclude_network_sequence</a> (<a class="el" href="classipaddress_1_1exclude__network__sequence.html">exclude_network_sequence</a> &amp;&amp;other) noexcept=default</td></tr>
-<tr class="memdesc:ae62983629c2311823588f1f74ce0126e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move constructor.  <br /></td></tr>
-<tr class="separator:ae62983629c2311823588f1f74ce0126e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac50409c3fc8c7f74271c2dfeba2854fb" id="r_ac50409c3fc8c7f74271c2dfeba2854fb"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1exclude__network__sequence.html">exclude_network_sequence</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac50409c3fc8c7f74271c2dfeba2854fb">operator=</a> (const <a class="el" href="classipaddress_1_1exclude__network__sequence.html">exclude_network_sequence</a> &amp;other) noexcept=default</td></tr>
-<tr class="memdesc:ac50409c3fc8c7f74271c2dfeba2854fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy assignment operator.  <br /></td></tr>
-<tr class="separator:ac50409c3fc8c7f74271c2dfeba2854fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac73d66544f6151b80bcc614f9eb7fd7" id="r_aac73d66544f6151b80bcc614f9eb7fd7"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1exclude__network__sequence.html">exclude_network_sequence</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aac73d66544f6151b80bcc614f9eb7fd7">operator=</a> (<a class="el" href="classipaddress_1_1exclude__network__sequence.html">exclude_network_sequence</a> &amp;&amp;other) noexcept=default</td></tr>
-<tr class="memdesc:aac73d66544f6151b80bcc614f9eb7fd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move assignment operator.  <br /></td></tr>
-<tr class="separator:aac73d66544f6151b80bcc614f9eb7fd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa0a595141c7321ecdc2df6500b4fe256" id="r_aa0a595141c7321ecdc2df6500b4fe256"><td class="memItemLeft" align="right" valign="top">constexpr inline&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa0a595141c7321ecdc2df6500b4fe256">exclude_network_sequence</a> (<a class="el" href="#ab1137da269e66589b98fce3416d40502">const_reference</a> network, <a class="el" href="#ab1137da269e66589b98fce3416d40502">const_reference</a> other) noexcept</td></tr>
 <tr class="memdesc:aa0a595141c7321ecdc2df6500b4fe256"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a sequence for a network, excluding addresses from another network.  <br /></td></tr>
 <tr class="separator:aa0a595141c7321ecdc2df6500b4fe256"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -250,78 +238,8 @@ class ipaddress::exclude_network_sequence&lt; T &gt;</div><p>A sequence containe
 </dl>
 <dl class="section remark"><dt>Remarks</dt><dd>When iterating, obtaining networks occurs through lazy calculations. </dd></dl>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a515db522db8155d299c91e1ea460c343" name="a515db522db8155d299c91e1ea460c343"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a515db522db8155d299c91e1ea460c343">&#9670;&#160;</a></span>exclude_network_sequence() <span class="overload">[1/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr inline <a class="el" href="classipaddress_1_1exclude__network__sequence.html">exclude_network_sequence</a> </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classipaddress_1_1exclude__network__sequence.html">exclude_network_sequence</a>&lt; T &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">default</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Copy constructor. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The <a class="el" href="classipaddress_1_1exclude__network__sequence.html" title="A sequence container for networks excluding specified subnets.">exclude_network_sequence</a> to copy. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="ae62983629c2311823588f1f74ce0126e" name="ae62983629c2311823588f1f74ce0126e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae62983629c2311823588f1f74ce0126e">&#9670;&#160;</a></span>exclude_network_sequence() <span class="overload">[2/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr inline <a class="el" href="classipaddress_1_1exclude__network__sequence.html">exclude_network_sequence</a> </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classipaddress_1_1exclude__network__sequence.html">exclude_network_sequence</a>&lt; T &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">default</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Move constructor. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The <a class="el" href="classipaddress_1_1exclude__network__sequence.html" title="A sequence container for networks excluding specified subnets.">exclude_network_sequence</a> to move. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="aa0a595141c7321ecdc2df6500b4fe256" name="aa0a595141c7321ecdc2df6500b4fe256"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa0a595141c7321ecdc2df6500b4fe256">&#9670;&#160;</a></span>exclude_network_sequence() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0a595141c7321ecdc2df6500b4fe256">&#9670;&#160;</a></span>exclude_network_sequence()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -362,78 +280,6 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ac50409c3fc8c7f74271c2dfeba2854fb" name="ac50409c3fc8c7f74271c2dfeba2854fb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac50409c3fc8c7f74271c2dfeba2854fb">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr inline <a class="el" href="classipaddress_1_1exclude__network__sequence.html">exclude_network_sequence</a> &amp; operator= </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="classipaddress_1_1exclude__network__sequence.html">exclude_network_sequence</a>&lt; T &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">default</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Copy assignment operator. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The <a class="el" href="classipaddress_1_1exclude__network__sequence.html" title="A sequence container for networks excluding specified subnets.">exclude_network_sequence</a> to copy. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A reference to the assigned <a class="el" href="classipaddress_1_1exclude__network__sequence.html" title="A sequence container for networks excluding specified subnets.">exclude_network_sequence</a>. </dd></dl>
-
-</div>
-</div>
-<a id="aac73d66544f6151b80bcc614f9eb7fd7" name="aac73d66544f6151b80bcc614f9eb7fd7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aac73d66544f6151b80bcc614f9eb7fd7">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr inline <a class="el" href="classipaddress_1_1exclude__network__sequence.html">exclude_network_sequence</a> &amp; operator= </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classipaddress_1_1exclude__network__sequence.html">exclude_network_sequence</a>&lt; T &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">default</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Move assignment operator. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>The <a class="el" href="classipaddress_1_1exclude__network__sequence.html" title="A sequence container for networks excluding specified subnets.">exclude_network_sequence</a> to move. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A reference to the moved <a class="el" href="classipaddress_1_1exclude__network__sequence.html" title="A sequence container for networks excluding specified subnets.">exclude_network_sequence</a>. </dd></dl>
-
-</div>
-</div>
 <a id="a32007b8371564d1d4199e762a8df76b3" name="a32007b8371564d1d4199e762a8df76b3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a32007b8371564d1d4199e762a8df76b3">&#9670;&#160;</a></span>begin()</h2>
 

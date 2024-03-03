@@ -85,7 +85,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="logo.svg"/></td>
   <td id="projectalign">
-   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.0.0</span>
+   <div id="projectname">ipaddress<span id="projectnumber">&#160;0.0.14</span>
    </div>
   </td>
  </tr>
@@ -236,7 +236,7 @@ $(function(){initNavTree('fixed-string_8hpp_source.html',''); initResizable(); }
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <span class="keyword">auto</span> ended = <span class="keyword">false</span>;</div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        <span class="keywordflow">for</span> (size_t i = 0; i &lt; N; ++i) {</div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            <span class="keywordflow">if</span> (<a class="code hl_define" href="config_8hpp.html#a9de2ca3f1627e4da4e0828f550b24660">IPADDRESS_IS_CONST_EVALUATED</a>(data) &amp;&amp; data[i] &gt; 127) {</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>                size_t err = data[i] / (data[i] - data[i]); <span class="comment">// invalid symbol for ip address</span></div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>                <span class="keyword">const</span> size_t err = data[i] / (data[i] - data[i]); <span class="comment">// NOLINT(misc-redundant-expression): invalid symbol for ip address</span></div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>            }</div>
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>            _data[i] = <span class="keywordtype">char</span>(data[i]);</div>
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>            <span class="keywordflow">if</span> (data[i] == <span class="stringliteral">&#39;\0&#39;</span>) {</div>
@@ -617,7 +617,7 @@ $(function(){initNavTree('fixed-string_8hpp_source.html',''); initResizable(); }
 <div class="line"><a id="l00458" name="l00458"></a><span class="lineno">  458</span>        <span class="keywordflow">return</span> at(n);</div>
 <div class="line"><a id="l00459" name="l00459"></a><span class="lineno">  459</span>    }</div>
 <div class="line"><a id="l00460" name="l00460"></a><span class="lineno">  460</span> </div>
-<div class="line"><a id="l00461" name="l00461"></a><span class="lineno">  461</span>    <a class="code hl_define" href="config_8hpp.html#af94b0f511ece16353195a8b260aba20a">IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS</a> IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> const_reference at(size_t n) <span class="keyword">const</span> <a class="code hl_define" href="config_8hpp.html#a1ce8f0549cece9344e691fcfc4910a7d">IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS</a> {</div>
+<div class="line"><a id="l00461" name="l00461"></a><span class="lineno">  461</span>    <a class="code hl_define" href="config_8hpp.html#af94b0f511ece16353195a8b260aba20a">IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS</a> IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> const_reference at(size_t <span class="comment">/*n*/</span>) <span class="keyword">const</span> <a class="code hl_define" href="config_8hpp.html#a1ce8f0549cece9344e691fcfc4910a7d">IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS</a> {</div>
 <div class="line"><a id="l00462" name="l00462"></a><span class="lineno">  462</span>        <span class="keywordflow">return</span> front();</div>
 <div class="line"><a id="l00463" name="l00463"></a><span class="lineno">  463</span>    }</div>
 <div class="line"><a id="l00464" name="l00464"></a><span class="lineno">  464</span> </div>

@@ -12,6 +12,7 @@ var classipaddress_1_1subnets__sequence =
     [ "reverse_iterator", "classipaddress_1_1subnets__sequence.html#ae69dd0815008a12dcbc25c14d08882b1", null ],
     [ "const_reverse_iterator", "classipaddress_1_1subnets__sequence.html#ae3332b55bd04d4a1edf91c7de9cefc17", null ],
     [ "ip_address_type", "classipaddress_1_1subnets__sequence.html#a6f43995f4e664dfb7dfe4f8b360aa5ea", null ],
+    [ "subnets_sequence", "classipaddress_1_1subnets__sequence.html#aefaf41654d2fe9b75eb8101ca027ec6a", null ],
     [ "subnets_sequence", "classipaddress_1_1subnets__sequence.html#aa764fedf773318cbf3512b9f0968b37a", null ],
     [ "subnets_sequence", "classipaddress_1_1subnets__sequence.html#afdeb7e729c41f9f8ee356b71b3df7118", null ],
     [ "begin", "classipaddress_1_1subnets__sequence.html#a32007b8371564d1d4199e762a8df76b3", null ],

@@ -85,7 +85,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="logo.svg"/></td>
   <td id="projectalign">
-   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.0.0</span>
+   <div id="projectname">ipaddress<span id="projectnumber">&#160;0.0.14</span>
    </div>
   </td>
  </tr>
@@ -198,7 +198,7 @@ $(function(){initNavTree('ipv6-network_8hpp_source.html',''); initResizable(); }
 <div class="line"><span class="lineno">   39</span><span class="comment">     * @return A boolean value indicating whether the network is site-local.</span></div>
 <div class="line"><span class="lineno">   40</span><span class="comment">     */</span></div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="classipaddress_1_1ipv6__network__base.html#a0e6814229a8f19ef2dfc6d7a63354149">   41</a></span>    <a class="code hl_define" href="config_8hpp.html#a7c6e8e32885550d898b7de8d1fd0e828">IPADDRESS_NODISCARD</a> IPADDRESS_CONSTEXPR <a class="code hl_define" href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a> <span class="keywordtype">bool</span> <a class="code hl_function" href="classipaddress_1_1ipv6__network__base.html#a0e6814229a8f19ef2dfc6d7a63354149">is_site_local</a>() <span class="keyword">const</span> <a class="code hl_define" href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a> {</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <span class="keyword">const</span> <span class="keyword">auto</span>&amp; network = *<span class="keyword">static_cast</span>&lt;<span class="keyword">const</span> ip_network_base&lt;ipv6_network_base&gt;*&gt;(<span class="keyword">this</span>);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <span class="keyword">const</span> <span class="keyword">auto</span>&amp; network = *<span class="keyword">static_cast</span>&lt;<span class="keyword">const</span> ip_network_base&lt;ipv6_network_base&gt;*&gt;(<span class="keyword">this</span>); <span class="comment">// NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)</span></div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="keywordflow">return</span> network.network_address().is_site_local() &amp;&amp; network.broadcast_address().is_site_local();</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    }</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
