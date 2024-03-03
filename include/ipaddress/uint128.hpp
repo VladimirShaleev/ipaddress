@@ -1262,7 +1262,7 @@ private:
         return (chk_hi > val_hi) || (chk_hi == val_hi && chk_lo > val_lo);
     }
 
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint32_t subtract_divisor(uint32_t* left, size_t ls, uint32_t (&right)[4], size_t rs, uint64_t q) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint32_t subtract_divisor(uint32_t* left, size_t ls, const uint32_t (&right)[4], size_t rs, uint64_t q) IPADDRESS_NOEXCEPT {
         assert(ls >= rs);
         assert(q <= 0xFFFFFFFF);
 
@@ -1274,27 +1274,23 @@ private:
             auto digit = uint32_t(carry);
             carry >>= 32;
 
-            uint32_t& left_item = left[i];
-
-            if (left_item < digit) {
+            if (left[i] < digit) {
                 ++carry;
             }
-            left_item -= digit;
+            left[i] -= digit;
         }
 
         return uint32_t(carry);
     }
 
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint32_t add_divisor(uint32_t* left, size_t ls, uint32_t (&right)[4], size_t rs) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint32_t add_divisor(uint32_t* left, size_t ls, const uint32_t (&right)[4], size_t rs) IPADDRESS_NOEXCEPT {
         assert(ls >= rs);
 
         uint64_t carry = 0;
 
         for (int32_t i = 0; i < rs; ++i) {
-            uint32_t& left_element = left[i];
-            uint64_t digit = left_element + carry + right[i];
-
-            left_element = uint32_t(digit);
+            uint64_t digit = left[i] + carry + right[i];
+            left[i] = uint32_t(digit);
             carry = digit >> 32;
         }
 
