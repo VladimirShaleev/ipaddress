@@ -43,8 +43,6 @@ struct networks {
 };
 #endif
 
-// NOLINTBEGIN(cert-err58-cpp): for C++11
-
 // Private networks
 #if __cpp_constexpr >= 201304L
 static constexpr ipv4_network
@@ -170,8 +168,6 @@ static constexpr ipv6_network
 template <typename T> const ipv6_network networks<T>::
 #endif
     ipv6_is_site_local = ipv6_network::parse("fec0::/10");
-
-// NOLINTEND(cert-err58-cpp):
 
 #if __cpp_constexpr >= 201304L
 };

@@ -8,7 +8,7 @@ set(IPADDRESS_IPV6_SCOPE_MAX_LENGTH "16" CACHE STRING "Maximum scope-id length f
 project(ipaddress 
   HOMEPAGE_URL "https://github.com/VladimirShaleev/ipaddress"
   DESCRIPTION "A library for working and manipulating IPv4/IPv6 addresses and networks"
-  VERSION 0.0.15
+  VERSION 1.0.0
   LANGUAGES CXX)
 
 include(CMakePackageConfigHelpers)
@@ -79,7 +79,16 @@ cmake_dependent_option(IPADDRESS_BUILD_PACKAGES "Build packages" ON
 if(IPADDRESS_ENABLE_CLANG_TIDY)
   find_program(IPADDRESS_CLANG_TIDY clang-tidy)
   if(IPADDRESS_CLANG_TIDY)
-    set(CMAKE_CXX_CLANG_TIDY ${IPADDRESS_CLANG_TIDY})
+    execute_process(COMMAND "${IPADDRESS_CLANG_TIDY}" --version
+      OUTPUT_VARIABLE IPADDRESS_CLANG_TIDY_VERSION
+      OUTPUT_STRIP_TRAILING_WHITESPACE)
+    string(REGEX MATCH "  LLVM version ([0-9]+)\\.([0-9]+)\\.([0-9]+)" _ ${IPADDRESS_CLANG_TIDY_VERSION})
+    set(IPADDRESS_CLANG_TIDY_VERSION_MAJOR ${CMAKE_MATCH_1})
+    if(IPADDRESS_CLANG_TIDY_VERSION_MAJOR GREATER_EQUAL 16)
+      set(CMAKE_CXX_CLANG_TIDY ${IPADDRESS_CLANG_TIDY})
+    else()
+      message(WARNING "Supported by clang-tidy version 16.0.0 or higher")
+    endif()
   else()
     message(WARNING "Could not find clang-tidy program")
   endif()

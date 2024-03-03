@@ -5,7 +5,7 @@
 using namespace ipaddress;
 
 #if IPADDRESS_CPP_VERSION >= 17
-#  define VAL_FIXED_STRING(name, str) fixed_string (name) = (str)
+#  define VAL_FIXED_STRING(name, str) fixed_string name = (str)
 #else
 #  define VAL_FIXED_STRING(name, str) auto (name) = make_fixed_string(str)
 #endif

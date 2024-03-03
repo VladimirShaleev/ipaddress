@@ -2,12 +2,32 @@ name: Publish to Launchpad PPA
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    tags:
+      - v*
 
 jobs:
   deploy:
+    strategy:
+      fail-fast: false
+      matrix:
+        series: [ "focal", "bionic", "xenial", "trusty", "jammy", "mantic", "noble" ]
+        include:
+          - series: focal
+            sub: 1
+          - series: bionic
+            sub: 2
+          - series: xenial
+            sub: 3
+          - series: trusty
+            sub: 4
+          - series: jammy
+            sub: 5
+          - series: mantic
+            sub: 6
+          - series: noble
+            sub: 7
+
+    name: "Series ${{ matrix.series }}"
     runs-on: ubuntu-20.04
     environment: launchpad
     steps:
@@ -21,7 +41,8 @@ jobs:
         shell: bash
         run: |
           echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
-          echo "version=0.0.15" >> "$GITHUB_OUTPUT"
+          echo "origin=${{ github.ref_name }}" >> "$GITHUB_OUTPUT"
+          echo "version=${{ github.ref_name }}.${{ matrix.sub }}" >> "$GITHUB_OUTPUT"
 
       - name: Configure CMake
         run: >
@@ -46,8 +67,8 @@ jobs:
           mkdir -p ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}
           mkdir -p ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian
           mkdir -p ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/source
-          cp _CPack_Packages/Linux/DEB/ipaddress-${{ steps.strings.outputs.version }}/data.tar.gz ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress_${{ steps.strings.outputs.version }}.orig.tar.gz
-          cp -r _CPack_Packages/Linux/DEB/ipaddress-${{ steps.strings.outputs.version }}/usr ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/
+          cp _CPack_Packages/Linux/DEB/ipaddress-${{ steps.strings.outputs.origin }}/data.tar.gz ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress_${{ steps.strings.outputs.version }}.orig.tar.gz
+          cp -r _CPack_Packages/Linux/DEB/ipaddress-${{ steps.strings.outputs.origin }}/usr ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/
 
       - name: Add debian package files
         env:
@@ -55,7 +76,7 @@ jobs:
         run: |
           dyear=$(date '+%Y')
           printf "#!/usr/bin/make -f\n\n%%:\n	dh \$@\n" >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/rules
-          printf "ipaddress (${{ steps.strings.outputs.version }}-${PPA_BUILD}~focal) focal bionic xenial trusty jammy mantic noble; urgency=low\n\n  * Release ${{ steps.strings.outputs.version }}\n\n -- Vladimir Shaleev <vladimirshaleev@gmail.com>  " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
+          printf "ipaddress (${{ steps.strings.outputs.version }}-${PPA_BUILD}~${{ matrix.series }}1) ${{ matrix.series }}; urgency=low\n\n  * Release ${{ steps.strings.outputs.version }}\n\n -- Vladimir Shaleev <vladimirshaleev@gmail.com>  " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
           date +"%a, %d %b %Y %H:%M:%S %z" >>  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
           echo 9 >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/compat
           echo "3.0 (quilt)" >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/source/format
@@ -104,5 +125,5 @@ jobs:
           cd ${{ steps.strings.outputs.build-output-dir }}/ppa
           export GPG_TTY=$(tty)
           echo -n "$PRIVATE_KEY" | base64 --decode | gpg --batch --import
-          debsign -p'gpg --passphrase ${{ secrets.LAUNCHPAD_PASSWORD }} --batch --pinentry-mode loopback' -S -k$PUBLIC_KEY ipaddress_${{ steps.strings.outputs.version }}-${PPA_BUILD}~focal_source.changes
-          dput ppa:vladimirshaleev/ipaddress ipaddress_${{ steps.strings.outputs.version }}-${PPA_BUILD}~focal_source.changes
+          debsign -p'gpg --passphrase ${{ secrets.LAUNCHPAD_PASSWORD }} --batch --pinentry-mode loopback' -S -k$PUBLIC_KEY ipaddress_${{ steps.strings.outputs.version }}-${PPA_BUILD}~${{ matrix.series }}1_source.changes
+          dput ppa:vladimirshaleev/ipaddress ipaddress_${{ steps.strings.outputs.version }}-${PPA_BUILD}~${{ matrix.series }}1_source.changes

@@ -27,8 +27,8 @@ TEST(uint128_t, Ctors) {
     IPADDRESS_CONSTEXPR uint128_t value6 = { 1, 2 };
     IPADDRESS_CONSTEXPR uint128_t value7 { 1 };
     IPADDRESS_CONSTEXPR uint128_t value8 = { 1 };
-    uint128_t value9 = (uint128_t) 457.3f;
-    uint128_t value10 = (uint128_t) 4.32e+20;
+    auto value9 = (uint128_t) 457.3f;
+    auto value10 = (uint128_t) 4.32e+20;
 
     ASSERT_EQ(value1.upper(), 0);
     ASSERT_EQ(value1.lower(), 0);
