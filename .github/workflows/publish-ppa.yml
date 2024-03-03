@@ -21,7 +21,7 @@ jobs:
         shell: bash
         run: |
           echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
-          echo "version=0.0.14" >> "$GITHUB_OUTPUT"
+          echo "version=0.0.15" >> "$GITHUB_OUTPUT"
 
       - name: Configure CMake
         run: >
@@ -55,7 +55,7 @@ jobs:
         run: |
           dyear=$(date '+%Y')
           printf "#!/usr/bin/make -f\n\n%%:\n	dh \$@\n" >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/rules
-          printf "ipaddress (${{ steps.strings.outputs.version }}-${PPA_BUILD}~focal) bionic xenial trusty jammy mantic noble; urgency=low\n\n  * Release ${{ steps.strings.outputs.version }}\n\n -- Vladimir Shaleev <vladimirshaleev@gmail.com>  " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
+          printf "ipaddress (${{ steps.strings.outputs.version }}-${PPA_BUILD}~focal) focal bionic xenial trusty jammy mantic noble; urgency=low\n\n  * Release ${{ steps.strings.outputs.version }}\n\n -- Vladimir Shaleev <vladimirshaleev@gmail.com>  " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
           date +"%a, %d %b %Y %H:%M:%S %z" >>  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
           echo 9 >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/compat
           echo "3.0 (quilt)" >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/source/format

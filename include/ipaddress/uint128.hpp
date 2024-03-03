@@ -1231,7 +1231,8 @@ private:
                 if (carry != t) {
                     assert(carry == t + 1);
 
-                    carry = add_divisor(left + n, left_size - n, right, right_size);
+                    // NOLINTNEXTLINE(clang-analyzer-deadcode.DeadStores): carry is not used in the release build
+                    carry = add_divisor(left + n, left_size - n, right, right_size); 
 
                     --digit;
                     assert(carry == 1);
