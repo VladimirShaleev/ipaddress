@@ -1,0 +1,47 @@
+name: Lint
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  lint:
+    strategy:
+      fail-fast: false
+      matrix:
+        standard: [ 11, 20 ]
+
+    name: "Linter [C++${{ matrix.standard }}]"
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run linter
+        run: |
+          wget https://apt.llvm.org/llvm.sh
+          chmod +x llvm.sh
+          ./llvm.sh 16
+          sudo apt-get install -y clang-tidy-16
+
+      - name: Set reusable strings
+        id: strings
+        shell: bash
+        run: |
+          echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
+  
+      - name: Configure CMake
+        run: >
+          cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }}
+          -DCMAKE_CXX_STANDARD=${{ matrix.standard }}
+          -DCMAKE_CXX_COMPILER=clang-16
+          -DCMAKE_BUILD_TYPE=Release
+          -DIPADDRESS_ENABLE_CLANG_TIDY=ON
+          -DIPADDRESS_BUILD_TESTS=ON
+          -DIPADDRESS_BUILD_DOC=OFF
+          -DIPADDRESS_BUILD_PACKAGES=OFF
+          -DIPADDRESS_CLANG_TIDY=clang-tidy-16
+
+      - name: Build
+        run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release -j2

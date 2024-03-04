@@ -24,7 +24,7 @@ Once the repository is clone, you can configure it using CMake.
 cmake -B build -S . \
   -DCMAKE_CXX_STANDARD=17 \
   -DCMAKE_BUILD_TYPE=Debug \
-  -DIPADDRESS_ENABLE_CLANG_TIDY=ON \
+  -DIPADDRESS_ENABLE_CLANG_TIDY=OFF \
   -DIPADDRESS_BUILD_TESTS=ON \
   -DIPADDRESS_BUILD_DOC=OFF \
   -DIPADDRESS_BUILD_PACKAGES=OFF \

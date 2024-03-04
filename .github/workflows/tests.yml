@@ -72,6 +72,7 @@ jobs:
           -DCMAKE_CXX_FLAGS="-stdlib=${{ matrix.stdlib }} -f${{ matrix.exception }}"
           -DCMAKE_CXX_COMPILER=c++
           -DCMAKE_BUILD_TYPE=Release
+          -DIPADDRESS_ENABLE_CLANG_TIDY=OFF
           -DIPADDRESS_BUILD_TESTS=ON
           -DIPADDRESS_BUILD_DOC=OFF
           -DIPADDRESS_BUILD_PACKAGES=OFF
@@ -118,6 +119,7 @@ jobs:
           -DCMAKE_CXX_COMPILER=c++
           -DCMAKE_CXX_FLAGS=-f${{ matrix.exception }}
           -DCMAKE_BUILD_TYPE=Release
+          -DIPADDRESS_ENABLE_CLANG_TIDY=OFF
           -DIPADDRESS_BUILD_TESTS=ON
           -DIPADDRESS_BUILD_DOC=OFF
           -DIPADDRESS_BUILD_PACKAGES=OFF
@@ -167,6 +169,7 @@ jobs:
           -DCMAKE_CXX_COMPILER=c++
           -DCMAKE_CXX_FLAGS=-f${{ matrix.exception }}
           -DCMAKE_BUILD_TYPE=Release
+          -DIPADDRESS_ENABLE_CLANG_TIDY=OFF
           -DIPADDRESS_BUILD_TESTS=ON
           -DIPADDRESS_BUILD_DOC=OFF
           -DIPADDRESS_BUILD_PACKAGES=OFF
