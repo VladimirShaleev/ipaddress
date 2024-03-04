@@ -16,9 +16,15 @@ jobs:
     name: "Linter [C++${{ matrix.standard }}]"
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v4
+      - name: Install Clang
+        uses: egor-tensin/setup-clang@v1
+        with:
+          version: 16
 
-      - name: Run linter
+      - uses: actions/checkout@v4
+      - run: c++ -v
+      
+      - name: Install Clang Tidy
         run: |
           wget https://apt.llvm.org/llvm.sh
           chmod +x llvm.sh
@@ -35,7 +41,8 @@ jobs:
         run: >
           cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }}
           -DCMAKE_CXX_STANDARD=${{ matrix.standard }}
-          -DCMAKE_CXX_COMPILER=clang-16
+          -DCMAKE_CXX_FLAGS="-stdlib=libstdc++"
+          -DCMAKE_CXX_COMPILER=c++
           -DCMAKE_BUILD_TYPE=Release
           -DIPADDRESS_ENABLE_CLANG_TIDY=ON
           -DIPADDRESS_BUILD_TESTS=ON
