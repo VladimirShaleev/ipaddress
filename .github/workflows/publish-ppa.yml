@@ -21,7 +21,7 @@ jobs:
         shell: bash
         run: |
           echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
-          echo "version=0.0.16" >> "$GITHUB_OUTPUT"
+          echo "version=0.0.17" >> "$GITHUB_OUTPUT"
 
       - name: Configure CMake
         run: >
@@ -55,7 +55,6 @@ jobs:
         run: |
           dyear=$(date '+%Y')
           printf "#!/usr/bin/make -f\n\n%%:\n	dh \$@\n" >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/rules
-          date +"%a, %d %b %Y %H:%M:%S %z" >>  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
           echo 9 >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/compat
           echo "3.0 (quilt)" >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/source/format
           printf "Source: ipaddress\nSection: devel\nPriority: optional\nMaintainer: Vladimir Shaleev <vladimirshaleev@gmail.com>\nStandards-Version: 4.5.0\nBuild-Depends: debhelper (>= 9)\n\nPackage: libipaddress-dev\nDepends: \${misc:Depends}\nArchitecture: all\nHomepage: https://github.com/VladimirShaleev/ipaddress\nDescription: A library for working and manipulating IPv4/IPv6 addresses and networks\n\n" >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/control
@@ -97,7 +96,8 @@ jobs:
           PUBLIC_KEY: ${{ vars.PUBLIC_KEY }}
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         run: |
-          printf "ipaddress (${{ steps.strings.outputs.version }}-${PPA_BUILD}~focal1) focal; urgency=low\n\n  * Release ${{ steps.strings.outputs.version }}\n\n -- Vladimir Shaleev <vladimirshaleev@gmail.com>  " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
+          printf "ipaddress (${{ steps.strings.outputs.version }}-${PPA_BUILD}~focal1) focal; urgency=low\n\n  * Release ${{ steps.strings.outputs.version }}\n\n -- Vladimir Shaleev <vladimirshaleev@gmail.com>  " > ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
+          date +"%a, %d %b %Y %H:%M:%S %z" >> ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
           cd ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}
           EDITOR=/bin/true dpkg-source -q --commit . changes
           debuild -S -sa -us -uc
@@ -113,7 +113,8 @@ jobs:
           PUBLIC_KEY: ${{ vars.PUBLIC_KEY }}
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         run: |
-          printf "ipaddress (${{ steps.strings.outputs.version }}-${PPA_BUILD}~bionic1) bionic; urgency=low\n\n  * Release ${{ steps.strings.outputs.version }}\n\n -- Vladimir Shaleev <vladimirshaleev@gmail.com>  " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
+          printf "ipaddress (${{ steps.strings.outputs.version }}-${PPA_BUILD}~bionic1) bionic; urgency=low\n\n  * Release ${{ steps.strings.outputs.version }}\n\n -- Vladimir Shaleev <vladimirshaleev@gmail.com>  " > ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
+          date +"%a, %d %b %Y %H:%M:%S %z" >> ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
           cd ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}
           EDITOR=/bin/true dpkg-source -q --commit . changes
           debuild -S -sa -us -uc
@@ -129,7 +130,8 @@ jobs:
           PUBLIC_KEY: ${{ vars.PUBLIC_KEY }}
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         run: |
-          printf "ipaddress (${{ steps.strings.outputs.version }}-${PPA_BUILD}~xenial1) xenial; urgency=low\n\n  * Release ${{ steps.strings.outputs.version }}\n\n -- Vladimir Shaleev <vladimirshaleev@gmail.com>  " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
+          printf "ipaddress (${{ steps.strings.outputs.version }}-${PPA_BUILD}~xenial1) xenial; urgency=low\n\n  * Release ${{ steps.strings.outputs.version }}\n\n -- Vladimir Shaleev <vladimirshaleev@gmail.com>  " > ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
+          date +"%a, %d %b %Y %H:%M:%S %z" >> ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
           cd ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}
           EDITOR=/bin/true dpkg-source -q --commit . changes
           debuild -S -sa -us -uc
@@ -145,7 +147,8 @@ jobs:
           PUBLIC_KEY: ${{ vars.PUBLIC_KEY }}
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         run: |
-          printf "ipaddress (${{ steps.strings.outputs.version }}-${PPA_BUILD}~trusty1) trusty; urgency=low\n\n  * Release ${{ steps.strings.outputs.version }}\n\n -- Vladimir Shaleev <vladimirshaleev@gmail.com>  " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
+          printf "ipaddress (${{ steps.strings.outputs.version }}-${PPA_BUILD}~trusty1) trusty; urgency=low\n\n  * Release ${{ steps.strings.outputs.version }}\n\n -- Vladimir Shaleev <vladimirshaleev@gmail.com>  " > ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
+          date +"%a, %d %b %Y %H:%M:%S %z" >> ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
           cd ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}
           EDITOR=/bin/true dpkg-source -q --commit . changes
           debuild -S -sa -us -uc
@@ -161,7 +164,8 @@ jobs:
           PUBLIC_KEY: ${{ vars.PUBLIC_KEY }}
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         run: |
-          printf "ipaddress (${{ steps.strings.outputs.version }}-${PPA_BUILD}~jammy1) jammy; urgency=low\n\n  * Release ${{ steps.strings.outputs.version }}\n\n -- Vladimir Shaleev <vladimirshaleev@gmail.com>  " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
+          printf "ipaddress (${{ steps.strings.outputs.version }}-${PPA_BUILD}~jammy1) jammy; urgency=low\n\n  * Release ${{ steps.strings.outputs.version }}\n\n -- Vladimir Shaleev <vladimirshaleev@gmail.com>  " > ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
+          date +"%a, %d %b %Y %H:%M:%S %z" >> ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
           cd ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}
           EDITOR=/bin/true dpkg-source -q --commit . changes
           debuild -S -sa -us -uc
@@ -177,7 +181,8 @@ jobs:
           PUBLIC_KEY: ${{ vars.PUBLIC_KEY }}
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         run: |
-          printf "ipaddress (${{ steps.strings.outputs.version }}-${PPA_BUILD}~mantic1) mantic; urgency=low\n\n  * Release ${{ steps.strings.outputs.version }}\n\n -- Vladimir Shaleev <vladimirshaleev@gmail.com>  " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
+          printf "ipaddress (${{ steps.strings.outputs.version }}-${PPA_BUILD}~mantic1) mantic; urgency=low\n\n  * Release ${{ steps.strings.outputs.version }}\n\n -- Vladimir Shaleev <vladimirshaleev@gmail.com>  " > ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
+          date +"%a, %d %b %Y %H:%M:%S %z" >> ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
           cd ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}
           EDITOR=/bin/true dpkg-source -q --commit . changes
           debuild -S -sa -us -uc
@@ -193,7 +198,8 @@ jobs:
           PUBLIC_KEY: ${{ vars.PUBLIC_KEY }}
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
         run: |
-          printf "ipaddress (${{ steps.strings.outputs.version }}-${PPA_BUILD}~noble1) noble; urgency=low\n\n  * Release ${{ steps.strings.outputs.version }}\n\n -- Vladimir Shaleev <vladimirshaleev@gmail.com>  " >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
+          printf "ipaddress (${{ steps.strings.outputs.version }}-${PPA_BUILD}~noble1) noble; urgency=low\n\n  * Release ${{ steps.strings.outputs.version }}\n\n -- Vladimir Shaleev <vladimirshaleev@gmail.com>  " > ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
+          date +"%a, %d %b %Y %H:%M:%S %z" >> ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
           cd ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}
           EDITOR=/bin/true dpkg-source -q --commit . changes
           debuild -S -sa -us -uc
