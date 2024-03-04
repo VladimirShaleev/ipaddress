@@ -77,7 +77,7 @@ cmake_dependent_option(IPADDRESS_BUILD_PACKAGES "Build packages" ON
   "CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR" OFF)
 
 if(IPADDRESS_ENABLE_CLANG_TIDY)
-  find_program(IPADDRESS_CLANG_TIDY NAMES clang-tidy clang-tidy-16)
+  find_program(IPADDRESS_CLANG_TIDY NAMES clang-tidy-16 clang-tidy)
   if(IPADDRESS_CLANG_TIDY)
     execute_process(COMMAND "${IPADDRESS_CLANG_TIDY}" --version
       OUTPUT_VARIABLE IPADDRESS_CLANG_TIDY_VERSION
