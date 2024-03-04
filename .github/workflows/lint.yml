@@ -41,7 +41,6 @@ jobs:
           -DIPADDRESS_BUILD_TESTS=ON
           -DIPADDRESS_BUILD_DOC=OFF
           -DIPADDRESS_BUILD_PACKAGES=OFF
-          -DIPADDRESS_CLANG_TIDY=clang-tidy-16
 
       - name: Build
         run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release -j2
