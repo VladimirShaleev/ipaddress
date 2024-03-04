@@ -7,9 +7,6 @@
 
 A library for working and manipulating IPv4/IPv6 addresses and networks in modern C++.
 
-> [!IMPORTANT]
-> THE LIBRARY IS CURRENTLY UNDER ACTIVE DEVELOPMENT AND NOT YET READY FOR USE!
-
 ## Introduction
 
 This cross-platfrom **header-only** library (for C++11 and newer) is inspired by the [ipaddress API in Python](https://docs.python.org/3.12/library/ipaddress.html), 
@@ -37,14 +34,17 @@ You can install in one of the following ways
 
 ### Use package managers
 
-> [!IMPORTANT]
-> Packages have not been published yet
-> 
-> #### Vcpkg
-> 
-> #### Conan
->
-> #### Homebrew
+#### Vcpkg
+
+**The package has not yet been published**
+
+#### Conan
+
+**The package has not yet been published**
+
+#### Homebrew
+
+**The package has not yet been published**
 
 #### Ubuntu PPA
 
