@@ -1031,7 +1031,7 @@ TEST_P(HostsIpv6NetworkParams, hosts) {
     }
 
     auto expected_reverse_it = expected.rbegin();
-    for (auto it = actual.rbegin(); it != actual.rend(); ++it) {
+    for (auto it = actual.rbegin(); it != actual.rend(); ++it) { // NOLINT(modernize-loop-convert)
         ASSERT_EQ(*it, *expected_reverse_it++);
     }
 
@@ -1168,7 +1168,7 @@ TEST_P(SubnetsIpv6NetworkParams, subnets) {
     }
 
     auto expected_reverse_it = expected.rbegin();
-    for (auto it = actual.rbegin(); it != actual.rend(); ++it) {
+    for (auto it = actual.rbegin(); it != actual.rend(); ++it) { // NOLINT(modernize-loop-convert)
         ASSERT_EQ(*it, *expected_reverse_it++);
     }
 
