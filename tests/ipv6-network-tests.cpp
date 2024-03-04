@@ -1103,7 +1103,6 @@ INSTANTIATE_TEST_SUITE_P(
 using SupernetErrorIpv6NetworkParams = TestWithParam<std::tuple<const char*, size_t, optional<size_t>, error_code, const char*>>;
 TEST_P(SupernetErrorIpv6NetworkParams, supernet) {
     const auto expected_error = std::get<3>(GetParam());
-    const auto expected_error_str = std::get<4>(GetParam());
 
     const auto network = ipv6_network::parse(std::get<0>(GetParam()));
     const auto prefixlen_diff = std::get<1>(GetParam());
@@ -1124,6 +1123,7 @@ TEST_P(SupernetErrorIpv6NetworkParams, supernet) {
     ASSERT_EQ(error_network.hostmask(), ipv6_address::parse("::"));
     ASSERT_EQ(error_network.prefixlen(), 128);
 #elif IPADDRESS_CPP_VERSION >= 14
+    const auto expected_error_str = std::get<4>(GetParam());
     EXPECT_THAT(
         ([&network, prefixlen_diff, new_prefix]() { network.supernet(prefixlen_diff, new_prefix); }),
         ThrowsMessage<logic_error>(StrEq(expected_error_str)));
@@ -1202,7 +1202,6 @@ INSTANTIATE_TEST_SUITE_P(
 using SubnetsErrorIpv6NetworkParams = TestWithParam<std::tuple<const char*, size_t, optional<size_t>, error_code, const char*>>;
 TEST_P(SubnetsErrorIpv6NetworkParams, subnets) {
     const auto expected_error = std::get<3>(GetParam());
-    const auto expected_error_str = std::get<4>(GetParam());
 
     const auto network = ipv6_network::parse(std::get<0>(GetParam()));
     const auto prefixlen_diff = std::get<1>(GetParam());
@@ -1217,6 +1216,7 @@ TEST_P(SubnetsErrorIpv6NetworkParams, subnets) {
     auto error_subnets = network.subnets(prefixlen_diff, new_prefix);
     ASSERT_TRUE(error_subnets.empty());
 #elif IPADDRESS_CPP_VERSION >= 14
+    const auto expected_error_str = std::get<4>(GetParam());
     EXPECT_THAT(
         ([&network, prefixlen_diff, new_prefix]() { network.subnets(prefixlen_diff, new_prefix); }),
         ThrowsMessage<logic_error>(StrEq(expected_error_str)));
@@ -1263,7 +1263,6 @@ INSTANTIATE_TEST_SUITE_P(
 using AddressExcludeErrorIpv6NetworkParams = TestWithParam<std::tuple<const char*, const char*, error_code, const char*>>;
 TEST_P(AddressExcludeErrorIpv6NetworkParams, address_exclude) {
     const auto expected_error = std::get<2>(GetParam());
-    const auto expected_error_str = std::get<3>(GetParam());
 
     const auto network1 = ipv6_network::parse(std::get<0>(GetParam()));
     const auto network2 = ipv6_network::parse(std::get<1>(GetParam()));
@@ -1277,6 +1276,7 @@ TEST_P(AddressExcludeErrorIpv6NetworkParams, address_exclude) {
     auto error_address_exclude = network1.address_exclude(network2);
     ASSERT_TRUE(error_address_exclude.empty());
 #elif IPADDRESS_CPP_VERSION >= 14
+    const auto expected_error_str = std::get<3>(GetParam());
     EXPECT_THAT(
         ([&network1, &network2]() { network1.address_exclude(network2); }),
         ThrowsMessage<logic_error>(StrEq(expected_error_str)));

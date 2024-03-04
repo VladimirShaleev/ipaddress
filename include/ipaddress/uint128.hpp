@@ -1207,7 +1207,7 @@ private:
             uint32_t t = uint32_t(i) < uint32_t(left_size) ? left[i] : 0;
 
             uint64_t val_hi = (uint64_t(t) << 32) | left[i - 1];
-            uint32_t val_lo = (i > 1) ? left[i - 2] : 0;
+            uint32_t val_lo = (i > 1) ? left[i - 2] : 0; // NOLINT(clang-analyzer-core.uninitialized.Assign)
 
             if (shift > 0) {
                 uint32_t val_nx = i > 2 ? left[i - 3] : 0;
@@ -1231,6 +1231,7 @@ private:
                 if (carry != t) {
                     assert(carry == t + 1);
 
+                    // NOLINTNEXTLINE(clang-analyzer-deadcode.DeadStores): carry is not used in the release build
                     carry = add_divisor(left + n, left_size - n, right, right_size); 
 
                     --digit;
@@ -1262,7 +1263,7 @@ private:
         return (chk_hi > val_hi) || (chk_hi == val_hi && chk_lo > val_lo);
     }
 
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint32_t subtract_divisor(uint32_t* left, int32_t ls, const uint32_t (&right)[4], int32_t rs, uint64_t q) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint32_t subtract_divisor(uint32_t* left, int32_t ls /* NOLINT(misc-unused-parameters) */, const uint32_t (&right)[4], int32_t rs, uint64_t q) IPADDRESS_NOEXCEPT {
         assert(ls >= rs);
         assert(q <= 0xFFFFFFFF);
 
@@ -1283,7 +1284,7 @@ private:
         return uint32_t(carry);
     }
 
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint32_t add_divisor(uint32_t* left, int32_t ls, const uint32_t (&right)[4], int32_t rs) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint32_t add_divisor(uint32_t* left, int32_t ls /* NOLINT(misc-unused-parameters) */, const uint32_t (&right)[4], int32_t rs) IPADDRESS_NOEXCEPT {
         assert(ls >= rs);
 
         uint64_t carry = 0;

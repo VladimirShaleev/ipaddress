@@ -49,6 +49,7 @@ static constexpr ipv4_network
 #else
 template <typename T> const ipv4_network networks<T>::
 #endif
+    // NOLINTNEXTLINE(cert-err58-cpp): for C++11
     ipv4_private_networks[] = {
         ipv4_network::parse("0.0.0.0/8"),
         ipv4_network::parse("10.0.0.0/8"),
@@ -71,6 +72,7 @@ static constexpr ipv6_network
 #else
 template <typename T> const ipv6_network networks<T>::
 #endif
+    // NOLINTNEXTLINE(cert-err58-cpp): for C++11
     ipv6_private_networks[] = {
         ipv6_network::parse("::1/128"),
         ipv6_network::parse("::/128"),
@@ -90,6 +92,7 @@ static constexpr ipv4_network
 #else
 template <typename T> const ipv4_network networks<T>::
 #endif
+    // NOLINTNEXTLINE(cert-err58-cpp): for C++11
     ipv4_is_global = ipv4_network::parse("100.64.0.0/10");
 
 // Reserved networks
@@ -98,6 +101,7 @@ static constexpr ipv4_network
 #else
 template <typename T> const ipv4_network networks<T>::
 #endif
+    // NOLINTNEXTLINE(cert-err58-cpp): for C++11
     ipv4_reserved_network = ipv4_network::parse("240.0.0.0/4");
 
 #if __cpp_constexpr >= 201304L
@@ -105,6 +109,7 @@ static constexpr ipv6_network
 #else
 template <typename T> const ipv6_network networks<T>::
 #endif
+    // NOLINTNEXTLINE(cert-err58-cpp): for C++11
     ipv6_reserved_networks[] = {
         ipv6_network::parse("::/8"),
         ipv6_network::parse("100::/8"),
@@ -129,6 +134,7 @@ static constexpr ipv4_network
 #else
 template <typename T> const ipv4_network networks<T>::
 #endif
+    // NOLINTNEXTLINE(cert-err58-cpp): for C++11
     ipv4_is_multicast = ipv4_network::parse("224.0.0.0/4");
 
 #if __cpp_constexpr >= 201304L
@@ -136,6 +142,7 @@ static constexpr ipv6_network
 #else
 template <typename T> const ipv6_network networks<T>::
 #endif
+    // NOLINTNEXTLINE(cert-err58-cpp): for C++11
     ipv6_is_multicast = ipv6_network::parse("ff00::/8");
 
 // Loopback networks
@@ -144,6 +151,7 @@ static constexpr ipv4_network
 #else
 template <typename T> const ipv4_network networks<T>::
 #endif
+    // NOLINTNEXTLINE(cert-err58-cpp): for C++11
     ipv4_is_loopback = ipv4_network::parse("127.0.0.0/8");
 
 // Link local networks
@@ -152,6 +160,7 @@ static constexpr ipv4_network
 #else
 template <typename T> const ipv4_network networks<T>::
 #endif
+    // NOLINTNEXTLINE(cert-err58-cpp): for C++11
     ipv4_is_link_local = ipv4_network::parse("169.254.0.0/16");
 
 #if __cpp_constexpr >= 201304L
@@ -159,6 +168,7 @@ static constexpr ipv6_network
 #else
 template <typename T> const ipv6_network networks<T>::
 #endif
+    // NOLINTNEXTLINE(cert-err58-cpp): for C++11
     ipv6_is_link_local = ipv6_network::parse("fe80::/10");
 
 // Site local networks
@@ -167,6 +177,7 @@ static constexpr ipv6_network
 #else
 template <typename T> const ipv6_network networks<T>::
 #endif
+    // NOLINTNEXTLINE(cert-err58-cpp): for C++11
     ipv6_is_site_local = ipv6_network::parse("fec0::/10");
 
 #if __cpp_constexpr >= 201304L

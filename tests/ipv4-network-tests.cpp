@@ -1058,7 +1058,6 @@ INSTANTIATE_TEST_SUITE_P(
 using SupernetErrorIpv4NetworkParams = TestWithParam<std::tuple<const char*, size_t, optional<size_t>, error_code, const char*>>;
 TEST_P(SupernetErrorIpv4NetworkParams, supernet) {
     const auto expected_error = std::get<3>(GetParam());
-    const auto expected_error_str = std::get<4>(GetParam());
 
     const auto network = ipv4_network::parse(std::get<0>(GetParam()));
     const auto prefixlen_diff = std::get<1>(GetParam());
@@ -1079,6 +1078,7 @@ TEST_P(SupernetErrorIpv4NetworkParams, supernet) {
     ASSERT_EQ(error_network.hostmask(), ipv4_address::parse("0.0.0.0"));
     ASSERT_EQ(error_network.prefixlen(), 32);
 #elif IPADDRESS_CPP_VERSION >= 14
+    const auto expected_error_str = std::get<4>(GetParam());
     EXPECT_THAT(
         ([&network, prefixlen_diff, new_prefix]() { network.supernet(prefixlen_diff, new_prefix); }),
         ThrowsMessage<logic_error>(StrEq(expected_error_str)));
@@ -1158,7 +1158,6 @@ INSTANTIATE_TEST_SUITE_P(
 using SubnetsErrorIpv4NetworkParams = TestWithParam<std::tuple<const char*, size_t, optional<size_t>, error_code, const char*>>;
 TEST_P(SubnetsErrorIpv4NetworkParams, subnets) {
     const auto expected_error = std::get<3>(GetParam());
-    const auto expected_error_str = std::get<4>(GetParam());
 
     const auto network = ipv4_network::parse(std::get<0>(GetParam()));
     const auto prefixlen_diff = std::get<1>(GetParam());
@@ -1173,6 +1172,7 @@ TEST_P(SubnetsErrorIpv4NetworkParams, subnets) {
     auto error_subnets = network.subnets(prefixlen_diff, new_prefix);
     ASSERT_TRUE(error_subnets.empty());
 #elif IPADDRESS_CPP_VERSION >= 14
+    const auto expected_error_str = std::get<4>(GetParam());
     EXPECT_THAT(
         ([&network, prefixlen_diff, new_prefix]() { network.subnets(prefixlen_diff, new_prefix); }),
         ThrowsMessage<logic_error>(StrEq(expected_error_str)));
@@ -1219,7 +1219,6 @@ INSTANTIATE_TEST_SUITE_P(
 using AddressExcludeErrorIpv4NetworkParams = TestWithParam<std::tuple<const char*, const char*, error_code, const char*>>;
 TEST_P(AddressExcludeErrorIpv4NetworkParams, address_exclude) {
     const auto expected_error = std::get<2>(GetParam());
-    const auto expected_error_str = std::get<3>(GetParam());
 
     const auto network1 = ipv4_network::parse(std::get<0>(GetParam()));
     const auto network2 = ipv4_network::parse(std::get<1>(GetParam()));
@@ -1233,6 +1232,7 @@ TEST_P(AddressExcludeErrorIpv4NetworkParams, address_exclude) {
     auto error_address_exclude = network1.address_exclude(network2);
     ASSERT_TRUE(error_address_exclude.empty());
 #elif IPADDRESS_CPP_VERSION >= 14
+    const auto expected_error_str = std::get<3>(GetParam());
     EXPECT_THAT(
         ([&network1, &network2]() { network1.address_exclude(network2); }),
         ThrowsMessage<logic_error>(StrEq(expected_error_str)));
