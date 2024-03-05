@@ -22,7 +22,7 @@ static constexpr ipv6_network test_swap(const char(&str1)[N1], const char(&str2)
 
 template <size_t N>
 static constexpr error_code test_error(const char(&str)[N]) noexcept {
-    error_code err = error_code::NO_ERROR;
+    error_code err = error_code::no_error;
     ipv6_network::parse(str, err);
     return err;
 }
@@ -92,7 +92,7 @@ TEST(ipv6_network, CompileTime) {
     ASSERT_GT(net4_hash, size_t(0));
 
     constexpr auto net5_error = test_error("2001:db8::/8");
-    ASSERT_EQ(net5_error, error_code::HAS_HOST_BITS_SET);
+    ASSERT_EQ(net5_error, error_code::has_host_bits_set);
     
     constexpr auto b1 = net3 < net4;
     constexpr auto b2 = net3 > net4;
@@ -523,7 +523,7 @@ TEST_P(NetworkFromAddressIpv6Params, from_address) {
 
     auto expected = ipv6_network::parse(get<0>(GetParam()), strict);
 
-    error_code err = error_code::NO_ERROR;
+    error_code err = error_code::no_error;
     auto actual = ipv6_network::from_address(address, err, prefixlen, strict);
     ASSERT_EQ(actual, expected);
     ASSERT_EQ(actual.network_address(), expected.network_address());
@@ -548,9 +548,9 @@ INSTANTIATE_TEST_SUITE_P(
     ));
 
 TEST(ipv6_network, from_address_error) {
-    error_code err = error_code::NO_ERROR;
+    error_code err = error_code::no_error;
     auto actual = ipv6_network::from_address(ipv6_address::parse("2001:db8::"), err, 16);
-    ASSERT_EQ(err, error_code::HAS_HOST_BITS_SET);
+    ASSERT_EQ(err, error_code::has_host_bits_set);
     ASSERT_EQ(actual.network_address(), ipv6_address::parse("::"));
     ASSERT_EQ(actual.broadcast_address(), ipv6_address::parse("::"));
     ASSERT_EQ(actual.netmask(), ipv6_address::parse("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff"));
@@ -577,7 +577,7 @@ TEST_P(InvalidNetworkIpv6Params, parse) {
     auto expected_network = get<0>(GetParam());
     auto expected_error_code = get<1>(GetParam());
 
-    error_code err = error_code::NO_ERROR;
+    error_code err = error_code::no_error;
     ipv6_network::parse(expected_network, err);
     ASSERT_EQ(err, expected_error_code);
 
@@ -602,35 +602,35 @@ TEST_P(InvalidNetworkIpv6Params, parse) {
 INSTANTIATE_TEST_SUITE_P(
     ipv6_network, InvalidNetworkIpv6Params,
     testing::Values(
-        std::make_tuple("/", error_code::EMPTY_NETMASK, "empty mask in address /"),
-        std::make_tuple("2001:db8::/", error_code::EMPTY_NETMASK, "empty mask in address 2001:db8::/"),
-        std::make_tuple("2001:db8::/129", error_code::INVALID_NETMASK, "is not a valid netmask in address 2001:db8::/129"),
-        std::make_tuple("2001:db8::/255.255.255.255", error_code::INVALID_NETMASK, "is not a valid netmask in address 2001:db8::/255.255.255.255"),
-        std::make_tuple("/%scope", error_code::INVALID_NETMASK, "is not a valid netmask in address /%scope"),
-        std::make_tuple("/%scope8", error_code::INVALID_NETMASK, "is not a valid netmask in address /%scope8"),
-        std::make_tuple("::1/::1", error_code::INVALID_NETMASK, "is not a valid netmask in address ::1/::1"),
-        std::make_tuple("::1/1::", error_code::INVALID_NETMASK, "is not a valid netmask in address ::1/1::"),
-        std::make_tuple("::1/-1", error_code::INVALID_NETMASK, "is not a valid netmask in address ::1/-1"),
-        std::make_tuple("::1/+1", error_code::INVALID_NETMASK, "is not a valid netmask in address ::1/+1"),
-        std::make_tuple("::1/ 1 ", error_code::INVALID_NETMASK, "is not a valid netmask in address ::1/ 1 "),
-        std::make_tuple("::1/word", error_code::INVALID_NETMASK, "is not a valid netmask in address ::1/word"),
-        std::make_tuple("::1/::", error_code::INVALID_NETMASK, "is not a valid netmask in address ::1/::"),
-        std::make_tuple("::1%scope/word", error_code::INVALID_NETMASK, "is not a valid netmask in address ::1%scope/word"),
+        std::make_tuple("/", error_code::empty_netmask, "empty mask in address /"),
+        std::make_tuple("2001:db8::/", error_code::empty_netmask, "empty mask in address 2001:db8::/"),
+        std::make_tuple("2001:db8::/129", error_code::invalid_netmask, "is not a valid netmask in address 2001:db8::/129"),
+        std::make_tuple("2001:db8::/255.255.255.255", error_code::invalid_netmask, "is not a valid netmask in address 2001:db8::/255.255.255.255"),
+        std::make_tuple("/%scope", error_code::invalid_netmask, "is not a valid netmask in address /%scope"),
+        std::make_tuple("/%scope8", error_code::invalid_netmask, "is not a valid netmask in address /%scope8"),
+        std::make_tuple("::1/::1", error_code::invalid_netmask, "is not a valid netmask in address ::1/::1"),
+        std::make_tuple("::1/1::", error_code::invalid_netmask, "is not a valid netmask in address ::1/1::"),
+        std::make_tuple("::1/-1", error_code::invalid_netmask, "is not a valid netmask in address ::1/-1"),
+        std::make_tuple("::1/+1", error_code::invalid_netmask, "is not a valid netmask in address ::1/+1"),
+        std::make_tuple("::1/ 1 ", error_code::invalid_netmask, "is not a valid netmask in address ::1/ 1 "),
+        std::make_tuple("::1/word", error_code::invalid_netmask, "is not a valid netmask in address ::1/word"),
+        std::make_tuple("::1/::", error_code::invalid_netmask, "is not a valid netmask in address ::1/::"),
+        std::make_tuple("::1%scope/word", error_code::invalid_netmask, "is not a valid netmask in address ::1%scope/word"),
         
-        std::make_tuple("2001:db8::/24", error_code::HAS_HOST_BITS_SET, "has host bits set in address 2001:db8::/24"),
-        std::make_tuple("2001:db8:://", error_code::ONLY_ONE_SLASH_PERMITTED, "only one '/' permitted in address 2001:db8:://"),
-        std::make_tuple("2001:db8:://128", error_code::ONLY_ONE_SLASH_PERMITTED, "only one '/' permitted in address 2001:db8:://128"),
-        std::make_tuple("2001:db8::/128/128", error_code::ONLY_ONE_SLASH_PERMITTED, "only one '/' permitted in address 2001:db8::/128/128"),
+        std::make_tuple("2001:db8::/24", error_code::has_host_bits_set, "has host bits set in address 2001:db8::/24"),
+        std::make_tuple("2001:db8:://", error_code::only_one_slash_permitted, "only one '/' permitted in address 2001:db8:://"),
+        std::make_tuple("2001:db8:://128", error_code::only_one_slash_permitted, "only one '/' permitted in address 2001:db8:://128"),
+        std::make_tuple("2001:db8::/128/128", error_code::only_one_slash_permitted, "only one '/' permitted in address 2001:db8::/128/128"),
 
-        std::make_tuple("/8", error_code::EMPTY_ADDRESS, "address cannot be empty"),
-        std::make_tuple("google.com", error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 0 of address google.com has invalid symbol"),
-        std::make_tuple("1.2.3.4", error_code::LEAST_3_PARTS, "least 3 parts in address 1.2.3.4"),
-        std::make_tuple("10/8", error_code::LEAST_3_PARTS, "least 3 parts in address 10/8"),
-        std::make_tuple("1234:axy::b", error_code::PART_HAS_INVALID_SYMBOL, "in part 0 of address 1234:axy::b has invalid symbols"),
-        std::make_tuple("google.com%scope", error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 0 of address google.com%scope has invalid symbol"),
-        std::make_tuple("1.2.3.4%scope", error_code::LEAST_3_PARTS, "least 3 parts in address 1.2.3.4%scope"),
-        std::make_tuple("10%scope/8", error_code::LEAST_3_PARTS, "least 3 parts in address 10%scope/8"),
-        std::make_tuple("1234:axy::b%scope", error_code::PART_HAS_INVALID_SYMBOL, "in part 0 of address 1234:axy::b%scope has invalid symbols")
+        std::make_tuple("/8", error_code::empty_address, "address cannot be empty"),
+        std::make_tuple("google.com", error_code::octet_has_invalid_symbol, "in octet 0 of address google.com has invalid symbol"),
+        std::make_tuple("1.2.3.4", error_code::least_3_parts, "least 3 parts in address 1.2.3.4"),
+        std::make_tuple("10/8", error_code::least_3_parts, "least 3 parts in address 10/8"),
+        std::make_tuple("1234:axy::b", error_code::part_has_invalid_symbol, "in part 0 of address 1234:axy::b has invalid symbols"),
+        std::make_tuple("google.com%scope", error_code::octet_has_invalid_symbol, "in octet 0 of address google.com%scope has invalid symbol"),
+        std::make_tuple("1.2.3.4%scope", error_code::least_3_parts, "least 3 parts in address 1.2.3.4%scope"),
+        std::make_tuple("10%scope/8", error_code::least_3_parts, "least 3 parts in address 10%scope/8"),
+        std::make_tuple("1234:axy::b%scope", error_code::part_has_invalid_symbol, "in part 0 of address 1234:axy::b%scope has invalid symbols")
     ));
 
 TEST(ipv6_network, Comparison) {
@@ -1108,7 +1108,7 @@ TEST_P(SupernetErrorIpv6NetworkParams, supernet) {
     const auto prefixlen_diff = std::get<1>(GetParam());
     const auto new_prefix = std::get<2>(GetParam());
 
-    error_code err = error_code::NO_ERROR;
+    error_code err = error_code::no_error;
     auto actural = network.supernet(err, prefixlen_diff, new_prefix);
     ASSERT_EQ(err, expected_error);
     ASSERT_EQ(actural.network_address(), ipv6_address::parse("::"));
@@ -1134,9 +1134,9 @@ TEST_P(SupernetErrorIpv6NetworkParams, supernet) {
 INSTANTIATE_TEST_SUITE_P(
     ipv6_network, SupernetErrorIpv6NetworkParams,
     Values(
-        std::make_tuple("2001:658:22a:cafe::/64", 1, 65, error_code::NEW_PREFIX_MUST_BE_SHORTER, "new prefix must be shorter"),
-        std::make_tuple("2001:658:22a:cafe::/64", 2, 63, error_code::CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX, "cannot set prefixlen_diff and new_prefix"),
-        std::make_tuple("2001:658:22a:cafe::/64", 65, nullptr, error_code::INVALID_PREFIXLEN_DIFF, "invalid prefixlen_diff")
+        std::make_tuple("2001:658:22a:cafe::/64", 1, 65, error_code::new_prefix_must_be_shorter, "new prefix must be shorter"),
+        std::make_tuple("2001:658:22a:cafe::/64", 2, 63, error_code::cannot_set_prefixlen_diff_and_new_prefix, "cannot set prefixlen_diff and new_prefix"),
+        std::make_tuple("2001:658:22a:cafe::/64", 65, nullptr, error_code::invalid_prefixlen_diff, "invalid prefixlen_diff")
     ));
 
 using SubnetsIpv6NetworkParams = TestWithParam<std::tuple<const char*, size_t, optional<size_t>, std::vector<const char*>>>;
@@ -1207,7 +1207,7 @@ TEST_P(SubnetsErrorIpv6NetworkParams, subnets) {
     const auto prefixlen_diff = std::get<1>(GetParam());
     const auto new_prefix = std::get<2>(GetParam());
 
-    error_code err = error_code::NO_ERROR;
+    error_code err = error_code::no_error;
     const auto actual = network.subnets(err, prefixlen_diff, new_prefix);
     ASSERT_EQ(err, expected_error);
     ASSERT_TRUE(actual.empty());
@@ -1227,9 +1227,9 @@ TEST_P(SubnetsErrorIpv6NetworkParams, subnets) {
 INSTANTIATE_TEST_SUITE_P(
     ipv6_network, SubnetsErrorIpv6NetworkParams,
     Values(
-        std::make_tuple("2001:658:22a:cafe::/120", 1, 119, error_code::NEW_PREFIX_MUST_BE_LONGER, "new prefix must be longer"),
-        std::make_tuple("2001:658:22a:cafe::/120", 2, 121, error_code::CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX, "cannot set prefixlen_diff and new_prefix"),
-        std::make_tuple("2001:658:22a:cafe::/120", 1, 500, error_code::INVALID_PREFIXLEN_DIFF, "invalid prefixlen_diff")
+        std::make_tuple("2001:658:22a:cafe::/120", 1, 119, error_code::new_prefix_must_be_longer, "new prefix must be longer"),
+        std::make_tuple("2001:658:22a:cafe::/120", 2, 121, error_code::cannot_set_prefixlen_diff_and_new_prefix, "cannot set prefixlen_diff and new_prefix"),
+        std::make_tuple("2001:658:22a:cafe::/120", 1, 500, error_code::invalid_prefixlen_diff, "invalid prefixlen_diff")
     ));
 
 using AddressExcludeIpv6NetworkParams = TestWithParam<std::tuple<const char*, const char*, std::vector<const char*>>>;
@@ -1267,7 +1267,7 @@ TEST_P(AddressExcludeErrorIpv6NetworkParams, address_exclude) {
     const auto network1 = ipv6_network::parse(std::get<0>(GetParam()));
     const auto network2 = ipv6_network::parse(std::get<1>(GetParam()));
     
-    error_code err = error_code::NO_ERROR;
+    error_code err = error_code::no_error;
     const auto actual = network1.address_exclude(network2, err);
     ASSERT_EQ(err, expected_error);
     ASSERT_TRUE(actual.empty());
@@ -1287,5 +1287,5 @@ TEST_P(AddressExcludeErrorIpv6NetworkParams, address_exclude) {
 INSTANTIATE_TEST_SUITE_P(
     ipv6_network, AddressExcludeErrorIpv6NetworkParams,
     Values(
-        std::make_tuple("2001:658:22a:caff::/120", "2001:658:22a:cafe::/122", error_code::NOT_CONTAINED_NETWORK, "network is not a subnet of other")
+        std::make_tuple("2001:658:22a:caff::/120", "2001:658:22a:cafe::/122", error_code::not_contained_network, "network is not a subnet of other")
     ));

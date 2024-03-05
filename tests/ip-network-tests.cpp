@@ -301,7 +301,7 @@ TEST_P(InvalidNetworkParams, parse) {
     auto expected_address = get<0>(GetParam());
     auto expected_error_code = get<1>(GetParam());
 
-    error_code err = error_code::NO_ERROR;
+    error_code err = error_code::no_error;
     ip_network::parse(expected_address, err);
     ASSERT_EQ(err, expected_error_code);
 
@@ -323,25 +323,25 @@ TEST_P(InvalidNetworkParams, parse) {
 INSTANTIATE_TEST_SUITE_P(
     ip_network, InvalidNetworkParams,
     testing::Values(
-        std::make_tuple("/8", error_code::EMPTY_ADDRESS, "address cannot be empty"),
-        std::make_tuple("1.2.3.4/", error_code::EMPTY_NETMASK, "empty mask in address 1.2.3.4/"),
-        std::make_tuple("1.2.3.4/33", error_code::LEAST_3_PARTS, "least 3 parts in address 1.2.3.4/33"),
-        std::make_tuple("1.2.3.4/255.255.255.127", error_code::INVALID_NETMASK, "is not a valid netmask in address 1.2.3.4/255.255.255.127"),
-        std::make_tuple("1.2.3.4/24", error_code::LEAST_3_PARTS, "least 3 parts in address 1.2.3.4/24"),
-        std::make_tuple("1.2.3.4//", error_code::ONLY_ONE_SLASH_PERMITTED, "only one '/' permitted in address 1.2.3.4//"),
-        std::make_tuple("bogus", error_code::PART_IS_MORE_4_CHARS, "in part 0 of address bogus more 4 characters"),
-        std::make_tuple("10/8", error_code::LEAST_3_PARTS, "least 3 parts in address 10/8"),
-        std::make_tuple("1.2.3.256", error_code::OCTET_EXCEEDED_255, "octet 0 of address 1.2.3.256 exceeded 255"),
-        std::make_tuple("/", error_code::EMPTY_NETMASK, "empty mask in address /"),
-        std::make_tuple("2001:db8::/129", error_code::INVALID_NETMASK, "is not a valid netmask in address 2001:db8::/129"),
-        std::make_tuple("2001:db8::/24", error_code::HAS_HOST_BITS_SET, "has host bits set in address 2001:db8::/24"),
-        std::make_tuple("google.com", error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 0 of address google.com has invalid symbol"),
-        std::make_tuple("10/8", error_code::LEAST_3_PARTS, "least 3 parts in address 10/8"),
-        std::make_tuple("1234:axy::b", error_code::PART_HAS_INVALID_SYMBOL, "in part 0 of address 1234:axy::b has invalid symbols"),
-        std::make_tuple("google.com%scope", error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 0 of address google.com%scope has invalid symbol"),
-        std::make_tuple("1.2.3.4%scope", error_code::LEAST_3_PARTS, "least 3 parts in address 1.2.3.4%scope"),
-        std::make_tuple("10%scope/8", error_code::LEAST_3_PARTS, "least 3 parts in address 10%scope/8"),
-        std::make_tuple("1234:axy::b%scope", error_code::PART_HAS_INVALID_SYMBOL, "in part 0 of address 1234:axy::b%scope has invalid symbols")
+        std::make_tuple("/8", error_code::empty_address, "address cannot be empty"),
+        std::make_tuple("1.2.3.4/", error_code::empty_netmask, "empty mask in address 1.2.3.4/"),
+        std::make_tuple("1.2.3.4/33", error_code::least_3_parts, "least 3 parts in address 1.2.3.4/33"),
+        std::make_tuple("1.2.3.4/255.255.255.127", error_code::invalid_netmask, "is not a valid netmask in address 1.2.3.4/255.255.255.127"),
+        std::make_tuple("1.2.3.4/24", error_code::least_3_parts, "least 3 parts in address 1.2.3.4/24"),
+        std::make_tuple("1.2.3.4//", error_code::only_one_slash_permitted, "only one '/' permitted in address 1.2.3.4//"),
+        std::make_tuple("bogus", error_code::part_is_more_4_chars, "in part 0 of address bogus more 4 characters"),
+        std::make_tuple("10/8", error_code::least_3_parts, "least 3 parts in address 10/8"),
+        std::make_tuple("1.2.3.256", error_code::octet_exceeded_255, "octet 0 of address 1.2.3.256 exceeded 255"),
+        std::make_tuple("/", error_code::empty_netmask, "empty mask in address /"),
+        std::make_tuple("2001:db8::/129", error_code::invalid_netmask, "is not a valid netmask in address 2001:db8::/129"),
+        std::make_tuple("2001:db8::/24", error_code::has_host_bits_set, "has host bits set in address 2001:db8::/24"),
+        std::make_tuple("google.com", error_code::octet_has_invalid_symbol, "in octet 0 of address google.com has invalid symbol"),
+        std::make_tuple("10/8", error_code::least_3_parts, "least 3 parts in address 10/8"),
+        std::make_tuple("1234:axy::b", error_code::part_has_invalid_symbol, "in part 0 of address 1234:axy::b has invalid symbols"),
+        std::make_tuple("google.com%scope", error_code::octet_has_invalid_symbol, "in octet 0 of address google.com%scope has invalid symbol"),
+        std::make_tuple("1.2.3.4%scope", error_code::least_3_parts, "least 3 parts in address 1.2.3.4%scope"),
+        std::make_tuple("10%scope/8", error_code::least_3_parts, "least 3 parts in address 10%scope/8"),
+        std::make_tuple("1234:axy::b%scope", error_code::part_has_invalid_symbol, "in part 0 of address 1234:axy::b%scope has invalid symbols")
     ));
 
 TEST(ip_network, Comparison) {

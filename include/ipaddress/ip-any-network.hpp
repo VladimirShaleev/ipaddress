@@ -36,9 +36,9 @@ template <typename T>
 struct net_any_parser {
     template <typename Str>
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T parse(const Str& address, bool strict) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        auto code = error_code::NO_ERROR;
+        auto code = error_code::no_error;
         const auto net4 = ipv4_network::parse(address, code, strict);
-        if (code == error_code::NO_ERROR) {
+        if (code == error_code::no_error) {
             return T(net4);
         }
         return T(ipv6_network::parse(address, strict));
@@ -46,13 +46,13 @@ struct net_any_parser {
 
     template <typename Str>
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T parse(const Str& address, error_code& code, bool strict) IPADDRESS_NOEXCEPT {
-        code = error_code::NO_ERROR;
+        code = error_code::no_error;
         const auto net4 = ipv4_network::parse(address, code, strict);
-        if (code == error_code::NO_ERROR) {
+        if (code == error_code::no_error) {
             return T(net4);
         }
         const auto net6 = ipv6_network::parse(address, code, strict);
-        if (code == error_code::NO_ERROR) {
+        if (code == error_code::no_error) {
             return T(net6);
         }
         return T();
@@ -444,10 +444,10 @@ public:
      * be set.
      * 
      * @code{.cpp}
-     *   auto err = error_code::NO_ERROR;
+     *   auto err = error_code::no_error;
      *   auto supernet = ip_network::parse("192.0.2.0/24").supernet(err, 2);
      *   
-     *   if (err == error_code::NO_ERROR) {
+     *   if (err == error_code::no_error) {
      *       std::cout << supernet << std::endl;
      *   }
      *   
@@ -554,10 +554,10 @@ public:
      * and new_prefix must be set.
      * 
      * @code{.cpp}
-     *   auto err = error_code::NO_ERROR;
+     *   auto err = error_code::no_error;
      *   auto subnets_sequence = ip_network::parse("192.0.2.0/24").subnets(err, 2);
      *   
-     *   if (err == error_code::NO_ERROR) {
+     *   if (err == error_code::no_error) {
      *       for (const auto& net : subnets_sequence) {
      *          std::cout << net << std::endl;
      *       }
@@ -609,9 +609,9 @@ public:
      * @remark `exclude_network_sequence` uses lazy evaluation to iterate networks.
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE exclude_network_sequence<ip_network> address_exclude(const ip_network& other) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        error_code code = error_code::NO_ERROR;
+        error_code code = error_code::no_error;
         const auto result = address_exclude(other, code);
-        if (code != error_code::NO_ERROR) {
+        if (code != error_code::no_error) {
             raise_error(code, 0, "", 0);
         }
         return result;
@@ -624,10 +624,10 @@ public:
      *   constexpr auto a = ip_network::parse("192.0.2.0/28");
      *   constexpr auto b = ip_network::parse("192.0.2.1/32");
      * 
-     *   auto err = error_code::NO_ERROR;
+     *   auto err = error_code::no_error;
      *   auto exclude_sequence = a.address_exclude(b, err);
      *   
-     *   if (err == error_code::NO_ERROR) {
+     *   if (err == error_code::no_error) {
      *       for (const auto& net : exclude_sequence) {
      *          std::cout << net << std::endl;
      *       }
@@ -645,9 +645,9 @@ public:
      * @remark `exclude_network_sequence` uses lazy evaluation to iterate networks.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE exclude_network_sequence<ip_network> address_exclude(const ip_network& other, error_code& code) const IPADDRESS_NOEXCEPT {
-        code = error_code::NO_ERROR;
+        code = error_code::no_error;
         if (_version != other._version) {
-            code = error_code::INVALID_VERSION;
+            code = error_code::invalid_version;
             return exclude_network_sequence<ip_network>();
         }
 
@@ -657,7 +657,7 @@ public:
         auto rhs = ip_network::from_address(addr2, other.prefixlen());
 
         if (!rhs.subnet_of(lhs)) {
-            code = error_code::NOT_CONTAINED_NETWORK;
+            code = error_code::not_contained_network;
             return exclude_network_sequence<ip_network>();
         }
 
@@ -816,7 +816,7 @@ public:
     template <fixed_string FixedString, bool Strict = true>
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE ip_network parse() IPADDRESS_NOEXCEPT {
         constexpr auto str = FixedString;
-        auto code = error_code::NO_ERROR;
+        auto code = error_code::no_error;
 
         char net[str.size() + 1]{};
         for (size_t i = 0; i < str.size(); ++i) {
@@ -824,7 +824,7 @@ public:
         }
 
         const auto net4 = ipv4_network::parse(net, code, Strict);
-        if (code == error_code::NO_ERROR) {
+        if (code == error_code::no_error) {
             return ip_network(net4);
         }
         
@@ -1126,9 +1126,9 @@ public:
     template <typename T, size_t N>
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(const T(&address)[N], bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         internal::is_char_type<T>();
-        auto code = error_code::NO_ERROR;
+        auto code = error_code::no_error;
         auto result = internal::net_any_parser<ip_network>::parse(address, code, strict);
-        if (code != error_code::NO_ERROR) {
+        if (code != error_code::no_error) {
             raise_error(code, 0, address, N);
         }
         return result;
@@ -1150,15 +1150,15 @@ public:
     template <typename T, size_t N>
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(const T(&address)[N], error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
         internal::is_char_type<T>();
-        code = error_code::NO_ERROR;
+        code = error_code::no_error;
 
         const auto net4 = ipv4_network::parse(address, code, strict);
-        if (code == error_code::NO_ERROR) {
+        if (code == error_code::no_error) {
             return ip_network(net4);
         }
         
         const auto net6 = ipv6_network::parse(address, code, strict);
-        if (code == error_code::NO_ERROR) {
+        if (code == error_code::no_error) {
             return ip_network(net6);
         }
         
@@ -1283,9 +1283,9 @@ private:
     //
     // template <typename Str>
     // IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse_string(const Str& address, bool strict) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-    //     auto code = error_code::NO_ERROR;
+    //     auto code = error_code::no_error;
     //     const auto net4 = ipv4_network::parse(address, code, strict);
-    //     if (code == error_code::NO_ERROR) {
+    //     if (code == error_code::no_error) {
     //         return ip_network(net4);
     //     }
     //     return ip_network(ipv6_network::parse(address, strict));
@@ -1293,14 +1293,14 @@ private:
     //
     // template <typename Str>
     // static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse_string(const Str& address, error_code& code, bool strict) IPADDRESS_NOEXCEPT {
-    //     code = error_code::NO_ERROR;
+    //     code = error_code::no_error;
     //     const auto net4 = ipv4_network::parse(address, code, strict);
-    //     if (code == error_code::NO_ERROR) {
+    //     if (code == error_code::no_error) {
     //         return ip_network(net4);
     //     }
     //     
     //     const auto net6 = ipv6_network::parse(address, code, strict);
-    //     if (code == error_code::NO_ERROR) {
+    //     if (code == error_code::no_error) {
     //         return ip_network(net6);
     //     }
     //     
@@ -1354,7 +1354,7 @@ private:
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const char* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         const auto max_len = ipv6_address::base_max_string_len * 2 + 1;
         if (size > max_len) {
-            raise_error(error_code::STRING_IS_TOO_LONG, 0, address, size);
+            raise_error(error_code::string_is_too_long, 0, address, size);
         }
         char str[max_len + 1] = {};
         for (size_t i = 0; i < size && i < max_len; ++i) {
@@ -1376,7 +1376,7 @@ private:
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const wchar_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         const auto max_len = ipv6_address::base_max_string_len * 2 + 1;
         if (size > max_len) {
-            raise_error(error_code::STRING_IS_TOO_LONG, 0, address, size);
+            raise_error(error_code::string_is_too_long, 0, address, size);
         }
         wchar_t str[max_len + 1] = {};
         for (size_t i = 0; i < size && i < max_len; ++i) {
@@ -1398,7 +1398,7 @@ private:
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const char16_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         const auto max_len = ipv6_address::base_max_string_len * 2 + 1;
         if (size > max_len) {
-            raise_error(error_code::STRING_IS_TOO_LONG, 0, address, size);
+            raise_error(error_code::string_is_too_long, 0, address, size);
         }
         char16_t str[max_len + 1] = {};
         for (size_t i = 0; i < size && i < max_len; ++i) {
@@ -1420,7 +1420,7 @@ private:
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const char32_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         const auto max_len = ipv6_address::base_max_string_len * 2 + 1;
         if (size > max_len) {
-            raise_error(error_code::STRING_IS_TOO_LONG, 0, address, size);
+            raise_error(error_code::string_is_too_long, 0, address, size);
         }
         char32_t str[max_len + 1] = {};
         for (size_t i = 0; i < size && i < max_len; ++i) {
@@ -1475,9 +1475,9 @@ IPADDRESS_FORCE_INLINE std::istream& operator>>(std::istream& stream, IPADDRESS_
 
     std::string str;
     stream >> str;
-    IPADDRESS_NAMESPACE::error_code err = IPADDRESS_NAMESPACE::error_code::NO_ERROR;
+    IPADDRESS_NAMESPACE::error_code err = IPADDRESS_NAMESPACE::error_code::no_error;
     network = IPADDRESS_NAMESPACE::ip_network::parse(str, err, strict);
-    if (err != IPADDRESS_NAMESPACE::error_code::NO_ERROR) {
+    if (err != IPADDRESS_NAMESPACE::error_code::no_error) {
         stream.setstate(std::ios_base::failbit);
     }
     return stream;

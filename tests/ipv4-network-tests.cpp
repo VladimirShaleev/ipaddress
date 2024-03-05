@@ -22,7 +22,7 @@ static constexpr ipv4_network test_swap(const char(&str1)[N1], const char(&str2)
 
 template <size_t N>
 static constexpr error_code test_error(const char(&str)[N]) noexcept {
-    error_code err = error_code::NO_ERROR;
+    error_code err = error_code::no_error;
     ipv4_network::parse(str, err);
     return err;
 }
@@ -92,7 +92,7 @@ TEST(ipv4_network, CompileTime) {
     ASSERT_GT(net4_hash, size_t(0));
 
     constexpr auto net5_error = test_error("127.0.0.1/24");
-    ASSERT_EQ(net5_error, error_code::HAS_HOST_BITS_SET);
+    ASSERT_EQ(net5_error, error_code::has_host_bits_set);
 
     constexpr auto net_prefix = ipv4_network::parse("1.2.3.4/255.255.255.255");
     ASSERT_EQ(net_prefix, ipv4_network::parse("1.2.3.4/32"));
@@ -522,7 +522,7 @@ TEST_P(NetworkFromAddressIpv4Params, from_address) {
 
     auto expected = ipv4_network::parse(get<0>(GetParam()), strict);
 
-    error_code err = error_code::NO_ERROR;
+    error_code err = error_code::no_error;
     auto actual = ipv4_network::from_address(address, err, prefixlen, strict);
     ASSERT_EQ(actual, expected);
     ASSERT_EQ(actual.network_address(), expected.network_address());
@@ -547,9 +547,9 @@ INSTANTIATE_TEST_SUITE_P(
     ));
 
 TEST(ipv4_network, from_address_error) {
-    error_code err = error_code::NO_ERROR;
+    error_code err = error_code::no_error;
     auto actual = ipv4_network::from_address(ipv4_address::parse("127.0.0.1"), err, 24);
-    ASSERT_EQ(err, error_code::HAS_HOST_BITS_SET);
+    ASSERT_EQ(err, error_code::has_host_bits_set);
     ASSERT_EQ(actual.network_address(), ipv4_address::parse("0.0.0.0"));
     ASSERT_EQ(actual.broadcast_address(), ipv4_address::parse("0.0.0.0"));
     ASSERT_EQ(actual.netmask(), ipv4_address::parse("255.255.255.255"));
@@ -576,7 +576,7 @@ TEST_P(InvalidNetworkIpv4Params, parse) {
     auto expected_network = get<0>(GetParam());
     auto expected_error_code = get<1>(GetParam());
 
-    error_code err = error_code::NO_ERROR;
+    error_code err = error_code::no_error;
     ipv4_network::parse(expected_network, err);
     ASSERT_EQ(err, expected_error_code);
 
@@ -601,37 +601,37 @@ TEST_P(InvalidNetworkIpv4Params, parse) {
 INSTANTIATE_TEST_SUITE_P(
     ipv4_network, InvalidNetworkIpv4Params,
     Values(
-        std::make_tuple("1.2.3.4/", error_code::EMPTY_NETMASK, "empty mask in address 1.2.3.4/"),
-        std::make_tuple("1.2.3.4/33", error_code::INVALID_NETMASK, "is not a valid netmask in address 1.2.3.4/33"),
-        std::make_tuple("1.2.3.4/255.0.0.256", error_code::INVALID_NETMASK, "is not a valid netmask in address 1.2.3.4/255.0.0.256"),
-        std::make_tuple("1.2.3.4/-1", error_code::INVALID_NETMASK, "is not a valid netmask in address 1.2.3.4/-1"),
-        std::make_tuple("1.2.3.4/+1", error_code::INVALID_NETMASK, "is not a valid netmask in address 1.2.3.4/+1"),
-        std::make_tuple("1.2.3.4/ 1 ", error_code::INVALID_NETMASK, "is not a valid netmask in address 1.2.3.4/ 1 "),
-        std::make_tuple("1.2.3.4/0x1", error_code::INVALID_NETMASK, "is not a valid netmask in address 1.2.3.4/0x1"),
-        std::make_tuple("1.2.3.4/254.254.255.256", error_code::INVALID_NETMASK, "is not a valid netmask in address 1.2.3.4/254.254.255.256"),
-        std::make_tuple("1.2.3.4/1.a.2.3", error_code::INVALID_NETMASK, "is not a valid netmask in address 1.2.3.4/1.a.2.3"),
-        std::make_tuple("1.1.1.1/254.xyz.2.3", error_code::INVALID_NETMASK, "is not a valid netmask in address 1.1.1.1/254.xyz.2.3"),
-        std::make_tuple("1.1.1.1/pudding", error_code::INVALID_NETMASK, "is not a valid netmask in address 1.1.1.1/pudding"),
-        std::make_tuple("1.1.1.1/::", error_code::INVALID_NETMASK, "is not a valid netmask in address 1.1.1.1/::"),
+        std::make_tuple("1.2.3.4/", error_code::empty_netmask, "empty mask in address 1.2.3.4/"),
+        std::make_tuple("1.2.3.4/33", error_code::invalid_netmask, "is not a valid netmask in address 1.2.3.4/33"),
+        std::make_tuple("1.2.3.4/255.0.0.256", error_code::invalid_netmask, "is not a valid netmask in address 1.2.3.4/255.0.0.256"),
+        std::make_tuple("1.2.3.4/-1", error_code::invalid_netmask, "is not a valid netmask in address 1.2.3.4/-1"),
+        std::make_tuple("1.2.3.4/+1", error_code::invalid_netmask, "is not a valid netmask in address 1.2.3.4/+1"),
+        std::make_tuple("1.2.3.4/ 1 ", error_code::invalid_netmask, "is not a valid netmask in address 1.2.3.4/ 1 "),
+        std::make_tuple("1.2.3.4/0x1", error_code::invalid_netmask, "is not a valid netmask in address 1.2.3.4/0x1"),
+        std::make_tuple("1.2.3.4/254.254.255.256", error_code::invalid_netmask, "is not a valid netmask in address 1.2.3.4/254.254.255.256"),
+        std::make_tuple("1.2.3.4/1.a.2.3", error_code::invalid_netmask, "is not a valid netmask in address 1.2.3.4/1.a.2.3"),
+        std::make_tuple("1.1.1.1/254.xyz.2.3", error_code::invalid_netmask, "is not a valid netmask in address 1.1.1.1/254.xyz.2.3"),
+        std::make_tuple("1.1.1.1/pudding", error_code::invalid_netmask, "is not a valid netmask in address 1.1.1.1/pudding"),
+        std::make_tuple("1.1.1.1/::", error_code::invalid_netmask, "is not a valid netmask in address 1.1.1.1/::"),
 
-        std::make_tuple("1.2.3.4/255.255.255.127", error_code::NETMASK_PATTERN_MIXES_ZEROES_AND_ONES, "netmask pattern mixes zeroes & ones in address 1.2.3.4/255.255.255.127"),
-        std::make_tuple("1.2.3.4/255.255.255.251", error_code::NETMASK_PATTERN_MIXES_ZEROES_AND_ONES, "netmask pattern mixes zeroes & ones in address 1.2.3.4/255.255.255.251"),
-        std::make_tuple("1.1.1.1/240.255.0.0", error_code::NETMASK_PATTERN_MIXES_ZEROES_AND_ONES, "netmask pattern mixes zeroes & ones in address 1.1.1.1/240.255.0.0"),
-        std::make_tuple("1.1.1.1/255.254.128.0", error_code::NETMASK_PATTERN_MIXES_ZEROES_AND_ONES, "netmask pattern mixes zeroes & ones in address 1.1.1.1/255.254.128.0"),
-        std::make_tuple("1.1.1.1/0.1.127.255", error_code::NETMASK_PATTERN_MIXES_ZEROES_AND_ONES, "netmask pattern mixes zeroes & ones in address 1.1.1.1/0.1.127.255"),
+        std::make_tuple("1.2.3.4/255.255.255.127", error_code::netmask_pattern_mixes_zeroes_and_ones, "netmask pattern mixes zeroes & ones in address 1.2.3.4/255.255.255.127"),
+        std::make_tuple("1.2.3.4/255.255.255.251", error_code::netmask_pattern_mixes_zeroes_and_ones, "netmask pattern mixes zeroes & ones in address 1.2.3.4/255.255.255.251"),
+        std::make_tuple("1.1.1.1/240.255.0.0", error_code::netmask_pattern_mixes_zeroes_and_ones, "netmask pattern mixes zeroes & ones in address 1.1.1.1/240.255.0.0"),
+        std::make_tuple("1.1.1.1/255.254.128.0", error_code::netmask_pattern_mixes_zeroes_and_ones, "netmask pattern mixes zeroes & ones in address 1.1.1.1/255.254.128.0"),
+        std::make_tuple("1.1.1.1/0.1.127.255", error_code::netmask_pattern_mixes_zeroes_and_ones, "netmask pattern mixes zeroes & ones in address 1.1.1.1/0.1.127.255"),
 
-        std::make_tuple("1.2.3.4/24", error_code::HAS_HOST_BITS_SET, "has host bits set in address 1.2.3.4/24"),
-        std::make_tuple("1.2.3.4//", error_code::ONLY_ONE_SLASH_PERMITTED, "only one '/' permitted in address 1.2.3.4//"),
-        std::make_tuple("1.2.3.4//32", error_code::ONLY_ONE_SLASH_PERMITTED, "only one '/' permitted in address 1.2.3.4//32"),
-        std::make_tuple("1.2.3.4/32/24", error_code::ONLY_ONE_SLASH_PERMITTED, "only one '/' permitted in address 1.2.3.4/32/24"),
+        std::make_tuple("1.2.3.4/24", error_code::has_host_bits_set, "has host bits set in address 1.2.3.4/24"),
+        std::make_tuple("1.2.3.4//", error_code::only_one_slash_permitted, "only one '/' permitted in address 1.2.3.4//"),
+        std::make_tuple("1.2.3.4//32", error_code::only_one_slash_permitted, "only one '/' permitted in address 1.2.3.4//32"),
+        std::make_tuple("1.2.3.4/32/24", error_code::only_one_slash_permitted, "only one '/' permitted in address 1.2.3.4/32/24"),
 
-        std::make_tuple("/", error_code::EMPTY_NETMASK, "empty mask in address /"),
-        std::make_tuple("/8", error_code::EMPTY_ADDRESS, "address cannot be empty"),
-        std::make_tuple("bogus", error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 0 of address bogus has invalid symbol"),
-        std::make_tuple("example.com", error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 0 of address example.com has invalid symbol"),
-        std::make_tuple("10/8", error_code::EXPECTED_4_OCTETS, "expected 4 octets in 10/8"),
-        std::make_tuple("::1.2.3.4", error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 0 of address ::1.2.3.4 has invalid symbol"),
-        std::make_tuple("1.2.3.256", error_code::OCTET_EXCEEDED_255, "octet 0 of address 1.2.3.256 exceeded 255")
+        std::make_tuple("/", error_code::empty_netmask, "empty mask in address /"),
+        std::make_tuple("/8", error_code::empty_address, "address cannot be empty"),
+        std::make_tuple("bogus", error_code::octet_has_invalid_symbol, "in octet 0 of address bogus has invalid symbol"),
+        std::make_tuple("example.com", error_code::octet_has_invalid_symbol, "in octet 0 of address example.com has invalid symbol"),
+        std::make_tuple("10/8", error_code::expected_4_octets, "expected 4 octets in 10/8"),
+        std::make_tuple("::1.2.3.4", error_code::octet_has_invalid_symbol, "in octet 0 of address ::1.2.3.4 has invalid symbol"),
+        std::make_tuple("1.2.3.256", error_code::octet_exceeded_255, "octet 0 of address 1.2.3.256 exceeded 255")
     ));
 
 TEST(ipv4_network, Comparison) {
@@ -1063,7 +1063,7 @@ TEST_P(SupernetErrorIpv4NetworkParams, supernet) {
     const auto prefixlen_diff = std::get<1>(GetParam());
     const auto new_prefix = std::get<2>(GetParam());
 
-    error_code err = error_code::NO_ERROR;
+    error_code err = error_code::no_error;
     auto actural = network.supernet(err, prefixlen_diff, new_prefix);
     ASSERT_EQ(err, expected_error);
     ASSERT_EQ(actural.network_address(), ipv4_address::parse("0.0.0.0"));
@@ -1089,9 +1089,9 @@ TEST_P(SupernetErrorIpv4NetworkParams, supernet) {
 INSTANTIATE_TEST_SUITE_P(
     ipv4_network, SupernetErrorIpv4NetworkParams,
     Values(
-        std::make_tuple("192.0.2.0/24", 1, 25, error_code::NEW_PREFIX_MUST_BE_SHORTER, "new prefix must be shorter"),
-        std::make_tuple("192.0.2.0/24", 2, 23, error_code::CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX, "cannot set prefixlen_diff and new_prefix"),
-        std::make_tuple("192.0.2.0/24", 25, nullptr, error_code::INVALID_PREFIXLEN_DIFF, "invalid prefixlen_diff")
+        std::make_tuple("192.0.2.0/24", 1, 25, error_code::new_prefix_must_be_shorter, "new prefix must be shorter"),
+        std::make_tuple("192.0.2.0/24", 2, 23, error_code::cannot_set_prefixlen_diff_and_new_prefix, "cannot set prefixlen_diff and new_prefix"),
+        std::make_tuple("192.0.2.0/24", 25, nullptr, error_code::invalid_prefixlen_diff, "invalid prefixlen_diff")
     ));
 
 using SubnetsIpv4NetworkParams = TestWithParam<std::tuple<const char*, size_t, optional<size_t>, std::vector<const char*>>>;
@@ -1163,7 +1163,7 @@ TEST_P(SubnetsErrorIpv4NetworkParams, subnets) {
     const auto prefixlen_diff = std::get<1>(GetParam());
     const auto new_prefix = std::get<2>(GetParam());
 
-    error_code err = error_code::NO_ERROR;
+    error_code err = error_code::no_error;
     const auto actual = network.subnets(err, prefixlen_diff, new_prefix);
     ASSERT_EQ(err, expected_error);
     ASSERT_TRUE(actual.empty());
@@ -1183,9 +1183,9 @@ TEST_P(SubnetsErrorIpv4NetworkParams, subnets) {
 INSTANTIATE_TEST_SUITE_P(
     ipv4_network, SubnetsErrorIpv4NetworkParams,
     Values(
-        std::make_tuple("192.0.2.0/24", 1, 23, error_code::NEW_PREFIX_MUST_BE_LONGER, "new prefix must be longer"),
-        std::make_tuple("192.0.2.0/24", 2, 25, error_code::CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX, "cannot set prefixlen_diff and new_prefix"),
-        std::make_tuple("192.0.2.0/24", 1, 33, error_code::INVALID_PREFIXLEN_DIFF, "invalid prefixlen_diff")
+        std::make_tuple("192.0.2.0/24", 1, 23, error_code::new_prefix_must_be_longer, "new prefix must be longer"),
+        std::make_tuple("192.0.2.0/24", 2, 25, error_code::cannot_set_prefixlen_diff_and_new_prefix, "cannot set prefixlen_diff and new_prefix"),
+        std::make_tuple("192.0.2.0/24", 1, 33, error_code::invalid_prefixlen_diff, "invalid prefixlen_diff")
     ));
 
 using AddressExcludeIpv4NetworkParams = TestWithParam<std::tuple<const char*, const char*, std::vector<const char*>>>;
@@ -1223,7 +1223,7 @@ TEST_P(AddressExcludeErrorIpv4NetworkParams, address_exclude) {
     const auto network1 = ipv4_network::parse(std::get<0>(GetParam()));
     const auto network2 = ipv4_network::parse(std::get<1>(GetParam()));
     
-    error_code err = error_code::NO_ERROR;
+    error_code err = error_code::no_error;
     const auto actual = network1.address_exclude(network2, err);
     ASSERT_EQ(err, expected_error);
     ASSERT_TRUE(actual.empty());
@@ -1243,5 +1243,5 @@ TEST_P(AddressExcludeErrorIpv4NetworkParams, address_exclude) {
 INSTANTIATE_TEST_SUITE_P(
     ipv4_network, AddressExcludeErrorIpv4NetworkParams,
     Values(
-        std::make_tuple("192.168.1.128/30", "192.168.1.0/24", error_code::NOT_CONTAINED_NETWORK, "network is not a subnet of other")
+        std::make_tuple("192.168.1.128/30", "192.168.1.0/24", error_code::not_contained_network, "network is not a subnet of other")
     ));

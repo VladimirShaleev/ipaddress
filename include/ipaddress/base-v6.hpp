@@ -62,26 +62,26 @@ protected:
     template <typename Iter>
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<Ext> ip_from_string(Iter begin, Iter end, error_code& code, int& parts_count) IPADDRESS_NOEXCEPT {
         if (begin == end) {
-            code = error_code::EMPTY_ADDRESS;
+            code = error_code::empty_address;
             return {};
         }
 
         auto ip_and_scope = split_scope_id(begin, end, code);
         end = ip_and_scope.first;
 
-        if (code != error_code::NO_ERROR) {
+        if (code != error_code::no_error) {
             return {};
         }
 
         const auto parts = split_parts(begin, end, parts_count, code);
 
-        if (code != error_code::NO_ERROR) {
+        if (code != error_code::no_error) {
             return {};
         }
 
         const auto result = get_parts_bound(parts, parts_count, code);
 
-        if (code != error_code::NO_ERROR) {
+        if (code != error_code::no_error) {
             return {};
         }
 
@@ -234,13 +234,13 @@ protected:
             if (c >= '0' && c <= '9') {
                 prefixlen = prefixlen * 10 + (c - '0');
             } else {
-                code = error_code::INVALID_NETMASK;
+                code = error_code::invalid_netmask;
                 return std::make_tuple(ip_address_base<Ext>(), 0);
             }
         }
         
         if (prefixlen > base_max_prefixlen) {
-            code = error_code::INVALID_NETMASK;
+            code = error_code::invalid_netmask;
             return std::make_tuple(ip_address_base<Ext>(), 0);
         }
         
@@ -261,7 +261,7 @@ protected:
 
         if (bytes != bytes_address) {
             if (strict) {
-                code = error_code::HAS_HOST_BITS_SET;
+                code = error_code::has_host_bits_set;
                 return ip_address_base<Ext>();
             } else {
                 return ip_address_base<Ext>(bytes);
@@ -283,11 +283,11 @@ private:
                 end_ip = it + 1;
             } else if (scope) {
                 if (index > IPADDRESS_IPV6_SCOPE_MAX_LENGTH - 1) {
-                    error = error_code::SCOPE_ID_IS_TOO_LONG;
+                    error = error_code::scope_id_is_too_long;
                     return std::make_pair(end_ip, make_fixed_string(scope_id));
                 }
                 if (c == '%' || c == '/') {
-                    error = error_code::INVALID_SCOPE_ID;
+                    error = error_code::invalid_scope_id;
                     return std::make_pair(end_ip, make_fixed_string(scope_id));
                 }
                 scope_id[index++] = c;
@@ -296,7 +296,7 @@ private:
             }
         }
         if (scope && scope_id[0] == '\0') {
-            error = error_code::INVALID_SCOPE_ID;
+            error = error_code::invalid_scope_id;
             return std::make_pair(end_ip, make_fixed_string(scope_id));
         }
         return std::make_pair(end_ip, make_fixed_string(scope_id));
@@ -330,20 +330,20 @@ private:
             }
             if (parts_count > _max_parts) {
                 error = has_double_colon
-                    ? error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON 
-                    : error_code::MOST_8_COLONS_PERMITTED;
+                    ? error_code::expected_at_most_7_other_parts_with_double_colon 
+                    : error_code::most_8_colons_permitted;
                 return empty_parts;
             }
             if (c != ':') {
                 if (symbol > 15) {
-                    error = error_code::PART_IS_MORE_4_CHARS;
+                    error = error_code::part_is_more_4_chars;
                     return empty_parts;
                 }
                 last_part[symbol++] = c;
                 last_part[symbol] = '\0';
             } else {
                 if (symbol > 4) {
-                    error = error_code::PART_IS_MORE_4_CHARS;
+                    error = error_code::part_is_more_4_chars;
                     return empty_parts;
                 }
 
@@ -361,11 +361,11 @@ private:
     
         if (parts_count > _max_parts) {
             if (parts[0][0] == '\0' && parts[1][0] != '\0') {
-                error = error_code::LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON;
+                error = error_code::leading_colon_only_permitted_as_part_of_double_colon;
             } else if (last_part[0] == '\0') {
-                error = error_code::TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON;
+                error = error_code::trailing_colon_only_permitted_as_part_of_double_colon;
             } else {
-                error = error_code::MOST_8_COLONS_PERMITTED;
+                error = error_code::most_8_colons_permitted;
             }
             return empty_parts;
         }
@@ -381,13 +381,13 @@ private:
 
         if (has_ipv4) {
             if (parts_count + 1 >= _max_parts) {
-                error = error_code::MOST_8_COLONS_PERMITTED;
+                error = error_code::most_8_colons_permitted;
                 return empty_parts;
             }
 
             auto ipv4 = ipv4_address::parse(last_part, error).to_uint();
 
-            if (error != error_code::NO_ERROR) {
+            if (error != error_code::no_error) {
                 return empty_parts;
             }
 
@@ -395,7 +395,7 @@ private:
             to_hex(uint16_t(ipv4 & 0xFFFF), parts[parts_count++]);
         } else {
             if (symbol > 4) {
-                error = error_code::PART_IS_MORE_4_CHARS;
+                error = error_code::part_is_more_4_chars;
                 return empty_parts;
             }
             
@@ -407,7 +407,7 @@ private:
         }
 
         if (parts_count < _min_parts) {
-            error = error_code::LEAST_3_PARTS;
+            error = error_code::least_3_parts;
             return empty_parts;
         }
 
@@ -428,7 +428,7 @@ private:
         for (size_t i = 1; i < parts_count - 1; ++i) {
             if (parts[i].empty()) {
                 if (skip) {
-                    error = error_code::MOST_ONE_DOUBLE_COLON_PERMITTED;
+                    error = error_code::most_one_double_colon_permitted;
                     return { 0, 0, 0 };
                 }
                 skip = i;
@@ -441,14 +441,14 @@ private:
 
             if (parts[0].empty()) {
                 if (--parts_hi) {
-                    error = error_code::LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON;
+                    error = error_code::leading_colon_only_permitted_as_part_of_double_colon;
                     return { 0, 0, 0 };
                 }
             }
 
             if (parts[parts_count - 1].empty()) {
                 if (--parts_lo) {
-                    error = error_code::TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON;
+                    error = error_code::trailing_colon_only_permitted_as_part_of_double_colon;
                     return { 0, 0, 0 };
                 }
             }
@@ -456,24 +456,24 @@ private:
             const auto parts_skipped = _max_parts - (parts_hi + parts_lo);
             
             if (parts_skipped < 1) {
-                error = error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON;
+                error = error_code::expected_at_most_7_other_parts_with_double_colon;
                 return { 0, 0, 0 };
             }
 
             return { parts_hi, parts_lo, parts_skipped };
         } else {
             if (parts_count != _max_parts) {
-                error = error_code::EXACTLY_8_PARTS_EXPECTED_WITHOUT_DOUBLE_COLON;
+                error = error_code::exactly_8_parts_expected_without_double_colon;
                 return { 0, 0, 0 };
             }
 
             if (parts[0].empty()) {
-                error = error_code::LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON;
+                error = error_code::leading_colon_only_permitted_as_part_of_double_colon;
                 return { 0, 0, 0 };
             }
 
             if (parts[parts_count - 1].empty()) {
-                error = error_code::TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON;
+                error = error_code::trailing_colon_only_permitted_as_part_of_double_colon;
                 return { 0, 0, 0 };
             }
 
@@ -490,7 +490,7 @@ private:
             result[index++] = uint8_t(part >> 8);
             result[index++] = uint8_t(part & 0xFF);
 
-            if (error != error_code::NO_ERROR) {
+            if (error != error_code::no_error) {
                 return {};
             }
         }
@@ -502,7 +502,7 @@ private:
             result[index++] = uint8_t(part >> 8);
             result[index++] = uint8_t(part & 0xFF);
 
-            if (error != error_code::NO_ERROR) {
+            if (error != error_code::no_error) {
                 return {};
             }
         }
@@ -521,7 +521,7 @@ private:
             } else if (c >= 'a' && c <= 'f') {
                 value += (c - 87) * power;
             } else {
-                error = error_code::PART_HAS_INVALID_SYMBOL;
+                error = error_code::part_has_invalid_symbol;
                 return 0;
             }
         }
