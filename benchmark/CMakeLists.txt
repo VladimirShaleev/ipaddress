@@ -15,11 +15,11 @@ set(FETCHCONTENT_QUIET FALSE)
 FetchContent_Declare(
     Boost
     URL https://github.com/boostorg/boost/releases/download/boost-1.84.0/boost-1.84.0.7z
-    URL_HASH MD5=5b8e7be1a6454fef772423800c98674d
+    URL_MD5 5b8e7be1a6454fef772423800c98674d
+    DOWNLOAD_EXTRACT_TIMESTAMP ON
     GIT_PROGRESS TRUE   
 )
-#set(BOOST_INCLUDE_LIBRARIES asio)
-#set(BOOST_ENABLE_CMAKE ON)
+set(BOOST_INCLUDE_LIBRARIES asio)
 FetchContent_MakeAvailable(Boost)
 
 if(IPADDRESS_CLANG_TIDY)

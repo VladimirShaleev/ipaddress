@@ -36,15 +36,15 @@ You can install in one of the following ways
 
 #### Vcpkg
 
-**The package has not yet been published**
+*The package has not yet been published*
 
 #### Conan
 
-**The package has not yet been published**
+*The package has not yet been published*
 
 #### Homebrew
 
-**The package has not yet been published**
+*The package has not yet been published*
 
 #### Ubuntu PPA
 

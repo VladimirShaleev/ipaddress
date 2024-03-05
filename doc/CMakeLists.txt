@@ -8,14 +8,14 @@ else()
   FetchContent_Declare(
     doxygen-awesome-css
     GIT_REPOSITORY https://github.com/jothepro/doxygen-awesome-css.git
-    GIT_TAG v2.3.1
+    GIT_TAG df88fe4fdd97714fadfd3ef17de0b4401f804052 # v2.3.1
   )
   FetchContent_MakeAvailable(doxygen-awesome-css)
 
   FetchContent_Declare(
     doxygen-cards
     GIT_REPOSITORY https://github.com/micro-os-plus/build-helper-xpack.git
-    GIT_TAG v2.14.1
+    GIT_TAG 91a9d718cfaf185d571addfa0c026ea55da3b0a6 # v2.14.1
   )
   FetchContent_MakeAvailable(doxygen-cards)
 

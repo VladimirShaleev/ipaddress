@@ -73,7 +73,7 @@ This is what the behavior will be if you pass this flag.
 using namespace ipaddress;
  
 int main() {
-    //try {
+    // try {
         auto empty = ipv4_address::parse("192.257.2.0");
         std::cout << empty << std::endl;
     // } catch (const parse_error& exc) { // exception will not be thrown
@@ -110,11 +110,11 @@ int main() {
 </div>
 
 <div class="card">
-  <a href="build.html">
+  <a href="benchmark.html">
   <div class="card_container">
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Arrow / Arrow_Circle_Right"> <path id="Vector" d="M13 15L16 12M16 12L13 9M16 12H8M21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21C16.9706 21 21 16.9706 21 12Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g></svg>
-    <h2>Build Guide</h2>
-    <p>Learn how to build the library, unit tests and documentation locally for development purposes.</p>
+    <h2>Benchmark</h2>
+    <p>Comparison of IP address parsing performance with library boost asio and sockets API.</p>
   </div>
   </a>
 </div>

@@ -1,7 +1,7 @@
 
 #ifdef _WIN32
 #  define WIN32_LEAN_AND_MEAN 
-#  include <WinSock2.h>
+#  include <Windows.h>
 #else
 #endif
 
@@ -63,25 +63,25 @@ BENCHMARK_DEFINE_F(Ipv4AddressFixture, BM_parse_ipaddress)(benchmark::State& sta
         benchmark::DoNotOptimize(ipaddress::ipv4_address::parse(str).to_uint());
     }
 }
-BENCHMARK_REGISTER_F(Ipv4AddressFixture, BM_parse_ipaddress)->Apply(Arguments);
+BENCHMARK_REGISTER_F(Ipv4AddressFixture, BM_parse_ipaddress)->Apply(Arguments); // NOLINT
 
 BENCHMARK_DEFINE_F(Ipv4AddressFixture, BM_parse_inet_pton)(benchmark::State& state) {
     for (auto _ : state) {
-        in_addr ip_addr; 
+        in_addr ip_addr{}; 
         if (inet_pton(AF_INET, str.data(), &ip_addr) != 1) {
             state.SkipWithError("parse ip failed");
         }
         benchmark::DoNotOptimize(uint32_t(ntohl(ip_addr.s_addr)));
     }
 }
-BENCHMARK_REGISTER_F(Ipv4AddressFixture, BM_parse_inet_pton)->Apply(Arguments);
+BENCHMARK_REGISTER_F(Ipv4AddressFixture, BM_parse_inet_pton)->Apply(Arguments); // NOLINT
 
 BENCHMARK_DEFINE_F(Ipv4AddressFixture, BM_parse_boost)(benchmark::State& state) {
     for (auto _ : state) {
         benchmark::DoNotOptimize(boost::asio::ip::make_address_v4(str).to_uint());
     }
 }
-BENCHMARK_REGISTER_F(Ipv4AddressFixture, BM_parse_boost)->Apply(Arguments);
+BENCHMARK_REGISTER_F(Ipv4AddressFixture, BM_parse_boost)->Apply(Arguments); // NOLINT
 
 // IPv6 address parser tests
 // 
@@ -90,22 +90,22 @@ BENCHMARK_DEFINE_F(Ipv6AddressFixture, BM_parse_ipaddress)(benchmark::State& sta
         benchmark::DoNotOptimize(ipaddress::ipv6_address::parse(str));
     }
 }
-BENCHMARK_REGISTER_F(Ipv6AddressFixture, BM_parse_ipaddress)->Apply(Arguments);
+BENCHMARK_REGISTER_F(Ipv6AddressFixture, BM_parse_ipaddress)->Apply(Arguments); // NOLINT
 
 BENCHMARK_DEFINE_F(Ipv6AddressFixture, BM_parse_inet_pton)(benchmark::State& state) {
     for (auto _ : state) {
-        in6_addr ip_addr; 
+        in6_addr ip_addr{}; 
         if (inet_pton(AF_INET6, str.data(), &ip_addr) != 1) {
             state.SkipWithError("parse ip failed");
         }
         benchmark::DoNotOptimize(ip_addr.s6_addr);
     }
 }
-BENCHMARK_REGISTER_F(Ipv6AddressFixture, BM_parse_inet_pton)->Apply(Arguments);
+BENCHMARK_REGISTER_F(Ipv6AddressFixture, BM_parse_inet_pton)->Apply(Arguments); // NOLINT
 
 BENCHMARK_DEFINE_F(Ipv6AddressFixture, BM_parse_boost)(benchmark::State& state) {
     for (auto _ : state) {
         benchmark::DoNotOptimize(boost::asio::ip::make_address_v6(str));
     }
 }
-BENCHMARK_REGISTER_F(Ipv6AddressFixture, BM_parse_boost)->Apply(Arguments);
+BENCHMARK_REGISTER_F(Ipv6AddressFixture, BM_parse_boost)->Apply(Arguments); // NOLINT
