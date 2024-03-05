@@ -1,8 +1,14 @@
+
+#ifdef _WIN32
+#  define WIN32_LEAN_AND_MEAN 
+#  include <WinSock2.h>
+#else
+#endif
+
 #include <benchmark/benchmark.h>
 
 #include <ipaddress/ipaddress.hpp>
 #include <boost/asio.hpp>
-#include <WinSock2.h>
 
 class Ipv4AddressFixture : public benchmark::Fixture {
 public:
