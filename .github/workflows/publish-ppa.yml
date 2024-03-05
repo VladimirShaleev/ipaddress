@@ -2,9 +2,8 @@ name: Publish to Launchpad PPA
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    tags:
+      - v*
 
 jobs:
   deploy:
@@ -21,7 +20,7 @@ jobs:
         shell: bash
         run: |
           echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
-          echo "version=0.0.17" >> "$GITHUB_OUTPUT"
+          echo "version=${{ github.ref_name }}" >> "$GITHUB_OUTPUT"
 
       - name: Configure CMake
         run: >

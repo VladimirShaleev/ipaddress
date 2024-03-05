@@ -2,7 +2,7 @@
 WarningsAsErrors: '*'
 HeaderFilterRegex: '.*'
 AnalyzeTemporaryDtors: false
-FormatStyle: file
+FormatStyle: none
 Checks: 'bugprone-argument-comment,
          bugprone-assert-side-effect,
          bugprone-assignment-in-if-condition,
