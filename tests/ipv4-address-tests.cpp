@@ -14,7 +14,7 @@ using namespace ipaddress;
 
 template <size_t N>
 static constexpr error_code get_parse_error(const char(&address)[N]) noexcept {
-    error_code err = error_code::NoError;
+    error_code err = error_code::NO_ERROR;
     ipv4_address::parse(address, err);
     return err;
 }
@@ -85,7 +85,7 @@ TEST(ipv4_address, CompileTime) {
     ASSERT_EQ(ip5_byte_3, 0x01);
 
     constexpr auto err = get_parse_error("127.0.0.256");
-    ASSERT_EQ(err, error_code::OctetExceeded255);
+    ASSERT_EQ(err, error_code::OCTET_EXCEEDED_255);
 
     constexpr auto ip6 = ipv4_address::from_uint(0x7F000002);
     constexpr auto ip6_uint32 = ip6.to_uint();
@@ -303,7 +303,7 @@ TEST_P(InvalidAddressIpv4Params, parse) {
     auto expected_address = get<0>(GetParam());
     auto expected_error_code = get<1>(GetParam());
 
-    error_code err = error_code::NoError;
+    error_code err = error_code::NO_ERROR;
     ipv4_address::parse(expected_address, err);
     ASSERT_EQ(err, expected_error_code);
 
@@ -328,55 +328,55 @@ TEST_P(InvalidAddressIpv4Params, parse) {
 INSTANTIATE_TEST_SUITE_P(
     ipv4_address, InvalidAddressIpv4Params,
     testing::Values(
-        std::make_tuple("", error_code::EmptyAddress, "address cannot be empty"),
+        std::make_tuple("", error_code::EMPTY_ADDRESS, "address cannot be empty"),
 
-        std::make_tuple("127",             error_code::Expected4Octets, "expected 4 octets in 127"),
-        std::make_tuple("127.0",           error_code::Expected4Octets, "expected 4 octets in 127.0"),
-        std::make_tuple("127.0.0",         error_code::Expected4Octets, "expected 4 octets in 127.0.0"),
-        std::make_tuple("42.42.42.42.42",  error_code::Expected4Octets, "expected 4 octets in 42.42.42.42.42"),
-        std::make_tuple("192.168.0.1.com", error_code::Expected4Octets, "expected 4 octets in 192.168.0.1.com"),
-        std::make_tuple("42.42.42.42...",  error_code::Expected4Octets, "expected 4 octets in 42.42.42.42..."),
+        std::make_tuple("127",             error_code::EXPECTED_4_OCTETS, "expected 4 octets in 127"),
+        std::make_tuple("127.0",           error_code::EXPECTED_4_OCTETS, "expected 4 octets in 127.0"),
+        std::make_tuple("127.0.0",         error_code::EXPECTED_4_OCTETS, "expected 4 octets in 127.0.0"),
+        std::make_tuple("42.42.42.42.42",  error_code::EXPECTED_4_OCTETS, "expected 4 octets in 42.42.42.42.42"),
+        std::make_tuple("192.168.0.1.com", error_code::EXPECTED_4_OCTETS, "expected 4 octets in 192.168.0.1.com"),
+        std::make_tuple("42.42.42.42...",  error_code::EXPECTED_4_OCTETS, "expected 4 octets in 42.42.42.42..."),
 
-        std::make_tuple("...42.42.42.42", error_code::EmptyCctet, "empty octet 0 in address ...42.42.42.42"),
-        std::make_tuple("42..42.42.42",   error_code::EmptyCctet, "empty octet 1 in address 42..42.42.42"),
-        std::make_tuple("42.42..42.42",   error_code::EmptyCctet, "empty octet 2 in address 42.42..42.42"),
-        std::make_tuple("42.42.42..42",   error_code::EmptyCctet, "empty octet 3 in address 42.42.42..42"),
-        std::make_tuple("42.42..42",      error_code::EmptyCctet, "empty octet 2 in address 42.42..42"),
-        std::make_tuple(".42.42.42.42",   error_code::EmptyCctet, "empty octet 0 in address .42.42.42.42"),
-        std::make_tuple(".",              error_code::EmptyCctet, "empty octet 0 in address ."),
-        std::make_tuple("42..42.42",      error_code::EmptyCctet, "empty octet 1 in address 42..42.42"),
-        std::make_tuple("...",            error_code::EmptyCctet, "empty octet 0 in address ..."),
-        std::make_tuple("127.0.0.",       error_code::EmptyCctet, "empty octet 3 in address 127.0.0."),
+        std::make_tuple("...42.42.42.42", error_code::EMPTY_OCTET, "empty octet 0 in address ...42.42.42.42"),
+        std::make_tuple("42..42.42.42",   error_code::EMPTY_OCTET, "empty octet 1 in address 42..42.42.42"),
+        std::make_tuple("42.42..42.42",   error_code::EMPTY_OCTET, "empty octet 2 in address 42.42..42.42"),
+        std::make_tuple("42.42.42..42",   error_code::EMPTY_OCTET, "empty octet 3 in address 42.42.42..42"),
+        std::make_tuple("42.42..42",      error_code::EMPTY_OCTET, "empty octet 2 in address 42.42..42"),
+        std::make_tuple(".42.42.42.42",   error_code::EMPTY_OCTET, "empty octet 0 in address .42.42.42.42"),
+        std::make_tuple(".",              error_code::EMPTY_OCTET, "empty octet 0 in address ."),
+        std::make_tuple("42..42.42",      error_code::EMPTY_OCTET, "empty octet 1 in address 42..42.42"),
+        std::make_tuple("...",            error_code::EMPTY_OCTET, "empty octet 0 in address ..."),
+        std::make_tuple("127.0.0.",       error_code::EMPTY_OCTET, "empty octet 3 in address 127.0.0."),
 
-        std::make_tuple("0x0a.0x0a.0x0a.0x0a", error_code::OctetHasInvalidSymbol, "in octet 0 of address 0x0a.0x0a.0x0a.0x0a has invalid symbol"),
-        std::make_tuple("0xa.0x0a.0x0a.0x0a",  error_code::OctetHasInvalidSymbol, "in octet 0 of address 0xa.0x0a.0x0a.0x0a has invalid symbol"),
-        std::make_tuple("42.42.42.-0",         error_code::OctetHasInvalidSymbol, "in octet 3 of address 42.42.42.-0 has invalid symbol"),
-        std::make_tuple("42.42.42.+0",         error_code::OctetHasInvalidSymbol, "in octet 3 of address 42.42.42.+0 has invalid symbol"),
-        std::make_tuple("42.42.42.-42",        error_code::OctetHasInvalidSymbol, "in octet 3 of address 42.42.42.-42 has invalid symbol"),
-        std::make_tuple("+1.+2.+3.4",          error_code::OctetHasInvalidSymbol, "in octet 0 of address +1.+2.+3.4 has invalid symbol"),
-        std::make_tuple("1.2.3.4e0",           error_code::OctetHasInvalidSymbol, "in octet 3 of address 1.2.3.4e0 has invalid symbol"),
-        std::make_tuple("1.2.3.4::",           error_code::OctetHasInvalidSymbol, "in octet 3 of address 1.2.3.4:: has invalid symbol"),
-        std::make_tuple("1.a.2.3",             error_code::OctetHasInvalidSymbol, "in octet 1 of address 1.a.2.3 has invalid symbol"),
-        std::make_tuple("127.0.0.1/24",        error_code::OctetHasInvalidSymbol, "in octet 3 of address 127.0.0.1/24 has invalid symbol"),
+        std::make_tuple("0x0a.0x0a.0x0a.0x0a", error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 0 of address 0x0a.0x0a.0x0a.0x0a has invalid symbol"),
+        std::make_tuple("0xa.0x0a.0x0a.0x0a",  error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 0 of address 0xa.0x0a.0x0a.0x0a has invalid symbol"),
+        std::make_tuple("42.42.42.-0",         error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 3 of address 42.42.42.-0 has invalid symbol"),
+        std::make_tuple("42.42.42.+0",         error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 3 of address 42.42.42.+0 has invalid symbol"),
+        std::make_tuple("42.42.42.-42",        error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 3 of address 42.42.42.-42 has invalid symbol"),
+        std::make_tuple("+1.+2.+3.4",          error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 0 of address +1.+2.+3.4 has invalid symbol"),
+        std::make_tuple("1.2.3.4e0",           error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 3 of address 1.2.3.4e0 has invalid symbol"),
+        std::make_tuple("1.2.3.4::",           error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 3 of address 1.2.3.4:: has invalid symbol"),
+        std::make_tuple("1.a.2.3",             error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 1 of address 1.a.2.3 has invalid symbol"),
+        std::make_tuple("127.0.0.1/24",        error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 3 of address 127.0.0.1/24 has invalid symbol"),
         
-        std::make_tuple("1271.0.0.1",   error_code::OctetMore3Characters, "in octet 0 of address 1271.0.0.1 more 3 characters"),
-        std::make_tuple("127.1271.0.1", error_code::OctetMore3Characters, "in octet 1 of address 127.1271.0.1 more 3 characters"),
-        std::make_tuple("127.0.1271.1", error_code::OctetMore3Characters, "in octet 2 of address 127.0.1271.1 more 3 characters"),
-        std::make_tuple("127.0.0.1271", error_code::OctetMore3Characters, "in octet 3 of address 127.0.0.1271 more 3 characters"),
+        std::make_tuple("1271.0.0.1",   error_code::OCTET_MORE_3_CHARACTERS, "in octet 0 of address 1271.0.0.1 more 3 characters"),
+        std::make_tuple("127.1271.0.1", error_code::OCTET_MORE_3_CHARACTERS, "in octet 1 of address 127.1271.0.1 more 3 characters"),
+        std::make_tuple("127.0.1271.1", error_code::OCTET_MORE_3_CHARACTERS, "in octet 2 of address 127.0.1271.1 more 3 characters"),
+        std::make_tuple("127.0.0.1271", error_code::OCTET_MORE_3_CHARACTERS, "in octet 3 of address 127.0.0.1271 more 3 characters"),
 
-        std::make_tuple("257.0.0.0",     error_code::OctetExceeded255, "octet 0 of address 257.0.0.0 exceeded 255"),
-        std::make_tuple("127.258.0.1",   error_code::OctetExceeded255, "octet 1 of address 127.258.0.1 exceeded 255"),
-        std::make_tuple("127.0.700.1",   error_code::OctetExceeded255, "octet 2 of address 127.0.700.1 exceeded 255"),
-        std::make_tuple("192.168.0.999", error_code::OctetExceeded255, "octet 3 of address 192.168.0.999 exceeded 255"),
+        std::make_tuple("257.0.0.0",     error_code::OCTET_EXCEEDED_255, "octet 0 of address 257.0.0.0 exceeded 255"),
+        std::make_tuple("127.258.0.1",   error_code::OCTET_EXCEEDED_255, "octet 1 of address 127.258.0.1 exceeded 255"),
+        std::make_tuple("127.0.700.1",   error_code::OCTET_EXCEEDED_255, "octet 2 of address 127.0.700.1 exceeded 255"),
+        std::make_tuple("192.168.0.999", error_code::OCTET_EXCEEDED_255, "octet 3 of address 192.168.0.999 exceeded 255"),
 
-        std::make_tuple("000.000.000.000", error_code::Leading0AreNotPermitted, "leading zeros are not permitted in octet 0 of address 000.000.000.000"),
-        std::make_tuple("192.168.000.001", error_code::Leading0AreNotPermitted, "leading zeros are not permitted in octet 2 of address 192.168.000.001"),
-        std::make_tuple("016.016.016.016", error_code::Leading0AreNotPermitted, "leading zeros are not permitted in octet 0 of address 016.016.016.016"),
-        std::make_tuple("001.000.008.016", error_code::Leading0AreNotPermitted, "leading zeros are not permitted in octet 0 of address 001.000.008.016"),
-        std::make_tuple("01.2.3.40",       error_code::Leading0AreNotPermitted, "leading zeros are not permitted in octet 0 of address 01.2.3.40"),
-        std::make_tuple("1.02.3.40",       error_code::Leading0AreNotPermitted, "leading zeros are not permitted in octet 1 of address 1.02.3.40"),
-        std::make_tuple("1.2.03.40",       error_code::Leading0AreNotPermitted, "leading zeros are not permitted in octet 2 of address 1.2.03.40"),
-        std::make_tuple("1.2.3.040",       error_code::Leading0AreNotPermitted, "leading zeros are not permitted in octet 3 of address 1.2.3.040")
+        std::make_tuple("000.000.000.000", error_code::LEADING_0_ARE_NOT_PERMITTED, "leading zeros are not permitted in octet 0 of address 000.000.000.000"),
+        std::make_tuple("192.168.000.001", error_code::LEADING_0_ARE_NOT_PERMITTED, "leading zeros are not permitted in octet 2 of address 192.168.000.001"),
+        std::make_tuple("016.016.016.016", error_code::LEADING_0_ARE_NOT_PERMITTED, "leading zeros are not permitted in octet 0 of address 016.016.016.016"),
+        std::make_tuple("001.000.008.016", error_code::LEADING_0_ARE_NOT_PERMITTED, "leading zeros are not permitted in octet 0 of address 001.000.008.016"),
+        std::make_tuple("01.2.3.40",       error_code::LEADING_0_ARE_NOT_PERMITTED, "leading zeros are not permitted in octet 0 of address 01.2.3.40"),
+        std::make_tuple("1.02.3.40",       error_code::LEADING_0_ARE_NOT_PERMITTED, "leading zeros are not permitted in octet 1 of address 1.02.3.40"),
+        std::make_tuple("1.2.03.40",       error_code::LEADING_0_ARE_NOT_PERMITTED, "leading zeros are not permitted in octet 2 of address 1.2.03.40"),
+        std::make_tuple("1.2.3.040",       error_code::LEADING_0_ARE_NOT_PERMITTED, "leading zeros are not permitted in octet 3 of address 1.2.3.040")
     ));
 
 TEST(ipv4_address, Comparison) {

@@ -36,7 +36,7 @@ public:
     static constexpr size_t base_size = 4;
     static constexpr size_t base_max_string_len = 15;
     static constexpr size_t base_max_prefixlen = base_size * 8;
-    static constexpr uint_type base_all_ones = (uint_type) (-1); // std::numeric_limits<uint_type>::max() may not work due to Windows macros
+    static constexpr uint_type base_all_ones = std::numeric_limits<uint_type>::max();
 
     /**
      * Retrieves the IP version of the address.
@@ -60,7 +60,7 @@ protected:
     template <typename Iter>
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<Ext> ip_from_string(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT {
         if (begin == end) {
-            code = error_code::EmptyAddress;
+            code = error_code::EMPTY_ADDRESS;
             return {};
         }
 
@@ -70,17 +70,17 @@ protected:
         int octet = 0;
         
         index = 0;
-        code = error_code::NoError;
+        code = error_code::NO_ERROR;
     
         for (auto it = begin; it != end; ++it) {
             auto c = char(*it);
             if (index >= 4) {
-                code = error_code::Expected4Octets;
+                code = error_code::EXPECTED_4_OCTETS;
                 return {};
             }
             if (c >= '0' && c <= '9') {
                 if (digits > 0 && first_symbol == '0') {
-                    code = error_code::Leading0AreNotPermitted;
+                    code = error_code::LEADING_0_ARE_NOT_PERMITTED;
                     return {};
                 } else if (digits == 0) {
                     first_symbol = c;
@@ -89,35 +89,35 @@ protected:
                 octet = octet * 10 + d;
                 ++digits;
                 if (digits > 3) {
-                    code = error_code::OctetMore3Characters;
+                    code = error_code::OCTET_MORE_3_CHARACTERS;
                     return {};
                 }
             } else if (c == '.' && digits > 0) {
                 if (octet > 255) {
-                    code = error_code::OctetExceeded255;
+                    code = error_code::OCTET_EXCEEDED_255;
                     return {};
                 }
                 octets[index++] = uint8_t(octet & 0xFF);
                 digits = 0;
                 octet = 0;
             } else if (c == '.') {
-                code = error_code::EmptyCctet;
+                code = error_code::EMPTY_OCTET;
                 return {};
             } else {
-                code = error_code::OctetHasInvalidSymbol;
+                code = error_code::OCTET_HAS_INVALID_SYMBOL;
                 return {};
             }
         }
         if (index != 3) {
-            code = error_code::Expected4Octets;
+            code = error_code::EXPECTED_4_OCTETS;
             return {};
         }
         if (digits == 0) {
-            code = error_code::EmptyCctet;
+            code = error_code::EMPTY_OCTET;
             return {};
         }
         if (octet > 255) {
-            code = error_code::OctetExceeded255;
+            code = error_code::OCTET_EXCEEDED_255;
             return {};
         }
         octets[index] = uint8_t(octet & 0xFF);
@@ -185,22 +185,22 @@ protected:
         }
         if (is_value) {
             if (prefixlen > base_max_prefixlen) {
-                code = error_code::InvalidNetmask;
+                code = error_code::INVALID_NETMASK;
                 return std::make_tuple(ip_address_base<Ext>(), 0);
             }
         } else {
             auto ip = ip_to_uint32(ip_from_string(begin, end, code, index).bytes());
-            if (code != error_code::NoError) {
-                code = error_code::InvalidNetmask;
+            if (code != error_code::NO_ERROR) {
+                code = error_code::INVALID_NETMASK;
                 return std::make_tuple(ip_address_base<Ext>(), 0);
             }
 
             prefixlen = prefix_from_ip_uint32(ip, code);
-            if (code != error_code::NoError) {
+            if (code != error_code::NO_ERROR) {
                 ip = ip ^ base_all_ones;
-                code = error_code::NoError;
+                code = error_code::NO_ERROR;
                 prefixlen = prefix_from_ip_uint32(ip, code);
-                if (code != error_code::NoError) {
+                if (code != error_code::NO_ERROR) {
                     return std::make_tuple(ip_address_base<Ext>(), 0);
                 }
             }
@@ -215,7 +215,7 @@ protected:
         auto pack_netmask = netmask.to_uint();
         if ((pack_address & pack_netmask) != pack_address) {
             if (strict) {
-                code = error_code::HasHostBitsSet;
+                code = error_code::HAS_HOST_BITS_SET;
                 return ip_address_base<Ext>();
             } else {
                 return ip_from_uint32(pack_address & pack_netmask);
@@ -231,7 +231,7 @@ private:
         auto leading_ones = trailing_zeroes != 32 ? (ip >> trailing_zeroes) : 0;
         auto all_ones = (uint_type(1) << (prefixlen - 1) << 1) - uint_type(1); // NOLINT
         if (leading_ones != all_ones) {
-            code = error_code::NetmaskPatternMixesZeroesAndOnes;
+            code = error_code::NETMASK_PATTERN_MIXES_ZEROES_AND_ONES;
             return 0;
         }
         return prefixlen;

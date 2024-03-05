@@ -64,10 +64,10 @@ public:
     template <fixed_string FixedString, bool Strict = true>
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEVAL ip_network_base parse() IPADDRESS_NOEXCEPT {
         constexpr auto str = FixedString;
-        auto code = error_code::NoError;
+        auto code = error_code::NO_ERROR;
         auto index = 0;
         auto result = parse_address_with_prefix(str, Strict, code, index);
-        if (code != error_code::NoError) {
+        if (code != error_code::NO_ERROR) {
             raise_error(code, index, str.data(), str.size());
         }
         return result;
@@ -421,9 +421,9 @@ public:
         size_t prefixlen = ip_address_type::max_prefixlen, 
         bool strict = true
     ) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        auto code = error_code::NoError;
+        auto code = error_code::NO_ERROR;
         auto result = from_address(address, code, prefixlen, strict);
-        if (code != error_code::NoError) {
+        if (code != error_code::NO_ERROR) {
             char str[ip_address_type::base_max_string_len + 1]{};
             const auto len = address.ip_to_chars(address.bytes(), format::compressed, str);
             raise_error(code, 0, str, len);
@@ -449,14 +449,14 @@ public:
         size_t prefixlen = ip_address_type::max_prefixlen, 
         bool strict = true
     ) IPADDRESS_NOEXCEPT {
-        code = error_code::NoError;
+        code = error_code::NO_ERROR;
 
         const auto netmask = ip_address_type::ip_from_prefix(prefixlen); 
 
         ip_network_base result;
         result._network_address = ip_address_type::strict_netmask(address, netmask, strict, code);
 
-        if (code != error_code::NoError) {
+        if (code != error_code::NO_ERROR) {
             return result;
         }
 
@@ -840,9 +840,9 @@ public:
      * @remark `exclude_network_sequence` uses lazy evaluation to iterate networks.
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE exclude_network_sequence<ip_network_base<Base>> address_exclude(const ip_network_base& other) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        error_code code = error_code::NoError;
+        error_code code = error_code::NO_ERROR;
         const auto result = address_exclude(other, code);
-        if (code != error_code::NoError) {
+        if (code != error_code::NO_ERROR) {
             raise_error(code, 0, "", 0);
         }
         return result;
@@ -855,10 +855,10 @@ public:
      *   constexpr auto a = ipv4_network::parse("192.0.2.0/28");
      *   constexpr auto b = ipv4_network::parse("192.0.2.1/32");
      * 
-     *   auto err = error_code::NoError;
+     *   auto err = error_code::NO_ERROR;
      *   auto exclude_sequence = a.address_exclude(b, err);
      *   
-     *   if (err == error_code::NoError) {
+     *   if (err == error_code::NO_ERROR) {
      *       for (const auto& net : exclude_sequence) {
      *          std::cout << net << std::endl;
      *       }
@@ -880,7 +880,7 @@ public:
         auto rhs = Base::remove_scope_id(other);
 
         if (!rhs.subnet_of(lhs)) {
-            code = error_code::NotContainedNetwork;
+            code = error_code::NOT_CONTAINED_NETWORK;
             return exclude_network_sequence<ip_network_base<Base>>();
         }
 
@@ -919,9 +919,9 @@ public:
      * @remark `subnets_sequence` uses lazy evaluation to iterate over the subnets.
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE subnets_sequence<ip_network_base<Base>> subnets(size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        error_code code = error_code::NoError;
+        error_code code = error_code::NO_ERROR;
         const auto result = subnets(code, prefixlen_diff, new_prefixlen);
-        if (code != error_code::NoError) {
+        if (code != error_code::NO_ERROR) {
             raise_error(code, 0, "", 0);
         }
         return result;
@@ -936,10 +936,10 @@ public:
      * and new_prefix must be set.
      * 
      * @code{.cpp}
-     *   auto err = error_code::NoError;
+     *   auto err = error_code::NO_ERROR;
      *   auto subnets_sequence = ipv4_network::parse("192.0.2.0/24").subnets(err, 2);
      *   
-     *   if (err == error_code::NoError) {
+     *   if (err == error_code::NO_ERROR) {
      *       for (const auto& net : subnets_sequence) {
      *          std::cout << net << std::endl;
      *       }
@@ -966,11 +966,11 @@ public:
 
         if (new_prefixlen) {
             if (new_prefixlen.value() < prefixlen()) {
-                code = error_code::NewPrefixMustBeLonger;
+                code = error_code::NEW_PREFIX_MUST_BE_LONGER;
                 return subnets_sequence<ip_network_base<Base>>();
             }
             if (prefixlen_diff != 1) {
-                code = error_code::CannotSetPrefixlenDiffAndNewPrefix;
+                code = error_code::CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX;
                 return subnets_sequence<ip_network_base<Base>>();
             }
             prefixlen_diff = new_prefixlen.value() - prefixlen();
@@ -979,7 +979,7 @@ public:
         auto new_prefix = prefixlen() + prefixlen_diff;
 
         if (new_prefix > ip_address_type::base_max_prefixlen) {
-            code = error_code::InvalidPrefixlenDiff;
+            code = error_code::INVALID_PREFIXLEN_DIFF;
             return subnets_sequence<ip_network_base<Base>>();
         }
 
@@ -1008,9 +1008,9 @@ public:
      * @throw logic_error Raised if the operation cannot be performed due to invalid parameters or prefix length.
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base<Base> supernet(size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        error_code code = error_code::NoError;
+        error_code code = error_code::NO_ERROR;
         const auto result = supernet(code, prefixlen_diff, new_prefixlen);
-        if (code != error_code::NoError) {
+        if (code != error_code::NO_ERROR) {
             raise_error(code, 0, "", 0);
         }
         return result;
@@ -1025,10 +1025,10 @@ public:
      * be set.
      * 
      * @code{.cpp}
-     *   auto err = error_code::NoError;
+     *   auto err = error_code::NO_ERROR;
      *   auto supernet = ipv4_network::parse("192.0.2.0/24").supernet(err, 2);
      *   
-     *   if (err == error_code::NoError) {
+     *   if (err == error_code::NO_ERROR) {
      *       std::cout << supernet << std::endl;
      *   }
      *   
@@ -1041,7 +1041,7 @@ public:
      * @return An ip network object representing the supernet, or the current network if an error occurs.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base<Base> supernet(error_code& code, size_t prefixlen_diff = 1, optional<size_t> new_prefixlen = nullptr) const IPADDRESS_NOEXCEPT {
-        code = error_code::NoError;
+        code = error_code::NO_ERROR;
 
         if (prefixlen() == 0) {
             return *this;
@@ -1049,18 +1049,18 @@ public:
 
         if (new_prefixlen) {
             if (new_prefixlen.value() > prefixlen()) {
-                code = error_code::NewPrefixMustBeShorter;
+                code = error_code::NEW_PREFIX_MUST_BE_SHORTER;
                 return ip_network_base<Base>();
             }
             if (prefixlen_diff != 1) {
-                code = error_code::CannotSetPrefixlenDiffAndNewPrefix;
+                code = error_code::CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX;
                 return ip_network_base<Base>();
             }
             prefixlen_diff = prefixlen() - new_prefixlen.value();
         }
 
         if (prefixlen_diff > prefixlen()) {
-            code = error_code::InvalidPrefixlenDiff;
+            code = error_code::INVALID_PREFIXLEN_DIFF;
             return ip_network_base<Base>();
         }
 
@@ -1180,10 +1180,10 @@ public:
 private:
     template <typename Str>
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base parse_address_with_prefix(const Str& str, bool strict) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        auto code = error_code::NoError;
+        auto code = error_code::NO_ERROR;
         auto index = 0;
         auto result = parse_address_with_prefix(str, strict, code, index);
-        if (code != error_code::NoError) {
+        if (code != error_code::NO_ERROR) {
             raise_error(code, index, str.data(), str.size());
         }
         return result;
@@ -1191,7 +1191,7 @@ private:
 
     template <typename Str>
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base parse_address_with_prefix(const Str& str, bool strict, error_code& code, int& index) IPADDRESS_NOEXCEPT {
-        code = error_code::NoError;
+        code = error_code::NO_ERROR;
         
         auto has_slash = false;
         auto netmask = str.end();
@@ -1201,11 +1201,11 @@ private:
             const auto c = char(*it);
             if (c == '/') {
                 if (has_slash) {
-                    code = error_code::OnlyOneSlashPermitted;
+                    code = error_code::ONLY_ONE_SLASH_PERMITTED;
                     return ip_network_base<Base>();
                 }
                 if (it + 1 == str.end()) {
-                    code = error_code::EmptyNetmask;
+                    code = error_code::EMPTY_NETMASK;
                     return ip_network_base<Base>();
                 }
                 netmask = it + 1;
@@ -1221,7 +1221,7 @@ private:
 
         auto netmask_result = ip_address_type::parse_netmask(netmask, str.end(), code, index);
         
-        if (code != error_code::NoError) {
+        if (code != error_code::NO_ERROR) {
             return ip_network_base<Base>();
         }
 
@@ -1230,13 +1230,13 @@ private:
         result._netmask = std::get<0>(netmask_result);
         result._prefixlen = std::get<1>(netmask_result);
 
-        if (code != error_code::NoError) {
+        if (code != error_code::NO_ERROR) {
             return ip_network_base<Base>();
         }
 
         result._network_address = ip_address_type::strict_netmask(result._network_address, result._netmask, strict, code);
 
-        if (code != error_code::NoError) {
+        if (code != error_code::NO_ERROR) {
             return ip_network_base<Base>();
         }
 
@@ -1259,7 +1259,7 @@ namespace internal {
 template <typename Base, typename TChar, size_t MaxLen>
 IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base<Base> parse_net_from_literal(const TChar* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
     if (size > MaxLen) {
-        raise_error(error_code::StringIsTooLong, 0, address, size);
+        raise_error(error_code::STRING_IS_TOO_LONG, 0, address, size);
     }
     TChar str[MaxLen + 1] = {};
     for (size_t i = 0; i < size && i < MaxLen; ++i) {
@@ -1332,9 +1332,9 @@ inline std::istream& operator>>(std::istream& stream, IPADDRESS_NAMESPACE::ip_ne
 
     std::string str;
     stream >> str;
-    IPADDRESS_NAMESPACE::error_code err = IPADDRESS_NAMESPACE::error_code::NoError;
+    IPADDRESS_NAMESPACE::error_code err = IPADDRESS_NAMESPACE::error_code::NO_ERROR;
     network = IPADDRESS_NAMESPACE::ip_network_base<Base>::parse(str, err, strict);
-    if (err != IPADDRESS_NAMESPACE::error_code::NoError) {
+    if (err != IPADDRESS_NAMESPACE::error_code::NO_ERROR) {
         stream.setstate(std::ios_base::failbit);
     }
     return stream;

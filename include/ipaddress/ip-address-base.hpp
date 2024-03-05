@@ -122,10 +122,10 @@ public:
     template <fixed_string FixedString>
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE ip_address_base<Base> parse() IPADDRESS_NOEXCEPT {
         constexpr auto str = FixedString;
-        auto code = error_code::NoError;
+        auto code = error_code::NO_ERROR;
         auto index = 0;
         auto result = Base::ip_from_string(str.begin(), str.end(), code, index);
-        if (code != error_code::NoError) {
+        if (code != error_code::NO_ERROR) {
             raise_error(code, index, str.data(), str.size());
         }
         return ip_address_base(result);
@@ -693,10 +693,10 @@ private:
 
     template <typename Str>
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse_string(const Str& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        auto code = error_code::NoError;
+        auto code = error_code::NO_ERROR;
         auto index = 0;
         auto result = Base::ip_from_string(address.begin(), address.end(), code, index);
-        if (code != error_code::NoError) {
+        if (code != error_code::NO_ERROR) {
             raise_error(code, index, address.data(), address.size());
         }
         return result;
@@ -704,7 +704,7 @@ private:
 
     template <typename Str>
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse_string(const Str& address, error_code& code) IPADDRESS_NOEXCEPT {
-        code = error_code::NoError;
+        code = error_code::NO_ERROR;
         auto index = 0;
         return Base::ip_from_string(address.begin(), address.end(), code, index);
     }
@@ -717,7 +717,7 @@ namespace internal {
 template <typename Base, typename TChar, size_t MaxLen>
 IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<Base> parse_ip_from_literal(const TChar* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
     if (size > MaxLen) {
-        raise_error(error_code::StringIsTooLong, 0, address, size);
+        raise_error(error_code::STRING_IS_TOO_LONG, 0, address, size);
     }
     TChar str[MaxLen + 1] = {};
     for (size_t i = 0; i < size && i < MaxLen; ++i) {
@@ -798,9 +798,9 @@ template <typename Base>
 IPADDRESS_FORCE_INLINE std::istream& operator>>(std::istream& stream, IPADDRESS_NAMESPACE::ip_address_base<Base>& ip) {
     std::string str;
     stream >> str;
-    IPADDRESS_NAMESPACE::error_code err = IPADDRESS_NAMESPACE::error_code::NoError;
+    IPADDRESS_NAMESPACE::error_code err = IPADDRESS_NAMESPACE::error_code::NO_ERROR;
     ip = IPADDRESS_NAMESPACE::ip_address_base<Base>::parse(str, err);
-    if (err != IPADDRESS_NAMESPACE::error_code::NoError) {
+    if (err != IPADDRESS_NAMESPACE::error_code::NO_ERROR) {
         stream.setstate(std::ios_base::failbit);
     }
     return stream;
