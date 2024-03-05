@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['build_20guide_0',['Build Guide',['../build.html',1,'']]]
+  ['benchmark_0',['Benchmark',['../benchmark.html',1,'']]],
+  ['build_20guide_1',['Build Guide',['../build.html',1,'']]]
 ];

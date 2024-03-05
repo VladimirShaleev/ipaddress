@@ -153,8 +153,9 @@ $(function(){initNavTree('build.html',''); initResizable(); });
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><ul><li class="level2"><a href="#autotoc_md37">Set up a project</a></li>
-<li class="level2"><a href="#autotoc_md38">Build a Documentation</a></li>
+<ul><ul><li class="level2"><a href="#autotoc_md38">Set up a project</a></li>
+<li class="level2"><a href="#autotoc_md39">Build a Documentation</a></li>
+<li class="level2"><a href="#autotoc_md40">Build a Benchmark</a></li>
 </ul>
 </ul>
 </div>
@@ -166,7 +167,7 @@ $(function(){initNavTree('build.html',''); initResizable(); });
 <li><a href="https://cmake.org/">CMake</a> and a compatible build tool for building the project;</li>
 <li><b>(optional)</b> clang-tidy 14+ for static analysis during build.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md37"></a>
+<h2><a class="anchor" id="autotoc_md38"></a>
 Set up a project</h2>
 <div class="fragment"><div class="line">git clone https://github.com/VladimirShaleev/ipaddress.git</div>
 <div class="line">cd ipaddress</div>
@@ -176,6 +177,7 @@ Set up a project</h2>
 <div class="line">  -DCMAKE_BUILD_TYPE=Debug \</div>
 <div class="line">  -DIPADDRESS_ENABLE_CLANG_TIDY=OFF \</div>
 <div class="line">  -DIPADDRESS_BUILD_TESTS=ON \</div>
+<div class="line">  -DIPADDRESS_BUILD_BENCHMARK=OFF \</div>
 <div class="line">  -DIPADDRESS_BUILD_DOC=OFF \</div>
 <div class="line">  -DIPADDRESS_BUILD_PACKAGES=OFF \</div>
 <div class="line">  -DIPADDRESS_NO_EXCEPTIONS=OFF \</div>
@@ -187,6 +189,7 @@ Set up a project</h2>
 <li><code>CMAKE_CXX_STANDARD</code> — The selected standard with which unit tests will be collected. If not specified, the default one in the current build tools will be used.</li>
 <li><code>IPADDRESS_ENABLE_CLANG_TIDY</code> — Enable clang-tidy checks (<code>ON</code> by default).</li>
 <li><code>IPADDRESS_BUILD_TESTS</code> — Build unit tests (<code>ON</code> by default).</li>
+<li><code>IPADDRESS_BUILD_BENCHMARK</code> — Build benchmark (<code>OFF</code> by default).</li>
 <li><code>IPADDRESS_BUILD_DOC</code> — Build doc (<code>ON</code> by default).</li>
 <li><code>IPADDRESS_BUILD_PACKAGES</code> — Create targets for building packages deb, rpm, etc. (<code>ON</code> by default).</li>
 <li><code>IPADDRESS_NO_EXCEPTIONS</code> — Disable exceptions throwing (<code>OFF</code> by default).</li>
@@ -198,7 +201,7 @@ Set up a project</h2>
 </div><!-- fragment --><p>Running unit tests.</p>
 <div class="fragment"><div class="line">cd build</div>
 <div class="line">ctest --output-on-failure</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md38"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md39"></a>
 Build a Documentation</h2>
 <p>To assemble the documentation, you need to install the following tools on the system:</p>
 <ul>
@@ -208,16 +211,21 @@ Build a Documentation</h2>
 <p>After which you can enable the documentation build in the configuration and run build.</p>
 <div class="fragment"><div class="line">cmake -B build -S . -DIPADDRESS_BUILD_DOC=ON</div>
 <div class="line">cmake --build build --target doc</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md40"></a>
+Build a Benchmark</h2>
+<p>To build the benchmark, follow these steps:</p>
+<div class="fragment"><div class="line">cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DIPADDRESS_BUILD_BENCHMARK=ON</div>
+<div class="line">cmake --build build --config Release --target ipaddress-benchmark</div>
 </div><!-- fragment --><p> 
 
 <div class="cards">
 
 <div class="card">
-  <a href="errors.html">
+  <a href="benchmark.html">
   <div class="card_container">
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Arrow / Arrow_Circle_Left"> <path id="Vector" d="M11 9L8 12M8 12L11 15M8 12H16M21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21C16.9706 21 21 16.9706 21 12Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g></svg>
-    <h2>Error Handling</h2>
-    <p>Back to error handling.</p>
+    <h2>Benchmark</h2>
+    <p>Back to benchmark.</p>
   </div>
   </a>
 </div>

@@ -29,6 +29,7 @@ var NAVTREE =
     [ "Tutorial", "tutorial.html", null ],
     [ "Network Operations", "operations.html", null ],
     [ "Error Handling", "errors.html", null ],
+    [ "Benchmark", "benchmark.html", null ],
     [ "Build Guide", "build.html", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
@@ -65,7 +66,7 @@ var NAVTREEINDEX =
 "classipaddress_1_1ip__network__iterator.html#ac0f5a4caf84278ebb06c4d41cc502b9a",
 "classipaddress_1_1scope.html#adbfb44693a7cddf189e2e2bc304adb9f",
 "classipaddress_1_1uint128__t.html#abc64922ec1f6ea2a8a9513e7e972981b",
-"namespaceipaddress.html#a88a76ee847c844cc47b94caac600689dafffb241652ff8066888df45e10856335"
+"namespaceipaddress.html#a88a76ee847c844cc47b94caac600689dafff488a86b73f1908fc4143f54436f10"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
