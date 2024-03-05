@@ -34,9 +34,9 @@ template <typename T>
 struct ip_any_parser {
     template <typename Str>
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T parse(const Str& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        auto code = error_code::NO_ERROR;
+        auto code = error_code::NoError;
         const auto ipv4 = ipv4_address::parse(address, code);
-        if (code == error_code::NO_ERROR) {
+        if (code == error_code::NoError) {
             return T(ipv4);
         }
         return T(ipv6_address::parse(address));
@@ -44,13 +44,13 @@ struct ip_any_parser {
 
     template <typename Str>
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T parse(const Str& address, error_code& code) IPADDRESS_NOEXCEPT {
-        code = error_code::NO_ERROR;
+        code = error_code::NoError;
         const auto ipv4 = ipv4_address::parse(address, code);
-        if (code == error_code::NO_ERROR) {
+        if (code == error_code::NoError) {
             return T(ipv4);
         }
         const auto ipv6 = ipv6_address::parse(address, code);
-        if (code == error_code::NO_ERROR) {
+        if (code == error_code::NoError) {
             return T(ipv6);
         }
         return T();
@@ -500,7 +500,7 @@ public:
     template <fixed_string FixedString>
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE ip_address parse() IPADDRESS_NOEXCEPT {
         constexpr auto str = FixedString;
-        auto code = error_code::NO_ERROR;
+        auto code = error_code::NoError;
 
         char ip[str.size() + 1]{};
         for (size_t i = 0; i < str.size(); ++i) {
@@ -508,7 +508,7 @@ public:
         }
 
         const auto ipv4 = ipv4_address::parse(ip, code);
-        if (code == error_code::NO_ERROR) {
+        if (code == error_code::NoError) {
             return ip_address(ipv4);
         }
         
@@ -1095,9 +1095,9 @@ public:
     template <typename T, size_t N>
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(const T(&address)[N]) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         internal::is_char_type<T>();
-        auto code = error_code::NO_ERROR;
+        auto code = error_code::NoError;
         auto result = internal::ip_any_parser<ip_address>::parse(address, code);
-        if (code != error_code::NO_ERROR) {
+        if (code != error_code::NoError) {
             raise_error(code, 0, address, N);
         }
         return result;
@@ -1302,9 +1302,9 @@ private:
     //
     // template <typename Str>
     // IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse_string(const Str& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-    //     auto code = error_code::NO_ERROR;
+    //     auto code = error_code::NoError;
     //     const auto ipv4 = ipv4_address::parse(address, code);
-    //     if (code == error_code::NO_ERROR) {
+    //     if (code == error_code::NoError) {
     //         return ip_address(ipv4);
     //     }
     //     return ip_address(ipv6_address::parse(address));
@@ -1312,14 +1312,14 @@ private:
     //
     // template <typename Str>
     // static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse_string(const Str& address, error_code& code) IPADDRESS_NOEXCEPT {
-    //     code = error_code::NO_ERROR;
+    //     code = error_code::NoError;
     //     const auto ipv4 = ipv4_address::parse(address, code);
-    //     if (code == error_code::NO_ERROR) {
+    //     if (code == error_code::NoError) {
     //         return ip_address(ipv4);
     //     }
     //     
     //     const auto ipv6 = ipv6_address::parse(address, code);
-    //     if (code == error_code::NO_ERROR) {
+    //     if (code == error_code::NoError) {
     //         return ip_address(ipv6);
     //     }
     //     
@@ -1372,7 +1372,7 @@ private:
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const char* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         if (size > ipv6_address::base_max_string_len) {
-            raise_error(error_code::STRING_IS_TOO_LONG, 0, address, size);
+            raise_error(error_code::StringIsTooLong, 0, address, size);
         }
         char str[ipv6_address::base_max_string_len + 1] = {};
         for (size_t i = 0; i < size && i < ipv6_address::base_max_string_len; ++i) {
@@ -1390,7 +1390,7 @@ private:
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const wchar_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         if (size > ipv6_address::base_max_string_len) {
-            raise_error(error_code::STRING_IS_TOO_LONG, 0, address, size);
+            raise_error(error_code::StringIsTooLong, 0, address, size);
         }
         wchar_t str[ipv6_address::base_max_string_len + 1] = {};
         for (size_t i = 0; i < size && i < ipv6_address::base_max_string_len; ++i) {
@@ -1408,7 +1408,7 @@ private:
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const char16_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         if (size > ipv6_address::base_max_string_len) {
-            raise_error(error_code::STRING_IS_TOO_LONG, 0, address, size);
+            raise_error(error_code::StringIsTooLong, 0, address, size);
         }
         char16_t str[ipv6_address::base_max_string_len + 1] = {};
         for (size_t i = 0; i < size && i < ipv6_address::base_max_string_len; ++i) {
@@ -1426,7 +1426,7 @@ private:
      */
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const char32_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         if (size > ipv6_address::base_max_string_len) {
-            raise_error(error_code::STRING_IS_TOO_LONG, 0, address, size);
+            raise_error(error_code::StringIsTooLong, 0, address, size);
         }
         char32_t str[ipv6_address::base_max_string_len + 1] = {};
         for (size_t i = 0; i < size && i < ipv6_address::base_max_string_len; ++i) {
@@ -1477,9 +1477,9 @@ IPADDRESS_FORCE_INLINE std::ostream& operator<<(std::ostream& stream, const IPAD
 IPADDRESS_FORCE_INLINE std::istream& operator>>(std::istream& stream, IPADDRESS_NAMESPACE::ip_address& ip) {
     std::string str;
     stream >> str;
-    IPADDRESS_NAMESPACE::error_code err = IPADDRESS_NAMESPACE::error_code::NO_ERROR;
+    IPADDRESS_NAMESPACE::error_code err = IPADDRESS_NAMESPACE::error_code::NoError;
     ip = IPADDRESS_NAMESPACE::ip_address::parse(str, err);
-    if (err != IPADDRESS_NAMESPACE::error_code::NO_ERROR) {
+    if (err != IPADDRESS_NAMESPACE::error_code::NoError) {
         stream.setstate(std::ios_base::failbit);
     }
     return stream;

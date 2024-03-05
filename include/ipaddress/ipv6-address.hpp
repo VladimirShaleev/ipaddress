@@ -27,10 +27,10 @@ template <typename T>
 struct ipv6_set_scope {
     template <typename Str>
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void change(fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>& result, const Str& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        error_code err = error_code::NO_ERROR;
+        error_code err = error_code::NoError;
         change(result, scope_id, err);
     #ifndef IPADDRESS_NO_EXCEPTIONS
-        if (err != error_code::NO_ERROR) {
+        if (err != error_code::NoError) {
             raise_error(err, 0, "<bytes>", 7);
         }
     #endif
@@ -38,10 +38,10 @@ struct ipv6_set_scope {
 
     template <typename Str>
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void change(fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>& result, const Str& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
-        code = error_code::NO_ERROR;
+        code = error_code::NoError;
     #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH > 0
         if (scope_id.size() > IPADDRESS_IPV6_SCOPE_MAX_LENGTH) {
-            code = error_code::SCOPE_ID_IS_TOO_LONG;
+            code = error_code::ScopeIdIsTooLong;
             return;
         }
         char scope[IPADDRESS_IPV6_SCOPE_MAX_LENGTH + 1] = {};
@@ -771,10 +771,10 @@ private:
     //
     // template <typename Str>
     // IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void change_scope_id(const Str& scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-    //     error_code err = error_code::NO_ERROR;
+    //     error_code err = error_code::NoError;
     //     change_scope_id(scope_id, err);
     // #ifndef IPADDRESS_NO_EXCEPTIONS
-    //     if (err != error_code::NO_ERROR) {
+    //     if (err != error_code::NoError) {
     //         raise_error(err, 0, "<bytes>", 7);
     //     }
     // #endif
@@ -782,10 +782,10 @@ private:
     //
     // template <typename Str>
     // IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void change_scope_id(const Str& scope_id, error_code& code) IPADDRESS_NOEXCEPT {
-    //     code = error_code::NO_ERROR;
+    //     code = error_code::NoError;
     // #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH > 0
     //     if (scope_id.size() > IPADDRESS_IPV6_SCOPE_MAX_LENGTH) {
-    //         code = error_code::SCOPE_ID_IS_TOO_LONG;
+    //         code = error_code::ScopeIdIsTooLong;
     //         return;
     //     }
     //     char scope[IPADDRESS_IPV6_SCOPE_MAX_LENGTH + 1] = {};

@@ -45,7 +45,7 @@ int main() {
     error_code err;
     auto ip = ipv4_address::parse("192.257.2.0", err);
 
-    if (err != error_code::NO_ERROR) {
+    if (err != error_code::NoError) {
         std::cout << "invalid ip" << std::endl;
         return 1;
     }
@@ -83,7 +83,7 @@ int main() {
     error_code err;
     auto ip = ipv4_address::parse("192.257.2.0", err);
 
-    if (err != error_code::NO_ERROR) { // this will work as expected
+    if (err != error_code::NoError) { // this will work as expected
         std::cout << "invalid ip" << std::endl;
         return 1;
     }

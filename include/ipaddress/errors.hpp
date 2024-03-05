@@ -50,43 +50,43 @@ namespace IPADDRESS_NAMESPACE {
  * Each error code is accompanied by a brief comment explaining the specific error condition it represents.
  */
 enum class error_code {
-    NO_ERROR = 0, /**< Indicates the absence of any errors. */
-    EMPTY_ADDRESS, /**< The IP address string is empty when it should contain a valid address. */
-    EMPTY_NETMASK, /**< The netmask portion of the address is empty when it should specify a valid netmask. */
-    INVALID_NETMASK, /**< The provided netmask is not valid according to standard netmask formatting rules. */
-    NETMASK_PATTERN_MIXES_ZEROES_AND_ONES, /**< The netmask contains an invalid pattern of zeroes and ones. */
-    HAS_HOST_BITS_SET, /**< The address has host bits set when they are expected to be clear. */
-    ONLY_ONE_SLASH_PERMITTED, /**< Only one slash character is permitted, used to separate the address from the netmask. */
-    STRING_IS_TOO_LONG, /**< Input string is too long. */
+    NoError = 0, /**< Indicates the absence of any errors. */
+    EmptyAddress, /**< The IP address string is empty when it should contain a valid address. */
+    EmptyNetmask, /**< The netmask portion of the address is empty when it should specify a valid netmask. */
+    InvalidNetmask, /**< The provided netmask is not valid according to standard netmask formatting rules. */
+    NetmaskPatternMixesZeroesAndOnes, /**< The netmask contains an invalid pattern of zeroes and ones. */
+    HasHostBitsSet, /**< The address has host bits set when they are expected to be clear. */
+    OnlyOneSlashPermitted, /**< Only one slash character is permitted, used to separate the address from the netmask. */
+    StringIsTooLong, /**< Input string is too long. */
 
     // ipv4 errors
-    EMPTY_OCTET, /**< An octet in the IPv4 address is empty when it should contain a numeric value. */
-    EXPECTED_4_OCTETS, /**< The IPv4 address does not contain the expected four octets. */
-    LEADING_0_ARE_NOT_PERMITTED, /**< Leading zeroes are not permitted in any octet of the IPv4 address. */
-    OCTET_MORE_3_CHARACTERS, /**< An octet contains more than three characters, exceeding the maximum allowed. */
-    OCTET_HAS_INVALID_SYMBOL, /**< An octet contains characters other than digits, which are invalid. */
-    OCTET_EXCEEDED_255, /**< An octet's value exceeds the maximum allowed value of 255. */
+    EmptyCctet, /**< An octet in the IPv4 address is empty when it should contain a numeric value. */
+    Expected4Octets, /**< The IPv4 address does not contain the expected four octets. */
+    Leading0AreNotPermitted, /**< Leading zeroes are not permitted in any octet of the IPv4 address. */
+    OctetMore3Characters, /**< An octet contains more than three characters, exceeding the maximum allowed. */
+    OctetHasInvalidSymbol, /**< An octet contains characters other than digits, which are invalid. */
+    OctetExceeded255, /**< An octet's value exceeds the maximum allowed value of 255. */
 
     // ipv6 errors
-    LEAST_3_PARTS, /**< The IPv6 address contains fewer than the minimum required parts. */
-    MOST_8_COLONS_PERMITTED, /**< The IPv6 address contains more than the maximum allowed number of colons. */
-    PART_IS_MORE_4_CHARS, /**< A part of the IPv6 address contains more than four characters. */
-    PART_HAS_INVALID_SYMBOL, /**< A part of the IPv6 address contains invalid characters. */
-    MOST_ONE_DOUBLE_COLON_PERMITTED, /**< More than one double colon is present in the IPv6 address. */
-    LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, /**< A leading colon is only permitted as part of a double colon. */
-    TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, /**< A trailing colon is only permitted as part of a double colon. */
-    EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, /**< With a double colon present, at most seven other parts are expected. */
-    EXACTLY_8_PARTS_EXPECTED_WITHOUT_DOUBLE_COLON, /**< Without a double colon, exactly eight parts are expected. */
-    SCOPE_ID_IS_TOO_LONG, /**< The scope ID in the IPv6 address exceeds the maximum length. */
-    INVALID_SCOPE_ID, /**< The scope ID in the IPv6 address is invalid. */
+    Least3Parts, /**< The IPv6 address contains fewer than the minimum required parts. */
+    Most8ColonsPermitted, /**< The IPv6 address contains more than the maximum allowed number of colons. */
+    PartIsMore4Chars, /**< A part of the IPv6 address contains more than four characters. */
+    PartHasInvalidSymbol, /**< A part of the IPv6 address contains invalid characters. */
+    MostOneDoubleColonPermitted, /**< More than one double colon is present in the IPv6 address. */
+    LeadingColonOnlyPermittedAsPartOfDoubleColon, /**< A leading colon is only permitted as part of a double colon. */
+    TrailingColonOnlyPermittedAsPartOfDoubleColon, /**< A trailing colon is only permitted as part of a double colon. */
+    ExpectedAtMost7OtherPartsWithDoubleColon, /**< With a double colon present, at most seven other parts are expected. */
+    Exactly8PartsExpectedWithoutDoubleColon, /**< Without a double colon, exactly eight parts are expected. */
+    ScopeIdIsTooLong, /**< The scope ID in the IPv6 address exceeds the maximum length. */
+    InvalidScopeId, /**< The scope ID in the IPv6 address is invalid. */
 
     // logic errors
-    INVALID_VERSION, /**< The IP address version does not match the expected version. */
-    INVALID_PREFIXLEN_DIFF, /**< The difference in prefix length is invalid for the operation being performed. */
-    NEW_PREFIX_MUST_BE_SHORTER, /**< The new prefix length must be shorter for the operation being performed. */
-    NEW_PREFIX_MUST_BE_LONGER, /**< The new prefix length must be longer for the operation being performed. */
-    CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX, /**< Both prefix length difference and new prefix cannot be set simultaneously. */
-    NOT_CONTAINED_NETWORK /**< The network is not a subnet of the other network as expected. */
+    InvalidVersion, /**< The IP address version does not match the expected version. */
+    InvalidPrefixlenDiff, /**< The difference in prefix length is invalid for the operation being performed. */
+    NewPrefixMustBeShorter, /**< The new prefix length must be shorter for the operation being performed. */
+    NewPrefixMustBeLonger, /**< The new prefix length must be longer for the operation being performed. */
+    CannotSetPrefixlenDiffAndNewPrefix, /**< Both prefix length difference and new prefix cannot be set simultaneously. */
+    NotContainedNetwork /**< The network is not a subnet of the other network as expected. */
 };
 
 /**
@@ -289,65 +289,65 @@ IPADDRESS_CONSTEXPR inline void raise_error(error_code code, int index, const T*
         str[i] = char(address[i]);
     }
     switch (code) {
-        case error_code::EMPTY_ADDRESS:
+        case error_code::EmptyAddress:
             throw parse_error(code, "address cannot be empty");
-        case error_code::EMPTY_NETMASK:
+        case error_code::EmptyNetmask:
             throw parse_error(code, "empty mask in address", str);
-        case error_code::INVALID_NETMASK:
+        case error_code::InvalidNetmask:
             throw parse_error(code, "is not a valid netmask in address", str);
-        case error_code::NETMASK_PATTERN_MIXES_ZEROES_AND_ONES:
+        case error_code::NetmaskPatternMixesZeroesAndOnes:
             throw parse_error(code, "netmask pattern mixes zeroes & ones in address", str);
-        case error_code::HAS_HOST_BITS_SET:
+        case error_code::HasHostBitsSet:
             throw parse_error(code, "has host bits set in address", str);
-        case error_code::ONLY_ONE_SLASH_PERMITTED:
+        case error_code::OnlyOneSlashPermitted:
             throw parse_error(code, "only one '/' permitted in address", str);
-        case error_code::STRING_IS_TOO_LONG:
+        case error_code::StringIsTooLong:
             throw parse_error(code, "input string is too long", str);
-        case error_code::EMPTY_OCTET:
+        case error_code::EmptyCctet:
             throw parse_error(code, "empty octet", index, "in address", str);
-        case error_code::EXPECTED_4_OCTETS:
+        case error_code::Expected4Octets:
             throw parse_error(code, "expected 4 octets in", str);
-        case error_code::LEADING_0_ARE_NOT_PERMITTED:
+        case error_code::Leading0AreNotPermitted:
             throw parse_error(code, "leading zeros are not permitted in octet", index, "of address", str);
-        case error_code::OCTET_MORE_3_CHARACTERS:
+        case error_code::OctetMore3Characters:
             throw parse_error(code, "in octet", index, "of address", str, "more 3 characters");
-        case error_code::OCTET_HAS_INVALID_SYMBOL:
+        case error_code::OctetHasInvalidSymbol:
             throw parse_error(code, "in octet", index, "of address", str, "has invalid symbol");
-        case error_code::OCTET_EXCEEDED_255:
+        case error_code::OctetExceeded255:
             throw parse_error(code, "octet", index, "of address", str, "exceeded 255");
-        case error_code::LEAST_3_PARTS:
+        case error_code::Least3Parts:
             throw parse_error(code, "least 3 parts in address", str);
-        case error_code::MOST_8_COLONS_PERMITTED:
+        case error_code::Most8ColonsPermitted:
             throw parse_error(code, "most 8 colons permitted in address", str);
-        case error_code::PART_IS_MORE_4_CHARS:
+        case error_code::PartIsMore4Chars:
             throw parse_error(code, "in part", index, "of address", str, "more 4 characters");
-        case error_code::PART_HAS_INVALID_SYMBOL:
+        case error_code::PartHasInvalidSymbol:
             throw parse_error(code, "in part", index, "of address", str, "has invalid symbols");
-        case error_code::MOST_ONE_DOUBLE_COLON_PERMITTED:
+        case error_code::MostOneDoubleColonPermitted:
             throw parse_error(code, "at most one '::' permitted in address", str);
-        case error_code::LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON:
+        case error_code::LeadingColonOnlyPermittedAsPartOfDoubleColon:
             throw parse_error(code, "at leading ':' only permitted as part of '::' in address", str);
-        case error_code::TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON:
+        case error_code::TrailingColonOnlyPermittedAsPartOfDoubleColon:
             throw parse_error(code, "at trailing ':' only permitted as part of '::' in address", str);
-        case error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON:
+        case error_code::ExpectedAtMost7OtherPartsWithDoubleColon:
             throw parse_error(code, "expected at most 7 other parts with '::' in address", str);
-        case error_code::EXACTLY_8_PARTS_EXPECTED_WITHOUT_DOUBLE_COLON:
+        case error_code::Exactly8PartsExpectedWithoutDoubleColon:
             throw parse_error(code, "exactly 8 parts expected without '::' in address", str);
-        case error_code::SCOPE_ID_IS_TOO_LONG:
+        case error_code::ScopeIdIsTooLong:
             throw parse_error(code, "scope id is too long in address", str);
-        case error_code::INVALID_SCOPE_ID:
+        case error_code::InvalidScopeId:
             throw parse_error(code, "invalid scope id in address", str);
-        case error_code::INVALID_VERSION:
+        case error_code::InvalidVersion:
             throw logic_error(code, "versions don't match");
-        case error_code::INVALID_PREFIXLEN_DIFF:
+        case error_code::InvalidPrefixlenDiff:
             throw logic_error(code, "invalid prefixlen_diff");
-        case error_code::NEW_PREFIX_MUST_BE_SHORTER:
+        case error_code::NewPrefixMustBeShorter:
             throw logic_error(code, "new prefix must be shorter");
-        case error_code::NEW_PREFIX_MUST_BE_LONGER:
+        case error_code::NewPrefixMustBeLonger:
             throw logic_error(code, "new prefix must be longer");
-        case error_code::CANNOT_SET_PREFIXLEN_DIFF_AND_NEW_PREFIX:
+        case error_code::CannotSetPrefixlenDiffAndNewPrefix:
             throw logic_error(code, "cannot set prefixlen_diff and new_prefix");
-        case error_code::NOT_CONTAINED_NETWORK:
+        case error_code::NotContainedNetwork:
             throw logic_error(code, "network is not a subnet of other");
         default:
             throw error(code, "unknown error");

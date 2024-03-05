@@ -380,7 +380,7 @@ TEST_P(InvalidAddressParams, parse) {
     auto expected_address = get<0>(GetParam());
     auto expected_error_code = get<1>(GetParam());
 
-    error_code err = error_code::NO_ERROR;
+    error_code err = error_code::NoError;
     ip_address::parse(expected_address, err);
     ASSERT_EQ(err, expected_error_code);
 
@@ -402,25 +402,25 @@ TEST_P(InvalidAddressParams, parse) {
 INSTANTIATE_TEST_SUITE_P(
     ip_address, InvalidAddressParams,
     testing::Values(
-        std::make_tuple("", error_code::EMPTY_ADDRESS, "address cannot be empty"),
-        std::make_tuple("127", error_code::LEAST_3_PARTS, "least 3 parts in address 127"),
-        std::make_tuple("127.0.0.", error_code::EMPTY_OCTET, "empty octet 0 in address 127.0.0."),
-        std::make_tuple("127.0.0.1/24", error_code::OCTET_HAS_INVALID_SYMBOL, "in octet 0 of address 127.0.0.1/24 has invalid symbol"),
-        std::make_tuple("127.0.0.1271", error_code::OCTET_MORE_3_CHARACTERS, "in octet 0 of address 127.0.0.1271 more 3 characters"),
-        std::make_tuple("192.168.0.999", error_code::OCTET_EXCEEDED_255, "octet 0 of address 192.168.0.999 exceeded 255"),
-        std::make_tuple("1.2.3.040", error_code::LEADING_0_ARE_NOT_PERMITTED, "leading zeros are not permitted in octet 0 of address 1.2.3.040"),
-        std::make_tuple("FEDC:9878%scope", error_code::LEAST_3_PARTS, "least 3 parts in address FEDC:9878%scope"),
-        std::make_tuple("10:9:8:7:6:5:4:3:42.42.42.42%scope", error_code::MOST_8_COLONS_PERMITTED, "most 8 colons permitted in address 10:9:8:7:6:5:4:3:42.42.42.42%scope"),
-        std::make_tuple("2001:db8:::1%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 2001:db8:::1%scope"),
-        std::make_tuple("123456789abcfe::", error_code::PART_IS_MORE_4_CHARS, "in part 0 of address 123456789abcfe:: more 4 characters"),
-        std::make_tuple("::1/24", error_code::PART_HAS_INVALID_SYMBOL, "in part 3 of address ::1/24 has invalid symbols"),
-        std::make_tuple("2001:db8:::1%scope", error_code::MOST_ONE_DOUBLE_COLON_PERMITTED, "at most one '::' permitted in address 2001:db8:::1%scope"),
-        std::make_tuple(":6:5:4:3:2:1::%scope", error_code::LEADING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at leading ':' only permitted as part of '::' in address :6:5:4:3:2:1::%scope"),
-        std::make_tuple("8:7:6:5:4:3:2:1::%scope", error_code::TRAILING_COLON_ONLY_PERMITTED_AS_PART_OF_DOUBLE_COLON, "at trailing ':' only permitted as part of '::' in address 8:7:6:5:4:3:2:1::%scope"),
-        std::make_tuple("1:2:3:4:5::6:7:8%scope", error_code::EXPECTED_AT_MOST_7_OTHER_PARTS_WITH_DOUBLE_COLON, "expected at most 7 other parts with '::' in address 1:2:3:4:5::6:7:8%scope"),
-        std::make_tuple("7:6:5:4:3:2:1%scope", error_code::EXACTLY_8_PARTS_EXPECTED_WITHOUT_DOUBLE_COLON, "exactly 8 parts expected without '::' in address 7:6:5:4:3:2:1%scope"),
-        std::make_tuple("::%123456789abcdefgh", error_code::SCOPE_ID_IS_TOO_LONG, "scope id is too long in address ::%123456789abcdefgh"),
-        std::make_tuple("::1%scope_id/24", error_code::INVALID_SCOPE_ID, "invalid scope id in address ::1%scope_id/24") 
+        std::make_tuple("", error_code::EmptyAddress, "address cannot be empty"),
+        std::make_tuple("127", error_code::Least3Parts, "least 3 parts in address 127"),
+        std::make_tuple("127.0.0.", error_code::EmptyCctet, "empty octet 0 in address 127.0.0."),
+        std::make_tuple("127.0.0.1/24", error_code::OctetHasInvalidSymbol, "in octet 0 of address 127.0.0.1/24 has invalid symbol"),
+        std::make_tuple("127.0.0.1271", error_code::OctetMore3Characters, "in octet 0 of address 127.0.0.1271 more 3 characters"),
+        std::make_tuple("192.168.0.999", error_code::OctetExceeded255, "octet 0 of address 192.168.0.999 exceeded 255"),
+        std::make_tuple("1.2.3.040", error_code::Leading0AreNotPermitted, "leading zeros are not permitted in octet 0 of address 1.2.3.040"),
+        std::make_tuple("FEDC:9878%scope", error_code::Least3Parts, "least 3 parts in address FEDC:9878%scope"),
+        std::make_tuple("10:9:8:7:6:5:4:3:42.42.42.42%scope", error_code::Most8ColonsPermitted, "most 8 colons permitted in address 10:9:8:7:6:5:4:3:42.42.42.42%scope"),
+        std::make_tuple("2001:db8:::1%scope", error_code::MostOneDoubleColonPermitted, "at most one '::' permitted in address 2001:db8:::1%scope"),
+        std::make_tuple("123456789abcfe::", error_code::PartIsMore4Chars, "in part 0 of address 123456789abcfe:: more 4 characters"),
+        std::make_tuple("::1/24", error_code::PartHasInvalidSymbol, "in part 3 of address ::1/24 has invalid symbols"),
+        std::make_tuple("2001:db8:::1%scope", error_code::MostOneDoubleColonPermitted, "at most one '::' permitted in address 2001:db8:::1%scope"),
+        std::make_tuple(":6:5:4:3:2:1::%scope", error_code::LeadingColonOnlyPermittedAsPartOfDoubleColon, "at leading ':' only permitted as part of '::' in address :6:5:4:3:2:1::%scope"),
+        std::make_tuple("8:7:6:5:4:3:2:1::%scope", error_code::TrailingColonOnlyPermittedAsPartOfDoubleColon, "at trailing ':' only permitted as part of '::' in address 8:7:6:5:4:3:2:1::%scope"),
+        std::make_tuple("1:2:3:4:5::6:7:8%scope", error_code::ExpectedAtMost7OtherPartsWithDoubleColon, "expected at most 7 other parts with '::' in address 1:2:3:4:5::6:7:8%scope"),
+        std::make_tuple("7:6:5:4:3:2:1%scope", error_code::Exactly8PartsExpectedWithoutDoubleColon, "exactly 8 parts expected without '::' in address 7:6:5:4:3:2:1%scope"),
+        std::make_tuple("::%123456789abcdefgh", error_code::ScopeIdIsTooLong, "scope id is too long in address ::%123456789abcdefgh"),
+        std::make_tuple("::1%scope_id/24", error_code::InvalidScopeId, "invalid scope id in address ::1%scope_id/24") 
     ));
 
 TEST(ip_address, Comparison) {
