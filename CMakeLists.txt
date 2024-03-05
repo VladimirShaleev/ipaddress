@@ -8,7 +8,7 @@ set(IPADDRESS_IPV6_SCOPE_MAX_LENGTH "16" CACHE STRING "Maximum scope-id length f
 project(ipaddress 
   HOMEPAGE_URL "https://github.com/VladimirShaleev/ipaddress"
   DESCRIPTION "A library for working and manipulating IPv4/IPv6 addresses and networks"
-  VERSION 0.0.17
+  VERSION 1.0.0
   LANGUAGES CXX)
 
 include(CMakePackageConfigHelpers)
@@ -71,6 +71,8 @@ cmake_dependent_option(IPADDRESS_ENABLE_CLANG_TIDY "Enable clang-tidy checks" ON
   "CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR" OFF)
 cmake_dependent_option(IPADDRESS_BUILD_TESTS "Build tests" ON
   "BUILD_TESTING;CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR" OFF)
+cmake_dependent_option(IPADDRESS_BUILD_BENCHMARK "Build benchmark" OFF
+  "CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR" OFF)
 cmake_dependent_option(IPADDRESS_BUILD_DOC "Build doc" ON
   "CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR" OFF)
 cmake_dependent_option(IPADDRESS_BUILD_PACKAGES "Build packages" ON
@@ -97,6 +99,10 @@ endif()
 
 if(IPADDRESS_BUILD_TESTS)
   add_subdirectory(tests)
+endif()
+
+if(IPADDRESS_BUILD_BENCHMARK)
+  add_subdirectory(benchmark)
 endif()
 
 if(IPADDRESS_BUILD_DOC)
