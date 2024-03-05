@@ -196,7 +196,7 @@ Handling Error Codes</h2>
 <div class="line">    <a class="code hl_enumeration" href="namespaceipaddress.html#a88a76ee847c844cc47b94caac600689d">error_code</a> err;</div>
 <div class="line">    <span class="keyword">auto</span> ip = ipv4_address::parse(<span class="stringliteral">&quot;192.257.2.0&quot;</span>, err);</div>
 <div class="line"> </div>
-<div class="line">    <span class="keywordflow">if</span> (err != error_code::NO_ERROR) {</div>
+<div class="line">    <span class="keywordflow">if</span> (err != error_code::no_error) {</div>
 <div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;invalid ip&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line">        <span class="keywordflow">return</span> 1;</div>
 <div class="line">    }</div>
@@ -228,7 +228,7 @@ Disable Exceptions</h2>
 <div class="line">    <a class="code hl_enumeration" href="namespaceipaddress.html#a88a76ee847c844cc47b94caac600689d">error_code</a> err;</div>
 <div class="line">    <span class="keyword">auto</span> ip = ipv4_address::parse(<span class="stringliteral">&quot;192.257.2.0&quot;</span>, err);</div>
 <div class="line"> </div>
-<div class="line">    <span class="keywordflow">if</span> (err != error_code::NO_ERROR) { <span class="comment">// this will work as expected</span></div>
+<div class="line">    <span class="keywordflow">if</span> (err != error_code::no_error) { <span class="comment">// this will work as expected</span></div>
 <div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;invalid ip&quot;</span> &lt;&lt; std::endl;</div>
 <div class="line">        <span class="keywordflow">return</span> 1;</div>
 <div class="line">    }</div>

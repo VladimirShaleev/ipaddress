@@ -1,11 +1,11 @@
 var searchData=
 [
   ['octal_0',['octal',['../classipaddress_1_1uint128__t.html#a387137c43ed9616d39ba90e890d181eba34d0e21ea08f041727cd3c62f02535e3',1,'ipaddress::uint128_t']]],
-  ['octet_5fexceeded_5f255_1',['OCTET_EXCEEDED_255',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689da1435adbd5ad33d9489c6351da36eb143',1,'ipaddress']]],
-  ['octet_5fhas_5finvalid_5fsymbol_2',['OCTET_HAS_INVALID_SYMBOL',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689dae5158f71e04b29e7ee269f95176890f4',1,'ipaddress']]],
-  ['octet_5fmore_5f3_5fcharacters_3',['OCTET_MORE_3_CHARACTERS',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689da6dd88c745a2fa77cc8cbba26b4adfff6',1,'ipaddress']]],
+  ['octet_5fexceeded_5f255_1',['octet_exceeded_255',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689da239c05af7c31a895134126a72b566b8e',1,'ipaddress']]],
+  ['octet_5fhas_5finvalid_5fsymbol_2',['octet_has_invalid_symbol',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689da0749344cbeac2329e6ff66879d2fa64c',1,'ipaddress']]],
+  ['octet_5fmore_5f3_5fcharacters_3',['octet_more_3_characters',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689dae188957b9f6cb30caea98971b8663791',1,'ipaddress']]],
   ['one_20network_20from_20another_20network_4',['Removing one network from another network',['../operations.html#autotoc_md32',1,'']]],
-  ['only_5fone_5fslash_5fpermitted_5',['ONLY_ONE_SLASH_PERMITTED',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689da9b0dd645bae34eb17b79da5c94855dba',1,'ipaddress']]],
+  ['only_5fone_5fslash_5fpermitted_5',['only_one_slash_permitted',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689dade2be6b66bbe04586587ced567e9ce9c',1,'ipaddress']]],
   ['operations_6',['Operations',['../operations.html',1,'Network Operations'],['../operations.html#autotoc_md33',1,'Other operations']]],
   ['operator_20bool_7',['operator bool',['../classipaddress_1_1scope.html#ae4fa87dce1664735f6a6043898a37642',1,'ipaddress::scope::operator bool()'],['../classipaddress_1_1optional.html#ae4fa87dce1664735f6a6043898a37642',1,'ipaddress::optional::operator bool()'],['../classipaddress_1_1uint128__t.html#ae4fa87dce1664735f6a6043898a37642',1,'ipaddress::uint128_t::operator bool() const noexcept']]],
   ['operator_20char_8',['operator char',['../classipaddress_1_1uint128__t.html#a144b4a1a93a42ad9ceaec789bb216213',1,'ipaddress::uint128_t']]],

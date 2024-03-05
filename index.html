@@ -176,9 +176,6 @@ $(function(){initNavTree('index.html',''); initResizable(); });
 </div>
 <div class="textblock"><p><a href="https://github.com/VladimirShaleev/ipaddress/releases"><img src="https://img.shields.io/github/v/release/vladimirshaleev/ipaddress?sort=semver&amp;display_name=tag" alt="GitHub Release" class="inline"/></a> <a href="https://github.com/VladimirShaleev/ipaddress/blob/main/LICENSE"><img src="https://img.shields.io/github/license/vladimirshaleev/ipaddress" alt="GitHub License" class="inline"/></a> <a href="https://github.com/VladimirShaleev/ipaddress/actions/workflows/tests.yml"><img src="https://img.shields.io/github/actions/workflow/status/vladimirshaleev/ipaddress/tests.yml?branch=main&amp;logo=github&amp;label=tests" alt="GitHub Actions Workflow Status" class="inline"/></a></p>
 <p>A library for working and manipulating IPv4/IPv6 addresses and networks in modern C++.</p>
-<blockquote class="doxtable">
-<p>&zwj;[!IMPORTANT] THE LIBRARY IS CURRENTLY UNDER ACTIVE DEVELOPMENT AND NOT YET READY FOR USE! </p>
-</blockquote>
 <h2><a class="anchor" id="autotoc_md0"></a>
 Introduction</h2>
 <p>This cross-platfrom <b>header-only</b> library (for C++11 and newer) is inspired by the <a href="https://docs.python.org/3.12/library/ipaddress.html">ipaddress API in Python</a>, from which it derives its name. It aims to be simpler to use due to its familiar interface. However, the C++ implementation takes a different approach: it uses <b>static polymorphism</b> through the strategy pattern instead of dynamic polymorphism to handle differences between IP versions (IPv4 and IPv6). This design choice eliminates the overhead of dynamic calls and virtual tables. For instance, an instance of the <b>ipv4_address</b> class will be represented by 4 bytes.</p>
@@ -201,16 +198,15 @@ Installation</h2>
 <p>You can install in one of the following ways</p>
 <h3><a class="anchor" id="autotoc_md3"></a>
 Use package managers</h3>
-<blockquote class="doxtable">
-<p>&zwj;[!IMPORTANT] Packages have not been published yet</p>
-<p></p>
-</blockquote>
 <h4><a class="anchor" id="autotoc_md4"></a>
 Vcpkg</h4>
+<p><b>The package has not yet been published</b></p>
 <h4><a class="anchor" id="autotoc_md5"></a>
 Conan</h4>
+<p><b>The package has not yet been published</b></p>
 <h4><a class="anchor" id="autotoc_md6"></a>
 Homebrew</h4>
+<p><b>The package has not yet been published</b></p>
 <h4><a class="anchor" id="autotoc_md7"></a>
 Ubuntu PPA</h4>
 <div class="fragment"><div class="line">sudo add-apt-repository ppa:vladimirshaleev/ipaddress</div>
