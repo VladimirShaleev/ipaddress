@@ -24,11 +24,11 @@ Once the repository is clone, you can configure it using CMake.
 cmake -B build -S . \
   -DCMAKE_CXX_STANDARD=17 \
   -DCMAKE_BUILD_TYPE=Debug \
+  -DIPADDRESS_ENABLE_CLANG_TIDY=OFF \
   -DIPADDRESS_BUILD_TESTS=ON \
   -DIPADDRESS_BUILD_BENCHMARK=OFF \
   -DIPADDRESS_BUILD_DOC=OFF \
   -DIPADDRESS_BUILD_PACKAGES=OFF \
-  -DIPADDRESS_ENABLE_CLANG_TIDY=OFF \
   -DIPADDRESS_NO_EXCEPTIONS=OFF \
   -DIPADDRESS_NO_IPV6_SCOPE=OFF \
   -DIPADDRESS_NO_OVERLOAD_STD=OFF \
@@ -38,11 +38,11 @@ cmake -B build -S . \
 Where:
 
 * `CMAKE_CXX_STANDARD` — The selected standard with which unit tests will be collected. If not specified, the default one in the current build tools will be used.
+* `IPADDRESS_ENABLE_CLANG_TIDY` — Enable clang-tidy checks (`ON` by default).
 * `IPADDRESS_BUILD_TESTS` — Build unit tests (`ON` by default).
 * `IPADDRESS_BUILD_BENCHMARK` — Build benchmark (`OFF` by default).
 * `IPADDRESS_BUILD_DOC` — Build doc (`ON` by default).
 * `IPADDRESS_BUILD_PACKAGES` — Create targets for building packages deb, rpm, etc. (`ON` by default).
-* `IPADDRESS_ENABLE_CLANG_TIDY` — Enable clang-tidy checks (`ON` by default).
 * `IPADDRESS_NO_EXCEPTIONS` — Disable exceptions throwing (`OFF` by default).
 * `IPADDRESS_NO_IPV6_SCOPE` — Disable scope id for ipv6 (`OFF` by default).
 * `IPADDRESS_IPV6_SCOPE_MAX_LENGTH` — scope id max length (`16` by default).

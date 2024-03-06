@@ -8,13 +8,6 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 set(INSTALL_GTEST OFF CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-if(IPADDRESS_CLANG_TIDY)
-  set_target_properties(gtest PROPERTIES CXX_CLANG_TIDY "")
-  set_target_properties(gmock PROPERTIES CXX_CLANG_TIDY "")
-  set_target_properties(gtest_main PROPERTIES CXX_CLANG_TIDY "")
-  set_target_properties(gmock_main PROPERTIES CXX_CLANG_TIDY "")
-endif()
-
 if(CMAKE_CXX_STANDARD)
   message(STATUS "Select standatd C++${CMAKE_CXX_STANDARD}")
 endif()
@@ -30,6 +23,10 @@ add_executable(ipaddress-tests
   "ip-address-tests.cpp" 
   "ip-network-tests.cpp")
 target_link_libraries(ipaddress-tests ipaddress GTest::gtest GTest::gtest_main GTest::gmock_main)
+
+if(IPADDRESS_CLANG_TIDY)
+  set_target_properties(ipaddress-tests PROPERTIES CXX_CLANG_TIDY ${IPADDRESS_CLANG_TIDY})
+endif()
 
 include(GoogleTest)
 gtest_discover_tests(ipaddress-tests)
