@@ -1,9 +1,18 @@
 var searchData=
 [
-  ['leading_5f0_5fare_5fnot_5fpermitted_0',['leading_0_are_not_permitted',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689da4a6e1e5e372f05f3be01e16d0af4414a',1,'ipaddress']]],
-  ['leading_5fcolon_5fonly_5fpermitted_5fas_5fpart_5fof_5fdouble_5fcolon_1',['leading_colon_only_permitted_as_part_of_double_colon',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689da1f1b12e93a0fb97480a27c1dcff5f515',1,'ipaddress']]],
-  ['least_5f3_5fparts_2',['least_3_parts',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689daee762d060f4b6e9d95cbef49e377a594',1,'ipaddress']]],
-  ['licensing_3',['Licensing',['../index.html#autotoc_md14',1,'']]],
-  ['logic_5ferror_4',['logic_error',['../classipaddress_1_1logic__error.html',1,'logic_error'],['../classipaddress_1_1logic__error.html#af9cb321a672a2c741e1442ec7f0fa131',1,'ipaddress::logic_error::logic_error(error_code code, const FirstArg &amp;arg, const Args &amp;... args)'],['../classipaddress_1_1logic__error.html#a88d4b462fdf573f6fdc4c2c48b371607',1,'ipaddress::logic_error::logic_error(error_code code, const std::string &amp;message)'],['../classipaddress_1_1logic__error.html#ac7c4119ba6540fc13e5b85da29bfaaad',1,'ipaddress::logic_error::logic_error(error_code code, const char *message)']]],
-  ['lower_5',['lower',['../classipaddress_1_1uint128__t.html#a14c0f16a519119e8e89fd6000888cdc2',1,'ipaddress::uint128_t']]]
+  ['handling_0',['Handling',['../errors.html',1,'Error Handling'],['../errors.html#autotoc_md34',1,'Exception Handling']]],
+  ['handling_20error_20codes_1',['Handling Error Codes',['../errors.html#autotoc_md35',1,'']]],
+  ['has_5fhost_5fbits_5fset_2',['has_host_bits_set',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689dacc88bd2276818f5831768af64bf979c2',1,'ipaddress']]],
+  ['has_5fstring_3',['has_string',['../classipaddress_1_1scope.html#a80338a97a8bc31b4523d3ec6db8fbc8c',1,'ipaddress::scope']]],
+  ['has_5fuint32_4',['has_uint32',['../classipaddress_1_1scope.html#a3eacfbff9a710760b642ac9bc8668008',1,'ipaddress::scope']]],
+  ['has_5fvalue_5',['has_value',['../classipaddress_1_1optional.html#afdb8fecd98cd3a473fadcea64c400d53',1,'ipaddress::optional']]],
+  ['hash_6',['hash',['../structipaddress_1_1fixed__string.html#ab4ea6c821fe871e802647d69810a470d',1,'ipaddress::fixed_string::hash()'],['../classipaddress_1_1ip__address__base.html#ab4ea6c821fe871e802647d69810a470d',1,'ipaddress::ip_address_base::hash()'],['../classipaddress_1_1ip__address.html#ab4ea6c821fe871e802647d69810a470d',1,'ipaddress::ip_address::hash()'],['../classipaddress_1_1ip__network.html#ab4ea6c821fe871e802647d69810a470d',1,'ipaddress::ip_network::hash()'],['../classipaddress_1_1ip__network__base.html#ab4ea6c821fe871e802647d69810a470d',1,'ipaddress::ip_network_base::hash()'],['../classipaddress_1_1uint128__t.html#a8923effefbc918cd47dcf38a74e916b8',1,'ipaddress::uint128_t::hash()']]],
+  ['hash_2ehpp_7',['hash.hpp',['../hash_8hpp.html',1,'']]],
+  ['hexadecimal_8',['hexadecimal',['../classipaddress_1_1uint128__t.html#a387137c43ed9616d39ba90e890d181eba2c34788af99f9ca074434e362d584d54',1,'ipaddress::uint128_t']]],
+  ['homebrew_9',['Homebrew',['../index.html#autotoc_md6',1,'']]],
+  ['hostmask_10',['hostmask',['../classipaddress_1_1ip__network.html#a06c4b45cf961b47a37da2164c0cc9808',1,'ipaddress::ip_network::hostmask()'],['../classipaddress_1_1ip__network__base.html#a34efffb7567ae9f6528aeef9fe76a469',1,'ipaddress::ip_network_base::hostmask()']]],
+  ['hosts_11',['hosts',['../classipaddress_1_1ip__network.html#ab1288f457a02658d5bc47c121b7a2d6b',1,'ipaddress::ip_network::hosts()'],['../classipaddress_1_1ip__network__base.html#a5c19443fa46e2546940326bbc2498947',1,'ipaddress::ip_network_base::hosts()']]],
+  ['hosts_5fany_5fsequence_12',['hosts_any_sequence',['../classipaddress_1_1hosts__any__sequence.html',1,'hosts_any_sequence'],['../classipaddress_1_1hosts__any__sequence.html#ae90ecd8acc1e604144ef7fd2b7a014d1',1,'ipaddress::hosts_any_sequence::hosts_any_sequence(ip_address_iterator&lt; ipv4_address &gt; begin, ip_address_iterator&lt; ipv4_address &gt; end) noexcept'],['../classipaddress_1_1hosts__any__sequence.html#a949142c1810de677df16c4828775ea29',1,'ipaddress::hosts_any_sequence::hosts_any_sequence(ip_address_iterator&lt; ipv6_address &gt; begin, ip_address_iterator&lt; ipv6_address &gt; end) noexcept']]],
+  ['hosts_5fsequence_13',['hosts_sequence',['../classipaddress_1_1hosts__sequence_3_01ip__address__base_3_01Base_01_4_01_4.html#aad322b972dc898f72e20f19e8d8c450d',1,'ipaddress::hosts_sequence&lt; ip_address_base&lt; Base &gt; &gt;']]],
+  ['hosts_5fsequence_3c_20ip_5faddress_5fbase_3c_20base_20_3e_20_3e_14',['hosts_sequence&lt; ip_address_base&lt; Base &gt; &gt;',['../classipaddress_1_1hosts__sequence_3_01ip__address__base_3_01Base_01_4_01_4.html',1,'ipaddress']]]
 ];

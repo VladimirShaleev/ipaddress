@@ -153,12 +153,17 @@ $(function(){initNavTree('benchmark.html',''); initResizable(); });
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><ul><li class="level2"><a href="#autotoc_md37">Comparison table</a></li>
+<ul><ul><li class="level2"><a href="#autotoc_md37">Comparison tables</a><ul><li class="level3"><a href="#autotoc_md38">Linux (Ubuntu 20.04)</a></li>
+<li class="level3"><a href="#autotoc_md39">MacOS</a></li>
+<li class="level3"><a href="#autotoc_md40">Windows</a></li>
+</ul>
+</li>
 </ul>
 </ul>
 </div>
-<div class="textblock"><h2><a class="anchor" id="autotoc_md37"></a>
-Comparison table</h2>
+<div class="textblock"><p>Below are tables comparing this library with the boost asio library and the sockets API.</p>
+<h2><a class="anchor" id="autotoc_md37"></a>
+Comparison tables</h2>
 <p> 
 
 <style type="text/css">
@@ -177,10 +182,113 @@ Comparison table</h2>
 </style>
 
 </p>
-<p>Below is a table comparing this library with the boost asio library and sockets API.</p>
+<h3><a class="anchor" id="autotoc_md38"></a>
+Linux (Ubuntu 20.04)</h3>
 <details  class="details_class" open="true">
 <summary >
-<b> Linux (Ubuntu) </b></summary>
+<b> Table </b></summary>
+<p></p>
+<dl class="section note"><dt>Note</dt><dd>Run on (16 X 3110 MHz CPU s) <br  />
+ CPU Caches: <br  />
+ &#160;&#160;&#160;&#160;L1 Data 48 KiB (x8) <br  />
+ &#160;&#160;&#160;&#160;L1 Instruction 32 KiB (x8) <br  />
+ &#160;&#160;&#160;&#160;L2 Unified 1280 KiB (x8) <br  />
+ &#160;&#160;&#160;&#160;L3 Unified 18432 KiB (x1) <br  />
+ Load Average: 3.12, 5.12, 6.21</dd></dl>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadLeft">input string   </th><th class="markdownTableHeadRight">ipaddress   </th><th class="markdownTableHeadRight">socket API   </th><th class="markdownTableHeadRight">boost asio    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft"><code>127.0.0.1</code>   </td><td class="markdownTableBodyRight">12.6 ns   </td><td class="markdownTableBodyRight">16.5 ns   </td><td class="markdownTableBodyRight">17.8 ns    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft"><code>192.168.0.1</code>   </td><td class="markdownTableBodyRight">14.5 ns   </td><td class="markdownTableBodyRight">19.6 ns   </td><td class="markdownTableBodyRight">20.8 ns    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft"><code>0.0.0.0</code>   </td><td class="markdownTableBodyRight">9.29 ns   </td><td class="markdownTableBodyRight">12.9 ns   </td><td class="markdownTableBodyRight">15.4 ns    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft"><code>100.64.0.0</code>   </td><td class="markdownTableBodyRight">11.6 ns   </td><td class="markdownTableBodyRight">16.9 ns   </td><td class="markdownTableBodyRight">20.7 ns    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft"><code>192.168.1.1</code>   </td><td class="markdownTableBodyRight">12.5 ns   </td><td class="markdownTableBodyRight">17.5 ns   </td><td class="markdownTableBodyRight">22.6 ns    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft"><code>127.239.0.1</code>   </td><td class="markdownTableBodyRight">12.3 ns   </td><td class="markdownTableBodyRight">17.9 ns   </td><td class="markdownTableBodyRight">21.6 ns    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft"><code>127.128.128.255</code>   </td><td class="markdownTableBodyRight">17.9 ns   </td><td class="markdownTableBodyRight">23.1 ns   </td><td class="markdownTableBodyRight">25.6 ns    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft"><code>224.1.1.1</code>   </td><td class="markdownTableBodyRight">11.0 ns   </td><td class="markdownTableBodyRight">16.1 ns   </td><td class="markdownTableBodyRight">17.8 ns    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft"><code>2001:db8::1</code>   </td><td class="markdownTableBodyRight">57.7 ns   </td><td class="markdownTableBodyRight">24.6 ns   </td><td class="markdownTableBodyRight">36.4 ns    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft"><code>0001:0002:0003:0004:0005:0006:0007:0008%12345</code>   </td><td class="markdownTableBodyRight">165 ns   </td><td class="markdownTableBodyRight">-   </td><td class="markdownTableBodyRight">73.3 ns    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft"><code>::ffff:172.32.0.0</code>   </td><td class="markdownTableBodyRight">97.7 ns   </td><td class="markdownTableBodyRight">40.7 ns   </td><td class="markdownTableBodyRight">50.5 ns    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft"><code>2002:ac1d:2d64::1</code>   </td><td class="markdownTableBodyRight">74.4 ns   </td><td class="markdownTableBodyRight">38.4 ns   </td><td class="markdownTableBodyRight">43.9 ns    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft"><code>2001:0000:4136:e378:8000:63bf:3fff:fdd2</code>   </td><td class="markdownTableBodyRight">130 ns   </td><td class="markdownTableBodyRight">53.0 ns   </td><td class="markdownTableBodyRight">69.2 ns    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft"><code>2000::4136:e378:8000:63bf:3fff:fdd2</code>   </td><td class="markdownTableBodyRight">119 ns   </td><td class="markdownTableBodyRight">58.3 ns   </td><td class="markdownTableBodyRight">68.1 ns    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft"><code>2001:db8:0:0:1:0:0:1</code>   </td><td class="markdownTableBodyRight">89.7 ns   </td><td class="markdownTableBodyRight">27.7 ns   </td><td class="markdownTableBodyRight">38.2 ns    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft"><code>fe80::1ff:fe23:4567:890a%31</code>   </td><td class="markdownTableBodyRight">98.4 ns   </td><td class="markdownTableBodyRight">-   </td><td class="markdownTableBodyRight">1423 ns   </td></tr>
+</table>
+<p></p>
+</details>
+<h3><a class="anchor" id="autotoc_md39"></a>
+MacOS</h3>
+<details  class="details_class">
+<summary >
+<b> Table </b></summary>
+<p></p>
+<dl class="section note"><dt>Note</dt><dd>Run on (8 X 2000 MHz CPU s) <br  />
+ CPU Caches: <br  />
+ &#160;&#160;&#160;&#160;L1 Data 48 KiB <br  />
+ &#160;&#160;&#160;&#160;L1 Instruction 32 KiB <br  />
+ &#160;&#160;&#160;&#160;L2 Unified 512 KiB (x4) <br  />
+ &#160;&#160;&#160;&#160;L3 Unified 6144 KiB <br  />
+ Load Average: 17.22, 9.41, 6.84</dd></dl>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadLeft">input string   </th><th class="markdownTableHeadRight">ipaddress   </th><th class="markdownTableHeadRight">socket API   </th><th class="markdownTableHeadRight">boost asio    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft"><code>127.0.0.1</code>   </td><td class="markdownTableBodyRight">14.4 ns   </td><td class="markdownTableBodyRight">49.2 ns   </td><td class="markdownTableBodyRight">57.8 ns    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft"><code>192.168.0.1</code>   </td><td class="markdownTableBodyRight">16.8 ns   </td><td class="markdownTableBodyRight">56.3 ns   </td><td class="markdownTableBodyRight">64.9 ns    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft"><code>0.0.0.0</code>   </td><td class="markdownTableBodyRight">12.0 ns   </td><td class="markdownTableBodyRight">38.7 ns   </td><td class="markdownTableBodyRight">48.4 ns    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft"><code>100.64.0.0</code>   </td><td class="markdownTableBodyRight">15.6 ns   </td><td class="markdownTableBodyRight">51.8 ns   </td><td class="markdownTableBodyRight">60.2 ns    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft"><code>192.168.1.1</code>   </td><td class="markdownTableBodyRight">16.7 ns   </td><td class="markdownTableBodyRight">55.9 ns   </td><td class="markdownTableBodyRight">63.3 ns    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft"><code>127.239.0.1</code>   </td><td class="markdownTableBodyRight">16.9 ns   </td><td class="markdownTableBodyRight">55.8 ns   </td><td class="markdownTableBodyRight">63.9 ns    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft"><code>127.128.128.255</code>   </td><td class="markdownTableBodyRight">22.3 ns   </td><td class="markdownTableBodyRight">70.7 ns   </td><td class="markdownTableBodyRight">80.9 ns    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft"><code>224.1.1.1</code>   </td><td class="markdownTableBodyRight">14.4 ns   </td><td class="markdownTableBodyRight">47.8 ns   </td><td class="markdownTableBodyRight">57.2 ns    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft"><code>2001:db8::1</code>   </td><td class="markdownTableBodyRight">71.6 ns   </td><td class="markdownTableBodyRight">80.2 ns   </td><td class="markdownTableBodyRight">95.0 ns    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft"><code>0001:0002:0003:0004:0005:0006:0007:0008%12345</code>   </td><td class="markdownTableBodyRight">194 ns   </td><td class="markdownTableBodyRight">311 ns   </td><td class="markdownTableBodyRight">292 ns    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft"><code>::ffff:172.32.0.0</code>   </td><td class="markdownTableBodyRight">115 ns   </td><td class="markdownTableBodyRight">132 ns   </td><td class="markdownTableBodyRight">146 ns    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft"><code>2002:ac1d:2d64::1</code>   </td><td class="markdownTableBodyRight">92.3 ns   </td><td class="markdownTableBodyRight">116 ns   </td><td class="markdownTableBodyRight">129 ns    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft"><code>2001:0000:4136:e378:8000:63bf:3fff:fdd2</code>   </td><td class="markdownTableBodyRight">187 ns   </td><td class="markdownTableBodyRight">265 ns   </td><td class="markdownTableBodyRight">267 ns    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft"><code>2000::4136:e378:8000:63bf:3fff:fdd2</code>   </td><td class="markdownTableBodyRight">171 ns   </td><td class="markdownTableBodyRight">218 ns   </td><td class="markdownTableBodyRight">244 ns    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyLeft"><code>2001:db8:0:0:1:0:0:1</code>   </td><td class="markdownTableBodyRight">115 ns   </td><td class="markdownTableBodyRight">142 ns   </td><td class="markdownTableBodyRight">159 ns    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyLeft"><code>fe80::1ff:fe23:4567:890a%31</code>   </td><td class="markdownTableBodyRight">131 ns   </td><td class="markdownTableBodyRight">44973 ns   </td><td class="markdownTableBodyRight">47695 ns   </td></tr>
+</table>
+<p></p>
+</details>
+<h3><a class="anchor" id="autotoc_md40"></a>
+Windows</h3>
+<details  class="details_class">
+<summary >
+<b> Table </b></summary>
 <p></p>
 <dl class="section note"><dt>Note</dt><dd>Run on (16 X 3110 MHz CPU s) <br  />
  CPU Caches: <br  />
@@ -190,129 +298,39 @@ Comparison table</h2>
  &#160;&#160;&#160;&#160;L3 Unified 18432 KiB (x1)</dd></dl>
 <table class="markdownTable">
 <tr class="markdownTableHead">
-<th class="markdownTableHeadNone">input string   </th><th class="markdownTableHeadRight">ipaddress   </th><th class="markdownTableHeadRight">socket API   </th><th class="markdownTableHeadRight">boost asio    </th></tr>
+<th class="markdownTableHeadLeft">input string   </th><th class="markdownTableHeadRight">ipaddress   </th><th class="markdownTableHeadRight">socket API   </th><th class="markdownTableHeadRight">boost asio    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>127.0.0.1</code>   </td><td class="markdownTableBodyRight">12.6 ns   </td><td class="markdownTableBodyRight">16.5 ns   </td><td class="markdownTableBodyRight">17.8 ns    </td></tr>
+<td class="markdownTableBodyLeft"><code>127.0.0.1</code>   </td><td class="markdownTableBodyRight">9.44 ns   </td><td class="markdownTableBodyRight">31.8 ns   </td><td class="markdownTableBodyRight">219 ns    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>192.168.0.1</code>   </td><td class="markdownTableBodyRight">14.5 ns   </td><td class="markdownTableBodyRight">19.6 ns   </td><td class="markdownTableBodyRight">20.8 ns    </td></tr>
+<td class="markdownTableBodyLeft"><code>192.168.0.1</code>   </td><td class="markdownTableBodyRight">11.7 ns   </td><td class="markdownTableBodyRight">34.4 ns   </td><td class="markdownTableBodyRight">227 ns    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>0.0.0.0</code>   </td><td class="markdownTableBodyRight">9.29 ns   </td><td class="markdownTableBodyRight">12.9 ns   </td><td class="markdownTableBodyRight">15.4 ns    </td></tr>
+<td class="markdownTableBodyLeft"><code>0.0.0.0</code>   </td><td class="markdownTableBodyRight">8.07 ns   </td><td class="markdownTableBodyRight">26.0 ns   </td><td class="markdownTableBodyRight">214 ns    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>100.64.0.0</code>   </td><td class="markdownTableBodyRight">11.6 ns   </td><td class="markdownTableBodyRight">16.9 ns   </td><td class="markdownTableBodyRight">20.7 ns    </td></tr>
+<td class="markdownTableBodyLeft"><code>100.64.0.0</code>   </td><td class="markdownTableBodyRight">10.9 ns   </td><td class="markdownTableBodyRight">32.0 ns   </td><td class="markdownTableBodyRight">226 ns    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>192.168.1.1</code>   </td><td class="markdownTableBodyRight">12.5 ns   </td><td class="markdownTableBodyRight">17.5 ns   </td><td class="markdownTableBodyRight">22.6 ns    </td></tr>
+<td class="markdownTableBodyLeft"><code>192.168.1.1</code>   </td><td class="markdownTableBodyRight">12.1 ns   </td><td class="markdownTableBodyRight">33.8 ns   </td><td class="markdownTableBodyRight">225 ns    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>127.239.0.1</code>   </td><td class="markdownTableBodyRight">12.3 ns   </td><td class="markdownTableBodyRight">17.9 ns   </td><td class="markdownTableBodyRight">21.6 ns    </td></tr>
+<td class="markdownTableBodyLeft"><code>127.239.0.1</code>   </td><td class="markdownTableBodyRight">12.5 ns   </td><td class="markdownTableBodyRight">34.9 ns   </td><td class="markdownTableBodyRight">227 ns    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>127.128.128.255</code>   </td><td class="markdownTableBodyRight">17.9 ns   </td><td class="markdownTableBodyRight">23.1 ns   </td><td class="markdownTableBodyRight">25.6 ns    </td></tr>
+<td class="markdownTableBodyLeft"><code>127.128.128.255</code>   </td><td class="markdownTableBodyRight">16.8 ns   </td><td class="markdownTableBodyRight">40.5 ns   </td><td class="markdownTableBodyRight">235 ns    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>224.1.1.1</code>   </td><td class="markdownTableBodyRight">11.0 ns   </td><td class="markdownTableBodyRight">16.1 ns   </td><td class="markdownTableBodyRight">17.8 ns    </td></tr>
+<td class="markdownTableBodyLeft"><code>224.1.1.1</code>   </td><td class="markdownTableBodyRight">10.2 ns   </td><td class="markdownTableBodyRight">27.9 ns   </td><td class="markdownTableBodyRight">225 ns    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>2001:db8::1</code>   </td><td class="markdownTableBodyRight">57.7 ns   </td><td class="markdownTableBodyRight">24.6 ns   </td><td class="markdownTableBodyRight">36.4 ns    </td></tr>
+<td class="markdownTableBodyLeft"><code>2001:db8::1</code>   </td><td class="markdownTableBodyRight">41.8 ns   </td><td class="markdownTableBodyRight">91.1 ns   </td><td class="markdownTableBodyRight">262 ns    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>0001:0002:0003:0004:0005:0006:0007:0008%12345</code>   </td><td class="markdownTableBodyRight">165 ns   </td><td class="markdownTableBodyRight">-   </td><td class="markdownTableBodyRight">73.3 ns    </td></tr>
+<td class="markdownTableBodyLeft"><code>0001:0002:0003:0004:0005:0006:0007:0008%12345</code>   </td><td class="markdownTableBodyRight">125 ns   </td><td class="markdownTableBodyRight">-   </td><td class="markdownTableBodyRight">424 ns    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>::ffff:172.32.0.0</code>   </td><td class="markdownTableBodyRight">97.7 ns   </td><td class="markdownTableBodyRight">40.7 ns   </td><td class="markdownTableBodyRight">50.5 ns    </td></tr>
+<td class="markdownTableBodyLeft"><code>::ffff:172.32.0.0</code>   </td><td class="markdownTableBodyRight">69.4 ns   </td><td class="markdownTableBodyRight">135 ns   </td><td class="markdownTableBodyRight">300 ns    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>2002:ac1d:2d64::1</code>   </td><td class="markdownTableBodyRight">74.4 ns   </td><td class="markdownTableBodyRight">38.4 ns   </td><td class="markdownTableBodyRight">43.9 ns    </td></tr>
+<td class="markdownTableBodyLeft"><code>2002:ac1d:2d64::1</code>   </td><td class="markdownTableBodyRight">57.4 ns   </td><td class="markdownTableBodyRight">131 ns   </td><td class="markdownTableBodyRight">307 ns    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>2001:0000:4136:e378:8000:63bf:3fff:fdd2</code>   </td><td class="markdownTableBodyRight">130 ns   </td><td class="markdownTableBodyRight">53.0 ns   </td><td class="markdownTableBodyRight">69.2 ns    </td></tr>
+<td class="markdownTableBodyLeft"><code>2001:0000:4136:e378:8000:63bf:3fff:fdd2</code>   </td><td class="markdownTableBodyRight">116 ns   </td><td class="markdownTableBodyRight">273 ns   </td><td class="markdownTableBodyRight">435 ns    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>2000::4136:e378:8000:63bf:3fff:fdd2</code>   </td><td class="markdownTableBodyRight">119 ns   </td><td class="markdownTableBodyRight">58.3 ns   </td><td class="markdownTableBodyRight">68.1 ns    </td></tr>
+<td class="markdownTableBodyLeft"><code>2000::4136:e378:8000:63bf:3fff:fdd2</code>   </td><td class="markdownTableBodyRight">101 ns   </td><td class="markdownTableBodyRight">214 ns   </td><td class="markdownTableBodyRight">338 ns    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>2001:db8:0:0:1:0:0:1</code>   </td><td class="markdownTableBodyRight">89.7 ns   </td><td class="markdownTableBodyRight">27.7 ns   </td><td class="markdownTableBodyRight">38.2 ns    </td></tr>
+<td class="markdownTableBodyLeft"><code>2001:db8:0:0:1:0:0:1</code>   </td><td class="markdownTableBodyRight">67.7 ns   </td><td class="markdownTableBodyRight">169 ns   </td><td class="markdownTableBodyRight">321 ns    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>fe80::1ff:fe23:4567:890a%31</code>   </td><td class="markdownTableBodyRight">98.4 ns   </td><td class="markdownTableBodyRight">-   </td><td class="markdownTableBodyRight">1423 ns   </td></tr>
-</table>
-<p></p>
-</details>
-<details  class="details_class">
-<summary >
-<b> MacOS </b></summary>
-<p></p>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadNone">input string   </th><th class="markdownTableHeadRight">ipaddress   </th><th class="markdownTableHeadRight">socket API   </th><th class="markdownTableHeadRight">boost asio    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>127.0.0.1</code>   </td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>192.168.0.1</code>   </td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>0.0.0.0</code>   </td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>100.64.0.0</code>   </td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>192.168.1.1</code>   </td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>127.239.0.1</code>   </td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>127.128.128.255</code>   </td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>224.1.1.1</code>   </td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>2001:db8::1</code>   </td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>0001:0002:0003:0004:0005:0006:0007:0008%12345</code>   </td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>::ffff:172.32.0.0</code>   </td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>2002:ac1d:2d64::1</code>   </td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>2001:0000:4136:e378:8000:63bf:3fff:fdd2</code>   </td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>2000::4136:e378:8000:63bf:3fff:fdd2</code>   </td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>2001:db8:0:0:1:0:0:1</code>   </td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>fe80::1ff:fe23:4567:890a%31</code>   </td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td><td class="markdownTableBodyRight"></td></tr>
-</table>
-<p></p>
-</details>
-<details  class="details_class">
-<summary >
-<b> Windows </b></summary>
-<p></p>
-<dl class="section note"><dt>Note</dt><dd>Run on (16 X 3110 MHz CPU s) <br  />
- CPU Caches: <br  />
- &#160;&#160;&#160;&#160;L1 Data 48 KiB (x8) <br  />
- &#160;&#160;&#160;&#160;L1 Instruction 32 KiB (x8) <br  />
- &#160;&#160;&#160;&#160;L2 Unified 1280 KiB (x8) <br  />
- &#160;&#160;&#160;&#160;L3 Unified 18432 KiB (x1)</dd></dl>
-<table class="markdownTable">
-<tr class="markdownTableHead">
-<th class="markdownTableHeadNone">input string   </th><th class="markdownTableHeadRight">ipaddress   </th><th class="markdownTableHeadRight">socket API   </th><th class="markdownTableHeadRight">boost asio    </th></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>127.0.0.1</code>   </td><td class="markdownTableBodyRight">9.44 ns   </td><td class="markdownTableBodyRight">31.8 ns   </td><td class="markdownTableBodyRight">219 ns    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>192.168.0.1</code>   </td><td class="markdownTableBodyRight">11.7 ns   </td><td class="markdownTableBodyRight">34.4 ns   </td><td class="markdownTableBodyRight">227 ns    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>0.0.0.0</code>   </td><td class="markdownTableBodyRight">8.07 ns   </td><td class="markdownTableBodyRight">26.0 ns   </td><td class="markdownTableBodyRight">214 ns    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>100.64.0.0</code>   </td><td class="markdownTableBodyRight">10.9 ns   </td><td class="markdownTableBodyRight">32.0 ns   </td><td class="markdownTableBodyRight">226 ns    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>192.168.1.1</code>   </td><td class="markdownTableBodyRight">12.1 ns   </td><td class="markdownTableBodyRight">33.8 ns   </td><td class="markdownTableBodyRight">225 ns    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>127.239.0.1</code>   </td><td class="markdownTableBodyRight">12.5 ns   </td><td class="markdownTableBodyRight">34.9 ns   </td><td class="markdownTableBodyRight">227 ns    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>127.128.128.255</code>   </td><td class="markdownTableBodyRight">16.8 ns   </td><td class="markdownTableBodyRight">40.5 ns   </td><td class="markdownTableBodyRight">235 ns    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>224.1.1.1</code>   </td><td class="markdownTableBodyRight">10.2 ns   </td><td class="markdownTableBodyRight">27.9 ns   </td><td class="markdownTableBodyRight">225 ns    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>2001:db8::1</code>   </td><td class="markdownTableBodyRight">41.8 ns   </td><td class="markdownTableBodyRight">91.1 ns   </td><td class="markdownTableBodyRight">262 ns    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>0001:0002:0003:0004:0005:0006:0007:0008%12345</code>   </td><td class="markdownTableBodyRight">125 ns   </td><td class="markdownTableBodyRight">-   </td><td class="markdownTableBodyRight">424 ns    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>::ffff:172.32.0.0</code>   </td><td class="markdownTableBodyRight">69.4 ns   </td><td class="markdownTableBodyRight">135 ns   </td><td class="markdownTableBodyRight">300 ns    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>2002:ac1d:2d64::1</code>   </td><td class="markdownTableBodyRight">57.4 ns   </td><td class="markdownTableBodyRight">131 ns   </td><td class="markdownTableBodyRight">307 ns    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>2001:0000:4136:e378:8000:63bf:3fff:fdd2</code>   </td><td class="markdownTableBodyRight">116 ns   </td><td class="markdownTableBodyRight">273 ns   </td><td class="markdownTableBodyRight">435 ns    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>2000::4136:e378:8000:63bf:3fff:fdd2</code>   </td><td class="markdownTableBodyRight">101 ns   </td><td class="markdownTableBodyRight">214 ns   </td><td class="markdownTableBodyRight">338 ns    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>2001:db8:0:0:1:0:0:1</code>   </td><td class="markdownTableBodyRight">67.7 ns   </td><td class="markdownTableBodyRight">169 ns   </td><td class="markdownTableBodyRight">321 ns    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>fe80::1ff:fe23:4567:890a%31</code>   </td><td class="markdownTableBodyRight">71.6 ns   </td><td class="markdownTableBodyRight">-   </td><td class="markdownTableBodyRight">349 ns   </td></tr>
+<td class="markdownTableBodyLeft"><code>fe80::1ff:fe23:4567:890a%31</code>   </td><td class="markdownTableBodyRight">71.6 ns   </td><td class="markdownTableBodyRight">-   </td><td class="markdownTableBodyRight">349 ns   </td></tr>
 </table>
 <p></p>
 </details>
