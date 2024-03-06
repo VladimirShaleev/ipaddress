@@ -2,7 +2,9 @@
 
 @tableofcontents
 
-## Comparison table
+Below are tables comparing this library with the boost asio library and the sockets API.
+
+## Comparison tables
 
 @htmlonly
 
@@ -23,10 +25,10 @@
 
 @endhtmlonly
 
-Below is a table comparing this library with the boost asio library and sockets API.
+### Linux (Ubuntu 20.04)
 
 <details class="details_class" open>
-<summary><b> Linux (Ubuntu) </b></summary>
+<summary><b> Table </b></summary>
 
 @note
 Run on (16 X 3110 MHz CPU s) <br>
@@ -34,10 +36,11 @@ CPU Caches: <br>
 &nbsp;&nbsp;&nbsp;&nbsp;L1 Data 48 KiB (x8) <br>
 &nbsp;&nbsp;&nbsp;&nbsp;L1 Instruction 32 KiB (x8) <br>
 &nbsp;&nbsp;&nbsp;&nbsp;L2 Unified 1280 KiB (x8) <br>
-&nbsp;&nbsp;&nbsp;&nbsp;L3 Unified 18432 KiB (x1)
+&nbsp;&nbsp;&nbsp;&nbsp;L3 Unified 18432 KiB (x1) <br>
+Load Average: 3.12, 5.12, 6.21
 
 | input string                                    | ipaddress | socket API | boost asio |
-| ----------------------------------------------- | ---------:| ----------:| ----------:|
+|:----------------------------------------------- | ---------:| ----------:| ----------:|
 | `127.0.0.1`                                     |   12.6 ns |    16.5 ns |    17.8 ns |
 | `192.168.0.1`                                   |   14.5 ns |    19.6 ns |    20.8 ns |
 | `0.0.0.0`                                       |   9.29 ns |    12.9 ns |    15.4 ns |
@@ -57,32 +60,45 @@ CPU Caches: <br>
 
 </details>
 
+### MacOS
+
 <details class="details_class">
-<summary><b> MacOS </b></summary>
+<summary><b> Table </b></summary>
+
+@note
+Run on (8 X 2000 MHz CPU s) <br>
+CPU Caches: <br>
+&nbsp;&nbsp;&nbsp;&nbsp;L1 Data 48 KiB <br>
+&nbsp;&nbsp;&nbsp;&nbsp;L1 Instruction 32 KiB <br>
+&nbsp;&nbsp;&nbsp;&nbsp;L2 Unified 512 KiB (x4) <br>
+&nbsp;&nbsp;&nbsp;&nbsp;L3 Unified 6144 KiB <br>
+Load Average: 17.22, 9.41, 6.84
 
 | input string                                    | ipaddress | socket API | boost asio |
-| ----------------------------------------------- | ---------:| ----------:| ----------:|
-| `127.0.0.1`                                     |           |            |            |
-| `192.168.0.1`                                   |           |            |            |
-| `0.0.0.0`                                       |           |            |            |
-| `100.64.0.0`                                    |           |            |            |
-| `192.168.1.1`                                   |           |            |            |
-| `127.239.0.1`                                   |           |            |            |
-| `127.128.128.255`                               |           |            |            |
-| `224.1.1.1`                                     |           |            |            |
-| `2001:db8::1`                                   |           |            |            |
-| `0001:0002:0003:0004:0005:0006:0007:0008%12345` |           |            |            |
-| `::ffff:172.32.0.0`                             |           |            |            |
-| `2002:ac1d:2d64::1`                             |           |            |            |
-| `2001:0000:4136:e378:8000:63bf:3fff:fdd2`       |           |            |            |
-| `2000::4136:e378:8000:63bf:3fff:fdd2`           |           |            |            |
-| `2001:db8:0:0:1:0:0:1`                          |           |            |            |
-| `fe80::1ff:fe23:4567:890a%31`                   |           |            |            |
+|:----------------------------------------------- | ---------:| ----------:| ----------:|
+| `127.0.0.1`                                     |   14.4 ns |    49.2 ns |    57.8 ns |
+| `192.168.0.1`                                   |   16.8 ns |    56.3 ns |    64.9 ns |
+| `0.0.0.0`                                       |   12.0 ns |    38.7 ns |    48.4 ns |
+| `100.64.0.0`                                    |   15.6 ns |    51.8 ns |    60.2 ns |
+| `192.168.1.1`                                   |   16.7 ns |    55.9 ns |    63.3 ns |
+| `127.239.0.1`                                   |   16.9 ns |    55.8 ns |    63.9 ns |
+| `127.128.128.255`                               |   22.3 ns |    70.7 ns |    80.9 ns |
+| `224.1.1.1`                                     |   14.4 ns |    47.8 ns |    57.2 ns |
+| `2001:db8::1`                                   |   71.6 ns |    80.2 ns |    95.0 ns |
+| `0001:0002:0003:0004:0005:0006:0007:0008%12345` |    194 ns |     311 ns |     292 ns |
+| `::ffff:172.32.0.0`                             |    115 ns |     132 ns |     146 ns |
+| `2002:ac1d:2d64::1`                             |   92.3 ns |     116 ns |     129 ns |
+| `2001:0000:4136:e378:8000:63bf:3fff:fdd2`       |    187 ns |     265 ns |     267 ns |
+| `2000::4136:e378:8000:63bf:3fff:fdd2`           |    171 ns |     218 ns |     244 ns |
+| `2001:db8:0:0:1:0:0:1`                          |    115 ns |     142 ns |     159 ns |
+| `fe80::1ff:fe23:4567:890a%31`                   |    131 ns |   44973 ns |   47695 ns |
 
 </details>
 
+### Windows
+
 <details class="details_class">
-<summary><b> Windows </b></summary>
+<summary><b> Table </b></summary>
 
 @note
 Run on (16 X 3110 MHz CPU s) <br>
@@ -93,7 +109,7 @@ CPU Caches: <br>
 &nbsp;&nbsp;&nbsp;&nbsp;L3 Unified 18432 KiB (x1)
 
 | input string                                    | ipaddress | socket API | boost asio |
-| ----------------------------------------------- | ---------:| ----------:| ----------:|
+|:----------------------------------------------- | ---------:| ----------:| ----------:|
 | `127.0.0.1`                                     |   9.44 ns |    31.8 ns |     219 ns |
 | `192.168.0.1`                                   |   11.7 ns |    34.4 ns |     227 ns |
 | `0.0.0.0`                                       |   8.07 ns |    26.0 ns |     214 ns |

@@ -1,6 +1,6 @@
 ---
 WarningsAsErrors: '*'
-HeaderFilterRegex: 'include/ipaddress/.*'
+HeaderFilterRegex: '.*'
 AnalyzeTemporaryDtors: false
 FormatStyle: none
 Checks: 'bugprone-argument-comment,

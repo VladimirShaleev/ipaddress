@@ -22,10 +22,5 @@ FetchContent_Declare(
 set(BOOST_INCLUDE_LIBRARIES asio)
 FetchContent_MakeAvailable(Boost)
 
-if(IPADDRESS_CLANG_TIDY)
-  set_target_properties(benchmark PROPERTIES CXX_CLANG_TIDY "")
-  set_target_properties(benchmark_main PROPERTIES CXX_CLANG_TIDY "")
-endif()
-
 add_executable(ipaddress-benchmark benchmark.cpp)
 target_link_libraries(ipaddress-benchmark PRIVATE ipaddress Boost::asio benchmark::benchmark benchmark::benchmark_main)

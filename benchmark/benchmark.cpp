@@ -63,7 +63,7 @@ BENCHMARK_DEFINE_F(Ipv4AddressFixture, BM_parse_ipaddress)(benchmark::State& sta
         benchmark::DoNotOptimize(ipaddress::ipv4_address::parse(str).to_uint());
     }
 }
-BENCHMARK_REGISTER_F(Ipv4AddressFixture, BM_parse_ipaddress)->Apply(Arguments); // NOLINT
+BENCHMARK_REGISTER_F(Ipv4AddressFixture, BM_parse_ipaddress)->Apply(Arguments);
 
 BENCHMARK_DEFINE_F(Ipv4AddressFixture, BM_parse_inet_pton)(benchmark::State& state) {
     for (auto _ : state) {
@@ -74,14 +74,14 @@ BENCHMARK_DEFINE_F(Ipv4AddressFixture, BM_parse_inet_pton)(benchmark::State& sta
         benchmark::DoNotOptimize(uint32_t(ntohl(ip_addr.s_addr)));
     }
 }
-BENCHMARK_REGISTER_F(Ipv4AddressFixture, BM_parse_inet_pton)->Apply(Arguments); // NOLINT
+BENCHMARK_REGISTER_F(Ipv4AddressFixture, BM_parse_inet_pton)->Apply(Arguments);
 
 BENCHMARK_DEFINE_F(Ipv4AddressFixture, BM_parse_boost)(benchmark::State& state) {
     for (auto _ : state) {
         benchmark::DoNotOptimize(boost::asio::ip::make_address_v4(str).to_uint());
     }
 }
-BENCHMARK_REGISTER_F(Ipv4AddressFixture, BM_parse_boost)->Apply(Arguments); // NOLINT
+BENCHMARK_REGISTER_F(Ipv4AddressFixture, BM_parse_boost)->Apply(Arguments);
 
 // IPv6 address parser tests
 // 
@@ -90,7 +90,7 @@ BENCHMARK_DEFINE_F(Ipv6AddressFixture, BM_parse_ipaddress)(benchmark::State& sta
         benchmark::DoNotOptimize(ipaddress::ipv6_address::parse(str));
     }
 }
-BENCHMARK_REGISTER_F(Ipv6AddressFixture, BM_parse_ipaddress)->Apply(Arguments); // NOLINT
+BENCHMARK_REGISTER_F(Ipv6AddressFixture, BM_parse_ipaddress)->Apply(Arguments);
 
 BENCHMARK_DEFINE_F(Ipv6AddressFixture, BM_parse_inet_pton)(benchmark::State& state) {
     for (auto _ : state) {
@@ -101,11 +101,11 @@ BENCHMARK_DEFINE_F(Ipv6AddressFixture, BM_parse_inet_pton)(benchmark::State& sta
         benchmark::DoNotOptimize(ip_addr.s6_addr);
     }
 }
-BENCHMARK_REGISTER_F(Ipv6AddressFixture, BM_parse_inet_pton)->Apply(Arguments); // NOLINT
+BENCHMARK_REGISTER_F(Ipv6AddressFixture, BM_parse_inet_pton)->Apply(Arguments);
 
 BENCHMARK_DEFINE_F(Ipv6AddressFixture, BM_parse_boost)(benchmark::State& state) {
     for (auto _ : state) {
         benchmark::DoNotOptimize(boost::asio::ip::make_address_v6(str));
     }
 }
-BENCHMARK_REGISTER_F(Ipv6AddressFixture, BM_parse_boost)->Apply(Arguments); // NOLINT
+BENCHMARK_REGISTER_F(Ipv6AddressFixture, BM_parse_boost)->Apply(Arguments);
