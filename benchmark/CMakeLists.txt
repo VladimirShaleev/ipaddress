@@ -14,10 +14,9 @@ FetchContent_MakeAvailable(benchmark)
 set(FETCHCONTENT_QUIET FALSE)
 FetchContent_Declare(
     Boost
-    URL https://github.com/boostorg/boost/releases/download/boost-1.84.0/boost-1.84.0.7z
-    URL_MD5 5b8e7be1a6454fef772423800c98674d
-    DOWNLOAD_EXTRACT_TIMESTAMP ON
-    GIT_PROGRESS TRUE   
+    URL https://github.com/boostorg/boost/releases/download/boost-1.84.0/boost-1.84.0.tar.xz
+    URL_MD5 893b5203b862eb9bbd08553e24ff146a
+    GIT_PROGRESS TRUE
 )
 set(BOOST_INCLUDE_LIBRARIES asio)
 FetchContent_MakeAvailable(Boost)
