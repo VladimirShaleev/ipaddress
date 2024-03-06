@@ -6,25 +6,6 @@ Below are tables comparing this library with the boost asio library and the sock
 
 ## Comparison tables
 
-@htmlonly
-
-<style type="text/css">
-  .details_class > summary:first-of-type {
-    list-style: inside disclosure-closed;
-  }
-  .details_class[open] > summary:first-of-type {
-    list-style: inside disclosure-open;
-  }
-  .details_class > summary::before {
-    content: none;
-  }
-  .details_class[open] > summary::before {
-    content: none;
-  }
-</style>
-
-@endhtmlonly
-
 ### Linux (Ubuntu 20.04)
 
 <details class="details_class" open>
