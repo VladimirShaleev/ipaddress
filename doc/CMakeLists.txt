@@ -64,14 +64,15 @@ else()
     file(WRITE "${TARGET}" "${TEXT}")
     ]=])
   add_custom_command(
-      OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/get-started.md"
-      COMMAND "${CMAKE_COMMAND}"
-          "-DLICENSE=${PROJECT_SOURCE_DIR}/LICENSE"
-          "-DCONTRIBUTING=${PROJECT_SOURCE_DIR}/CONTRIBUTING.md"
-          "-DSOURCE=${PROJECT_SOURCE_DIR}/README.md"
-          "-DTARGET=\"${CMAKE_CURRENT_BINARY_DIR}/get-started.md\""
-          -P "${CMAKE_CURRENT_BINARY_DIR}/getstarted.cmake"
+      OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/get-started.md
+      COMMAND ${CMAKE_COMMAND}
+        -DLICENSE=${PROJECT_SOURCE_DIR}/LICENSE
+        -DCONTRIBUTING=${PROJECT_SOURCE_DIR}/CONTRIBUTING.md
+        -DSOURCE=${PROJECT_SOURCE_DIR}/README.md
+        -DTARGET=${CMAKE_CURRENT_BINARY_DIR}/get-started.md
+        -P ${CMAKE_CURRENT_BINARY_DIR}/getstarted.cmake
       DEPENDS ${PROJECT_SOURCE_DIR}/README.md
+      VERBATIM
   )
 
   file(GLOB IPADDRESS_DOC_SOURCES ${CMAKE_CURRENT_LIST_DIR}/../include/ipaddress/*)
@@ -92,7 +93,8 @@ else()
       ${IPADDRESS_DOC_SOURCES} 
       ${IPADDRESS_DOC_MARKDOWN} 
       ${CMAKE_CURRENT_BINARY_DIR}/get-started.md
-    WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/../
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+    VERBATIM
   )
 
   # Hide sync button
@@ -105,11 +107,12 @@ else()
     ]=])
   add_custom_command(
       OUTPUT navtree
-      COMMAND "${CMAKE_COMMAND}"
-          "-DSOURCE=${CMAKE_CURRENT_BINARY_DIR}/html/navtree.js"
-          "-DTARGET=${CMAKE_CURRENT_BINARY_DIR}/html/navtree.js"
-          -P "${CMAKE_CURRENT_BINARY_DIR}/replace.cmake"
-      DEPENDS html "${CMAKE_CURRENT_BINARY_DIR}/replace.cmake"
+      COMMAND ${CMAKE_COMMAND}
+        -DSOURCE=${CMAKE_CURRENT_BINARY_DIR}/html/navtree.js
+        -DTARGET=${CMAKE_CURRENT_BINARY_DIR}/html/navtree.js
+        -P ${CMAKE_CURRENT_BINARY_DIR}/replace.cmake
+      DEPENDS html ${CMAKE_CURRENT_BINARY_DIR}/replace.cmake
+      VERBATIM
   )
   
   foreach(FULL_PATH ${IPADDRESS_DOC_ICONS})
