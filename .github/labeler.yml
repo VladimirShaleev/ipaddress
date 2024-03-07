@@ -1,0 +1,25 @@
+source:
+- changed-files:
+  - any-glob-to-any-file: include/ipaddress/**
+
+tests:
+- changed-files:
+  - any-glob-to-any-file: tests/**
+
+benchmark:
+- changed-files:
+  - any-glob-to-any-file: benchmark/**
+
+documentation:
+- changed-files:
+  - any-glob-to-any-file: 
+    - doc/**
+    - README.md
+
+package:
+- changed-files:
+  - any-glob-to-any-file: package/**
+  
+CI:
+- changed-files:
+  - any-glob-to-any-file: .github/**/*
