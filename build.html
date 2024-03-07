@@ -176,17 +176,18 @@ Set up a project</h2>
 <div class="line">  -DCMAKE_CXX_STANDARD=17 \</div>
 <div class="line">  -DCMAKE_BUILD_TYPE=Debug \</div>
 <div class="line">  -DIPADDRESS_ENABLE_CLANG_TIDY=OFF \</div>
-<div class="line">  -DIPADDRESS_BUILD_TESTS=ON \</div>
-<div class="line">  -DIPADDRESS_BUILD_BENCHMARK=OFF \</div>
-<div class="line">  -DIPADDRESS_BUILD_DOC=OFF \</div>
-<div class="line">  -DIPADDRESS_BUILD_PACKAGES=OFF \</div>
-<div class="line">  -DIPADDRESS_NO_EXCEPTIONS=OFF \</div>
-<div class="line">  -DIPADDRESS_NO_IPV6_SCOPE=OFF \</div>
-<div class="line">  -DIPADDRESS_NO_OVERLOAD_STD=OFF \</div>
-<div class="line">  -DIPADDRESS_IPV6_SCOPE_MAX_LENGTH=16</div>
+<div class="line">  -DIPADDRESS_BUILD_TESTS=ON</div>
 </div><!-- fragment --><p>Where:</p>
 <ul>
 <li><code>CMAKE_CXX_STANDARD</code> — The selected standard with which unit tests will be collected. If not specified, the default one in the current build tools will be used.</li>
+</ul>
+<p>Once configured, you can build tests.</p>
+<div class="fragment"><div class="line">cmake --build build --config Debug --target ipaddress-tests -j4</div>
+</div><!-- fragment --><p>Running unit tests.</p>
+<div class="fragment"><div class="line">cd build</div>
+<div class="line">ctest --output-on-failure</div>
+</div><!-- fragment --><p>Below is a list of all parameters supported by the configuration:</p>
+<ul>
 <li><code>IPADDRESS_ENABLE_CLANG_TIDY</code> — Enable clang-tidy checks (<code>ON</code> by default).</li>
 <li><code>IPADDRESS_BUILD_TESTS</code> — Build unit tests (<code>ON</code> by default).</li>
 <li><code>IPADDRESS_BUILD_BENCHMARK</code> — Build benchmark (<code>OFF</code> by default).</li>
@@ -196,12 +197,7 @@ Set up a project</h2>
 <li><code>IPADDRESS_NO_IPV6_SCOPE</code> — Disable scope id for ipv6 (<code>OFF</code> by default).</li>
 <li><code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH</code> — scope id max length (<code>16</code> by default).</li>
 </ul>
-<p>Once configured, you can build.</p>
-<div class="fragment"><div class="line">cmake --build build --config Debug -j4</div>
-</div><!-- fragment --><p>Running unit tests.</p>
-<div class="fragment"><div class="line">cd build</div>
-<div class="line">ctest --output-on-failure</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md42"></a>
+<h2><a class="anchor" id="autotoc_md42"></a>
 Build a Documentation</h2>
 <p>To assemble the documentation, you need to install the following tools on the system:</p>
 <ul>
