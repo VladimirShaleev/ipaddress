@@ -21,8 +21,9 @@ jobs:
         id: strings
         shell: bash
         run: |
+          TAG=${{ github.ref_name }}
           echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
-          echo "version=${{ github.ref_name }}" >> "$GITHUB_OUTPUT"
+          echo "version=${TAG#v}" >> "$GITHUB_OUTPUT"
 
       - name: Configure CMake
         run: >
