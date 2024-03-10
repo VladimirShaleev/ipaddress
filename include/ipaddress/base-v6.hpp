@@ -67,6 +67,8 @@ protected:
         }
 
         auto ip_and_scope = split_scope_id(begin, end, code);
+        auto scope_begin = ip_and_scope.second;
+        auto scope_end = end;
         end = ip_and_scope.first;
 
         if (code != error_code::no_error) {
@@ -87,11 +89,14 @@ protected:
 
         auto ip = ip_address_base<Ext>(parse_parts(parts, parts_count, std::get<0>(result), std::get<1>(result), std::get<2>(result), code));
 
-        char scope_id[IPADDRESS_IPV6_SCOPE_MAX_LENGTH + 1] = {};
-        for (size_t i = 0; i < ip_and_scope.second.size(); ++i) {
-            scope_id[i] = ip_and_scope.second[i];
+        if (scope_begin != scope_end) {
+            char scope_id[IPADDRESS_IPV6_SCOPE_MAX_LENGTH + 1] = {};
+            int index = 0;
+            for (auto it = scope_begin; it != scope_end; ++it) {
+                scope_id[index++] = char(*it);
+            }
+            ip.set_scope_id(scope_id);
         }
-        ip.set_scope_id(scope_id);
 
         return ip;
     }
@@ -272,49 +277,38 @@ protected:
 
 private:
     template <typename Iter>
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::pair<Iter, fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>> split_scope_id(Iter begin, Iter end, error_code& error) IPADDRESS_NOEXCEPT {
-        char scope_id[IPADDRESS_IPV6_SCOPE_MAX_LENGTH + 1] = {};
-        auto index = 0;
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::pair<Iter, Iter> split_scope_id(Iter begin, Iter end, error_code& error) IPADDRESS_NOEXCEPT {
         Iter end_ip = begin;
+        Iter scope_id = end;
         auto scope = false;
+        auto scope_len = 0;
         for (auto it = begin; it != end; ++it) {
             const auto c = char(*it);
             if (!scope && c != '%') {
                 end_ip = it + 1;
             } else if (scope) {
-                if (index > IPADDRESS_IPV6_SCOPE_MAX_LENGTH - 1) {
+                if (++scope_len > IPADDRESS_IPV6_SCOPE_MAX_LENGTH) {
                     error = error_code::scope_id_is_too_long;
-                    return std::make_pair(end_ip, make_fixed_string(scope_id));
+                    return std::make_pair(end_ip, scope_id);
                 }
                 if (c == '%' || c == '/') {
                     error = error_code::invalid_scope_id;
-                    return std::make_pair(end_ip, make_fixed_string(scope_id));
+                    return std::make_pair(end_ip, scope_id);
                 }
-                scope_id[index++] = c;
             } else {
+                scope_id = it + 1;
                 scope = true;
             }
         }
-        if (scope && scope_id[0] == '\0') {
+        if (scope && scope_id == end) {
             error = error_code::invalid_scope_id;
-            return std::make_pair(end_ip, make_fixed_string(scope_id));
+            return std::make_pair(end_ip, scope_id);
         }
-        return std::make_pair(end_ip, make_fixed_string(scope_id));
+        return std::make_pair(end_ip, scope_id);
     }
 
     template <typename Iter>
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::array<fixed_string<4>, _max_parts + 1> split_parts(Iter begin, Iter end, int& parts_count, error_code& error) IPADDRESS_NOEXCEPT {
-        IPADDRESS_CONSTEXPR std::array<fixed_string<4>, _max_parts + 1> empty_parts = {
-            make_fixed_string("\0\0\0\0"),
-            make_fixed_string("\0\0\0\0"),
-            make_fixed_string("\0\0\0\0"),
-            make_fixed_string("\0\0\0\0"),
-            make_fixed_string("\0\0\0\0"),
-            make_fixed_string("\0\0\0\0"),
-            make_fixed_string("\0\0\0\0"),
-            make_fixed_string("\0\0\0\0"),
-            make_fixed_string("\0\0\0\0")};
-
         char parts[_max_parts + 1][5] = {};
         char last_part[17] = {};
         
@@ -332,19 +326,19 @@ private:
                 error = has_double_colon
                     ? error_code::expected_at_most_7_other_parts_with_double_colon 
                     : error_code::most_8_colons_permitted;
-                return empty_parts;
+                return empty_parts();
             }
             if (c != ':') {
                 if (symbol > 15) {
                     error = error_code::part_is_more_4_chars;
-                    return empty_parts;
+                    return empty_parts();
                 }
                 last_part[symbol++] = c;
                 last_part[symbol] = '\0';
             } else {
                 if (symbol > 4) {
                     error = error_code::part_is_more_4_chars;
-                    return empty_parts;
+                    return empty_parts();
                 }
 
                 auto& current_part = parts[parts_count++];
@@ -367,7 +361,7 @@ private:
             } else {
                 error = error_code::most_8_colons_permitted;
             }
-            return empty_parts;
+            return empty_parts();
         }
         
         auto has_ipv4 = false;
@@ -382,13 +376,13 @@ private:
         if (has_ipv4) {
             if (parts_count + 1 >= _max_parts) {
                 error = error_code::most_8_colons_permitted;
-                return empty_parts;
+                return empty_parts();
             }
 
             auto ipv4 = ipv4_address::parse(last_part, error).to_uint();
 
             if (error != error_code::no_error) {
-                return empty_parts;
+                return empty_parts();
             }
 
             to_hex(uint16_t((ipv4 >> 16) & 0xFFFF), parts[parts_count++]);
@@ -396,7 +390,7 @@ private:
         } else {
             if (symbol > 4) {
                 error = error_code::part_is_more_4_chars;
-                return empty_parts;
+                return empty_parts();
             }
             
             auto& current_part = parts[parts_count++];
@@ -408,7 +402,7 @@ private:
 
         if (parts_count < _min_parts) {
             error = error_code::least_3_parts;
-            return empty_parts;
+            return empty_parts();
         }
 
         return {
@@ -526,6 +520,19 @@ private:
             }
         }
         return value;
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::array<fixed_string<4>, _max_parts + 1> empty_parts() IPADDRESS_NOEXCEPT {
+        return {
+            make_fixed_string("\0\0\0\0"),
+            make_fixed_string("\0\0\0\0"),
+            make_fixed_string("\0\0\0\0"),
+            make_fixed_string("\0\0\0\0"),
+            make_fixed_string("\0\0\0\0"),
+            make_fixed_string("\0\0\0\0"),
+            make_fixed_string("\0\0\0\0"),
+            make_fixed_string("\0\0\0\0"),
+            make_fixed_string("\0\0\0\0")};
     }
 
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint16_t pow16(size_t power) IPADDRESS_NOEXCEPT {
