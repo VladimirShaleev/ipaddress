@@ -24,7 +24,7 @@ add_executable(ipaddress-tests
   "ip-network-tests.cpp")
 target_link_libraries(ipaddress-tests ipaddress GTest::gtest GTest::gtest_main GTest::gmock_main)
 
-if(IPADDRESS_CLANG_TIDY)
+if(IPADDRESS_ENABLE_CLANG_TIDY AND IPADDRESS_CLANG_TIDY)
   set_target_properties(ipaddress-tests PROPERTIES CXX_CLANG_TIDY ${IPADDRESS_CLANG_TIDY})
 endif()
 
