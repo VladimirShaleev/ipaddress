@@ -8,7 +8,7 @@ set(IPADDRESS_IPV6_SCOPE_MAX_LENGTH "16" CACHE STRING "Maximum scope-id length f
 project(ipaddress 
   HOMEPAGE_URL "https://github.com/VladimirShaleev/ipaddress"
   DESCRIPTION "A library for working and manipulating IPv4/IPv6 addresses and networks"
-  VERSION 1.0.0
+  VERSION 1.0.1
   LANGUAGES CXX)
 
 include(CMakePackageConfigHelpers)
@@ -32,6 +32,7 @@ if(IPADDRESS_NO_OVERLOAD_STD)
   target_compile_definitions(${PROJECT_NAME} INTERFACE IPADDRESS_NO_OVERLOAD_STD)
 endif()
 if(IPADDRESS_NO_IPV6_SCOPE)
+  target_compile_definitions(${PROJECT_NAME} INTERFACE IPADDRESS_NO_IPV6_SCOPE)
   target_compile_definitions(${PROJECT_NAME} INTERFACE IPADDRESS_IPV6_SCOPE_MAX_LENGTH=0)
 else()
   target_compile_definitions(${PROJECT_NAME} INTERFACE $<BUILD_INTERFACE:IPADDRESS_IPV6_SCOPE_MAX_LENGTH=${IPADDRESS_IPV6_SCOPE_MAX_LENGTH}>)

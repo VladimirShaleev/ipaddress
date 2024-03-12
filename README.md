@@ -100,7 +100,7 @@ include(FetchContent)
 FetchContent_Declare(
   ipaddress
   GIT_REPOSITORY https://github.com/VladimirShaleev/ipaddress
-  GIT_TAG v1.0.0
+  GIT_TAG v1.0.1
 )
 FetchContent_MakeAvailable(ipaddress)
 
