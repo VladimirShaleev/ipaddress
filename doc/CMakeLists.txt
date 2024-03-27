@@ -20,7 +20,7 @@ else()
   FetchContent_MakeAvailable(doxygen-cards)
 
   # Generate Get Started from README
-  file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/getstarted.cmake"
+  file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/get-started.cmake"
     [=[
     file(READ "${SOURCE}" TEXT)
     file(READ "${CONTRIBUTING}" CONTRIBUTING)
@@ -64,20 +64,20 @@ else()
     file(WRITE "${TARGET}" "${TEXT}")
     ]=])
   add_custom_command(
-      OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/get-started.md
+      OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/get-started.md"
       COMMAND ${CMAKE_COMMAND}
         -DLICENSE=${PROJECT_SOURCE_DIR}/LICENSE
         -DCONTRIBUTING=${PROJECT_SOURCE_DIR}/CONTRIBUTING.md
         -DSOURCE=${PROJECT_SOURCE_DIR}/README.md
         -DTARGET=${CMAKE_CURRENT_BINARY_DIR}/get-started.md
-        -P ${CMAKE_CURRENT_BINARY_DIR}/getstarted.cmake
-      DEPENDS ${PROJECT_SOURCE_DIR}/README.md
+        -P ${CMAKE_CURRENT_BINARY_DIR}/get-started.cmake
+      DEPENDS "${PROJECT_SOURCE_DIR}/README.md"
       VERBATIM
   )
 
-  file(GLOB IPADDRESS_DOC_SOURCES ${CMAKE_CURRENT_LIST_DIR}/../include/ipaddress/*)
-  file(GLOB IPADDRESS_DOC_MARKDOWN ${CMAKE_CURRENT_LIST_DIR}/*.md)
-  file(GLOB IPADDRESS_DOC_ICONS ${CMAKE_CURRENT_LIST_DIR}/icons/*)
+  file(GLOB IPADDRESS_DOC_SOURCES "${CMAKE_CURRENT_LIST_DIR}/../include/ipaddress/*")
+  file(GLOB IPADDRESS_DOC_MARKDOWN "${CMAKE_CURRENT_LIST_DIR}/*.md")
+  file(GLOB IPADDRESS_DOC_ICONS "${CMAKE_CURRENT_LIST_DIR}/icons/*")
 
   set(IPADDRESS_DOC_CSS "${doxygen-awesome-css_SOURCE_DIR}" CACHE STRING "doxygen-awesome")
   set(IPADDRESS_DOC_CARDS_CSS "${doxygen-cards_SOURCE_DIR}" CACHE STRING "doxygen-cards")
@@ -86,14 +86,14 @@ else()
   configure_file(Doxyfile.in Doxyfile @ONLY)
 
   add_custom_command(OUTPUT html
-    COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
-    COMMAND ${CMAKE_COMMAND} -E touch ${CMAKE_CURRENT_BINARY_DIR}/html
+    COMMAND ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile"
+    COMMAND ${CMAKE_COMMAND} -E touch "${CMAKE_CURRENT_BINARY_DIR}/html"
     DEPENDS 
-      ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile 
-      ${IPADDRESS_DOC_SOURCES} 
-      ${IPADDRESS_DOC_MARKDOWN} 
-      ${CMAKE_CURRENT_BINARY_DIR}/get-started.md
-    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+      "${CMAKE_CURRENT_BINARY_DIR}/Doxyfile"
+      "${IPADDRESS_DOC_SOURCES}"
+      "${IPADDRESS_DOC_MARKDOWN}"
+      "${CMAKE_CURRENT_BINARY_DIR}/get-started.md"
+    WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
     VERBATIM
   )
 
@@ -111,17 +111,17 @@ else()
         -DSOURCE=${CMAKE_CURRENT_BINARY_DIR}/html/navtree.js
         -DTARGET=${CMAKE_CURRENT_BINARY_DIR}/html/navtree.js
         -P ${CMAKE_CURRENT_BINARY_DIR}/replace.cmake
-      DEPENDS html ${CMAKE_CURRENT_BINARY_DIR}/replace.cmake
+      DEPENDS html "${CMAKE_CURRENT_BINARY_DIR}/replace.cmake"
       VERBATIM
   )
   
   foreach(FULL_PATH ${IPADDRESS_DOC_ICONS})
-    get_filename_component(FILE ${FULL_PATH} NAME) 
-    configure_file(${FULL_PATH} ${CMAKE_CURRENT_BINARY_DIR}/html/${FILE} COPYONLY)
-    set(IPADDRESS_DOC_COPY_ICONS ${IPADDRESS_DOC_COPY_ICONS} ${CMAKE_CURRENT_BINARY_DIR}/html/${FILE})
+    get_filename_component(FILE "${FULL_PATH}" NAME) 
+    configure_file("${FULL_PATH}" "${CMAKE_CURRENT_BINARY_DIR}/html/${FILE}" COPYONLY)
+    set(IPADDRESS_DOC_COPY_ICONS ${IPADDRESS_DOC_COPY_ICONS} "${CMAKE_CURRENT_BINARY_DIR}/html/${FILE}")
   endforeach()
   
   add_custom_target(doc ALL DEPENDS html navtree ${IPADDRESS_DOC_COPY_ICONS})
   
-  install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html DESTINATION doc COMPONENT doc)
+  install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/html" DESTINATION doc COMPONENT doc)
 endif()

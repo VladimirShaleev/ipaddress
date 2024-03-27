@@ -42,10 +42,6 @@ You can install in one of the following ways
 
 *The package has not yet been published*
 
-#### Homebrew
-
-*The package has not yet been published*
-
 #### Ubuntu PPA
 
 ```bash
