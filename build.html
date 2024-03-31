@@ -6,6 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.10.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="description" content="ipaddress is a library for working and manipulating IPv4/IPv6 addresses and networks in modern C++.">
 <meta name="google-site-verification" content="uQYFmsuPjcXUmeBoLNMqxmIJ4S__SUukKLX_xzT9sH4" />
 <meta name="msvalidate.01" content="E78F7336FAA956728F9E29CB3CFC7741" />
 <!-- BEGIN opengraph metadata -->
@@ -155,9 +156,9 @@ $(function(){initNavTree('build.html',''); initResizable(); });
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><ul><li class="level2"><a href="#autotoc_md41">Set up a project</a></li>
-<li class="level2"><a href="#autotoc_md42">Build a Documentation</a></li>
-<li class="level2"><a href="#autotoc_md43">Build a Benchmark</a></li>
+<ul><ul><li class="level2"><a href="#autotoc_md40">Set up a project</a></li>
+<li class="level2"><a href="#autotoc_md41">Build a Documentation</a></li>
+<li class="level2"><a href="#autotoc_md42">Build a Benchmark</a></li>
 </ul>
 </ul>
 </div>
@@ -169,7 +170,7 @@ $(function(){initNavTree('build.html',''); initResizable(); });
 <li><a href="https://cmake.org/">CMake</a> and a compatible build tool for building the project;</li>
 <li><b>(optional)</b> clang-tidy 14+ for static analysis during build.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md41"></a>
+<h2><a class="anchor" id="autotoc_md40"></a>
 Set up a project</h2>
 <div class="fragment"><div class="line">git clone https://github.com/VladimirShaleev/ipaddress.git</div>
 <div class="line">cd ipaddress</div>
@@ -199,7 +200,7 @@ Set up a project</h2>
 <li><code>IPADDRESS_NO_IPV6_SCOPE</code> — Disable scope id for ipv6 (<code>OFF</code> by default).</li>
 <li><code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH</code> — scope id max length (<code>16</code> by default).</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md42"></a>
+<h2><a class="anchor" id="autotoc_md41"></a>
 Build a Documentation</h2>
 <p>To assemble the documentation, you need to install the following tools on the system:</p>
 <ul>
@@ -209,7 +210,7 @@ Build a Documentation</h2>
 <p>After which you can enable the documentation build in the configuration and run build.</p>
 <div class="fragment"><div class="line">cmake -B build -S . -DIPADDRESS_BUILD_DOC=ON</div>
 <div class="line">cmake --build build --target doc</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md43"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md42"></a>
 Build a Benchmark</h2>
 <p>To build the benchmark, follow these steps:</p>
 <div class="fragment"><div class="line">cmake -B build -S . -DCMAKE_BUILD_TYPE=Release -DIPADDRESS_BUILD_BENCHMARK=ON</div>

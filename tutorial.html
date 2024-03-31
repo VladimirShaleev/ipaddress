@@ -6,6 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.10.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="description" content="ipaddress is a library for working and manipulating IPv4/IPv6 addresses and networks in modern C++.">
 <meta name="google-site-verification" content="uQYFmsuPjcXUmeBoLNMqxmIJ4S__SUukKLX_xzT9sH4" />
 <meta name="msvalidate.01" content="E78F7336FAA956728F9E29CB3CFC7741" />
 <!-- BEGIN opengraph metadata -->
@@ -155,27 +156,27 @@ $(function(){initNavTree('tutorial.html',''); initResizable(); });
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><ul><li class="level2"><a href="#autotoc_md15">IP addresses</a><ul><li class="level3"><a href="#autotoc_md16">Parsing ip strings</a></li>
-<li class="level3"><a href="#autotoc_md17">From uint/To uint</a></li>
-<li class="level3"><a href="#autotoc_md18">Working with bytes</a></li>
-<li class="level3"><a href="#autotoc_md19">Comparison</a></li>
-<li class="level3"><a href="#autotoc_md20">Properties</a></li>
-<li class="level3"><a href="#autotoc_md21">Convert to string</a></li>
+<ul><ul><li class="level2"><a href="#autotoc_md14">IP addresses</a><ul><li class="level3"><a href="#autotoc_md15">Parsing ip strings</a></li>
+<li class="level3"><a href="#autotoc_md16">From uint/To uint</a></li>
+<li class="level3"><a href="#autotoc_md17">Working with bytes</a></li>
+<li class="level3"><a href="#autotoc_md18">Comparison</a></li>
+<li class="level3"><a href="#autotoc_md19">Properties</a></li>
+<li class="level3"><a href="#autotoc_md20">Convert to string</a></li>
 </ul>
 </li>
-<li class="level2"><a href="#autotoc_md22">IP networks</a><ul><li class="level3"><a href="#autotoc_md23">Parsing ip network strings</a></li>
-<li class="level3"><a href="#autotoc_md24">Create from address</a></li>
-<li class="level3"><a href="#autotoc_md25">Comparison</a></li>
-<li class="level3"><a href="#autotoc_md26">Properties</a></li>
-<li class="level3"><a href="#autotoc_md27">Convert to string</a></li>
+<li class="level2"><a href="#autotoc_md21">IP networks</a><ul><li class="level3"><a href="#autotoc_md22">Parsing ip network strings</a></li>
+<li class="level3"><a href="#autotoc_md23">Create from address</a></li>
+<li class="level3"><a href="#autotoc_md24">Comparison</a></li>
+<li class="level3"><a href="#autotoc_md25">Properties</a></li>
+<li class="level3"><a href="#autotoc_md26">Convert to string</a></li>
 </ul>
 </li>
-<li class="level2"><a href="#autotoc_md28">Scope Id</a></li>
-<li class="level2"><a href="#autotoc_md29">Std overrides</a></li>
+<li class="level2"><a href="#autotoc_md27">Scope Id</a></li>
+<li class="level2"><a href="#autotoc_md28">Std overrides</a></li>
 </ul>
 </ul>
 </div>
-<div class="textblock"><h2><a class="anchor" id="autotoc_md15"></a>
+<div class="textblock"><h2><a class="anchor" id="autotoc_md14"></a>
 IP addresses</h2>
 <p>For working with IP addresses, the library provides three classes:</p>
 <ul>
@@ -185,7 +186,7 @@ IP addresses</h2>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>Regardless of which class you use, the internal address is stored as an array of bytes, not as an unsigned integer. This design choice ensures that the address is stored in network byte order (big-endian) regardless of the platform. This is convenient because ultimately, this address can be used in sockets or similar libraries that require passing addresses in network byte order. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>All operations on addresses support compile-time computations. If an address is specified as a constant, during compilation, we get: errors if the address was entered incorrectly, the resulting IP address represented as bytes, and any other operations on addresses. </dd></dl>
-<h3><a class="anchor" id="autotoc_md16"></a>
+<h3><a class="anchor" id="autotoc_md15"></a>
 Parsing ip strings</h3>
 <p>Let's look at examples of obtaining IP addresses from string literals and strings.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="ipaddress_8hpp.html">ipaddress/ipaddress.hpp</a>&gt;</span></div>
@@ -274,7 +275,7 @@ Parsing ip strings</h3>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md17"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md16"></a>
 From uint/To uint</h3>
 <p>Below is code demonstrating how to create IP addresses from unsigned integers and convert them back to unsigned integers.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="ipaddress_8hpp.html">ipaddress/ipaddress.hpp</a>&gt;</span></div>
@@ -305,7 +306,7 @@ From uint/To uint</h3>
 <div class="ttc" id="aclassipaddress_1_1ip__address__base_html_a5332dae176bf5fd604530b9f8aac1b36"><div class="ttname"><a href="classipaddress_1_1ip__address__base.html#a5332dae176bf5fd604530b9f8aac1b36">ipaddress::ip_address_base&lt; ipv4_address_base &gt;::uint_type</a></div><div class="ttdeci">typename Base::uint_type uint_type</div><div class="ttdoc">Type alias for the underlying unsigned integer type.</div><div class="ttdef"><b>Definition</b> ip-address-base.hpp:59</div></div>
 </div><!-- fragment --><dl class="section note"><dt>Note</dt><dd><code>ipaddress</code> defines its type <code>uint128_t</code> to work with 128-bit unsigned integers. It is designed to fill the gap in the C++ standard, which does not natively support 128-bit integers across all platforms. Unlike compiler-specific extensions like <code>__int128</code>, <code>uint128_t</code> ensures compatibility and portability across different compilers and architectures. <br  />
  The implementation is inspired by the algorithms used in the .NET framework's <a href="https://source.dot.net/#System.Private.CoreLib/src/libraries/System.Private.CoreLib/src/System/UInt128.cs">UInt128</a>, providing a reliable foundation for arithmetic operations and other integer-related functionalities.</dd></dl>
-<h3><a class="anchor" id="autotoc_md18"></a>
+<h3><a class="anchor" id="autotoc_md17"></a>
 Working with bytes</h3>
 <p>Below is an example of working with bytes and pointers to bytes directly.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="ipaddress_8hpp.html">ipaddress/ipaddress.hpp</a>&gt;</span></div>
@@ -359,7 +360,7 @@ Working with bytes</h3>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 <div class="ttc" id="aclassipaddress_1_1ip__address__base_html_a1be7cee0334a10989321732568ff4e23"><div class="ttname"><a href="classipaddress_1_1ip__address__base.html#a1be7cee0334a10989321732568ff4e23">ipaddress::ip_address_base&lt; ipv6_address_base &gt;::base_type</a></div><div class="ttdeci">typename Base::base_type base_type</div><div class="ttdoc">Type alias for the base storage type.</div><div class="ttdef"><b>Definition</b> ip-address-base.hpp:58</div></div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md19"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md18"></a>
 Comparison</h3>
 <p>For classes for working with IP addresses, comparison operators and spaceship operator (for C++20 and newer) have been redefined.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="ipaddress_8hpp.html">ipaddress/ipaddress.hpp</a>&gt;</span></div>
@@ -396,7 +397,7 @@ Comparison</h3>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md20"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md19"></a>
 Properties</h3>
 <p>The library provides many properties for determining certain features of an IP address. Let's look at the example below (all possible properties are not presented here; for a more complete picture, see the <a href="classipaddress_1_1ip__address.html#pub-methods">documentation for the code</a>).</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="ipaddress_8hpp.html">ipaddress/ipaddress.hpp</a>&gt;</span></div>
@@ -418,7 +419,7 @@ Properties</h3>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md21"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md20"></a>
 Convert to string</h3>
 <p>There are three different formats for converting IP addresses to strings as you can see below.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="ipaddress_8hpp.html">ipaddress/ipaddress.hpp</a>&gt;</span></div>
@@ -443,7 +444,7 @@ Convert to string</h3>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md22"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md21"></a>
 IP networks</h2>
 <ul>
 <li><b>ipv4_network</b> — A class for working with IPv4 networks.</li>
@@ -452,7 +453,7 @@ IP networks</h2>
 </ul>
 <p>Networks store two IP addresses (network address and netmask), as well as the prefix length. This means that the size of a network instance will be <code>2 * sizeof(&lt;ip_type&gt;) + sizeof(size_t)</code>.</p>
 <p>Working with networks is similar to working with addresses. So let's get straight to the examples.</p>
-<h3><a class="anchor" id="autotoc_md23"></a>
+<h3><a class="anchor" id="autotoc_md22"></a>
 Parsing ip network strings</h3>
 <p>Let's look at examples of obtaining networks from string literals and strings.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="ipaddress_8hpp.html">ipaddress/ipaddress.hpp</a>&gt;</span></div>
@@ -525,7 +526,7 @@ Parsing ip network strings</h3>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md24"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md23"></a>
 Create from address</h3>
 <p>A network can be created from an IP address and a prefixlen.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="ipaddress_8hpp.html">ipaddress/ipaddress.hpp</a>&gt;</span></div>
@@ -547,7 +548,7 @@ Create from address</h3>
 <div class="line">}</div>
 <div class="ttc" id="aclassipaddress_1_1ip__network__base_html"><div class="ttname"><a href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base&lt; ipv4_network_base &gt;</a></div></div>
 <div class="ttc" id="aclassipaddress_1_1ip__network_html"><div class="ttname"><a href="classipaddress_1_1ip__network.html">ipaddress::ip_network</a></div><div class="ttdoc">A class that encapsulates both IPv4 and IPv6 network functionalities.</div><div class="ttdef"><b>Definition</b> ip-any-network.hpp:73</div></div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md25"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md24"></a>
 Comparison</h3>
 <p>For classes for working with IP networks, comparison operators and spaceship operator (for C++20 and newer) have been redefined.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="ipaddress_8hpp.html">ipaddress/ipaddress.hpp</a>&gt;</span></div>
@@ -583,7 +584,7 @@ Comparison</h3>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md26"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md25"></a>
 Properties</h3>
 <p>The library provides many properties for determining certain features of an IP network. Let's look at the example below (all possible properties are not presented here; for a more complete picture, see the <a href="classipaddress_1_1ip__network.html#pub-methods">documentation for the code</a>).</p>
 <p>As you can see, getting network properties is not much different from getting address properties.</p>
@@ -600,7 +601,7 @@ Properties</h3>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md27"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md26"></a>
 Convert to string</h3>
 <p>There are three different formats for converting IP networks to strings as you can see below.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="ipaddress_8hpp.html">ipaddress/ipaddress.hpp</a>&gt;</span></div>
@@ -620,7 +621,7 @@ Convert to string</h3>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md28"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md27"></a>
 Scope Id</h2>
 <p>The library supports <b>Scope Id</b> both as numeric values and as strings.</p>
 <p>By default, <b>Scope Id</b> are enabled, and their maximum size is 16 characters (defined by <code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH</code> during compilation). Yes, the <b>scope id</b> is internally represented as a fixed-size array, and its maximum size cannot be changed dynamically. This means that you cannot store a <b>scope id</b> longer than <code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH</code>. There are several reasons for this design choice: simplicity in storing <b>scope id</b>, avoiding additional allocations (all data for the IP address will be as local as possible in memory), and enabling working with <b>scope id</b> in a <b>constexpr</b> manner.</p>
@@ -661,7 +662,7 @@ Scope Id</h2>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md29"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md28"></a>
 Std overrides</h2>
 <dl class="section note"><dt>Note</dt><dd>If, for some reason, you don't want the library to overload standard functions, you can define <code>IPADDRESS_NO_OVERLOAD_STD</code> during compilation.</dd></dl>
 <p>The library overloads some functions from the standard library so that IP addresses and networks (<code>ipv4_address</code>, <code>ipv6_address</code>, <code>ip_address</code>, <code>ipv4_network</code>, <code>ipv6_network</code> and <code>ip_network</code>) can be used in hash tables and other standard operations on <code>std::swap</code>, etc.</p>

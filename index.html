@@ -6,6 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.10.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="description" content="ipaddress is a library for working and manipulating IPv4/IPv6 addresses and networks in modern C++.">
 <meta name="google-site-verification" content="uQYFmsuPjcXUmeBoLNMqxmIJ4S__SUukKLX_xzT9sH4" />
 <meta name="msvalidate.01" content="E78F7336FAA956728F9E29CB3CFC7741" />
 <!-- BEGIN opengraph metadata -->
@@ -159,20 +160,19 @@ $(function(){initNavTree('index.html',''); initResizable(); });
 <li class="level2"><a href="#autotoc_md1">Compatibility</a></li>
 <li class="level2"><a href="#autotoc_md2">Installation</a><ul><li class="level3"><a href="#autotoc_md3">Use package managers</a><ul><li class="level4"><a href="#autotoc_md4">Vcpkg</a></li>
 <li class="level4"><a href="#autotoc_md5">Conan</a></li>
-<li class="level4"><a href="#autotoc_md6">Homebrew</a></li>
-<li class="level4"><a href="#autotoc_md7">Ubuntu PPA</a></li>
+<li class="level4"><a href="#autotoc_md6">Ubuntu PPA</a></li>
 </ul>
 </li>
-<li class="level3"><a href="#autotoc_md8">Use as a Submodule with CMake</a></li>
-<li class="level3"><a href="#autotoc_md9">Use CMake FetchContent</a></li>
+<li class="level3"><a href="#autotoc_md7">Use as a Submodule with CMake</a></li>
+<li class="level3"><a href="#autotoc_md8">Use CMake FetchContent</a></li>
 </ul>
 </li>
-<li class="level2"><a href="#autotoc_md10">Quick Start</a></li>
-<li class="level2"><a href="#autotoc_md11">Contributing</a><ul><li class="level3"><a href="#autotoc_md12">Issues</a></li>
-<li class="level3"><a href="#autotoc_md13">Pull Requests</a></li>
+<li class="level2"><a href="#autotoc_md9">Quick Start</a></li>
+<li class="level2"><a href="#autotoc_md10">Contributing</a><ul><li class="level3"><a href="#autotoc_md11">Issues</a></li>
+<li class="level3"><a href="#autotoc_md12">Pull Requests</a></li>
 </ul>
 </li>
-<li class="level2"><a href="#autotoc_md14">Licensing</a></li>
+<li class="level2"><a href="#autotoc_md13">Licensing</a></li>
 </ul>
 </ul>
 </div>
@@ -207,9 +207,6 @@ Vcpkg</h4>
 Conan</h4>
 <p><em>The package has not yet been published</em></p>
 <h4><a class="anchor" id="autotoc_md6"></a>
-Homebrew</h4>
-<p><em>The package has not yet been published</em></p>
-<h4><a class="anchor" id="autotoc_md7"></a>
 Ubuntu PPA</h4>
 <div class="fragment"><div class="line">sudo add-apt-repository ppa:vladimirshaleev/ipaddress</div>
 <div class="line">sudo apt update</div>
@@ -224,7 +221,7 @@ Ubuntu PPA</h4>
 <div class="line"> </div>
 <div class="line">add_executable(my_project main.cpp)</div>
 <div class="line">target_link_libraries(my_project ipaddress::ipaddress) # add the library to your target</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md8"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md7"></a>
 Use as a Submodule with CMake</h3>
 <p>Go to your project directory and add a submodule:</p>
 <div class="fragment"><div class="line">cd my_project</div>
@@ -238,7 +235,7 @@ Use as a Submodule with CMake</h3>
 <div class="line"> </div>
 <div class="line">add_executable(my_project main.cpp)</div>
 <div class="line">target_link_libraries(my_project ipaddress::ipaddress) # add the library to your target</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md9"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md8"></a>
 Use CMake FetchContent</h3>
 <div class="fragment"><div class="line">cmake_minimum_required(VERSION 3.8.0)</div>
 <div class="line"> </div>
@@ -254,7 +251,7 @@ Use CMake FetchContent</h3>
 <div class="line"> </div>
 <div class="line">add_executable(my_project main.cpp)</div>
 <div class="line">target_link_libraries(my_project ipaddress::ipaddress) # add the library to your target</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md10"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md9"></a>
 Quick Start</h2>
 <p>The library provides capabilities for creating, analyzing and managing IPv4 and IPv6 addresses and networks using classes such as <b>ipv4_address</b>, <b>ipv6_address</b>, <b>ip_address</b> (any IP version), <b>ipv4_network</b>, <b>ipv6_network</b> and <b>ip_network</b> (any IP version). It also offers error handling methods with or without exceptions if for some reason exceptions are not used or disabled in your project.</p>
 <p>To start using the library, simply include the header <code><a class="el" href="ipaddress_8hpp.html" title="The main include file for the ipaddress library.">ipaddress/ipaddress.hpp</a></code>, and you’re ready to begin your work!</p>
@@ -300,13 +297,13 @@ Quick Start</h2>
 <div class="line">}</div>
 <div class="ttc" id="aipaddress_8hpp_html"><div class="ttname"><a href="ipaddress_8hpp.html">ipaddress.hpp</a></div><div class="ttdoc">The main include file for the ipaddress library.</div></div>
 <div class="ttc" id="anamespaceipaddress_html"><div class="ttname"><a href="namespaceipaddress.html">ipaddress</a></div><div class="ttdoc">Namespace dedicated to IP addresses and networks operations.</div><div class="ttdef"><b>Definition</b> base-v4.hpp:18</div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md11"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md10"></a>
 Contributing</h2>
 <p>ipaddress welcomes contributions and appreciates contributions from the community. Please follow the code below.</p>
-<h3><a class="anchor" id="autotoc_md12"></a>
+<h3><a class="anchor" id="autotoc_md11"></a>
 Issues</h3>
 <p>We welcome you to submit any issues or enhancement requests. When doing so, please provide minimal reproducible examples, as source code is often more effective in helping others understand the issue. If you encounter crash problems on specific platforms, please include operating system and compiler information.</p>
-<h3><a class="anchor" id="autotoc_md13"></a>
+<h3><a class="anchor" id="autotoc_md12"></a>
 Pull Requests</h3>
 <p>We welcome pull requests for fixes and features. To avoid any unnecessary time investment, we strongly recommend opening an issue to discuss whether the proposed PR aligns with our guidelines.</p>
 <p>To do this, follow these steps:</p>
@@ -320,7 +317,7 @@ Pull Requests</h3>
 </ol>
 <p>NOTE: Be sure to merge the latest from "upstream" before making a pull request!</p>
 <p>Currently, I am the sole maintainer of this project. Therefore, I will monitor questions, suggestions, as well as community activity and interest in this project to the best of my abilities.</p>
-<h2><a class="anchor" id="autotoc_md14"></a>
+<h2><a class="anchor" id="autotoc_md13"></a>
 Licensing</h2>
 <div class="fragment"><div class="line">MIT License</div>
 <div class="line"> </div>

@@ -6,6 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.10.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="description" content="ipaddress is a library for working and manipulating IPv4/IPv6 addresses and networks in modern C++.">
 <meta name="google-site-verification" content="uQYFmsuPjcXUmeBoLNMqxmIJ4S__SUukKLX_xzT9sH4" />
 <meta name="msvalidate.01" content="E78F7336FAA956728F9E29CB3CFC7741" />
 <!-- BEGIN opengraph metadata -->
@@ -155,16 +156,16 @@ $(function(){initNavTree('operations.html',''); initResizable(); });
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><ul><li class="level2"><a href="#autotoc_md30">Enumerating network addresses</a></li>
-<li class="level2"><a href="#autotoc_md31">Supernet and Subnets</a></li>
-<li class="level2"><a href="#autotoc_md32">Removing one network from another network</a></li>
-<li class="level2"><a href="#autotoc_md33">Other operations</a></li>
+<ul><ul><li class="level2"><a href="#autotoc_md29">Enumerating network addresses</a></li>
+<li class="level2"><a href="#autotoc_md30">Supernet and Subnets</a></li>
+<li class="level2"><a href="#autotoc_md31">Removing one network from another network</a></li>
+<li class="level2"><a href="#autotoc_md32">Other operations</a></li>
 </ul>
 </ul>
 </div>
 <div class="textblock"><p>Here describes various ways to operate with networks and addresses, for example how to get all hosts on a given network, or exclude one network from another, etc.</p>
 <dl class="section note"><dt>Note</dt><dd>All iteration operations in this library are implemented with lazy evaluation. That is, the list is not generated in advance; instead, each element is generated upon request.</dd></dl>
-<h2><a class="anchor" id="autotoc_md30"></a>
+<h2><a class="anchor" id="autotoc_md29"></a>
 Enumerating network addresses</h2>
 <p>Below is a demonstration of how to get all hosts on a given network</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -197,7 +198,7 @@ Enumerating network addresses</h2>
 </div><!-- fragment --><dl class="section warning"><dt>Warning</dt><dd>Please note that with IPv6, the number of addresses can be so large that iterating through them all may be practically impossible. Therefore, use the <code>hosts()</code> method cautiously to avoid endlessly retrieving addresses.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>For ipv4 all the IP addresses that belong to the network, except the network address itself and the network broadcast address. For networks with a mask length of 31, the network address and network broadcast address are also included in the result. Networks with a mask of 32 will return a list containing the single host address. <br  />
  For ipv6 all the IP addresses that belong to the network, except the Subnet-Router anycast address. For networks with a mask length of 127, the Subnet-Router anycast address is also included in the result. Networks with a mask of 128 will return a list containing the single host address.</dd></dl>
-<h2><a class="anchor" id="autotoc_md31"></a>
+<h2><a class="anchor" id="autotoc_md30"></a>
 Supernet and Subnets</h2>
 <p>Get the subnets that are combined to create the current network definition.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -219,7 +220,7 @@ Supernet and Subnets</h2>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md32"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md31"></a>
 Removing one network from another network</h2>
 <p>Calculates the network definitions that arise from subtracting the specified network from the current one.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -242,7 +243,7 @@ Removing one network from another network</h2>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md33"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md32"></a>
 Other operations</h2>
 <p>This library does not overload arithmetic operators for IP addresses and networks. But what if they need address arithmetic to resolve your problems? You can use integer arithmetic for this.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
