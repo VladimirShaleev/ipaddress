@@ -58,6 +58,7 @@ enum class error_code {
     has_host_bits_set, /**< The address has host bits set when they are expected to be clear. */
     only_one_slash_permitted, /**< Only one slash character is permitted, used to separate the address from the netmask. */
     string_is_too_long, /**< Input string is too long. */
+    unexpected_symbol, /**< The input string contains an unexpected character. */
 
     // ipv4 errors
     empty_octet, /**< An octet in the IPv4 address is empty when it should contain a numeric value. */
@@ -263,11 +264,11 @@ public:
  * Raises an error with a specific error code and additional context.
  * 
  * This function constructs an error message based on the provided error code,
- * index, and address, then throws a parse_error or a logic_error exception with the constructed message.
+ * value, and address, then throws a parse_error or a logic_error exception with the constructed message.
  * 
  * @tparam T The character type of the address string.
  * @param[in] code The error code indicating the type of error encountered.
- * @param[in] index The index at which the error occurred, if applicable.
+ * @param[in] value The value at which the error occurred, if applicable.
  * @param[in] address A pointer to the beginning of the address string.
  * @param[in] length The length of the address string.
  * @throw parse_error Thrown with a message corresponding to the error code.
@@ -278,7 +279,7 @@ template <typename T>
 #ifndef IPADDRESS_NO_EXCEPTIONS 
 [[noreturn]] 
 #endif
-IPADDRESS_CONSTEXPR inline void raise_error(error_code code, int index, const T* address, size_t length) {
+IPADDRESS_CONSTEXPR inline void raise_error(error_code code, uint32_t value, const T* address, size_t length) {
 #ifndef IPADDRESS_NO_EXCEPTIONS
     char str[101] = {};
     size_t max_len = length;
@@ -303,26 +304,31 @@ IPADDRESS_CONSTEXPR inline void raise_error(error_code code, int index, const T*
             throw parse_error(code, "only one '/' permitted in address", str);
         case error_code::string_is_too_long:
             throw parse_error(code, "input string is too long", str);
+        case error_code::unexpected_symbol: {
+            std::ostringstream ss;
+            ss << "{U+" << std::setw(4) << std::setfill('0') << std::hex << value << '}';
+            throw parse_error(code, "unexpected next unicode symbol", ss.str(), "in address", str);
+        }
         case error_code::empty_octet:
-            throw parse_error(code, "empty octet", index, "in address", str);
+            throw parse_error(code, "empty octet", value, "in address", str);
         case error_code::expected_4_octets:
             throw parse_error(code, "expected 4 octets in", str);
         case error_code::leading_0_are_not_permitted:
-            throw parse_error(code, "leading zeros are not permitted in octet", index, "of address", str);
+            throw parse_error(code, "leading zeros are not permitted in octet", value, "of address", str);
         case error_code::octet_more_3_characters:
-            throw parse_error(code, "in octet", index, "of address", str, "more 3 characters");
+            throw parse_error(code, "in octet", value, "of address", str, "more 3 characters");
         case error_code::octet_has_invalid_symbol:
-            throw parse_error(code, "in octet", index, "of address", str, "has invalid symbol");
+            throw parse_error(code, "in octet", value, "of address", str, "has invalid symbol");
         case error_code::octet_exceeded_255:
-            throw parse_error(code, "octet", index, "of address", str, "exceeded 255");
+            throw parse_error(code, "octet", value, "of address", str, "exceeded 255");
         case error_code::least_3_parts:
             throw parse_error(code, "least 3 parts in address", str);
         case error_code::most_8_colons_permitted:
             throw parse_error(code, "most 8 colons permitted in address", str);
         case error_code::part_is_more_4_chars:
-            throw parse_error(code, "in part", index, "of address", str, "more 4 characters");
+            throw parse_error(code, "in part", value, "of address", str, "more 4 characters");
         case error_code::part_has_invalid_symbol:
-            throw parse_error(code, "in part", index, "of address", str, "has invalid symbols");
+            throw parse_error(code, "in part", value, "of address", str, "has invalid symbols");
         case error_code::most_one_double_colon_permitted:
             throw parse_error(code, "at most one '::' permitted in address", str);
         case error_code::leading_colon_only_permitted_as_part_of_double_colon:

@@ -29,7 +29,7 @@ struct char_or_throw_converter {
         auto prev_it = it;
         const auto result = char_converter<T>::get_char_or_error(it, end, code, error_symbol);
         if (code != error_code::no_error) {
-            raise_error(code, error_symbol, begin, end - begin);
+            raise_error(code, error_symbol, begin, prev_it - begin);
         }
         return result;
     }
@@ -172,9 +172,9 @@ struct char_converter<char16_t> : char_or_throw_converter<char16_t> {
             
             case 2:
                 if ((*++it & 0b1111'1100'0000'0000) == 0b1101'1100'0000'0000) {
-				    symbol.value = ((symbol.value << 10) | (uint16_t(*it) & 0b0000'0011'1111'1111)) + 0x10000;
+                    symbol.value = ((symbol.value << 10) | (uint16_t(*it) & 0b0000'0011'1111'1111)) + 0x10000;
                 } else {
-				    correct = false;
+                    correct = false;
                 }
                 break;
 
@@ -191,7 +191,7 @@ struct char_converter<char16_t> : char_or_throw_converter<char16_t> {
     }
 
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE symbol utf16_code_point(uint16_t value) IPADDRESS_NOEXCEPT {
-	    if ((value & 0b1111'1100'0000'0000) == 0b1101'1000'0000'0000) {
+        if ((value & 0b1111'1100'0000'0000) == 0b1101'1000'0000'0000) {
             return {static_cast<uint32_t>(value & 0b0000'0011'1111'1111), 2};
         } else {
             return {value, 1};

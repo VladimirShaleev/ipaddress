@@ -66,7 +66,7 @@ install(
 install(
   FILES 
     "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.pc"
-	DESTINATION "${CMAKE_INSTALL_DATADIR}/pkgconfig"
+    DESTINATION "${CMAKE_INSTALL_DATADIR}/pkgconfig"
 )
 install(DIRECTORY include/ DESTINATION include)
 
