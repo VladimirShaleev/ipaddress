@@ -305,9 +305,13 @@ IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void raise_error(error_code code, uin
         case error_code::string_is_too_long:
             throw parse_error(code, "input string is too long", str);
         case error_code::unexpected_symbol: {
-            std::ostringstream ss;
-            ss << "{U+" << std::setw(4) << std::setfill('0') << std::hex << value << '}';
-            throw parse_error(code, "unexpected next unicode symbol", ss.str(), "in address", str);
+            if (value != 0) {
+                std::ostringstream ss;
+                ss << "{U+" << std::setw(4) << std::setfill('0') << std::hex << value << '}';
+                throw parse_error(code, "unexpected next unicode symbol", ss.str(), "in address", str);
+            } else {
+                throw parse_error(code, "incorrect sequence of bytes in Unicode encoding for address", str);
+            }
         }
         case error_code::empty_octet:
             throw parse_error(code, "empty octet", value, "in address", str);

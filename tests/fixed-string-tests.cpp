@@ -1,7 +1,9 @@
 #include <gtest/gtest.h>
+#include <gmock/gmock-matchers.h>
 
 #include <ipaddress/ipaddress.hpp>
 
+using namespace testing;
 using namespace ipaddress;
 
 #if IPADDRESS_CPP_VERSION >= 17
@@ -357,4 +359,113 @@ TEST(fixed_string, ConstexprCompare) {
     ASSERT_FALSE(b_52);
     ASSERT_TRUE(b_53);
     ASSERT_TRUE(b_54);
+}
+
+TEST(fixed_string, InvalidUnicodeString) {
+#if __cpp_char8_t >= 201811L
+
+    const char8_t utf8_1[2] = { char8_t(240), char8_t(0) };
+    const char8_t utf8_2[3] = { char8_t(240), char8_t(144), char8_t(0) };
+    const char8_t utf8_3[4] = { char8_t(240), char8_t(144), char8_t(141), char8_t(0) };
+    const char8_t utf8_4[5] = { char8_t(240), char8_t(144), char8_t(141), char8_t(136), char8_t(0) };
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    VAL_FIXED_STRING(str_utf8_1, utf8_1);
+    EXPECT_EQ(str_utf8_1.size(), 0);
+#else
+    EXPECT_THAT(
+        [&]() { VAL_FIXED_STRING(str_utf8_1, utf8_1); },
+        ThrowsMessage<parse_error>(StrEq("incorrect sequence of bytes in Unicode encoding for address ")));
+#endif
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    VAL_FIXED_STRING(str_utf8_2, utf8_2);
+    EXPECT_EQ(str_utf8_2.size(), 0);
+#else
+    EXPECT_THAT(
+        [&]() { VAL_FIXED_STRING(str_utf8_2, utf8_2); },
+        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+10000} in address {U+10000}")));
+#endif
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    VAL_FIXED_STRING(str_utf8_3, utf8_3);
+    EXPECT_EQ(str_utf8_3.size(), 0);
+#else
+    EXPECT_THAT(
+        [&]() { VAL_FIXED_STRING(str_utf8_3, utf8_3); },
+        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+10340} in address {U+10340}")));
+#endif
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    VAL_FIXED_STRING(str_utf8_4, utf8_4);
+    EXPECT_EQ(str_utf8_4.size(), 0);
+#else
+    EXPECT_THAT(
+        [&]() { VAL_FIXED_STRING(str_utf8_4, utf8_4); },
+        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+10348} in address {U+10348}")));
+#endif
+
+#endif // __cpp_char8_t
+
+    const char16_t utf16_2[2] = { char16_t(55296), char16_t(0) };
+    const char16_t utf16_3[3] = { char16_t(55296), char16_t(48), char16_t(0) };
+    const char16_t utf16_4[3] = { char16_t(55296), char16_t(57160), char16_t(0) };
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    VAL_FIXED_STRING(str_utf16_2, utf16_2);
+    EXPECT_EQ(str_utf16_2.size(), 0);
+#elif IPADDRESS_CPP_VERSION >= 14
+    EXPECT_THAT(
+        [&]() { VAL_FIXED_STRING(str_utf16_2, utf16_2); },
+        ThrowsMessage<parse_error>(StrEq("incorrect sequence of bytes in Unicode encoding for address ")));
+#else
+    ASSERT_THROW((make_fixed_string(utf16_2)), parse_error);
+#endif
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    VAL_FIXED_STRING(str_utf16_3, utf16_3);
+    EXPECT_EQ(str_utf16_3.size(), 0);
+#elif IPADDRESS_CPP_VERSION >= 14
+    EXPECT_THAT(
+        [&]() { VAL_FIXED_STRING(str_utf16_3, utf16_3); },
+        ThrowsMessage<parse_error>(StrEq("incorrect sequence of bytes in Unicode encoding for address ")));
+#else
+    ASSERT_THROW((make_fixed_string(utf16_3)), parse_error);
+#endif
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    VAL_FIXED_STRING(str_utf16_4, utf16_4);
+    EXPECT_EQ(str_utf16_4.size(), 0);
+#elif IPADDRESS_CPP_VERSION >= 14
+    EXPECT_THAT(
+        [&]() { VAL_FIXED_STRING(str_utf16_4, utf16_4); },
+        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+10348} in address {U+10348}")));
+#else
+    ASSERT_THROW((make_fixed_string(utf16_4)), parse_error);
+#endif
+
+    const char32_t utf32_3[2] = { char32_t(259), char32_t(0) };
+    const char32_t utf32_4[2] = { char32_t(66376), char32_t(0) };
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    VAL_FIXED_STRING(str_utf32_3, utf32_3);
+    EXPECT_EQ(str_utf32_3.size(), 0);
+#elif IPADDRESS_CPP_VERSION >= 14
+    EXPECT_THAT(
+        [&]() { VAL_FIXED_STRING(str_utf32_3, utf32_3); },
+        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+0103} in address {U+0103}")));
+#else
+    ASSERT_THROW((make_fixed_string(utf32_3)), parse_error);
+#endif
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    VAL_FIXED_STRING(str_utf32_4, utf32_4);
+    EXPECT_EQ(str_utf32_4.size(), 0);
+#elif IPADDRESS_CPP_VERSION >= 14
+    EXPECT_THAT(
+        [&]() { VAL_FIXED_STRING(str_utf32_4, utf32_4); },
+        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+10348} in address {U+10348}")));
+#else
+    ASSERT_THROW((make_fixed_string(utf32_4)), parse_error);
+#endif
 }
