@@ -279,7 +279,7 @@ template <typename T>
 #ifndef IPADDRESS_NO_EXCEPTIONS 
 [[noreturn]] 
 #endif
-IPADDRESS_CONSTEXPR inline void raise_error(error_code code, uint32_t value, const T* address, size_t length) {
+IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void raise_error(error_code code, uint32_t value, const T* address, size_t length) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
 #ifndef IPADDRESS_NO_EXCEPTIONS
     char str[101] = {};
     size_t max_len = length;
