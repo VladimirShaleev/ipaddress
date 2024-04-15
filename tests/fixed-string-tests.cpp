@@ -469,3 +469,58 @@ TEST(fixed_string, InvalidUnicodeString) {
     ASSERT_THROW((make_fixed_string(utf32_4)), parse_error);
 #endif
 }
+
+template <typename T, size_t N>
+IPADDRESS_CONSTEXPR auto make_fixed_string_and_code(const T (&str)[N]) noexcept -> decltype(std::make_pair(make_fixed_string(str), error_code::no_error)) {
+    auto code = error_code::no_error;
+    auto result = make_fixed_string(str, code);
+    return std::make_pair(result, code);
+}
+
+TEST(fixed_string, make_fixed_string) {
+    IPADDRESS_CONSTEXPR auto result1 = make_fixed_string_and_code("");
+    IPADDRESS_CONSTEXPR auto result2 = make_fixed_string_and_code(u"");
+    IPADDRESS_CONSTEXPR auto result3 = make_fixed_string_and_code(U"");
+    IPADDRESS_CONSTEXPR auto result4 = make_fixed_string_and_code(L"");
+    IPADDRESS_CONSTEXPR auto result5 = make_fixed_string_and_code("1");
+    IPADDRESS_CONSTEXPR auto result6 = make_fixed_string_and_code(u"1");
+    IPADDRESS_CONSTEXPR auto result7 = make_fixed_string_and_code(U"1");
+    IPADDRESS_CONSTEXPR auto result8 = make_fixed_string_and_code(L"1");
+    IPADDRESS_CONSTEXPR auto result9 = make_fixed_string_and_code(u"1\U00010348");
+    IPADDRESS_CONSTEXPR auto result10 = make_fixed_string_and_code(U"1\U00010348");
+    IPADDRESS_CONSTEXPR auto result11 = make_fixed_string_and_code(L"1\U00010348");
+    ASSERT_EQ(result1.first.size(), 0);
+    ASSERT_EQ(result2.first.size(), 0);
+    ASSERT_EQ(result3.first.size(), 0);
+    ASSERT_EQ(result4.first.size(), 0);
+    ASSERT_EQ(result5.first.size(), 1);
+    ASSERT_EQ(result6.first.size(), 1);
+    ASSERT_EQ(result7.first.size(), 1);
+    ASSERT_EQ(result8.first.size(), 1);
+    ASSERT_EQ(result9.first.size(), 1);
+    ASSERT_EQ(result10.first.size(), 1);
+    ASSERT_EQ(result11.first.size(), 1);
+    ASSERT_EQ(result1.second, error_code::no_error);
+    ASSERT_EQ(result2.second, error_code::no_error);
+    ASSERT_EQ(result3.second, error_code::no_error);
+    ASSERT_EQ(result4.second, error_code::no_error);
+    ASSERT_EQ(result5.second, error_code::no_error);
+    ASSERT_EQ(result6.second, error_code::no_error);
+    ASSERT_EQ(result7.second, error_code::no_error);
+    ASSERT_EQ(result8.second, error_code::no_error);
+    ASSERT_EQ(result9.second, error_code::unexpected_symbol);
+    ASSERT_EQ(result10.second, error_code::unexpected_symbol);
+    ASSERT_EQ(result11.second, error_code::unexpected_symbol);
+
+#if __cpp_char8_t >= 201811L
+    constexpr auto result12 = make_fixed_string_and_code(u8"");
+    constexpr auto result13 = make_fixed_string_and_code(u8"1");
+    constexpr auto result14 = make_fixed_string_and_code(u8"1\U00010348");
+    ASSERT_EQ(result12.first.size(), 0);
+    ASSERT_EQ(result13.first.size(), 1);
+    ASSERT_EQ(result14.first.size(), 1);
+    ASSERT_EQ(result12.second, error_code::no_error);
+    ASSERT_EQ(result13.second, error_code::no_error);
+    ASSERT_EQ(result14.second, error_code::unexpected_symbol);
+#endif
+}

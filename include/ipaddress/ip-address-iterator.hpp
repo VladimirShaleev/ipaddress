@@ -38,7 +38,7 @@ public:
     using iterator_concept  = std::random_access_iterator_tag; /**< The iterator concept, defined if concepts are available. */
 #endif
     using iterator_category = typename std::iterator_traits<Iterator>::iterator_category; /**< The category of the iterator. */
-    using iterator_type	    = Iterator; /**< The underlying iterator type. */
+    using iterator_type        = Iterator; /**< The underlying iterator type. */
     using value_type        = typename std::iterator_traits<Iterator>::value_type; /**< The type of the values iterated over. */
     using difference_type   = typename std::iterator_traits<Iterator>::difference_type; /**< The type representing the difference between two iterators. */
     using pointer           = typename std::iterator_traits<Iterator>::pointer; /**< The pointer type of the iterated values. */
