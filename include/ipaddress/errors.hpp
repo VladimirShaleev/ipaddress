@@ -279,16 +279,15 @@ template <typename T>
 #ifndef IPADDRESS_NO_EXCEPTIONS 
 [[noreturn]] 
 #endif
-IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void raise_error(error_code code, uint32_t value, const T* address, size_t length) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void raise_error(error_code code, uint32_t value, const T* address, size_t length) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS;
+
+template <>
+#ifndef IPADDRESS_NO_EXCEPTIONS 
+[[noreturn]] 
+#endif
+IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void raise_error<char>(error_code code, uint32_t value, const char* address, size_t length) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
 #ifndef IPADDRESS_NO_EXCEPTIONS
-    char str[101] = {};
-    size_t max_len = length;
-    if (length > 100) {
-        max_len = 100;
-    }
-    for (size_t i = 0; i < max_len; ++i) {
-        str[i] = char(address[i]);
-    }
+    const std::string str(address, length);
     switch (code) {
         case error_code::empty_address:
             throw parse_error(code, "address cannot be empty");
@@ -310,7 +309,7 @@ IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void raise_error(error_code code, uin
                 ss << "{U+" << std::setw(4) << std::setfill('0') << std::hex << value << '}';
                 throw parse_error(code, "unexpected next unicode symbol", ss.str(), "in address", str);
             } else {
-                throw parse_error(code, "incorrect sequence of bytes in Unicode encoding for address", str);
+                throw parse_error(code, "incorrect sequence of bytes in unicode encoding for address", str);
             }
         }
         case error_code::empty_octet:

@@ -375,7 +375,7 @@ TEST(fixed_string, InvalidUnicodeString) {
 #else
     EXPECT_THAT(
         [&]() { VAL_FIXED_STRING(str_utf8_1, utf8_1); },
-        ThrowsMessage<parse_error>(StrEq("incorrect sequence of bytes in Unicode encoding for address ")));
+        ThrowsMessage<parse_error>(StrEq("incorrect sequence of bytes in unicode encoding for address ")));
 #endif
 
 #ifdef IPADDRESS_NO_EXCEPTIONS
@@ -417,7 +417,7 @@ TEST(fixed_string, InvalidUnicodeString) {
 #elif IPADDRESS_CPP_VERSION >= 14
     EXPECT_THAT(
         [&]() { VAL_FIXED_STRING(str_utf16_2, utf16_2); },
-        ThrowsMessage<parse_error>(StrEq("incorrect sequence of bytes in Unicode encoding for address ")));
+        ThrowsMessage<parse_error>(StrEq("incorrect sequence of bytes in unicode encoding for address ")));
 #else
     ASSERT_THROW((make_fixed_string(utf16_2)), parse_error);
 #endif
@@ -428,7 +428,7 @@ TEST(fixed_string, InvalidUnicodeString) {
 #elif IPADDRESS_CPP_VERSION >= 14
     EXPECT_THAT(
         [&]() { VAL_FIXED_STRING(str_utf16_3, utf16_3); },
-        ThrowsMessage<parse_error>(StrEq("incorrect sequence of bytes in Unicode encoding for address ")));
+        ThrowsMessage<parse_error>(StrEq("incorrect sequence of bytes in unicode encoding for address ")));
 #else
     ASSERT_THROW((make_fixed_string(utf16_3)), parse_error);
 #endif

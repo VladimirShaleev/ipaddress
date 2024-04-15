@@ -29,41 +29,9 @@ struct char_or_throw_converter {
         auto prev_it = it;
         const auto result = char_converter<T>::get_char_or_error(it, end, code, error_symbol);
         if (code != error_code::no_error) {
-            encode_and_raise_error(code, error_symbol, begin, end - begin);
+            raise_error(code, error_symbol, begin, end - begin);
         }
         return result;
-    }
-
-    #ifndef IPADDRESS_NO_EXCEPTIONS 
-    [[noreturn]] 
-    #endif
-    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void encode_and_raise_error(error_code code, uint32_t value, const T* address, size_t length) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-    #ifndef IPADDRESS_NO_EXCEPTIONS
-        std::ostringstream ss;
-        auto stub_code = error_code::no_error;
-        uint32_t error_symbol = 0;
-        const T* it = address;
-        const T* end = it + length;
-        while (it < end) {
-            const auto result = char_converter<T>::get_char_or_error(it, end, stub_code, error_symbol);
-            ++it;
-            if (stub_code == error_code::no_error) {
-                if (result == '\0') {
-                    break;
-                }
-                ss << result;
-            } else {
-                if (error_symbol == 0) {
-                    break;
-                }
-                ss << "{U+" << std::setw(4) << std::setfill('0') << std::hex << error_symbol << '}';
-            }
-        }
-        const auto error_str = ss.str();
-        raise_error(code, value, error_str.data(), error_str.size()); // unexpected unicode symbol
-    #else
-        raise_error(code, value, address, length);
-    #endif
     }
 
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void has_throw() IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS;
@@ -274,6 +242,39 @@ struct char_converter<wchar_t> : char_or_throw_converter<wchar_t> {
 };
 
 } // IPADDRESS_NAMESPACE::internal
+
+template <typename T>
+#ifndef IPADDRESS_NO_EXCEPTIONS 
+[[noreturn]] 
+#endif
+IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void raise_error(error_code code, uint32_t value, const T* address, size_t length) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    #ifndef IPADDRESS_NO_EXCEPTIONS
+        std::ostringstream ss;
+        auto stub_code = error_code::no_error;
+        uint32_t error_symbol = 0;
+        const T* it = address;
+        const T* end = it + length;
+        while (it < end) {
+            const auto result = internal::char_converter<T>::get_char_or_error(it, end, stub_code, error_symbol);
+            ++it;
+            if (stub_code == error_code::no_error) {
+                if (result == '\0') {
+                    break;
+                }
+                ss << result;
+            } else {
+                if (error_symbol == 0) {
+                    break;
+                }
+                ss << "{U+" << std::setw(4) << std::setfill('0') << std::hex << error_symbol << '}';
+            }
+        }
+        const auto error_str = ss.str();
+        raise_error(code, value, error_str.data(), error_str.size()); // unexpected unicode symbol
+    #else
+        raise_error(code, value, "", 0);
+    #endif
+}
 
 } // namespace IPADDRESS_NAMESPACE
 
