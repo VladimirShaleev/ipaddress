@@ -153,8 +153,8 @@ TEST(char_converter, CompileTime) {
     constexpr auto result13 = constexpr_test_error(u8"12\ud55c34");
     constexpr auto result14 = constexpr_test(u8"1234");
     ASSERT_TRUE(result12);
-    ASSERT_TRUE(result13);
-    ASSERT_FALSE(result9);
+    ASSERT_FALSE(result13);
+    ASSERT_TRUE(result14);
 #endif // __cpp_char8_t
 }
 
@@ -196,6 +196,20 @@ TEST(char_converter, WideCharException) {
     test_exception(L"12\U00010348\ud55c\u0418$");
 }
 
+#ifdef IPADDRESS_CHAR_IS_UTF8
+TEST(char_converter, Char) {
+    char str[13] = { 
+        char(49), 
+        char(50), 
+        char(240), char(144), char(141), char(136), 
+        char(237), char(149), char(156), 
+        char(208), char(152), 
+        char(36), 
+        char(0) 
+    };
+    test(str);
+}
+#else // IPADDRESS_CHAR_IS_UTF8
 TEST(char_converter, Char) {
     constexpr char str[] = "abc123";
 
@@ -247,3 +261,4 @@ TEST(char_converter, Char) {
     EXPECT_EQ(code, error_code::no_error);
     EXPECT_EQ(error_symbol, 0);
 }
+#endif
