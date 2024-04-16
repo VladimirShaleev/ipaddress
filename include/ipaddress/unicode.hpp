@@ -270,7 +270,7 @@ IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void raise_error(error_code code, uin
             }
         }
         const auto error_str = ss.str();
-        raise_error(code, value, error_str.data(), error_str.size()); // unexpected unicode symbol
+        raise_error(code, value, error_str.data(), error_str.size());
     #else
         raise_error(code, value, "", 0);
     #endif

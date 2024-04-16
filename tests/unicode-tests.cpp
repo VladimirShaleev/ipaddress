@@ -139,25 +139,22 @@ TEST(char_converter, CompileTime) {
     ASSERT_TRUE(result6);
     ASSERT_FALSE(result7);
 
-#if __cpp_char8_t >= 201811L
-    constexpr auto result8 = constexpr_test_error(u8"1234");
-    constexpr auto result9 = constexpr_test_error(u8"12\ud55c34");
+    constexpr auto result8 = constexpr_test("1234");
+    constexpr auto result9 = constexpr_test(u"1234");
+    constexpr auto result10 = constexpr_test(U"1234");
+    constexpr auto result11 = constexpr_test(L"1234");
     ASSERT_TRUE(result8);
-    ASSERT_FALSE(result9);
-#endif
-
-    constexpr auto result10 = constexpr_test("1234");
-    constexpr auto result11 = constexpr_test(u"1234");
-    constexpr auto result12 = constexpr_test(U"1234");
-    constexpr auto result13 = constexpr_test(L"1234");
+    ASSERT_TRUE(result9);
     ASSERT_TRUE(result10);
     ASSERT_TRUE(result11);
-    ASSERT_TRUE(result12);
-    ASSERT_TRUE(result13);
 
 #if __cpp_char8_t >= 201811L
+    constexpr auto result12 = constexpr_test_error(u8"1234");
+    constexpr auto result13 = constexpr_test_error(u8"12\ud55c34");
     constexpr auto result14 = constexpr_test(u8"1234");
-    ASSERT_TRUE(result14);
+    ASSERT_TRUE(result12);
+    ASSERT_TRUE(result13);
+    ASSERT_FALSE(result9);
 #endif // __cpp_char8_t
 }
 
