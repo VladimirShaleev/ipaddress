@@ -158,8 +158,8 @@ $(function(){initNavTree('index.html',''); initResizable(); });
 <div class="toc"><h3>Table of Contents</h3>
 <ul><ul><li class="level2"><a href="#autotoc_md0">Introduction</a></li>
 <li class="level2"><a href="#autotoc_md1">Compatibility</a></li>
-<li class="level2"><a href="#autotoc_md2">Installation</a><ul><li class="level3"><a href="#autotoc_md3">Use package managers</a><ul><li class="level4"><a href="#autotoc_md4">Vcpkg</a></li>
-<li class="level4"><a href="#autotoc_md5">Conan</a></li>
+<li class="level2"><a href="#autotoc_md2">Installation</a><ul><li class="level3"><a href="#autotoc_md3">Use package managers</a><ul><li class="level4"><a href="#autotoc_md4">Conan</a></li>
+<li class="level4"><a href="#autotoc_md5">Vcpkg</a></li>
 <li class="level4"><a href="#autotoc_md6">Ubuntu PPA</a></li>
 </ul>
 </li>
@@ -201,12 +201,18 @@ Installation</h2>
 <h3><a class="anchor" id="autotoc_md3"></a>
 Use package managers</h3>
 <h4><a class="anchor" id="autotoc_md4"></a>
-Vcpkg</h4>
-<p><em>The package has not yet been published</em></p>
-<h4><a class="anchor" id="autotoc_md5"></a>
 Conan</h4>
 <p><em>The package has not yet been published</em></p>
-<h4><a class="anchor" id="autotoc_md6"></a>
+<h4><a class="anchor" id="autotoc_md5"></a>
+Vcpkg</h4>
+<p>You can install <b>ipaddress</b> using <a href="https://github.com/microsoft/vcpkg#getting-started">vcpkg</a> dependency manager as follows:</p>
+<div class="fragment"><div class="line">./vcpkg install vladimirshaleev-ipaddress</div>
+</div><!-- fragment --><p>or via <code>vcpkg.json</code> if your project uses <a href="https://learn.microsoft.com/vcpkg/concepts/manifest-mode">manifest mode</a>:</p>
+<div class="fragment"><div class="line">{</div>
+<div class="line">  &quot;name&quot;: &quot;my-project&quot;,</div>
+<div class="line">  &quot;dependencies&quot;: [ &quot;vladimirshaleev-ipaddress&quot; ]</div>
+<div class="line">}</div>
+</div><!-- fragment --><h4><a class="anchor" id="autotoc_md6"></a>
 Ubuntu PPA</h4>
 <div class="fragment"><div class="line">sudo add-apt-repository ppa:vladimirshaleev/ipaddress</div>
 <div class="line">sudo apt update</div>
