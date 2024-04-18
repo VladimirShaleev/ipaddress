@@ -34,13 +34,26 @@ You can install in one of the following ways
 
 ### Use package managers
 
-#### Vcpkg
-
-*The package has not yet been published*
-
 #### Conan
 
 *The package has not yet been published*
+
+#### Vcpkg
+
+You can install **ipaddress** using [vcpkg](https://github.com/microsoft/vcpkg#getting-started) dependency manager as follows:
+
+```bash
+./vcpkg install vladimirshaleev-ipaddress
+```
+
+or via `vcpkg.json` if your project uses [manifest mode](https://learn.microsoft.com/vcpkg/concepts/manifest-mode):
+
+```json
+{
+  "name": "my-project",
+  "dependencies": [ "vladimirshaleev-ipaddress" ]
+}
+```
 
 #### Ubuntu PPA
 
