@@ -176,7 +176,7 @@ $(function(){initNavTree('index.html',''); initResizable(); });
 </ul>
 </ul>
 </div>
-<div class="textblock"><p><a href="https://github.com/VladimirShaleev/ipaddress/releases"><img src="https://img.shields.io/github/v/release/vladimirshaleev/ipaddress?sort=semver&amp;display_name=tag" alt="GitHub Release" class="inline"/></a> <a href="https://github.com/VladimirShaleev/ipaddress/blob/main/LICENSE"><img src="https://img.shields.io/github/license/vladimirshaleev/ipaddress" alt="GitHub License" class="inline"/></a> <a href="https://github.com/VladimirShaleev/ipaddress/actions/workflows/tests.yml"><img src="https://img.shields.io/github/actions/workflow/status/vladimirshaleev/ipaddress/tests.yml?branch=main&amp;logo=github&amp;label=tests" alt="GitHub Actions Workflow Status" class="inline"/></a></p>
+<div class="textblock"><p><a href="https://github.com/VladimirShaleev/ipaddress/releases"><img src="https://img.shields.io/github/v/release/vladimirshaleev/ipaddress?sort=semver&amp;display_name=tag" alt="GitHub Release" class="inline"/></a> <a href="https://conan.io/center/recipes/ipaddress"><img src="https://img.shields.io/conan/v/ipaddress" alt="Conan Center" class="inline"/></a> <a href="https://vcpkgx.com/details.html?package=vladimirshaleev-ipaddress"><img src="https://img.shields.io/vcpkg/v/vladimirshaleev-ipaddress" alt="Vcpkg Version" class="inline"/></a> <a href="https://github.com/VladimirShaleev/ipaddress/blob/main/LICENSE"><img src="https://img.shields.io/github/license/vladimirshaleev/ipaddress" alt="GitHub License" class="inline"/></a> <a href="https://github.com/VladimirShaleev/ipaddress/actions/workflows/tests.yml"><img src="https://img.shields.io/github/actions/workflow/status/vladimirshaleev/ipaddress/tests.yml?branch=main&amp;logo=github&amp;label=tests" alt="GitHub Actions Workflow Status" class="inline"/></a></p>
 <p>A library for working and manipulating IPv4/IPv6 addresses and networks in modern C++.</p>
 <h2><a class="anchor" id="autotoc_md0"></a>
 Introduction</h2>
@@ -202,12 +202,15 @@ Installation</h2>
 Use package managers</h3>
 <h4><a class="anchor" id="autotoc_md4"></a>
 Conan</h4>
-<p><em>The package has not yet been published</em></p>
+<p>Add <b>ipaddress</b> dependency to <code>conanfile.txt</code>:</p>
+<div class="fragment"><div class="line">[requires]</div>
+<div class="line">ipaddress/1.0.1</div>
+</div><!-- fragment --><p>More information and installation options can be found here <a href="https://conan.io/center/recipes/ipaddress">https://conan.io/center/recipes/ipaddress</a></p>
 <h4><a class="anchor" id="autotoc_md5"></a>
 Vcpkg</h4>
 <p>You can install <b>ipaddress</b> using <a href="https://github.com/microsoft/vcpkg#getting-started">vcpkg</a> dependency manager as follows:</p>
 <div class="fragment"><div class="line">./vcpkg install vladimirshaleev-ipaddress</div>
-</div><!-- fragment --><p>or via <code>vcpkg.json</code> if your project uses <a href="https://learn.microsoft.com/vcpkg/concepts/manifest-mode">manifest mode</a>:</p>
+</div><!-- fragment --><p>or via <code>vcpkg.json</code> if your project uses <b>manifest mode</b> <a href="https://learn.microsoft.com/vcpkg/consume/manifest-mode">[1]</a> <a href="https://learn.microsoft.com/vcpkg/concepts/manifest-mode">[2]</a>:</p>
 <div class="fragment"><div class="line">{</div>
 <div class="line">  &quot;name&quot;: &quot;my-project&quot;,</div>
 <div class="line">  &quot;dependencies&quot;: [ &quot;vladimirshaleev-ipaddress&quot; ]</div>
