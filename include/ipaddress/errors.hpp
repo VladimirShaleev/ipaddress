@@ -58,7 +58,6 @@ enum class error_code {
     has_host_bits_set, /**< The address has host bits set when they are expected to be clear. */
     only_one_slash_permitted, /**< Only one slash character is permitted, used to separate the address from the netmask. */
     string_is_too_long, /**< Input string is too long. */
-    unexpected_symbol, /**< The input string contains an unexpected character. */
 
     // ipv4 errors
     empty_octet, /**< An octet in the IPv4 address is empty when it should contain a numeric value. */
@@ -87,7 +86,11 @@ enum class error_code {
     new_prefix_must_be_shorter, /**< The new prefix length must be shorter for the operation being performed. */
     new_prefix_must_be_longer, /**< The new prefix length must be longer for the operation being performed. */
     cannot_set_prefixlen_diff_and_new_prefix, /**< Both prefix length difference and new prefix cannot be set simultaneously. */
-    not_contained_network /**< The network is not a subnet of the other network as expected. */
+    not_contained_network, /**< The network is not a subnet of the other network as expected. */
+    
+    // input string errors
+    unexpected_symbol, /**< The input string contains an unexpected character. */
+    wrong_encoding_sequence /**< Incorrect byte sequence in Unicode encoding. */
 };
 
 /**
@@ -302,15 +305,6 @@ IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void raise_error<char>(error_code cod
             throw parse_error(code, "only one '/' permitted in address", std::string(address, length));
         case error_code::string_is_too_long:
             throw parse_error(code, "input string is too long", std::string(address, length));
-        case error_code::unexpected_symbol: {
-            if (value != 0) {
-                std::ostringstream ss;
-                ss << "{U+" << std::setw(4) << std::setfill('0') << std::hex << value << '}';
-                throw parse_error(code, "unexpected next unicode symbol", ss.str(), "in address", std::string(address, length));
-            } else {
-                throw parse_error(code, "incorrect sequence of bytes in unicode encoding for address", std::string(address, length));
-            }
-        }
         case error_code::empty_octet:
             throw parse_error(code, "empty octet", value, "in address", std::string(address, length));
         case error_code::expected_4_octets:
@@ -357,6 +351,13 @@ IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void raise_error<char>(error_code cod
             throw logic_error(code, "cannot set prefixlen_diff and new_prefix");
         case error_code::not_contained_network:
             throw logic_error(code, "network is not a subnet of other");
+        case error_code::unexpected_symbol: {
+            std::ostringstream ss;
+            ss << "{U+" << std::setw(4) << std::setfill('0') << std::hex << value << '}';
+            throw parse_error(code, "unexpected next unicode symbol", ss.str(), "in address", std::string(address, length));
+        }
+        case error_code::wrong_encoding_sequence:
+            throw parse_error(code, "incorrect sequence of bytes in unicode encoding for address", std::string(address, length));
         default:
             throw error(code, "unknown error");
     }

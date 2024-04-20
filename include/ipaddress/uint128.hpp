@@ -68,7 +68,7 @@ public:
      *
      * Constructs a new `uint128_t` instance with default values.
      */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t() IPADDRESS_NOEXCEPT = default; /**< Default constructor */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t() IPADDRESS_NOEXCEPT = default;
 
     /**
      * Copy constructor.
@@ -77,7 +77,7 @@ public:
      * 
      * @param[in] other The `uint128_t` instance to copy.
      */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(const uint128_t& other) IPADDRESS_NOEXCEPT = default; /**< Copy constructor */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(const uint128_t& other) IPADDRESS_NOEXCEPT = default;
     
     /**
      * Move constructor.
@@ -86,7 +86,7 @@ public:
      * 
      * @param[in,out] other The `uint128_t` instance to move.
      */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(uint128_t&& other) IPADDRESS_NOEXCEPT = default; /**< Move constructor */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t(uint128_t&& other) IPADDRESS_NOEXCEPT = default;
 
     /**
      * Assignment operator.
@@ -96,7 +96,7 @@ public:
      * @param[in] other The `uint128_t` instance to assign from.
      * @return A reference to the assigned `uint128_t` instance.
      */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t& operator=(const uint128_t& other) IPADDRESS_NOEXCEPT = default; /**< Assignment operator */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t& operator=(const uint128_t& other) IPADDRESS_NOEXCEPT = default;
     
     /**
      * Move assignment operator.
@@ -106,7 +106,7 @@ public:
      * @param[in,out] other The `uint128_t` instance to move from.
      * @return A reference to the moved `uint128_t` instance.
      */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t& operator=(uint128_t&& other) IPADDRESS_NOEXCEPT = default; /**< Move assignment operator */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t& operator=(uint128_t&& other) IPADDRESS_NOEXCEPT = default;
 
     /**
      * Constructs a `uint128_t` instance from upper and lower parts.
@@ -236,7 +236,7 @@ public:
      * @param[in] value The floating-point value to convert.
      */
     IPADDRESS_FORCE_INLINE explicit uint128_t(double value) IPADDRESS_NOEXCEPT {
-        const auto result = from_double(double(value));
+        const auto result = from_double(value);
         _upper = result._upper;
         _lower = result._lower;
     }

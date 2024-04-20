@@ -1,10 +1,13 @@
 /**
  * @file      unicode.hpp
- * @brief     TODO:
+ * @brief     Unicode character processing
  * @author    Vladimir Shaleev
  * @copyright MIT License
  * 
- * TODO:
+ * This file contains definitions and templates for working with various
+ * Unicode encodings such as UTF-8, UTF-16, UTF-32, and Wide chars.
+ * It provides functionality to convert unicode characters to char and 
+ * handling errors associated with invalid Unicode characters.
  */
 
 #ifndef IPADDRESS_UNICODE_HPP
@@ -74,7 +77,10 @@ struct utf8_converter {
                     break;
             }
         }
-        if (symbol.value > 127 || !correct) {
+        if (!correct) {
+            error = error_code::wrong_encoding_sequence;
+            return '\0';
+        } else if (symbol.value > 127) {
             error = error_code::unexpected_symbol;
             error_symbol = symbol.value;
             return '\0';
@@ -182,7 +188,10 @@ struct char_converter<char16_t> : char_or_throw_converter<char16_t> {
                 correct = false;
                 break;
         }
-        if (symbol.value > 127 || !correct) {
+        if (!correct) {
+            error = error_code::wrong_encoding_sequence;
+            return '\0';
+        } else if (symbol.value > 127) {
             error = error_code::unexpected_symbol;
             error_symbol = symbol.value;
             return '\0';

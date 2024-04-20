@@ -384,7 +384,7 @@ TEST(fixed_string, InvalidUnicodeString) {
 #else
     EXPECT_THAT(
         [&]() { VAL_FIXED_STRING(str_utf8_2, utf8_2); },
-        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+10000} in address {U+10000}")));
+        ThrowsMessage<parse_error>(StrEq("incorrect sequence of bytes in unicode encoding for address ")));
 #endif
 
 #ifdef IPADDRESS_NO_EXCEPTIONS
@@ -393,7 +393,7 @@ TEST(fixed_string, InvalidUnicodeString) {
 #else
     EXPECT_THAT(
         [&]() { VAL_FIXED_STRING(str_utf8_3, utf8_3); },
-        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+10340} in address {U+10340}")));
+        ThrowsMessage<parse_error>(StrEq("incorrect sequence of bytes in unicode encoding for address ")));
 #endif
 
 #ifdef IPADDRESS_NO_EXCEPTIONS
