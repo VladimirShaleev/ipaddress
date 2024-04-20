@@ -1,6 +1,8 @@
 # ipaddress
 
 [![GitHub Release](https://img.shields.io/github/v/release/vladimirshaleev/ipaddress?sort=semver&display_name=tag)](https://github.com/VladimirShaleev/ipaddress/releases)
+[![Conan Center](https://img.shields.io/conan/v/ipaddress)](https://conan.io/center/recipes/ipaddress)
+[![Vcpkg Version](https://img.shields.io/vcpkg/v/vladimirshaleev-ipaddress)](https://vcpkgx.com/details.html?package=vladimirshaleev-ipaddress)
 [![GitHub License](https://img.shields.io/github/license/vladimirshaleev/ipaddress)](https://github.com/VladimirShaleev/ipaddress/blob/main/LICENSE)
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/vladimirshaleev/ipaddress/tests.yml?branch=main&logo=github&label=tests)
 ](https://github.com/VladimirShaleev/ipaddress/actions/workflows/tests.yml)
@@ -36,7 +38,14 @@ You can install in one of the following ways
 
 #### Conan
 
-*The package has not yet been published*
+Add **ipaddress** dependency to `conanfile.txt`:
+
+```ini
+[requires]
+ipaddress/1.0.1
+```
+
+More information and installation options can be found here https://conan.io/center/recipes/ipaddress
 
 #### Vcpkg
 
@@ -46,7 +55,7 @@ You can install **ipaddress** using [vcpkg](https://github.com/microsoft/vcpkg#g
 ./vcpkg install vladimirshaleev-ipaddress
 ```
 
-or via `vcpkg.json` if your project uses [manifest mode](https://learn.microsoft.com/vcpkg/concepts/manifest-mode):
+or via `vcpkg.json` if your project uses **manifest mode** [[1]](https://learn.microsoft.com/vcpkg/consume/manifest-mode) [[2]](https://learn.microsoft.com/vcpkg/concepts/manifest-mode):
 
 ```json
 {
