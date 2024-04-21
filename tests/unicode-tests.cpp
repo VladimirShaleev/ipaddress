@@ -104,7 +104,7 @@ void test_exception(const T (&str)[N]) {
 #elif IPADDRESS_CPP_VERSION >= 14
     EXPECT_THAT(
         [&]() { char_reader<T>::next(it, begin, end); },
-        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+10348} in address 12{U+10348}{U+d55c}{U+0418}$")));
+        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+10348} in string 12{U+10348}{U+d55c}{U+0418}$")));
 #else
     ASSERT_THROW((char_reader<T>::next(it, begin, end)), parse_error);
 #endif

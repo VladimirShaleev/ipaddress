@@ -354,10 +354,10 @@ IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void raise_error<char>(error_code cod
         case error_code::unexpected_symbol: {
             std::ostringstream ss;
             ss << "{U+" << std::setw(4) << std::setfill('0') << std::hex << value << '}';
-            throw parse_error(code, "unexpected next unicode symbol", ss.str(), "in address", std::string(address, length));
+            throw parse_error(code, "unexpected next unicode symbol", ss.str(), "in string", std::string(address, length));
         }
         case error_code::wrong_encoding_sequence:
-            throw parse_error(code, "incorrect sequence of bytes in unicode encoding for address", std::string(address, length));
+            throw parse_error(code, "incorrect sequence of bytes in unicode encoding for string", std::string(address, length));
         default:
             throw error(code, "unknown error");
     }

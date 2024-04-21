@@ -423,6 +423,59 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("::1%scope_id/24", error_code::invalid_scope_id, "invalid scope id in address ::1%scope_id/24") 
     ));
 
+template <typename T, size_t N1, size_t N2>
+static void parse_invalid_unicode(const T (&expected_address)[N1], const T (&expected_scope)[N2]) {
+    error_code err = error_code::no_error;
+    ip_address::parse(expected_address, err);
+    ASSERT_EQ(err, error_code::unexpected_symbol);
+
+    auto ip = ip_address::parse("2001:db8::1");
+    ip.set_scope_id(expected_scope, err);
+    ASSERT_EQ(err, error_code::unexpected_symbol);
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    auto error_ip = ip_address::parse(expected_address);
+    ip.set_scope_id(expected_scope);
+
+    EXPECT_EQ(error_ip.v6().value().to_uint(), 0);
+#elif IPADDRESS_CPP_VERSION >= 14
+    EXPECT_THAT(
+        [address=expected_address]() { ip_address::parse(address); },
+        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+10348} in string 200{U+10348}:d{U+d55c}8::1")));
+    EXPECT_THAT(
+        [address=expected_address]() { ip_address::parse(address); },
+        Throws<parse_error>(Property(&parse_error::code, Eq(error_code::unexpected_symbol))));
+    EXPECT_THAT(
+        [=]() { ip_address(ip).set_scope_id(expected_scope); },
+        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+d55c} in string 12{U+d55c}3")));
+    EXPECT_THAT(
+        [=]() { ip_address(ip).set_scope_id(expected_scope); },
+        Throws<parse_error>(Property(&parse_error::code, Eq(error_code::unexpected_symbol))));
+#else // googletest EXPECT_THAT is not supported in cpp less than 14
+    ASSERT_THROW(ip_address::parse(expected_address), parse_error);
+    ASSERT_THROW(ip.set_scope_id(expected_scope), parse_error);
+#endif
+}
+#define PARSE_INVALID_UNICODE(unicode) parse_invalid_unicode(unicode##"200\U00010348:d\ud55c8::1", unicode##"12\ud55c3")
+
+#if __cpp_char8_t >= 201811L
+TEST(ip_address, ParseInvalidUtf8) {
+    PARSE_INVALID_UNICODE(u8);
+}
+#endif
+
+TEST(ip_address, ParseInvalidUtf16) {
+    PARSE_INVALID_UNICODE(u);
+}
+
+TEST(ip_address, ParseInvalidUtf32) {
+    PARSE_INVALID_UNICODE(U);
+}
+
+TEST(ip_address, ParseInvalidWideChar) {
+    PARSE_INVALID_UNICODE(L);
+}
+
 TEST(ip_address, Comparison) {
     IPADDRESS_CONSTEXPR auto ip1 = ip_address::parse("127.240.0.1");
     IPADDRESS_CONSTEXPR auto ip2 = ip_address::parse("2001:db8::1");

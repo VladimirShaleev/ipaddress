@@ -379,14 +379,11 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("1.2.3.040",       error_code::leading_0_are_not_permitted, "leading zeros are not permitted in octet 3 of address 1.2.3.040")
     ));
 
-#if __cpp_char8_t >= 201811L
-TEST(ipv4_address, ParseInvalidUtf8) {
-    auto expected_address = u8"127.\U00010348.\ud55c.1";
-    auto expected_error_code = error_code::unexpected_symbol;
-
+template <typename T, size_t N>
+static void parse_invalid_unicode(const T (&expected_address)[N]) {
     error_code err = error_code::no_error;
     ipv4_address::parse(expected_address, err);
-    ASSERT_EQ(err, expected_error_code);
+    ASSERT_EQ(err, error_code::unexpected_symbol);
 
 #ifdef IPADDRESS_NO_EXCEPTIONS
     ipv4_address::base_type expected_empty { 0, 0, 0, 0};
@@ -398,95 +395,32 @@ TEST(ipv4_address, ParseInvalidUtf8) {
 #elif IPADDRESS_CPP_VERSION >= 14
     EXPECT_THAT(
         [address=expected_address]() { ipv4_address::parse(address); },
-        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+10348} in address 127.{U+10348}.{U+d55c}.1")));
+        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+10348} in string 127.{U+10348}.{U+d55c}.1")));
     EXPECT_THAT(
         [address=expected_address]() { ipv4_address::parse(address); },
-        Throws<parse_error>(Property(&parse_error::code, Eq(expected_error_code))));
-#else
+        Throws<parse_error>(Property(&parse_error::code, Eq(error_code::unexpected_symbol))));
+#else // googletest EXPECT_THAT is not supported in cpp less than 14
     ASSERT_THROW(ipv4_address::parse(expected_address), parse_error);
 #endif
+}
+#define PARSE_INVALID_UNICODE(unicode) parse_invalid_unicode(unicode##"127.\U00010348.\ud55c.1")
+
+#if __cpp_char8_t >= 201811L
+TEST(ipv4_address, ParseInvalidUtf8) {
+    PARSE_INVALID_UNICODE(u8);
 }
 #endif
 
 TEST(ipv4_address, ParseInvalidUtf16) {
-    auto expected_address = u"127.\U00010348.\ud55c.1";
-    auto expected_error_code = error_code::unexpected_symbol;
-
-    error_code err = error_code::no_error;
-    ipv4_address::parse(expected_address, err);
-    ASSERT_EQ(err, expected_error_code);
-
-#ifdef IPADDRESS_NO_EXCEPTIONS
-    ipv4_address::base_type expected_empty { 0, 0, 0, 0};
-    auto error_ip = ipv4_address::parse(expected_address);
-
-    EXPECT_EQ(error_ip.bytes(), expected_empty);
-    ASSERT_EQ(error_ip.to_uint(), 0);
-    EXPECT_EQ(uint32_t(error_ip), 0);
-#elif IPADDRESS_CPP_VERSION >= 14
-    EXPECT_THAT(
-        [address=expected_address]() { ipv4_address::parse(address); },
-        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+10348} in address 127.{U+10348}.{U+d55c}.1")));
-    EXPECT_THAT(
-        [address=expected_address]() { ipv4_address::parse(address); },
-        Throws<parse_error>(Property(&parse_error::code, Eq(expected_error_code))));
-#else
-    ASSERT_THROW(ipv4_address::parse(expected_address), parse_error);
-#endif
+    PARSE_INVALID_UNICODE(u);
 }
 
 TEST(ipv4_address, ParseInvalidUtf32) {
-    auto expected_address = U"127.\U00010348.\ud55c.1";
-    auto expected_error_code = error_code::unexpected_symbol;
-
-    error_code err = error_code::no_error;
-    ipv4_address::parse(expected_address, err);
-    ASSERT_EQ(err, expected_error_code);
-
-#ifdef IPADDRESS_NO_EXCEPTIONS
-    ipv4_address::base_type expected_empty { 0, 0, 0, 0};
-    auto error_ip = ipv4_address::parse(expected_address);
-
-    EXPECT_EQ(error_ip.bytes(), expected_empty);
-    ASSERT_EQ(error_ip.to_uint(), 0);
-    EXPECT_EQ(uint32_t(error_ip), 0);
-#elif IPADDRESS_CPP_VERSION >= 14
-    EXPECT_THAT(
-        [address=expected_address]() { ipv4_address::parse(address); },
-        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+10348} in address 127.{U+10348}.{U+d55c}.1")));
-    EXPECT_THAT(
-        [address=expected_address]() { ipv4_address::parse(address); },
-        Throws<parse_error>(Property(&parse_error::code, Eq(expected_error_code))));
-#else
-    ASSERT_THROW(ipv4_address::parse(expected_address), parse_error);
-#endif
+    PARSE_INVALID_UNICODE(U);
 }
 
 TEST(ipv4_address, ParseInvalidWideChar) {
-    auto expected_address = L"127.\U00010348.\ud55c.1";
-    auto expected_error_code = error_code::unexpected_symbol;
-
-    error_code err = error_code::no_error;
-    ipv4_address::parse(expected_address, err);
-    ASSERT_EQ(err, expected_error_code);
-
-#ifdef IPADDRESS_NO_EXCEPTIONS
-    ipv4_address::base_type expected_empty { 0, 0, 0, 0};
-    auto error_ip = ipv4_address::parse(expected_address);
-
-    EXPECT_EQ(error_ip.bytes(), expected_empty);
-    ASSERT_EQ(error_ip.to_uint(), 0);
-    EXPECT_EQ(uint32_t(error_ip), 0);
-#elif IPADDRESS_CPP_VERSION >= 14
-    EXPECT_THAT(
-        [address=expected_address]() { ipv4_address::parse(address); },
-        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+10348} in address 127.{U+10348}.{U+d55c}.1")));
-    EXPECT_THAT(
-        [address=expected_address]() { ipv4_address::parse(address); },
-        Throws<parse_error>(Property(&parse_error::code, Eq(expected_error_code))));
-#else
-    ASSERT_THROW(ipv4_address::parse(expected_address), parse_error);
-#endif
+    PARSE_INVALID_UNICODE(L);
 }
 
 TEST(ipv4_address, Comparison) {

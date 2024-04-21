@@ -130,7 +130,7 @@ struct char_reader<char>
         return utf8_next_or_error(it, end, error, error_symbol);
     }
 
-#else // IPADDRESS_CHAR_IS_UTF8
+#else // !IPADDRESS_CHAR_IS_UTF8
 
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE char next(const char*& it, const char* begin, const char* end) IPADDRESS_NOEXCEPT {
         return *it++;
@@ -144,7 +144,7 @@ struct char_reader<char>
 
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void has_throw() IPADDRESS_NOEXCEPT;
 
-#endif
+#endif // !IPADDRESS_CHAR_IS_UTF8
 };
 
 #if __cpp_char8_t >= 201811L
