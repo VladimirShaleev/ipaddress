@@ -290,9 +290,9 @@ public:
      * 
      * This method calculates a hash value for the `uint128_t` instance, which can be used in hash-based data structures.
      * 
-     * @return A `std::size_t` representing the hash value of the `uint128_t` instance.
+     * @return A `size_t` representing the hash value of the `uint128_t` instance.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::size_t hash() const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t hash() const IPADDRESS_NOEXCEPT {
         internal::hash_combine<8> hasher{};
         const auto seed = hasher(_upper);
         const auto hash = hasher(seed + 0x9e3779b9 + _lower);
@@ -1727,29 +1727,29 @@ namespace std {
 
 template <typename T>
 struct _numeric_limits_uint128 {
-    static constexpr bool is_bounded               = true;
-    static constexpr bool is_exact                 = true;
-    static constexpr bool is_integer               = true;
-    static constexpr bool is_modulo                = true;
-    static constexpr bool is_specialized           = true;
-    static constexpr bool is_iec559                = false;
-    static constexpr bool is_signed                = false;
-    static constexpr bool has_denorm_loss          = false;
-    static constexpr bool has_infinity             = false;
-    static constexpr bool has_quiet_NaN            = false;
-    static constexpr bool has_signaling_NaN        = false;
-    static constexpr bool tinyness_before          = false;
-    static constexpr bool traps                    = false;
-    static constexpr int max_digits10              = 0;
-    static constexpr int max_exponent              = 0;
-    static constexpr int max_exponent10            = 0;
-    static constexpr int min_exponent              = 0;
-    static constexpr int min_exponent10            = 0;
-    static constexpr int digits                    = 128;
-    static constexpr int digits10                  = 38;
-    static constexpr int radix                     = 2;
-    static constexpr float_denorm_style has_denorm = denorm_absent;
-    static constexpr float_round_style round_style = round_toward_zero;
+    static constexpr bool is_bounded                    = true;
+    static constexpr bool is_exact                      = true;
+    static constexpr bool is_integer                    = true;
+    static constexpr bool is_modulo                     = true;
+    static constexpr bool is_specialized                = true;
+    static constexpr bool is_iec559                     = false;
+    static constexpr bool is_signed                     = false;
+    static constexpr bool has_denorm_loss               = false;
+    static constexpr bool has_infinity                  = false;
+    static constexpr bool has_quiet_NaN                 = false;
+    static constexpr bool has_signaling_NaN             = false;
+    static constexpr bool tinyness_before               = false;
+    static constexpr bool traps                         = false;
+    static constexpr int max_digits10                   = 0;
+    static constexpr int max_exponent                   = 0;
+    static constexpr int max_exponent10                 = 0;
+    static constexpr int min_exponent                   = 0;
+    static constexpr int min_exponent10                 = 0;
+    static constexpr int digits                         = 128;
+    static constexpr int digits10                       = 38;
+    static constexpr int radix                          = 2;
+    static constexpr std::float_denorm_style has_denorm = std::denorm_absent;
+    static constexpr std::float_round_style round_style = std::round_toward_zero;
 
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T (min)() IPADDRESS_NOEXCEPT {
         return 0;
@@ -1852,10 +1852,10 @@ template <typename T>
 constexpr int _numeric_limits_uint128<T>::radix;
 
 template <typename T>
-constexpr float_denorm_style _numeric_limits_uint128<T>::has_denorm;
+constexpr std::float_denorm_style _numeric_limits_uint128<T>::has_denorm;
 
 template <typename T>
-constexpr float_round_style _numeric_limits_uint128<T>::round_style;
+constexpr std::float_round_style _numeric_limits_uint128<T>::round_style;
 
 #ifdef __clang__
   _Pragma("clang diagnostic pop")
@@ -1871,7 +1871,7 @@ struct numeric_limits<IPADDRESS_NAMESPACE::uint128_t> : _numeric_limits_uint128<
 
 template <>
 struct hash<IPADDRESS_NAMESPACE::uint128_t> {
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::size_t operator()(const IPADDRESS_NAMESPACE::uint128_t& value) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t operator()(const IPADDRESS_NAMESPACE::uint128_t& value) const IPADDRESS_NOEXCEPT {
         return value.hash();
     }
 };

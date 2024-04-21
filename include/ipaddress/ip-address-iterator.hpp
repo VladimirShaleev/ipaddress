@@ -426,7 +426,7 @@ public:
 #endif
     using iterator_category = std::random_access_iterator_tag; /**< The category of the iterator. */
     using value_type        = ip_address_base<Base>; /**< The type of the values iterated over. */
-    using difference_type   = std::int64_t; /**< The type representing the difference between two iterators. */
+    using difference_type   = int64_t; /**< The type representing the difference between two iterators. */
     using pointer           = const value_type*; /**< The pointer type of the iterated values. */
     using reference         = const value_type&; /**< The reference type of the iterated values. */
 
@@ -868,7 +868,7 @@ template <typename Base>
 class hosts_sequence<ip_address_base<Base>> {
 public:
     using value_type      = ip_address_base<Base>; /**< The type of the IP addresses in the sequence. */
-    using size_type       = std::size_t; /**< The type used for representing the size of the sequence. */
+    using size_type       = size_t; /**< The type used for representing the size of the sequence. */
     using difference_type = typename value_type::uint_type; /**< The type used for representing differences between iterators. */
     using pointer         = value_type*; /**< The pointer type for the value_type. */
     using const_pointer   = const value_type*; /**< The const pointer type for the value_type. */

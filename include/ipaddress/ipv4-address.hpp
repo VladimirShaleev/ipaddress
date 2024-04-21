@@ -81,7 +81,7 @@ protected:
         lhs._bytes.swap(rhs._bytes);
     }
 
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::size_t hash(const base_type& bytes) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t hash(const base_type& bytes) IPADDRESS_NOEXCEPT {
         return internal::calc_hash(0, size_t(bytes[0]), size_t(bytes[1]), size_t(bytes[2]), size_t(bytes[3]));
     }
 
@@ -151,7 +151,7 @@ using ipv4_address = ip_address_base<ipv4_address_base>;
      * @param[in] size The size of the character array.
      * @return An ipv4_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(const char* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(const char* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return internal::parse_ip_from_literal<ipv4_address_base, char, ipv4_address::base_max_string_len>(address, size);
     }
 
@@ -162,7 +162,7 @@ using ipv4_address = ip_address_base<ipv4_address_base>;
      * @param[in] size The size of the character array.
      * @return An ipv4_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(const wchar_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(const wchar_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return internal::parse_ip_from_literal<ipv4_address_base, wchar_t, ipv4_address::base_max_string_len>(address, size);
     }
 
@@ -173,7 +173,7 @@ using ipv4_address = ip_address_base<ipv4_address_base>;
      * @param[in] size The size of the character array.
      * @return An ipv4_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(const char16_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(const char16_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return internal::parse_ip_from_literal<ipv4_address_base, char16_t, ipv4_address::base_max_string_len>(address, size);
     }
 
@@ -184,7 +184,7 @@ using ipv4_address = ip_address_base<ipv4_address_base>;
      * @param[in] size The size of the character array.
      * @return An ipv4_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(const char32_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(const char32_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return internal::parse_ip_from_literal<ipv4_address_base, char32_t, ipv4_address::base_max_string_len>(address, size);
     }
 

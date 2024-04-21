@@ -48,7 +48,7 @@ public:
 #endif
     using iterator_category = std::random_access_iterator_tag; /**< Iterator category. */
     using value_type        = T; /**< Value type iterated over. */
-    using difference_type   = std::int64_t; /**< Difference type between iterators. */
+    using difference_type   = int64_t; /**< Difference type between iterators. */
     using pointer           = const value_type*; /**< Pointer to value type. */
     using reference         = const value_type&; /**< Reference to value type. */
 
@@ -482,7 +482,7 @@ private:
 class hosts_any_sequence {
 public:
     using value_type      = ip_address; /**< The type of the IP addresses in the sequence. */
-    using size_type       = std::size_t; /**< The type used for representing the size of the sequence. */
+    using size_type       = size_t; /**< The type used for representing the size of the sequence. */
     using difference_type = uint128_t; /**< The type used for representing differences between iterators. */
     using pointer         = value_type*; /**< The pointer type for the value_type. */
     using const_pointer   = const value_type*; /**< The const pointer type for the value_type. */
@@ -661,7 +661,7 @@ template <typename T>
 class subnets_any_sequence {
 public:
     using value_type      = T; /**< The type of subnet value. */
-    using size_type       = std::size_t; /**< An unsigned integral type. */
+    using size_type       = size_t; /**< An unsigned integral type. */
     using difference_type = uint128_t; /**< Unsigned integer type for differences. */
     using pointer         = value_type*; /**< Pointer to the subnet type. */
     using const_pointer   = const value_type*; /**< Const pointer to the subnet type. */
