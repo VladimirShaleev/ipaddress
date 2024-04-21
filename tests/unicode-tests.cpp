@@ -5,7 +5,7 @@
 
 using namespace testing;
 using namespace ipaddress;
-using ipaddress::internal::char_converter;
+using ipaddress::internal::char_reader;
 
 template <typename T, size_t N>
 constexpr bool constexpr_test_error(const T (&str)[N]) noexcept {
@@ -14,14 +14,13 @@ constexpr bool constexpr_test_error(const T (&str)[N]) noexcept {
     while (it != end) {
         auto code = error_code::no_error;
         uint32_t error_symbol = 0;
-        char symbol = char_converter<T>::get_char_or_error(it, end, code, error_symbol);
+        char symbol = char_reader<T>::next_or_error(it, end, code, error_symbol);
         if (code != error_code::no_error) {
             return false;
         }
         if (symbol == '\0') {
             break;
         }
-        ++it;
     }
     return true;
 }
@@ -32,11 +31,10 @@ constexpr bool constexpr_test(const T (&str)[N]) {
     const T* begin = str;
     const T* end = it + N;
     while (it != end) {
-        char symbol = char_converter<T>::get_char(it, begin, end);
+        char symbol = char_reader<T>::next(it, begin, end);
         if (symbol == '\0') {
             break;
         }
-        ++it;
     }
     return true;
 }
@@ -50,43 +48,37 @@ void test(const T (&str)[N]) {
     char symbol = '\0';
     uint32_t error_symbol = 0;
 
-    symbol = char_converter<T>::get_char_or_error(it, end, code, error_symbol);
+    symbol = char_reader<T>::next_or_error(it, end, code, error_symbol);
     EXPECT_EQ(symbol, '1');
     EXPECT_EQ(code, error_code::no_error);
     EXPECT_EQ(error_symbol, 0);
     
-    ++it;
-    symbol = char_converter<T>::get_char_or_error(it, end, code, error_symbol);
+    symbol = char_reader<T>::next_or_error(it, end, code, error_symbol);
     EXPECT_EQ(symbol, '2');
     EXPECT_EQ(code, error_code::no_error);
     EXPECT_EQ(error_symbol, 0);
     
-    ++it;
-    symbol = char_converter<T>::get_char_or_error(it, end, code, error_symbol);
+    symbol = char_reader<T>::next_or_error(it, end, code, error_symbol);
     EXPECT_EQ(symbol, '\0');
     EXPECT_EQ(code, error_code::unexpected_symbol);
     EXPECT_EQ(error_symbol, 0x10348);
     
-    ++it;
-    symbol = char_converter<T>::get_char_or_error(it, end, code, error_symbol);
+    symbol = char_reader<T>::next_or_error(it, end, code, error_symbol);
     EXPECT_EQ(symbol, '\0');
     EXPECT_EQ(code, error_code::unexpected_symbol);
     EXPECT_EQ(error_symbol, 0xd55c);
     
-    ++it;
-    symbol = char_converter<T>::get_char_or_error(it, end, code, error_symbol);
+    symbol = char_reader<T>::next_or_error(it, end, code, error_symbol);
     EXPECT_EQ(symbol, '\0');
     EXPECT_EQ(code, error_code::unexpected_symbol);
     EXPECT_EQ(error_symbol, 0x0418);
     
-    ++it;
-    symbol = char_converter<T>::get_char_or_error(it, end, code, error_symbol);
+    symbol = char_reader<T>::next_or_error(it, end, code, error_symbol);
     EXPECT_EQ(symbol, '$');
     EXPECT_EQ(code, error_code::no_error);
     EXPECT_EQ(error_symbol, 0);
 
-    ++it;
-    symbol = char_converter<T>::get_char_or_error(it, end, code, error_symbol);
+    symbol = char_reader<T>::next_or_error(it, end, code, error_symbol);
     EXPECT_EQ(symbol, '\0');
     EXPECT_EQ(code, error_code::no_error);
     EXPECT_EQ(error_symbol, 0);
@@ -100,30 +92,27 @@ void test_exception(const T (&str)[N]) {
 
     char symbol = '\0';
 
-    symbol = char_converter<T>::get_char(it, begin, end);
+    symbol = char_reader<T>::next(it, begin, end);
     EXPECT_EQ(symbol, '1');
     
-    ++it;
-    symbol = char_converter<T>::get_char(it, begin, end);
+    symbol = char_reader<T>::next(it, begin, end);
     EXPECT_EQ(symbol, '2');
     
-    ++it;
-
 #ifdef IPADDRESS_NO_EXCEPTIONS
-    const auto actual = char_converter<T>::get_char(it, begin, end);
+    const auto actual = char_reader<T>::next(it, begin, end);
     EXPECT_EQ(actual, '\0');
 #elif IPADDRESS_CPP_VERSION >= 14
     EXPECT_THAT(
-        [&]() { char_converter<T>::get_char(it, begin, end); },
+        [&]() { char_reader<T>::next(it, begin, end); },
         ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+10348} in address 12{U+10348}{U+d55c}{U+0418}$")));
 #else
-    ASSERT_THROW((char_converter<T>::get_char(it, begin, end)), parse_error);
+    ASSERT_THROW((char_reader<T>::next(it, begin, end)), parse_error);
 #endif
 }
 
 #if IPADDRESS_CPP_VERSION >= 14
 
-TEST(char_converter, CompileTime) {
+TEST(char_reader, CompileTime) {
     constexpr auto result1 = constexpr_test_error("1234");
     constexpr auto result2 = constexpr_test_error(u"1234");
     constexpr auto result3 = constexpr_test_error(u"1猫4");
@@ -161,43 +150,43 @@ TEST(char_converter, CompileTime) {
 #endif
 
 #if __cpp_char8_t >= 201811L
-TEST(char_converter, Utf8) {
+TEST(char_reader, Utf8) {
     test(u8"12\U00010348\ud55c\u0418$");
 }
 #endif // __cpp_char8_t
 
-TEST(char_converter, Utf16) {
+TEST(char_reader, Utf16) {
     test(u"12\U00010348\ud55c\u0418$");
 }
 
-TEST(char_converter, Utf32) {
+TEST(char_reader, Utf32) {
     test(U"12\U00010348\ud55c\u0418$");
 }
 
-TEST(char_converter, WideChar) {
+TEST(char_reader, WideChar) {
     test(L"12\U00010348\ud55c\u0418$");
 }
 
 #if __cpp_char8_t >= 201811L
-TEST(char_converter, Utf8Exception) {
+TEST(char_reader, Utf8Exception) {
     test_exception(u8"12\U00010348\ud55c\u0418$");
 }
 #endif // __cpp_char8_t
 
-TEST(char_converter, Utf16Exception) {
+TEST(char_reader, Utf16Exception) {
     test_exception(u"12\U00010348\ud55c\u0418$");
 }
 
-TEST(char_converter, Utf32Exception) {
+TEST(char_reader, Utf32Exception) {
     test_exception(U"12\U00010348\ud55c\u0418$");
 }
 
-TEST(char_converter, WideCharException) {
+TEST(char_reader, WideCharException) {
     test_exception(L"12\U00010348\ud55c\u0418$");
 }
 
 #ifdef IPADDRESS_CHAR_IS_UTF8
-TEST(char_converter, Char) {
+TEST(char_reader, Char) {
     char str[13] = { 
         char(49), 
         char(50), 
@@ -210,7 +199,7 @@ TEST(char_converter, Char) {
     test(str);
 }
 #else // IPADDRESS_CHAR_IS_UTF8
-TEST(char_converter, Char) {
+TEST(char_reader, Char) {
     constexpr char str[] = "abc123";
 
     const char* it = str;
@@ -220,43 +209,37 @@ TEST(char_converter, Char) {
     char symbol = '\0';
     uint32_t error_symbol = 0;
 
-    symbol = char_converter<char>::get_char_or_error(it, end, code, error_symbol);
+    symbol = char_reader<char>::next_or_error(it, end, code, error_symbol);
     EXPECT_EQ(symbol, 'a');
     EXPECT_EQ(code, error_code::no_error);
     EXPECT_EQ(error_symbol, 0);
     
-    ++it;
-    symbol = char_converter<char>::get_char_or_error(it, end, code, error_symbol);
+    symbol = char_reader<char>::next_or_error(it, end, code, error_symbol);
     EXPECT_EQ(symbol, 'b');
     EXPECT_EQ(code, error_code::no_error);
     EXPECT_EQ(error_symbol, 0);
     
-    ++it;
-    symbol = char_converter<char>::get_char_or_error(it, end, code, error_symbol);
+    symbol = char_reader<char>::next_or_error(it, end, code, error_symbol);
     EXPECT_EQ(symbol, 'c');
     EXPECT_EQ(code, error_code::no_error);
     EXPECT_EQ(error_symbol, 0);
     
-    ++it;
-    symbol = char_converter<char>::get_char_or_error(it, end, code, error_symbol);
+    symbol = char_reader<char>::next_or_error(it, end, code, error_symbol);
     EXPECT_EQ(symbol, '1');
     EXPECT_EQ(code, error_code::no_error);
     EXPECT_EQ(error_symbol, 0);
     
-    ++it;
-    symbol = char_converter<char>::get_char_or_error(it, end, code, error_symbol);
+    symbol = char_reader<char>::next_or_error(it, end, code, error_symbol);
     EXPECT_EQ(symbol, '2');
     EXPECT_EQ(code, error_code::no_error);
     EXPECT_EQ(error_symbol, 0);
     
-    ++it;
-    symbol = char_converter<char>::get_char_or_error(it, end, code, error_symbol);
+    symbol = char_reader<char>::next_or_error(it, end, code, error_symbol);
     EXPECT_EQ(symbol, '3');
     EXPECT_EQ(code, error_code::no_error);
     EXPECT_EQ(error_symbol, 0);
 
-    ++it;
-    symbol = char_converter<char>::get_char_or_error(it, end, code, error_symbol);
+    symbol = char_reader<char>::next_or_error(it, end, code, error_symbol);
     EXPECT_EQ(symbol, '\0');
     EXPECT_EQ(code, error_code::no_error);
     EXPECT_EQ(error_symbol, 0);

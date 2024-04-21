@@ -56,13 +56,12 @@ struct fixed_string {
      * @throw parse_error Thrown if contains unexpected characters for addresses
      */
     template <typename T>
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string(const T (&data)[N + 1]) IPADDRESS_NOEXCEPT(noexcept(internal::char_converter<T>::has_throw())) {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string(const T (&data)[N + 1]) IPADDRESS_NOEXCEPT(noexcept(internal::char_reader<T>::has_throw())) {
         const auto begin = &data[0];
         const auto end = &data[N];
         auto it = begin;
         for (size_t i = 0; i < N; ++i) {
-            _data[i] = internal::char_converter<T>::get_char(it, begin, end);
-            ++it;
+            _data[i] = internal::char_reader<T>::next(it, begin, end);
             if (_data[i] == '\0') {
                 break;
             }
@@ -86,8 +85,7 @@ struct fixed_string {
         auto it = begin;
         uint32_t error_symbol = 0;
         for (size_t i = 0; i < N; ++i) {
-            _data[i] = internal::char_converter<T>::get_char_or_error(it, end, code, error_symbol);
-            ++it;
+            _data[i] = internal::char_reader<T>::next_or_error(it, end, code, error_symbol);
             if (_data[i] == '\0' || code != error_code::no_error) {
                 break;
             }
@@ -651,7 +649,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
  * @return A fixed_string object of size N-1.
  */
 template <typename T, size_t N>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 1> make_fixed_string(const T(&data)[N]) IPADDRESS_NOEXCEPT(noexcept(internal::char_converter<T>::has_throw())) {
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 1> make_fixed_string(const T(&data)[N]) IPADDRESS_NOEXCEPT(noexcept(internal::char_reader<T>::has_throw())) {
     return fixed_string<N - 1>(data);
 }
 

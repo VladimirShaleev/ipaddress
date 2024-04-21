@@ -20,17 +20,17 @@ namespace IPADDRESS_NAMESPACE {
 namespace internal {
 
 template <typename T>
-struct char_converter {
+struct char_reader {
     static_assert(!std::is_same<T, T>::value, "not supported char type");
 };
 
 template <typename T>
-struct char_or_throw_converter {
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE char get_char(const T*& it, const T* begin, const T* end) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+struct char_or_throw {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE char next(const T*& it, const T* begin, const T* end) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         uint32_t error_symbol = 0;
         auto code = error_code::no_error;
         auto prev_it = it;
-        const auto result = char_converter<T>::get_char_or_error(it, end, code, error_symbol);
+        const auto result = char_reader<T>::next_or_error(it, end, code, error_symbol);
         if (code != error_code::no_error) {
             raise_error(code, error_symbol, begin, end - begin);
         }
@@ -46,8 +46,8 @@ struct symbol {
 };
 
 template <typename T>
-struct utf8_converter {
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE char get_utf8_char(const T*& it, const T* end, error_code& error, uint32_t& error_symbol) {
+struct utf8_reader {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE char utf8_next_or_error(const T*& it, const T* end, error_code& error, uint32_t& error_symbol) {
         error = error_code::no_error;
         error_symbol = 0;
         auto correct = true;
@@ -77,6 +77,7 @@ struct utf8_converter {
                     break;
             }
         }
+        ++it;
         if (!correct) {
             error = error_code::wrong_encoding_sequence;
             return '\0';
@@ -120,27 +121,27 @@ struct utf8_converter {
 };
 
 template <>
-struct char_converter<char>
+struct char_reader<char>
 #ifdef IPADDRESS_CHAR_IS_UTF8
-: utf8_converter<char>, char_or_throw_converter<char>
+: utf8_reader<char>, char_or_throw<char>
 #endif
 {
 #ifdef IPADDRESS_CHAR_IS_UTF8
 
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE char get_char_or_error(const char*& it, const char* end, error_code& error, uint32_t& error_symbol) IPADDRESS_NOEXCEPT {
-        return get_utf8_char(it, end, error, error_symbol);
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE char next_or_error(const char*& it, const char* end, error_code& error, uint32_t& error_symbol) IPADDRESS_NOEXCEPT {
+        return utf8_next_or_error(it, end, error, error_symbol);
     }
 
 #else // IPADDRESS_CHAR_IS_UTF8
 
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE char get_char(const char* it, const char* begin, const char* end) IPADDRESS_NOEXCEPT {
-        return *it;
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE char next(const char*& it, const char* begin, const char* end) IPADDRESS_NOEXCEPT {
+        return *it++;
     }
 
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE char get_char_or_error(const char* it, const char* end, error_code& error, uint32_t& error_symbol) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE char next_or_error(const char*& it, const char* end, error_code& error, uint32_t& error_symbol) IPADDRESS_NOEXCEPT {
         error = error_code::no_error;
         error_symbol = 0;
-        return *it;
+        return *it++;
     }
 
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void has_throw() IPADDRESS_NOEXCEPT;
@@ -151,22 +152,22 @@ struct char_converter<char>
 #if __cpp_char8_t >= 201811L
 
 template <>
-struct char_converter<char8_t> : utf8_converter<char8_t>, char_or_throw_converter<char8_t> {
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE char get_char_or_error(const char8_t*& it, const char8_t* end, error_code& error, uint32_t& error_symbol) IPADDRESS_NOEXCEPT {
-        return get_utf8_char(it, end, error, error_symbol);
+struct char_reader<char8_t> : utf8_reader<char8_t>, char_or_throw<char8_t> {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE char next_or_error(const char8_t*& it, const char8_t* end, error_code& error, uint32_t& error_symbol) IPADDRESS_NOEXCEPT {
+        return utf8_next_or_error(it, end, error, error_symbol);
     }
 };
 
 #endif // __cpp_char8_t
 
 template <>
-struct char_converter<char16_t> : char_or_throw_converter<char16_t> {
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE char get_char_or_error(const char16_t*& it, const char16_t* end, error_code& error, uint32_t& error_symbol) IPADDRESS_NOEXCEPT {
-        return utf16_get_char_or_error(it, end, error, error_symbol);
+struct char_reader<char16_t> : char_or_throw<char16_t> {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE char next_or_error(const char16_t*& it, const char16_t* end, error_code& error, uint32_t& error_symbol) IPADDRESS_NOEXCEPT {
+        return utf16_next_or_error(it, end, error, error_symbol);
     }
 
     template <typename T>
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE char utf16_get_char_or_error(const T*& it, const T* end, error_code& error, uint32_t& error_symbol) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE char utf16_next_or_error(const T*& it, const T* end, error_code& error, uint32_t& error_symbol) IPADDRESS_NOEXCEPT {
         error = error_code::no_error;
         error_symbol = 0;
         bool correct = true;
@@ -188,6 +189,7 @@ struct char_converter<char16_t> : char_or_throw_converter<char16_t> {
                 correct = false;
                 break;
         }
+        ++it;
         if (!correct) {
             error = error_code::wrong_encoding_sequence;
             return '\0';
@@ -209,44 +211,44 @@ struct char_converter<char16_t> : char_or_throw_converter<char16_t> {
 };
 
 template <>
-struct char_converter<char32_t> : char_or_throw_converter<char32_t> {
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE char get_char_or_error(const char32_t*& it, const char32_t* end, error_code& error, uint32_t& error_symbol) IPADDRESS_NOEXCEPT {
-        return utf32_get_char_or_error(it, end, error, error_symbol);
+struct char_reader<char32_t> : char_or_throw<char32_t> {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE char next_or_error(const char32_t*& it, const char32_t* end, error_code& error, uint32_t& error_symbol) IPADDRESS_NOEXCEPT {
+        return utf32_next_or_error(it, end, error, error_symbol);
     }
 
     template <typename T>
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE char utf32_get_char_or_error(const T*& it, const T* end, error_code& error, uint32_t& error_symbol) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE char utf32_next_or_error(const T*& it, const T* end, error_code& error, uint32_t& error_symbol) IPADDRESS_NOEXCEPT {
         error = error_code::no_error;
         error_symbol = 0;
         if (uint32_t(*it) > 127) {
             error = error_code::unexpected_symbol;
-            error_symbol = uint32_t(*it);
+            error_symbol = uint32_t(*it++);
             return '\0';
         }
-        return char(*it);
+        return char(*it++);
     }
 };
 
 template <>
-struct char_converter<wchar_t> : char_or_throw_converter<wchar_t> {
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE char get_char_or_error(const wchar_t*& it, const wchar_t* end, error_code& error, uint32_t& error_symbol) IPADDRESS_NOEXCEPT {
+struct char_reader<wchar_t> : char_or_throw<wchar_t> {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE char next_or_error(const wchar_t*& it, const wchar_t* end, error_code& error, uint32_t& error_symbol) IPADDRESS_NOEXCEPT {
         error = error_code::no_error;
         error_symbol = 0;
     #ifdef _WIN32
         if (sizeof(wchar_t) == sizeof(char16_t)) {
-            return char_converter<char16_t>::utf16_get_char_or_error(it, end, error, error_symbol);
+            return char_reader<char16_t>::utf16_next_or_error(it, end, error, error_symbol);
         }
     #else
         if (sizeof(wchar_t) == sizeof(char32_t)) {
-            return char_converter<char32_t>::utf32_get_char_or_error(it, end, error, error_symbol);
+            return char_reader<char32_t>::utf32_next_or_error(it, end, error, error_symbol);
         }
     #endif
         if (*it > 127) {
             error = error_code::unexpected_symbol;
-            error_symbol = uint32_t(*it);
+            error_symbol = uint32_t(*it++);
             return '\0';
         }
-        return char(*it);
+        return char(*it++);
     }
 };
 
@@ -264,8 +266,7 @@ IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void raise_error(error_code code, uin
         const T* it = address;
         const T* end = it + length;
         while (it < end) {
-            const auto result = internal::char_converter<T>::get_char_or_error(it, end, stub_code, error_symbol);
-            ++it;
+            const auto result = internal::char_reader<T>::next_or_error(it, end, stub_code, error_symbol);
             if (stub_code == error_code::no_error) {
                 if (result == '\0') {
                     break;
