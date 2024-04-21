@@ -123,10 +123,10 @@ public:
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE ip_address_base<Base> parse() IPADDRESS_NOEXCEPT {
         constexpr auto str = FixedString;
         auto code = error_code::no_error;
-        auto index = 0;
-        auto result = Base::ip_from_string(str.begin(), str.end(), code, index);
+        uint32_t value = 0;
+        auto result = Base::ip_from_string(str.begin(), str.end(), code, value);
         if (code != error_code::no_error) {
-            raise_error(code, index, str.data(), str.size());
+            raise_error(code, value, str.data(), str.size());
         }
         return ip_address_base(result);
     }
@@ -401,7 +401,6 @@ public:
      */
     template <typename T, size_t N>
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(const T(&address)[N]) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        internal::is_char_type<T>();
         auto str = make_fixed_string(address);
         return parse_string(str);
     }
@@ -420,9 +419,8 @@ public:
      */
     template <typename T, size_t N>
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(const T(&address)[N], error_code& code) IPADDRESS_NOEXCEPT {
-        internal::is_char_type<T>();
-        auto str = make_fixed_string(address);
-        return parse_string(str, code);
+        auto str = make_fixed_string(address, code);
+        return code == error_code::no_error ? parse_string(str, code) : ip_address_base{};
     }
 
     /**
@@ -694,10 +692,10 @@ private:
     template <typename Str>
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse_string(const Str& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         auto code = error_code::no_error;
-        auto index = 0;
-        auto result = Base::ip_from_string(address.begin(), address.end(), code, index);
+        uint32_t value = 0;
+        auto result = Base::ip_from_string(address.data(), address.data() + address.size(), code, value);
         if (code != error_code::no_error) {
-            raise_error(code, index, address.data(), address.size());
+            raise_error(code, value, address.data(), address.size());
         }
         return result;
     }
@@ -705,8 +703,8 @@ private:
     template <typename Str>
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse_string(const Str& address, error_code& code) IPADDRESS_NOEXCEPT {
         code = error_code::no_error;
-        auto index = 0;
-        return Base::ip_from_string(address.begin(), address.end(), code, index);
+        uint32_t value = 0;
+        return Base::ip_from_string(address.data(), address.data() + address.size(), code, value);
     }
 };
 
@@ -715,7 +713,7 @@ private:
 namespace internal {
 
 template <typename Base, typename TChar, size_t MaxLen>
-IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<Base> parse_ip_from_literal(const TChar* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<Base> parse_ip_from_literal(const TChar* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
     if (size > MaxLen) {
         raise_error(error_code::string_is_too_long, 0, address, size);
     }
@@ -762,7 +760,7 @@ namespace std {
 
 template <typename Base>
 struct hash<IPADDRESS_NAMESPACE::ip_address_base<Base>> {
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::size_t operator()(const IPADDRESS_NAMESPACE::ip_address_base<Base>& ip) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t operator()(const IPADDRESS_NAMESPACE::ip_address_base<Base>& ip) const IPADDRESS_NOEXCEPT {
         return ip.hash();
     }
 };

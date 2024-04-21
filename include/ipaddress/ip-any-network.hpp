@@ -29,9 +29,6 @@ namespace IPADDRESS_NAMESPACE {
 
 namespace internal {
 
-// Parsing has been removed from the ip_network class due to a bug 
-// in the Clang compiler in version 14 and below
-// https://bugs.llvm.org/show_bug.cgi?id=18781
 template <typename T>
 struct net_any_parser {
     template <typename Str>
@@ -1125,7 +1122,6 @@ public:
      */
     template <typename T, size_t N>
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(const T(&address)[N], bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        internal::is_char_type<T>();
         auto code = error_code::no_error;
         auto result = internal::net_any_parser<ip_network>::parse(address, code, strict);
         if (code != error_code::no_error) {
@@ -1149,7 +1145,6 @@ public:
      */
     template <typename T, size_t N>
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(const T(&address)[N], error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
-        internal::is_char_type<T>();
         code = error_code::no_error;
 
         const auto net4 = ipv4_network::parse(address, code, strict);
@@ -1278,35 +1273,6 @@ public:
 #endif // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
 private:
-    // not used due to clang bug in version 14 and below
-    // https://bugs.llvm.org/show_bug.cgi?id=18781
-    //
-    // template <typename Str>
-    // IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse_string(const Str& address, bool strict) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-    //     auto code = error_code::no_error;
-    //     const auto net4 = ipv4_network::parse(address, code, strict);
-    //     if (code == error_code::no_error) {
-    //         return ip_network(net4);
-    //     }
-    //     return ip_network(ipv6_network::parse(address, strict));
-    // }
-    //
-    // template <typename Str>
-    // static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse_string(const Str& address, error_code& code, bool strict) IPADDRESS_NOEXCEPT {
-    //     code = error_code::no_error;
-    //     const auto net4 = ipv4_network::parse(address, code, strict);
-    //     if (code == error_code::no_error) {
-    //         return ip_network(net4);
-    //     }
-    //     
-    //     const auto net6 = ipv6_network::parse(address, code, strict);
-    //     if (code == error_code::no_error) {
-    //         return ip_network(net6);
-    //     }
-    //     
-    //     return ip_network();
-    // }
-
     union ip_any_network {
         IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_network() IPADDRESS_NOEXCEPT : ipv4() {
         }
@@ -1351,7 +1317,7 @@ private:
      * @param[in] size The size of the string literal.
      * @return An ip_network object representing the network specified by the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const char* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const char* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         const auto max_len = ipv6_address::base_max_string_len * 2 + 1;
         if (size > max_len) {
             raise_error(error_code::string_is_too_long, 0, address, size);
@@ -1373,7 +1339,7 @@ private:
      * @param[in] size The size of the string literal.
      * @return An ip_network object representing the network specified by the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const wchar_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const wchar_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         const auto max_len = ipv6_address::base_max_string_len * 2 + 1;
         if (size > max_len) {
             raise_error(error_code::string_is_too_long, 0, address, size);
@@ -1395,7 +1361,7 @@ private:
      * @param[in] size The size of the string literal.
      * @return An ip_network object representing the network specified by the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const char16_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const char16_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         const auto max_len = ipv6_address::base_max_string_len * 2 + 1;
         if (size > max_len) {
             raise_error(error_code::string_is_too_long, 0, address, size);
@@ -1417,7 +1383,7 @@ private:
      * @param[in] size The size of the string literal.
      * @return An ip_network object representing the network specified by the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const char32_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const char32_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         const auto max_len = ipv6_address::base_max_string_len * 2 + 1;
         if (size > max_len) {
             raise_error(error_code::string_is_too_long, 0, address, size);
@@ -1439,7 +1405,7 @@ namespace std {
 
 template <>
 struct hash<IPADDRESS_NAMESPACE::ip_network> {
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::size_t operator()(const IPADDRESS_NAMESPACE::ip_network& network) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t operator()(const IPADDRESS_NAMESPACE::ip_network& network) const IPADDRESS_NOEXCEPT {
         return network.hash();
     }
 };

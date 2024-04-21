@@ -27,9 +27,6 @@ namespace IPADDRESS_NAMESPACE {
 
 namespace internal {
 
-// Parsing has been removed from the ip_address class due to a bug 
-// in the Clang compiler in version 14 and below
-// https://bugs.llvm.org/show_bug.cgi?id=18781
 template <typename T>
 struct ip_any_parser {
     template <typename Str>
@@ -1094,7 +1091,6 @@ public:
      */
     template <typename T, size_t N>
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(const T(&address)[N]) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        internal::is_char_type<T>();
         auto code = error_code::no_error;
         auto result = internal::ip_any_parser<ip_address>::parse(address, code);
         if (code != error_code::no_error) {
@@ -1117,7 +1113,6 @@ public:
      */
     template <typename T, size_t N>
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(const T(&address)[N], error_code& code) IPADDRESS_NOEXCEPT {
-        internal::is_char_type<T>();
         return internal::ip_any_parser<ip_address>::parse(address, code);
     }
 
@@ -1133,8 +1128,7 @@ public:
      * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect.
      */
     template <typename T, size_t N>
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(const T(&scope_id)[N]) IPADDRESS_NOEXCEPT {
-        internal::is_char_type<T>();
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(const T(&scope_id)[N]) IPADDRESS_NOEXCEPT(noexcept(_ipv.ipv6.set_scope_id(scope_id))) {
         if (_version == ip_version::V6) {
             _ipv.ipv6.set_scope_id(scope_id);
         }
@@ -1297,35 +1291,6 @@ public:
 #endif // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
 private:
-    // not used due to clang bug in version 14 and below
-    // https://bugs.llvm.org/show_bug.cgi?id=18781
-    //
-    // template <typename Str>
-    // IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse_string(const Str& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-    //     auto code = error_code::no_error;
-    //     const auto ipv4 = ipv4_address::parse(address, code);
-    //     if (code == error_code::no_error) {
-    //         return ip_address(ipv4);
-    //     }
-    //     return ip_address(ipv6_address::parse(address));
-    // }
-    //
-    // template <typename Str>
-    // static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse_string(const Str& address, error_code& code) IPADDRESS_NOEXCEPT {
-    //     code = error_code::no_error;
-    //     const auto ipv4 = ipv4_address::parse(address, code);
-    //     if (code == error_code::no_error) {
-    //         return ip_address(ipv4);
-    //     }
-    //     
-    //     const auto ipv6 = ipv6_address::parse(address, code);
-    //     if (code == error_code::no_error) {
-    //         return ip_address(ipv6);
-    //     }
-    //     
-    //     return ip_address();
-    // }
-
     union ip_any_address {
         IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_address() IPADDRESS_NOEXCEPT : ipv4() {
         }
@@ -1370,7 +1335,7 @@ private:
      * @param[in] size The size of the character array.
      * @return An ip_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const char* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const char* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         if (size > ipv6_address::base_max_string_len) {
             raise_error(error_code::string_is_too_long, 0, address, size);
         }
@@ -1388,7 +1353,7 @@ private:
      * @param[in] size The size of the character array.
      * @return An ip_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const wchar_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const wchar_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         if (size > ipv6_address::base_max_string_len) {
             raise_error(error_code::string_is_too_long, 0, address, size);
         }
@@ -1406,7 +1371,7 @@ private:
      * @param[in] size The size of the character array.
      * @return An ip_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const char16_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const char16_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         if (size > ipv6_address::base_max_string_len) {
             raise_error(error_code::string_is_too_long, 0, address, size);
         }
@@ -1424,7 +1389,7 @@ private:
      * @param[in] size The size of the character array.
      * @return An ip_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const char32_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const char32_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         if (size > ipv6_address::base_max_string_len) {
             raise_error(error_code::string_is_too_long, 0, address, size);
         }
@@ -1445,7 +1410,7 @@ namespace std {
 
 template <>
 struct hash<IPADDRESS_NAMESPACE::ip_address> {
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::size_t operator()(const IPADDRESS_NAMESPACE::ip_address& ip) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t operator()(const IPADDRESS_NAMESPACE::ip_address& ip) const IPADDRESS_NOEXCEPT {
         return ip.hash();
     }
 };
