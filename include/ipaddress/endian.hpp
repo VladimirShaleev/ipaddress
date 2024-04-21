@@ -93,7 +93,7 @@
 #    define IPADDRESS_ENDIAN IPADDRESS_LITTLE_ENDIAN
 #  elif defined(_MSC_VER) && (defined(_M_ARM) || defined(_M_ARM64))
 #    define IPADDRESS_ENDIAN IPADDRESS_LITTLE_ENDIAN
-#  else
+#  elif !defined(IPADDRESS_HAS_STD_ENDIAN)
 #    error Unknown endianness detected. Needs to define IPADDRESS_ENDIAN
 #  endif
 #endif

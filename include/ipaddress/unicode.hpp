@@ -20,9 +20,7 @@ namespace IPADDRESS_NAMESPACE {
 namespace internal {
 
 template <typename T>
-struct char_reader {
-    static_assert(!std::is_same<T, T>::value, "not supported char type");
-};
+struct char_reader;
 
 template <typename T>
 struct char_or_throw {

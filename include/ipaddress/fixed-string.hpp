@@ -649,7 +649,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
  * @return A fixed_string object of size N-1.
  */
 template <typename T, size_t N>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 1> make_fixed_string(const T(&data)[N]) IPADDRESS_NOEXCEPT(noexcept(internal::char_reader<T>::has_throw())) {
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 1> make_fixed_string(const T(&data)[N]) IPADDRESS_NOEXCEPT(noexcept(fixed_string<N - 1>(data))) {
     return fixed_string<N - 1>(data);
 }
 
