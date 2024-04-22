@@ -219,7 +219,7 @@ protected:
 
     template <typename Iter>
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::tuple<ip_address_base<Ext>, size_t> parse_netmask(Iter begin, Iter end, error_code& code, uint32_t& code_value) IPADDRESS_NOEXCEPT {
-        using T = std::decay<decltype(*begin)>::type;
+        using T = typename std::decay<decltype(*begin)>::type;
         const T* it = begin;
         size_t prefixlen = 0;
         auto has_prefixlen = false;
@@ -277,7 +277,7 @@ private:
 
     template <typename Iter>
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_and_scope<Iter> split_scope_id(Iter begin, Iter end, error_code& error, uint32_t& error_value) IPADDRESS_NOEXCEPT {
-        using T = std::decay<decltype(*begin)>::type;
+        using T = typename std::decay<decltype(*begin)>::type;
         auto index = 0;
         const T* it = begin;
         auto scope = false;
@@ -312,7 +312,7 @@ private:
 
     template <typename Iter>
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::array<fixed_string<4>, _max_parts + 1> split_parts(Iter begin, Iter end, uint32_t& parts_count, error_code& error) IPADDRESS_NOEXCEPT {
-        using T = std::decay<decltype(*begin)>::type;
+        using T = typename std::decay<decltype(*begin)>::type;
 
         IPADDRESS_CONSTEXPR std::array<fixed_string<4>, _max_parts + 1> empty_parts = {
             make_fixed_string("\0\0\0\0"),

@@ -88,17 +88,17 @@ struct utf8_reader {
     }
 
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE symbol utf8_code_point(uint8_t byte, bool& correct) IPADDRESS_NOEXCEPT {
-        if ((byte & 0b1000'0000) == 0b0000'0000) {
+        if ((byte & 0b10000000) == 0b00000000) {
             return {static_cast<uint32_t>(byte), 1};
         }
-        if ((byte & 0b1110'0000) == 0b1100'0000) {
-            return {static_cast<uint32_t>(byte & 0b0001'1111), 2};
+        if ((byte & 0b11100000) == 0b11000000) {
+            return {static_cast<uint32_t>(byte & 0b00011111), 2};
         }
-        if ((byte & 0b1111'0000) == 0b1110'0000) { 
-            return {static_cast<uint32_t>(byte & 0b0000'1111), 3};
+        if ((byte & 0b11110000) == 0b11100000) { 
+            return {static_cast<uint32_t>(byte & 0b00001111), 3};
         }
-        if ((byte & 0b1111'1000) == 0b1111'0000) { 
-            return {static_cast<uint32_t>(byte & 0b0000'0111), 4};
+        if ((byte & 0b11111000) == 0b11110000) { 
+            return {static_cast<uint32_t>(byte & 0b00000111), 4};
         }
         correct = false;
         return {0, 0};
@@ -109,9 +109,9 @@ struct utf8_reader {
             correct = false;
             return 0;
         } 
-        if ((uint8_t(*it) & 0b1100'0000) == 0b1000'0000) {
+        if ((uint8_t(*it) & 0b11000000) == 0b10000000) {
             correct = true;
-            return uint8_t(*it) & 0b0011'1111;
+            return uint8_t(*it) & 0b00111111;
         } 
         correct = false;
         return 0;
@@ -135,8 +135,8 @@ struct utf16_reader {
                     correct = false;
                     break;
                 } 
-                if ((*it & 0b1111'1100'0000'0000) == 0b1101'1100'0000'0000) {
-                    symbol.value = ((symbol.value << 10) | (uint16_t(*it) & 0b0000'0011'1111'1111)) + 0x10000;
+                if ((*it & 0b1111110000000000) == 0b1101110000000000) {
+                    symbol.value = ((symbol.value << 10) | (uint16_t(*it) & 0b0000001111111111)) + 0x10000;
                 } else {
                     correct = false;
                 }
@@ -159,8 +159,8 @@ struct utf16_reader {
     }
 
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE symbol utf16_code_point(uint16_t value) IPADDRESS_NOEXCEPT {
-        if ((value & 0b1111'1100'0000'0000) == 0b1101'1000'0000'0000) {
-            return {static_cast<uint32_t>(value & 0b0000'0011'1111'1111), 2};
+        if ((value & 0b1111110000000000) == 0b1101100000000000) {
+            return {static_cast<uint32_t>(value & 0b0000001111111111), 2};
         } else {
             return {value, 1};
         }
@@ -236,7 +236,7 @@ struct char_reader<char32_t> : utf32_reader<char32_t>, char_or_throw<char32_t> {
 };
 
 template <>
-struct char_reader<wchar_t> : utf16_reader<wchar_t>, utf32_reader<char32_t>, char_or_throw<wchar_t> {
+struct char_reader<wchar_t> : utf16_reader<wchar_t>, utf32_reader<wchar_t>, char_or_throw<wchar_t> {
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE char next_or_error(const wchar_t*& it, const wchar_t* end, error_code& error, uint32_t& error_symbol) IPADDRESS_NOEXCEPT {
         error = error_code::no_error;
         error_symbol = 0;

@@ -59,7 +59,7 @@ public:
 protected:
     template <typename Iter>
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<Ext> ip_from_string(Iter begin, Iter end, error_code& code, uint32_t& index) IPADDRESS_NOEXCEPT {
-        using T = std::decay<decltype(*begin)>::type;
+        using T = typename std::decay<decltype(*begin)>::type;
 
         if (begin == end) {
             code = error_code::empty_address;
@@ -178,7 +178,7 @@ protected:
 
     template <typename Iter>
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::tuple<ip_address_base<Ext>, size_t> parse_netmask(Iter begin, Iter end, error_code& code, uint32_t& code_value) IPADDRESS_NOEXCEPT {
-        using T = std::decay<decltype(*begin)>::type;
+        using T = typename std::decay<decltype(*begin)>::type;
 
         code = error_code::no_error;
         code_value = 0;

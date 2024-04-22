@@ -8,7 +8,7 @@ using namespace ipaddress;
 using ipaddress::internal::char_reader;
 
 template <typename T, size_t N>
-constexpr bool constexpr_test_error(const T (&str)[N]) noexcept {
+IPADDRESS_CONSTEXPR bool constexpr_test_error(const T (&str)[N]) noexcept {
     const T* it = str;
     const T* end = it + N;
     while (it != end) {
@@ -26,7 +26,7 @@ constexpr bool constexpr_test_error(const T (&str)[N]) noexcept {
 }
 
 template <typename T, size_t N>
-constexpr bool constexpr_test(const T (&str)[N]) {
+IPADDRESS_CONSTEXPR bool constexpr_test(const T (&str)[N]) {
     const T* it = str;
     const T* begin = str;
     const T* end = it + N;
@@ -110,16 +110,14 @@ void test_exception(const T (&str)[N]) {
 #endif
 }
 
-#if IPADDRESS_CPP_VERSION >= 14
-
 TEST(char_reader, CompileTime) {
-    constexpr auto result1 = constexpr_test_error("1234");
-    constexpr auto result2 = constexpr_test_error(u"1234");
-    constexpr auto result3 = constexpr_test_error(u"1猫4");
-    constexpr auto result4 = constexpr_test_error(U"1234");
-    constexpr auto result5 = constexpr_test_error(U"1猫4");
-    constexpr auto result6 = constexpr_test_error(L"1234");
-    constexpr auto result7 = constexpr_test_error(L"1猫4");
+    IPADDRESS_CONSTEXPR auto result1 = constexpr_test_error("1234");
+    IPADDRESS_CONSTEXPR auto result2 = constexpr_test_error(u"1234");
+    IPADDRESS_CONSTEXPR auto result3 = constexpr_test_error(u"1猫4");
+    IPADDRESS_CONSTEXPR auto result4 = constexpr_test_error(U"1234");
+    IPADDRESS_CONSTEXPR auto result5 = constexpr_test_error(U"1猫4");
+    IPADDRESS_CONSTEXPR auto result6 = constexpr_test_error(L"1234");
+    IPADDRESS_CONSTEXPR auto result7 = constexpr_test_error(L"1猫4");
     ASSERT_TRUE(result1);
     ASSERT_TRUE(result2);
     ASSERT_FALSE(result3);
@@ -128,10 +126,10 @@ TEST(char_reader, CompileTime) {
     ASSERT_TRUE(result6);
     ASSERT_FALSE(result7);
 
-    constexpr auto result8 = constexpr_test("1234");
-    constexpr auto result9 = constexpr_test(u"1234");
-    constexpr auto result10 = constexpr_test(U"1234");
-    constexpr auto result11 = constexpr_test(L"1234");
+    IPADDRESS_CONSTEXPR auto result8 = constexpr_test("1234");
+    IPADDRESS_CONSTEXPR auto result9 = constexpr_test(u"1234");
+    IPADDRESS_CONSTEXPR auto result10 = constexpr_test(U"1234");
+    IPADDRESS_CONSTEXPR auto result11 = constexpr_test(L"1234");
     ASSERT_TRUE(result8);
     ASSERT_TRUE(result9);
     ASSERT_TRUE(result10);
@@ -146,8 +144,6 @@ TEST(char_reader, CompileTime) {
     ASSERT_TRUE(result14);
 #endif // __cpp_char8_t
 }
-
-#endif
 
 #if __cpp_char8_t >= 201811L
 TEST(char_reader, Utf8) {
