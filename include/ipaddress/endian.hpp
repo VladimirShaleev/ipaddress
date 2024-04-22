@@ -17,8 +17,8 @@
  * and handling data with different endianness.
  * 
  * The determination of endianness is done with a priority order:
- * 1. User-defined `IPADDRESS_ENDIAN`.
- * 2. C++20's `std::endian`.
+ * 1. C++20's `std::endian`.
+ * 2. User-defined `IPADDRESS_ENDIAN`.
  * 3. Platform/compiler-provided macros.
  * 
  * If the endianness cannot be determined, a compilation error is raised
