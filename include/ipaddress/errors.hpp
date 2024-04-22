@@ -153,24 +153,39 @@ public:
         return _code;
     }
 
+    struct symbol {
+        uint32_t value;
+    };
+
 private:
     template <typename... Args>
     static std::string concatenate(const Args&... args) {
         std::ostringstream ss;
-        print(ss, args...);
+        concat(ss, args...);
         return ss.str();
     }
 
     template <typename FirstArg, typename... Args>
-    static void print(std::ostringstream& out, const FirstArg& arg, const Args&... args) {
-        out << arg << ' ';
-        print(out, args...);
+    static void concat(std::ostringstream& out, const FirstArg& arg, const Args&... args) {
+        print(out, arg) << ' ';
+        concat(out, args...);
     }
 
     template <typename FirstArg>
-    static void print(std::ostringstream& out, const FirstArg& arg) {
-        out << arg;
+    static void concat(std::ostringstream& out, const FirstArg& arg) {
+        print(out, arg);
     }
+
+    template <typename T>
+    static std::ostringstream& print(std::ostringstream& out, const T& arg) {
+        out << arg;
+        return out;
+    }
+
+    static std::ostringstream& print(std::ostringstream& out, const symbol& arg);
+
+    template <typename T, size_t N>
+    static std::ostringstream& print(std::ostringstream& out, const T (&str)[N]);
 
     error_code _code;
 };
@@ -282,63 +297,70 @@ template <typename T>
 #ifndef IPADDRESS_NO_EXCEPTIONS 
 [[noreturn]] 
 #endif
-IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void raise_error(error_code code, uint32_t value, const T* address, size_t length) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS;
-
-template <>
-#ifndef IPADDRESS_NO_EXCEPTIONS 
-[[noreturn]] 
-#endif
-IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void raise_error<char>(error_code code, uint32_t value, const char* address, size_t length) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void raise_error(error_code code, uint32_t value, const T* address, size_t length) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
 #ifndef IPADDRESS_NO_EXCEPTIONS
+    T str[104] = {};
+    size_t max_len = length;
+    if (length > 100) {
+        max_len = 100;
+    }
+    for (size_t i = 0; i < max_len; ++i) {
+        str[i] = address[i];
+    }
+    if (length > 100) {
+        str[100] = '.';
+        str[101] = '.';
+        str[102] = '.';
+    }
     switch (code) {
         case error_code::empty_address:
             throw parse_error(code, "address cannot be empty");
         case error_code::empty_netmask:
-            throw parse_error(code, "empty mask in address", std::string(address, length));
+            throw parse_error(code, "empty mask in address", str);
         case error_code::invalid_netmask:
-            throw parse_error(code, "is not a valid netmask in address", std::string(address, length));
+            throw parse_error(code, "is not a valid netmask in address", str);
         case error_code::netmask_pattern_mixes_zeroes_and_ones:
-            throw parse_error(code, "netmask pattern mixes zeroes & ones in address", std::string(address, length));
+            throw parse_error(code, "netmask pattern mixes zeroes & ones in address", str);
         case error_code::has_host_bits_set:
-            throw parse_error(code, "has host bits set in address", std::string(address, length));
+            throw parse_error(code, "has host bits set in address", str);
         case error_code::only_one_slash_permitted:
-            throw parse_error(code, "only one '/' permitted in address", std::string(address, length));
+            throw parse_error(code, "only one '/' permitted in address", str);
         case error_code::string_is_too_long:
-            throw parse_error(code, "input string is too long", std::string(address, length));
+            throw parse_error(code, "input string is too long", str);
         case error_code::empty_octet:
-            throw parse_error(code, "empty octet", value, "in address", std::string(address, length));
+            throw parse_error(code, "empty octet", value, "in address", str);
         case error_code::expected_4_octets:
-            throw parse_error(code, "expected 4 octets in", std::string(address, length));
+            throw parse_error(code, "expected 4 octets in", str);
         case error_code::leading_0_are_not_permitted:
-            throw parse_error(code, "leading zeros are not permitted in octet", value, "of address", std::string(address, length));
+            throw parse_error(code, "leading zeros are not permitted in octet", value, "of address", str);
         case error_code::octet_more_3_characters:
-            throw parse_error(code, "in octet", value, "of address", std::string(address, length), "more 3 characters");
+            throw parse_error(code, "in octet", value, "of address", str, "more 3 characters");
         case error_code::octet_has_invalid_symbol:
-            throw parse_error(code, "in octet", value, "of address", std::string(address, length), "has invalid symbol");
+            throw parse_error(code, "in octet", value, "of address", str, "has invalid symbol");
         case error_code::octet_exceeded_255:
-            throw parse_error(code, "octet", value, "of address", std::string(address, length), "exceeded 255");
+            throw parse_error(code, "octet", value, "of address", str, "exceeded 255");
         case error_code::least_3_parts:
-            throw parse_error(code, "least 3 parts in address", std::string(address, length));
+            throw parse_error(code, "least 3 parts in address", str);
         case error_code::most_8_colons_permitted:
-            throw parse_error(code, "most 8 colons permitted in address", std::string(address, length));
+            throw parse_error(code, "most 8 colons permitted in address", str);
         case error_code::part_is_more_4_chars:
-            throw parse_error(code, "in part", value, "of address", std::string(address, length), "more 4 characters");
+            throw parse_error(code, "in part", value, "of address", str, "more 4 characters");
         case error_code::part_has_invalid_symbol:
-            throw parse_error(code, "in part", value, "of address", std::string(address, length), "has invalid symbols");
+            throw parse_error(code, "in part", value, "of address", str, "has invalid symbols");
         case error_code::most_one_double_colon_permitted:
-            throw parse_error(code, "at most one '::' permitted in address", std::string(address, length));
+            throw parse_error(code, "at most one '::' permitted in address", str);
         case error_code::leading_colon_only_permitted_as_part_of_double_colon:
-            throw parse_error(code, "at leading ':' only permitted as part of '::' in address", std::string(address, length));
+            throw parse_error(code, "at leading ':' only permitted as part of '::' in address", str);
         case error_code::trailing_colon_only_permitted_as_part_of_double_colon:
-            throw parse_error(code, "at trailing ':' only permitted as part of '::' in address", std::string(address, length));
+            throw parse_error(code, "at trailing ':' only permitted as part of '::' in address", str);
         case error_code::expected_at_most_7_other_parts_with_double_colon:
-            throw parse_error(code, "expected at most 7 other parts with '::' in address", std::string(address, length));
+            throw parse_error(code, "expected at most 7 other parts with '::' in address", str);
         case error_code::exactly_8_parts_expected_without_double_colon:
-            throw parse_error(code, "exactly 8 parts expected without '::' in address", std::string(address, length));
+            throw parse_error(code, "exactly 8 parts expected without '::' in address", str);
         case error_code::scope_id_is_too_long:
-            throw parse_error(code, "scope id is too long in address", std::string(address, length));
+            throw parse_error(code, "scope id is too long in address", str);
         case error_code::invalid_scope_id:
-            throw parse_error(code, "invalid scope id in address", std::string(address, length));
+            throw parse_error(code, "invalid scope id in address", str);
         case error_code::invalid_version:
             throw logic_error(code, "versions don't match");
         case error_code::invalid_prefixlen_diff:
@@ -351,13 +373,10 @@ IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void raise_error<char>(error_code cod
             throw logic_error(code, "cannot set prefixlen_diff and new_prefix");
         case error_code::not_contained_network:
             throw logic_error(code, "network is not a subnet of other");
-        case error_code::unexpected_symbol: {
-            std::ostringstream ss;
-            ss << "{U+" << std::setw(4) << std::setfill('0') << std::hex << value << '}';
-            throw parse_error(code, "unexpected next unicode symbol", ss.str(), "in string", std::string(address, length));
-        }
+        case error_code::unexpected_symbol:
+            throw parse_error(code, "unexpected next unicode symbol", error::symbol { value }, "in string", str);
         case error_code::wrong_encoding_sequence:
-            throw parse_error(code, "incorrect sequence of bytes in unicode encoding for string", std::string(address, length));
+            throw parse_error(code, "incorrect sequence of bytes in unicode encoding for string", str);
         default:
             throw error(code, "unknown error");
     }

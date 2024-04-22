@@ -33,7 +33,15 @@ struct ipv6_set_scope {
         for (size_t i = 0; i < scope_id.size(); ++i) {
             scope[i] = scope_id[i];
         }
+    #ifdef IPADDRESS_NO_EXCEPTIONS
+        auto code = error_code::no_error;
+        auto str = make_fixed_string(scope, code);
+        if (code == error_code::no_error) {
+            result = str;
+        }
+    #else // !IPADDRESS_NO_EXCEPTIONS
         result = make_fixed_string(scope);
+    #endif // !IPADDRESS_NO_EXCEPTIONS
     #endif // IPADDRESS_IPV6_SCOPE_MAX_LENGTH
     }
 
@@ -50,7 +58,7 @@ struct ipv6_set_scope {
             scope[i] = scope_id[i];
         }
         const auto new_scope_id = make_fixed_string(scope, code);
-        if (code != error_code::no_error) {
+        if (code == error_code::no_error) {
             result = new_scope_id;
         }
     #endif // IPADDRESS_IPV6_SCOPE_MAX_LENGTH
@@ -290,7 +298,15 @@ public:
         for (size_t i = 0; i < N; ++i) {
             str[i] = scope_id[i];
         }
+    #ifdef IPADDRESS_NO_EXCEPTIONS
+        auto code = error_code::no_error;
+        auto result = make_fixed_string(str, code);
+        if (code == error_code::no_error) {
+            _data.scope_id = result;
+        }
+    #else // !IPADDRESS_NO_EXCEPTIONS
         _data.scope_id = make_fixed_string(str);
+    #endif // !IPADDRESS_NO_EXCEPTIONS
     #endif // IPADDRESS_IPV6_SCOPE_MAX_LENGTH
     }
 
@@ -315,7 +331,7 @@ public:
             str[i] = scope_id[i];
         }
         const auto result = make_fixed_string(str, code);
-        if (code != error_code::no_error) {
+        if (code == error_code::no_error) {
             _data.scope_id = result;
         }
     #endif // IPADDRESS_IPV6_SCOPE_MAX_LENGTH

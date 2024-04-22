@@ -621,59 +621,84 @@ INSTANTIATE_TEST_SUITE_P(
     ));
 
 template <typename T, size_t N1, size_t N2>
-static void parse_invalid_unicode(const T (&expected_address)[N1], const T (&expected_scope)[N2]) {
-    error_code err = error_code::no_error;
-    ipv6_address::parse(expected_address, err);
-    ASSERT_EQ(err, error_code::unexpected_symbol);
-
+static void parse_unexpected_symbol(const T (&expected_address)[N1], const T (&expected_scope)[N2]) {
+    using String = std::basic_string<T, std::char_traits<T>, std::allocator<T>>;
     auto ip = ipv6_address::parse("2001:db8::1");
-    ip.set_scope_id(expected_scope, err);
-    ASSERT_EQ(err, error_code::unexpected_symbol);
+    error_code err1 = error_code::no_error;
+    error_code err2 = error_code::no_error;
+    error_code err3 = error_code::no_error;
+    error_code err4 = error_code::no_error;
+
+    ipv6_address::parse(expected_address, err1);
+    ipv6_address::parse(String(expected_address, N1), err2);
+    ip.set_scope_id(expected_scope, err3);
+    ASSERT_FALSE(ip.get_scope_id());
+    ip.set_scope_id(String(expected_scope, N2), err4);
+    ASSERT_FALSE(ip.get_scope_id());
+    ASSERT_EQ(err1, error_code::unexpected_symbol);
+    ASSERT_EQ(err2, error_code::unexpected_symbol);
+    ASSERT_EQ(err3, error_code::unexpected_symbol);
+    ASSERT_EQ(err4, error_code::unexpected_symbol);
 
 #ifdef IPADDRESS_NO_EXCEPTIONS
-    ipv6_address::base_type expected_empty { 0 };
-    auto error_ip = ipv6_address::parse(expected_address);
+    auto error_ip1 = ipv6_address::parse(expected_address);
+    auto error_ip2 = ipv6_address::parse(String(expected_address, N1));
+    ASSERT_EQ(error_ip1.to_uint(), 0);
+    ASSERT_EQ(error_ip2.to_uint(), 0);
     ip.set_scope_id(expected_scope);
-
-    EXPECT_EQ(error_ip.bytes(), expected_empty);
-    ASSERT_EQ(error_ip.to_uint(), 0);
-    EXPECT_EQ(uint32_t(error_ip), 0);
+    ASSERT_FALSE(ip.get_scope_id());
+    ip.set_scope_id(String(expected_scope, N2));
+    ASSERT_FALSE(ip.get_scope_id());
 #elif IPADDRESS_CPP_VERSION >= 14
     EXPECT_THAT(
         [address=expected_address]() { ipv6_address::parse(address); },
         ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+10348} in string 200{U+10348}:d{U+d55c}8::1")));
     EXPECT_THAT(
+        [address=expected_address]() { ipv6_address::parse(String(address, N1)); },
+        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+10348} in string 200{U+10348}:d{U+d55c}8::1")));
+    EXPECT_THAT(
         [address=expected_address]() { ipv6_address::parse(address); },
+        Throws<parse_error>(Property(&parse_error::code, Eq(error_code::unexpected_symbol))));
+    EXPECT_THAT(
+        [address=expected_address]() { ipv6_address::parse(String(address, N1)); },
         Throws<parse_error>(Property(&parse_error::code, Eq(error_code::unexpected_symbol))));
     EXPECT_THAT(
         [=]() { ipv6_address(ip).set_scope_id(expected_scope); },
         ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+d55c} in string 12{U+d55c}3")));
     EXPECT_THAT(
+        [=]() { ipv6_address(ip).set_scope_id(String(expected_scope, N2)); },
+        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+d55c} in string 12{U+d55c}3")));
+    EXPECT_THAT(
         [=]() { ipv6_address(ip).set_scope_id(expected_scope); },
+        Throws<parse_error>(Property(&parse_error::code, Eq(error_code::unexpected_symbol))));
+    EXPECT_THAT(
+        [=]() { ipv6_address(ip).set_scope_id(String(expected_scope, N2)); },
         Throws<parse_error>(Property(&parse_error::code, Eq(error_code::unexpected_symbol))));
 #else // googletest EXPECT_THAT is not supported in cpp less than 14
     ASSERT_THROW(ipv6_address::parse(expected_address), parse_error);
+    ASSERT_THROW((ipv6_address::parse(String(expected_address, N1))), parse_error);
     ASSERT_THROW(ip.set_scope_id(expected_scope), parse_error);
+    ASSERT_THROW((ip.set_scope_id(String(expected_scope, N2))), parse_error);
 #endif
 }
-#define PARSE_INVALID_UNICODE(unicode) parse_invalid_unicode(unicode##"200\U00010348:d\ud55c8::1", unicode##"12\ud55c3")
+#define PARSE_UNEXPECTED_SYMBOL(unicode) parse_unexpected_symbol(unicode##"200\U00010348:d\ud55c8::1", unicode##"12\ud55c3")
 
 #if __cpp_char8_t >= 201811L
-TEST(ipv6_address, ParseInvalidUtf8) {
-    PARSE_INVALID_UNICODE(u8);
+TEST(ipv6_address, ParseUnexpectedUtf8) {
+    PARSE_UNEXPECTED_SYMBOL(u8);
 }
 #endif
 
-TEST(ipv6_address, ParseInvalidUtf16) {
-    PARSE_INVALID_UNICODE(u);
+TEST(ipv6_address, ParseUnexpectedUtf16) {
+    PARSE_UNEXPECTED_SYMBOL(u);
 }
 
-TEST(ipv6_address, ParseInvalidUtf32) {
-    PARSE_INVALID_UNICODE(U);
+TEST(ipv6_address, ParseUnexpectedUtf32) {
+    PARSE_UNEXPECTED_SYMBOL(U);
 }
 
-TEST(ipv6_address, ParseInvalidWideChar) {
-    PARSE_INVALID_UNICODE(L);
+TEST(ipv6_address, ParseUnexpectedWideChar) {
+    PARSE_UNEXPECTED_SYMBOL(L);
 }
 
 TEST(ipv6_address, Comparison) {

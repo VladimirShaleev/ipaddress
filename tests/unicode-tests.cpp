@@ -40,7 +40,7 @@ constexpr bool constexpr_test(const T (&str)[N]) {
 }
 
 template <typename T, size_t N>
-void test(const T (&str)[N]) {
+void test(const T (&str)[N]) { // NOLINT(readability-function-cognitive-complexity)
     const T* it = str;
     const T* end = it + N;
 
@@ -94,7 +94,7 @@ void test_exception(const T (&str)[N]) {
 
     symbol = char_reader<T>::next(it, begin, end);
     EXPECT_EQ(symbol, '1');
-    
+
     symbol = char_reader<T>::next(it, begin, end);
     EXPECT_EQ(symbol, '2');
     
@@ -103,7 +103,7 @@ void test_exception(const T (&str)[N]) {
     EXPECT_EQ(actual, '\0');
 #elif IPADDRESS_CPP_VERSION >= 14
     EXPECT_THAT(
-        [&]() { char_reader<T>::next(it, begin, end); },
+        [=]() { auto curr_it = it; char_reader<T>::next(curr_it, begin, end); },
         ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+10348} in string 12{U+10348}{U+d55c}{U+0418}$")));
 #else
     ASSERT_THROW((char_reader<T>::next(it, begin, end)), parse_error);
