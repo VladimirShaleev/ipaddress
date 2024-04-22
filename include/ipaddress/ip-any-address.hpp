@@ -1128,7 +1128,7 @@ public:
      * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect.
      */
     template <typename T, size_t N>
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(const T(&scope_id)[N]) IPADDRESS_NOEXCEPT(noexcept(_ipv.ipv6.set_scope_id(scope_id))) {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(const T(&scope_id)[N]) IPADDRESS_NOEXCEPT(noexcept(ipv6_address().set_scope_id(scope_id))) {
         if (_version == ip_version::V6) {
             _ipv.ipv6.set_scope_id(scope_id);
         }

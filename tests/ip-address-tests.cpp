@@ -387,7 +387,7 @@ TEST_P(InvalidAddressParams, parse) {
 #ifdef IPADDRESS_NO_EXCEPTIONS
     auto error_ip = ip_address::parse(expected_address);
 
-    EXPECT_EQ(error_ip.v4().value().to_uint(), 0);
+    EXPECT_EQ(error_ip.to_uint128(), 0);
 #elif IPADDRESS_CPP_VERSION >= 14
     EXPECT_THAT(
         [address=expected_address]() { ip_address::parse(address); },
@@ -446,8 +446,8 @@ static void parse_unexpected_symbol(const T (&expected_address)[N1], const T (&e
 #ifdef IPADDRESS_NO_EXCEPTIONS
     auto error_ip1 = ip_address::parse(expected_address);
     auto error_ip2 = ip_address::parse(String(expected_address, N1));
-    ASSERT_EQ(error_ip1.to_uint(), 0);
-    ASSERT_EQ(error_ip2.to_uint(), 0);
+    ASSERT_EQ(error_ip1.to_uint128(), 0);
+    ASSERT_EQ(error_ip2.to_uint128(), 0);
     ip.set_scope_id(expected_scope);
     ASSERT_FALSE(ip.get_scope_id());
     ip.set_scope_id(String(expected_scope, N2));

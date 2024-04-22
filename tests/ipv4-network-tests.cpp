@@ -648,8 +648,8 @@ static void parse_unexpected_symbol(const T (&expected_address)[N]) {
 #ifdef IPADDRESS_NO_EXCEPTIONS
     auto error_ip1 = ipv4_network::parse(expected_address);
     auto error_ip2 = ipv4_network::parse(String(expected_address, N));
-    ASSERT_EQ(error_ip1.to_uint(), 0);
-    ASSERT_EQ(error_ip2.to_uint(), 0);
+    ASSERT_EQ(error_ip1.network_address().to_uint(), 0);
+    ASSERT_EQ(error_ip2.network_address().to_uint(), 0);
 #elif IPADDRESS_CPP_VERSION >= 14
     EXPECT_THAT(
         [address=expected_address]() { ipv4_network::parse(address); },

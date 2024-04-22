@@ -174,7 +174,7 @@ struct utf32_reader {
         error_symbol = 0;
         if (uint32_t(*it) > 127) {
             error = error_code::unexpected_symbol;
-            error_symbol = uint32_t(*it++);
+            error_symbol = uint32_t(*it++); // NOLINT
             return '\0';
         }
         return char(*it++);
@@ -251,7 +251,7 @@ struct char_reader<wchar_t> : utf16_reader<wchar_t>, utf32_reader<wchar_t>, char
     #endif
         if (*it > 127) {
             error = error_code::unexpected_symbol;
-            error_symbol = uint32_t(*it++);
+            error_symbol = uint32_t(*it++); // NOLINT
             return '\0';
         }
         return char(*it++);
