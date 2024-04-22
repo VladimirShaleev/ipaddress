@@ -621,7 +621,7 @@ INSTANTIATE_TEST_SUITE_P(
     ));
 
 template <typename T, size_t N1, size_t N2>
-static void parse_unexpected_symbol(const T (&expected_address)[N1], const T (&expected_scope)[N2]) {
+static void parse_unexpected_symbol(const T (&expected_address)[N1], const T (&expected_scope)[N2]) { // NOLINT(readability-function-cognitive-complexity)
     using String = std::basic_string<T, std::char_traits<T>, std::allocator<T>>;
     auto ip = ipv6_address::parse("2001:db8::1");
     error_code err1 = error_code::no_error;
