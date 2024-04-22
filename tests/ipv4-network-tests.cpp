@@ -634,6 +634,57 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("1.2.3.256", error_code::octet_exceeded_255, "octet 0 of address 1.2.3.256 exceeded 255")
     ));
 
+template <typename T, size_t N>
+static void parse_unexpected_symbol(const T (&expected_address)[N]) {
+    using String = std::basic_string<T, std::char_traits<T>, std::allocator<T>>;
+    error_code err1 = error_code::no_error;
+    error_code err2 = error_code::no_error;
+
+    ipv4_network::parse(expected_address, err1);
+    ipv4_network::parse(String(expected_address, N), err2);
+    ASSERT_EQ(err1, error_code::unexpected_symbol);
+    ASSERT_EQ(err2, error_code::unexpected_symbol);
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    auto error_ip1 = ipv4_network::parse(expected_address);
+    auto error_ip2 = ipv4_network::parse(String(expected_address, N));
+    ASSERT_EQ(error_ip1.to_uint(), 0);
+    ASSERT_EQ(error_ip2.to_uint(), 0);
+#elif IPADDRESS_CPP_VERSION >= 14
+    EXPECT_THAT(
+        [address=expected_address]() { ipv4_network::parse(address); },
+        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+d55c} in string 127.0.0.1/3{U+d55c}")));
+    EXPECT_THAT(
+        [address=expected_address]() { ipv4_network::parse(String(address, N)); },
+        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+d55c} in string 127.0.0.1/3{U+d55c}")));
+    EXPECT_THAT(
+        [address=expected_address]() { ipv4_network::parse(address); },
+        Throws<parse_error>(Property(&parse_error::code, Eq(error_code::unexpected_symbol))));
+#else // googletest EXPECT_THAT is not supported in cpp less than 14
+    ASSERT_THROW(ipv4_network::parse(expected_address), parse_error);
+    ASSERT_THROW((ipv4_network::parse(String(expected_address, N))), parse_error);
+#endif
+}
+#define PARSE_UNEXPECTED_SYMBOL(unicode) parse_unexpected_symbol(unicode##"127.0.0.1/3\ud55c")
+
+#if __cpp_char8_t >= 201811L
+TEST(ipv4_network, ParseUnexpectedUtf8) {
+    PARSE_UNEXPECTED_SYMBOL(u8);
+}
+#endif
+
+TEST(ipv4_network, ParseUnexpectedUtf16) {
+    PARSE_UNEXPECTED_SYMBOL(u);
+}
+
+TEST(ipv4_network, ParseUnexpectedUtf32) {
+    PARSE_UNEXPECTED_SYMBOL(U);
+}
+
+TEST(ipv4_network, ParseUnexpectedWideChar) {
+    PARSE_UNEXPECTED_SYMBOL(L);
+}
+
 TEST(ipv4_network, Comparison) {
     auto net1 = ipv4_network::parse("127.240.1.0/24");
     auto net2 = ipv4_network::parse("127.240.1.0");
