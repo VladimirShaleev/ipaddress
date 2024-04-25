@@ -258,6 +258,24 @@ struct char_reader<wchar_t> : utf16_reader<wchar_t>, utf32_reader<wchar_t>, char
     }
 };
 
+template <typename T>
+struct string_converter {
+    IPADDRESS_NODISCARD static IPADDRESS_FORCE_INLINE std::basic_string<T, std::char_traits<T>, std::allocator<T>> convert(const std::string& str) {
+        std::basic_string<T, std::char_traits<T>, std::allocator<T>> result(str.length(), '\0');
+        std::transform(str.cbegin(), str.cend(), result.begin(), [](char c){
+            return T(c);
+        });
+        return result;
+    }
+};
+
+template <>
+struct string_converter<char> {
+    IPADDRESS_NODISCARD static IPADDRESS_FORCE_INLINE const std::string& convert(const std::string& str) IPADDRESS_NOEXCEPT {
+        return str;
+    }
+};
+
 IPADDRESS_FORCE_INLINE void print_symbol_code(std::ostringstream& out, uint32_t symbol) {
     out << "{U+" << std::setw(4) << std::setfill('0') << std::hex << symbol << '}';
 }

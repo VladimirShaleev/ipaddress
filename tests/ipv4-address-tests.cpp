@@ -485,6 +485,7 @@ TEST_P(ToStringIpv4Params, to_string) {
     ss << actual;
 
     ASSERT_EQ(actual.to_string(), std::string(expected));
+    ASSERT_EQ((std::string) actual, std::string(expected));
     ASSERT_EQ(std::to_string(actual), std::string(expected));
     ASSERT_EQ(ss.str(), std::string(expected));
 }
@@ -495,6 +496,93 @@ INSTANTIATE_TEST_SUITE_P(
         "127.0.0.1",
         "255.0.42.42"
     ));
+
+using ToWStringIpv4Params = TestWithParam<const wchar_t*>;
+TEST_P(ToWStringIpv4Params, to_wstring) {
+    const auto expected = GetParam();
+
+    const auto actual = ipv4_address::parse(expected);
+
+    std::wostringstream ss;
+    ss << actual;
+
+    ASSERT_EQ(actual.to_wstring(), std::wstring(expected));
+    ASSERT_EQ((std::wstring) actual, std::wstring(expected));
+    ASSERT_EQ(std::to_wstring(actual), std::wstring(expected));
+    ASSERT_EQ(ss.str(), std::wstring(expected));
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_address, ToWStringIpv4Params,
+    testing::Values(
+        L"0.0.0.0",
+        L"127.0.0.1",
+        L"255.0.42.42"
+    ));
+
+using ToUtf16StringIpv4Params = TestWithParam<const char16_t*>;
+TEST_P(ToUtf16StringIpv4Params, to_wstring) {
+    const auto expected = GetParam();
+
+    const auto actual = ipv4_address::parse(expected);
+
+    std::basic_ostringstream<char16_t, std::char_traits<char16_t>, std::allocator<char16_t>> ss;
+    ss << actual;
+
+    ASSERT_EQ(actual.to_u16string(), std::u16string(expected));
+    ASSERT_EQ((std::u16string) actual, std::u16string(expected));
+    ASSERT_EQ(ss.str(), std::u16string(expected));
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_address, ToUtf16StringIpv4Params,
+    testing::Values(
+        u"0.0.0.0",
+        u"127.0.0.1",
+        u"255.0.42.42"
+    ));
+
+using ToUtf32StringIpv4Params = TestWithParam<const char32_t*>;
+TEST_P(ToUtf32StringIpv4Params, to_wstring) {
+    const auto expected = GetParam();
+
+    const auto actual = ipv4_address::parse(expected);
+
+    std::basic_ostringstream<char32_t, std::char_traits<char32_t>, std::allocator<char32_t>> ss;
+    ss << actual;
+
+    ASSERT_EQ(actual.to_u32string(), std::u32string(expected));
+    ASSERT_EQ((std::u32string) actual, std::u32string(expected));
+    ASSERT_EQ(ss.str(), std::u32string(expected));
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_address, ToUtf32StringIpv4Params,
+    testing::Values(
+        U"0.0.0.0",
+        U"127.0.0.1",
+        U"255.0.42.42"
+    ));
+
+#if __cpp_char8_t >= 201811L
+using ToUtf8StringIpv4Params = TestWithParam<const char8_t*>;
+TEST_P(ToUtf8StringIpv4Params, to_wstring) {
+    const auto expected = GetParam();
+
+    const auto actual = ipv4_address::parse(expected);
+
+    std::basic_ostringstream<char8_t, std::char_traits<char8_t>, std::allocator<char8_t>> ss;
+    ss << actual;
+
+    ASSERT_EQ(actual.to_u8string(), std::u8string(expected));
+    ASSERT_EQ((std::u8string) actual, std::u8string(expected));
+    ASSERT_EQ(ss.str(), std::u8string(expected));
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_address, ToUtf8StringIpv4Params,
+    testing::Values(
+        u8"0.0.0.0",
+        u8"127.0.0.1",
+        u8"255.0.42.42"
+    ));
+#endif
 
 TEST(ipv4_address, Hash) {
     auto ip1 = ipv4_address::parse("127.0.0.1");
