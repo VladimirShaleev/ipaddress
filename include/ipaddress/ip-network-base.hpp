@@ -579,6 +579,62 @@ public:
     }
 
     /**
+     * Converts the network to a string representation.
+     * 
+     * This method returns a string representation of the network, combining the network address
+     * and the prefix length, formatted according to the specified format.
+     * 
+     * @param[in] fmt The format to use for the string representation. *Defaults to format::compressed*.
+     * @return A string representation of the network.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::wstring to_wstring(format fmt = format::compressed) const {
+        return internal::string_converter<wchar_t>::convert(to_string(fmt));
+    }
+
+    /**
+     * Converts the network to a string representation.
+     * 
+     * This method returns a string representation of the network, combining the network address
+     * and the prefix length, formatted according to the specified format.
+     * 
+     * @param[in] fmt The format to use for the string representation. *Defaults to format::compressed*.
+     * @return A string representation of the network.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::u16string to_u16string(format fmt = format::compressed) const {
+        return internal::string_converter<char16_t>::convert(to_string(fmt));
+    }
+
+    /**
+     * Converts the network to a string representation.
+     * 
+     * This method returns a string representation of the network, combining the network address
+     * and the prefix length, formatted according to the specified format.
+     * 
+     * @param[in] fmt The format to use for the string representation. *Defaults to format::compressed*.
+     * @return A string representation of the network.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::u32string to_u32string(format fmt = format::compressed) const {
+        return internal::string_converter<char32_t>::convert(to_string(fmt));
+    }
+
+#if __cpp_char8_t >= 201811L
+
+    /**
+     * Converts the network to a string representation.
+     * 
+     * This method returns a string representation of the network, combining the network address
+     * and the prefix length, formatted according to the specified format.
+     * 
+     * @param[in] fmt The format to use for the string representation. *Defaults to format::compressed*.
+     * @return A string representation of the network.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::u8string to_u8string(format fmt = format::compressed) const {
+        return internal::string_converter<char8_t>::convert(to_string(fmt));
+    }
+
+#endif // __cpp_char8_t
+
+    /**
      * Swaps the contents of this network with another network.
      * 
      * This method exchanges the network address, netmask, and prefix length with those of another
@@ -1070,10 +1126,12 @@ public:
     /**
      * Converts the ip network object to a std::string.
      * 
-     * @return A `std::string` representation of the ip network object.
+     * @tparam T The character type of the string.
+     * @return A string representation of the ip network object.
      */
-    IPADDRESS_NODISCARD explicit operator std::string() const {
-        return to_string();
+    template <typename T>
+    IPADDRESS_NODISCARD explicit operator std::basic_string<T, std::char_traits<T>, std::allocator<T>>() const {
+        return internal::string_converter<T>::convert(to_string());
     }
 
     /**
@@ -1315,18 +1373,30 @@ IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void swap(IPADDRESS_NAMESPACE::ip_net
 }
 
 template <typename Base>
-IPADDRESS_FORCE_INLINE std::string to_string(const IPADDRESS_NAMESPACE::ip_network_base<Base>& network) {
+IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string to_string(const IPADDRESS_NAMESPACE::ip_network_base<Base>& network) {
     return network.to_string();
 }
 
 template <typename Base>
-IPADDRESS_FORCE_INLINE std::ostream& operator<<(std::ostream& stream, const IPADDRESS_NAMESPACE::ip_network_base<Base>& network) {
+IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::wstring to_wstring(const IPADDRESS_NAMESPACE::ip_network_base<Base>& network) {
+    return network.to_wstring();
+}
+
+template <typename T, typename Base>
+IPADDRESS_FORCE_INLINE std::basic_ostream<T, std::char_traits<T>>& operator<<(std::basic_ostream<T, std::char_traits<T>>& stream, const IPADDRESS_NAMESPACE::ip_network_base<Base>& network) {
     auto& iword = stream.iword(IPADDRESS_NAMESPACE::stream_index());
     auto fmt = iword
         ? (IPADDRESS_NAMESPACE::format) (iword - 1) 
         : IPADDRESS_NAMESPACE::format::compressed;
     iword = 0;
-    return stream << network.to_string(fmt);
+    auto str = network.to_string(fmt);
+    if (stream.flags() & ios_base::uppercase) {
+        auto end = std::find(str.cbegin(), str.cend(), '%');
+        std::transform(str.cbegin(), end, str.begin(), [](char c){
+            return std::toupper(c);
+        });
+    }
+    return stream << IPADDRESS_NAMESPACE::internal::string_converter<T>::convert(str);
 }
 
 template <typename T, typename Base>
