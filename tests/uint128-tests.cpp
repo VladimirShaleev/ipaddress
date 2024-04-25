@@ -726,3 +726,29 @@ TEST(uint128_t, from_string_utf8) {
     ASSERT_EQ(value5.upper(), 0);
 }
 #endif
+
+TEST(uint128_t, to_string) {
+    IPADDRESS_CONSTEXPR auto value = uint128_t::from_string("10000000000000000042674").value();
+    
+    ASSERT_EQ(std::to_string(value), "10000000000000000042674");
+    ASSERT_EQ(std::to_wstring(value), L"10000000000000000042674");
+
+    std::ostringstream ss1; ss1 << value;
+    std::wstringstream ss2; ss2 << value;
+    std::basic_ostringstream<char16_t, std::char_traits<char16_t>, std::allocator<char16_t>> ss3; ss3 << value;
+    std::basic_ostringstream<char32_t, std::char_traits<char32_t>, std::allocator<char32_t>> ss4; ss4 << value;
+    ASSERT_EQ(ss1.str(), "10000000000000000042674");
+    ASSERT_EQ(ss2.str(), L"10000000000000000042674");
+    ASSERT_EQ(ss3.str(), u"10000000000000000042674");
+    ASSERT_EQ(ss4.str(), U"10000000000000000042674");
+    ASSERT_EQ(value.to_string(), "10000000000000000042674");
+    ASSERT_EQ(value.to_wstring(), L"10000000000000000042674");
+    ASSERT_EQ(value.to_u16string(), u"10000000000000000042674");
+    ASSERT_EQ(value.to_u32string(), U"10000000000000000042674");
+
+#if __cpp_char8_t >= 201811L
+    std::basic_ostringstream<char8_t, std::char_traits<char8_t>, std::allocator<char8_t>> ss5; ss5 << value;
+    ASSERT_EQ(ss5.str(), u8"10000000000000000042674");
+    ASSERT_EQ(value.to_u8string(), u8"10000000000000000042674");
+#endif
+}

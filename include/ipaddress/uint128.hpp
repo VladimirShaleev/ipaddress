@@ -350,6 +350,62 @@ public:
     }
 
     /**
+     * Converts the `uint128_t` value to a string representation.
+     * 
+     * This method converts the `uint128_t` instance to its string representation in the specified format.
+     * It supports decimal, octal, and hexadecimal formats.
+     * 
+     * @param[in] fmt The format to use for the conversion, with `format::decimal` as the default.
+     * @return A `std::wstring` holding the converted value.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::wstring to_wstring(format fmt = format::decimal) const {
+        return internal::string_converter<wchar_t>::convert(to_string(fmt));
+    }
+
+    /**
+     * Converts the `uint128_t` value to a string representation.
+     * 
+     * This method converts the `uint128_t` instance to its string representation in the specified format.
+     * It supports decimal, octal, and hexadecimal formats.
+     * 
+     * @param[in] fmt The format to use for the conversion, with `format::decimal` as the default.
+     * @return A `std::u16string` holding the converted value.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::u16string to_u16string(format fmt = format::decimal) const {
+        return internal::string_converter<char16_t>::convert(to_string(fmt));
+    }
+
+    /**
+     * Converts the `uint128_t` value to a string representation.
+     * 
+     * This method converts the `uint128_t` instance to its string representation in the specified format.
+     * It supports decimal, octal, and hexadecimal formats.
+     * 
+     * @param[in] fmt The format to use for the conversion, with `format::decimal` as the default.
+     * @return A `std::u32string` holding the converted value.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::u32string to_u32string(format fmt = format::decimal) const {
+        return internal::string_converter<char32_t>::convert(to_string(fmt));
+    }
+
+#if __cpp_char8_t >= 201811L
+
+    /**
+     * Converts the `uint128_t` value to a string representation.
+     * 
+     * This method converts the `uint128_t` instance to its string representation in the specified format.
+     * It supports decimal, octal, and hexadecimal formats.
+     * 
+     * @param[in] fmt The format to use for the conversion, with `format::decimal` as the default.
+     * @return A `std::u8string` holding the converted value.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::u8string to_u8string(format fmt = format::decimal) const {
+        return internal::string_converter<char8_t>::convert(to_string(fmt));
+    }
+
+#endif // __cpp_char8_t
+
+    /**
      * Parses a string to a `uint128_t` instance.
      *
      * This static method attempts to parse a given string as a `uint128_t` value in the specified format.
@@ -1984,7 +2040,12 @@ IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string to_string(const IPADDRESS
     return value.to_string();
 }
 
-IPADDRESS_FORCE_INLINE std::ostream& operator<<(std::ostream& stream, const IPADDRESS_NAMESPACE::uint128_t& value) {
+IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::wstring to_wstring(const IPADDRESS_NAMESPACE::uint128_t& value) {
+    return value.to_wstring();
+}
+
+template <typename T>
+IPADDRESS_FORCE_INLINE std::basic_ostream<T, std::char_traits<T>>& operator<<(std::basic_ostream<T, std::char_traits<T>>& stream, const IPADDRESS_NAMESPACE::uint128_t& value) {
     auto fmt = IPADDRESS_NAMESPACE::uint128_t::format::decimal;
     if (stream.flags() & ios_base::hex) {
         fmt = IPADDRESS_NAMESPACE::uint128_t::format::hexadecimal;
@@ -1997,7 +2058,7 @@ IPADDRESS_FORCE_INLINE std::ostream& operator<<(std::ostream& stream, const IPAD
             return std::toupper(c);
         });
     }
-    return stream << str;
+    return stream << IPADDRESS_NAMESPACE::internal::string_converter<T>::convert(str);
 }
 
 template <typename T>
