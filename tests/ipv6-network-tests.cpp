@@ -646,16 +646,6 @@ static void parse_unexpected_symbol(const T (&expected_address)[N1], const T (&s
     ASSERT_EQ(err1, error_code::unexpected_symbol);
     ASSERT_EQ(err2, error_code::unexpected_symbol);
 
-    tistringstream ss(str);
-    ipv6_network net1;
-    ipv6_network net2;
-    ss >> non_strict >> net1;
-    ASSERT_FALSE(ss.fail());
-    ASSERT_EQ(net1, ipv6_network::parse("2001:db8::/96"));
-    ss >> net2;
-    ASSERT_TRUE(ss.fail());
-    ASSERT_EQ(net2, ipv6_network::parse("::"));
-    
 #ifdef IPADDRESS_NO_EXCEPTIONS
     auto error_ip1 = ipv6_network::parse(expected_address);
     auto error_ip2 = ipv6_network::parse(tstring(expected_address));

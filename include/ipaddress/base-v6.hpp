@@ -294,7 +294,7 @@ private:
                     error = error_code::scope_id_is_too_long;
                     return result;
                 }
-                if (c == '%' || c == '/') {
+                if (c == '%' || c == '/' || uint32_t(c) > 127) {
                     error = error_code::invalid_scope_id;
                     return result;
                 }

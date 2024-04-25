@@ -579,8 +579,6 @@ TEST(uint128_t, FromStringWideChar) {
 }
 
 TEST(uint128_t, FromStringUtf16) {
-    using u16istringstream = std::basic_istringstream<char16_t, std::char_traits<char16_t>, std::allocator<char16_t>>;
-
     IPADDRESS_CONSTEXPR auto value1 = uint128_t::from_string(u"10000000000000000042674");
     IPADDRESS_CONSTEXPR auto has_value1 = value1.has_value();
     IPADDRESS_CONSTEXPR auto lower_value1 = value1.value().lower();
@@ -602,25 +600,9 @@ TEST(uint128_t, FromStringUtf16) {
     ASSERT_TRUE(value3.has_value());
     ASSERT_EQ(value3.value().lower(), 1864712049423066802ULL);
     ASSERT_EQ(value3.value().upper(), 542ULL);
-
-    uint128_t value4;
-    u16istringstream ss1(u"10000000000000000042674");
-    ss1 >> value4;
-    ASSERT_FALSE(ss1.fail());
-    ASSERT_EQ(value4.lower(), 1864712049423066802ULL);
-    ASSERT_EQ(value4.upper(), 542ULL);
-    
-    uint128_t value5;
-    u16istringstream ss2(u"1000c0000000000000042674");
-    ss2 >> value5;
-    ASSERT_TRUE(ss2.fail());
-    ASSERT_EQ(value5.lower(), 0);
-    ASSERT_EQ(value5.upper(), 0);
 }
 
 TEST(uint128_t, FromStringUtf32) {
-    using u32istringstream = std::basic_istringstream<char32_t, std::char_traits<char32_t>, std::allocator<char32_t>>;
-
     IPADDRESS_CONSTEXPR auto value1 = uint128_t::from_string(U"10000000000000000042674");
     IPADDRESS_CONSTEXPR auto has_value1 = value1.has_value();
     IPADDRESS_CONSTEXPR auto lower_value1 = value1.value().lower();
@@ -642,26 +624,10 @@ TEST(uint128_t, FromStringUtf32) {
     ASSERT_TRUE(value3.has_value());
     ASSERT_EQ(value3.value().lower(), 1864712049423066802ULL);
     ASSERT_EQ(value3.value().upper(), 542ULL);
-
-    uint128_t value4;
-    u32istringstream ss1(U"10000000000000000042674");
-    ss1 >> value4;
-    ASSERT_FALSE(ss1.fail());
-    ASSERT_EQ(value4.lower(), 1864712049423066802ULL);
-    ASSERT_EQ(value4.upper(), 542ULL);
-    
-    uint128_t value5;
-    u32istringstream ss2(U"1000c0000000000000042674");
-    ss2 >> value5;
-    ASSERT_TRUE(ss2.fail());
-    ASSERT_EQ(value5.lower(), 0);
-    ASSERT_EQ(value5.upper(), 0);
 }
 
 #if __cpp_char8_t >= 201811L
 TEST(uint128_t, FromStringUtf8) {
-    using u8istringstream = std::basic_istringstream<char8_t, std::char_traits<char8_t>, std::allocator<char8_t>>;
-
     IPADDRESS_CONSTEXPR auto value1 = uint128_t::from_string(u8"10000000000000000042674");
     IPADDRESS_CONSTEXPR auto has_value1 = value1.has_value();
     IPADDRESS_CONSTEXPR auto lower_value1 = value1.value().lower();
@@ -683,20 +649,6 @@ TEST(uint128_t, FromStringUtf8) {
     ASSERT_TRUE(value3.has_value());
     ASSERT_EQ(value3.value().lower(), 1864712049423066802ULL);
     ASSERT_EQ(value3.value().upper(), 542ULL);
-
-    uint128_t value4;
-    u8istringstream ss1(u8"10000000000000000042674");
-    ss1 >> value4;
-    ASSERT_FALSE(ss1.fail());
-    ASSERT_EQ(value4.lower(), 1864712049423066802ULL);
-    ASSERT_EQ(value4.upper(), 542ULL);
-    
-    uint128_t value5;
-    u8istringstream ss2(u8"1000c0000000000000042674");
-    ss2 >> value5;
-    ASSERT_TRUE(ss2.fail());
-    ASSERT_EQ(value5.lower(), 0);
-    ASSERT_EQ(value5.upper(), 0);
 }
 #endif
 

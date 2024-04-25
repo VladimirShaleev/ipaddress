@@ -261,11 +261,7 @@ struct char_reader<wchar_t> : utf16_reader<wchar_t>, utf32_reader<wchar_t>, char
 template <typename T>
 struct string_converter {
     IPADDRESS_NODISCARD static IPADDRESS_FORCE_INLINE std::basic_string<T, std::char_traits<T>, std::allocator<T>> convert(const std::string& str) {
-        std::basic_string<T, std::char_traits<T>, std::allocator<T>> result(str.length(), '\0');
-        std::transform(str.cbegin(), str.cend(), result.begin(), [](char c){
-            return T(c);
-        });
-        return result;
+        return std::basic_string<T, std::char_traits<T>, std::allocator<T>>(str.cbegin(), str.cend());
     }
 };
 

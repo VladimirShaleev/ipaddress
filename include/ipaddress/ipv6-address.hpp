@@ -36,12 +36,19 @@ struct ipv6_set_scope {
     #ifdef IPADDRESS_NO_EXCEPTIONS
         auto code = error_code::no_error;
         auto str = make_fixed_string(scope, code);
-        if (code == error_code::no_error) {
-            result = str;
+        if (code != error_code::no_error) {
+            return;
         }
     #else // !IPADDRESS_NO_EXCEPTIONS
-        result = make_fixed_string(scope);
+        auto str = make_fixed_string(scope);
     #endif // !IPADDRESS_NO_EXCEPTIONS
+        for (const char c : str) {
+            if (uint32_t(c) > 127) {
+                raise_error(error_code::invalid_scope_id, 0, scope_id.data(), scope_id.size());
+                return;
+            }
+        }
+        result = str;
     #endif // IPADDRESS_IPV6_SCOPE_MAX_LENGTH
     }
 
@@ -59,6 +66,12 @@ struct ipv6_set_scope {
         }
         const auto new_scope_id = make_fixed_string(scope, code);
         if (code == error_code::no_error) {
+            for (const char c : new_scope_id) {
+                if (uint32_t(c) > 127) {
+                    code = error_code::invalid_scope_id;
+                    return;
+                }
+            }
             result = new_scope_id;
         }
     #endif // IPADDRESS_IPV6_SCOPE_MAX_LENGTH
@@ -301,12 +314,19 @@ public:
     #ifdef IPADDRESS_NO_EXCEPTIONS
         auto code = error_code::no_error;
         auto result = make_fixed_string(str, code);
-        if (code == error_code::no_error) {
-            _data.scope_id = result;
+        if (code != error_code::no_error) {
+            return;
         }
     #else // !IPADDRESS_NO_EXCEPTIONS
-        _data.scope_id = make_fixed_string(str);
+        auto result = make_fixed_string(str);
+        for (const char c : result) {
+            if (uint32_t(c) > 127) {
+                raise_error(error_code::invalid_scope_id, 0, scope_id, N);
+                return;
+            }
+        }
     #endif // !IPADDRESS_NO_EXCEPTIONS
+        _data.scope_id = result;
     #endif // IPADDRESS_IPV6_SCOPE_MAX_LENGTH
     }
 
@@ -332,6 +352,12 @@ public:
         }
         const auto result = make_fixed_string(str, code);
         if (code == error_code::no_error) {
+            for (const char c : result) {
+                if (uint32_t(c) > 127) {
+                    code = error_code::invalid_scope_id;
+                    return;
+                }
+            }
             _data.scope_id = result;
         }
     #endif // IPADDRESS_IPV6_SCOPE_MAX_LENGTH
