@@ -633,20 +633,31 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("1234:axy::b%scope", error_code::part_has_invalid_symbol, "in part 0 of address 1234:axy::b%scope has invalid symbols")
     ));
 
-template <typename T, size_t N>
-static void parse_unexpected_symbol(const T (&expected_address)[N]) {
-    using String = std::basic_string<T, std::char_traits<T>, std::allocator<T>>;
+template <typename T, size_t N1, size_t N2>
+static void parse_unexpected_symbol(const T (&expected_address)[N1], const T (&str)[N2]) {
+    using tstring = std::basic_string<T, std::char_traits<T>, std::allocator<T>>;
+    using tistringstream = std::basic_istringstream<T, std::char_traits<T>, std::allocator<T>>;
+
     error_code err1 = error_code::no_error;
     error_code err2 = error_code::no_error;
 
     ipv6_network::parse(expected_address, err1);
-    ipv6_network::parse(String(expected_address, N), err2);
+    ipv6_network::parse(tstring(expected_address), err2);
     ASSERT_EQ(err1, error_code::unexpected_symbol);
     ASSERT_EQ(err2, error_code::unexpected_symbol);
 
+    tistringstream ss(str);
+    ipv6_network net1, net2;
+    ss >> non_strict >> net1;
+    ASSERT_FALSE(ss.fail());
+    ASSERT_EQ(net1, ipv6_network::parse("2001:db8::/96"));
+    ss >> net2;
+    ASSERT_TRUE(ss.fail());
+    ASSERT_EQ(net2, ipv6_network::parse("::"));
+    
 #ifdef IPADDRESS_NO_EXCEPTIONS
     auto error_ip1 = ipv6_network::parse(expected_address);
-    auto error_ip2 = ipv6_network::parse(String(expected_address, N));
+    auto error_ip2 = ipv6_network::parse(tstring(expected_address));
     ASSERT_EQ(error_ip1.network_address().to_uint(), 0);
     ASSERT_EQ(error_ip2.network_address().to_uint(), 0);
 #elif IPADDRESS_CPP_VERSION >= 14
@@ -654,17 +665,17 @@ static void parse_unexpected_symbol(const T (&expected_address)[N]) {
         [address=expected_address]() { ipv6_network::parse(address); },
         ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+d55c} in string 2001:dc8::/1{U+d55c}2{U+d55c}")));
     EXPECT_THAT(
-        [address=expected_address]() { ipv6_network::parse(String(address, N)); },
+        [address=expected_address]() { ipv6_network::parse(tstring(address)); },
         ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+d55c} in string 2001:dc8::/1{U+d55c}2{U+d55c}")));
     EXPECT_THAT(
         [address=expected_address]() { ipv6_network::parse(address); },
         Throws<parse_error>(Property(&parse_error::code, Eq(error_code::unexpected_symbol))));
 #else // googletest EXPECT_THAT is not supported in cpp less than 14
     ASSERT_THROW(ipv6_network::parse(expected_address), parse_error);
-    ASSERT_THROW((ipv6_network::parse(String(expected_address, N))), parse_error);
+    ASSERT_THROW((ipv6_network::parse(tstring(expected_address))), parse_error);
 #endif
 }
-#define PARSE_UNEXPECTED_SYMBOL(unicode) parse_unexpected_symbol(unicode##"2001:dc8::/1\ud55c2\ud55c")
+#define PARSE_UNEXPECTED_SYMBOL(unicode) parse_unexpected_symbol(unicode##"2001:dc8::/1\ud55c2\ud55c", unicode##"2001:db8::1/96 2001:db8::/3\ud55c")
 
 #if __cpp_char8_t >= 201811L
 TEST(ipv6_network, ParseUnexpectedUtf8) {

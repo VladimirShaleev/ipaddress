@@ -792,9 +792,9 @@ IPADDRESS_FORCE_INLINE std::ostream& operator<<(std::ostream& stream, const IPAD
     return stream << str;
 }
 
-template <typename Base>
-IPADDRESS_FORCE_INLINE std::istream& operator>>(std::istream& stream, IPADDRESS_NAMESPACE::ip_address_base<Base>& ip) {
-    std::string str;
+template <typename T, typename Base>
+IPADDRESS_FORCE_INLINE std::basic_istream<T, std::char_traits<T>>& operator>>(std::basic_istream<T, std::char_traits<T>>& stream, IPADDRESS_NAMESPACE::ip_address_base<Base>& ip) {
+    std::basic_string<T, std::char_traits<T>, std::allocator<T>> str;
     stream >> str;
     IPADDRESS_NAMESPACE::error_code err = IPADDRESS_NAMESPACE::error_code::no_error;
     ip = IPADDRESS_NAMESPACE::ip_address_base<Base>::parse(str, err);

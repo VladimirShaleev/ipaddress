@@ -1282,12 +1282,14 @@ IPADDRESS_FORCE_INLINE int network_strict_index() {
     return i;
 }
 
-IPADDRESS_FORCE_INLINE std::istream& strict(std::istream& stream) {
+template <typename T>
+IPADDRESS_FORCE_INLINE std::basic_istream<T, std::char_traits<T>>& strict(std::basic_istream<T, std::char_traits<T>>& stream) {
     stream.iword(network_strict_index()) = 0;
     return stream;
 }
 
-IPADDRESS_FORCE_INLINE std::istream& non_strict(std::istream& stream) {
+template <typename T>
+IPADDRESS_FORCE_INLINE std::basic_istream<T, std::char_traits<T>>& non_strict(std::basic_istream<T, std::char_traits<T>>& stream) {
     stream.iword(network_strict_index()) = 1;
     return stream;
 }
@@ -1327,13 +1329,13 @@ IPADDRESS_FORCE_INLINE std::ostream& operator<<(std::ostream& stream, const IPAD
     return stream << network.to_string(fmt);
 }
 
-template <typename Base>
-IPADDRESS_FORCE_INLINE std::istream& operator>>(std::istream& stream, IPADDRESS_NAMESPACE::ip_network_base<Base>& network) {
+template <typename T, typename Base>
+IPADDRESS_FORCE_INLINE std::basic_istream<T, std::char_traits<T>>& operator>>(std::basic_istream<T, std::char_traits<T>>& stream, IPADDRESS_NAMESPACE::ip_network_base<Base>& network) {
     auto& iword = stream.iword(IPADDRESS_NAMESPACE::network_strict_index());
     auto strict = iword == 0;
     iword = 0;
 
-    std::string str;
+    std::basic_string<T, std::char_traits<T>, std::allocator<T>> str;
     stream >> str;
     IPADDRESS_NAMESPACE::error_code err = IPADDRESS_NAMESPACE::error_code::no_error;
     network = IPADDRESS_NAMESPACE::ip_network_base<Base>::parse(str, err, strict);
