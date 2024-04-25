@@ -643,7 +643,9 @@ static void parse_unexpected_symbol(const T (&expected_address)[N1], const T (&e
     ASSERT_EQ(err4, error_code::unexpected_symbol);
 
     tistringstream ss(str);
-    ipv6_address ip1, ip2, ip3;
+    ipv6_address ip1;
+    ipv6_address ip2;
+    ipv6_address ip3;
     ss >> ip1;
     ASSERT_FALSE(ss.fail());
     ASSERT_EQ(ip1, ipv6_address::parse("2001:db8::1%123"));

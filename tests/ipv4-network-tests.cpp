@@ -648,7 +648,8 @@ static void parse_unexpected_symbol(const T (&expected_address)[N1], const T (&s
     ASSERT_EQ(err2, error_code::unexpected_symbol);
 
     tistringstream ss(str);
-    ipv4_network net1, net2;
+    ipv4_network net1;
+    ipv4_network net2;
     ss >> non_strict >> net1;
     ASSERT_FALSE(ss.fail());
     ASSERT_EQ(net1, ipv4_network::parse("127.0.0.0/16"));
