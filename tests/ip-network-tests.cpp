@@ -480,6 +480,196 @@ TEST(ip_network, to_string) {
     ASSERT_EQ(ss_compressed_upper_2.str(), expected_compressed_upper_2);
 }
 
+TEST(ip_network, to_wstring) {
+    IPADDRESS_CONSTEXPR auto net1 = ip_network::parse("127.240.0.0/24");
+    IPADDRESS_CONSTEXPR auto net2 = ip_network::parse("fe80::1ff:fe23:4567:890a%eth2");
+
+    const std::wstring expected_address = L"127.240.0.0/24";
+    const wchar_t* expected_full_2 = L"fe80:0000:0000:0000:01ff:fe23:4567:890a%eth2/128";
+    const wchar_t* expected_compact_2 = L"fe80:0:0:0:1ff:fe23:4567:890a%eth2/128";
+    const wchar_t* expected_compressed_2 = L"fe80::1ff:fe23:4567:890a%eth2/128";
+    const wchar_t* expected_compressed_upper_2 = L"FE80::1FF:FE23:4567:890A%eth2/128";
+
+    std::wostringstream ss_full; ss_full << full << net1;
+    std::wostringstream ss_default; ss_default << net1;
+    std::wostringstream ss_compact; ss_compact << compact << net1;
+    std::wostringstream ss_compressed; ss_compressed << compressed << net1;
+    std::wostringstream ss_compressed_upper; ss_compressed_upper << std::uppercase << compressed << net1;
+
+    std::wostringstream ss_full_2; ss_full_2 << full << net2;
+    std::wostringstream ss_default_2; ss_default_2 << net2;
+    std::wostringstream ss_compact_2; ss_compact_2 << compact << net2;
+    std::wostringstream ss_compressed_2; ss_compressed_2 << compressed << net2;
+    std::wostringstream ss_compressed_upper_2; ss_compressed_upper_2 << std::uppercase << compressed << net2;
+    
+    ASSERT_EQ(net1.to_wstring(format::full), expected_address);
+    ASSERT_EQ(net1.to_wstring(format::compact), expected_address);
+    ASSERT_EQ(net1.to_wstring(format::compressed),expected_address);
+    ASSERT_EQ(net1.to_wstring(), expected_address);
+    ASSERT_EQ((std::wstring) net1, expected_address);
+    ASSERT_EQ(std::to_wstring(net1), expected_address);
+    ASSERT_EQ(ss_full.str(),expected_address);
+    ASSERT_EQ(ss_default.str(), expected_address);
+    ASSERT_EQ(ss_compact.str(), expected_address);
+    ASSERT_EQ(ss_compressed.str(), expected_address);
+    ASSERT_EQ(ss_compressed_upper.str(), expected_address);
+
+    ASSERT_EQ(net2.to_wstring(format::full), expected_full_2);
+    ASSERT_EQ(net2.to_wstring(format::compact), expected_compact_2);
+    ASSERT_EQ(net2.to_wstring(format::compressed), expected_compressed_2);
+    ASSERT_EQ(net2.to_wstring(), expected_compressed_2);
+    ASSERT_EQ((std::wstring) net2, expected_compressed_2);
+    ASSERT_EQ(std::to_wstring(net2), expected_compressed_2);
+    ASSERT_EQ(ss_full_2.str(), expected_full_2);
+    ASSERT_EQ(ss_default_2.str(), expected_compressed_2);
+    ASSERT_EQ(ss_compact_2.str(), expected_compact_2);
+    ASSERT_EQ(ss_compressed_2.str(), expected_compressed_2);
+    ASSERT_EQ(ss_compressed_upper_2.str(), expected_compressed_upper_2);
+}
+
+TEST(ip_network, to_u16string) {
+    using u16ostringstream = std::basic_ostringstream<char16_t, std::char_traits<char16_t>, std::allocator<char16_t>>;
+
+    IPADDRESS_CONSTEXPR auto net1 = ip_network::parse("127.240.0.0/24");
+    IPADDRESS_CONSTEXPR auto net2 = ip_network::parse("fe80::1ff:fe23:4567:890a%eth2");
+
+    const std::u16string expected_address = u"127.240.0.0/24";
+    const char16_t* expected_full_2 = u"fe80:0000:0000:0000:01ff:fe23:4567:890a%eth2/128";
+    const char16_t* expected_compact_2 = u"fe80:0:0:0:1ff:fe23:4567:890a%eth2/128";
+    const char16_t* expected_compressed_2 = u"fe80::1ff:fe23:4567:890a%eth2/128";
+    const char16_t* expected_compressed_upper_2 = u"FE80::1FF:FE23:4567:890A%eth2/128";
+
+    u16ostringstream ss_full; ss_full << full << net1;
+    u16ostringstream ss_default; ss_default << net1;
+    u16ostringstream ss_compact; ss_compact << compact << net1;
+    u16ostringstream ss_compressed; ss_compressed << compressed << net1;
+    u16ostringstream ss_compressed_upper; ss_compressed_upper << std::uppercase << compressed << net1;
+
+    u16ostringstream ss_full_2; ss_full_2 << full << net2;
+    u16ostringstream ss_default_2; ss_default_2 << net2;
+    u16ostringstream ss_compact_2; ss_compact_2 << compact << net2;
+    u16ostringstream ss_compressed_2; ss_compressed_2 << compressed << net2;
+    u16ostringstream ss_compressed_upper_2; ss_compressed_upper_2 << std::uppercase << compressed << net2;
+    
+    ASSERT_EQ(net1.to_u16string(format::full), expected_address);
+    ASSERT_EQ(net1.to_u16string(format::compact), expected_address);
+    ASSERT_EQ(net1.to_u16string(format::compressed),expected_address);
+    ASSERT_EQ(net1.to_u16string(), expected_address);
+    ASSERT_EQ((std::u16string) net1, expected_address);
+    ASSERT_EQ(ss_full.str(),expected_address);
+    ASSERT_EQ(ss_default.str(), expected_address);
+    ASSERT_EQ(ss_compact.str(), expected_address);
+    ASSERT_EQ(ss_compressed.str(), expected_address);
+    ASSERT_EQ(ss_compressed_upper.str(), expected_address);
+
+    ASSERT_EQ(net2.to_u16string(format::full), expected_full_2);
+    ASSERT_EQ(net2.to_u16string(format::compact), expected_compact_2);
+    ASSERT_EQ(net2.to_u16string(format::compressed), expected_compressed_2);
+    ASSERT_EQ(net2.to_u16string(), expected_compressed_2);
+    ASSERT_EQ((std::u16string) net2, expected_compressed_2);
+    ASSERT_EQ(ss_full_2.str(), expected_full_2);
+    ASSERT_EQ(ss_default_2.str(), expected_compressed_2);
+    ASSERT_EQ(ss_compact_2.str(), expected_compact_2);
+    ASSERT_EQ(ss_compressed_2.str(), expected_compressed_2);
+    ASSERT_EQ(ss_compressed_upper_2.str(), expected_compressed_upper_2);
+}
+
+TEST(ip_network, to_u32string) {
+    using u32ostringstream = std::basic_ostringstream<char32_t, std::char_traits<char32_t>, std::allocator<char32_t>>;
+
+    IPADDRESS_CONSTEXPR auto net1 = ip_network::parse("127.240.0.0/24");
+    IPADDRESS_CONSTEXPR auto net2 = ip_network::parse("fe80::1ff:fe23:4567:890a%eth2");
+
+    const std::u32string expected_address = U"127.240.0.0/24";
+    const char32_t* expected_full_2 = U"fe80:0000:0000:0000:01ff:fe23:4567:890a%eth2/128";
+    const char32_t* expected_compact_2 = U"fe80:0:0:0:1ff:fe23:4567:890a%eth2/128";
+    const char32_t* expected_compressed_2 = U"fe80::1ff:fe23:4567:890a%eth2/128";
+    const char32_t* expected_compressed_upper_2 = U"FE80::1FF:FE23:4567:890A%eth2/128";
+
+    u32ostringstream ss_full; ss_full << full << net1;
+    u32ostringstream ss_default; ss_default << net1;
+    u32ostringstream ss_compact; ss_compact << compact << net1;
+    u32ostringstream ss_compressed; ss_compressed << compressed << net1;
+    u32ostringstream ss_compressed_upper; ss_compressed_upper << std::uppercase << compressed << net1;
+
+    u32ostringstream ss_full_2; ss_full_2 << full << net2;
+    u32ostringstream ss_default_2; ss_default_2 << net2;
+    u32ostringstream ss_compact_2; ss_compact_2 << compact << net2;
+    u32ostringstream ss_compressed_2; ss_compressed_2 << compressed << net2;
+    u32ostringstream ss_compressed_upper_2; ss_compressed_upper_2 << std::uppercase << compressed << net2;
+    
+    ASSERT_EQ(net1.to_u32string(format::full), expected_address);
+    ASSERT_EQ(net1.to_u32string(format::compact), expected_address);
+    ASSERT_EQ(net1.to_u32string(format::compressed),expected_address);
+    ASSERT_EQ(net1.to_u32string(), expected_address);
+    ASSERT_EQ((std::u32string) net1, expected_address);
+    ASSERT_EQ(ss_full.str(),expected_address);
+    ASSERT_EQ(ss_default.str(), expected_address);
+    ASSERT_EQ(ss_compact.str(), expected_address);
+    ASSERT_EQ(ss_compressed.str(), expected_address);
+    ASSERT_EQ(ss_compressed_upper.str(), expected_address);
+
+    ASSERT_EQ(net2.to_u32string(format::full), expected_full_2);
+    ASSERT_EQ(net2.to_u32string(format::compact), expected_compact_2);
+    ASSERT_EQ(net2.to_u32string(format::compressed), expected_compressed_2);
+    ASSERT_EQ(net2.to_u32string(), expected_compressed_2);
+    ASSERT_EQ((std::u32string) net2, expected_compressed_2);
+    ASSERT_EQ(ss_full_2.str(), expected_full_2);
+    ASSERT_EQ(ss_default_2.str(), expected_compressed_2);
+    ASSERT_EQ(ss_compact_2.str(), expected_compact_2);
+    ASSERT_EQ(ss_compressed_2.str(), expected_compressed_2);
+    ASSERT_EQ(ss_compressed_upper_2.str(), expected_compressed_upper_2);
+}
+
+#if __cpp_char8_t >= 201811L
+TEST(ip_network, to_u8string) {
+    using u8ostringstream = std::basic_ostringstream<char8_t, std::char_traits<char8_t>, std::allocator<char8_t>>;
+
+    IPADDRESS_CONSTEXPR auto net1 = ip_network::parse("127.240.0.0/24");
+    IPADDRESS_CONSTEXPR auto net2 = ip_network::parse("fe80::1ff:fe23:4567:890a%eth2");
+
+    const std::u8string expected_address = u8"127.240.0.0/24";
+    const char8_t* expected_full_2 = u8"fe80:0000:0000:0000:01ff:fe23:4567:890a%eth2/128";
+    const char8_t* expected_compact_2 = u8"fe80:0:0:0:1ff:fe23:4567:890a%eth2/128";
+    const char8_t* expected_compressed_2 = u8"fe80::1ff:fe23:4567:890a%eth2/128";
+    const char8_t* expected_compressed_upper_2 = u8"FE80::1FF:FE23:4567:890A%eth2/128";
+
+    u8ostringstream ss_full; ss_full << full << net1;
+    u8ostringstream ss_default; ss_default << net1;
+    u8ostringstream ss_compact; ss_compact << compact << net1;
+    u8ostringstream ss_compressed; ss_compressed << compressed << net1;
+    u8ostringstream ss_compressed_upper; ss_compressed_upper << std::uppercase << compressed << net1;
+
+    u8ostringstream ss_full_2; ss_full_2 << full << net2;
+    u8ostringstream ss_default_2; ss_default_2 << net2;
+    u8ostringstream ss_compact_2; ss_compact_2 << compact << net2;
+    u8ostringstream ss_compressed_2; ss_compressed_2 << compressed << net2;
+    u8ostringstream ss_compressed_upper_2; ss_compressed_upper_2 << std::uppercase << compressed << net2;
+    
+    ASSERT_EQ(net1.to_u8string(format::full), expected_address);
+    ASSERT_EQ(net1.to_u8string(format::compact), expected_address);
+    ASSERT_EQ(net1.to_u8string(format::compressed),expected_address);
+    ASSERT_EQ(net1.to_u8string(), expected_address);
+    ASSERT_EQ((std::u8string) net1, expected_address);
+    ASSERT_EQ(ss_full.str(),expected_address);
+    ASSERT_EQ(ss_default.str(), expected_address);
+    ASSERT_EQ(ss_compact.str(), expected_address);
+    ASSERT_EQ(ss_compressed.str(), expected_address);
+    ASSERT_EQ(ss_compressed_upper.str(), expected_address);
+
+    ASSERT_EQ(net2.to_u8string(format::full), expected_full_2);
+    ASSERT_EQ(net2.to_u8string(format::compact), expected_compact_2);
+    ASSERT_EQ(net2.to_u8string(format::compressed), expected_compressed_2);
+    ASSERT_EQ(net2.to_u8string(), expected_compressed_2);
+    ASSERT_EQ((std::u8string) net2, expected_compressed_2);
+    ASSERT_EQ(ss_full_2.str(), expected_full_2);
+    ASSERT_EQ(ss_default_2.str(), expected_compressed_2);
+    ASSERT_EQ(ss_compact_2.str(), expected_compact_2);
+    ASSERT_EQ(ss_compressed_2.str(), expected_compressed_2);
+    ASSERT_EQ(ss_compressed_upper_2.str(), expected_compressed_upper_2);
+}
+#endif
+
 TEST(ip_network, Hash) {
     IPADDRESS_CONSTEXPR auto hash_functor = std::hash<ip_network>{};
 

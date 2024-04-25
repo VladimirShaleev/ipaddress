@@ -1130,7 +1130,7 @@ public:
      * @return A string representation of the ip network object.
      */
     template <typename T>
-    IPADDRESS_NODISCARD explicit operator std::basic_string<T, std::char_traits<T>, std::allocator<T>>() const {
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE explicit operator std::basic_string<T, std::char_traits<T>, std::allocator<T>>() const {
         return internal::string_converter<T>::convert(to_string());
     }
 
@@ -1142,7 +1142,7 @@ public:
      * @param[in] rhs The other ip network object to compare with.
      * @return `true` if both objects are equal, `false` otherwise.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator==(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
         return _network_address == rhs._network_address && _netmask == rhs._netmask;
     }
 
@@ -1154,7 +1154,7 @@ public:
      * @param[in] rhs The other ip network object to compare with.
      * @return `true` if both objects are not equal, `false` otherwise.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator!=(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
         return !(*this == rhs);
     }
 
@@ -1168,7 +1168,7 @@ public:
      * @param[in] rhs The other ip network object to compare with.
      * @return `std::strong_ordering` result of the comparison.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR std::strong_ordering operator<=>(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
         if (auto result = _network_address <=> rhs._network_address; result != std::strong_ordering::equivalent) {
             return result;
         }
@@ -1185,7 +1185,7 @@ public:
      * @param[in] rhs The other ip network object to compare with.
      * @return `true` if this object is less than the other, `false` otherwise.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
         if (_network_address != rhs._network_address) {
             return _network_address < rhs._network_address;
         }
@@ -1203,7 +1203,7 @@ public:
      * @param[in] rhs The other ip network object to compare with.
      * @return `true` if this object is greater than the other, `false` otherwise.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
         return rhs < *this;
     }
     
@@ -1215,7 +1215,7 @@ public:
      * @param[in] rhs The other ip network object to compare with.
      * @return `true` if this object is less than or equal to the other, `false` otherwise.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<=(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
         return !(rhs < *this);
     }
     
@@ -1227,7 +1227,7 @@ public:
      * @param[in] rhs The other ip network object to compare with.
      * @return `true` if this object is greater than or equal to the other, `false` otherwise.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>=(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
         return !(*this < rhs);
     }
 
