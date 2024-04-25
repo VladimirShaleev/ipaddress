@@ -360,14 +360,84 @@ public:
      * @return An optional containing the parsed `uint128_t` value if successful, otherwise an empty optional.
      */
     IPADDRESS_NODISCARD static IPADDRESS_FORCE_INLINE optional<uint128_t> from_string(const std::string& str, format fmt = format::decimal) IPADDRESS_NOEXCEPT {
-        switch (fmt) {
-            case format::octal:
-                return oct_str_to_uint128(str);
-            case format::hexadecimal:
-                return hex_str_to_uint128(str);
-            default:
-                return dec_str_to_uint128(str);
-        }
+        return str_to_uint128(str.data(), str.data() + str.length(), fmt);
+    }
+
+    /**
+     * Parses a string to a `uint128_t` instance.
+     *
+     * This static method attempts to parse a given string as a `uint128_t` value in the specified format.
+     * If the parsing is successful, it returns an optional containing the parsed `uint128_t` value.
+     *
+     * @param[in] str The input string to parse.
+     * @param[in] fmt The string format to interpret the input string (*defaults to decimal*).
+     * @return An optional containing the parsed `uint128_t` value if successful, otherwise an empty optional.
+     */
+    IPADDRESS_NODISCARD static IPADDRESS_FORCE_INLINE optional<uint128_t> from_string(const std::wstring& str, format fmt = format::decimal) IPADDRESS_NOEXCEPT {
+        return str_to_uint128(str.data(), str.data() + str.length(), fmt);
+    }
+
+    /**
+     * Parses a string to a `uint128_t` instance.
+     *
+     * This static method attempts to parse a given string as a `uint128_t` value in the specified format.
+     * If the parsing is successful, it returns an optional containing the parsed `uint128_t` value.
+     *
+     * @param[in] str The input string to parse.
+     * @param[in] fmt The string format to interpret the input string (*defaults to decimal*).
+     * @return An optional containing the parsed `uint128_t` value if successful, otherwise an empty optional.
+     */
+    IPADDRESS_NODISCARD static IPADDRESS_FORCE_INLINE optional<uint128_t> from_string(const std::u16string& str, format fmt = format::decimal) IPADDRESS_NOEXCEPT {
+        return str_to_uint128(str.data(), str.data() + str.length(), fmt);
+    }
+
+    /**
+     * Parses a string to a `uint128_t` instance.
+     *
+     * This static method attempts to parse a given string as a `uint128_t` value in the specified format.
+     * If the parsing is successful, it returns an optional containing the parsed `uint128_t` value.
+     *
+     * @param[in] str The input string to parse.
+     * @param[in] fmt The string format to interpret the input string (*defaults to decimal*).
+     * @return An optional containing the parsed `uint128_t` value if successful, otherwise an empty optional.
+     */
+    IPADDRESS_NODISCARD static IPADDRESS_FORCE_INLINE optional<uint128_t> from_string(const std::u32string& str, format fmt = format::decimal) IPADDRESS_NOEXCEPT {
+        return str_to_uint128(str.data(), str.data() + str.length(), fmt);
+    }
+
+#if __cpp_char8_t >= 201811L
+
+    /**
+     * Parses a string to a `uint128_t` instance.
+     *
+     * This static method attempts to parse a given string as a `uint128_t` value in the specified format.
+     * If the parsing is successful, it returns an optional containing the parsed `uint128_t` value.
+     *
+     * @param[in] str The input string to parse.
+     * @param[in] fmt The string format to interpret the input string (*defaults to decimal*).
+     * @return An optional containing the parsed `uint128_t` value if successful, otherwise an empty optional.
+     */
+    IPADDRESS_NODISCARD static IPADDRESS_FORCE_INLINE optional<uint128_t> from_string(const std::u8string& str, format fmt = format::decimal) IPADDRESS_NOEXCEPT {
+        return str_to_uint128(str.data(), str.data() + str.length(), fmt);
+    }
+
+#endif // __cpp_char8_t
+
+    /**
+     * Parses a string to a `uint128_t` instance.
+     *
+     * This static method attempts to parse a given string as a `uint128_t` value in the specified format.
+     * If the parsing is successful, it returns an optional containing the parsed `uint128_t` value.
+     *
+     * @tparam T The character type of the array.
+     * @tparam N The size of the character array.
+     * @param[in] str The input string to parse.
+     * @param[in] fmt The string format to interpret the input string (*defaults to decimal*).
+     * @return An optional containing the parsed `uint128_t` value if successful, otherwise an empty optional.
+     */
+    template <typename T, size_t N>
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<uint128_t> from_string(const T(&str)[N], format fmt = format::decimal) IPADDRESS_NOEXCEPT {
+        return str_to_uint128(str, str + N, fmt);
     }
 
     /**
@@ -1439,37 +1509,61 @@ private:
         return result;
     }
 
-    IPADDRESS_NODISCARD static IPADDRESS_FORCE_INLINE optional<uint128_t> dec_str_to_uint128(const std::string& str) IPADDRESS_NOEXCEPT {
+    template <typename T>
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<uint128_t> str_to_uint128(const T* begin, const T* end, format fmt) IPADDRESS_NOEXCEPT {
+        switch (fmt) {
+            case format::octal:
+                return oct_str_to_uint128(begin, end);
+            case format::hexadecimal:
+                return hex_str_to_uint128(begin, end);
+            default:
+                return dec_str_to_uint128(begin, end);
+        }
+    }
+
+    template <typename T>
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<uint128_t> dec_str_to_uint128(const T* begin, const T* end) IPADDRESS_NOEXCEPT {
         uint128_t result = 0;
-        for (const auto c : str) {
-            if (c < '0' || c > '9') {
+        for (const T* it = begin; it != end; ++it) {
+            auto c = *it;
+            if (c == T('\0')) {
+                break;
+            } else if (c < T('0') || c > T('9')) {
                 return nullptr;
             }
-            result = result * 10 + (c - '0');
+            result = result * 10 + (c - T('0'));
         }
         return result;
     }
 
-    IPADDRESS_NODISCARD static IPADDRESS_FORCE_INLINE optional<uint128_t> oct_str_to_uint128(const std::string& str) IPADDRESS_NOEXCEPT {
+    template <typename T>
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<uint128_t> oct_str_to_uint128(const T* begin, const T* end) IPADDRESS_NOEXCEPT {
         uint128_t result = 0;
-        for (const auto c : str) {
-            if (c < '0' || c > '7') {
+        for (const T* it = begin; it != end; ++it) {
+            auto c = *it;
+            if (c == T('\0')) {
+                break;
+            } else if (c < T('0') || c > T('7')) {
                 return nullptr;
             }
-            result = result * 8 + (c - '0');
+            result = result * 8 + (c - T('0'));
         }
         return result;
     }
 
-    IPADDRESS_NODISCARD static IPADDRESS_FORCE_INLINE optional<uint128_t> hex_str_to_uint128(const std::string& str) IPADDRESS_NOEXCEPT {
+    template <typename T>
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<uint128_t> hex_str_to_uint128(const T* begin, const T* end) IPADDRESS_NOEXCEPT {
         uint128_t result = 0;
         int digit = 0;
-        for (const auto c : str) {
-            if (c >= '0' && c <= '9') {
-                digit = c - '0';
-            } else if (c >= 'A' && c <= 'F') {
+        for (const T* it = begin; it != end; ++it) {
+            auto c = *it;
+            if (c == T('\0')) {
+                break;
+            } else if (c >= T('0') && c <= T('9')) {
+                digit = c - T('0');
+            } else if (c >= T('A') && c <= T('F')) {
                 digit = c - 55;
-            } else if (c >= 'a' && c <= 'f') {
+            } else if (c >= T('a') && c <= T('f')) {
                 digit = c - 87;
             } else {
                 return nullptr;
@@ -1906,14 +2000,15 @@ IPADDRESS_FORCE_INLINE std::ostream& operator<<(std::ostream& stream, const IPAD
     return stream << str;
 }
 
-IPADDRESS_FORCE_INLINE std::istream& operator>>(std::istream& stream, IPADDRESS_NAMESPACE::uint128_t& value) {
+template <typename T>
+IPADDRESS_FORCE_INLINE std::basic_istream<T, std::char_traits<T>>& operator>>(std::basic_istream<T, std::char_traits<T>>& stream, IPADDRESS_NAMESPACE::uint128_t& value) {
     auto fmt = IPADDRESS_NAMESPACE::uint128_t::format::decimal;
     if (stream.flags() & ios_base::hex) {
         fmt = IPADDRESS_NAMESPACE::uint128_t::format::hexadecimal;
     } else if (stream.flags() & ios_base::oct) {
         fmt = IPADDRESS_NAMESPACE::uint128_t::format::octal;
     }
-    std::string str;
+    std::basic_string<T, std::char_traits<T>, std::allocator<T>> str;
     stream >> str;
     const auto result = IPADDRESS_NAMESPACE::uint128_t::from_string(str, fmt);
     if (result) {
