@@ -797,17 +797,20 @@ IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE int stream_index() {
     return i;
 }
 
-IPADDRESS_FORCE_INLINE std::ostream& full(std::ostream& stream) {
+template <typename T>
+IPADDRESS_FORCE_INLINE std::basic_ostream<T, std::char_traits<T>>& full(std::basic_ostream<T, std::char_traits<T>>& stream) {
     stream.iword(stream_index()) = long(format::full) + 1;
     return stream;
 }
 
-IPADDRESS_FORCE_INLINE std::ostream& compact(std::ostream& stream) {
+template <typename T>
+IPADDRESS_FORCE_INLINE std::basic_ostream<T, std::char_traits<T>>& compact(std::basic_ostream<T, std::char_traits<T>>& stream) {
     stream.iword(stream_index()) = long(format::compact) + 1;
     return stream;
 }
 
-IPADDRESS_FORCE_INLINE std::ostream& compressed(std::ostream& stream) {
+template <typename T>
+IPADDRESS_FORCE_INLINE std::basic_ostream<T, std::char_traits<T>>& compressed(std::basic_ostream<T, std::char_traits<T>>& stream) {
     stream.iword(stream_index()) = long(format::compressed) + 1;
     return stream;
 }

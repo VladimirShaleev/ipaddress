@@ -450,6 +450,58 @@ public:
     }
 
     /**
+     * Converts the IP address to a string.
+     * 
+     * This function returns a string representation of the IP address. The format can be specified by the \a fmt parameter.
+     * 
+     * @param[in] fmt The format to use for the string representation, defaults to compressed format.
+     * @return A `std::wstring` representing the IP address in the specified format.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::wstring to_wstring(format fmt = format::compressed) const {
+        return _version == ip_version::V4 ? _ipv.ipv4.to_wstring(fmt) : _ipv.ipv6.to_wstring(fmt);
+    }
+
+    /**
+     * Converts the IP address to a string.
+     * 
+     * This function returns a string representation of the IP address. The format can be specified by the \a fmt parameter.
+     * 
+     * @param[in] fmt The format to use for the string representation, defaults to compressed format.
+     * @return A `std::u16string` representing the IP address in the specified format.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::u16string to_u16string(format fmt = format::compressed) const {
+        return _version == ip_version::V4 ? _ipv.ipv4.to_u16string(fmt) : _ipv.ipv6.to_u16string(fmt);
+    }
+
+    /**
+     * Converts the IP address to a string.
+     * 
+     * This function returns a string representation of the IP address. The format can be specified by the \a fmt parameter.
+     * 
+     * @param[in] fmt The format to use for the string representation, defaults to compressed format.
+     * @return A `std::u32string` representing the IP address in the specified format.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::u32string to_u32string(format fmt = format::compressed) const {
+        return _version == ip_version::V4 ? _ipv.ipv4.to_u32string(fmt) : _ipv.ipv6.to_u32string(fmt);
+    }
+
+#if __cpp_char8_t >= 201811L
+
+    /**
+     * Converts the IP address to a string.
+     * 
+     * This function returns a string representation of the IP address. The format can be specified by the \a fmt parameter.
+     * 
+     * @param[in] fmt The format to use for the string representation, defaults to compressed format.
+     * @return A `std::u8string` representing the IP address in the specified format.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::u8string to_u8string(format fmt = format::compressed) const {
+        return _version == ip_version::V4 ? _ipv.ipv4.to_u8string(fmt) : _ipv.ipv6.to_u8string(fmt);
+    }
+
+#endif // __cpp_char8_t
+
+    /**
      * Generates a reverse DNS lookup pointer for the IP address.
      * 
      * This function creates a string that is the reverse DNS lookup pointer of the IP address.
@@ -1181,10 +1233,12 @@ public:
      * 
      * This operator allows the IP address to be converted to a string.
      * 
+     * @tparam T The character type of the string.
      * @return A `std::string` representation of the IP address.
      */
-    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE explicit operator std::string() const {
-        return _version == ip_version::V4 ? _ipv.ipv4.to_string() : _ipv.ipv6.to_string();
+    template <typename T>
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE explicit operator std::basic_string<T, std::char_traits<T>, std::allocator<T>>() const {
+        return internal::string_converter<T>::convert(to_string());
     }
 
     /**
@@ -1423,7 +1477,12 @@ IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string to_string(const IPADDRESS
     return ip.to_string();
 }
 
-IPADDRESS_FORCE_INLINE std::ostream& operator<<(std::ostream& stream, const IPADDRESS_NAMESPACE::ip_address& ip) {
+IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::wstring to_wstring(const IPADDRESS_NAMESPACE::ip_address& ip) {
+    return ip.to_wstring();
+}
+
+template <typename T>
+IPADDRESS_FORCE_INLINE std::basic_ostream<T, std::char_traits<T>>& operator<<(std::basic_ostream<T, std::char_traits<T>>& stream, const IPADDRESS_NAMESPACE::ip_address& ip) {
     auto& iword = stream.iword(IPADDRESS_NAMESPACE::stream_index());
     auto fmt = iword
         ? (IPADDRESS_NAMESPACE::format) (iword - 1) 
@@ -1436,7 +1495,7 @@ IPADDRESS_FORCE_INLINE std::ostream& operator<<(std::ostream& stream, const IPAD
             return std::toupper(c);
         });
     }
-    return stream << str;
+    return stream << IPADDRESS_NAMESPACE::internal::string_converter<T>::convert(str);
 }
 
 template <typename T>

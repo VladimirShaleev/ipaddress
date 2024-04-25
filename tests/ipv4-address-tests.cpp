@@ -520,13 +520,13 @@ INSTANTIATE_TEST_SUITE_P(
     ));
 
 using ToUtf16StringIpv4Params = TestWithParam<const char16_t*>;
-TEST_P(ToUtf16StringIpv4Params, to_wstring) {
+TEST_P(ToUtf16StringIpv4Params, to_u16string) {
     const auto expected = GetParam();
 
     const auto actual = ipv4_address::parse(expected);
 
     std::basic_ostringstream<char16_t, std::char_traits<char16_t>, std::allocator<char16_t>> ss;
-    ss << actual;
+    ss << compressed << actual;
 
     ASSERT_EQ(actual.to_u16string(), std::u16string(expected));
     ASSERT_EQ((std::u16string) actual, std::u16string(expected));
@@ -541,13 +541,13 @@ INSTANTIATE_TEST_SUITE_P(
     ));
 
 using ToUtf32StringIpv4Params = TestWithParam<const char32_t*>;
-TEST_P(ToUtf32StringIpv4Params, to_wstring) {
+TEST_P(ToUtf32StringIpv4Params, to_u32string) {
     const auto expected = GetParam();
 
     const auto actual = ipv4_address::parse(expected);
 
     std::basic_ostringstream<char32_t, std::char_traits<char32_t>, std::allocator<char32_t>> ss;
-    ss << actual;
+    ss << compact << actual;
 
     ASSERT_EQ(actual.to_u32string(), std::u32string(expected));
     ASSERT_EQ((std::u32string) actual, std::u32string(expected));
@@ -563,13 +563,13 @@ INSTANTIATE_TEST_SUITE_P(
 
 #if __cpp_char8_t >= 201811L
 using ToUtf8StringIpv4Params = TestWithParam<const char8_t*>;
-TEST_P(ToUtf8StringIpv4Params, to_wstring) {
+TEST_P(ToUtf8StringIpv4Params, to_u8string) {
     const auto expected = GetParam();
 
     const auto actual = ipv4_address::parse(expected);
 
     std::basic_ostringstream<char8_t, std::char_traits<char8_t>, std::allocator<char8_t>> ss;
-    ss << actual;
+    ss << full << actual;
 
     ASSERT_EQ(actual.to_u8string(), std::u8string(expected));
     ASSERT_EQ((std::u8string) actual, std::u8string(expected));
