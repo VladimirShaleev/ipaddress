@@ -633,8 +633,8 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("1234:axy::b%scope", error_code::part_has_invalid_symbol, "in part 0 of address 1234:axy::b%scope has invalid symbols")
     ));
 
-template <typename T, size_t N1, size_t N2>
-static void parse_unexpected_symbol(const T (&expected_address)[N1], const T (&str)[N2]) {
+template <typename T, size_t N>
+static void parse_unexpected_symbol(const T (&expected_address)[N]) {
     using tstring = std::basic_string<T, std::char_traits<T>, std::allocator<T>>;
     using tistringstream = std::basic_istringstream<T, std::char_traits<T>, std::allocator<T>>;
 
@@ -666,7 +666,7 @@ static void parse_unexpected_symbol(const T (&expected_address)[N1], const T (&s
     ASSERT_THROW((ipv6_network::parse(tstring(expected_address))), parse_error);
 #endif
 }
-#define PARSE_UNEXPECTED_SYMBOL(unicode) parse_unexpected_symbol(unicode##"2001:dc8::/1\ud55c2\ud55c", unicode##"2001:db8::1/96 2001:db8::/3\ud55c")
+#define PARSE_UNEXPECTED_SYMBOL(unicode) parse_unexpected_symbol(unicode##"2001:dc8::/1\ud55c2\ud55c")
 
 #if __cpp_char8_t >= 201811L
 TEST(ipv6_network, ParseUnexpectedUtf8) {

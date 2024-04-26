@@ -379,8 +379,8 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("1.2.3.040",       error_code::leading_0_are_not_permitted, "leading zeros are not permitted in octet 3 of address 1.2.3.040")
     ));
 
-template <typename T, size_t N1, size_t N2>
-static void parse_unexpected_symbol(const T (&expected_address)[N1], const T (&str)[N2]) {
+template <typename T, size_t N>
+static void parse_unexpected_symbol(const T (&expected_address)[N]) {
     using tstring = std::basic_string<T, std::char_traits<T>, std::allocator<T>>;
     using tistringstream = std::basic_istringstream<T, std::char_traits<T>, std::allocator<T>>;
 
@@ -412,7 +412,7 @@ static void parse_unexpected_symbol(const T (&expected_address)[N1], const T (&s
     ASSERT_THROW((ipv4_address::parse(tstring(expected_address))), parse_error);
 #endif
 }
-#define PARSE_UNEXPECTED_SYMBOL(unicode) parse_unexpected_symbol(unicode##"127.\U00010348.\ud55c.1", unicode##"127.0.0.1 127.\U00010348.\ud55c.1")
+#define PARSE_UNEXPECTED_SYMBOL(unicode) parse_unexpected_symbol(unicode##"127.\U00010348.\ud55c.1")
 
 #if __cpp_char8_t >= 201811L
 TEST(ipv4_address, ParseUnexpectedUtf8) {

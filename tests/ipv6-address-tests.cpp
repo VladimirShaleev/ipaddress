@@ -620,8 +620,8 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("::1%scope_id/24", error_code::invalid_scope_id, "invalid scope id in address ::1%scope_id/24") 
     ));
 
-template <typename T, size_t N1, size_t N2, size_t N3>
-static void parse_unexpected_symbol(const T (&expected_address)[N1], const T (&expected_scope)[N2], const T (&str)[N3]) { // NOLINT(readability-function-cognitive-complexity)
+template <typename T, size_t N1, size_t N2>
+static void parse_unexpected_symbol(const T (&expected_address)[N1], const T (&expected_scope)[N2]) { // NOLINT(readability-function-cognitive-complexity)
     using tstring = std::basic_string<T, std::char_traits<T>, std::allocator<T>>;
     using tistringstream = std::basic_istringstream<T, std::char_traits<T>, std::allocator<T>>;
 
@@ -683,7 +683,7 @@ static void parse_unexpected_symbol(const T (&expected_address)[N1], const T (&e
     ASSERT_THROW((ip.set_scope_id(tstring(expected_scope))), parse_error);
 #endif
 }
-#define PARSE_UNEXPECTED_SYMBOL(unicode) parse_unexpected_symbol(unicode##"200\U00010348:d\ud55c8::1", unicode##"12\ud55c3", unicode##"2001:db8::1%123 200\U00010348:d\ud55c8::1 2001:db8::1%12\ud55c3")
+#define PARSE_UNEXPECTED_SYMBOL(unicode) parse_unexpected_symbol(unicode##"200\U00010348:d\ud55c8::1", unicode##"12\ud55c3")
 
 #if __cpp_char8_t >= 201811L
 TEST(ipv6_address, ParseUnexpectedUtf8) {
