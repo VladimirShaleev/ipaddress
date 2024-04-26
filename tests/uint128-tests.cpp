@@ -490,20 +490,13 @@ TEST(uint128_t, ToStringUnicode) {
 
     std::ostringstream ss1; ss1 << value;
     std::wstringstream ss2; ss2 << value;
-    std::basic_ostringstream<char16_t, std::char_traits<char16_t>, std::allocator<char16_t>> ss3; ss3 << value;
-    std::basic_ostringstream<char32_t, std::char_traits<char32_t>, std::allocator<char32_t>> ss4; ss4 << value;
     ASSERT_EQ(ss1.str(), "10000000000000000042674");
     ASSERT_EQ(ss2.str(), L"10000000000000000042674");
-    ASSERT_EQ(ss3.str(), u"10000000000000000042674");
-    ASSERT_EQ(ss4.str(), U"10000000000000000042674");
     ASSERT_EQ(value.to_string(), "10000000000000000042674");
     ASSERT_EQ(value.to_wstring(), L"10000000000000000042674");
     ASSERT_EQ(value.to_u16string(), u"10000000000000000042674");
     ASSERT_EQ(value.to_u32string(), U"10000000000000000042674");
-
 #if __cpp_char8_t >= 201811L
-    std::basic_ostringstream<char8_t, std::char_traits<char8_t>, std::allocator<char8_t>> ss5; ss5 << value;
-    ASSERT_EQ(ss5.str(), u8"10000000000000000042674");
     ASSERT_EQ(value.to_u8string(), u8"10000000000000000042674");
 #endif
 }

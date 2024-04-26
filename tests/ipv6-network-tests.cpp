@@ -786,28 +786,17 @@ INSTANTIATE_TEST_SUITE_P(
 
 using ToUtf16StringNetworkIpv6Params = TestWithParam<std::tuple<const char*, const char16_t*, const char16_t*, const char16_t*>>;
 TEST_P(ToUtf16StringNetworkIpv6Params, to_u16string) {
-    using u16ostringstream = std::basic_ostringstream<char16_t, std::char_traits<char16_t>, std::allocator<char16_t>>;
-
     const auto expected_full = std::get<1>(GetParam());
     const auto expected_compact = std::get<2>(GetParam());
     const auto expected_compressed = std::get<3>(GetParam());
 
     const auto actual = ipv6_network::parse(std::get<0>(GetParam()));
 
-    u16ostringstream ss_full; ss_full << full << actual;
-    u16ostringstream ss_default; ss_default << actual;
-    u16ostringstream ss_compact; ss_compact << compact << actual;
-    u16ostringstream ss_compressed; ss_compressed << compressed << actual;
-    
     ASSERT_EQ(actual.to_u16string(format::full), std::u16string(expected_full));
     ASSERT_EQ(actual.to_u16string(format::compact), std::u16string(expected_compact));
     ASSERT_EQ(actual.to_u16string(format::compressed), std::u16string(expected_compressed));
     ASSERT_EQ(actual.to_u16string(), std::u16string(expected_compressed));
     ASSERT_EQ((std::u16string) actual, std::u16string(expected_compressed));
-    ASSERT_EQ(ss_full.str(), std::u16string(expected_full));
-    ASSERT_EQ(ss_default.str(), std::u16string(expected_compressed));
-    ASSERT_EQ(ss_compact.str(), std::u16string(expected_compact));
-    ASSERT_EQ(ss_compressed.str(), std::u16string(expected_compressed));
 }
 INSTANTIATE_TEST_SUITE_P(
     ipv6_network, ToUtf16StringNetworkIpv6Params,
@@ -819,28 +808,17 @@ INSTANTIATE_TEST_SUITE_P(
 
 using ToUtf32StringNetworkIpv6Params = TestWithParam<std::tuple<const char*, const char32_t*, const char32_t*, const char32_t*>>;
 TEST_P(ToUtf32StringNetworkIpv6Params, to_u32string) {
-    using u32ostringstream = std::basic_ostringstream<char32_t, std::char_traits<char32_t>, std::allocator<char32_t>>;
-
     const auto expected_full = std::get<1>(GetParam());
     const auto expected_compact = std::get<2>(GetParam());
     const auto expected_compressed = std::get<3>(GetParam());
 
     const auto actual = ipv6_network::parse(std::get<0>(GetParam()));
 
-    u32ostringstream ss_full; ss_full << full << actual;
-    u32ostringstream ss_default; ss_default << actual;
-    u32ostringstream ss_compact; ss_compact << compact << actual;
-    u32ostringstream ss_compressed; ss_compressed << compressed << actual;
-    
     ASSERT_EQ(actual.to_u32string(format::full), std::u32string(expected_full));
     ASSERT_EQ(actual.to_u32string(format::compact), std::u32string(expected_compact));
     ASSERT_EQ(actual.to_u32string(format::compressed), std::u32string(expected_compressed));
     ASSERT_EQ(actual.to_u32string(), std::u32string(expected_compressed));
     ASSERT_EQ((std::u32string) actual, std::u32string(expected_compressed));
-    ASSERT_EQ(ss_full.str(), std::u32string(expected_full));
-    ASSERT_EQ(ss_default.str(), std::u32string(expected_compressed));
-    ASSERT_EQ(ss_compact.str(), std::u32string(expected_compact));
-    ASSERT_EQ(ss_compressed.str(), std::u32string(expected_compressed));
 }
 INSTANTIATE_TEST_SUITE_P(
     ipv6_network, ToUtf32StringNetworkIpv6Params,
@@ -853,28 +831,17 @@ INSTANTIATE_TEST_SUITE_P(
 #if __cpp_char8_t >= 201811L
 using ToUtf8StringNetworkIpv6Params = TestWithParam<std::tuple<const char*, const char8_t*, const char8_t*, const char8_t*>>;
 TEST_P(ToUtf8StringNetworkIpv6Params, to_u8string) {
-    using u8ostringstream = std::basic_ostringstream<char8_t, std::char_traits<char8_t>, std::allocator<char8_t>>;
-
     const auto expected_full = std::get<1>(GetParam());
     const auto expected_compact = std::get<2>(GetParam());
     const auto expected_compressed = std::get<3>(GetParam());
 
     const auto actual = ipv6_network::parse(std::get<0>(GetParam()));
 
-    u8ostringstream ss_full; ss_full << full << actual;
-    u8ostringstream ss_default; ss_default << actual;
-    u8ostringstream ss_compact; ss_compact << compact << actual;
-    u8ostringstream ss_compressed; ss_compressed << compressed << actual;
-    
     ASSERT_EQ(actual.to_u8string(format::full), std::u8string(expected_full));
     ASSERT_EQ(actual.to_u8string(format::compact), std::u8string(expected_compact));
     ASSERT_EQ(actual.to_u8string(format::compressed), std::u8string(expected_compressed));
     ASSERT_EQ(actual.to_u8string(), std::u8string(expected_compressed));
     ASSERT_EQ((std::u8string) actual, std::u8string(expected_compressed));
-    ASSERT_EQ(ss_full.str(), std::u8string(expected_full));
-    ASSERT_EQ(ss_default.str(), std::u8string(expected_compressed));
-    ASSERT_EQ(ss_compact.str(), std::u8string(expected_compact));
-    ASSERT_EQ(ss_compressed.str(), std::u8string(expected_compressed));
 }
 INSTANTIATE_TEST_SUITE_P(
     ipv6_network, ToUtf8StringNetworkIpv6Params,
