@@ -88,7 +88,7 @@ template <typename T, size_t N>
 void test_exception(const T (&str)[N]) {
     const T* it = str;
     const T* begin = it;
-    const T* end = it + sizeof(str);
+    const T* end = it + sizeof(str) / sizeof(str[0]);
 
     char symbol = '\0';
 
@@ -199,7 +199,7 @@ TEST(char_reader, Char) {
     constexpr char str[] = "abc123";
 
     const char* it = str;
-    const char* end = it + sizeof(str);
+    const char* end = it + sizeof(str) / sizeof(str[0]);
 
     auto code = error_code::no_error;
     char symbol = '\0';

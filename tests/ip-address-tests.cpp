@@ -680,7 +680,6 @@ TEST(ip_address, to_u8string) {
     const char8_t* expected_full_2 = u8"fe80:0000:0000:0000:01ff:fe23:4567:890a%eth2";
     const char8_t* expected_compact_2 = u8"fe80:0:0:0:1ff:fe23:4567:890a%eth2";
     const char8_t* expected_compressed_2 = u8"fe80::1ff:fe23:4567:890a%eth2";
-    const char8_t* expected_compressed_upper_2 = u8"FE80::1FF:FE23:4567:890A%eth2";
 
     ASSERT_EQ(ip1.to_u8string(format::full), expected_address);
     ASSERT_EQ(ip1.to_u8string(format::compact), expected_address);
