@@ -259,6 +259,16 @@ struct char_reader<wchar_t> : utf16_reader<wchar_t>, utf32_reader<wchar_t>, char
 };
 
 template <typename T>
+IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE char next_char(const T*& it, const T* begin, const T* end) IPADDRESS_NOEXCEPT(noexcept(internal::char_reader<T>::next(it, begin, end))) {
+    return internal::char_reader<T>::next(it, begin, end);
+}
+
+template <typename T>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE char next_char_or_error(const T*& it, const T* end, error_code& error, uint32_t& error_symbol) IPADDRESS_NOEXCEPT {
+    return internal::char_reader<T>::next_or_error(it, end, error, error_symbol);
+}
+
+template <typename T>
 struct string_converter {
     IPADDRESS_NODISCARD static IPADDRESS_FORCE_INLINE std::basic_string<T, std::char_traits<T>, std::allocator<T>> convert(const std::string& str) {
         return std::basic_string<T, std::char_traits<T>, std::allocator<T>>(str.cbegin(), str.cend());
@@ -290,7 +300,7 @@ IPADDRESS_FORCE_INLINE std::ostringstream& error::print(std::ostringstream& out,
     const T* it = str;
     const T* end = str + N;
     while (it < end) {
-        const auto result = internal::char_reader<T>::next_or_error(it, end, code, error_symbol);
+        const auto result = internal::next_char_or_error(it, end, code, error_symbol);
         if (code == error_code::no_error) {
             if (result == '\0') {
                 break;

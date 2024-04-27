@@ -61,7 +61,7 @@ struct fixed_string {
         const auto end = &data[N];
         auto it = begin;
         for (size_t i = 0; i < N; ++i) {
-            _data[i] = internal::char_reader<T>::next(it, begin, end);
+            _data[i] = internal::next_char(it, begin, end);
             if (_data[i] == '\0') {
                 break;
             }
@@ -85,7 +85,7 @@ struct fixed_string {
         auto it = begin;
         uint32_t error_symbol = 0;
         for (size_t i = 0; i < N; ++i) {
-            _data[i] = internal::char_reader<T>::next_or_error(it, end, code, error_symbol);
+            _data[i] = internal::next_char_or_error(it, end, code, error_symbol);
             if (_data[i] == '\0' || code != error_code::no_error) {
                 break;
             }

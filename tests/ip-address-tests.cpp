@@ -635,7 +635,6 @@ TEST(ip_address, to_u16string) {
     const char16_t* expected_full_2 = u"fe80:0000:0000:0000:01ff:fe23:4567:890a%eth2";
     const char16_t* expected_compact_2 = u"fe80:0:0:0:1ff:fe23:4567:890a%eth2";
     const char16_t* expected_compressed_2 = u"fe80::1ff:fe23:4567:890a%eth2";
-    const char16_t* expected_compressed_upper_2 = u"FE80::1FF:FE23:4567:890A%eth2";
 
     ASSERT_EQ(ip1.to_u16string(format::full), expected_address);
     ASSERT_EQ(ip1.to_u16string(format::compact), expected_address);
@@ -658,7 +657,6 @@ TEST(ip_address, to_u32string) {
     const char32_t* expected_full_2 = U"fe80:0000:0000:0000:01ff:fe23:4567:890a%eth2";
     const char32_t* expected_compact_2 = U"fe80:0:0:0:1ff:fe23:4567:890a%eth2";
     const char32_t* expected_compressed_2 = U"fe80::1ff:fe23:4567:890a%eth2";
-    const char32_t* expected_compressed_upper_2 = U"FE80::1FF:FE23:4567:890A%eth2";
 
     ASSERT_EQ(ip1.to_u32string(format::full), expected_address);
     ASSERT_EQ(ip1.to_u32string(format::compact), expected_address);

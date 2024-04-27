@@ -1247,16 +1247,15 @@ private:
 
     template <typename Str>
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base parse_address_with_prefix(const Str& str, bool strict, error_code& code, uint32_t& code_value) IPADDRESS_NOEXCEPT {
-        using T = typename Str::value_type;
         code = error_code::no_error;
-        const T* it = str.data();
-        const T* end = str.data() + str.size();
+        auto it = str.data();
+        auto end = str.data() + str.size();
         auto has_slash = false;
         auto netmask = end;
         auto symbol = 0;
         char address[ip_address_type::base_max_string_len + 1] = {};
         while (it < end) {
-            const auto c = internal::char_reader<T>::next_or_error(it, end, code, code_value);
+            const auto c = internal::next_char_or_error(it, end, code, code_value);
             if (code != error_code::no_error) {
                 return ip_network_base<Base>();
             }

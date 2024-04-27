@@ -219,13 +219,12 @@ protected:
 
     template <typename Iter>
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::tuple<ip_address_base<Ext>, size_t> parse_netmask(Iter begin, Iter end, error_code& code, uint32_t& code_value) IPADDRESS_NOEXCEPT {
-        using T = typename std::decay<decltype(*begin)>::type;
-        const T* it = begin;
         size_t prefixlen = 0;
+        auto it = begin;
         auto has_prefixlen = false;
         while (it < end) {
             has_prefixlen = true;
-            const auto c = internal::char_reader<T>::next_or_error(it, end, code, code_value);
+            const auto c = internal::next_char_or_error(it, end, code, code_value);
             if (code != error_code::no_error) {
                 return std::make_tuple(ip_address_base<Ext>(), 0);
             }
@@ -277,13 +276,12 @@ private:
 
     template <typename Iter>
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_and_scope<Iter> split_scope_id(Iter begin, Iter end, error_code& error, uint32_t& error_value) IPADDRESS_NOEXCEPT {
-        using T = typename std::decay<decltype(*begin)>::type;
         auto index = 0;
-        const T* it = begin;
+        auto it = begin;
         auto scope = false;
         ip_and_scope<Iter> result{};
         while (it < end) {
-            const auto c = internal::char_reader<T>::next_or_error(it, end, error, error_value);
+            const auto c = internal::next_char_or_error(it, end, error, error_value);
             if (error != error_code::no_error) {
                 return result;
             }
@@ -312,8 +310,6 @@ private:
 
     template <typename Iter>
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::array<fixed_string<4>, _max_parts + 1> split_parts(Iter begin, Iter end, uint32_t& parts_count, error_code& error) IPADDRESS_NOEXCEPT {
-        using T = typename std::decay<decltype(*begin)>::type;
-
         IPADDRESS_CONSTEXPR std::array<fixed_string<4>, _max_parts + 1> empty_parts = {
             make_fixed_string("\0\0\0\0"),
             make_fixed_string("\0\0\0\0"),
@@ -333,11 +329,11 @@ private:
         char prev_c = '\0';
         bool has_double_colon = false;
 
-        const T* it = begin;
+        Iter it = begin;
         uint32_t error_symbol = 0;
 
         while (it < end) {
-            auto c = internal::char_reader<T>::next_or_error(it, end, error, error_symbol);
+            auto c = internal::next_char_or_error(it, end, error, error_symbol);
             if (error != error_code::no_error) {
                 parts_count = error_symbol;
                 return empty_parts;

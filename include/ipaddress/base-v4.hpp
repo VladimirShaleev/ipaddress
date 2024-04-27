@@ -59,8 +59,6 @@ public:
 protected:
     template <typename Iter>
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<Ext> ip_from_string(Iter begin, Iter end, error_code& code, uint32_t& index) IPADDRESS_NOEXCEPT {
-        using T = typename std::decay<decltype(*begin)>::type;
-
         if (begin == end) {
             code = error_code::empty_address;
             return {};
@@ -73,11 +71,11 @@ protected:
         
         index = 0;
         code = error_code::no_error;
-        const T* it = begin;
+        Iter it = begin;
         uint32_t error_symbol = 0;
     
         while (it < end) {
-            auto c = internal::char_reader<T>::next_or_error(it, end, code, error_symbol);
+            auto c = internal::next_char_or_error(it, end, code, error_symbol);
             if (code != error_code::no_error) {
                 index = error_symbol;
                 return {};
@@ -178,11 +176,9 @@ protected:
 
     template <typename Iter>
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::tuple<ip_address_base<Ext>, size_t> parse_netmask(Iter begin, Iter end, error_code& code, uint32_t& code_value) IPADDRESS_NOEXCEPT {
-        using T = typename std::decay<decltype(*begin)>::type;
-
         code = error_code::no_error;
         code_value = 0;
-        const T* it = begin;
+        Iter it = begin;
         
         size_t prefixlen = 0;
         auto is_value = true;
@@ -190,7 +186,7 @@ protected:
 
         while (it < end) {
             has_prefixlen = true;
-            const auto c = internal::char_reader<T>::next_or_error(it, end, code, code_value);
+            const auto c = internal::next_char_or_error(it, end, code, code_value);
             if (code != error_code::no_error) {
                 return std::make_tuple(ip_address_base<Ext>(), 0);
             }
