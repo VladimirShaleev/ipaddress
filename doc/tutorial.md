@@ -8,7 +8,7 @@ For working with IP addresses, the library provides three classes:
 
 - **ipv4_address** — A class for working with IPv4 addresses, where the instance size is always 4 bytes.
 - **ipv6_address** — A class for working with IPv6 addresses, where the instance size includes both the space allocated for the IPv6 address itself and the scope id (zone index). As a result, the instance size will be 16 bytes plus the maximum length of the scope id (plus aligned bytes if any). Read about scope ids below.
-- **ip_address** — Combines the `ipv4_address` and `ipv6_address` classes via a union. This ensures version-independent IP address manipulation. It has implicit constructors for converting from `ipv4_address` and `ipv6_address`. The instance size is the same as that of `ipv6_address`.
+- **ip_address** — Combines the `ipv4_address` and `ipv6_address` classes via a union. This ensures version-independent IP address manipulation. It has implicit constructors for converting from `ipv4_address` and `ipv6_address`. The instance size is the same as that of `ipv6_address` plus IP address version (and data alignment).
 
 @parblock
 @note Regardless of which class you use, the internal address is stored as an array of bytes, not as an unsigned integer. This design choice ensures that the address is stored in network byte order (big-endian) regardless of the platform. This is convenient because ultimately, this address can be used in sockets or similar libraries that require passing addresses in network byte order.
