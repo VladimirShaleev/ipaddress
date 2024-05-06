@@ -60,38 +60,32 @@ protected:
     static constexpr size_t _max_parts = 8;
 
     template <typename Iter>
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<Ext> ip_from_string(Iter begin, Iter end, error_code& code, int& parts_count) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<Ext> ip_from_string(Iter begin, Iter end, error_code& code, uint32_t& value) IPADDRESS_NOEXCEPT {
         if (begin == end) {
             code = error_code::empty_address;
             return {};
         }
 
-        auto ip_and_scope = split_scope_id(begin, end, code);
-        end = ip_and_scope.first;
+        auto ip_and_scope = split_scope_id(begin, end, code, value);
 
         if (code != error_code::no_error) {
             return {};
         }
 
-        const auto parts = split_parts(begin, end, parts_count, code);
+        const auto parts = split_parts(begin, ip_and_scope.end_ip, value, code);
 
         if (code != error_code::no_error) {
             return {};
         }
 
-        const auto result = get_parts_bound(parts, parts_count, code);
+        const auto result = get_parts_bound(parts, value, code);
 
         if (code != error_code::no_error) {
             return {};
         }
 
-        auto ip = ip_address_base<Ext>(parse_parts(parts, parts_count, std::get<0>(result), std::get<1>(result), std::get<2>(result), code));
-
-        char scope_id[IPADDRESS_IPV6_SCOPE_MAX_LENGTH + 1] = {};
-        for (size_t i = 0; i < ip_and_scope.second.size(); ++i) {
-            scope_id[i] = ip_and_scope.second[i];
-        }
-        ip.set_scope_id(scope_id);
+        auto ip = ip_address_base<Ext>(parse_parts(parts, value, std::get<0>(result), std::get<1>(result), std::get<2>(result), code));
+        ip.set_scope_id(ip_and_scope.scope_id);
 
         return ip;
     }
@@ -224,13 +218,16 @@ protected:
     }
 
     template <typename Iter>
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::tuple<ip_address_base<Ext>, size_t> parse_netmask(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT {
-        index = 0;
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::tuple<ip_address_base<Ext>, size_t> parse_netmask(Iter begin, Iter end, error_code& code, uint32_t& code_value) IPADDRESS_NOEXCEPT {
         size_t prefixlen = 0;
+        auto it = begin;
         auto has_prefixlen = false;
-        for (auto it = begin; it != end; ++it) {
+        while (it < end) {
             has_prefixlen = true;
-            const auto c = char(*it);
+            const auto c = internal::next_char_or_error(it, end, code, code_value);
+            if (code != error_code::no_error) {
+                return std::make_tuple(ip_address_base<Ext>(), 0);
+            }
             if (c >= '0' && c <= '9') {
                 prefixlen = prefixlen * 10 + (c - '0');
             } else {
@@ -272,38 +269,47 @@ protected:
 
 private:
     template <typename Iter>
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::pair<Iter, fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>> split_scope_id(Iter begin, Iter end, error_code& error) IPADDRESS_NOEXCEPT {
-        char scope_id[IPADDRESS_IPV6_SCOPE_MAX_LENGTH + 1] = {};
+    struct ip_and_scope {
+        Iter end_ip;
+        char scope_id[IPADDRESS_IPV6_SCOPE_MAX_LENGTH + 1];
+    };
+
+    template <typename Iter>
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_and_scope<Iter> split_scope_id(Iter begin, Iter end, error_code& error, uint32_t& error_value) IPADDRESS_NOEXCEPT {
         auto index = 0;
-        Iter end_ip = begin;
+        auto it = begin;
         auto scope = false;
-        for (auto it = begin; it != end; ++it) {
-            const auto c = char(*it);
+        ip_and_scope<Iter> result{};
+        while (it < end) {
+            const auto c = internal::next_char_or_error(it, end, error, error_value);
+            if (error != error_code::no_error) {
+                return result;
+            }
             if (!scope && c != '%') {
-                end_ip = it + 1;
+                result.end_ip = it;
             } else if (scope) {
                 if (index > IPADDRESS_IPV6_SCOPE_MAX_LENGTH - 1) {
                     error = error_code::scope_id_is_too_long;
-                    return std::make_pair(end_ip, make_fixed_string(scope_id));
+                    return result;
                 }
-                if (c == '%' || c == '/') {
+                if (c == '%' || c == '/' || uint32_t(c) > 127) {
                     error = error_code::invalid_scope_id;
-                    return std::make_pair(end_ip, make_fixed_string(scope_id));
+                    return result;
                 }
-                scope_id[index++] = c;
+                result.scope_id[index++] = c;
             } else {
                 scope = true;
             }
         }
-        if (scope && scope_id[0] == '\0') {
+        if (scope && result.scope_id[0] == '\0') {
             error = error_code::invalid_scope_id;
-            return std::make_pair(end_ip, make_fixed_string(scope_id));
+            return result;
         }
-        return std::make_pair(end_ip, make_fixed_string(scope_id));
+        return result;
     }
 
     template <typename Iter>
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::array<fixed_string<4>, _max_parts + 1> split_parts(Iter begin, Iter end, int& parts_count, error_code& error) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::array<fixed_string<4>, _max_parts + 1> split_parts(Iter begin, Iter end, uint32_t& parts_count, error_code& error) IPADDRESS_NOEXCEPT {
         IPADDRESS_CONSTEXPR std::array<fixed_string<4>, _max_parts + 1> empty_parts = {
             make_fixed_string("\0\0\0\0"),
             make_fixed_string("\0\0\0\0"),
@@ -323,8 +329,15 @@ private:
         char prev_c = '\0';
         bool has_double_colon = false;
 
-        for (auto it = begin; it != end; ++it) {
-            auto c = char(*it);
+        Iter it = begin;
+        uint32_t error_symbol = 0;
+
+        while (it < end) {
+            auto c = internal::next_char_or_error(it, end, error, error_symbol);
+            if (error != error_code::no_error) {
+                parts_count = error_symbol;
+                return empty_parts;
+            }
             if (!has_double_colon && c == ':' && prev_c == ':') {
                 has_double_colon = true;
             }

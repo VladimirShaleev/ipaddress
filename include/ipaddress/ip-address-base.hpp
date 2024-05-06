@@ -123,10 +123,10 @@ public:
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE ip_address_base<Base> parse() IPADDRESS_NOEXCEPT {
         constexpr auto str = FixedString;
         auto code = error_code::no_error;
-        auto index = 0;
-        auto result = Base::ip_from_string(str.begin(), str.end(), code, index);
+        uint32_t value = 0;
+        auto result = Base::ip_from_string(str.begin(), str.end(), code, value);
         if (code != error_code::no_error) {
-            raise_error(code, index, str.data(), str.size());
+            raise_error(code, value, str.data(), str.size());
         }
         return ip_address_base(result);
     }
@@ -401,7 +401,6 @@ public:
      */
     template <typename T, size_t N>
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(const T(&address)[N]) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        internal::is_char_type<T>();
         auto str = make_fixed_string(address);
         return parse_string(str);
     }
@@ -420,9 +419,8 @@ public:
      */
     template <typename T, size_t N>
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(const T(&address)[N], error_code& code) IPADDRESS_NOEXCEPT {
-        internal::is_char_type<T>();
-        auto str = make_fixed_string(address);
-        return parse_string(str, code);
+        auto str = make_fixed_string(address, code);
+        return code == error_code::no_error ? parse_string(str, code) : ip_address_base{};
     }
 
     /**
@@ -525,6 +523,66 @@ public:
     }
 
     /**
+     * Converts the IP address to a string representation.
+     * 
+     * The function converts the binary representation of the IP address to a string.
+     * The format of the output string can be adjusted by passing the desired format as an argument.
+     * The default format is 'compressed'.
+     * 
+     * @param[in] fmt The format to use for the string representation. Defaults to `format::compressed`.
+     * @return A `std::wstring` representing the IP address in the specified format.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::wstring to_wstring(format fmt = format::compressed) const {
+        return internal::string_converter<wchar_t>::convert(to_string(fmt));
+    }
+
+    /**
+     * Converts the IP address to a string representation.
+     * 
+     * The function converts the binary representation of the IP address to a string.
+     * The format of the output string can be adjusted by passing the desired format as an argument.
+     * The default format is 'compressed'.
+     * 
+     * @param[in] fmt The format to use for the string representation. Defaults to `format::compressed`.
+     * @return A `std::u16string` representing the IP address in the specified format.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::u16string to_u16string(format fmt = format::compressed) const {
+        return internal::string_converter<char16_t>::convert(to_string(fmt));
+    }
+
+    /**
+     * Converts the IP address to a string representation.
+     * 
+     * The function converts the binary representation of the IP address to a string.
+     * The format of the output string can be adjusted by passing the desired format as an argument.
+     * The default format is 'compressed'.
+     * 
+     * @param[in] fmt The format to use for the string representation. Defaults to `format::compressed`.
+     * @return A `std::u32string` representing the IP address in the specified format.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::u32string to_u32string(format fmt = format::compressed) const {
+        return internal::string_converter<char32_t>::convert(to_string(fmt));
+    }
+
+#if __cpp_char8_t >= 201811L
+
+    /**
+     * Converts the IP address to a string representation.
+     * 
+     * The function converts the binary representation of the IP address to a string.
+     * The format of the output string can be adjusted by passing the desired format as an argument.
+     * The default format is 'compressed'.
+     * 
+     * @param[in] fmt The format to use for the string representation. Defaults to `format::compressed`.
+     * @return A `std::u8string` representing the IP address in the specified format.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::u8string to_u8string(format fmt = format::compressed) const {
+        return internal::string_converter<char8_t>::convert(to_string(fmt));
+    }
+
+#endif // __cpp_char8_t
+
+    /**
      * Swaps the contents of this IP address with another IP address.
      * 
      * This function swaps the underlying bytes representing the IP address with those of another IP address.
@@ -587,10 +645,12 @@ public:
      * 
      * This operator allows the IP address to be converted to a string.
      * 
-     * @return A `std::string` representation of the IP address.
+     * @tparam T The character type of the string.
+     * @return A string representation of the IP address.
      */
-    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE explicit operator std::string() const {
-        return to_string();
+    template <typename T>
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE explicit operator std::basic_string<T, std::char_traits<T>, std::allocator<T>>() const {
+        return internal::string_converter<T>::convert(to_string());
     }
 
     /**
@@ -694,10 +754,10 @@ private:
     template <typename Str>
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse_string(const Str& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         auto code = error_code::no_error;
-        auto index = 0;
-        auto result = Base::ip_from_string(address.begin(), address.end(), code, index);
+        uint32_t value = 0;
+        auto result = Base::ip_from_string(address.data(), address.data() + address.size(), code, value);
         if (code != error_code::no_error) {
-            raise_error(code, index, address.data(), address.size());
+            raise_error(code, value, address.data(), address.size());
         }
         return result;
     }
@@ -705,8 +765,8 @@ private:
     template <typename Str>
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse_string(const Str& address, error_code& code) IPADDRESS_NOEXCEPT {
         code = error_code::no_error;
-        auto index = 0;
-        return Base::ip_from_string(address.begin(), address.end(), code, index);
+        uint32_t value = 0;
+        return Base::ip_from_string(address.data(), address.data() + address.size(), code, value);
     }
 };
 
@@ -715,7 +775,7 @@ private:
 namespace internal {
 
 template <typename Base, typename TChar, size_t MaxLen>
-IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<Base> parse_ip_from_literal(const TChar* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<Base> parse_ip_from_literal(const TChar* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
     if (size > MaxLen) {
         raise_error(error_code::string_is_too_long, 0, address, size);
     }
@@ -737,17 +797,20 @@ IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE int stream_index() {
     return i;
 }
 
-IPADDRESS_FORCE_INLINE std::ostream& full(std::ostream& stream) {
+template <typename T>
+IPADDRESS_FORCE_INLINE std::basic_ostream<T, std::char_traits<T>>& full(std::basic_ostream<T, std::char_traits<T>>& stream) {
     stream.iword(stream_index()) = long(format::full) + 1;
     return stream;
 }
 
-IPADDRESS_FORCE_INLINE std::ostream& compact(std::ostream& stream) {
+template <typename T>
+IPADDRESS_FORCE_INLINE std::basic_ostream<T, std::char_traits<T>>& compact(std::basic_ostream<T, std::char_traits<T>>& stream) {
     stream.iword(stream_index()) = long(format::compact) + 1;
     return stream;
 }
 
-IPADDRESS_FORCE_INLINE std::ostream& compressed(std::ostream& stream) {
+template <typename T>
+IPADDRESS_FORCE_INLINE std::basic_ostream<T, std::char_traits<T>>& compressed(std::basic_ostream<T, std::char_traits<T>>& stream) {
     stream.iword(stream_index()) = long(format::compressed) + 1;
     return stream;
 }
@@ -762,7 +825,7 @@ namespace std {
 
 template <typename Base>
 struct hash<IPADDRESS_NAMESPACE::ip_address_base<Base>> {
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::size_t operator()(const IPADDRESS_NAMESPACE::ip_address_base<Base>& ip) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t operator()(const IPADDRESS_NAMESPACE::ip_address_base<Base>& ip) const IPADDRESS_NOEXCEPT {
         return ip.hash();
     }
 };
@@ -778,7 +841,12 @@ IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string to_string(const IPADDRESS
 }
 
 template <typename Base>
-IPADDRESS_FORCE_INLINE std::ostream& operator<<(std::ostream& stream, const IPADDRESS_NAMESPACE::ip_address_base<Base>& ip) {
+IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::wstring to_wstring(const IPADDRESS_NAMESPACE::ip_address_base<Base>& ip) {
+    return ip.to_wstring();
+}
+
+template <typename T, typename Base>
+IPADDRESS_FORCE_INLINE std::basic_ostream<T, std::char_traits<T>>& operator<<(std::basic_ostream<T, std::char_traits<T>>& stream, const IPADDRESS_NAMESPACE::ip_address_base<Base>& ip) {
     auto& iword = stream.iword(IPADDRESS_NAMESPACE::stream_index());
     auto fmt = iword
         ? (IPADDRESS_NAMESPACE::format) (iword - 1) 
@@ -791,12 +859,12 @@ IPADDRESS_FORCE_INLINE std::ostream& operator<<(std::ostream& stream, const IPAD
             return std::toupper(c);
         });
     }
-    return stream << str;
+    return stream << IPADDRESS_NAMESPACE::internal::string_converter<T>::convert(str);
 }
 
-template <typename Base>
-IPADDRESS_FORCE_INLINE std::istream& operator>>(std::istream& stream, IPADDRESS_NAMESPACE::ip_address_base<Base>& ip) {
-    std::string str;
+template <typename T, typename Base>
+IPADDRESS_FORCE_INLINE std::basic_istream<T, std::char_traits<T>>& operator>>(std::basic_istream<T, std::char_traits<T>>& stream, IPADDRESS_NAMESPACE::ip_address_base<Base>& ip) {
+    std::basic_string<T, std::char_traits<T>, std::allocator<T>> str;
     stream >> str;
     IPADDRESS_NAMESPACE::error_code err = IPADDRESS_NAMESPACE::error_code::no_error;
     ip = IPADDRESS_NAMESPACE::ip_address_base<Base>::parse(str, err);

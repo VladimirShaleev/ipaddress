@@ -27,9 +27,6 @@ namespace IPADDRESS_NAMESPACE {
 
 namespace internal {
 
-// Parsing has been removed from the ip_address class due to a bug 
-// in the Clang compiler in version 14 and below
-// https://bugs.llvm.org/show_bug.cgi?id=18781
 template <typename T>
 struct ip_any_parser {
     template <typename Str>
@@ -451,6 +448,58 @@ public:
     IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string to_string(format fmt = format::compressed) const {
         return _version == ip_version::V4 ? _ipv.ipv4.to_string(fmt) : _ipv.ipv6.to_string(fmt);
     }
+
+    /**
+     * Converts the IP address to a string.
+     * 
+     * This function returns a string representation of the IP address. The format can be specified by the \a fmt parameter.
+     * 
+     * @param[in] fmt The format to use for the string representation, defaults to compressed format.
+     * @return A `std::wstring` representing the IP address in the specified format.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::wstring to_wstring(format fmt = format::compressed) const {
+        return _version == ip_version::V4 ? _ipv.ipv4.to_wstring(fmt) : _ipv.ipv6.to_wstring(fmt);
+    }
+
+    /**
+     * Converts the IP address to a string.
+     * 
+     * This function returns a string representation of the IP address. The format can be specified by the \a fmt parameter.
+     * 
+     * @param[in] fmt The format to use for the string representation, defaults to compressed format.
+     * @return A `std::u16string` representing the IP address in the specified format.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::u16string to_u16string(format fmt = format::compressed) const {
+        return _version == ip_version::V4 ? _ipv.ipv4.to_u16string(fmt) : _ipv.ipv6.to_u16string(fmt);
+    }
+
+    /**
+     * Converts the IP address to a string.
+     * 
+     * This function returns a string representation of the IP address. The format can be specified by the \a fmt parameter.
+     * 
+     * @param[in] fmt The format to use for the string representation, defaults to compressed format.
+     * @return A `std::u32string` representing the IP address in the specified format.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::u32string to_u32string(format fmt = format::compressed) const {
+        return _version == ip_version::V4 ? _ipv.ipv4.to_u32string(fmt) : _ipv.ipv6.to_u32string(fmt);
+    }
+
+#if __cpp_char8_t >= 201811L
+
+    /**
+     * Converts the IP address to a string.
+     * 
+     * This function returns a string representation of the IP address. The format can be specified by the \a fmt parameter.
+     * 
+     * @param[in] fmt The format to use for the string representation, defaults to compressed format.
+     * @return A `std::u8string` representing the IP address in the specified format.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::u8string to_u8string(format fmt = format::compressed) const {
+        return _version == ip_version::V4 ? _ipv.ipv4.to_u8string(fmt) : _ipv.ipv6.to_u8string(fmt);
+    }
+
+#endif // __cpp_char8_t
 
     /**
      * Generates a reverse DNS lookup pointer for the IP address.
@@ -1094,7 +1143,6 @@ public:
      */
     template <typename T, size_t N>
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(const T(&address)[N]) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        internal::is_char_type<T>();
         auto code = error_code::no_error;
         auto result = internal::ip_any_parser<ip_address>::parse(address, code);
         if (code != error_code::no_error) {
@@ -1117,7 +1165,6 @@ public:
      */
     template <typename T, size_t N>
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse(const T(&address)[N], error_code& code) IPADDRESS_NOEXCEPT {
-        internal::is_char_type<T>();
         return internal::ip_any_parser<ip_address>::parse(address, code);
     }
 
@@ -1133,8 +1180,7 @@ public:
      * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect.
      */
     template <typename T, size_t N>
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(const T(&scope_id)[N]) IPADDRESS_NOEXCEPT {
-        internal::is_char_type<T>();
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(const T(&scope_id)[N]) IPADDRESS_NOEXCEPT(noexcept(ipv6_address().set_scope_id(scope_id))) {
         if (_version == ip_version::V6) {
             _ipv.ipv6.set_scope_id(scope_id);
         }
@@ -1187,10 +1233,12 @@ public:
      * 
      * This operator allows the IP address to be converted to a string.
      * 
+     * @tparam T The character type of the string.
      * @return A `std::string` representation of the IP address.
      */
-    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE explicit operator std::string() const {
-        return _version == ip_version::V4 ? _ipv.ipv4.to_string() : _ipv.ipv6.to_string();
+    template <typename T>
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE explicit operator std::basic_string<T, std::char_traits<T>, std::allocator<T>>() const {
+        return internal::string_converter<T>::convert(to_string());
     }
 
     /**
@@ -1297,35 +1345,6 @@ public:
 #endif // !IPADDRESS_HAS_SPACESHIP_OPERATOR
 
 private:
-    // not used due to clang bug in version 14 and below
-    // https://bugs.llvm.org/show_bug.cgi?id=18781
-    //
-    // template <typename Str>
-    // IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse_string(const Str& address) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-    //     auto code = error_code::no_error;
-    //     const auto ipv4 = ipv4_address::parse(address, code);
-    //     if (code == error_code::no_error) {
-    //         return ip_address(ipv4);
-    //     }
-    //     return ip_address(ipv6_address::parse(address));
-    // }
-    //
-    // template <typename Str>
-    // static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address parse_string(const Str& address, error_code& code) IPADDRESS_NOEXCEPT {
-    //     code = error_code::no_error;
-    //     const auto ipv4 = ipv4_address::parse(address, code);
-    //     if (code == error_code::no_error) {
-    //         return ip_address(ipv4);
-    //     }
-    //     
-    //     const auto ipv6 = ipv6_address::parse(address, code);
-    //     if (code == error_code::no_error) {
-    //         return ip_address(ipv6);
-    //     }
-    //     
-    //     return ip_address();
-    // }
-
     union ip_any_address {
         IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_address() IPADDRESS_NOEXCEPT : ipv4() {
         }
@@ -1370,7 +1389,7 @@ private:
      * @param[in] size The size of the character array.
      * @return An ip_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const char* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const char* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         if (size > ipv6_address::base_max_string_len) {
             raise_error(error_code::string_is_too_long, 0, address, size);
         }
@@ -1388,7 +1407,7 @@ private:
      * @param[in] size The size of the character array.
      * @return An ip_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const wchar_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const wchar_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         if (size > ipv6_address::base_max_string_len) {
             raise_error(error_code::string_is_too_long, 0, address, size);
         }
@@ -1406,7 +1425,7 @@ private:
      * @param[in] size The size of the character array.
      * @return An ip_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const char16_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const char16_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         if (size > ipv6_address::base_max_string_len) {
             raise_error(error_code::string_is_too_long, 0, address, size);
         }
@@ -1424,7 +1443,7 @@ private:
      * @param[in] size The size of the character array.
      * @return An ip_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const char32_t* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address operator""_ip(const char32_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         if (size > ipv6_address::base_max_string_len) {
             raise_error(error_code::string_is_too_long, 0, address, size);
         }
@@ -1445,7 +1464,7 @@ namespace std {
 
 template <>
 struct hash<IPADDRESS_NAMESPACE::ip_address> {
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::size_t operator()(const IPADDRESS_NAMESPACE::ip_address& ip) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t operator()(const IPADDRESS_NAMESPACE::ip_address& ip) const IPADDRESS_NOEXCEPT {
         return ip.hash();
     }
 };
@@ -1458,7 +1477,12 @@ IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string to_string(const IPADDRESS
     return ip.to_string();
 }
 
-IPADDRESS_FORCE_INLINE std::ostream& operator<<(std::ostream& stream, const IPADDRESS_NAMESPACE::ip_address& ip) {
+IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::wstring to_wstring(const IPADDRESS_NAMESPACE::ip_address& ip) {
+    return ip.to_wstring();
+}
+
+template <typename T>
+IPADDRESS_FORCE_INLINE std::basic_ostream<T, std::char_traits<T>>& operator<<(std::basic_ostream<T, std::char_traits<T>>& stream, const IPADDRESS_NAMESPACE::ip_address& ip) {
     auto& iword = stream.iword(IPADDRESS_NAMESPACE::stream_index());
     auto fmt = iword
         ? (IPADDRESS_NAMESPACE::format) (iword - 1) 
@@ -1471,11 +1495,12 @@ IPADDRESS_FORCE_INLINE std::ostream& operator<<(std::ostream& stream, const IPAD
             return std::toupper(c);
         });
     }
-    return stream << str;
+    return stream << IPADDRESS_NAMESPACE::internal::string_converter<T>::convert(str);
 }
 
-IPADDRESS_FORCE_INLINE std::istream& operator>>(std::istream& stream, IPADDRESS_NAMESPACE::ip_address& ip) {
-    std::string str;
+template <typename T>
+IPADDRESS_FORCE_INLINE std::basic_istream<T, std::char_traits<T>>& operator>>(std::basic_istream<T, std::char_traits<T>>& stream, IPADDRESS_NAMESPACE::ip_address& ip) {
+    std::basic_string<T, std::char_traits<T>, std::allocator<T>> str;
     stream >> str;
     IPADDRESS_NAMESPACE::error_code err = IPADDRESS_NAMESPACE::error_code::no_error;
     ip = IPADDRESS_NAMESPACE::ip_address::parse(str, err);

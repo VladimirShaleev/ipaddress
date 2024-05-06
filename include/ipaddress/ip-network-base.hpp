@@ -65,10 +65,10 @@ public:
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEVAL ip_network_base parse() IPADDRESS_NOEXCEPT {
         constexpr auto str = FixedString;
         auto code = error_code::no_error;
-        auto index = 0;
-        auto result = parse_address_with_prefix(str, Strict, code, index);
+        uint32_t value = 0;
+        auto result = parse_address_with_prefix(str, Strict, code, value);
         if (code != error_code::no_error) {
-            raise_error(code, index, str.data(), str.size());
+            raise_error(code, value, str.data(), str.size());
         }
         return result;
     }
@@ -179,8 +179,8 @@ public:
      * @remark For C++ versions prior to C++17, member functions with `std::string` and C-strings will be used instead.
      */
     static IPADDRESS_CONSTEXPR ip_network_base parse(std::string_view address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
-        auto index = 0;
-        return parse_address_with_prefix(address, strict, code, index);
+        uint32_t value = 0;
+        return parse_address_with_prefix(address, strict, code, value);
     }
 
     /**
@@ -197,8 +197,8 @@ public:
      * @remark For C++ versions prior to C++17, member functions with `std::wstring` and C-strings will be used instead.
      */
     static IPADDRESS_CONSTEXPR ip_network_base parse(std::wstring_view address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
-        auto index = 0;
-        return parse_address_with_prefix(address, strict, code, index);
+        uint32_t value = 0;
+        return parse_address_with_prefix(address, strict, code, value);
     }
 
 #if __cpp_char8_t >= 201811L
@@ -216,8 +216,8 @@ public:
      * @note This method is available for C++20 and later versions where `char8_t` is supported.
      */
     static IPADDRESS_CONSTEXPR ip_network_base parse(std::u8string_view address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
-        auto index = 0;
-        return parse_address_with_prefix(address, strict, code, index);
+        uint32_t value = 0;
+        return parse_address_with_prefix(address, strict, code, value);
     }
 
 #endif // __cpp_char8_t
@@ -236,8 +236,8 @@ public:
      * @remark For C++ versions prior to C++17, member functions with `std::u16string` and C-strings will be used instead.
      */
     static IPADDRESS_CONSTEXPR ip_network_base parse(std::u16string_view address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
-        auto index = 0;
-        return parse_address_with_prefix(address, strict, code, index);
+        uint32_t value = 0;
+        return parse_address_with_prefix(address, strict, code, value);
     }
 
     /**
@@ -254,8 +254,8 @@ public:
      * @remark For C++ versions prior to C++17, member functions with `std::u32string` and C-strings will be used instead.
      */
     static IPADDRESS_CONSTEXPR ip_network_base parse(std::u32string_view address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
-        auto index = 0;
-        return parse_address_with_prefix(address, strict, code, index);
+        uint32_t value = 0;
+        return parse_address_with_prefix(address, strict, code, value);
     }
 
 #else // IPADDRESS_CPP_VERSION < 17
@@ -317,8 +317,8 @@ public:
      * @return An ip network object representing the parsed network.
      */
     static ip_network_base parse(const std::string& address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
-        auto index = 0;
-        return parse_address_with_prefix(address, strict, code, index);
+        uint32_t value = 0;
+        return parse_address_with_prefix(address, strict, code, value);
     }
 
     /**
@@ -330,8 +330,8 @@ public:
      * @return An ip network object representing the parsed network.
      */
     static ip_network_base parse(const std::wstring& address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
-        auto index = 0;
-        return parse_address_with_prefix(address, strict, code, index);
+        uint32_t value = 0;
+        return parse_address_with_prefix(address, strict, code, value);
     }
 
     /**
@@ -343,8 +343,8 @@ public:
      * @return An ip network object representing the parsed network.
      */
     static ip_network_base parse(const std::u16string& address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
-        auto index = 0;
-        return parse_address_with_prefix(address, strict, code, index);
+        uint32_t value = 0;
+        return parse_address_with_prefix(address, strict, code, value);
     }
 
     /**
@@ -356,8 +356,8 @@ public:
      * @return An ip network object representing the parsed network.
      */
     static ip_network_base parse(const std::u32string& address, error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
-        auto index = 0;
-        return parse_address_with_prefix(address, strict, code, index);
+        uint32_t value = 0;
+        return parse_address_with_prefix(address, strict, code, value);
     }
 
 #endif // IPADDRESS_CPP_VERSION < 17
@@ -376,7 +376,6 @@ public:
      */
     template <typename T, size_t N>
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base parse(const T(&address)[N], bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        internal::is_char_type<T>();
         auto str = make_fixed_string(address);
         return parse_address_with_prefix(str, strict);
     }
@@ -396,10 +395,9 @@ public:
      */
     template <typename T, size_t N>
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base parse(const T(&address)[N], error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
-        internal::is_char_type<T>();
-        auto str = make_fixed_string(address);
-        auto index = 0;
-        return parse_address_with_prefix(str, strict, code, index);
+        auto str = make_fixed_string(address, code);
+        uint32_t value = 0;
+        return code == error_code::no_error ? parse_address_with_prefix(str, strict, code, value) : ip_network_base{};
     }
 
     /**
@@ -579,6 +577,62 @@ public:
     IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string to_string(format fmt = format::compressed) const {
         return _network_address.to_string(fmt) + '/' + std::to_string(_prefixlen);
     }
+
+    /**
+     * Converts the network to a string representation.
+     * 
+     * This method returns a string representation of the network, combining the network address
+     * and the prefix length, formatted according to the specified format.
+     * 
+     * @param[in] fmt The format to use for the string representation. *Defaults to format::compressed*.
+     * @return A string representation of the network.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::wstring to_wstring(format fmt = format::compressed) const {
+        return internal::string_converter<wchar_t>::convert(to_string(fmt));
+    }
+
+    /**
+     * Converts the network to a string representation.
+     * 
+     * This method returns a string representation of the network, combining the network address
+     * and the prefix length, formatted according to the specified format.
+     * 
+     * @param[in] fmt The format to use for the string representation. *Defaults to format::compressed*.
+     * @return A string representation of the network.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::u16string to_u16string(format fmt = format::compressed) const {
+        return internal::string_converter<char16_t>::convert(to_string(fmt));
+    }
+
+    /**
+     * Converts the network to a string representation.
+     * 
+     * This method returns a string representation of the network, combining the network address
+     * and the prefix length, formatted according to the specified format.
+     * 
+     * @param[in] fmt The format to use for the string representation. *Defaults to format::compressed*.
+     * @return A string representation of the network.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::u32string to_u32string(format fmt = format::compressed) const {
+        return internal::string_converter<char32_t>::convert(to_string(fmt));
+    }
+
+#if __cpp_char8_t >= 201811L
+
+    /**
+     * Converts the network to a string representation.
+     * 
+     * This method returns a string representation of the network, combining the network address
+     * and the prefix length, formatted according to the specified format.
+     * 
+     * @param[in] fmt The format to use for the string representation. *Defaults to format::compressed*.
+     * @return A string representation of the network.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::u8string to_u8string(format fmt = format::compressed) const {
+        return internal::string_converter<char8_t>::convert(to_string(fmt));
+    }
+
+#endif // __cpp_char8_t
 
     /**
      * Swaps the contents of this network with another network.
@@ -1072,10 +1126,12 @@ public:
     /**
      * Converts the ip network object to a std::string.
      * 
-     * @return A `std::string` representation of the ip network object.
+     * @tparam T The character type of the string.
+     * @return A string representation of the ip network object.
      */
-    IPADDRESS_NODISCARD explicit operator std::string() const {
-        return to_string();
+    template <typename T>
+    IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE explicit operator std::basic_string<T, std::char_traits<T>, std::allocator<T>>() const {
+        return internal::string_converter<T>::convert(to_string());
     }
 
     /**
@@ -1086,7 +1142,7 @@ public:
      * @param[in] rhs The other ip network object to compare with.
      * @return `true` if both objects are equal, `false` otherwise.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator==(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
         return _network_address == rhs._network_address && _netmask == rhs._netmask;
     }
 
@@ -1098,7 +1154,7 @@ public:
      * @param[in] rhs The other ip network object to compare with.
      * @return `true` if both objects are not equal, `false` otherwise.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator!=(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
         return !(*this == rhs);
     }
 
@@ -1112,7 +1168,7 @@ public:
      * @param[in] rhs The other ip network object to compare with.
      * @return `std::strong_ordering` result of the comparison.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR std::strong_ordering operator<=>(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
         if (auto result = _network_address <=> rhs._network_address; result != std::strong_ordering::equivalent) {
             return result;
         }
@@ -1129,7 +1185,7 @@ public:
      * @param[in] rhs The other ip network object to compare with.
      * @return `true` if this object is less than the other, `false` otherwise.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
         if (_network_address != rhs._network_address) {
             return _network_address < rhs._network_address;
         }
@@ -1147,7 +1203,7 @@ public:
      * @param[in] rhs The other ip network object to compare with.
      * @return `true` if this object is greater than the other, `false` otherwise.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
         return rhs < *this;
     }
     
@@ -1159,7 +1215,7 @@ public:
      * @param[in] rhs The other ip network object to compare with.
      * @return `true` if this object is less than or equal to the other, `false` otherwise.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator<=(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
         return !(rhs < *this);
     }
     
@@ -1171,7 +1227,7 @@ public:
      * @param[in] rhs The other ip network object to compare with.
      * @return `true` if this object is greater than or equal to the other, `false` otherwise.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR bool operator>=(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(const ip_network_base& rhs) const IPADDRESS_NOEXCEPT {
         return !(*this < rhs);
     }
 
@@ -1181,34 +1237,38 @@ private:
     template <typename Str>
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base parse_address_with_prefix(const Str& str, bool strict) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         auto code = error_code::no_error;
-        auto index = 0;
-        auto result = parse_address_with_prefix(str, strict, code, index);
+        uint32_t value = 0;
+        auto result = parse_address_with_prefix(str, strict, code, value);
         if (code != error_code::no_error) {
-            raise_error(code, index, str.data(), str.size());
+            raise_error(code, value, str.data(), str.size());
         }
         return result;
     }
 
     template <typename Str>
-    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base parse_address_with_prefix(const Str& str, bool strict, error_code& code, int& index) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base parse_address_with_prefix(const Str& str, bool strict, error_code& code, uint32_t& code_value) IPADDRESS_NOEXCEPT {
         code = error_code::no_error;
-        
+        auto it = str.data();
+        auto end = str.data() + str.size();
         auto has_slash = false;
-        auto netmask = str.end();
+        auto netmask = end;
         auto symbol = 0;
         char address[ip_address_type::base_max_string_len + 1] = {};
-        for (auto it = str.begin(); it != str.end(); ++it) {
-            const auto c = char(*it);
+        while (it < end) {
+            const auto c = internal::next_char_or_error(it, end, code, code_value);
+            if (code != error_code::no_error) {
+                return ip_network_base<Base>();
+            }
             if (c == '/') {
                 if (has_slash) {
                     code = error_code::only_one_slash_permitted;
                     return ip_network_base<Base>();
                 }
-                if (it + 1 == str.end()) {
+                if (it == end) {
                     code = error_code::empty_netmask;
                     return ip_network_base<Base>();
                 }
-                netmask = it + 1;
+                netmask = it;
                 has_slash = true;
             }
             if (!has_slash) {
@@ -1219,7 +1279,7 @@ private:
             }
         }
 
-        auto netmask_result = ip_address_type::parse_netmask(netmask, str.end(), code, index);
+        auto netmask_result = ip_address_type::parse_netmask(netmask, end, code, code_value);
         
         if (code != error_code::no_error) {
             return ip_network_base<Base>();
@@ -1257,7 +1317,7 @@ private:
 namespace internal {
 
 template <typename Base, typename TChar, size_t MaxLen>
-IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base<Base> parse_net_from_literal(const TChar* address, std::size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network_base<Base> parse_net_from_literal(const TChar* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
     if (size > MaxLen) {
         raise_error(error_code::string_is_too_long, 0, address, size);
     }
@@ -1274,17 +1334,19 @@ IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLIN
 
 #ifndef IPADDRESS_NO_OVERLOAD_STD
 
-inline int network_strict_index() { 
+IPADDRESS_FORCE_INLINE int network_strict_index() { 
     static int i = std::ios_base::xalloc();
     return i;
 }
 
-inline std::istream& strict(std::istream& stream) {
+template <typename T>
+IPADDRESS_FORCE_INLINE std::basic_istream<T, std::char_traits<T>>& strict(std::basic_istream<T, std::char_traits<T>>& stream) {
     stream.iword(network_strict_index()) = 0;
     return stream;
 }
 
-inline std::istream& non_strict(std::istream& stream) {
+template <typename T>
+IPADDRESS_FORCE_INLINE std::basic_istream<T, std::char_traits<T>>& non_strict(std::basic_istream<T, std::char_traits<T>>& stream) {
     stream.iword(network_strict_index()) = 1;
     return stream;
 }
@@ -1299,38 +1361,50 @@ namespace std {
 
 template <typename Base>
 struct hash<IPADDRESS_NAMESPACE::ip_network_base<Base>> {
-    IPADDRESS_CONSTEXPR std::size_t operator()(const IPADDRESS_NAMESPACE::ip_network_base<Base>& network) const IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t operator()(const IPADDRESS_NAMESPACE::ip_network_base<Base>& network) const IPADDRESS_NOEXCEPT {
         return network.hash();
     }
 };
 
 template <typename Base>
-inline IPADDRESS_CONSTEXPR void swap(IPADDRESS_NAMESPACE::ip_network_base<Base>& net1, IPADDRESS_NAMESPACE::ip_network_base<Base>& net2) IPADDRESS_NOEXCEPT {
+IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void swap(IPADDRESS_NAMESPACE::ip_network_base<Base>& net1, IPADDRESS_NAMESPACE::ip_network_base<Base>& net2) IPADDRESS_NOEXCEPT {
     return net1.swap(net2);
 }
 
 template <typename Base>
-inline std::string to_string(const IPADDRESS_NAMESPACE::ip_network_base<Base>& network) {
+IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string to_string(const IPADDRESS_NAMESPACE::ip_network_base<Base>& network) {
     return network.to_string();
 }
 
 template <typename Base>
-inline std::ostream& operator<<(std::ostream& stream, const IPADDRESS_NAMESPACE::ip_network_base<Base>& network) {
+IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::wstring to_wstring(const IPADDRESS_NAMESPACE::ip_network_base<Base>& network) {
+    return network.to_wstring();
+}
+
+template <typename T, typename Base>
+IPADDRESS_FORCE_INLINE std::basic_ostream<T, std::char_traits<T>>& operator<<(std::basic_ostream<T, std::char_traits<T>>& stream, const IPADDRESS_NAMESPACE::ip_network_base<Base>& network) {
     auto& iword = stream.iword(IPADDRESS_NAMESPACE::stream_index());
     auto fmt = iword
         ? (IPADDRESS_NAMESPACE::format) (iword - 1) 
         : IPADDRESS_NAMESPACE::format::compressed;
     iword = 0;
-    return stream << network.to_string(fmt);
+    auto str = network.to_string(fmt);
+    if (stream.flags() & ios_base::uppercase) {
+        auto end = std::find(str.cbegin(), str.cend(), '%');
+        std::transform(str.cbegin(), end, str.begin(), [](char c){
+            return std::toupper(c);
+        });
+    }
+    return stream << IPADDRESS_NAMESPACE::internal::string_converter<T>::convert(str);
 }
 
-template <typename Base>
-inline std::istream& operator>>(std::istream& stream, IPADDRESS_NAMESPACE::ip_network_base<Base>& network) {
+template <typename T, typename Base>
+IPADDRESS_FORCE_INLINE std::basic_istream<T, std::char_traits<T>>& operator>>(std::basic_istream<T, std::char_traits<T>>& stream, IPADDRESS_NAMESPACE::ip_network_base<Base>& network) {
     auto& iword = stream.iword(IPADDRESS_NAMESPACE::network_strict_index());
     auto strict = iword == 0;
     iword = 0;
 
-    std::string str;
+    std::basic_string<T, std::char_traits<T>, std::allocator<T>> str;
     stream >> str;
     IPADDRESS_NAMESPACE::error_code err = IPADDRESS_NAMESPACE::error_code::no_error;
     network = IPADDRESS_NAMESPACE::ip_network_base<Base>::parse(str, err, strict);

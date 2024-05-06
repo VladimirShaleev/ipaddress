@@ -29,10 +29,10 @@ namespace IPADDRESS_NAMESPACE {
  * @remark The purpose of the byte_array class is to provide functionality similar to std::array in .
  *         environments where std::array cannot be used to its full extent during compile-time operations.
  */
-template <std::size_t N>
+template <size_t N>
 struct byte_array {
     using value_type      = uint8_t; /**< The type of elements contained in the byte_array. */
-    using size_type       = std::size_t; /**< The type representing sizes and counts. */
+    using size_type       = size_t; /**< The type representing sizes and counts. */
     using difference_type = std::ptrdiff_t; /**< The type representing the difference between two pointers. */
     using pointer         = value_type*; /**< A pointer to an element in the byte_array. */
     using const_pointer   = const value_type*; /**< A pointer to a constant element in the byte_array. */
@@ -277,7 +277,7 @@ template <>
 class byte_array<0> {
 public:
     using value_type      = uint8_t;
-    using size_type       = std::size_t;
+    using size_type       = size_t;
     using difference_type = std::ptrdiff_t;
     using pointer         = value_type*;
     using const_pointer   = const value_type*;
@@ -390,9 +390,9 @@ public:
  * @retval true the two byte_array objects are equal
  * @retval false the two byte_array objects are not equal
  */
-template <std::size_t N>
+template <size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
-    for (std::size_t i = 0; i < N; ++i) {
+    for (size_t i = 0; i < N; ++i) {
         if (lhs[i] != rhs[i]) {
             return false;
         }
@@ -412,7 +412,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(c
  * @retval true the two byte_array objects are not equal
  * @retval false the two byte_array objects are equal
  */
-template <std::size_t N>
+template <size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
     return !(lhs == rhs);
 }
@@ -434,9 +434,9 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
      * @retval std::strong_ordering::greater if lhs is lexicographically greater than rhs
      * @retval std::strong_ordering::equivalent if lhs is lexicographically equal to rhs
      */
-    template <std::size_t N>
+    template <size_t N>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
-        for (std::size_t i = 0; i < N; ++i) {
+        for (size_t i = 0; i < N; ++i) {
             if (const auto result = lhs[i] <=> rhs[i]; result != std::strong_ordering::equivalent) {
                 return result;
             }
@@ -458,9 +458,9 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
      * @param[in] rhs A reference to the right-hand side byte_array object.
      * @return `true` if lhs is lexicographically less than rhs, `false` otherwise.
      */
-    template <std::size_t N>
+    template <size_t N>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
-        for (std::size_t i = 0; i < N; ++i) {
+        for (size_t i = 0; i < N; ++i) {
             if (lhs._data[i] < rhs._data[i]) {
                 return true;
             } else if (lhs._data[i] != rhs._data[i]) {
@@ -478,7 +478,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
      * @param[in] rhs A reference to the right-hand side byte_array object.
      * @return `true` if lhs is lexicographically greater than rhs, `false` otherwise.
      */
-    template <std::size_t N>
+    template <size_t N>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
         return rhs < lhs;
     }
@@ -491,7 +491,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
      * @param[in] rhs A reference to the right-hand side byte_array object.
      * @return `true` if lhs is lexicographically less than or equal to rhs, `false` otherwise.
      */
-    template <std::size_t N>
+    template <size_t N>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
         return !(rhs < lhs);
     }
@@ -504,7 +504,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
      * @param[in] rhs A reference to the right-hand side byte_array object.
      * @return `true` if lhs is lexicographically greater than or equal to rhs, `false` otherwise.
      */
-    template <std::size_t N>
+    template <size_t N>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(const byte_array<N>& lhs, const byte_array<N>& rhs) IPADDRESS_NOEXCEPT {
         return !(lhs < rhs);
     }

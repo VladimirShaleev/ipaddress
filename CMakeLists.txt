@@ -8,7 +8,7 @@ set(IPADDRESS_IPV6_SCOPE_MAX_LENGTH "16" CACHE STRING "Maximum scope-id length f
 project(ipaddress 
   HOMEPAGE_URL "https://github.com/VladimirShaleev/ipaddress"
   DESCRIPTION "A library for working and manipulating IPv4/IPv6 addresses and networks"
-  VERSION 1.0.1
+  VERSION 1.1.0
   LANGUAGES CXX)
 
 include(CMakePackageConfigHelpers)
@@ -66,7 +66,7 @@ install(
 install(
   FILES 
     "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.pc"
-	DESTINATION "${CMAKE_INSTALL_DATADIR}/pkgconfig"
+    DESTINATION "${CMAKE_INSTALL_DATADIR}/pkgconfig"
 )
 install(DIRECTORY include/ DESTINATION include)
 

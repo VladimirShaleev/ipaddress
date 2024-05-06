@@ -483,6 +483,24 @@ TEST(uint128_t, ToString) {
     ASSERT_EQ(ss10.str(), std::string("400000000000045BC"));
 }
 
+TEST(uint128_t, ToStringUnicode) {
+    IPADDRESS_CONSTEXPR auto value = uint128_t::from_string("10000000000000000042674").value();
+    ASSERT_EQ(std::to_string(value), "10000000000000000042674");
+    ASSERT_EQ(std::to_wstring(value), L"10000000000000000042674");
+
+    std::ostringstream ss1; ss1 << value;
+    std::wstringstream ss2; ss2 << value;
+    ASSERT_EQ(ss1.str(), "10000000000000000042674");
+    ASSERT_EQ(ss2.str(), L"10000000000000000042674");
+    ASSERT_EQ(value.to_string(), "10000000000000000042674");
+    ASSERT_EQ(value.to_wstring(), L"10000000000000000042674");
+    ASSERT_EQ(value.to_u16string(), u"10000000000000000042674");
+    ASSERT_EQ(value.to_u32string(), U"10000000000000000042674");
+#if __cpp_char8_t >= 201811L
+    ASSERT_EQ(value.to_u8string(), u8"10000000000000000042674");
+#endif
+}
+
 TEST(uint128_t, FromString) {
     const uint128_t expected1 = 17852;
     const uint128_t expected2 = { 4, 17852 };
@@ -514,6 +532,118 @@ TEST(uint128_t, FromString) {
     ASSERT_TRUE(ss11.fail());
     ASSERT_EQ(read11, uint128_t(0));
 }
+
+TEST(uint128_t, FromStringWideChar) {
+    IPADDRESS_CONSTEXPR auto value1 = uint128_t::from_string(L"10000000000000000042674");
+    IPADDRESS_CONSTEXPR auto has_value1 = value1.has_value();
+    IPADDRESS_CONSTEXPR auto lower_value1 = value1.value().lower();
+    IPADDRESS_CONSTEXPR auto upper_value1 = value1.value().upper();
+    ASSERT_TRUE(has_value1);
+    ASSERT_EQ(lower_value1, 1864712049423066802ULL);
+    ASSERT_EQ(upper_value1, 542ULL);
+
+    IPADDRESS_CONSTEXPR auto value2 = uint128_t::from_string(L"100000000000a00000042674");
+    IPADDRESS_CONSTEXPR auto has_value2 = value2.has_value();
+    IPADDRESS_CONSTEXPR auto lower_value2 = value2.value().lower();
+    IPADDRESS_CONSTEXPR auto upper_value2 = value2.value().upper();
+    ASSERT_FALSE(has_value2);
+    ASSERT_EQ(lower_value2, 0);
+    ASSERT_EQ(upper_value2, 0);
+
+    const auto str = L"10000000000000000042674";
+    const auto value3 = uint128_t::from_string(str);
+    ASSERT_TRUE(value3.has_value());
+    ASSERT_EQ(value3.value().lower(), 1864712049423066802ULL);
+    ASSERT_EQ(value3.value().upper(), 542ULL);
+
+    uint128_t value4;
+    std::wistringstream ss1(L"10000000000000000042674");
+    ss1 >> value4;
+    ASSERT_FALSE(ss1.fail());
+    ASSERT_EQ(value4.lower(), 1864712049423066802ULL);
+    ASSERT_EQ(value4.upper(), 542ULL);
+    
+    uint128_t value5;
+    std::wistringstream ss2(L"1000c0000000000000042674");
+    ss2 >> value5;
+    ASSERT_TRUE(ss2.fail());
+    ASSERT_EQ(value5.lower(), 0);
+    ASSERT_EQ(value5.upper(), 0);
+}
+
+TEST(uint128_t, FromStringUtf16) {
+    IPADDRESS_CONSTEXPR auto value1 = uint128_t::from_string(u"10000000000000000042674");
+    IPADDRESS_CONSTEXPR auto has_value1 = value1.has_value();
+    IPADDRESS_CONSTEXPR auto lower_value1 = value1.value().lower();
+    IPADDRESS_CONSTEXPR auto upper_value1 = value1.value().upper();
+    ASSERT_TRUE(has_value1);
+    ASSERT_EQ(lower_value1, 1864712049423066802ULL);
+    ASSERT_EQ(upper_value1, 542ULL);
+
+    IPADDRESS_CONSTEXPR auto value2 = uint128_t::from_string(u"100000000000a00000042674");
+    IPADDRESS_CONSTEXPR auto has_value2 = value2.has_value();
+    IPADDRESS_CONSTEXPR auto lower_value2 = value2.value().lower();
+    IPADDRESS_CONSTEXPR auto upper_value2 = value2.value().upper();
+    ASSERT_FALSE(has_value2);
+    ASSERT_EQ(lower_value2, 0);
+    ASSERT_EQ(upper_value2, 0);
+
+    const auto str = u"10000000000000000042674";
+    const auto value3 = uint128_t::from_string(str);
+    ASSERT_TRUE(value3.has_value());
+    ASSERT_EQ(value3.value().lower(), 1864712049423066802ULL);
+    ASSERT_EQ(value3.value().upper(), 542ULL);
+}
+
+TEST(uint128_t, FromStringUtf32) {
+    IPADDRESS_CONSTEXPR auto value1 = uint128_t::from_string(U"10000000000000000042674");
+    IPADDRESS_CONSTEXPR auto has_value1 = value1.has_value();
+    IPADDRESS_CONSTEXPR auto lower_value1 = value1.value().lower();
+    IPADDRESS_CONSTEXPR auto upper_value1 = value1.value().upper();
+    ASSERT_TRUE(has_value1);
+    ASSERT_EQ(lower_value1, 1864712049423066802ULL);
+    ASSERT_EQ(upper_value1, 542ULL);
+
+    IPADDRESS_CONSTEXPR auto value2 = uint128_t::from_string(U"100000000000a00000042674");
+    IPADDRESS_CONSTEXPR auto has_value2 = value2.has_value();
+    IPADDRESS_CONSTEXPR auto lower_value2 = value2.value().lower();
+    IPADDRESS_CONSTEXPR auto upper_value2 = value2.value().upper();
+    ASSERT_FALSE(has_value2);
+    ASSERT_EQ(lower_value2, 0);
+    ASSERT_EQ(upper_value2, 0);
+
+    const auto str = U"10000000000000000042674";
+    const auto value3 = uint128_t::from_string(str);
+    ASSERT_TRUE(value3.has_value());
+    ASSERT_EQ(value3.value().lower(), 1864712049423066802ULL);
+    ASSERT_EQ(value3.value().upper(), 542ULL);
+}
+
+#if __cpp_char8_t >= 201811L
+TEST(uint128_t, FromStringUtf8) {
+    IPADDRESS_CONSTEXPR auto value1 = uint128_t::from_string(u8"10000000000000000042674");
+    IPADDRESS_CONSTEXPR auto has_value1 = value1.has_value();
+    IPADDRESS_CONSTEXPR auto lower_value1 = value1.value().lower();
+    IPADDRESS_CONSTEXPR auto upper_value1 = value1.value().upper();
+    ASSERT_TRUE(has_value1);
+    ASSERT_EQ(lower_value1, 1864712049423066802ULL);
+    ASSERT_EQ(upper_value1, 542ULL);
+
+    IPADDRESS_CONSTEXPR auto value2 = uint128_t::from_string(u8"100000000000a00000042674");
+    IPADDRESS_CONSTEXPR auto has_value2 = value2.has_value();
+    IPADDRESS_CONSTEXPR auto lower_value2 = value2.value().lower();
+    IPADDRESS_CONSTEXPR auto upper_value2 = value2.value().upper();
+    ASSERT_FALSE(has_value2);
+    ASSERT_EQ(lower_value2, 0);
+    ASSERT_EQ(upper_value2, 0);
+
+    const auto str = u8"10000000000000000042674";
+    const auto value3 = uint128_t::from_string(str);
+    ASSERT_TRUE(value3.has_value());
+    ASSERT_EQ(value3.value().lower(), 1864712049423066802ULL);
+    ASSERT_EQ(value3.value().upper(), 542ULL);
+}
+#endif
 
 TEST(uint128_t, NumericLimits) {
     ASSERT_TRUE(std::numeric_limits<uint128_t>::is_integer);

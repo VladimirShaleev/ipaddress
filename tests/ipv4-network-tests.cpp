@@ -634,6 +634,59 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("1.2.3.256", error_code::octet_exceeded_255, "octet 0 of address 1.2.3.256 exceeded 255")
     ));
 
+template <typename T, size_t N>
+static void parse_unexpected_symbol(const T (&expected_address)[N]) {
+    using tstring = std::basic_string<T, std::char_traits<T>, std::allocator<T>>;
+    using tistringstream = std::basic_istringstream<T, std::char_traits<T>, std::allocator<T>>;
+
+    error_code err1 = error_code::no_error;
+    error_code err2 = error_code::no_error;
+
+    ipv4_network::parse(expected_address, err1);
+    ipv4_network::parse(tstring(expected_address), err2);
+    ASSERT_EQ(err1, error_code::unexpected_symbol);
+    ASSERT_EQ(err2, error_code::unexpected_symbol);
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    auto error_ip1 = ipv4_network::parse(expected_address);
+    auto error_ip2 = ipv4_network::parse(tstring(expected_address));
+    ASSERT_EQ(error_ip1.network_address().to_uint(), 0);
+    ASSERT_EQ(error_ip2.network_address().to_uint(), 0);
+#elif IPADDRESS_CPP_VERSION >= 14
+    EXPECT_THAT(
+        [address=expected_address]() { ipv4_network::parse(address); },
+        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+d55c} in string 127.0.0.1/3{U+d55c}")));
+    EXPECT_THAT(
+        [address=expected_address]() { ipv4_network::parse(tstring(address)); },
+        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+d55c} in string 127.0.0.1/3{U+d55c}")));
+    EXPECT_THAT(
+        [address=expected_address]() { ipv4_network::parse(address); },
+        Throws<parse_error>(Property(&parse_error::code, Eq(error_code::unexpected_symbol))));
+#else // googletest EXPECT_THAT is not supported in cpp less than 14
+    ASSERT_THROW(ipv4_network::parse(expected_address), parse_error);
+    ASSERT_THROW((ipv4_network::parse(tstring(expected_address))), parse_error);
+#endif
+}
+#define PARSE_UNEXPECTED_SYMBOL(unicode) parse_unexpected_symbol(unicode##"127.0.0.1/3\ud55c")
+
+#if __cpp_char8_t >= 201811L
+TEST(ipv4_network, ParseUnexpectedUtf8) {
+    PARSE_UNEXPECTED_SYMBOL(u8);
+}
+#endif
+
+TEST(ipv4_network, ParseUnexpectedUtf16) {
+    PARSE_UNEXPECTED_SYMBOL(u);
+}
+
+TEST(ipv4_network, ParseUnexpectedUtf32) {
+    PARSE_UNEXPECTED_SYMBOL(U);
+}
+
+TEST(ipv4_network, ParseUnexpectedWideChar) {
+    PARSE_UNEXPECTED_SYMBOL(L);
+}
+
 TEST(ipv4_network, Comparison) {
     auto net1 = ipv4_network::parse("127.240.1.0/24");
     auto net2 = ipv4_network::parse("127.240.1.0");
@@ -689,6 +742,81 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("1.2.3.4/32", "1.2.3.4/32"),
         std::make_tuple("1.2.3.4/255.255.255.255", "1.2.3.4/32")
     ));
+
+using ToWStringNetworkIpv4Params = TestWithParam<std::tuple<const char*, const wchar_t*>>;
+TEST_P(ToWStringNetworkIpv4Params, to_wstring) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv4_network::parse(std::get<0>(GetParam()));
+
+    std::wostringstream ss;
+    ss << actual;
+
+    ASSERT_EQ(actual.to_wstring(), std::wstring(expected));
+    ASSERT_EQ(std::wstring(actual), std::wstring(expected));
+    ASSERT_EQ(std::to_wstring(actual), std::wstring(expected));
+    ASSERT_EQ(ss.str(), std::wstring(expected));
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_network, ToWStringNetworkIpv4Params,
+    Values(
+        std::make_tuple("1.2.3.4", L"1.2.3.4/32"),
+        std::make_tuple("1.2.3.4/32", L"1.2.3.4/32"),
+        std::make_tuple("1.2.3.4/255.255.255.255", L"1.2.3.4/32")
+    ));
+
+using ToUtf16StringNetworkIpv4Params = TestWithParam<std::tuple<const char*, const char16_t*>>;
+TEST_P(ToUtf16StringNetworkIpv4Params, to_u16string) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv4_network::parse(std::get<0>(GetParam()));
+
+    ASSERT_EQ(actual.to_u16string(), std::u16string(expected));
+    ASSERT_EQ(std::u16string(actual), std::u16string(expected));
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_network, ToUtf16StringNetworkIpv4Params,
+    Values(
+        std::make_tuple("1.2.3.4", u"1.2.3.4/32"),
+        std::make_tuple("1.2.3.4/32", u"1.2.3.4/32"),
+        std::make_tuple("1.2.3.4/255.255.255.255", u"1.2.3.4/32")
+    ));
+
+using ToUtf32StringNetworkIpv4Params = TestWithParam<std::tuple<const char*, const char32_t*>>;
+TEST_P(ToUtf32StringNetworkIpv4Params, to_u32string) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv4_network::parse(std::get<0>(GetParam()));
+
+    ASSERT_EQ(actual.to_u32string(), std::u32string(expected));
+    ASSERT_EQ(std::u32string(actual), std::u32string(expected));
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_network, ToUtf32StringNetworkIpv4Params,
+    Values(
+        std::make_tuple("1.2.3.4", U"1.2.3.4/32"),
+        std::make_tuple("1.2.3.4/32", U"1.2.3.4/32"),
+        std::make_tuple("1.2.3.4/255.255.255.255", U"1.2.3.4/32")
+    ));
+
+#if __cpp_char8_t >= 201811L
+using ToUtf8StringNetworkIpv4Params = TestWithParam<std::tuple<const char*, const char8_t*>>;
+TEST_P(ToUtf8StringNetworkIpv4Params, to_u8string) {
+    const auto expected = std::get<1>(GetParam());
+
+    const auto actual = ipv4_network::parse(std::get<0>(GetParam()));
+
+    ASSERT_EQ(actual.to_u8string(), std::u8string(expected));
+    ASSERT_EQ(std::u8string(actual), std::u8string(expected));
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_network, ToUtf8StringNetworkIpv4Params,
+    Values(
+        std::make_tuple("1.2.3.4", u8"1.2.3.4/32"),
+        std::make_tuple("1.2.3.4/32", u8"1.2.3.4/32"),
+        std::make_tuple("1.2.3.4/255.255.255.255", u8"1.2.3.4/32")
+    ));
+#endif
 
 TEST(ipv4_network, Hash) {
     auto net1 = ipv4_network::parse("127.0.0.1");

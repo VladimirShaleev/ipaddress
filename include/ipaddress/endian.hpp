@@ -17,8 +17,8 @@
  * and handling data with different endianness.
  * 
  * The determination of endianness is done with a priority order:
- * 1. User-defined `IPADDRESS_ENDIAN`.
- * 2. C++20's `std::endian`.
+ * 1. C++20's `std::endian`.
+ * 2. User-defined `IPADDRESS_ENDIAN`.
  * 3. Platform/compiler-provided macros.
  * 
  * If the endianness cannot be determined, a compilation error is raised
@@ -93,7 +93,7 @@
 #    define IPADDRESS_ENDIAN IPADDRESS_LITTLE_ENDIAN
 #  elif defined(_MSC_VER) && (defined(_M_ARM) || defined(_M_ARM64))
 #    define IPADDRESS_ENDIAN IPADDRESS_LITTLE_ENDIAN
-#  else
+#  elif !defined(IPADDRESS_HAS_STD_ENDIAN)
 #    error Unknown endianness detected. Needs to define IPADDRESS_ENDIAN
 #  endif
 #endif

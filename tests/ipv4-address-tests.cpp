@@ -379,6 +379,59 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("1.2.3.040",       error_code::leading_0_are_not_permitted, "leading zeros are not permitted in octet 3 of address 1.2.3.040")
     ));
 
+template <typename T, size_t N>
+static void parse_unexpected_symbol(const T (&expected_address)[N]) {
+    using tstring = std::basic_string<T, std::char_traits<T>, std::allocator<T>>;
+    using tistringstream = std::basic_istringstream<T, std::char_traits<T>, std::allocator<T>>;
+
+    error_code err1 = error_code::no_error;
+    error_code err2 = error_code::no_error;
+
+    ipv4_address::parse(expected_address, err1);
+    ipv4_address::parse(tstring(expected_address), err2);
+    ASSERT_EQ(err1, error_code::unexpected_symbol);
+    ASSERT_EQ(err2, error_code::unexpected_symbol);
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    auto error_ip1 = ipv4_address::parse(expected_address);
+    auto error_ip2 = ipv4_address::parse(tstring(expected_address));
+    ASSERT_EQ(error_ip1.to_uint(), 0);
+    ASSERT_EQ(error_ip2.to_uint(), 0);
+#elif IPADDRESS_CPP_VERSION >= 14
+    EXPECT_THAT(
+        [address=expected_address]() { ipv4_address::parse(address); },
+        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+10348} in string 127.{U+10348}.{U+d55c}.1")));
+    EXPECT_THAT(
+        [address=expected_address]() { ipv4_address::parse(tstring(address)); },
+        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+10348} in string 127.{U+10348}.{U+d55c}.1")));
+    EXPECT_THAT(
+        [address=expected_address]() { ipv4_address::parse(address); },
+        Throws<parse_error>(Property(&parse_error::code, Eq(error_code::unexpected_symbol))));
+#else // googletest EXPECT_THAT is not supported in cpp less than 14
+    ASSERT_THROW(ipv4_address::parse(expected_address), parse_error);
+    ASSERT_THROW((ipv4_address::parse(tstring(expected_address))), parse_error);
+#endif
+}
+#define PARSE_UNEXPECTED_SYMBOL(unicode) parse_unexpected_symbol(unicode##"127.\U00010348.\ud55c.1")
+
+#if __cpp_char8_t >= 201811L
+TEST(ipv4_address, ParseUnexpectedUtf8) {
+    PARSE_UNEXPECTED_SYMBOL(u8);
+}
+#endif
+
+TEST(ipv4_address, ParseUnexpectedUtf16) {
+    PARSE_UNEXPECTED_SYMBOL(u);
+}
+
+TEST(ipv4_address, ParseUnexpectedUtf32) {
+    PARSE_UNEXPECTED_SYMBOL(U);
+}
+
+TEST(ipv4_address, ParseUnexpectedWideChar) {
+    PARSE_UNEXPECTED_SYMBOL(L);
+}
+
 TEST(ipv4_address, Comparison) {
     auto ip1 = ipv4_address::parse("127.239.0.1");
     auto ip2 = ipv4_address::parse("127.240.0.1");
@@ -423,6 +476,7 @@ TEST_P(ToStringIpv4Params, to_string) {
     ss << actual;
 
     ASSERT_EQ(actual.to_string(), std::string(expected));
+    ASSERT_EQ((std::string) actual, std::string(expected));
     ASSERT_EQ(std::to_string(actual), std::string(expected));
     ASSERT_EQ(ss.str(), std::string(expected));
 }
@@ -433,6 +487,81 @@ INSTANTIATE_TEST_SUITE_P(
         "127.0.0.1",
         "255.0.42.42"
     ));
+
+using ToWStringIpv4Params = TestWithParam<const wchar_t*>;
+TEST_P(ToWStringIpv4Params, to_wstring) {
+    const auto expected = GetParam();
+
+    const auto actual = ipv4_address::parse(expected);
+
+    std::wostringstream ss;
+    ss << actual;
+
+    ASSERT_EQ(actual.to_wstring(), std::wstring(expected));
+    ASSERT_EQ((std::wstring) actual, std::wstring(expected));
+    ASSERT_EQ(std::to_wstring(actual), std::wstring(expected));
+    ASSERT_EQ(ss.str(), std::wstring(expected));
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_address, ToWStringIpv4Params,
+    testing::Values(
+        L"0.0.0.0",
+        L"127.0.0.1",
+        L"255.0.42.42"
+    ));
+
+using ToUtf16StringIpv4Params = TestWithParam<const char16_t*>;
+TEST_P(ToUtf16StringIpv4Params, to_u16string) {
+    const auto expected = GetParam();
+
+    const auto actual = ipv4_address::parse(expected);
+
+    ASSERT_EQ(actual.to_u16string(), std::u16string(expected));
+    ASSERT_EQ((std::u16string) actual, std::u16string(expected));
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_address, ToUtf16StringIpv4Params,
+    testing::Values(
+        u"0.0.0.0",
+        u"127.0.0.1",
+        u"255.0.42.42"
+    ));
+
+using ToUtf32StringIpv4Params = TestWithParam<const char32_t*>;
+TEST_P(ToUtf32StringIpv4Params, to_u32string) {
+    const auto expected = GetParam();
+
+    const auto actual = ipv4_address::parse(expected);
+
+    ASSERT_EQ(actual.to_u32string(), std::u32string(expected));
+    ASSERT_EQ((std::u32string) actual, std::u32string(expected));
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_address, ToUtf32StringIpv4Params,
+    testing::Values(
+        U"0.0.0.0",
+        U"127.0.0.1",
+        U"255.0.42.42"
+    ));
+
+#if __cpp_char8_t >= 201811L
+using ToUtf8StringIpv4Params = TestWithParam<const char8_t*>;
+TEST_P(ToUtf8StringIpv4Params, to_u8string) {
+    const auto expected = GetParam();
+
+    const auto actual = ipv4_address::parse(expected);
+
+    ASSERT_EQ(actual.to_u8string(), std::u8string(expected));
+    ASSERT_EQ((std::u8string) actual, std::u8string(expected));
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_address, ToUtf8StringIpv4Params,
+    testing::Values(
+        u8"0.0.0.0",
+        u8"127.0.0.1",
+        u8"255.0.42.42"
+    ));
+#endif
 
 TEST(ipv4_address, Hash) {
     auto ip1 = ipv4_address::parse("127.0.0.1");

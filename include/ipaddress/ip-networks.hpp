@@ -26,7 +26,7 @@ struct networks {
     static const ipv4_network ipv4_private_networks[];
     static const ipv6_network ipv6_private_networks[];
 
-    static const ipv4_network ipv4_is_global;
+    static const ipv4_network ipv4_is_public_network;
 
     static const ipv4_network ipv4_reserved_network;
     static const ipv6_network ipv6_reserved_networks[];
@@ -93,7 +93,7 @@ static constexpr ipv4_network
 template <typename T> const ipv4_network networks<T>::
 #endif
     // NOLINTNEXTLINE(cert-err58-cpp): for C++11
-    ipv4_is_global = ipv4_network::parse("100.64.0.0/10");
+    ipv4_is_public_network = ipv4_network::parse("100.64.0.0/10");
 
 // Reserved networks
 #if __cpp_constexpr >= 201304L
@@ -190,7 +190,7 @@ template <typename T>
 constexpr ipv6_network networks<T>::ipv6_private_networks[];
 
 template <typename T>
-constexpr ipv4_network networks<T>::ipv4_is_global;
+constexpr ipv4_network networks<T>::ipv4_is_public_network;
 
 template <typename T>
 constexpr ipv4_network networks<T>::ipv4_reserved_network;
@@ -248,7 +248,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv6_network
 
 template<>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv4_network::is_global() const IPADDRESS_NOEXCEPT {
-    const auto& network = internal::nets::ipv4_is_global;
+    const auto& network = internal::nets::ipv4_is_public_network;
     const auto& address = network_address();
     const auto broadcast = broadcast_address();
     return !(network.contains(address) && network.contains(broadcast)) && !is_private();
@@ -298,7 +298,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv6_address
 
 template<>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool ipv4_address::is_global() const IPADDRESS_NOEXCEPT {
-    return !internal::nets::ipv4_is_global.contains(*this) && !is_private();
+    return !internal::nets::ipv4_is_public_network.contains(*this) && !is_private();
 }
 
 template<>

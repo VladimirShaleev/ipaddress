@@ -58,7 +58,7 @@ public:
 
 protected:
     template <typename Iter>
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<Ext> ip_from_string(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base<Ext> ip_from_string(Iter begin, Iter end, error_code& code, uint32_t& index) IPADDRESS_NOEXCEPT {
         if (begin == end) {
             code = error_code::empty_address;
             return {};
@@ -71,9 +71,15 @@ protected:
         
         index = 0;
         code = error_code::no_error;
+        Iter it = begin;
+        uint32_t error_symbol = 0;
     
-        for (auto it = begin; it != end; ++it) {
-            auto c = char(*it);
+        while (it < end) {
+            auto c = internal::next_char_or_error(it, end, code, error_symbol);
+            if (code != error_code::no_error) {
+                index = error_symbol;
+                return {};
+            }
             if (index >= 4) {
                 code = error_code::expected_4_octets;
                 return {};
@@ -169,13 +175,21 @@ protected:
     }
 
     template <typename Iter>
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::tuple<ip_address_base<Ext>, size_t> parse_netmask(Iter begin, Iter end, error_code& code, int& index) IPADDRESS_NOEXCEPT {
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::tuple<ip_address_base<Ext>, size_t> parse_netmask(Iter begin, Iter end, error_code& code, uint32_t& code_value) IPADDRESS_NOEXCEPT {
+        code = error_code::no_error;
+        code_value = 0;
+        Iter it = begin;
+        
         size_t prefixlen = 0;
         auto is_value = true;
         auto has_prefixlen = false;
-        for (auto it = begin; it != end; ++it) {
+
+        while (it < end) {
             has_prefixlen = true;
-            const auto c = char(*it);
+            const auto c = internal::next_char_or_error(it, end, code, code_value);
+            if (code != error_code::no_error) {
+                return std::make_tuple(ip_address_base<Ext>(), 0);
+            }
             if (c >= '0' && c <= '9') {
                 prefixlen = prefixlen * 10 + (c - '0');
             } else {
@@ -189,7 +203,7 @@ protected:
                 return std::make_tuple(ip_address_base<Ext>(), 0);
             }
         } else {
-            auto ip = ip_to_uint32(ip_from_string(begin, end, code, index).bytes());
+            auto ip = ip_to_uint32(ip_from_string(begin, end, code, code_value).bytes());
             if (code != error_code::no_error) {
                 code = error_code::invalid_netmask;
                 return std::make_tuple(ip_address_base<Ext>(), 0);

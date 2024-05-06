@@ -1,7 +1,9 @@
 #include <gtest/gtest.h>
+#include <gmock/gmock-matchers.h>
 
 #include <ipaddress/ipaddress.hpp>
 
+using namespace testing;
 using namespace ipaddress;
 
 #if IPADDRESS_CPP_VERSION >= 17
@@ -357,4 +359,168 @@ TEST(fixed_string, ConstexprCompare) {
     ASSERT_FALSE(b_52);
     ASSERT_TRUE(b_53);
     ASSERT_TRUE(b_54);
+}
+
+TEST(fixed_string, InvalidUnicodeString) {
+#if __cpp_char8_t >= 201811L
+
+    const char8_t utf8_1[2] = { char8_t(240), char8_t(0) };
+    const char8_t utf8_2[3] = { char8_t(240), char8_t(144), char8_t(0) };
+    const char8_t utf8_3[4] = { char8_t(240), char8_t(144), char8_t(141), char8_t(0) };
+    const char8_t utf8_4[5] = { char8_t(240), char8_t(144), char8_t(141), char8_t(136), char8_t(0) };
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    VAL_FIXED_STRING(str_utf8_1, utf8_1);
+    EXPECT_EQ(str_utf8_1.size(), 0);
+#else
+    EXPECT_THAT(
+        [&]() { VAL_FIXED_STRING(str_utf8_1, utf8_1); },
+        ThrowsMessage<parse_error>(StrEq("incorrect sequence of bytes in unicode encoding for string ")));
+#endif
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    VAL_FIXED_STRING(str_utf8_2, utf8_2);
+    EXPECT_EQ(str_utf8_2.size(), 0);
+#else
+    EXPECT_THAT(
+        [&]() { VAL_FIXED_STRING(str_utf8_2, utf8_2); },
+        ThrowsMessage<parse_error>(StrEq("incorrect sequence of bytes in unicode encoding for string ")));
+#endif
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    VAL_FIXED_STRING(str_utf8_3, utf8_3);
+    EXPECT_EQ(str_utf8_3.size(), 0);
+#else
+    EXPECT_THAT(
+        [&]() { VAL_FIXED_STRING(str_utf8_3, utf8_3); },
+        ThrowsMessage<parse_error>(StrEq("incorrect sequence of bytes in unicode encoding for string ")));
+#endif
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    VAL_FIXED_STRING(str_utf8_4, utf8_4);
+    EXPECT_EQ(str_utf8_4.size(), 0);
+#else
+    EXPECT_THAT(
+        [&]() { VAL_FIXED_STRING(str_utf8_4, utf8_4); },
+        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+10348} in string {U+10348}")));
+#endif
+
+#endif // __cpp_char8_t
+
+    const char16_t utf16_2[2] = { char16_t(55296), char16_t(0) };
+    const char16_t utf16_3[3] = { char16_t(55296), char16_t(48), char16_t(0) };
+    const char16_t utf16_4[3] = { char16_t(55296), char16_t(57160), char16_t(0) };
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    VAL_FIXED_STRING(str_utf16_2, utf16_2);
+    EXPECT_EQ(str_utf16_2.size(), 0);
+#elif IPADDRESS_CPP_VERSION >= 14
+    EXPECT_THAT(
+        [&]() { VAL_FIXED_STRING(str_utf16_2, utf16_2); },
+        ThrowsMessage<parse_error>(StrEq("incorrect sequence of bytes in unicode encoding for string ")));
+#else
+    ASSERT_THROW((make_fixed_string(utf16_2)), parse_error);
+#endif
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    VAL_FIXED_STRING(str_utf16_3, utf16_3);
+    EXPECT_EQ(str_utf16_3.size(), 0);
+#elif IPADDRESS_CPP_VERSION >= 14
+    EXPECT_THAT(
+        [&]() { VAL_FIXED_STRING(str_utf16_3, utf16_3); },
+        ThrowsMessage<parse_error>(StrEq("incorrect sequence of bytes in unicode encoding for string ")));
+#else
+    ASSERT_THROW((make_fixed_string(utf16_3)), parse_error);
+#endif
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    VAL_FIXED_STRING(str_utf16_4, utf16_4);
+    EXPECT_EQ(str_utf16_4.size(), 0);
+#elif IPADDRESS_CPP_VERSION >= 14
+    EXPECT_THAT(
+        [&]() { VAL_FIXED_STRING(str_utf16_4, utf16_4); },
+        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+10348} in string {U+10348}")));
+#else
+    ASSERT_THROW((make_fixed_string(utf16_4)), parse_error);
+#endif
+
+    const char32_t utf32_3[2] = { char32_t(259), char32_t(0) };
+    const char32_t utf32_4[2] = { char32_t(66376), char32_t(0) };
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    VAL_FIXED_STRING(str_utf32_3, utf32_3);
+    EXPECT_EQ(str_utf32_3.size(), 0);
+#elif IPADDRESS_CPP_VERSION >= 14
+    EXPECT_THAT(
+        [&]() { VAL_FIXED_STRING(str_utf32_3, utf32_3); },
+        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+0103} in string {U+0103}")));
+#else
+    ASSERT_THROW((make_fixed_string(utf32_3)), parse_error);
+#endif
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    VAL_FIXED_STRING(str_utf32_4, utf32_4);
+    EXPECT_EQ(str_utf32_4.size(), 0);
+#elif IPADDRESS_CPP_VERSION >= 14
+    EXPECT_THAT(
+        [&]() { VAL_FIXED_STRING(str_utf32_4, utf32_4); },
+        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+10348} in string {U+10348}")));
+#else
+    ASSERT_THROW((make_fixed_string(utf32_4)), parse_error);
+#endif
+}
+
+template <typename T, size_t N>
+IPADDRESS_CONSTEXPR auto make_fixed_string_and_code(const T (&str)[N]) noexcept -> decltype(std::make_pair(make_fixed_string(str), error_code::no_error)) {
+    auto code = error_code::no_error;
+    auto result = make_fixed_string(str, code);
+    return std::make_pair(result, code);
+}
+
+TEST(fixed_string, make_fixed_string) {
+    IPADDRESS_CONSTEXPR auto result1 = make_fixed_string_and_code("");
+    IPADDRESS_CONSTEXPR auto result2 = make_fixed_string_and_code(u"");
+    IPADDRESS_CONSTEXPR auto result3 = make_fixed_string_and_code(U"");
+    IPADDRESS_CONSTEXPR auto result4 = make_fixed_string_and_code(L"");
+    IPADDRESS_CONSTEXPR auto result5 = make_fixed_string_and_code("1");
+    IPADDRESS_CONSTEXPR auto result6 = make_fixed_string_and_code(u"1");
+    IPADDRESS_CONSTEXPR auto result7 = make_fixed_string_and_code(U"1");
+    IPADDRESS_CONSTEXPR auto result8 = make_fixed_string_and_code(L"1");
+    IPADDRESS_CONSTEXPR auto result9 = make_fixed_string_and_code(u"1\U00010348");
+    IPADDRESS_CONSTEXPR auto result10 = make_fixed_string_and_code(U"1\U00010348");
+    IPADDRESS_CONSTEXPR auto result11 = make_fixed_string_and_code(L"1\U00010348");
+    ASSERT_EQ(result1.first.size(), 0);
+    ASSERT_EQ(result2.first.size(), 0);
+    ASSERT_EQ(result3.first.size(), 0);
+    ASSERT_EQ(result4.first.size(), 0);
+    ASSERT_EQ(result5.first.size(), 1);
+    ASSERT_EQ(result6.first.size(), 1);
+    ASSERT_EQ(result7.first.size(), 1);
+    ASSERT_EQ(result8.first.size(), 1);
+    ASSERT_EQ(result9.first.size(), 1);
+    ASSERT_EQ(result10.first.size(), 1);
+    ASSERT_EQ(result11.first.size(), 1);
+    ASSERT_EQ(result1.second, error_code::no_error);
+    ASSERT_EQ(result2.second, error_code::no_error);
+    ASSERT_EQ(result3.second, error_code::no_error);
+    ASSERT_EQ(result4.second, error_code::no_error);
+    ASSERT_EQ(result5.second, error_code::no_error);
+    ASSERT_EQ(result6.second, error_code::no_error);
+    ASSERT_EQ(result7.second, error_code::no_error);
+    ASSERT_EQ(result8.second, error_code::no_error);
+    ASSERT_EQ(result9.second, error_code::unexpected_symbol);
+    ASSERT_EQ(result10.second, error_code::unexpected_symbol);
+    ASSERT_EQ(result11.second, error_code::unexpected_symbol);
+
+#if __cpp_char8_t >= 201811L
+    constexpr auto result12 = make_fixed_string_and_code(u8"");
+    constexpr auto result13 = make_fixed_string_and_code(u8"1");
+    constexpr auto result14 = make_fixed_string_and_code(u8"1\U00010348");
+    ASSERT_EQ(result12.first.size(), 0);
+    ASSERT_EQ(result13.first.size(), 1);
+    ASSERT_EQ(result14.first.size(), 1);
+    ASSERT_EQ(result12.second, error_code::no_error);
+    ASSERT_EQ(result13.second, error_code::no_error);
+    ASSERT_EQ(result14.second, error_code::unexpected_symbol);
+#endif
 }

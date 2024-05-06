@@ -34,7 +34,7 @@ class ip_network_iterator {
 public:
     using iterator_category = std::random_access_iterator_tag; /**< The category of the iterator. */
     using value_type        = T; /**< The type of value iterated over. */
-    using difference_type   = std::int64_t; /**< Type to represent the difference between two iterators. */
+    using difference_type   = int64_t; /**< Type to represent the difference between two iterators. */
     using pointer           = const value_type*; /**< Pointer to the value type. */
     using reference         = const value_type&; /**< Reference to the value type. */
  
@@ -463,7 +463,7 @@ class ip_exclude_network_iterator {
 public:
     using iterator_category = std::forward_iterator_tag; /**< The category of the iterator. */
     using value_type        = T; /**< The type of value iterated over. */
-    using difference_type   = std::int64_t; /**< Type to represent the difference between two iterators. */
+    using difference_type   = int64_t; /**< Type to represent the difference between two iterators. */
     using pointer           = const value_type*; /**< Pointer to the value type. */
     using reference         = const value_type&; /**< Reference to the value type. */
 
@@ -678,7 +678,7 @@ template <typename T>
 class subnets_sequence {
 public:
     using value_type      = T; /**< The type of subnet value. */
-    using size_type       = std::size_t; /**< An unsigned integral type. */
+    using size_type       = size_t; /**< An unsigned integral type. */
     using difference_type = typename value_type::uint_type; /**< Unsigned integer type for differences. */
     using pointer         = value_type*; /**< Pointer to the subnet type. */
     using const_pointer   = const value_type*; /**< Const pointer to the subnet type. */
@@ -890,7 +890,7 @@ template <typename T>
 class exclude_network_sequence {
 public:
     using value_type      = T; /**< The type of network value. */
-    using size_type       = std::size_t; /**< An unsigned integral type. */
+    using size_type       = size_t; /**< An unsigned integral type. */
     using difference_type = typename value_type::uint_type; /**< Unsigned integer type for differences. */
     using pointer         = value_type*; /**< Pointer to the network type. */
     using const_pointer   = const value_type*; /**< Const pointer to the network type. */

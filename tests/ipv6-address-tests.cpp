@@ -620,6 +620,89 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("::1%scope_id/24", error_code::invalid_scope_id, "invalid scope id in address ::1%scope_id/24") 
     ));
 
+template <typename T, size_t N1, size_t N2>
+static void parse_unexpected_symbol(const T (&expected_address)[N1], const T (&expected_scope)[N2]) { // NOLINT(readability-function-cognitive-complexity)
+    using tstring = std::basic_string<T, std::char_traits<T>, std::allocator<T>>;
+    using tistringstream = std::basic_istringstream<T, std::char_traits<T>, std::allocator<T>>;
+
+    auto ip = ipv6_address::parse("2001:db8::1");
+    error_code err1 = error_code::no_error;
+    error_code err2 = error_code::no_error;
+    error_code err3 = error_code::no_error;
+    error_code err4 = error_code::no_error;
+
+    ipv6_address::parse(expected_address, err1);
+    ipv6_address::parse(tstring(expected_address), err2);
+    ip.set_scope_id(expected_scope, err3);
+    ASSERT_FALSE(ip.get_scope_id());
+    ip.set_scope_id(tstring(expected_scope), err4);
+    ASSERT_FALSE(ip.get_scope_id());
+    ASSERT_EQ(err1, error_code::unexpected_symbol);
+    ASSERT_EQ(err2, error_code::unexpected_symbol);
+    ASSERT_EQ(err3, error_code::unexpected_symbol);
+    ASSERT_EQ(err4, error_code::unexpected_symbol);
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    auto error_ip1 = ipv6_address::parse(expected_address);
+    auto error_ip2 = ipv6_address::parse(tstring(expected_address));
+    ASSERT_EQ(error_ip1.to_uint(), 0);
+    ASSERT_EQ(error_ip2.to_uint(), 0);
+    ip.set_scope_id(expected_scope);
+    ASSERT_FALSE(ip.get_scope_id());
+    ip.set_scope_id(tstring(expected_scope));
+    ASSERT_FALSE(ip.get_scope_id());
+#elif IPADDRESS_CPP_VERSION >= 14
+    EXPECT_THAT(
+        [address=expected_address]() { ipv6_address::parse(address); },
+        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+10348} in string 200{U+10348}:d{U+d55c}8::1")));
+    EXPECT_THAT(
+        [address=expected_address]() { ipv6_address::parse(tstring(address)); },
+        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+10348} in string 200{U+10348}:d{U+d55c}8::1")));
+    EXPECT_THAT(
+        [address=expected_address]() { ipv6_address::parse(address); },
+        Throws<parse_error>(Property(&parse_error::code, Eq(error_code::unexpected_symbol))));
+    EXPECT_THAT(
+        [address=expected_address]() { ipv6_address::parse(tstring(address)); },
+        Throws<parse_error>(Property(&parse_error::code, Eq(error_code::unexpected_symbol))));
+    EXPECT_THAT(
+        [=]() { ipv6_address(ip).set_scope_id(expected_scope); },
+        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+d55c} in string 12{U+d55c}3")));
+    EXPECT_THAT(
+        [=]() { ipv6_address(ip).set_scope_id(tstring(expected_scope)); },
+        ThrowsMessage<parse_error>(StrEq("unexpected next unicode symbol {U+d55c} in string 12{U+d55c}3")));
+    EXPECT_THAT(
+        [=]() { ipv6_address(ip).set_scope_id(expected_scope); },
+        Throws<parse_error>(Property(&parse_error::code, Eq(error_code::unexpected_symbol))));
+    EXPECT_THAT(
+        [=]() { ipv6_address(ip).set_scope_id(tstring(expected_scope)); },
+        Throws<parse_error>(Property(&parse_error::code, Eq(error_code::unexpected_symbol))));
+#else // googletest EXPECT_THAT is not supported in cpp less than 14
+    ASSERT_THROW(ipv6_address::parse(expected_address), parse_error);
+    ASSERT_THROW((ipv6_address::parse(tstring(expected_address))), parse_error);
+    ASSERT_THROW(ip.set_scope_id(expected_scope), parse_error);
+    ASSERT_THROW((ip.set_scope_id(tstring(expected_scope))), parse_error);
+#endif
+}
+#define PARSE_UNEXPECTED_SYMBOL(unicode) parse_unexpected_symbol(unicode##"200\U00010348:d\ud55c8::1", unicode##"12\ud55c3")
+
+#if __cpp_char8_t >= 201811L
+TEST(ipv6_address, ParseUnexpectedUtf8) {
+    PARSE_UNEXPECTED_SYMBOL(u8);
+}
+#endif
+
+TEST(ipv6_address, ParseUnexpectedUtf16) {
+    PARSE_UNEXPECTED_SYMBOL(u);
+}
+
+TEST(ipv6_address, ParseUnexpectedUtf32) {
+    PARSE_UNEXPECTED_SYMBOL(U);
+}
+
+TEST(ipv6_address, ParseUnexpectedWideChar) {
+    PARSE_UNEXPECTED_SYMBOL(L);
+}
+
 TEST(ipv6_address, Comparison) {
     auto ip1 = ipv6_address::parse("2001:db8::1");
     auto ip2 = ipv6_address::parse("2001:db8::2");
@@ -753,6 +836,61 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("fe80::1ff:fe23:4567:890a%31", "fe80:0000:0000:0000:01ff:fe23:4567:890a%31", "fe80:0:0:0:1ff:fe23:4567:890a%31", "fe80::1ff:fe23:4567:890a%31", "FE80::1FF:FE23:4567:890A%31"),
         std::make_tuple("1:2:3:4:5:6:42.42.42.1", "0001:0002:0003:0004:0005:0006:2a2a:2a01", "1:2:3:4:5:6:2a2a:2a01", "1:2:3:4:5:6:2a2a:2a01", "1:2:3:4:5:6:2A2A:2A01"),
         std::make_tuple("0:0:0:4:5:6:42.42.42.1%test", "0000:0000:0000:0004:0005:0006:2a2a:2a01%test", "0:0:0:4:5:6:2a2a:2a01%test", "::4:5:6:2a2a:2a01%test", "::4:5:6:2A2A:2A01%test")
+    ));
+
+using ToWStringIpv6Params = TestWithParam<std::tuple<const char*, const wchar_t*, const wchar_t*, const wchar_t*, const wchar_t*>>;
+TEST_P(ToWStringIpv6Params, to_wstring) {
+    const wchar_t* expected_full = std::get<1>(GetParam());
+    const wchar_t* expected_compact = std::get<2>(GetParam());
+    const wchar_t* expected_compressed = std::get<3>(GetParam());
+    const wchar_t* expected_compressed_upper = std::get<4>(GetParam());
+
+    const auto actual = ipv6_address::parse(std::get<0>(GetParam()));
+
+    std::wostringstream ss_full; ss_full << full << actual;
+    std::wostringstream ss_default; ss_default << actual;
+    std::wostringstream ss_compact; ss_compact << compact << actual;
+    std::wostringstream ss_compressed; ss_compressed << compressed << actual;
+    std::wostringstream ss_compressed_upper; ss_compressed_upper << std::uppercase << compressed << actual;
+    
+    ASSERT_EQ(actual.to_wstring(format::full), std::wstring(expected_full));
+    ASSERT_EQ(actual.to_wstring(format::compact), std::wstring(expected_compact));
+    ASSERT_EQ(actual.to_wstring(format::compressed), std::wstring(expected_compressed));
+    ASSERT_EQ(actual.to_wstring(), std::wstring(expected_compressed));
+    ASSERT_EQ((std::wstring) actual, std::wstring(expected_compressed));
+    ASSERT_EQ(std::to_wstring(actual), std::wstring(expected_compressed));
+    ASSERT_EQ(ss_full.str(), std::wstring(expected_full));
+    ASSERT_EQ(ss_default.str(), std::wstring(expected_compressed));
+    ASSERT_EQ(ss_compact.str(), std::wstring(expected_compact));
+    ASSERT_EQ(ss_compressed.str(), std::wstring(expected_compressed));
+    ASSERT_EQ(ss_compressed_upper.str(), std::wstring(expected_compressed_upper));
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_address, ToWStringIpv6Params,
+    testing::Values(
+        std::make_tuple("2001:db8:0:0:1:0:0:1", L"2001:0db8:0000:0000:0001:0000:0000:0001", L"2001:db8:0:0:1:0:0:1", L"2001:db8::1:0:0:1", L"2001:DB8::1:0:0:1"),
+        std::make_tuple("2001:DB8::1", L"2001:0db8:0000:0000:0000:0000:0000:0001", L"2001:db8:0:0:0:0:0:1", L"2001:db8::1", L"2001:DB8::1"),
+        std::make_tuple("2001:db8::1", L"2001:0db8:0000:0000:0000:0000:0000:0001", L"2001:db8:0:0:0:0:0:1", L"2001:db8::1", L"2001:DB8::1"),
+        std::make_tuple("2001:0db8:85a3:0000:0000:8a2e:0370:7334", L"2001:0db8:85a3:0000:0000:8a2e:0370:7334", L"2001:db8:85a3:0:0:8a2e:370:7334", L"2001:db8:85a3::8a2e:370:7334", L"2001:DB8:85A3::8A2E:370:7334"),
+        std::make_tuple("fe80::1ff:fe23:4567:890a", L"fe80:0000:0000:0000:01ff:fe23:4567:890a", L"fe80:0:0:0:1ff:fe23:4567:890a", L"fe80::1ff:fe23:4567:890a", L"FE80::1FF:FE23:4567:890A"),
+        std::make_tuple("::", L"0000:0000:0000:0000:0000:0000:0000:0000", L"0:0:0:0:0:0:0:0", L"::", L"::"),
+        std::make_tuple("::127.0.0.1", L"0000:0000:0000:0000:0000:0000:7f00:0001", L"0:0:0:0:0:0:7f00:1", L"::7f00:1", L"::7F00:1"),
+        std::make_tuple("0000::0000", L"0000:0000:0000:0000:0000:0000:0000:0000", L"0:0:0:0:0:0:0:0", L"::", L"::"),
+        std::make_tuple("::c0a8:1", L"0000:0000:0000:0000:0000:0000:c0a8:0001", L"0:0:0:0:0:0:c0a8:1", L"::c0a8:1", L"::C0A8:1"),
+        std::make_tuple("000::c0a8:0001", L"0000:0000:0000:0000:0000:0000:c0a8:0001", L"0:0:0:0:0:0:c0a8:1", L"::c0a8:1", L"::C0A8:1"),
+        std::make_tuple("::1", L"0000:0000:0000:0000:0000:0000:0000:0001", L"0:0:0:0:0:0:0:1", L"::1", L"::1"),
+        std::make_tuple("::ffff:0:0", L"0000:0000:0000:0000:0000:ffff:0000:0000", L"0:0:0:0:0:ffff:0:0", L"::ffff:0:0", L"::FFFF:0:0"),
+        std::make_tuple("::ffff:0:0:0", L"0000:0000:0000:0000:ffff:0000:0000:0000", L"0:0:0:0:ffff:0:0:0", L"::ffff:0:0:0", L"::FFFF:0:0:0"),
+        std::make_tuple("64:ff9b::", L"0064:ff9b:0000:0000:0000:0000:0000:0000", L"64:ff9b:0:0:0:0:0:0", L"64:ff9b::", L"64:FF9B::"),
+        std::make_tuple("64:ff9b:1::", L"0064:ff9b:0001:0000:0000:0000:0000:0000", L"64:ff9b:1:0:0:0:0:0", L"64:ff9b:1::", L"64:FF9B:1::"),
+        std::make_tuple("100::", L"0100:0000:0000:0000:0000:0000:0000:0000", L"100:0:0:0:0:0:0:0", L"100::", L"100::"),
+        std::make_tuple("ff02::1:3", L"ff02:0000:0000:0000:0000:0000:0001:0003", L"ff02:0:0:0:0:0:1:3", L"ff02::1:3", L"FF02::1:3"),
+        std::make_tuple("fe80::1ff:fe23:4567:890a%eth2", L"fe80:0000:0000:0000:01ff:fe23:4567:890a%eth2", L"fe80:0:0:0:1ff:fe23:4567:890a%eth2", L"fe80::1ff:fe23:4567:890a%eth2", L"FE80::1FF:FE23:4567:890A%eth2"),
+        std::make_tuple("fe80::1ff:fe23:4567:890a%25eth01234567", L"fe80:0000:0000:0000:01ff:fe23:4567:890a%25eth01234567", L"fe80:0:0:0:1ff:fe23:4567:890a%25eth01234567", L"fe80::1ff:fe23:4567:890a%25eth01234567", L"FE80::1FF:FE23:4567:890A%25eth01234567"),
+        std::make_tuple("fe80::1ff:fe23:4567:890a%3", L"fe80:0000:0000:0000:01ff:fe23:4567:890a%3", L"fe80:0:0:0:1ff:fe23:4567:890a%3", L"fe80::1ff:fe23:4567:890a%3", L"FE80::1FF:FE23:4567:890A%3"),
+        std::make_tuple("fe80::1ff:fe23:4567:890a%31", L"fe80:0000:0000:0000:01ff:fe23:4567:890a%31", L"fe80:0:0:0:1ff:fe23:4567:890a%31", L"fe80::1ff:fe23:4567:890a%31", L"FE80::1FF:FE23:4567:890A%31"),
+        std::make_tuple("1:2:3:4:5:6:42.42.42.1", L"0001:0002:0003:0004:0005:0006:2a2a:2a01", L"1:2:3:4:5:6:2a2a:2a01", L"1:2:3:4:5:6:2a2a:2a01", L"1:2:3:4:5:6:2A2A:2A01"),
+        std::make_tuple("0:0:0:4:5:6:42.42.42.1%test", L"0000:0000:0000:0004:0005:0006:2a2a:2a01%test", L"0:0:0:4:5:6:2a2a:2a01%test", L"::4:5:6:2a2a:2a01%test", L"::4:5:6:2A2A:2A01%test")
     ));
 
 TEST(ipv6_address, Hash) {
