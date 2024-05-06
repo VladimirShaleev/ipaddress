@@ -88,7 +88,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="logo.svg"/></td>
   <td id="projectalign">
-   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.0.1</span>
+   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.1.0</span>
    </div>
   </td>
  </tr>
@@ -180,10 +180,10 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>iterator_category</b
 using&#160;</td><td class="memItemRight" valign="bottom"><b>value_type</b> = T</td></tr>
 <tr class="memdesc:afb9ded5f49336ae503bb9f2035ea902b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type of value iterated over. <br /></td></tr>
 <tr class="separator:afb9ded5f49336ae503bb9f2035ea902b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22d527952840fac9f06a48d5cb1c566d" id="r_a22d527952840fac9f06a48d5cb1c566d"><td class="memItemLeft" align="right" valign="top"><a id="a22d527952840fac9f06a48d5cb1c566d" name="a22d527952840fac9f06a48d5cb1c566d"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>difference_type</b> = std::int64_t</td></tr>
-<tr class="memdesc:a22d527952840fac9f06a48d5cb1c566d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type to represent the difference between two iterators. <br /></td></tr>
-<tr class="separator:a22d527952840fac9f06a48d5cb1c566d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc4e70b6c5f2e22e6051b6ec3bb523de" id="r_acc4e70b6c5f2e22e6051b6ec3bb523de"><td class="memItemLeft" align="right" valign="top"><a id="acc4e70b6c5f2e22e6051b6ec3bb523de" name="acc4e70b6c5f2e22e6051b6ec3bb523de"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>difference_type</b> = int64_t</td></tr>
+<tr class="memdesc:acc4e70b6c5f2e22e6051b6ec3bb523de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type to represent the difference between two iterators. <br /></td></tr>
+<tr class="separator:acc4e70b6c5f2e22e6051b6ec3bb523de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3530c00e0558d6c7b67f0a4809302cf7" id="r_a3530c00e0558d6c7b67f0a4809302cf7"><td class="memItemLeft" align="right" valign="top"><a id="a3530c00e0558d6c7b67f0a4809302cf7" name="a3530c00e0558d6c7b67f0a4809302cf7"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>pointer</b> = const <a class="el" href="#afb9ded5f49336ae503bb9f2035ea902b">value_type</a>*</td></tr>
 <tr class="memdesc:a3530c00e0558d6c7b67f0a4809302cf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer to the value type. <br /></td></tr>
@@ -219,7 +219,7 @@ constexpr inline&#160;</td><td class="memItemRight" valign="bottom"><b>ip_networ
 <tr class="memitem:ac602c8861f61378007bb8a4a7aeeb487" id="r_ac602c8861f61378007bb8a4a7aeeb487"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="#a3530c00e0558d6c7b67f0a4809302cf7">pointer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac602c8861f61378007bb8a4a7aeeb487">operator-&gt;</a> () const noexcept</td></tr>
 <tr class="memdesc:ac602c8861f61378007bb8a4a7aeeb487"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a pointer to the current element.  <br /></td></tr>
 <tr class="separator:ac602c8861f61378007bb8a4a7aeeb487"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a042df999b246928ba23774c12fb23f" id="r_a1a042df999b246928ba23774c12fb23f"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="#afb9ded5f49336ae503bb9f2035ea902b">value_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1a042df999b246928ba23774c12fb23f">operator[]</a> (<a class="el" href="#a22d527952840fac9f06a48d5cb1c566d">difference_type</a> n) const noexcept</td></tr>
+<tr class="memitem:a1a042df999b246928ba23774c12fb23f" id="r_a1a042df999b246928ba23774c12fb23f"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="#afb9ded5f49336ae503bb9f2035ea902b">value_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1a042df999b246928ba23774c12fb23f">operator[]</a> (<a class="el" href="#acc4e70b6c5f2e22e6051b6ec3bb523de">difference_type</a> n) const noexcept</td></tr>
 <tr class="memdesc:a1a042df999b246928ba23774c12fb23f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accesses an element by index.  <br /></td></tr>
 <tr class="separator:a1a042df999b246928ba23774c12fb23f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a303f3d9b2c912d0a2287a48cd15125fa" id="r_a303f3d9b2c912d0a2287a48cd15125fa"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="#afb9ded5f49336ae503bb9f2035ea902b">value_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a303f3d9b2c912d0a2287a48cd15125fa">operator[]</a> (const <a class="el" href="#ab1ac080a63179dc133b0b40fcd14c8c1">uint_type</a> &amp;n) const noexcept</td></tr>
@@ -237,31 +237,31 @@ constexpr inline&#160;</td><td class="memItemRight" valign="bottom"><b>ip_networ
 <tr class="memitem:a85ee2d5e3b12e52eea48ca4253308c58" id="r_a85ee2d5e3b12e52eea48ca4253308c58"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1ip__network__iterator.html">ip_network_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a85ee2d5e3b12e52eea48ca4253308c58">operator--</a> (int) noexcept</td></tr>
 <tr class="memdesc:a85ee2d5e3b12e52eea48ca4253308c58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Post-decrement operator.  <br /></td></tr>
 <tr class="separator:a85ee2d5e3b12e52eea48ca4253308c58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a515728cf84a9bafad3cd6e7f75343d76" id="r_a515728cf84a9bafad3cd6e7f75343d76"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1ip__network__iterator.html">ip_network_iterator</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a515728cf84a9bafad3cd6e7f75343d76">operator+=</a> (<a class="el" href="#a22d527952840fac9f06a48d5cb1c566d">difference_type</a> n) noexcept</td></tr>
+<tr class="memitem:a515728cf84a9bafad3cd6e7f75343d76" id="r_a515728cf84a9bafad3cd6e7f75343d76"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1ip__network__iterator.html">ip_network_iterator</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a515728cf84a9bafad3cd6e7f75343d76">operator+=</a> (<a class="el" href="#acc4e70b6c5f2e22e6051b6ec3bb523de">difference_type</a> n) noexcept</td></tr>
 <tr class="memdesc:a515728cf84a9bafad3cd6e7f75343d76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Addition assignment operator.  <br /></td></tr>
 <tr class="separator:a515728cf84a9bafad3cd6e7f75343d76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e17de023b8f0854e4d54bdcb450d3ea" id="r_a0e17de023b8f0854e4d54bdcb450d3ea"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1ip__network__iterator.html">ip_network_iterator</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0e17de023b8f0854e4d54bdcb450d3ea">operator+=</a> (const <a class="el" href="#ab1ac080a63179dc133b0b40fcd14c8c1">uint_type</a> &amp;n) noexcept</td></tr>
 <tr class="memdesc:a0e17de023b8f0854e4d54bdcb450d3ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Addition assignment operator.  <br /></td></tr>
 <tr class="separator:a0e17de023b8f0854e4d54bdcb450d3ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90259a4e9c4357725f5c39e2cf146307" id="r_a90259a4e9c4357725f5c39e2cf146307"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1ip__network__iterator.html">ip_network_iterator</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a90259a4e9c4357725f5c39e2cf146307">operator-=</a> (<a class="el" href="#a22d527952840fac9f06a48d5cb1c566d">difference_type</a> n) noexcept</td></tr>
+<tr class="memitem:a90259a4e9c4357725f5c39e2cf146307" id="r_a90259a4e9c4357725f5c39e2cf146307"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1ip__network__iterator.html">ip_network_iterator</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a90259a4e9c4357725f5c39e2cf146307">operator-=</a> (<a class="el" href="#acc4e70b6c5f2e22e6051b6ec3bb523de">difference_type</a> n) noexcept</td></tr>
 <tr class="memdesc:a90259a4e9c4357725f5c39e2cf146307"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subtraction assignment operator.  <br /></td></tr>
 <tr class="separator:a90259a4e9c4357725f5c39e2cf146307"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae21b1d44510ef2d2630a22b635104fd" id="r_aae21b1d44510ef2d2630a22b635104fd"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1ip__network__iterator.html">ip_network_iterator</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aae21b1d44510ef2d2630a22b635104fd">operator-=</a> (const <a class="el" href="#ab1ac080a63179dc133b0b40fcd14c8c1">uint_type</a> &amp;n) noexcept</td></tr>
 <tr class="memdesc:aae21b1d44510ef2d2630a22b635104fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subtraction assignment operator.  <br /></td></tr>
 <tr class="separator:aae21b1d44510ef2d2630a22b635104fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5dcd1cc3c6eea3c4d86ec38a29ce898f" id="r_a5dcd1cc3c6eea3c4d86ec38a29ce898f"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1ip__network__iterator.html">ip_network_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5dcd1cc3c6eea3c4d86ec38a29ce898f">operator+</a> (<a class="el" href="#a22d527952840fac9f06a48d5cb1c566d">difference_type</a> n) const noexcept</td></tr>
+<tr class="memitem:a5dcd1cc3c6eea3c4d86ec38a29ce898f" id="r_a5dcd1cc3c6eea3c4d86ec38a29ce898f"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1ip__network__iterator.html">ip_network_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5dcd1cc3c6eea3c4d86ec38a29ce898f">operator+</a> (<a class="el" href="#acc4e70b6c5f2e22e6051b6ec3bb523de">difference_type</a> n) const noexcept</td></tr>
 <tr class="memdesc:a5dcd1cc3c6eea3c4d86ec38a29ce898f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Addition operator.  <br /></td></tr>
 <tr class="separator:a5dcd1cc3c6eea3c4d86ec38a29ce898f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a19bd98b6376b348b0d46276d0b8ea49e" id="r_a19bd98b6376b348b0d46276d0b8ea49e"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1ip__network__iterator.html">ip_network_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a19bd98b6376b348b0d46276d0b8ea49e">operator+</a> (const <a class="el" href="#ab1ac080a63179dc133b0b40fcd14c8c1">uint_type</a> &amp;n) const noexcept</td></tr>
 <tr class="memdesc:a19bd98b6376b348b0d46276d0b8ea49e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Addition operator.  <br /></td></tr>
 <tr class="separator:a19bd98b6376b348b0d46276d0b8ea49e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5f102d0481dcce82a8faa2ac8b9a5ad" id="r_aa5f102d0481dcce82a8faa2ac8b9a5ad"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1ip__network__iterator.html">ip_network_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa5f102d0481dcce82a8faa2ac8b9a5ad">operator-</a> (<a class="el" href="#a22d527952840fac9f06a48d5cb1c566d">difference_type</a> n) const noexcept</td></tr>
+<tr class="memitem:aa5f102d0481dcce82a8faa2ac8b9a5ad" id="r_aa5f102d0481dcce82a8faa2ac8b9a5ad"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1ip__network__iterator.html">ip_network_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa5f102d0481dcce82a8faa2ac8b9a5ad">operator-</a> (<a class="el" href="#acc4e70b6c5f2e22e6051b6ec3bb523de">difference_type</a> n) const noexcept</td></tr>
 <tr class="memdesc:aa5f102d0481dcce82a8faa2ac8b9a5ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subtraction operator.  <br /></td></tr>
 <tr class="separator:aa5f102d0481dcce82a8faa2ac8b9a5ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae91fb73b391b9b39c089c74a6ca5168a" id="r_ae91fb73b391b9b39c089c74a6ca5168a"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1ip__network__iterator.html">ip_network_iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae91fb73b391b9b39c089c74a6ca5168a">operator-</a> (const <a class="el" href="#ab1ac080a63179dc133b0b40fcd14c8c1">uint_type</a> &amp;n) const noexcept</td></tr>
 <tr class="memdesc:ae91fb73b391b9b39c089c74a6ca5168a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subtraction operator.  <br /></td></tr>
 <tr class="separator:ae91fb73b391b9b39c089c74a6ca5168a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab321eaaa0329c4bb57228e1b5357c9a5" id="r_ab321eaaa0329c4bb57228e1b5357c9a5"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="#a22d527952840fac9f06a48d5cb1c566d">difference_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab321eaaa0329c4bb57228e1b5357c9a5">operator-</a> (const <a class="el" href="classipaddress_1_1ip__network__iterator.html">ip_network_iterator</a> &amp;other) const noexcept</td></tr>
+<tr class="memitem:ab321eaaa0329c4bb57228e1b5357c9a5" id="r_ab321eaaa0329c4bb57228e1b5357c9a5"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="#acc4e70b6c5f2e22e6051b6ec3bb523de">difference_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab321eaaa0329c4bb57228e1b5357c9a5">operator-</a> (const <a class="el" href="classipaddress_1_1ip__network__iterator.html">ip_network_iterator</a> &amp;other) const noexcept</td></tr>
 <tr class="memdesc:ab321eaaa0329c4bb57228e1b5357c9a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subtraction operator.  <br /></td></tr>
 <tr class="separator:ab321eaaa0329c4bb57228e1b5357c9a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a838c24c27a801a96a2f098db8787bae3" id="r_a838c24c27a801a96a2f098db8787bae3"><td class="memItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a838c24c27a801a96a2f098db8787bae3">operator==</a> (const <a class="el" href="classipaddress_1_1ip__network__iterator.html">ip_network_iterator</a> &amp;other) const noexcept</td></tr>
@@ -458,7 +458,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname">constexpr inline <a class="el" href="#afb9ded5f49336ae503bb9f2035ea902b">value_type</a> operator[] </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="#a22d527952840fac9f06a48d5cb1c566d">difference_type</a></td>          <td class="paramname"><span class="paramname"><em>n</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="#acc4e70b6c5f2e22e6051b6ec3bb523de">difference_type</a></td>          <td class="paramname"><span class="paramname"><em>n</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -654,7 +654,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname">constexpr inline <a class="el" href="classipaddress_1_1ip__network__iterator.html">ip_network_iterator</a> &amp; operator+= </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="#a22d527952840fac9f06a48d5cb1c566d">difference_type</a></td>          <td class="paramname"><span class="paramname"><em>n</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="#acc4e70b6c5f2e22e6051b6ec3bb523de">difference_type</a></td>          <td class="paramname"><span class="paramname"><em>n</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -728,7 +728,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname">constexpr inline <a class="el" href="classipaddress_1_1ip__network__iterator.html">ip_network_iterator</a> &amp; operator-= </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="#a22d527952840fac9f06a48d5cb1c566d">difference_type</a></td>          <td class="paramname"><span class="paramname"><em>n</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="#acc4e70b6c5f2e22e6051b6ec3bb523de">difference_type</a></td>          <td class="paramname"><span class="paramname"><em>n</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -802,7 +802,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname">constexpr inline <a class="el" href="classipaddress_1_1ip__network__iterator.html">ip_network_iterator</a> operator+ </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="#a22d527952840fac9f06a48d5cb1c566d">difference_type</a></td>          <td class="paramname"><span class="paramname"><em>n</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="#acc4e70b6c5f2e22e6051b6ec3bb523de">difference_type</a></td>          <td class="paramname"><span class="paramname"><em>n</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -876,7 +876,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="memname">constexpr inline <a class="el" href="classipaddress_1_1ip__network__iterator.html">ip_network_iterator</a> operator- </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="#a22d527952840fac9f06a48d5cb1c566d">difference_type</a></td>          <td class="paramname"><span class="paramname"><em>n</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="#acc4e70b6c5f2e22e6051b6ec3bb523de">difference_type</a></td>          <td class="paramname"><span class="paramname"><em>n</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -948,7 +948,7 @@ template&lt;typename T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr inline <a class="el" href="#a22d527952840fac9f06a48d5cb1c566d">difference_type</a> operator- </td>
+          <td class="memname">constexpr inline <a class="el" href="#acc4e70b6c5f2e22e6051b6ec3bb523de">difference_type</a> operator- </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classipaddress_1_1ip__network__iterator.html">ip_network_iterator</a>&lt; T &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
           <td> const</td>

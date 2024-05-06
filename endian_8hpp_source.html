@@ -88,7 +88,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="logo.svg"/></td>
   <td id="projectalign">
-   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.0.1</span>
+   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.1.0</span>
    </div>
   </td>
  </tr>
@@ -179,8 +179,8 @@ $(function(){initNavTree('endian_8hpp_source.html',''); initResizable(); });
 <div class="line"><span class="lineno">   17</span><span class="comment"> * and handling data with different endianness.</span></div>
 <div class="line"><span class="lineno">   18</span><span class="comment"> * </span></div>
 <div class="line"><span class="lineno">   19</span><span class="comment"> * The determination of endianness is done with a priority order:</span></div>
-<div class="line"><span class="lineno">   20</span><span class="comment"> * 1. User-defined `IPADDRESS_ENDIAN`.</span></div>
-<div class="line"><span class="lineno">   21</span><span class="comment"> * 2. C++20&#39;s `std::endian`.</span></div>
+<div class="line"><span class="lineno">   20</span><span class="comment"> * 1. C++20&#39;s `std::endian`.</span></div>
+<div class="line"><span class="lineno">   21</span><span class="comment"> * 2. User-defined `IPADDRESS_ENDIAN`.</span></div>
 <div class="line"><span class="lineno">   22</span><span class="comment"> * 3. Platform/compiler-provided macros.</span></div>
 <div class="line"><span class="lineno">   23</span><span class="comment"> * </span></div>
 <div class="line"><span class="lineno">   24</span><span class="comment"> * If the endianness cannot be determined, a compilation error is raised</span></div>
@@ -255,7 +255,7 @@ $(function(){initNavTree('endian_8hpp_source.html',''); initResizable(); });
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="preprocessor">#</span>    <span class="preprocessor">define</span> <span class="preprocessor">IPADDRESS_ENDIAN</span> <span class="preprocessor">IPADDRESS_LITTLE_ENDIAN</span></div>
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="preprocessor">#</span>  <span class="preprocessor">elif</span> <span class="preprocessor">defined</span><span class="preprocessor">(</span><span class="preprocessor">_MSC_VER</span><span class="preprocessor">)</span> <span class="preprocessor">&amp;&amp;</span> <span class="preprocessor">(</span><span class="preprocessor">defined</span><span class="preprocessor">(</span><span class="preprocessor">_M_ARM</span><span class="preprocessor">)</span> <span class="preprocessor">||</span> <span class="preprocessor">defined</span><span class="preprocessor">(</span><span class="preprocessor">_M_ARM64</span><span class="preprocessor">)</span><span class="preprocessor">)</span></div>
 <div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="preprocessor">#</span>    <span class="preprocessor">define</span> <span class="preprocessor">IPADDRESS_ENDIAN</span> <span class="preprocessor">IPADDRESS_LITTLE_ENDIAN</span></div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="preprocessor">#</span>  <span class="preprocessor">else</span></div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="preprocessor">#</span>  <span class="preprocessor">elif</span> <span class="preprocessor">!</span><span class="preprocessor">defined</span><span class="preprocessor">(</span><span class="preprocessor">IPADDRESS_HAS_STD_ENDIAN</span><span class="preprocessor">)</span></div>
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="preprocessor">#</span>    <span class="preprocessor">error</span> <span class="preprocessor">Unknown</span> <span class="preprocessor">endianness</span> <span class="preprocessor">detected</span><span class="preprocessor">.</span> <span class="preprocessor">Needs</span> <span class="preprocessor">to</span> <span class="preprocessor">define</span> <span class="preprocessor">IPADDRESS_ENDIAN</span></div>
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span><span class="preprocessor">#</span>  <span class="preprocessor">endif</span></div>
 <div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span><span class="preprocessor">#</span><span class="preprocessor">endif</span></div>
@@ -292,10 +292,10 @@ $(function(){initNavTree('endian_8hpp_source.html',''); initResizable(); });
 <div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>} <span class="comment">// namespace IPADDRESS_NAMESPACE</span></div>
 <div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
 <div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span><span class="preprocessor">#</span><span class="preprocessor">endif</span> <span class="comment">// IPADDRESS_ENDIAN_HPP</span></div>
-<div class="ttc" id="aconfig_8hpp_html_a7c6e8e32885550d898b7de8d1fd0e828"><div class="ttname"><a href="config_8hpp.html#a7c6e8e32885550d898b7de8d1fd0e828">IPADDRESS_NODISCARD</a></div><div class="ttdeci">#define IPADDRESS_NODISCARD</div><div class="ttdef"><b>Definition</b> config.hpp:90</div></div>
-<div class="ttc" id="aconfig_8hpp_html_aa38a708bf692a56b2b1f00cb14582617"><div class="ttname"><a href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a></div><div class="ttdeci">#define IPADDRESS_FORCE_INLINE</div><div class="ttdef"><b>Definition</b> config.hpp:104</div></div>
-<div class="ttc" id="aconfig_8hpp_html_ad0b1f2a1113cf0f75cc8e7468bcf56db"><div class="ttname"><a href="config_8hpp.html#ad0b1f2a1113cf0f75cc8e7468bcf56db">IPADDRESS_NAMESPACE</a></div><div class="ttdeci">#define IPADDRESS_NAMESPACE</div><div class="ttdef"><b>Definition</b> config.hpp:36</div></div>
-<div class="ttc" id="aconfig_8hpp_html_adea1f8ab9ec3e0c6a0a3ec7684871068"><div class="ttname"><a href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a></div><div class="ttdeci">#define IPADDRESS_NOEXCEPT</div><div class="ttdef"><b>Definition</b> config.hpp:81</div></div>
+<div class="ttc" id="aconfig_8hpp_html_a7c6e8e32885550d898b7de8d1fd0e828"><div class="ttname"><a href="config_8hpp.html#a7c6e8e32885550d898b7de8d1fd0e828">IPADDRESS_NODISCARD</a></div><div class="ttdeci">#define IPADDRESS_NODISCARD</div><div class="ttdef"><b>Definition</b> config.hpp:91</div></div>
+<div class="ttc" id="aconfig_8hpp_html_aa38a708bf692a56b2b1f00cb14582617"><div class="ttname"><a href="config_8hpp.html#aa38a708bf692a56b2b1f00cb14582617">IPADDRESS_FORCE_INLINE</a></div><div class="ttdeci">#define IPADDRESS_FORCE_INLINE</div><div class="ttdef"><b>Definition</b> config.hpp:105</div></div>
+<div class="ttc" id="aconfig_8hpp_html_ad0b1f2a1113cf0f75cc8e7468bcf56db"><div class="ttname"><a href="config_8hpp.html#ad0b1f2a1113cf0f75cc8e7468bcf56db">IPADDRESS_NAMESPACE</a></div><div class="ttdeci">#define IPADDRESS_NAMESPACE</div><div class="ttdef"><b>Definition</b> config.hpp:37</div></div>
+<div class="ttc" id="aconfig_8hpp_html_adea1f8ab9ec3e0c6a0a3ec7684871068"><div class="ttname"><a href="config_8hpp.html#adea1f8ab9ec3e0c6a0a3ec7684871068">IPADDRESS_NOEXCEPT</a></div><div class="ttdeci">#define IPADDRESS_NOEXCEPT</div><div class="ttdef"><b>Definition</b> config.hpp:82</div></div>
 <div class="ttc" id="aendian_8hpp_html_a40a566cfb0ff7c97d895f65eadfa08f1"><div class="ttname"><a href="endian_8hpp.html#a40a566cfb0ff7c97d895f65eadfa08f1">IPADDRESS_LITTLE_ENDIAN</a></div><div class="ttdeci">#define IPADDRESS_LITTLE_ENDIAN</div><div class="ttdef"><b>Definition</b> endian.hpp:40</div></div>
 <div class="ttc" id="anamespaceipaddress_html_a81c2188b3ff3f049f12f54d2d739c5fd"><div class="ttname"><a href="namespaceipaddress.html#a81c2188b3ff3f049f12f54d2d739c5fd">ipaddress::is_little_endian</a></div><div class="ttdeci">constexpr inline bool is_little_endian() noexcept</div><div class="ttdoc">Checks if the system is little-endian.</div><div class="ttdef"><b>Definition</b> endian.hpp:108</div></div>
 <div class="ttc" id="anamespaceipaddress_html_af524c25b69b6d182168edce0d93387de"><div class="ttname"><a href="namespaceipaddress.html#af524c25b69b6d182168edce0d93387de">ipaddress::swap_bytes</a></div><div class="ttdeci">constexpr inline uint32_t swap_bytes(uint32_t value) noexcept</div><div class="ttdoc">Swaps the bytes of a 32-bit unsigned integer.</div><div class="ttdef"><b>Definition</b> endian.hpp:124</div></div>

@@ -88,7 +88,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="logo.svg"/></td>
   <td id="projectalign">
-   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.0.1</span>
+   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.1.0</span>
    </div>
   </td>
  </tr>
@@ -187,10 +187,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a47b5bc52d3740a846a1fa317c7ffb7e1" id="r_a47b5bc52d3740a846a1fa317c7ffb7e1"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1scope.html">scope</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a47b5bc52d3740a846a1fa317c7ffb7e1">get_scope_id</a> () const noexcept</td></tr>
 <tr class="memdesc:a47b5bc52d3740a846a1fa317c7ffb7e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the scope identifier of the IPv6 address.  <br /></td></tr>
 <tr class="separator:a47b5bc52d3740a846a1fa317c7ffb7e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86ef9aafaa1b840d092b454d13dbb7dc" id="r_a86ef9aafaa1b840d092b454d13dbb7dc"><td class="memTemplParams" colspan="2">template&lt;typename T , size_t N&gt; </td></tr>
-<tr class="memitem:a86ef9aafaa1b840d092b454d13dbb7dc"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a86ef9aafaa1b840d092b454d13dbb7dc">set_scope_id</a> (const T(&amp;scope_id)[N]) noexcept</td></tr>
-<tr class="memdesc:a86ef9aafaa1b840d092b454d13dbb7dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the scope identifier of the IPv6 address.  <br /></td></tr>
-<tr class="separator:a86ef9aafaa1b840d092b454d13dbb7dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac33c3dd1e07661526d53f4c9a713a997" id="r_ac33c3dd1e07661526d53f4c9a713a997"><td class="memTemplParams" colspan="2">template&lt;typename T , size_t N&gt; </td></tr>
+<tr class="memitem:ac33c3dd1e07661526d53f4c9a713a997"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ac33c3dd1e07661526d53f4c9a713a997">set_scope_id</a> (const T(&amp;scope_id)[N]) noexcept(noexcept(internal::char_reader&lt; T &gt;::has_throw()))</td></tr>
+<tr class="memdesc:ac33c3dd1e07661526d53f4c9a713a997"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the scope identifier of the IPv6 address.  <br /></td></tr>
+<tr class="separator:ac33c3dd1e07661526d53f4c9a713a997"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46c3659381aac25ed6fe37c362220ebd" id="r_a46c3659381aac25ed6fe37c362220ebd"><td class="memTemplParams" colspan="2">template&lt;typename T , size_t N&gt; </td></tr>
+<tr class="memitem:a46c3659381aac25ed6fe37c362220ebd"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a46c3659381aac25ed6fe37c362220ebd">set_scope_id</a> (const T(&amp;scope_id)[N], <a class="el" href="namespaceipaddress.html#a88a76ee847c844cc47b94caac600689d">error_code</a> &amp;code) noexcept</td></tr>
+<tr class="memdesc:a46c3659381aac25ed6fe37c362220ebd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the scope identifier of the IPv6 address and reports any errors encountered.  <br /></td></tr>
+<tr class="separator:a46c3659381aac25ed6fe37c362220ebd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a84667cb28f4239608941530d2be70b1f" id="r_a84667cb28f4239608941530d2be70b1f"><td class="memItemLeft" align="right" valign="top">constexpr inline void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a84667cb28f4239608941530d2be70b1f">set_scope_id</a> (std::string_view scope_id)</td></tr>
 <tr class="memdesc:a84667cb28f4239608941530d2be70b1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the scope identifier of the IPv6 address using a string view.  <br /></td></tr>
 <tr class="separator:a84667cb28f4239608941530d2be70b1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -286,8 +290,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a86ef9aafaa1b840d092b454d13dbb7dc" name="a86ef9aafaa1b840d092b454d13dbb7dc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a86ef9aafaa1b840d092b454d13dbb7dc">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[1/11]</span></h2>
+<a id="ac33c3dd1e07661526d53f4c9a713a997" name="ac33c3dd1e07661526d53f4c9a713a997"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac33c3dd1e07661526d53f4c9a713a997">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[1/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -330,8 +334,57 @@ template&lt;typename T , size_t N&gt; </div>
 
 </div>
 </div>
+<a id="a46c3659381aac25ed6fe37c362220ebd" name="a46c3659381aac25ed6fe37c362220ebd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46c3659381aac25ed6fe37c362220ebd">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[2/12]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t N&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr inline void set_scope_id </td>
+          <td>(</td>
+          <td class="paramtype">const T(&amp;)</td>          <td class="paramname"><span class="paramname"><em>scope_id</em>[N], </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespaceipaddress.html#a88a76ee847c844cc47b94caac600689d">error_code</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>code</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the scope identifier of the IPv6 address and reports any errors encountered. </p>
+<p>This function sets the scope identifier using a character array. The length of the array should not exceed <code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH + 1</code>.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>The character type of the scope identifier. </td></tr>
+    <tr><td class="paramname">N</td><td>The size of the scope identifier array. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">scope_id</td><td>The character array representing the scope identifier. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>An error_code object that will be set to the error that occurred, if any. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section remark"><dt>Remarks</dt><dd>If scope is disabled in settings (<code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0</code>) then this call will have no effect. </dd></dl>
+
+</div>
+</div>
 <a id="a84667cb28f4239608941530d2be70b1f" name="a84667cb28f4239608941530d2be70b1f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a84667cb28f4239608941530d2be70b1f">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[2/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a84667cb28f4239608941530d2be70b1f">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[3/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -374,7 +427,7 @@ template&lt;typename T , size_t N&gt; </div>
 </div>
 </div>
 <a id="a0effad5631676a1764520b1aa3831b92" name="a0effad5631676a1764520b1aa3831b92"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0effad5631676a1764520b1aa3831b92">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[3/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0effad5631676a1764520b1aa3831b92">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[4/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -417,7 +470,7 @@ template&lt;typename T , size_t N&gt; </div>
 </div>
 </div>
 <a id="affecaeff3bbf75504a7b91769b034987" name="affecaeff3bbf75504a7b91769b034987"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#affecaeff3bbf75504a7b91769b034987">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[4/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#affecaeff3bbf75504a7b91769b034987">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[5/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -459,7 +512,7 @@ template&lt;typename T , size_t N&gt; </div>
 </div>
 </div>
 <a id="a706d50b1fe6875cb3c681822bd9d84ab" name="a706d50b1fe6875cb3c681822bd9d84ab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a706d50b1fe6875cb3c681822bd9d84ab">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[5/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a706d50b1fe6875cb3c681822bd9d84ab">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[6/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -502,7 +555,7 @@ template&lt;typename T , size_t N&gt; </div>
 </div>
 </div>
 <a id="a75a6163aea5c3ff56e89830f29252434" name="a75a6163aea5c3ff56e89830f29252434"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a75a6163aea5c3ff56e89830f29252434">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[6/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a75a6163aea5c3ff56e89830f29252434">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[7/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -545,7 +598,7 @@ template&lt;typename T , size_t N&gt; </div>
 </div>
 </div>
 <a id="ab191561dcb9e96b6552a4986d8f648dc" name="ab191561dcb9e96b6552a4986d8f648dc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab191561dcb9e96b6552a4986d8f648dc">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[7/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab191561dcb9e96b6552a4986d8f648dc">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[8/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -587,7 +640,7 @@ template&lt;typename T , size_t N&gt; </div>
 </div>
 </div>
 <a id="a909fed7e38abb081dc03e17edaa1929d" name="a909fed7e38abb081dc03e17edaa1929d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a909fed7e38abb081dc03e17edaa1929d">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[8/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a909fed7e38abb081dc03e17edaa1929d">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[9/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -629,7 +682,7 @@ template&lt;typename T , size_t N&gt; </div>
 </div>
 </div>
 <a id="a3faecf0aeaa23a9c662b192763ed9b28" name="a3faecf0aeaa23a9c662b192763ed9b28"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3faecf0aeaa23a9c662b192763ed9b28">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[9/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3faecf0aeaa23a9c662b192763ed9b28">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[10/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -670,7 +723,7 @@ template&lt;typename T , size_t N&gt; </div>
 </div>
 </div>
 <a id="a55b377ce9a224c5f5290a9b11c2d3e50" name="a55b377ce9a224c5f5290a9b11c2d3e50"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a55b377ce9a224c5f5290a9b11c2d3e50">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[10/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a55b377ce9a224c5f5290a9b11c2d3e50">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[11/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -712,7 +765,7 @@ template&lt;typename T , size_t N&gt; </div>
 </div>
 </div>
 <a id="a1595efc3f52cf5e1eae4ed3848f4ffa0" name="a1595efc3f52cf5e1eae4ed3848f4ffa0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1595efc3f52cf5e1eae4ed3848f4ffa0">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[11/11]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1595efc3f52cf5e1eae4ed3848f4ffa0">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[12/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">

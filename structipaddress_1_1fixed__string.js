@@ -1,11 +1,13 @@
 var structipaddress_1_1fixed__string =
 [
+    [ "value_type", "structipaddress_1_1fixed__string.html#a3b3e782ab4fa4d9997d459a64fc38642", null ],
     [ "const_pointer", "structipaddress_1_1fixed__string.html#ad7ed632a955185d039cb9d3bd036540a", null ],
     [ "const_reference", "structipaddress_1_1fixed__string.html#a36c64c2655f65693530281e9dc4488ee", null ],
     [ "const_iterator", "structipaddress_1_1fixed__string.html#a82c3c04df36124e34ccfad98ebec2e25", null ],
     [ "const_reverse_iterator", "structipaddress_1_1fixed__string.html#af0af7cd2cb131805b96d2b01cae24bf1", null ],
     [ "fixed_string", "structipaddress_1_1fixed__string.html#a0707b8fe705f37c8bac1c7fdcf1deedf", null ],
-    [ "fixed_string", "structipaddress_1_1fixed__string.html#a4331d6e39d81ccf7e1f45c343b0e8a0a", null ],
+    [ "fixed_string", "structipaddress_1_1fixed__string.html#aa91cabedefbc38a4cf5a85a01a8e1d10", null ],
+    [ "fixed_string", "structipaddress_1_1fixed__string.html#ad5f1b1d8e41af166983e336608b9e796", null ],
     [ "begin", "structipaddress_1_1fixed__string.html#a32007b8371564d1d4199e762a8df76b3", null ],
     [ "end", "structipaddress_1_1fixed__string.html#abc40ad0206fc3c66224ad7d5f79e672f", null ],
     [ "rbegin", "structipaddress_1_1fixed__string.html#adb6a11b2c85699bedd0e3d0d4da703ad", null ],

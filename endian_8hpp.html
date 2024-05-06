@@ -88,7 +88,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="logo.svg"/></td>
   <td id="projectalign">
-   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.0.1</span>
+   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.1.0</span>
    </div>
   </td>
  </tr>
@@ -187,8 +187,8 @@ Functions</h2></td></tr>
 <p>This header file contains macros and utility functions to determine and work with the byte order (endianness) of the system. It provides a set of preprocessor directives that establish the byte order based on various conditions, such as user definitions, C++20 standard features, or platform-specific macros.</p>
 <p>The file defines <code>IPADDRESS_LITTLE_ENDIAN</code> and <code>IPADDRESS_BIG_ENDIAN</code> as constants for comparison and sets <code>IPADDRESS_ENDIAN</code> accordingly. It also includes functions to check the system's endianness and to swap bytes in an integer, which are useful for network programming and handling data with different endianness.</p>
 <p>The determination of endianness is done with a priority order:</p><ol type="1">
-<li>User-defined <code>IPADDRESS_ENDIAN</code>.</li>
 <li>C++20's <code>std::endian</code>.</li>
+<li>User-defined <code>IPADDRESS_ENDIAN</code>.</li>
 <li>Platform/compiler-provided macros.</li>
 </ol>
 <p>If the endianness cannot be determined, a compilation error is raised prompting the user to define <code>IPADDRESS_ENDIAN</code>. </p>

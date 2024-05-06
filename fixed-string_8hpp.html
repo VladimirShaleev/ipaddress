@@ -88,7 +88,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="logo.svg"/></td>
   <td id="projectalign">
-   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.0.1</span>
+   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.1.0</span>
    </div>
   </td>
  </tr>
@@ -163,6 +163,7 @@ $(function(){initNavTree('fixed-string_8hpp.html',''); initResizable(); });
 <p>Provides a template for a fixed-length string suitable for use in non-type template parameters.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="config_8hpp_source.html">config.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="unicode_8hpp_source.html">unicode.hpp</a>&quot;</code><br />
 </div>
 <p><a href="fixed-string_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -204,26 +205,14 @@ Functions</h2></td></tr>
 <tr class="memitem:a360bfae1b01e3c0766bf24bcda9a6044"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceipaddress.html#a360bfae1b01e3c0766bf24bcda9a6044">operator&gt;=</a> (const <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N1 &gt; &amp;lhs, const <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N2 &gt; &amp;rhs) noexcept</td></tr>
 <tr class="memdesc:a360bfae1b01e3c0766bf24bcda9a6044"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares the contents of two fixed strings for greater than or equal relation.  <br /></td></tr>
 <tr class="separator:a360bfae1b01e3c0766bf24bcda9a6044"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a956dd9046c069d47d5d075c553a3db01" id="r_a956dd9046c069d47d5d075c553a3db01"><td class="memTemplParams" colspan="2">template&lt;size_t N&gt; </td></tr>
-<tr class="memitem:a956dd9046c069d47d5d075c553a3db01"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N - 1 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceipaddress.html#a956dd9046c069d47d5d075c553a3db01">make_fixed_string</a> (const char(&amp;data)[N]) noexcept</td></tr>
-<tr class="memdesc:a956dd9046c069d47d5d075c553a3db01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a fixed-length string from a character array.  <br /></td></tr>
-<tr class="separator:a956dd9046c069d47d5d075c553a3db01"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d3a8a140d928f4a80e5e286b4029659" id="r_a8d3a8a140d928f4a80e5e286b4029659"><td class="memTemplParams" colspan="2">template&lt;size_t N&gt; </td></tr>
-<tr class="memitem:a8d3a8a140d928f4a80e5e286b4029659"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N - 1 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceipaddress.html#a8d3a8a140d928f4a80e5e286b4029659">make_fixed_string</a> (const wchar_t(&amp;data)[N]) noexcept</td></tr>
-<tr class="memdesc:a8d3a8a140d928f4a80e5e286b4029659"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a fixed-length string from a wide character array.  <br /></td></tr>
-<tr class="separator:a8d3a8a140d928f4a80e5e286b4029659"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29d595119c8954a137eaba3ef8c1aa4a" id="r_a29d595119c8954a137eaba3ef8c1aa4a"><td class="memTemplParams" colspan="2">template&lt;size_t N&gt; </td></tr>
-<tr class="memitem:a29d595119c8954a137eaba3ef8c1aa4a"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N - 1 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceipaddress.html#a29d595119c8954a137eaba3ef8c1aa4a">make_fixed_string</a> (const char16_t(&amp;data)[N]) noexcept</td></tr>
-<tr class="memdesc:a29d595119c8954a137eaba3ef8c1aa4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a fixed-length string from a UTF-16 character array.  <br /></td></tr>
-<tr class="separator:a29d595119c8954a137eaba3ef8c1aa4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec817d6ec31f7efcf06902c35f7cce50" id="r_aec817d6ec31f7efcf06902c35f7cce50"><td class="memTemplParams" colspan="2">template&lt;size_t N&gt; </td></tr>
-<tr class="memitem:aec817d6ec31f7efcf06902c35f7cce50"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N - 1 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceipaddress.html#aec817d6ec31f7efcf06902c35f7cce50">make_fixed_string</a> (const char32_t(&amp;data)[N]) noexcept</td></tr>
-<tr class="memdesc:aec817d6ec31f7efcf06902c35f7cce50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a fixed-length string from a UTF-32 character array.  <br /></td></tr>
-<tr class="separator:aec817d6ec31f7efcf06902c35f7cce50"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff00fe84d95c3b275ffacf39ee81df34" id="r_aff00fe84d95c3b275ffacf39ee81df34"><td class="memTemplParams" colspan="2">template&lt;size_t N&gt; </td></tr>
-<tr class="memitem:aff00fe84d95c3b275ffacf39ee81df34"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N - 1 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceipaddress.html#aff00fe84d95c3b275ffacf39ee81df34">make_fixed_string</a> (const char8_t(&amp;data)[N]) noexcept</td></tr>
-<tr class="memdesc:aff00fe84d95c3b275ffacf39ee81df34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a fixed-length string from a UTF-8 character array.  <br /></td></tr>
-<tr class="separator:aff00fe84d95c3b275ffacf39ee81df34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae53bf066ef8cb4819cf01a905cf0ddf0" id="r_ae53bf066ef8cb4819cf01a905cf0ddf0"><td class="memTemplParams" colspan="2">template&lt;typename T , size_t N&gt; </td></tr>
+<tr class="memitem:ae53bf066ef8cb4819cf01a905cf0ddf0"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N - 1 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceipaddress.html#ae53bf066ef8cb4819cf01a905cf0ddf0">make_fixed_string</a> (const T(&amp;data)[N]) noexcept(noexcept(<a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N - 1 &gt;(data)))</td></tr>
+<tr class="memdesc:ae53bf066ef8cb4819cf01a905cf0ddf0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a fixed-length string from a character array.  <br /></td></tr>
+<tr class="separator:ae53bf066ef8cb4819cf01a905cf0ddf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaedfc9655c225009a575a5aaeceedf0f" id="r_aaedfc9655c225009a575a5aaeceedf0f"><td class="memTemplParams" colspan="2">template&lt;typename T , size_t N&gt; </td></tr>
+<tr class="memitem:aaedfc9655c225009a575a5aaeceedf0f"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N - 1 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceipaddress.html#aaedfc9655c225009a575a5aaeceedf0f">make_fixed_string</a> (const T(&amp;data)[N], <a class="el" href="namespaceipaddress.html#a88a76ee847c844cc47b94caac600689d">error_code</a> &amp;code) noexcept</td></tr>
+<tr class="memdesc:aaedfc9655c225009a575a5aaeceedf0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a fixed-length string from a character array.  <br /></td></tr>
+<tr class="separator:aaedfc9655c225009a575a5aaeceedf0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Provides a template for a fixed-length string suitable for use in non-type template parameters. </p>

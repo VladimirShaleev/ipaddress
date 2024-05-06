@@ -88,7 +88,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="logo.svg"/></td>
   <td id="projectalign">
-   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.0.1</span>
+   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.1.0</span>
    </div>
   </td>
  </tr>
@@ -330,6 +330,10 @@ Enumerations</h2></td></tr>
 &#160;&#160;<a class="el" href="#a88a76ee847c844cc47b94caac600689da04b003d0c2f566d949a16c0d95caecdb">cannot_set_prefixlen_diff_and_new_prefix</a>
 , <br />
 &#160;&#160;<a class="el" href="#a88a76ee847c844cc47b94caac600689da35bc33b7007d4d326726e135148c3dc5">not_contained_network</a>
+, <br />
+&#160;&#160;<a class="el" href="#a88a76ee847c844cc47b94caac600689da16be2b382276049a300d4a34fa77df9c">unexpected_symbol</a>
+, <br />
+&#160;&#160;<a class="el" href="#a88a76ee847c844cc47b94caac600689da487b22b520c6961ac3ec30cb755e3068">wrong_encoding_sequence</a>
 <br />
  }</td></tr>
 <tr class="memdesc:a88a76ee847c844cc47b94caac600689d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration of error codes for IP address parsing and validation.  <a href="#a88a76ee847c844cc47b94caac600689d">More...</a><br /></td></tr>
@@ -355,27 +359,27 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ae152906605a801e881781467fbc0ef27" id="r_ae152906605a801e881781467fbc0ef27"><td class="memTemplParams" colspan="2">template&lt;std::size_t N&gt; </td></tr>
+<tr class="memitem:ae152906605a801e881781467fbc0ef27" id="r_ae152906605a801e881781467fbc0ef27"><td class="memTemplParams" colspan="2">template&lt;size_t N&gt; </td></tr>
 <tr class="memitem:ae152906605a801e881781467fbc0ef27"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ae152906605a801e881781467fbc0ef27">operator==</a> (const <a class="el" href="structipaddress_1_1byte__array.html">byte_array</a>&lt; N &gt; &amp;lhs, const <a class="el" href="structipaddress_1_1byte__array.html">byte_array</a>&lt; N &gt; &amp;rhs) noexcept</td></tr>
 <tr class="memdesc:ae152906605a801e881781467fbc0ef27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if two <a class="el" href="structipaddress_1_1byte__array.html" title="A template class for creating and managing a fixed-size array of bytes.">byte_array</a> objects are equal.  <br /></td></tr>
 <tr class="separator:ae152906605a801e881781467fbc0ef27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a18c5dec8ed16e157eab5a1417d70b190" id="r_a18c5dec8ed16e157eab5a1417d70b190"><td class="memTemplParams" colspan="2">template&lt;std::size_t N&gt; </td></tr>
+<tr class="memitem:a18c5dec8ed16e157eab5a1417d70b190" id="r_a18c5dec8ed16e157eab5a1417d70b190"><td class="memTemplParams" colspan="2">template&lt;size_t N&gt; </td></tr>
 <tr class="memitem:a18c5dec8ed16e157eab5a1417d70b190"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a18c5dec8ed16e157eab5a1417d70b190">operator!=</a> (const <a class="el" href="structipaddress_1_1byte__array.html">byte_array</a>&lt; N &gt; &amp;lhs, const <a class="el" href="structipaddress_1_1byte__array.html">byte_array</a>&lt; N &gt; &amp;rhs) noexcept</td></tr>
 <tr class="memdesc:a18c5dec8ed16e157eab5a1417d70b190"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if two <a class="el" href="structipaddress_1_1byte__array.html" title="A template class for creating and managing a fixed-size array of bytes.">byte_array</a> objects are not equal.  <br /></td></tr>
 <tr class="separator:a18c5dec8ed16e157eab5a1417d70b190"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac0fe7cf9a5b3dd7d5ecd303b05e7a74e" id="r_ac0fe7cf9a5b3dd7d5ecd303b05e7a74e"><td class="memTemplParams" colspan="2">template&lt;std::size_t N&gt; </td></tr>
+<tr class="memitem:ac0fe7cf9a5b3dd7d5ecd303b05e7a74e" id="r_ac0fe7cf9a5b3dd7d5ecd303b05e7a74e"><td class="memTemplParams" colspan="2">template&lt;size_t N&gt; </td></tr>
 <tr class="memitem:ac0fe7cf9a5b3dd7d5ecd303b05e7a74e"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ac0fe7cf9a5b3dd7d5ecd303b05e7a74e">operator&lt;</a> (const <a class="el" href="structipaddress_1_1byte__array.html">byte_array</a>&lt; N &gt; &amp;lhs, const <a class="el" href="structipaddress_1_1byte__array.html">byte_array</a>&lt; N &gt; &amp;rhs) noexcept</td></tr>
 <tr class="memdesc:ac0fe7cf9a5b3dd7d5ecd303b05e7a74e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines if one <a class="el" href="structipaddress_1_1byte__array.html" title="A template class for creating and managing a fixed-size array of bytes.">byte_array</a> is less than another.  <br /></td></tr>
 <tr class="separator:ac0fe7cf9a5b3dd7d5ecd303b05e7a74e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1a0d2145a802a73bfbc2348f1e19a9f5" id="r_a1a0d2145a802a73bfbc2348f1e19a9f5"><td class="memTemplParams" colspan="2">template&lt;std::size_t N&gt; </td></tr>
+<tr class="memitem:a1a0d2145a802a73bfbc2348f1e19a9f5" id="r_a1a0d2145a802a73bfbc2348f1e19a9f5"><td class="memTemplParams" colspan="2">template&lt;size_t N&gt; </td></tr>
 <tr class="memitem:a1a0d2145a802a73bfbc2348f1e19a9f5"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a1a0d2145a802a73bfbc2348f1e19a9f5">operator&gt;</a> (const <a class="el" href="structipaddress_1_1byte__array.html">byte_array</a>&lt; N &gt; &amp;lhs, const <a class="el" href="structipaddress_1_1byte__array.html">byte_array</a>&lt; N &gt; &amp;rhs) noexcept</td></tr>
 <tr class="memdesc:a1a0d2145a802a73bfbc2348f1e19a9f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines if one <a class="el" href="structipaddress_1_1byte__array.html" title="A template class for creating and managing a fixed-size array of bytes.">byte_array</a> is greater than another.  <br /></td></tr>
 <tr class="separator:a1a0d2145a802a73bfbc2348f1e19a9f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88391db8f21b65518e89fb131a3b9e7e" id="r_a88391db8f21b65518e89fb131a3b9e7e"><td class="memTemplParams" colspan="2">template&lt;std::size_t N&gt; </td></tr>
+<tr class="memitem:a88391db8f21b65518e89fb131a3b9e7e" id="r_a88391db8f21b65518e89fb131a3b9e7e"><td class="memTemplParams" colspan="2">template&lt;size_t N&gt; </td></tr>
 <tr class="memitem:a88391db8f21b65518e89fb131a3b9e7e"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a88391db8f21b65518e89fb131a3b9e7e">operator&lt;=</a> (const <a class="el" href="structipaddress_1_1byte__array.html">byte_array</a>&lt; N &gt; &amp;lhs, const <a class="el" href="structipaddress_1_1byte__array.html">byte_array</a>&lt; N &gt; &amp;rhs) noexcept</td></tr>
 <tr class="memdesc:a88391db8f21b65518e89fb131a3b9e7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines if one <a class="el" href="structipaddress_1_1byte__array.html" title="A template class for creating and managing a fixed-size array of bytes.">byte_array</a> is less than or equal to another.  <br /></td></tr>
 <tr class="separator:a88391db8f21b65518e89fb131a3b9e7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a40459ce900575e6fcd3575109f519e42" id="r_a40459ce900575e6fcd3575109f519e42"><td class="memTemplParams" colspan="2">template&lt;std::size_t N&gt; </td></tr>
+<tr class="memitem:a40459ce900575e6fcd3575109f519e42" id="r_a40459ce900575e6fcd3575109f519e42"><td class="memTemplParams" colspan="2">template&lt;size_t N&gt; </td></tr>
 <tr class="memitem:a40459ce900575e6fcd3575109f519e42"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a40459ce900575e6fcd3575109f519e42">operator&gt;=</a> (const <a class="el" href="structipaddress_1_1byte__array.html">byte_array</a>&lt; N &gt; &amp;lhs, const <a class="el" href="structipaddress_1_1byte__array.html">byte_array</a>&lt; N &gt; &amp;rhs) noexcept</td></tr>
 <tr class="memdesc:a40459ce900575e6fcd3575109f519e42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines if one <a class="el" href="structipaddress_1_1byte__array.html" title="A template class for creating and managing a fixed-size array of bytes.">byte_array</a> is greater than or equal to another.  <br /></td></tr>
 <tr class="separator:a40459ce900575e6fcd3575109f519e42"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -385,10 +389,10 @@ Functions</h2></td></tr>
 <tr class="memitem:af524c25b69b6d182168edce0d93387de" id="r_af524c25b69b6d182168edce0d93387de"><td class="memItemLeft" align="right" valign="top">constexpr inline uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af524c25b69b6d182168edce0d93387de">swap_bytes</a> (uint32_t value) noexcept</td></tr>
 <tr class="memdesc:af524c25b69b6d182168edce0d93387de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swaps the bytes of a 32-bit unsigned integer.  <br /></td></tr>
 <tr class="separator:af524c25b69b6d182168edce0d93387de"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a72e22b2f60d8491d05a7457fdc9d33cb" id="r_a72e22b2f60d8491d05a7457fdc9d33cb"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a72e22b2f60d8491d05a7457fdc9d33cb"><td class="memTemplItemLeft" align="right" valign="top">constexpr void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a72e22b2f60d8491d05a7457fdc9d33cb">raise_error</a> (<a class="el" href="#a88a76ee847c844cc47b94caac600689d">error_code</a> code, int index, const T *address, size_t length)</td></tr>
-<tr class="memdesc:a72e22b2f60d8491d05a7457fdc9d33cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Raises an error with a specific error code and additional context.  <br /></td></tr>
-<tr class="separator:a72e22b2f60d8491d05a7457fdc9d33cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66a9b2b6d984adbbdf712917e818fc4c" id="r_a66a9b2b6d984adbbdf712917e818fc4c"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a66a9b2b6d984adbbdf712917e818fc4c"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a66a9b2b6d984adbbdf712917e818fc4c">raise_error</a> (<a class="el" href="#a88a76ee847c844cc47b94caac600689d">error_code</a> code, uint32_t value, const T *address, size_t length)</td></tr>
+<tr class="memdesc:a66a9b2b6d984adbbdf712917e818fc4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Raises an error with a specific error code and additional context.  <br /></td></tr>
+<tr class="separator:a66a9b2b6d984adbbdf712917e818fc4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af01042455e8ed031c0612794c3aef4df" id="r_af01042455e8ed031c0612794c3aef4df"><td class="memTemplParams" colspan="2">template&lt;size_t N1, size_t N2&gt; </td></tr>
 <tr class="memitem:af01042455e8ed031c0612794c3aef4df"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#af01042455e8ed031c0612794c3aef4df">operator==</a> (const <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N1 &gt; &amp;lhs, const <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N2 &gt; &amp;rhs) noexcept</td></tr>
 <tr class="memdesc:af01042455e8ed031c0612794c3aef4df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares the contents of two fixed strings for equality.  <br /></td></tr>
@@ -413,26 +417,14 @@ Functions</h2></td></tr>
 <tr class="memitem:a360bfae1b01e3c0766bf24bcda9a6044"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a360bfae1b01e3c0766bf24bcda9a6044">operator&gt;=</a> (const <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N1 &gt; &amp;lhs, const <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N2 &gt; &amp;rhs) noexcept</td></tr>
 <tr class="memdesc:a360bfae1b01e3c0766bf24bcda9a6044"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares the contents of two fixed strings for greater than or equal relation.  <br /></td></tr>
 <tr class="separator:a360bfae1b01e3c0766bf24bcda9a6044"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a956dd9046c069d47d5d075c553a3db01" id="r_a956dd9046c069d47d5d075c553a3db01"><td class="memTemplParams" colspan="2">template&lt;size_t N&gt; </td></tr>
-<tr class="memitem:a956dd9046c069d47d5d075c553a3db01"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N - 1 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a956dd9046c069d47d5d075c553a3db01">make_fixed_string</a> (const char(&amp;data)[N]) noexcept</td></tr>
-<tr class="memdesc:a956dd9046c069d47d5d075c553a3db01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a fixed-length string from a character array.  <br /></td></tr>
-<tr class="separator:a956dd9046c069d47d5d075c553a3db01"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8d3a8a140d928f4a80e5e286b4029659" id="r_a8d3a8a140d928f4a80e5e286b4029659"><td class="memTemplParams" colspan="2">template&lt;size_t N&gt; </td></tr>
-<tr class="memitem:a8d3a8a140d928f4a80e5e286b4029659"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N - 1 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a8d3a8a140d928f4a80e5e286b4029659">make_fixed_string</a> (const wchar_t(&amp;data)[N]) noexcept</td></tr>
-<tr class="memdesc:a8d3a8a140d928f4a80e5e286b4029659"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a fixed-length string from a wide character array.  <br /></td></tr>
-<tr class="separator:a8d3a8a140d928f4a80e5e286b4029659"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a29d595119c8954a137eaba3ef8c1aa4a" id="r_a29d595119c8954a137eaba3ef8c1aa4a"><td class="memTemplParams" colspan="2">template&lt;size_t N&gt; </td></tr>
-<tr class="memitem:a29d595119c8954a137eaba3ef8c1aa4a"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N - 1 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a29d595119c8954a137eaba3ef8c1aa4a">make_fixed_string</a> (const char16_t(&amp;data)[N]) noexcept</td></tr>
-<tr class="memdesc:a29d595119c8954a137eaba3ef8c1aa4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a fixed-length string from a UTF-16 character array.  <br /></td></tr>
-<tr class="separator:a29d595119c8954a137eaba3ef8c1aa4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec817d6ec31f7efcf06902c35f7cce50" id="r_aec817d6ec31f7efcf06902c35f7cce50"><td class="memTemplParams" colspan="2">template&lt;size_t N&gt; </td></tr>
-<tr class="memitem:aec817d6ec31f7efcf06902c35f7cce50"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N - 1 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aec817d6ec31f7efcf06902c35f7cce50">make_fixed_string</a> (const char32_t(&amp;data)[N]) noexcept</td></tr>
-<tr class="memdesc:aec817d6ec31f7efcf06902c35f7cce50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a fixed-length string from a UTF-32 character array.  <br /></td></tr>
-<tr class="separator:aec817d6ec31f7efcf06902c35f7cce50"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aff00fe84d95c3b275ffacf39ee81df34" id="r_aff00fe84d95c3b275ffacf39ee81df34"><td class="memTemplParams" colspan="2">template&lt;size_t N&gt; </td></tr>
-<tr class="memitem:aff00fe84d95c3b275ffacf39ee81df34"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N - 1 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aff00fe84d95c3b275ffacf39ee81df34">make_fixed_string</a> (const char8_t(&amp;data)[N]) noexcept</td></tr>
-<tr class="memdesc:aff00fe84d95c3b275ffacf39ee81df34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a fixed-length string from a UTF-8 character array.  <br /></td></tr>
-<tr class="separator:aff00fe84d95c3b275ffacf39ee81df34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae53bf066ef8cb4819cf01a905cf0ddf0" id="r_ae53bf066ef8cb4819cf01a905cf0ddf0"><td class="memTemplParams" colspan="2">template&lt;typename T , size_t N&gt; </td></tr>
+<tr class="memitem:ae53bf066ef8cb4819cf01a905cf0ddf0"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N - 1 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ae53bf066ef8cb4819cf01a905cf0ddf0">make_fixed_string</a> (const T(&amp;data)[N]) noexcept(noexcept(<a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N - 1 &gt;(data)))</td></tr>
+<tr class="memdesc:ae53bf066ef8cb4819cf01a905cf0ddf0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a fixed-length string from a character array.  <br /></td></tr>
+<tr class="separator:ae53bf066ef8cb4819cf01a905cf0ddf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaedfc9655c225009a575a5aaeceedf0f" id="r_aaedfc9655c225009a575a5aaeceedf0f"><td class="memTemplParams" colspan="2">template&lt;typename T , size_t N&gt; </td></tr>
+<tr class="memitem:aaedfc9655c225009a575a5aaeceedf0f"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N - 1 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aaedfc9655c225009a575a5aaeceedf0f">make_fixed_string</a> (const T(&amp;data)[N], <a class="el" href="#a88a76ee847c844cc47b94caac600689d">error_code</a> &amp;code) noexcept</td></tr>
+<tr class="memdesc:aaedfc9655c225009a575a5aaeceedf0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a fixed-length string from a character array.  <br /></td></tr>
+<tr class="separator:aaedfc9655c225009a575a5aaeceedf0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd586286b0af2efef1fabf74378195d1" id="r_abd586286b0af2efef1fabf74378195d1"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a> FixedString&gt; </td></tr>
 <tr class="memitem:abd586286b0af2efef1fabf74378195d1"><td class="memTemplItemLeft" align="right" valign="top">consteval inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#abd586286b0af2efef1fabf74378195d1">operator&quot;&quot;_ip</a> () noexcept</td></tr>
 <tr class="memdesc:abd586286b0af2efef1fabf74378195d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">User-defined literal for creating an <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> from a fixed string at compile time.  <br /></td></tr>
@@ -682,6 +674,10 @@ Functions</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="a88a76ee847c844cc47b94caac600689da35bc33b7007d4d326726e135148c3dc5" name="a88a76ee847c844cc47b94caac600689da35bc33b7007d4d326726e135148c3dc5"></a>not_contained_network&#160;</td><td class="fielddoc"><p>The network is not a subnet of the other network as expected. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="a88a76ee847c844cc47b94caac600689da16be2b382276049a300d4a34fa77df9c" name="a88a76ee847c844cc47b94caac600689da16be2b382276049a300d4a34fa77df9c"></a>unexpected_symbol&#160;</td><td class="fielddoc"><p>The input string contains an unexpected character. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a88a76ee847c844cc47b94caac600689da487b22b520c6961ac3ec30cb755e3068" name="a88a76ee847c844cc47b94caac600689da487b22b520c6961ac3ec30cb755e3068"></a>wrong_encoding_sequence&#160;</td><td class="fielddoc"><p>Incorrect byte sequence in Unicode encoding. </p>
+</td></tr>
 </table>
 
 </div>
@@ -757,7 +753,7 @@ Functions</h2></td></tr>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t N&gt; </div>
+template&lt;size_t N&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -812,7 +808,7 @@ template&lt;std::size_t N&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t N&gt; </div>
+template&lt;size_t N&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -867,7 +863,7 @@ template&lt;std::size_t N&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t N&gt; </div>
+template&lt;size_t N&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -915,7 +911,7 @@ template&lt;std::size_t N&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t N&gt; </div>
+template&lt;size_t N&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -962,7 +958,7 @@ template&lt;std::size_t N&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t N&gt; </div>
+template&lt;size_t N&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1009,7 +1005,7 @@ template&lt;std::size_t N&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;std::size_t N&gt; </div>
+template&lt;size_t N&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1112,26 +1108,23 @@ template&lt;std::size_t N&gt; </div>
 
 </div>
 </div>
-<a id="a72e22b2f60d8491d05a7457fdc9d33cb" name="a72e22b2f60d8491d05a7457fdc9d33cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a72e22b2f60d8491d05a7457fdc9d33cb">&#9670;&#160;</a></span>raise_error()</h2>
+<a id="a66a9b2b6d984adbbdf712917e818fc4c" name="a66a9b2b6d984adbbdf712917e818fc4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66a9b2b6d984adbbdf712917e818fc4c">&#9670;&#160;</a></span>raise_error()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr void raise_error </td>
+          <td class="memname">constexpr inline void raise_error </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="#a88a76ee847c844cc47b94caac600689d">error_code</a></td>          <td class="paramname"><span class="paramname"><em>code</em>, </span></td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em>, </span></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>value</em>, </span></td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1144,15 +1137,10 @@ template&lt;typename T &gt; </div>
           <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>length</em></span>&#160;)</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Raises an error with a specific error code and additional context. </p>
-<p>This function constructs an error message based on the provided error code, index, and address, then throws a <a class="el" href="classipaddress_1_1parse__error.html" title="Exception for errors encountered during IP address parsing.">parse_error</a> or a <a class="el" href="classipaddress_1_1logic__error.html" title="Exception for logical errors in IP address operations.">logic_error</a> exception with the constructed message.</p>
+<p>This function constructs an error message based on the provided error code, value, and address, then throws a <a class="el" href="classipaddress_1_1parse__error.html" title="Exception for errors encountered during IP address parsing.">parse_error</a> or a <a class="el" href="classipaddress_1_1logic__error.html" title="Exception for logical errors in IP address operations.">logic_error</a> exception with the constructed message.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>The character type of the address string. </td></tr>
@@ -1162,7 +1150,7 @@ template&lt;typename T &gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">code</td><td>The error code indicating the type of error encountered. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">index</td><td>The index at which the error occurred, if applicable. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>The value at which the error occurred, if applicable. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>A pointer to the beginning of the address string. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>The length of the address string. </td></tr>
   </table>
@@ -1473,13 +1461,13 @@ template&lt;size_t N1, size_t N2&gt; </div>
 
 </div>
 </div>
-<a id="a956dd9046c069d47d5d075c553a3db01" name="a956dd9046c069d47d5d075c553a3db01"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a956dd9046c069d47d5d075c553a3db01">&#9670;&#160;</a></span>make_fixed_string() <span class="overload">[1/5]</span></h2>
+<a id="ae53bf066ef8cb4819cf01a905cf0ddf0" name="ae53bf066ef8cb4819cf01a905cf0ddf0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae53bf066ef8cb4819cf01a905cf0ddf0">&#9670;&#160;</a></span>make_fixed_string() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;size_t N&gt; </div>
+template&lt;typename T , size_t N&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1487,7 +1475,7 @@ template&lt;size_t N&gt; </div>
         <tr>
           <td class="memname">constexpr inline <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N - 1 &gt; make_fixed_string </td>
           <td>(</td>
-          <td class="paramtype">const char(&amp;)</td>          <td class="paramname"><span class="paramname"><em>data</em>[N]</span></td><td>)</td>
+          <td class="paramtype">const T(&amp;)</td>          <td class="paramname"><span class="paramname"><em>data</em>[N]</span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1502,6 +1490,7 @@ template&lt;size_t N&gt; </div>
 <p>Constructs a <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> object from a character array, deducing the size automatically.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
+    <tr><td class="paramname">T</td><td>The character type of the input array. </td></tr>
     <tr><td class="paramname">N</td><td>The size of the character array plus one for the null terminator. </td></tr>
   </table>
   </dd>
@@ -1516,13 +1505,13 @@ template&lt;size_t N&gt; </div>
 
 </div>
 </div>
-<a id="a8d3a8a140d928f4a80e5e286b4029659" name="a8d3a8a140d928f4a80e5e286b4029659"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8d3a8a140d928f4a80e5e286b4029659">&#9670;&#160;</a></span>make_fixed_string() <span class="overload">[2/5]</span></h2>
+<a id="aaedfc9655c225009a575a5aaeceedf0f" name="aaedfc9655c225009a575a5aaeceedf0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaedfc9655c225009a575a5aaeceedf0f">&#9670;&#160;</a></span>make_fixed_string() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;size_t N&gt; </div>
+template&lt;typename T , size_t N&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1530,8 +1519,12 @@ template&lt;size_t N&gt; </div>
         <tr>
           <td class="memname">constexpr inline <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N - 1 &gt; make_fixed_string </td>
           <td>(</td>
-          <td class="paramtype">const wchar_t(&amp;)</td>          <td class="paramname"><span class="paramname"><em>data</em>[N]</span></td><td>)</td>
+          <td class="paramtype">const T(&amp;)</td>          <td class="paramname"><span class="paramname"><em>data</em>[N], </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="#a88a76ee847c844cc47b94caac600689d">error_code</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>code</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -1541,146 +1534,19 @@ template&lt;size_t N&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Creates a fixed-length string from a wide character array. </p>
-<p>Constructs a <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> object from a wide character array, deducing the size automatically.</p>
+<p>Creates a fixed-length string from a character array. </p>
+<p>Constructs a <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> object from a character array, deducing the size automatically.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">N</td><td>The size of the wide character array plus one for the null terminator. </td></tr>
+    <tr><td class="paramname">T</td><td>The character type of the input array. </td></tr>
+    <tr><td class="paramname">N</td><td>The size of the character array plus one for the null terminator. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>The wide character array to initialize the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> with. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> object of size N-1. </dd></dl>
-
-</div>
-</div>
-<a id="a29d595119c8954a137eaba3ef8c1aa4a" name="a29d595119c8954a137eaba3ef8c1aa4a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a29d595119c8954a137eaba3ef8c1aa4a">&#9670;&#160;</a></span>make_fixed_string() <span class="overload">[3/5]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;size_t N&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr inline <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N - 1 &gt; make_fixed_string </td>
-          <td>(</td>
-          <td class="paramtype">const char16_t(&amp;)</td>          <td class="paramname"><span class="paramname"><em>data</em>[N]</span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Creates a fixed-length string from a UTF-16 character array. </p>
-<p>Constructs a <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> object from a UTF-16 character array, deducing the size automatically.</p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">N</td><td>The size of the UTF-16 character array plus one for the null terminator. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>The UTF-16 character array to initialize the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> with. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> object of size N-1. </dd></dl>
-
-</div>
-</div>
-<a id="aec817d6ec31f7efcf06902c35f7cce50" name="aec817d6ec31f7efcf06902c35f7cce50"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aec817d6ec31f7efcf06902c35f7cce50">&#9670;&#160;</a></span>make_fixed_string() <span class="overload">[4/5]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;size_t N&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr inline <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N - 1 &gt; make_fixed_string </td>
-          <td>(</td>
-          <td class="paramtype">const char32_t(&amp;)</td>          <td class="paramname"><span class="paramname"><em>data</em>[N]</span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Creates a fixed-length string from a UTF-32 character array. </p>
-<p>Constructs a <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> object from a UTF-32 character array, deducing the size automatically.</p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">N</td><td>The size of the UTF-32 character array plus one for the null terminator. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>The UTF-32 character array to initialize the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> with. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> object of size N-1. </dd></dl>
-
-</div>
-</div>
-<a id="aff00fe84d95c3b275ffacf39ee81df34" name="aff00fe84d95c3b275ffacf39ee81df34"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aff00fe84d95c3b275ffacf39ee81df34">&#9670;&#160;</a></span>make_fixed_string() <span class="overload">[5/5]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;size_t N&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr inline <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N - 1 &gt; make_fixed_string </td>
-          <td>(</td>
-          <td class="paramtype">const char8_t(&amp;)</td>          <td class="paramname"><span class="paramname"><em>data</em>[N]</span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Creates a fixed-length string from a UTF-8 character array. </p>
-<p>Constructs a <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> object from a UTF-8 character array, deducing the size automatically.</p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">N</td><td>The size of the UTF-8 character array plus one for the null terminator. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>The UTF-8 character array to initialize the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> with. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>The character array to initialize the <a class="el" href="structipaddress_1_1fixed__string.html" title="Fixed size string class.">fixed_string</a> with. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>A reference to an <code>error_code</code> object that will be set if an error occurs during parsing. </td></tr>
   </table>
   </dd>
 </dl>

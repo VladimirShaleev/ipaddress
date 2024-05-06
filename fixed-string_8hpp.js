@@ -7,9 +7,6 @@ var fixed_string_8hpp =
     [ "operator>", "fixed-string_8hpp.html#a374f69580e0ce86fb820fe3317cecae2", null ],
     [ "operator<=", "fixed-string_8hpp.html#ace73f059f10698e321bdfd42d87eabe1", null ],
     [ "operator>=", "fixed-string_8hpp.html#a360bfae1b01e3c0766bf24bcda9a6044", null ],
-    [ "make_fixed_string", "fixed-string_8hpp.html#a956dd9046c069d47d5d075c553a3db01", null ],
-    [ "make_fixed_string", "fixed-string_8hpp.html#a8d3a8a140d928f4a80e5e286b4029659", null ],
-    [ "make_fixed_string", "fixed-string_8hpp.html#a29d595119c8954a137eaba3ef8c1aa4a", null ],
-    [ "make_fixed_string", "fixed-string_8hpp.html#aec817d6ec31f7efcf06902c35f7cce50", null ],
-    [ "make_fixed_string", "fixed-string_8hpp.html#aff00fe84d95c3b275ffacf39ee81df34", null ]
+    [ "make_fixed_string", "fixed-string_8hpp.html#ae53bf066ef8cb4819cf01a905cf0ddf0", null ],
+    [ "make_fixed_string", "fixed-string_8hpp.html#aaedfc9655c225009a575a5aaeceedf0f", null ]
 ];

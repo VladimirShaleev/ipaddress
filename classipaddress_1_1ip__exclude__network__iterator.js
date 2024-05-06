@@ -2,7 +2,7 @@ var classipaddress_1_1ip__exclude__network__iterator =
 [
     [ "iterator_category", "classipaddress_1_1ip__exclude__network__iterator.html#a6b137a24d9328a60aef01d0f938cf0c3", null ],
     [ "value_type", "classipaddress_1_1ip__exclude__network__iterator.html#afb9ded5f49336ae503bb9f2035ea902b", null ],
-    [ "difference_type", "classipaddress_1_1ip__exclude__network__iterator.html#a22d527952840fac9f06a48d5cb1c566d", null ],
+    [ "difference_type", "classipaddress_1_1ip__exclude__network__iterator.html#acc4e70b6c5f2e22e6051b6ec3bb523de", null ],
     [ "pointer", "classipaddress_1_1ip__exclude__network__iterator.html#a3530c00e0558d6c7b67f0a4809302cf7", null ],
     [ "reference", "classipaddress_1_1ip__exclude__network__iterator.html#ab20613740e68819fffc1e80755f2bcea", null ],
     [ "ip_exclude_network_iterator", "classipaddress_1_1ip__exclude__network__iterator.html#a7118ae310a63e48e499848b551b0a8ea", null ],

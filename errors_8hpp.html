@@ -88,7 +88,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="logo.svg"/></td>
   <td id="projectalign">
-   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.0.1</span>
+   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.1.0</span>
    </div>
   </td>
  </tr>
@@ -249,6 +249,10 @@ Enumerations</h2></td></tr>
 &#160;&#160;<a class="el" href="namespaceipaddress.html#a88a76ee847c844cc47b94caac600689da04b003d0c2f566d949a16c0d95caecdb">cannot_set_prefixlen_diff_and_new_prefix</a>
 , <br />
 &#160;&#160;<a class="el" href="namespaceipaddress.html#a88a76ee847c844cc47b94caac600689da35bc33b7007d4d326726e135148c3dc5">not_contained_network</a>
+, <br />
+&#160;&#160;<a class="el" href="namespaceipaddress.html#a88a76ee847c844cc47b94caac600689da16be2b382276049a300d4a34fa77df9c">unexpected_symbol</a>
+, <br />
+&#160;&#160;<a class="el" href="namespaceipaddress.html#a88a76ee847c844cc47b94caac600689da487b22b520c6961ac3ec30cb755e3068">wrong_encoding_sequence</a>
 <br />
  }</td></tr>
 <tr class="memdesc:a88a76ee847c844cc47b94caac600689d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration of error codes for IP address parsing and validation.  <a href="namespaceipaddress.html#a88a76ee847c844cc47b94caac600689d">More...</a><br /></td></tr>
@@ -256,10 +260,10 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a72e22b2f60d8491d05a7457fdc9d33cb" id="r_a72e22b2f60d8491d05a7457fdc9d33cb"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a72e22b2f60d8491d05a7457fdc9d33cb"><td class="memTemplItemLeft" align="right" valign="top">constexpr void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceipaddress.html#a72e22b2f60d8491d05a7457fdc9d33cb">raise_error</a> (<a class="el" href="namespaceipaddress.html#a88a76ee847c844cc47b94caac600689d">error_code</a> code, int index, const T *address, size_t length)</td></tr>
-<tr class="memdesc:a72e22b2f60d8491d05a7457fdc9d33cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Raises an error with a specific error code and additional context.  <br /></td></tr>
-<tr class="separator:a72e22b2f60d8491d05a7457fdc9d33cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66a9b2b6d984adbbdf712917e818fc4c" id="r_a66a9b2b6d984adbbdf712917e818fc4c"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a66a9b2b6d984adbbdf712917e818fc4c"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceipaddress.html#a66a9b2b6d984adbbdf712917e818fc4c">raise_error</a> (<a class="el" href="namespaceipaddress.html#a88a76ee847c844cc47b94caac600689d">error_code</a> code, uint32_t value, const T *address, size_t length)</td></tr>
+<tr class="memdesc:a66a9b2b6d984adbbdf712917e818fc4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Raises an error with a specific error code and additional context.  <br /></td></tr>
+<tr class="separator:a66a9b2b6d984adbbdf712917e818fc4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Declares error codes and exceptions for IP address operations. </p>

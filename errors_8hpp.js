@@ -34,7 +34,9 @@ var errors_8hpp =
       [ "new_prefix_must_be_shorter", "errors_8hpp.html#a88a76ee847c844cc47b94caac600689da7ddc6d5596873b7ea5bb70a46603c6b1", null ],
       [ "new_prefix_must_be_longer", "errors_8hpp.html#a88a76ee847c844cc47b94caac600689dabfb471bc18a0a6a9d1bad370acb68794", null ],
       [ "cannot_set_prefixlen_diff_and_new_prefix", "errors_8hpp.html#a88a76ee847c844cc47b94caac600689da04b003d0c2f566d949a16c0d95caecdb", null ],
-      [ "not_contained_network", "errors_8hpp.html#a88a76ee847c844cc47b94caac600689da35bc33b7007d4d326726e135148c3dc5", null ]
+      [ "not_contained_network", "errors_8hpp.html#a88a76ee847c844cc47b94caac600689da35bc33b7007d4d326726e135148c3dc5", null ],
+      [ "unexpected_symbol", "errors_8hpp.html#a88a76ee847c844cc47b94caac600689da16be2b382276049a300d4a34fa77df9c", null ],
+      [ "wrong_encoding_sequence", "errors_8hpp.html#a88a76ee847c844cc47b94caac600689da487b22b520c6961ac3ec30cb755e3068", null ]
     ] ],
-    [ "raise_error", "errors_8hpp.html#a72e22b2f60d8491d05a7457fdc9d33cb", null ]
+    [ "raise_error", "errors_8hpp.html#a66a9b2b6d984adbbdf712917e818fc4c", null ]
 ];
