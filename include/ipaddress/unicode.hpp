@@ -27,7 +27,6 @@ struct char_or_throw {
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE char next(const T*& it, const T* begin, const T* end) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         uint32_t error_symbol = 0;
         auto code = error_code::no_error;
-        auto prev_it = it;
         const auto result = char_reader<T>::next_or_error(it, end, code, error_symbol);
         if (code != error_code::no_error) {
             raise_error(code, error_symbol, begin, end - begin);

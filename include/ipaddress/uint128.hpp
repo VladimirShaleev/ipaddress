@@ -1875,11 +1875,12 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(T
 namespace std {
 
 #pragma warning(push, 3)
-#ifdef __GNUC__
+#if defined(_MSC_VER)
+#  pragma warning(disable:4996)
+#elif defined(__GNUC__)
 #  pragma GCC diagnostic push
 #  pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#endif
-#ifdef __clang__
+#elif defined(__clang__)
   _Pragma("clang diagnostic push")
   _Pragma("clang diagnostic ignored \"-Wdeprecated\"")
 #endif
@@ -2016,11 +2017,12 @@ constexpr std::float_denorm_style _numeric_limits_uint128<T>::has_denorm;
 template <typename T>
 constexpr std::float_round_style _numeric_limits_uint128<T>::round_style;
 
-#ifdef __clang__
-  _Pragma("clang diagnostic pop")
-#endif
-#ifdef __GNUC__
+#if defined(_MSC_VER)
+#  pragma warning(default:4996)
+#elif defined(__GNUC__)
 #  pragma GCC diagnostic pop
+#elif defined(__clang__)
+  _Pragma("clang diagnostic pop")
 #endif
 #pragma warning(pop)
 

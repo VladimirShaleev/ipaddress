@@ -43,9 +43,6 @@ namespace IPADDRESS_NAMESPACE {
 template <typename T, typename Ipv4Iter, typename Ipv6Iter>
 class ip_any_iterator {
 public:
-#ifdef IPADDRESS_HAS_CONCEPTS
-    using iterator_concept  = std::random_access_iterator_tag; /**< Iterator concept (C++20). */
-#endif
     using iterator_category = std::random_access_iterator_tag; /**< Iterator category. */
     using value_type        = T; /**< Value type iterated over. */
     using difference_type   = int64_t; /**< Difference type between iterators. */
