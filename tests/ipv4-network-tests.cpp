@@ -637,7 +637,6 @@ INSTANTIATE_TEST_SUITE_P(
 template <typename T, size_t N>
 static void parse_unexpected_symbol(const T (&expected_address)[N]) {
     using tstring = std::basic_string<T, std::char_traits<T>, std::allocator<T>>;
-    using tistringstream = std::basic_istringstream<T, std::char_traits<T>, std::allocator<T>>;
 
     error_code err1 = error_code::no_error;
     error_code err2 = error_code::no_error;

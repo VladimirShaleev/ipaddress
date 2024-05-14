@@ -70,10 +70,10 @@
 #  error ipaddress needs at least C++ standard version 11
 #endif
 
-#if __GNUC__ <= 9 && !defined(__llvm__) && !defined(__INTEL_COMPILER)
-#  define IPADDRESS_CONSTEVAL IPADDRESS_CONSTEXPR
-#else
+#if defined(__cpp_consteval) && __cpp_consteval >= 201811L
 #  define IPADDRESS_CONSTEVAL consteval
+#else
+#  define IPADDRESS_CONSTEVAL IPADDRESS_CONSTEXPR
 #endif
 
 #if defined(_MSC_VER) && (_MSC_VER <= 1800)
@@ -110,10 +110,6 @@
 #    define IPADDRESS_HAS_SPACESHIP_OPERATOR
 #    include <compare>
 #  endif
-#endif
-
-#if defined(__cpp_lib_concepts) && __cpp_lib_concepts >= 202002L
-#  define IPADDRESS_HAS_CONCEPTS
 #endif
 
 #if defined(__cpp_nontype_template_parameter_class)

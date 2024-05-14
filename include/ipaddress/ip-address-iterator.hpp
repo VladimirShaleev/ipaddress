@@ -34,9 +34,6 @@ namespace IPADDRESS_NAMESPACE {
 template <typename Iterator>
 class ip_reverse_iterator {
 public:
-#ifdef IPADDRESS_HAS_CONCEPTS
-    using iterator_concept  = std::random_access_iterator_tag; /**< The iterator concept, defined if concepts are available. */
-#endif
     using iterator_category = typename std::iterator_traits<Iterator>::iterator_category; /**< The category of the iterator. */
     using iterator_type     = Iterator; /**< The underlying iterator type. */
     using value_type        = typename std::iterator_traits<Iterator>::value_type; /**< The type of the values iterated over. */
@@ -421,9 +418,6 @@ class ip_address_iterator;
 template <typename Base>
 class ip_address_iterator<ip_address_base<Base>> {
 public:
-#ifdef IPADDRESS_HAS_CONCEPTS
-    using iterator_concept  = std::random_access_iterator_tag; /**< The iterator concept, defined if concepts are available. */
-#endif
     using iterator_category = std::random_access_iterator_tag; /**< The category of the iterator. */
     using value_type        = ip_address_base<Base>; /**< The type of the values iterated over. */
     using difference_type   = int64_t; /**< The type representing the difference between two iterators. */
