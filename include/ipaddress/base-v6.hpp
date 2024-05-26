@@ -85,7 +85,16 @@ protected:
         }
 
         auto ip = ip_address_base<Ext>(parse_parts(parts, value, std::get<0>(result), std::get<1>(result), std::get<2>(result), code));
-        ip.set_scope_id(ip_and_scope.scope_id);
+
+    #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH > 0
+        if (code != error_code::no_error) {
+            return {};
+        }
+
+        if (ip_and_scope.scope_id[0] != '\0') {
+            ip._data.scope_id = make_fixed_string(ip_and_scope.scope_id, code);
+        }
+    #endif // IPADDRESS_IPV6_SCOPE_MAX_LENGTH
 
         return ip;
     }
@@ -104,7 +113,8 @@ protected:
     }
 
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t ip_to_chars(const base_type& bytes, const fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>& scope_id, format fmt, char (&result)[base_max_string_len + 1]) IPADDRESS_NOEXCEPT {
-        char hextets[base_size >> 1][5] = {};
+        constexpr auto hextets_count = size_t(base_size >> 1);
+        char hextets[hextets_count][5] = {};
         const size_t max_hextets = base_size >> 1;
         for (size_t i = 0; i < max_hextets; ++i) {
             const uint16_t value = (uint16_t(bytes[i * 2]) << 8) | uint16_t(bytes[i * 2 + 1]);
@@ -116,7 +126,8 @@ protected:
         auto has_doublecolon_end = false;
 
         if (fmt == format::compact || fmt == format::compressed) {
-            for (auto& hextet : hextets) {
+            for (size_t i = 0; i < hextets_count; ++i) {
+                auto& hextet = hextets[i];
                 for (size_t h = 0; h < 3; ++h) {
                     if (hextet[0] != '0') {
                         break;
@@ -198,8 +209,9 @@ protected:
         }
         if (!scope_id.empty()) {
             result[offset++] = '%';
-            for (const auto c : scope_id) {
-                result[offset++] = c;
+            const auto scope_id_size = scope_id.size();
+            for (size_t i = 0; i < scope_id_size; ++i) {
+                result[offset++] = scope_id[i];
             }
         }
         result[offset] = '\0';
@@ -267,6 +279,10 @@ protected:
         return address;
     }
 
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_invalid_scope_id_symbol(char c) IPADDRESS_NOEXCEPT {
+        return c == '%' || c == '/' || c == ' ' || (c >= '\t' && c <= '\r');
+    }
+
 private:
     template <typename Iter>
     struct ip_and_scope {
@@ -292,7 +308,7 @@ private:
                     error = error_code::scope_id_is_too_long;
                     return result;
                 }
-                if (c == '%' || c == '/' || uint32_t(c) > 127) {
+                if (is_invalid_scope_id_symbol(c)) {
                     error = error_code::invalid_scope_id;
                     return result;
                 }
