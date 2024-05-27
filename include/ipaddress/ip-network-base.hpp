@@ -28,7 +28,7 @@ namespace IPADDRESS_NAMESPACE {
  * @tparam Base The base class from which ip_network_base inherits. Should be a type that
  *              represents an individual IP address.
  */
-template <typename Base>
+IPADDRESS_EXPORT template <typename Base>
 class ip_network_base : public Base {
 public:
     using ip_address_type = typename Base::ip_address_type; /**< The IP address type used by the network. */
@@ -1339,13 +1339,13 @@ IPADDRESS_FORCE_INLINE int network_strict_index() {
     return i;
 }
 
-template <typename T>
+IPADDRESS_EXPORT template <typename T>
 IPADDRESS_FORCE_INLINE std::basic_istream<T, std::char_traits<T>>& strict(std::basic_istream<T, std::char_traits<T>>& stream) {
     stream.iword(network_strict_index()) = 0;
     return stream;
 }
 
-template <typename T>
+IPADDRESS_EXPORT template <typename T>
 IPADDRESS_FORCE_INLINE std::basic_istream<T, std::char_traits<T>>& non_strict(std::basic_istream<T, std::char_traits<T>>& stream) {
     stream.iword(network_strict_index()) = 1;
     return stream;
@@ -1359,29 +1359,29 @@ IPADDRESS_FORCE_INLINE std::basic_istream<T, std::char_traits<T>>& non_strict(st
 
 namespace std {
 
-template <typename Base>
+IPADDRESS_EXPORT template <typename Base>
 struct hash<IPADDRESS_NAMESPACE::ip_network_base<Base>> {
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t operator()(const IPADDRESS_NAMESPACE::ip_network_base<Base>& network) const IPADDRESS_NOEXCEPT {
         return network.hash();
     }
 };
 
-template <typename Base>
+IPADDRESS_EXPORT template <typename Base>
 IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void swap(IPADDRESS_NAMESPACE::ip_network_base<Base>& net1, IPADDRESS_NAMESPACE::ip_network_base<Base>& net2) IPADDRESS_NOEXCEPT {
     return net1.swap(net2);
 }
 
-template <typename Base>
+IPADDRESS_EXPORT template <typename Base>
 IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string to_string(const IPADDRESS_NAMESPACE::ip_network_base<Base>& network) {
     return network.to_string();
 }
 
-template <typename Base>
+IPADDRESS_EXPORT template <typename Base>
 IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::wstring to_wstring(const IPADDRESS_NAMESPACE::ip_network_base<Base>& network) {
     return network.to_wstring();
 }
 
-template <typename T, typename Base>
+IPADDRESS_EXPORT template <typename T, typename Base>
 IPADDRESS_FORCE_INLINE std::basic_ostream<T, std::char_traits<T>>& operator<<(std::basic_ostream<T, std::char_traits<T>>& stream, const IPADDRESS_NAMESPACE::ip_network_base<Base>& network) {
     auto& iword = stream.iword(IPADDRESS_NAMESPACE::stream_index());
     auto fmt = iword
@@ -1398,7 +1398,7 @@ IPADDRESS_FORCE_INLINE std::basic_ostream<T, std::char_traits<T>>& operator<<(st
     return stream << IPADDRESS_NAMESPACE::internal::string_converter<T>::convert(str);
 }
 
-template <typename T, typename Base>
+IPADDRESS_EXPORT template <typename T, typename Base>
 IPADDRESS_FORCE_INLINE std::basic_istream<T, std::char_traits<T>>& operator>>(std::basic_istream<T, std::char_traits<T>>& stream, IPADDRESS_NAMESPACE::ip_network_base<Base>& network) {
     auto& iword = stream.iword(IPADDRESS_NAMESPACE::network_strict_index());
     auto strict = iword == 0;

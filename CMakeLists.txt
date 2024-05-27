@@ -80,6 +80,8 @@ cmake_dependent_option(IPADDRESS_BUILD_DOC "Build doc" ON
   "CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR" OFF)
 cmake_dependent_option(IPADDRESS_BUILD_PACKAGES "Build packages" ON
   "CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR" OFF)
+cmake_dependent_option(IPADDRESS_BUILD_MODULE "Build Cpp module" ON
+  "CMAKE_VERSION VERSION_GREATER_EQUAL 3.26.0;CMAKE_CXX_STANDARD GREATER_EQUAL 20;CMAKE_GENERATOR MATCHES Visual OR CMAKE_GENERATOR MATCHES Ninja" OFF)
 
 if(IPADDRESS_ENABLE_CLANG_TIDY)
   find_program(IPADDRESS_CLANG_TIDY NAMES clang-tidy-16 clang-tidy)
@@ -115,4 +117,8 @@ endif()
 
 if(IPADDRESS_BUILD_PACKAGES)
   add_subdirectory(package)
+endif()
+
+if(IPADDRESS_BUILD_MODULE)
+  add_subdirectory(src)
 endif()

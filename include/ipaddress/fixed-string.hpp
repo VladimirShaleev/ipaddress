@@ -25,7 +25,7 @@ namespace IPADDRESS_NAMESPACE {
  * 
  * @tparam N The maximum number of characters the fixed_string can hold.
  */
-template <size_t N>
+IPADDRESS_EXPORT template <size_t N>
 struct fixed_string {
     using value_type             = char; /**< Type of character in a string. */
     using const_pointer          = const char*; /**< Type of constant pointer to the string data. */
@@ -384,7 +384,7 @@ struct fixed_string {
     }
 }; // fixed_string<N>
 
-template <>
+IPADDRESS_EXPORT template <>
 struct fixed_string<0> {
     using value_type             = char;
     using const_pointer          = const char*;
@@ -524,7 +524,7 @@ struct fixed_string<0> {
  * @param[in] rhs The fixed string whose contents to compare.
  * @return `true` if the contents of the strings are equal, `false` otherwise.
  */
-template <size_t N1, size_t N2>
+IPADDRESS_EXPORT template <size_t N1, size_t N2>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
     return lhs.compare(rhs) == 0;
 }
@@ -541,7 +541,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(c
  * @param[in] rhs The fixed string whose contents to compare.
  * @return `true` if the contents of the strings are not equal, `false` otherwise.
  */
-template <size_t N1, size_t N2>
+IPADDRESS_EXPORT template <size_t N1, size_t N2>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
     return !(lhs == rhs);
 }
@@ -559,7 +559,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
      * @param[in] rhs The fixed string whose contents to compare.
      * @return The relative order of the first pair of non-equivalent elements in \a lhs and \a rhs if there are such elements.
      */
-    template <size_t N1, size_t N2>
+    IPADDRESS_EXPORT template <size_t N1, size_t N2>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
         if (const auto result = lhs.compare(rhs); result == 0) {
             return std::strong_ordering::equivalent;
@@ -583,7 +583,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
      * @param[in] rhs The fixed string whose contents to compare.
      * @return `true` if the contents of \a lhs are lexicographically less than the contents of \a rhs, `false` otherwise.
      */
-    template <size_t N1, size_t N2>
+    IPADDRESS_EXPORT template <size_t N1, size_t N2>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
         return lhs.compare(rhs) < 0;
     }
@@ -599,7 +599,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
      * @param[in] rhs The fixed string whose contents to compare.
      * @return `true` if \a lhs is lexicographically greater than \a rhs, `false` otherwise.
      */
-    template <size_t N1, size_t N2>
+    IPADDRESS_EXPORT template <size_t N1, size_t N2>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
         return rhs < lhs;
     }
@@ -615,7 +615,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
      * @param[in] rhs The fixed string whose contents to compare.
      * @return `true` if \a lhs is lexicographically less than or equal to \a rhs, `false` otherwise.
      */
-    template <size_t N1, size_t N2>
+    IPADDRESS_EXPORT template <size_t N1, size_t N2>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
         return !(rhs < lhs);
     }
@@ -631,7 +631,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
      * @param[in] rhs The fixed string whose contents to compare.
      * @return `true` if \a lhs is lexicographically greater than or equal to \a rhs, `false` otherwise.
      */
-    template <size_t N1, size_t N2>
+    IPADDRESS_EXPORT template <size_t N1, size_t N2>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(const fixed_string<N1>& lhs, const fixed_string<N2>& rhs) IPADDRESS_NOEXCEPT {
         return !(lhs < rhs);
     }
@@ -648,7 +648,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(c
  * @param[in] data The character array to initialize the fixed_string with.
  * @return A fixed_string object of size N-1.
  */
-template <typename T, size_t N>
+IPADDRESS_EXPORT template <typename T, size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 1> make_fixed_string(const T(&data)[N]) IPADDRESS_NOEXCEPT(noexcept(fixed_string<N - 1>(data))) {
     return fixed_string<N - 1>(data);
 }
@@ -664,7 +664,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 
  * @param[out] code A reference to an `error_code` object that will be set if an error occurs during parsing.
  * @return A fixed_string object of size N-1.
  */
-template <typename T, size_t N>
+IPADDRESS_EXPORT template <typename T, size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 1> make_fixed_string(const T(&data)[N], error_code& code) IPADDRESS_NOEXCEPT {
     return fixed_string<N - 1>(data, code);
 }
@@ -672,14 +672,14 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_string<N - 
 #if IPADDRESS_CPP_VERSION >= 17
 
 #if __cpp_char8_t >= 201811L
-    template <size_t N> fixed_string(const char8_t(&)[N]) -> fixed_string<N - 1>;
+    IPADDRESS_EXPORT template <size_t N> fixed_string(const char8_t(&)[N]) -> fixed_string<N - 1>;
 #endif // __cpp_char8_t
-    template <size_t N> fixed_string(fixed_string<N>) -> fixed_string<N>;
-    template <size_t N> fixed_string(const char(&)[N]) -> fixed_string<N - 1>;
-    template <size_t N> fixed_string(const wchar_t(&)[N]) -> fixed_string<N - 1>;
-    template <size_t N> fixed_string(const char16_t(&)[N]) -> fixed_string<N - 1>;
-    template <size_t N> fixed_string(const char32_t(&)[N]) -> fixed_string<N - 1>;
-    fixed_string() -> fixed_string<0>;
+    IPADDRESS_EXPORT template <size_t N> fixed_string(fixed_string<N>) -> fixed_string<N>;
+    IPADDRESS_EXPORT template <size_t N> fixed_string(const char(&)[N]) -> fixed_string<N - 1>;
+    IPADDRESS_EXPORT template <size_t N> fixed_string(const wchar_t(&)[N]) -> fixed_string<N - 1>;
+    IPADDRESS_EXPORT template <size_t N> fixed_string(const char16_t(&)[N]) -> fixed_string<N - 1>;
+    IPADDRESS_EXPORT template <size_t N> fixed_string(const char32_t(&)[N]) -> fixed_string<N - 1>;
+    IPADDRESS_EXPORT fixed_string() -> fixed_string<0>;
 
 #endif
 

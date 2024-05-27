@@ -12,10 +12,12 @@ if(CMAKE_CXX_STANDARD)
   message(STATUS "Select standatd C++${CMAKE_CXX_STANDARD}")
 endif()
 
+include(CMakeDependentOption)
+cmake_dependent_option(IPADDRESS_TEST_MODULE "Test Cpp module" OFF "IPADDRESS_BUILD_MODULE" OFF)
+
 enable_testing()
 add_executable(ipaddress-tests 
-  "uint128-tests.cpp" 
-  "unicode-tests.cpp" 
+  "uint128-tests.cpp"
   "fixed-string-tests.cpp" 
   "ipv4-address-tests.cpp" 
   "ipv6-address-tests.cpp" 
@@ -23,7 +25,22 @@ add_executable(ipaddress-tests
   "ipv6-network-tests.cpp" 
   "ip-address-tests.cpp" 
   "ip-network-tests.cpp")
-target_link_libraries(ipaddress-tests ipaddress GTest::gtest GTest::gtest_main GTest::gmock_main)
+target_link_libraries(ipaddress-tests PRIVATE GTest::gtest GTest::gtest_main GTest::gmock_main)
+if(IPADDRESS_TEST_MODULE)
+  target_link_libraries(ipaddress-tests PRIVATE ipaddress-module)
+  set_target_properties(ipaddress-tests PROPERTIES CXX_SCAN_FOR_MODULES ON)
+  set_target_properties(ipaddress-tests PROPERTIES CXX_EXTENSIONS OFF)
+
+  # These macros are used in unit tests, so let's add them
+  target_compile_definitions(ipaddress-tests PRIVATE IPADDRESS_TEST_MODULE)
+  target_compile_definitions(ipaddress-tests PRIVATE IPADDRESS_NONTYPE_TEMPLATE_PARAMETER)
+  target_compile_definitions(ipaddress-tests PRIVATE IPADDRESS_CONSTEXPR=constexpr)
+  target_compile_definitions(ipaddress-tests PRIVATE IPADDRESS_CONSTEXPR_17=constexpr)
+  target_compile_definitions(ipaddress-tests PRIVATE IPADDRESS_CPP_VERSION=${CMAKE_CXX_STANDARD})
+else()
+  target_sources(ipaddress-tests PRIVATE "unicode-tests.cpp")
+  target_link_libraries(ipaddress-tests PRIVATE ipaddress)
+endif()
 
 if(IPADDRESS_ENABLE_CLANG_TIDY AND IPADDRESS_CLANG_TIDY)
   set_target_properties(ipaddress-tests PROPERTIES CXX_CLANG_TIDY ${IPADDRESS_CLANG_TIDY})

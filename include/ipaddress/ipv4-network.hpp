@@ -25,7 +25,7 @@ namespace IPADDRESS_NAMESPACE {
  * The ipv4_network_base class provides foundational functionality for IPv4 network
  * address manipulation by extending the base_v4 class.
  */
-class ipv4_network_base : public base_v4<ipv4_network_base> {
+IPADDRESS_EXPORT class ipv4_network_base : public base_v4<ipv4_network_base> {
 public:
     using ip_address_type = ipv4_address; /**< Alias for the IPv4 address type used within the class. */
 
@@ -47,7 +47,7 @@ protected:
  * network addresses using a type that is specifically designed for IPv4,
  * simplifying the interface and usage in code that deals with IPv4 networks.
  */
-using ipv4_network = ip_network_base<ipv4_network_base>;
+IPADDRESS_EXPORT using ipv4_network = ip_network_base<ipv4_network_base>;
 
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
@@ -60,7 +60,7 @@ using ipv4_network = ip_network_base<ipv4_network_base>;
      * @tparam FixedString A string literal representing the IPv4 network.
      * @return An ipv4_network object representing the network specified by the string literal.
      */
-    template <fixed_string FixedString>
+    IPADDRESS_EXPORT template <fixed_string FixedString>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE ipv4_network operator""_ipv4_net() IPADDRESS_NOEXCEPT {
         return ipv4_network::parse<FixedString>();
     }
@@ -77,7 +77,7 @@ using ipv4_network = ip_network_base<ipv4_network_base>;
      * @param[in] size The size of the string literal.
      * @return An ipv4_network object representing the network specified by the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_network operator""_ipv4_net(const char* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_EXPORT IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_network operator""_ipv4_net(const char* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return internal::parse_net_from_literal<ipv4_network_base, char, ipv4_network::base_max_string_len * 2 + 1>(address, size);
     }
 
@@ -91,7 +91,7 @@ using ipv4_network = ip_network_base<ipv4_network_base>;
      * @param[in] size The size of the string literal.
      * @return An ipv4_network object representing the network specified by the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_network operator""_ipv4_net(const wchar_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_EXPORT IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_network operator""_ipv4_net(const wchar_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return internal::parse_net_from_literal<ipv4_network_base, wchar_t, ipv4_network::base_max_string_len * 2 + 1>(address, size);
     }
 
@@ -105,7 +105,7 @@ using ipv4_network = ip_network_base<ipv4_network_base>;
      * @param[in] size The size of the string literal.
      * @return An ipv4_network object representing the network specified by the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_network operator""_ipv4_net(const char16_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_EXPORT IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_network operator""_ipv4_net(const char16_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return internal::parse_net_from_literal<ipv4_network_base, char16_t, ipv4_network::base_max_string_len * 2 + 1>(address, size);
     }
 
@@ -119,7 +119,7 @@ using ipv4_network = ip_network_base<ipv4_network_base>;
      * @param[in] size The size of the string literal.
      * @return An ipv4_network object representing the network specified by the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_network operator""_ipv4_net(const char32_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_EXPORT IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_network operator""_ipv4_net(const char32_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return internal::parse_net_from_literal<ipv4_network_base, char32_t, ipv4_network::base_max_string_len * 2 + 1>(address, size);
     }
 

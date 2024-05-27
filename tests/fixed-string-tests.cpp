@@ -1,7 +1,11 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock-matchers.h>
 
+#ifdef IPADDRESS_TEST_MODULE
+import ipaddress;
+#else
 #include <ipaddress/ipaddress.hpp>
+#endif
 
 using namespace testing;
 using namespace ipaddress;

@@ -1,6 +1,10 @@
 #include <gtest/gtest.h>
 
+#ifdef IPADDRESS_TEST_MODULE
+import ipaddress;
+#else
 #include <ipaddress/ipaddress.hpp>
+#endif
 
 using namespace ipaddress;
 
