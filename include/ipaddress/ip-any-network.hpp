@@ -1178,12 +1178,7 @@ public:
      */
     template <typename T, size_t N>
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(const T(&address)[N], bool strict = true) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        auto code = error_code::no_error;
-        auto result = internal::net_any_parser<ip_network>::parse(address, code, strict);
-        if (code != error_code::no_error) {
-            raise_error(code, 0, address, N);
-        }
-        return result;
+        return internal::net_any_parser<ip_network>::parse(address, strict);
     }
 
     /**
@@ -1201,19 +1196,7 @@ public:
      */
     template <typename T, size_t N>
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network parse(const T(&address)[N], error_code& code, bool strict = true) IPADDRESS_NOEXCEPT {
-        code = error_code::no_error;
-
-        const auto net4 = ipv4_network::parse(address, code, strict);
-        if (code == error_code::no_error) {
-            return ip_network(net4);
-        }
-        
-        const auto net6 = ipv6_network::parse(address, code, strict);
-        if (code == error_code::no_error) {
-            return ip_network(net6);
-        }
-        
-        return ip_network();
+        return internal::net_any_parser<ip_network>::parse(address, code, strict);
     }
 
     /**

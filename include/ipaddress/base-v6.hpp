@@ -17,6 +17,14 @@
 
 namespace IPADDRESS_NAMESPACE {
 
+namespace internal {
+
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_invalid_scope_id_symbol(char c) IPADDRESS_NOEXCEPT {
+    return c == '%' || c == '/' || c == ' ' || (c >= '\t' && c <= '\r');
+}
+
+} // namespace IPADDRESS_NAMESPACE::internal
+
 /**
  * A template class providing the base functionality for IPv6 addresses.
  * 
@@ -279,10 +287,6 @@ protected:
         return address;
     }
 
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_invalid_scope_id_symbol(char c) IPADDRESS_NOEXCEPT {
-        return c == '%' || c == '/' || c == ' ' || (c >= '\t' && c <= '\r');
-    }
-
 private:
     template <typename Iter>
     struct ip_and_scope {
@@ -308,7 +312,7 @@ private:
                     error = error_code::scope_id_is_too_long;
                     return result;
                 }
-                if (is_invalid_scope_id_symbol(c)) {
+                if (internal::is_invalid_scope_id_symbol(c)) {
                     error = error_code::invalid_scope_id;
                     return result;
                 }
