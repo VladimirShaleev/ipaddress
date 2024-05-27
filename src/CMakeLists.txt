@@ -38,7 +38,6 @@ check_cxx_compiler_flag("-Winclude-angled-in-module-purview" IPADDRESS_MODULE_PU
 add_library(${PROJECT_NAME}-module)
 add_library(${PROJECT_NAME}::${PROJECT_NAME}-module ALIAS ${PROJECT_NAME}-module)
 target_link_libraries(${PROJECT_NAME}-module PRIVATE ${PROJECT_NAME})
-set_target_properties(${PROJECT_NAME}-module PROPERTIES CXX_STANDARD ${CMAKE_CXX_STANDARD})
 set_target_properties(${PROJECT_NAME}-module PROPERTIES CXX_STANDARD_REQUIRED ON)
 set_target_properties(${PROJECT_NAME}-module PROPERTIES CXX_EXTENSIONS OFF)
 target_sources(${PROJECT_NAME}-module
@@ -51,15 +50,15 @@ if(IPADDRESS_MODULE_PURVIEW_FOUND)
   target_compile_options(${PROJECT_NAME}-module PRIVATE "-Wno-include-angled-in-module-purview")
 endif()
 
-# if(NOT CMAKE_GENERATOR MATCHES Visual)
-#   install(TARGETS ${PROJECT_NAME}-module
-#     EXPORT ${PROJECT_NAME}-targets
-#     LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
-#     FILE_SET CXX_MODULES DESTINATION "${CMAKE_INSTALL_LIBDIR}/cxx/miu"
-#     CXX_MODULES_BMI DESTINATION "${CMAKE_INSTALL_LIBDIR}/cxx/bmi"
-#     )
-#   install(EXPORT ${PROJECT_NAME}-targets 
-#     DESTINATION "${CMAKE_INSTALL_DATADIR}/cmake/${PROJECT_NAME}"
-#     NAMESPACE ${PROJECT_NAME}::
-#     CXX_MODULES_DIRECTORY "cxx-modules")
-# endif()
+if(CMAKE_GENERATOR MATCHES Ninja)
+  install(TARGETS ${PROJECT_NAME}-module
+    EXPORT ${PROJECT_NAME}-targets
+    LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+    FILE_SET CXX_MODULES DESTINATION "${CMAKE_INSTALL_LIBDIR}/cxx/miu"
+    CXX_MODULES_BMI DESTINATION "${CMAKE_INSTALL_LIBDIR}/cxx/bmi"
+    )
+  install(EXPORT ${PROJECT_NAME}-targets 
+    DESTINATION "${CMAKE_INSTALL_DATADIR}/cmake/${PROJECT_NAME}"
+    NAMESPACE ${PROJECT_NAME}::
+    CXX_MODULES_DIRECTORY "cxx-modules")
+endif()
