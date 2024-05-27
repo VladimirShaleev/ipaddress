@@ -113,6 +113,8 @@ int main() {
 }
 ```
 
+@remark The library also supports working with Unicode C++ strings such as **UTF-8**, **UTF-16**, **UTF-32** and **wide-char** (`char8_t`, `char16_t`, `char32_t` and `wchar_t`). For strings with a base type of `char`, it is assumed that the input string consists of an **ASCII** character sequence and is not encoded with any encoding. If your application uses the Unicode encoding **UTF-8** for incoming strings with a base type of `char`, you can define the macro `IPADDRESS_CHAR_IS_UTF8`. In this case, all incoming strings with a base type of `char` will be interpreted as **UTF-8** encoding. Despite the support for Unicode, it's important to note that for successful parsing of IP addresses, the incoming string must contain valid symbols for IP addresses.
+
 ### From uint/To uint
 
 Below is code demonstrating how to create IP addresses from unsigned integers and convert them back to unsigned integers.
@@ -549,6 +551,8 @@ int main() {
     return 0;
 }
 ```
+
+@remark By default, the use of whitespace characters in the scope id is not permitted. If a whitespace character is found in the incoming string within the scope id (for example, `fe80::1ff:fe23:4567:890a%et h2`), an error with the code `error_code::invalid_scope_id` will be generated. However, if for some reason you need to parse and save spaces in the scope id, you can define the macro `IPADDRESS_SCOPE_ID_SUPPORT_SPACES`.
 
 ## Std overrides
 

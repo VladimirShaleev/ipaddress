@@ -1593,8 +1593,8 @@ private:
         uint128_t result = 0;
         const T* it = begin;
         while (it < end) {
-            auto c = internal::next_char_or_error(it, end, code, error_symbol);
-            if (code != error_code::no_error) {
+            const auto c = internal::next_char_or_error(it, end, code, error_symbol);
+            if (code != error_code::no_error) { // NOLINT(bugprone-branch-clone)
                 return nullptr;
             } else if (c == '\0') {
                 break;
@@ -1613,8 +1613,8 @@ private:
         uint128_t result = 0;
         const T* it = begin;
         while (it < end) {
-            auto c = internal::next_char_or_error(it, end, code, error_symbol);
-            if (code != error_code::no_error) {
+            const auto c = internal::next_char_or_error(it, end, code, error_symbol);
+            if (code != error_code::no_error) { // NOLINT(bugprone-branch-clone)
                 return nullptr;
             } else if (c == '\0') {
                 break;
@@ -1634,8 +1634,8 @@ private:
         int digit = 0;
         const T* it = begin;
         while (it < end) {
-            auto c = internal::next_char_or_error(it, end, code, error_symbol);
-            if (code != error_code::no_error) {
+            const auto c = internal::next_char_or_error(it, end, code, error_symbol);
+            if (code != error_code::no_error) { // NOLINT(bugprone-branch-clone)
                 return nullptr;
             } else if (c == '\0') {
                 break;

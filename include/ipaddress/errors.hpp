@@ -78,7 +78,7 @@ enum class error_code {
     expected_at_most_7_other_parts_with_double_colon, /**< With a double colon present, at most seven other parts are expected. */
     exactly_8_parts_expected_without_double_colon, /**< Without a double colon, exactly eight parts are expected. */
     scope_id_is_too_long, /**< The scope ID in the IPv6 address exceeds the maximum length. */
-    invalid_scope_id, /**< The scope ID in the IPv6 address is invalid. */
+    invalid_scope_id, /**< The scope ID in the IPv6 address is invalid. If for some reason you need to add whitespace support to the scope id, add the following definition IPADDRESS_SCOPE_ID_SUPPORT_SPACES */
 
     // logic errors
     invalid_version, /**< The IP address version does not match the expected version. */

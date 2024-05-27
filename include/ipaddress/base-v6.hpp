@@ -20,7 +20,11 @@ namespace IPADDRESS_NAMESPACE {
 namespace internal {
 
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_invalid_scope_id_symbol(char c) IPADDRESS_NOEXCEPT {
-    return c == '%' || c == '/' || c == ' ' || (c >= '\t' && c <= '\r');
+    return c == '%' || c == '/' 
+#ifndef IPADDRESS_SCOPE_ID_SUPPORT_SPACES
+    || c == ' ' || (c >= '\t' && c <= '\r')
+#endif // IPADDRESS_SCOPE_ID_SUPPORT_SPACES
+    ;
 }
 
 } // namespace IPADDRESS_NAMESPACE::internal
