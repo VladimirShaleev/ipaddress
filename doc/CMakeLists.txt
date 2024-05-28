@@ -26,9 +26,22 @@ else()
     file(READ "${CONTRIBUTING}" CONTRIBUTING)
     file(READ "${LICENSE}" LICENSE)
     string(REPLACE "# ipaddress" "@mainpage Get Started\n\n@tableofcontents" TEXT "${TEXT}")
+    string(REPLACE "## Introduction" "## Introduction {#introduction}" TEXT "${TEXT}")
+    string(REPLACE "## Compatibility" "## Compatibility {#compatibility}" TEXT "${TEXT}")
+    string(REPLACE "## Installation" "## Installation {#installation}" TEXT "${TEXT}")
+    string(REPLACE "### Use package managers" "### Use package managers {#use-package-managers}" TEXT "${TEXT}")
+    string(REPLACE "#### Conan" "#### Conan {#conan}" TEXT "${TEXT}")
+    string(REPLACE "#### Vcpkg" "#### Vcpkg {#vcpkg}" TEXT "${TEXT}")
+    string(REPLACE "#### Ubuntu PPA" "#### Ubuntu PPA {#ppa}" TEXT "${TEXT}")
+    string(REPLACE "### Use as a Submodule with CMake" "### Use as a Submodule with CMake {#submodule}" TEXT "${TEXT}")
+    string(REPLACE "### Use CMake FetchContent" "### Use CMake FetchContent {#fetch-content}" TEXT "${TEXT}")
+    string(REPLACE "## Quick Start" "## Quick Start {#quick-start}" TEXT "${TEXT}")
+    string(REPLACE "## Contributing" "## Contributing {#contributing}" CONTRIBUTING "${CONTRIBUTING}")
+    string(REPLACE "### Issues" "### Issues {#issues}" CONTRIBUTING "${CONTRIBUTING}")
+    string(REPLACE "### Pull Requests" "### Pull Requests {#pull-requests}" CONTRIBUTING "${CONTRIBUTING}")
     string(REPLACE "## Documentation" "" TEXT "${TEXT}")
     string(REPLACE "For more details on setup, usage and code examples can be found in the full [documentation](https://vladimirshaleev.github.io/ipaddress/)." "" TEXT "${TEXT}")
-    string(CONCAT TEXT "${TEXT}" "\n${CONTRIBUTING}\n\n" "\n\n## Licensing\n\n```\n${LICENSE}\n```\n"
+    string(CONCAT TEXT "${TEXT}" "\n${CONTRIBUTING}\n\n" "\n\n## Licensing {#licensing}\n\n```\n${LICENSE}\n```\n"
     [==[
     
 @htmlonly

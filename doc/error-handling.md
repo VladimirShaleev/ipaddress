@@ -4,7 +4,7 @@
 
 The library provides two ways to handle errors: through exceptions and through returned error codes. Which method to choose depends on the task and policy of your project (not everywhere it is possible to use exceptions; moreover, they may even be disabled in your build).
 
-## Exception Handling
+## Exception Handling {#exceptions}
 
 All methods not marked `noexcept` can throw exceptions; there are only a few such methods. The documentation labels them all, and also indicates the types of exceptions that can be thrown.
 
@@ -29,7 +29,7 @@ int main() {
 
 That's basically all you need to know about exception handling. The only thing I’ll clarify is that universal classes for addresses and networks (with union IPv4 and IPv6) first attempt to parse for IPv4, and then IPv6, which is why the error will contain information about the non-corect IPv6 (in case of exception).
 
-## Handling Error Codes
+## Handling Error Codes {#error-codes}
 
 If you do not use exceptions, then for all methods that can throw exceptions there are alternative methods that return an error code.
 
@@ -55,7 +55,7 @@ int main() {
 }
 ```
 
-## Disable Exceptions
+## Disable Exceptions {#disable-exceptions}
 
 Also, your compiler may have exceptions disabled. In this case, you can also disable exceptions in the library.
 

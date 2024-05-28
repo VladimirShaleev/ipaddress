@@ -4,7 +4,7 @@
 
 Below are tables comparing this library with the boost asio library and the sockets API.
 
-## Comparison tables
+## Comparison tables {#comparison-tables}
 
 @htmlonly
 
@@ -25,7 +25,7 @@ Below are tables comparing this library with the boost asio library and the sock
 
 @endhtmlonly
 
-### Linux (Ubuntu 20.04)
+### Linux (Ubuntu 20.04) {#linux}
 
 <details class="details_class" open>
 <summary><b> Table </b></summary>
@@ -60,7 +60,7 @@ Load Average: 2.22, 2.16, 1.02
 
 </details>
 
-### MacOS
+### MacOS {#macos}
 
 <details class="details_class">
 <summary><b> Table </b></summary>
@@ -95,7 +95,7 @@ Load Average: 2.70, 4.59, 7.36
 
 </details>
 
-### Windows
+### Windows {#windows}
 
 <details class="details_class">
 <summary><b> Table </b></summary>
