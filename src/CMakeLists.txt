@@ -4,21 +4,21 @@ endif()
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
   if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 16)
-    message(STATUS "The C++20 module requires Clang 16 or newer")
+    message(STATUS "The C++ module requires Clang 16 or newer")
     return()
   endif()
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 14)
-    message(STATUS "The C++20 module requires GCC 14 or newer")
+    message(STATUS "The C++ module requires GCC 14 or newer")
     return()
   endif ()
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 17.4)
-    message(STATUS "The C++20 module requires MSVC 17.4 or newer")
+    message(STATUS "The C++ module requires MSVC 17.4 or newer")
     return()
   endif ()
 else()
-  message(STATUS "The C++20 module is not supported by the compiler: ${CMAKE_CXX_COMPILER_ID}")
+  message(STATUS "The C++ module is not supported by the compiler: ${CMAKE_CXX_COMPILER_ID}")
   return()
 endif()
 
@@ -40,6 +40,7 @@ add_library(${PROJECT_NAME}::${PROJECT_NAME}-module ALIAS ${PROJECT_NAME}-module
 target_link_libraries(${PROJECT_NAME}-module PRIVATE ${PROJECT_NAME})
 set_target_properties(${PROJECT_NAME}-module PROPERTIES CXX_STANDARD_REQUIRED ON)
 set_target_properties(${PROJECT_NAME}-module PROPERTIES CXX_EXTENSIONS OFF)
+target_compile_features(${PROJECT_NAME}-module PRIVATE cxx_std_20)
 target_sources(${PROJECT_NAME}-module
   PUBLIC
     FILE_SET CXX_MODULES
@@ -50,6 +51,7 @@ if(IPADDRESS_MODULE_PURVIEW_FOUND)
   target_compile_options(${PROJECT_NAME}-module PRIVATE "-Wno-include-angled-in-module-purview")
 endif()
 
+# Currently, only Ninja and Ninja Multi-Config generators support export of targets with C++ modules
 if(CMAKE_GENERATOR MATCHES Ninja)
   install(TARGETS ${PROJECT_NAME}-module
     EXPORT ${PROJECT_NAME}-targets
