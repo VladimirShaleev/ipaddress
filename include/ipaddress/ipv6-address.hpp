@@ -47,6 +47,10 @@ struct ipv6_set_scope {
     template <typename Str>
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void change(fixed_string<IPADDRESS_IPV6_SCOPE_MAX_LENGTH>& result, const Str& scope, error_code& code, uint32_t& index) IPADDRESS_NOEXCEPT {
     #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH > 0
+        if (scope.size() > IPADDRESS_IPV6_SCOPE_MAX_LENGTH) {
+            code = error_code::scope_id_is_too_long;
+            return;
+        }
         char str[IPADDRESS_IPV6_SCOPE_MAX_LENGTH + 1] = {};
         auto it = scope.data();
         auto end = it + scope.size();
@@ -54,10 +58,6 @@ struct ipv6_set_scope {
         code = error_code::no_error;
         index = 0;
         for (int i = 0; it < end; ++i) {
-            if (i > IPADDRESS_IPV6_SCOPE_MAX_LENGTH) {
-                code = error_code::scope_id_is_too_long;
-                return;
-            }
             auto c = internal::next_char_or_error(it, end, code, error_symbol);
             if (code != error_code::no_error) {
                 index = error_symbol;
