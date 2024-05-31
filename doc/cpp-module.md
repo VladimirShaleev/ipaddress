@@ -8,6 +8,8 @@ To take advantage of this, you need to have the necessary set of tools. This req
 
 ## Using the module {#import-module}
 
+By default, the assembly of the target for C++ module is disabled. To turn on, it is necessary to set the `-DIPADDRESS_BUILD_MODULE=ON` configuration parameter or set it clearly in the CMake file.
+
 If your compiler supports the **C++20** standard and higher, you can import the **ipaddress** module as follows (there are many restrictions for using C++ modules, read about them [below](#restrictions)):
 
 ```cmake
@@ -22,12 +24,6 @@ find_package(ipaddress CONFIG REQUIRED)
 
 add_executable(my-project main.cpp)
 target_link_libraries(my-project PRIVATE ipaddress::ipaddress-module) # add the module to your target 
-
-# You can also set the minimum required standard 
-# for your target, instead of:
-#   target_compile_features(my-project PRIVATE cxx_std_20)
-# or
-#   target_compile_features(my-project PRIVATE cxx_std_23)
 
 # Also depending on your build you may need to 
 # add the following properties:
@@ -49,6 +45,8 @@ int main() {
 }
 ```
 
+@note At the moment, the goal of `ipaddress::ipaddress-module` is not provided through package-managers like Vcpkg or Conan, because there is still no Best Practice on the integration of C++ modules into packages.
+
 ## Restrictions on the use of modules {#restrictions}
 
 Let's look at some restrictions on the use of modules. There are at least the following compilers that support C++ modules:
@@ -64,13 +62,19 @@ Requires CMake version 3.28 or later (or 3.26 with extensions enabled). At the s
 
 There are also some features, such as:
 
-* CMake can currently export targets with C++ modules only for Ninja and Ninja Multi-Config generators; 
-* on Windows there are some problems when using modules with Clang;
+* CMake can currently export targets with C++ modules for subsequent imports only Ninja and Ninja Multi-Config generators; 
+* On Windows there are some problems when using modules with Clang;
 * It's safe to say that most editors do not have full module support. When using them IntelliSense and etc. technology maybe break.
 
 @note In other words, it’s important to understand that C++ modules and build systems are still under development and are just starting to be structured for support. Also, best practices for their integration into various packages have not yet been established.
 
 @warning As you can see, there are numerous limitations to using C++ modules. Therefore, you should decide whether it is feasible to use them in your project. If your product needs to be compiled on as many platforms as possible with various toolsets, including not the most up-to-date versions, then perhaps modules are not the choice for you. However, if it is strictly defined that your product is being developed for a specific platform and you have a certain set of tools that you use, then C++ modules (including the standard library modules) can significantly speed up the compilation of your projects.
+
+## Additional links {#cpp-module-articles}
+
+Additional information on the integration with modules can be found in the following articles:
+* https://crascit.com/2024/04/04/cxx-modules-cmake-shared-libraries/
+* https://www.kitware.com/import-cmake-the-experiment-is-over/
 
 @htmlonly
 
