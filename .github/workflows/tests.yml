@@ -43,22 +43,22 @@ jobs:
             stdlib: libc++
             standard: 11
             exception: "no-exceptions"
-            cppmodule: [ "OFF" ]
+            cppmodule: "OFF"
           - clang: 17
             stdlib: libstdc++
             standard: 23
             exception: "no-exceptions"
-            cppmodule: [ "OFF" ]
+            cppmodule: "OFF"
           - clang: 17
             stdlib: libc++
             standard: 20
             exception: "exceptions"
-            cppmodule: [ "ON" ]
+            cppmodule: "ON"
           - clang: 17
             stdlib: libstdc++
             standard: 23
             exception: "exceptions"
-            cppmodule: [ "ON" ]
+            cppmodule: "ON"
     name: "Clang ${{ matrix.clang }} [C++${{ matrix.standard }}, ${{ matrix.stdlib }}, ${{ matrix.exception }}, cppmodule=${{ matrix.cppmodule }}]"
     runs-on: ubuntu-20.04
     steps:
@@ -209,20 +209,20 @@ jobs:
           - version: "14.29"
             standard: 14
             exception: "no-exceptions"
-            cppmodule: [ "OFF" ]
+            cppmodule: "OFF"
           - version: "14.29"
             standard: 23
             exception: "no-exceptions"
-            cppmodule: [ "OFF" ]
+            cppmodule: "OFF"
+          - version: "14.39"
+            standard: 20
+            exception: "exceptions"
+            cppmodule: "ON"
           - version: "14.39"
             standard: 23
             exception: "exceptions"
-            cppmodule: [ "ON" ]
-          - version: "14.39"
-            standard: 23
-            exception: "exceptions"
-            cppmodule: [ "ON" ]
-    name: "MSVC ${{ matrix.version }} [C++${{ matrix.standard }}, ${{ matrix.exception }}]"
+            cppmodule: "ON"
+    name: "MSVC ${{ matrix.version }} [C++${{ matrix.standard }}, ${{ matrix.exception }}, cppmodule=${{ matrix.cppmodule }}]"
     runs-on: windows-2022
     steps:
       - name: Add MSVC ${{ matrix.version }} to PATH
