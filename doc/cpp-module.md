@@ -2,15 +2,15 @@
 
 @tableofcontents
 
-The library can be integrated as a C++ module. C++ modules, introduced in the C++20 standard, significantly speed up compilation and make C++ code more natural.
+This library can be integrated as a C++ module. C++ modules, introduced in the C++20 standard, not only expedite the compilation process but also make the use of C++ more natural.
 
-To take advantage of this, you need to have the necessary set of tools. This requires a modern compiler, a supported build system, and CMake 3.28 (or 3.26 with extensions enabled) or newer.
+To leverage these benefits, ensure you have the right toolset, which includes a modern compiler, a compatible build system, and CMake version 3.28 or later (or 3.26 with extensions).
 
-## Using the module {#import-module}
+## Using the Module {#import-module}
 
-By default, the assembly of the target for C++ module is disabled. To turn on, it is necessary to set the `-DIPADDRESS_BUILD_MODULE=ON` configuration parameter or set it clearly in the CMake file.
+By default, the target assembly for the C++ module is not enabled. To activate it, you need to set the `-DIPADDRESS_BUILD_MODULE=ON` flag in your configuration parameters or explicitly specify it in your CMake file.
 
-If your compiler supports the **C++20** standard and higher, you can import the **ipaddress** module as follows (there are many restrictions for using C++ modules, read about them [below](#restrictions)):
+If your compiler is compatible with the **C++20** standard or newer, you can import the `ipaddress` module as shown below (there are many restrictions for using C++ modules, read about them [in the next section](#restrictions)):
 
 ```cmake
 cmake_minimum_required(VERSION 3.28.0)
@@ -42,34 +42,34 @@ int main() {
 }
 ```
 
-@note At the moment, the goal of `ipaddress::ipaddress-module` is not provided through package-managers like Vcpkg or Conan, because there is still no Best Practice on the integration of C++ modules into packages.
+@note Currently, the `ipaddress::ipaddress-module` is not available via package managers such as Vcpkg or Conan. This is primarily due to the absence of established best practices for integrating C++ modules into package distributions.
 
 ## Restrictions on the use of modules {#restrictions}
 
-Let's look at some restrictions on the use of modules. There are at least the following compilers that support C++ modules:
+Considerations for the use of C++ modules include compiler support and build system requirements. The following compilers are known to support C++ modules:
 
-* Clang 16 and newer;
-* MSVC 17.4 and newer;
-* GCC 14 and newer.
+* Clang 16 or later;
+* MSVC 17.4 or later;
+* GCC 14 or later.
 
-Requires CMake version 3.28 or later (or 3.26 with extensions enabled). At the same time, CMake supports working with C++ modules only for the following generators:
+CMake version 3.28 or higher is required, although version 3.26 may suffice if extensions are enabled. Currently, CMake offers support for C++ modules with these specific generators:
 
 * Ninja and Ninja Multi-Config;
 * Visual Studio.
 
-There are also some features, such as:
+Additionally, there are notable considerations:
 
-* CMake can currently export targets with C++ modules for subsequent imports only Ninja and Ninja Multi-Config generators; 
-* On Windows there are some problems when using modules with Clang;
-* It's safe to say that most editors do not have full module support. When using them IntelliSense and etc. technology maybe break.
+* CMake is presently capable of exporting targets with C++ modules for subsequent imports, but only with the Ninja and Ninja Multi-Config generators;
+* On Windows, certain issues have been observed when utilizing modules with Clang;
+* It is generally acknowledged that most editors lack comprehensive support for modules. Consequently, when using such editors, functionalities like IntelliSense may not perform reliably.
 
-@note In other words, it’s important to understand that C++ modules and build systems are still under development and are just starting to be structured for support. Also, best practices for their integration into various packages have not yet been established.
+@note In essence, it is crucial to recognize that the ecosystem for C++ modules and build systems is in a state of ongoing development. The structuring for their support is only beginning to take shape. Furthermore, the best practices for integrating these modules into distributable packages managed by package managers are still being formulating.
 
-@warning As you can see, there are numerous limitations to using C++ modules. Therefore, you should decide whether it is feasible to use them in your project. If your product needs to be compiled on as many platforms as possible with various toolsets, including not the most up-to-date versions, then perhaps modules are not the choice for you. However, if it is strictly defined that your product is being developed for a specific platform and you have a certain set of tools that you use, then C++ modules (including the standard library modules) can significantly speed up the compilation of your projects.
+@warning The current landscape of C++ modules presents several challenges. It's crucial to assess their suitability for your project. If your product requires compilation across a broad range of platforms and toolsets, including older versions, modules might not be the optimal choice. Conversely, if your product is tailored for a specific platform and you have a consistent toolset, utilizing C++ modules, including those from the standard library, could greatly enhance compilation efficiency.
 
 ## Additional links {#cpp-module-articles}
 
-Additional information on the integration with modules can be found in the following articles:
+For more insights into integrating modules in your C++ projects, consider exploring these articles:
 * https://crascit.com/2024/04/04/cxx-modules-cmake-shared-libraries/
 * https://www.kitware.com/import-cmake-the-experiment-is-over/
 
