@@ -243,7 +243,7 @@ struct fixed_string {
      * @throw std::out_of_range When going beyond the bounds of the character array.
      * @sa at(size_t) const
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reference operator[](size_t n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reference operator[](size_t n) const IPADDRESS_NOEXCEPT {
         return at(n);
     }
 
@@ -258,16 +258,8 @@ struct fixed_string {
      * @throw std::out_of_range When going beyond the bounds of the character array.
      * @sa operator[](size_t) const
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reference at(size_t n) const IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-        if (n >= 0 && n < N) {
-            return _data[n];
-        } else {
-        #ifdef IPADDRESS_NO_EXCEPTIONS
-            return *_data;
-        #else
-            throw std::out_of_range("index out of array");
-        #endif
-        }
+    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_reference at(size_t n) const IPADDRESS_NOEXCEPT {
+        return _data[n];
     }
 
     /**
