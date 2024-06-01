@@ -275,7 +275,8 @@ Parsing ip strings</h3>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md16"></a>
+</div><!-- fragment --><dl class="section remark"><dt>Remarks</dt><dd>The library also supports working with Unicode C++ strings such as <b>UTF-8</b>, <b>UTF-16</b>, <b>UTF-32</b> and <b>wide-char</b> (<code>char8_t</code>, <code>char16_t</code>, <code>char32_t</code> and <code>wchar_t</code>). For strings with a base type of <code>char</code>, it is assumed that the input string consists of an <b>ASCII</b> character sequence and is not encoded with any encoding. If your application uses the Unicode encoding <b>UTF-8</b> for incoming strings with a base type of <code>char</code>, you can define the macro <code>IPADDRESS_CHAR_IS_UTF8</code>. In this case, all incoming strings with a base type of <code>char</code> will be interpreted as <b>UTF-8</b> encoding. Despite the support for Unicode, it's important to note that for successful parsing of IP addresses, the incoming string must contain valid symbols for IP addresses.</dd></dl>
+<h3><a class="anchor" id="autotoc_md16"></a>
 From uint/To uint</h3>
 <p>Below is code demonstrating how to create IP addresses from unsigned integers and convert them back to unsigned integers.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="ipaddress_8hpp.html">ipaddress/ipaddress.hpp</a>&gt;</span></div>
@@ -662,7 +663,8 @@ Scope Id</h2>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md28"></a>
+</div><!-- fragment --><dl class="section remark"><dt>Remarks</dt><dd>By default, the use of whitespace characters in the scope id is not permitted. If a whitespace character is found in the incoming string within the scope id (for example, <code>fe80::1ff:fe23:4567:890aet h2</code>), an error with the code <code>error_code::invalid_scope_id</code> will be generated. However, if for some reason you need to parse and save spaces in the scope id, you can define the macro <code>IPADDRESS_SCOPE_ID_SUPPORT_SPACES</code>.</dd></dl>
+<h2><a class="anchor" id="autotoc_md28"></a>
 Std overrides</h2>
 <dl class="section note"><dt>Note</dt><dd>If, for some reason, you don't want the library to overload standard functions, you can define <code>IPADDRESS_NO_OVERLOAD_STD</code> during compilation.</dd></dl>
 <p>The library overloads some functions from the standard library so that IP addresses and networks (<code>ipv4_address</code>, <code>ipv6_address</code>, <code>ip_address</code>, <code>ipv4_network</code>, <code>ipv6_network</code> and <code>ip_network</code>) can be used in hash tables and other standard operations on <code>std::swap</code>, etc.</p>

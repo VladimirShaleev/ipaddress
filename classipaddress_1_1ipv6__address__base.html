@@ -187,10 +187,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a47b5bc52d3740a846a1fa317c7ffb7e1" id="r_a47b5bc52d3740a846a1fa317c7ffb7e1"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1scope.html">scope</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a47b5bc52d3740a846a1fa317c7ffb7e1">get_scope_id</a> () const noexcept</td></tr>
 <tr class="memdesc:a47b5bc52d3740a846a1fa317c7ffb7e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the scope identifier of the IPv6 address.  <br /></td></tr>
 <tr class="separator:a47b5bc52d3740a846a1fa317c7ffb7e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac33c3dd1e07661526d53f4c9a713a997" id="r_ac33c3dd1e07661526d53f4c9a713a997"><td class="memTemplParams" colspan="2">template&lt;typename T , size_t N&gt; </td></tr>
-<tr class="memitem:ac33c3dd1e07661526d53f4c9a713a997"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ac33c3dd1e07661526d53f4c9a713a997">set_scope_id</a> (const T(&amp;scope_id)[N]) noexcept(noexcept(internal::char_reader&lt; T &gt;::has_throw()))</td></tr>
-<tr class="memdesc:ac33c3dd1e07661526d53f4c9a713a997"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the scope identifier of the IPv6 address.  <br /></td></tr>
-<tr class="separator:ac33c3dd1e07661526d53f4c9a713a997"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ed386e23a3f20aee94d3c0f827e46c5" id="r_a7ed386e23a3f20aee94d3c0f827e46c5"><td class="memTemplParams" colspan="2">template&lt;typename T , size_t N&gt; </td></tr>
+<tr class="memitem:a7ed386e23a3f20aee94d3c0f827e46c5"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a7ed386e23a3f20aee94d3c0f827e46c5">set_scope_id</a> (const T(&amp;scope_id)[N])</td></tr>
+<tr class="memdesc:a7ed386e23a3f20aee94d3c0f827e46c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the scope identifier of the IPv6 address.  <br /></td></tr>
+<tr class="separator:a7ed386e23a3f20aee94d3c0f827e46c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a46c3659381aac25ed6fe37c362220ebd" id="r_a46c3659381aac25ed6fe37c362220ebd"><td class="memTemplParams" colspan="2">template&lt;typename T , size_t N&gt; </td></tr>
 <tr class="memitem:a46c3659381aac25ed6fe37c362220ebd"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a46c3659381aac25ed6fe37c362220ebd">set_scope_id</a> (const T(&amp;scope_id)[N], <a class="el" href="namespaceipaddress.html#a88a76ee847c844cc47b94caac600689d">error_code</a> &amp;code) noexcept</td></tr>
 <tr class="memdesc:a46c3659381aac25ed6fe37c362220ebd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the scope identifier of the IPv6 address and reports any errors encountered.  <br /></td></tr>
@@ -290,8 +290,8 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ac33c3dd1e07661526d53f4c9a713a997" name="ac33c3dd1e07661526d53f4c9a713a997"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac33c3dd1e07661526d53f4c9a713a997">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[1/12]</span></h2>
+<a id="a7ed386e23a3f20aee94d3c0f827e46c5" name="a7ed386e23a3f20aee94d3c0f827e46c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ed386e23a3f20aee94d3c0f827e46c5">&#9670;&#160;</a></span>set_scope_id() <span class="overload">[1/12]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -310,7 +310,7 @@ template&lt;typename T , size_t N&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
