@@ -401,7 +401,15 @@ public:
      */
     template <typename T, size_t N>
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(const T(&address)[N]) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    #ifdef IPADDRESS_NO_EXCEPTIONS
+        error_code err = error_code::no_error;
+        auto str = make_fixed_string(address, err);
+        if (err != error_code::no_error) {
+            return {};
+        }
+    #else
         auto str = make_fixed_string(address);
+    #endif
         return parse_string(str);
     }
 
