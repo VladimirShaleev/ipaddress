@@ -34,8 +34,12 @@ struct char_or_throw {
         return result;
     }
 
-    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void has_throw() IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
-    }
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void has_throw() IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS
+#ifdef IPADDRESS_MODULE
+    { }
+#else
+    ;
+#endif
 };
 
 struct symbol {
@@ -205,8 +209,12 @@ struct char_reader<char>
         return *it++;
     }
 
-    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void has_throw() IPADDRESS_NOEXCEPT {
-    }
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void has_throw() IPADDRESS_NOEXCEPT
+#ifdef IPADDRESS_MODULE
+    { }
+#else
+    ;
+#endif
 
 #endif // !IPADDRESS_CHAR_IS_UTF8
 };
