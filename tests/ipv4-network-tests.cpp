@@ -1126,12 +1126,12 @@ TEST_P(HostsIpv4NetworkParams, hosts) {
     }
 
     auto expected_const_it = expected.cbegin();
-    for (auto it = actual.cbegin(); it != actual.cend(); ++it) { // NOLINT(modernize-loop-convert)
+    for (auto it = actual.cbegin(); it != actual.cend(); ++it) {
         ASSERT_EQ(*it, *expected_const_it++);
     }
 
     auto expected_reverse_it = expected.rbegin();
-    for (auto it = actual.rbegin(); it != actual.rend(); ++it) { // NOLINT(modernize-loop-convert)
+    for (auto it = actual.rbegin(); it != actual.rend(); ++it) {
         ASSERT_EQ(*it, *expected_reverse_it++);
     }
 
@@ -1245,12 +1245,12 @@ TEST_P(SubnetsIpv4NetworkParams, subnets) {
     }
 
     auto expected_const_it = expected.cbegin();
-    for (auto it = actual.cbegin(); it != actual.cend(); ++it) { // NOLINT(modernize-loop-convert)
+    for (auto it = actual.cbegin(); it != actual.cend(); ++it) {
         ASSERT_EQ(*it, *expected_const_it++);
     }
 
     auto expected_reverse_it = expected.rbegin();
-    for (auto it = actual.rbegin(); it != actual.rend(); ++it) { // NOLINT(modernize-loop-convert)
+    for (auto it = actual.rbegin(); it != actual.rend(); ++it) {
         ASSERT_EQ(*it, *expected_reverse_it++);
     }
 
@@ -1333,7 +1333,7 @@ TEST_P(AddressExcludeIpv4NetworkParams, address_exclude) {
     }
 
     auto expected_const_it = expected.cbegin();
-    for (auto it = actual.cbegin(); it != actual.cend(); ++it) { // NOLINT(modernize-loop-convert)
+    for (auto it = actual.cbegin(); it != actual.cend(); ++it) {
         ASSERT_EQ(*it, *expected_const_it++);
     }
 }

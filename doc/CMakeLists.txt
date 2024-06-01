@@ -8,7 +8,7 @@ else()
   FetchContent_Declare(
     doxygen-awesome-css
     GIT_REPOSITORY https://github.com/jothepro/doxygen-awesome-css.git
-    GIT_TAG df88fe4fdd97714fadfd3ef17de0b4401f804052 # v2.3.1
+    GIT_TAG 40e9b25b6174dd3b472d8868f63323a870dfeeb8 # v2.3.3
   )
   FetchContent_MakeAvailable(doxygen-awesome-css)
 

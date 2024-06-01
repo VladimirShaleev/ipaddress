@@ -1588,47 +1588,62 @@ private:
 
     template <typename T>
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<uint128_t> dec_str_to_uint128(const T* begin, const T* end) IPADDRESS_NOEXCEPT {
+        error_code code = error_code::no_error;
+        uint32_t error_symbol = 0;
         uint128_t result = 0;
-        for (const T* it = begin; it != end; ++it) {
-            auto c = *it;
-            if (c == T('\0')) {
+        const T* it = begin;
+        while (it < end) {
+            const auto c = internal::next_char_or_error(it, end, code, error_symbol);
+            if (code != error_code::no_error) { // NOLINT(bugprone-branch-clone)
+                return nullptr;
+            } else if (c == '\0') {
                 break;
-            } else if (c < T('0') || c > T('9')) {
+            } else if (c < '0' || c > '9') {
                 return nullptr;
             }
-            result = result * 10 + (c - T('0'));
+            result = result * 10 + (c - '0');
         }
         return result;
     }
 
     template <typename T>
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<uint128_t> oct_str_to_uint128(const T* begin, const T* end) IPADDRESS_NOEXCEPT {
+        error_code code = error_code::no_error;
+        uint32_t error_symbol = 0;
         uint128_t result = 0;
-        for (const T* it = begin; it != end; ++it) {
-            auto c = *it;
-            if (c == T('\0')) {
+        const T* it = begin;
+        while (it < end) {
+            const auto c = internal::next_char_or_error(it, end, code, error_symbol);
+            if (code != error_code::no_error) { // NOLINT(bugprone-branch-clone)
+                return nullptr;
+            } else if (c == '\0') {
                 break;
-            } else if (c < T('0') || c > T('7')) {
+            } else if (c < '0' || c > '7') {
                 return nullptr;
             }
-            result = result * 8 + (c - T('0'));
+            result = result * 8 + (c - '0');
         }
         return result;
     }
 
     template <typename T>
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<uint128_t> hex_str_to_uint128(const T* begin, const T* end) IPADDRESS_NOEXCEPT {
+        error_code code = error_code::no_error;
+        uint32_t error_symbol = 0;
         uint128_t result = 0;
         int digit = 0;
-        for (const T* it = begin; it != end; ++it) {
-            auto c = *it;
-            if (c == T('\0')) {
+        const T* it = begin;
+        while (it < end) {
+            const auto c = internal::next_char_or_error(it, end, code, error_symbol);
+            if (code != error_code::no_error) { // NOLINT(bugprone-branch-clone)
+                return nullptr;
+            } else if (c == '\0') {
                 break;
-            } else if (c >= T('0') && c <= T('9')) {
-                digit = c - T('0');
-            } else if (c >= T('A') && c <= T('F')) {
+            } else if (c >= '0' && c <= '9') {
+                digit = c - '0';
+            } else if (c >= 'A' && c <= 'F') {
                 digit = c - 55;
-            } else if (c >= T('a') && c <= T('f')) {
+            } else if (c >= 'a' && c <= 'f') {
                 digit = c - 87;
             } else {
                 return nullptr;
