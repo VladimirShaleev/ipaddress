@@ -18,23 +18,20 @@ cmake_minimum_required(VERSION 3.28.0)
 project(my-project LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 23) # or: set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_EXTENSIONS OFF)
 
-find_package(ipaddress CONFIG REQUIRED)
+option(IPADDRESS_BUILD_MODULE "Build Cpp module" ON)
+add_subdirectory(third-party/ipaddress)
 
 add_executable(my-project main.cpp)
 target_link_libraries(my-project PRIVATE ipaddress::ipaddress-module) # add the module to your target 
-
-# Also depending on your build you may need to 
-# add the following properties:
-#   set_target_properties(my-project PROPERTIES CXX_SCAN_FOR_MODULES ON)
-#   set_target_properties(my-project PROPERTIES CXX_EXTENSIONS OFF)
+set_target_properties(my-project PROPERTIES CXX_SCAN_FOR_MODULES ON)
+set_target_properties(my-project PROPERTIES CXX_EXTENSIONS OFF)
 ```
 
 After which you can import the module in your source files:
 
 ```cpp
-#include <iostream> // or if supported: import std;
+#include <iostream>
 
 import ipaddress;
 
