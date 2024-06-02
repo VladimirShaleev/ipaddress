@@ -2,8 +2,10 @@ name: Lint
 on:
   push:
     branches: [ "main" ]
+    paths: [ "**.hpp", "**.cpp", "**.ixx", "**.txt", "!doc/**" ]
   pull_request:
     branches: [ "main" ]
+    paths: [ "**.hpp", "**.cpp", "**.ixx", "**.txt", "!doc/**" ]
 
 jobs:
 

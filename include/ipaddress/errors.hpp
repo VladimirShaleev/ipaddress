@@ -49,7 +49,7 @@ namespace IPADDRESS_NAMESPACE {
  * 
  * Each error code is accompanied by a brief comment explaining the specific error condition it represents.
  */
-enum class error_code {
+IPADDRESS_EXPORT enum class error_code {
     no_error = 0, /**< Indicates the absence of any errors. */
     empty_address, /**< The IP address string is empty when it should contain a valid address. */
     empty_netmask, /**< The netmask portion of the address is empty when it should specify a valid netmask. */
@@ -111,7 +111,7 @@ enum class error_code {
  * @sa parse_error
  * @sa logic_error
  */
-class error : public std::runtime_error {
+IPADDRESS_EXPORT class error : public std::runtime_error {
 public:
     /**
      * Constructs an error with a code and a concatenated message from multiple arguments.
@@ -200,7 +200,7 @@ private:
  * 
  * @sa error
  */
-class parse_error : public error {
+IPADDRESS_EXPORT class parse_error : public error {
 public:    
     /**
      * Constructs a parsing error with a code and a concatenated message from multiple arguments.
@@ -244,7 +244,7 @@ public:
  * 
  * @sa error
  */
-class logic_error : public error {
+IPADDRESS_EXPORT class logic_error : public error {
 public:
     /**
      * Constructs a logic error with a code and a concatenated message from multiple arguments.
@@ -293,7 +293,7 @@ public:
  * @throw logic_error Thrown with a message corresponding to the error code.
  * @note This function is marked [[noreturn]] as it always throws an exception.
  */
-template <typename T>
+IPADDRESS_EXPORT template <typename T>
 #ifndef IPADDRESS_NO_EXCEPTIONS 
 [[noreturn]] 
 #endif

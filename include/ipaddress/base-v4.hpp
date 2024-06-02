@@ -26,7 +26,7 @@ namespace IPADDRESS_NAMESPACE {
  * 
  * @tparam Ext The extension type that provides additional functionality.
  */
-template <typename Ext>
+IPADDRESS_EXPORT template <typename Ext>
 class base_v4 {
 public:
     using base_type = byte_array<4>;

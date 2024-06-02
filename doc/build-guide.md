@@ -11,7 +11,7 @@ To work you will need:
 * [CMake](https://cmake.org/) and a compatible build tool for building the project;
 * <b>(optional)</b> clang-tidy 14+ for static analysis during build.
 
-## Set up a project
+## Set up a project {#build-tests}
 
 ```bash
 git clone https://github.com/VladimirShaleev/ipaddress.git
@@ -52,11 +52,13 @@ Below is a list of all parameters supported by the configuration:
 * `IPADDRESS_BUILD_BENCHMARK` — Build benchmark (`OFF` by default).
 * `IPADDRESS_BUILD_DOC` — Build doc (`ON` by default).
 * `IPADDRESS_BUILD_PACKAGES` — Create targets for building packages deb, rpm, etc. (`ON` by default).
+* `IPADDRESS_BUILD_MODULE` — Build cpp module (`OFF` by default).
+* `IPADDRESS_TEST_MODULE` — Will use the C++ module to build tests if available (`OFF` by default).
 * `IPADDRESS_NO_EXCEPTIONS` — Disable exceptions throwing (`OFF` by default).
 * `IPADDRESS_NO_IPV6_SCOPE` — Disable scope id for ipv6 (`OFF` by default).
 * `IPADDRESS_IPV6_SCOPE_MAX_LENGTH` — scope id max length (`16` by default).
 
-## Build a Documentation
+## Build a Documentation {#build-doc}
 
 To assemble the documentation, you need to install the following tools on the system:
 
@@ -70,7 +72,7 @@ cmake -B build -S . -DIPADDRESS_BUILD_DOC=ON
 cmake --build build --target doc
 ```
 
-## Build a Benchmark
+## Build a Benchmark {#build-benchmark}
 
 To build the benchmark, follow these steps:
 

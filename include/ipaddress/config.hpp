@@ -17,24 +17,31 @@
 #ifndef IPADDRESS_CONFIG_HPP
 #define IPADDRESS_CONFIG_HPP
 
-#include <cstdint>
-#include <cstddef>
-
-#include <array>
-#include <tuple>
-#include <cmath>
-#include <cassert>
-#include <sstream>
-#include <iomanip>
-#include <cstring>
-#include <numeric>
-#include <iterator>
-#include <algorithm>
-#include <stdexcept>
-#include <type_traits>
+#ifndef IPADDRESS_MODULE
+#  include <cstdint>
+#  include <cstddef>
+#  include <array>
+#  include <tuple>
+#  include <cmath>
+#  include <cassert>
+#  include <sstream>
+#  include <iomanip>
+#  include <cstring>
+#  include <numeric>
+#  include <iterator>
+#  include <algorithm>
+#  include <stdexcept>
+#  include <type_traits>
+#endif
 
 #ifndef IPADDRESS_NAMESPACE
 #  define IPADDRESS_NAMESPACE ipaddress
+#endif
+
+#ifndef IPADDRESS_MODULE
+#  define IPADDRESS_EXPORT
+#else
+#  define IPADDRESS_EXPORT export
 #endif
 
 #if defined(_MSVC_LANG)
@@ -108,7 +115,9 @@
 #if !defined(IPADDRESS_NO_SPACESHIP_OPERATOR) && defined(__has_include)
 #  if (__cpp_lib_three_way_comparison >= 201907L) && __has_include(<compare>)
 #    define IPADDRESS_HAS_SPACESHIP_OPERATOR
-#    include <compare>
+#    ifndef IPADDRESS_MODULE
+#      include <compare>
+#    endif
 #  endif
 #endif
 
@@ -138,7 +147,7 @@
 #  define IPADDRESS_IS_CONST_EVALUATED(x) false
 #endif
 
-#if IPADDRESS_CPP_VERSION >= 17
+#if IPADDRESS_CPP_VERSION >= 17 && !defined(IPADDRESS_MODULE)
 #  include <string_view>
 #endif
 

@@ -26,7 +26,7 @@ namespace IPADDRESS_NAMESPACE {
  * 
  * Defines constants representing the two versions of Internet Protocol: IPv4 and IPv6.
  */
-enum class ip_version {
+IPADDRESS_EXPORT enum class ip_version {
     V4 = 4, /**< IPv4 version identifier. */
     V6 = 6 /**< IPv6 version identifier. */
 };
@@ -37,7 +37,7 @@ enum class ip_version {
  * Defines the formatting styles that can be applied when converting IP addresses to strings,
  * such as full, compact, or compressed representations.
  */
-enum class format {
+IPADDRESS_EXPORT enum class format {
     full = 0, /**< Full format with no compression or omission. */
     compact, /**< Compact format with possible omission of leading zeros. */
     compressed /**< Compressed format with maximal omission of segments or octets. */
@@ -52,7 +52,7 @@ enum class format {
  * 
  * @tparam Base The base class providing storage and low-level IP address functionalities.
  */
-template <typename Base>
+IPADDRESS_EXPORT template <typename Base>
 class ip_address_base : public Base {
 public:
     using base_type = typename Base::base_type; /**< Type alias for the base storage type. */
@@ -401,7 +401,15 @@ public:
      */
     template <typename T, size_t N>
     IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_address_base parse(const T(&address)[N]) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    #ifdef IPADDRESS_NO_EXCEPTIONS
+        error_code err = error_code::no_error;
+        auto str = make_fixed_string(address, err);
+        if (err != error_code::no_error) {
+            return {};
+        }
+    #else
         auto str = make_fixed_string(address);
+    #endif
         return parse_string(str);
     }
 
@@ -797,19 +805,19 @@ IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE int stream_index() {
     return i;
 }
 
-template <typename T>
+IPADDRESS_EXPORT template <typename T>
 IPADDRESS_FORCE_INLINE std::basic_ostream<T, std::char_traits<T>>& full(std::basic_ostream<T, std::char_traits<T>>& stream) {
     stream.iword(stream_index()) = long(format::full) + 1;
     return stream;
 }
 
-template <typename T>
+IPADDRESS_EXPORT template <typename T>
 IPADDRESS_FORCE_INLINE std::basic_ostream<T, std::char_traits<T>>& compact(std::basic_ostream<T, std::char_traits<T>>& stream) {
     stream.iword(stream_index()) = long(format::compact) + 1;
     return stream;
 }
 
-template <typename T>
+IPADDRESS_EXPORT template <typename T>
 IPADDRESS_FORCE_INLINE std::basic_ostream<T, std::char_traits<T>>& compressed(std::basic_ostream<T, std::char_traits<T>>& stream) {
     stream.iword(stream_index()) = long(format::compressed) + 1;
     return stream;
@@ -823,29 +831,29 @@ IPADDRESS_FORCE_INLINE std::basic_ostream<T, std::char_traits<T>>& compressed(st
 
 namespace std {
 
-template <typename Base>
+IPADDRESS_EXPORT template <typename Base>
 struct hash<IPADDRESS_NAMESPACE::ip_address_base<Base>> {
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t operator()(const IPADDRESS_NAMESPACE::ip_address_base<Base>& ip) const IPADDRESS_NOEXCEPT {
         return ip.hash();
     }
 };
 
-template <typename Base>
+IPADDRESS_EXPORT template <typename Base>
 IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void swap(IPADDRESS_NAMESPACE::ip_address_base<Base>& ip1, IPADDRESS_NAMESPACE::ip_address_base<Base>& ip2) IPADDRESS_NOEXCEPT {
     ip1.swap(ip2);
 }
 
-template <typename Base>
+IPADDRESS_EXPORT template <typename Base>
 IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string to_string(const IPADDRESS_NAMESPACE::ip_address_base<Base>& ip) {
     return ip.to_string();
 }
 
-template <typename Base>
+IPADDRESS_EXPORT template <typename Base>
 IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::wstring to_wstring(const IPADDRESS_NAMESPACE::ip_address_base<Base>& ip) {
     return ip.to_wstring();
 }
 
-template <typename T, typename Base>
+IPADDRESS_EXPORT template <typename T, typename Base>
 IPADDRESS_FORCE_INLINE std::basic_ostream<T, std::char_traits<T>>& operator<<(std::basic_ostream<T, std::char_traits<T>>& stream, const IPADDRESS_NAMESPACE::ip_address_base<Base>& ip) {
     auto& iword = stream.iword(IPADDRESS_NAMESPACE::stream_index());
     auto fmt = iword
@@ -862,7 +870,7 @@ IPADDRESS_FORCE_INLINE std::basic_ostream<T, std::char_traits<T>>& operator<<(st
     return stream << IPADDRESS_NAMESPACE::internal::string_converter<T>::convert(str);
 }
 
-template <typename T, typename Base>
+IPADDRESS_EXPORT template <typename T, typename Base>
 IPADDRESS_FORCE_INLINE std::basic_istream<T, std::char_traits<T>>& operator>>(std::basic_istream<T, std::char_traits<T>>& stream, IPADDRESS_NAMESPACE::ip_address_base<Base>& ip) {
     std::basic_string<T, std::char_traits<T>, std::allocator<T>> str;
     stream >> str;

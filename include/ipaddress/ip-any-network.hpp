@@ -67,7 +67,7 @@ struct net_any_parser {
  * This class is essential for applications that require flexibility in dealing with
  * various IP network types without concern for the underlying IP version.
  */
-class ip_network {
+IPADDRESS_EXPORT class ip_network {
 public:
     using ip_address_type = ip_address; /**< Type alias for ip_address, representing the IP address within the network. */
     using uint_type = uint128_t; /**< Type alias for a 128-bit unsigned integer type. */
@@ -1341,7 +1341,7 @@ private:
      * @tparam FixedString A string literal representing the IP network.
      * @return An ip_network object representing the network specified by the string literal.
      */
-    template <fixed_string FixedString>
+    IPADDRESS_EXPORT template <fixed_string FixedString>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE ip_network operator""_net() IPADDRESS_NOEXCEPT {
         return ip_network::parse<FixedString>();
     }
@@ -1358,7 +1358,7 @@ private:
      * @param[in] size The size of the string literal.
      * @return An ip_network object representing the network specified by the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const char* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_EXPORT IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const char* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         const auto max_len = ipv6_address::base_max_string_len * 2 + 1;
         if (size > max_len) {
             raise_error(error_code::string_is_too_long, 0, address, size);
@@ -1380,7 +1380,7 @@ private:
      * @param[in] size The size of the string literal.
      * @return An ip_network object representing the network specified by the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const wchar_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_EXPORT IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const wchar_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         const auto max_len = ipv6_address::base_max_string_len * 2 + 1;
         if (size > max_len) {
             raise_error(error_code::string_is_too_long, 0, address, size);
@@ -1402,7 +1402,7 @@ private:
      * @param[in] size The size of the string literal.
      * @return An ip_network object representing the network specified by the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const char16_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_EXPORT IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const char16_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         const auto max_len = ipv6_address::base_max_string_len * 2 + 1;
         if (size > max_len) {
             raise_error(error_code::string_is_too_long, 0, address, size);
@@ -1424,7 +1424,7 @@ private:
      * @param[in] size The size of the string literal.
      * @return An ip_network object representing the network specified by the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const char32_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_EXPORT IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_network operator""_net(const char32_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         const auto max_len = ipv6_address::base_max_string_len * 2 + 1;
         if (size > max_len) {
             raise_error(error_code::string_is_too_long, 0, address, size);
@@ -1444,26 +1444,26 @@ private:
 
 namespace std {
 
-template <>
+IPADDRESS_EXPORT template <>
 struct hash<IPADDRESS_NAMESPACE::ip_network> {
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t operator()(const IPADDRESS_NAMESPACE::ip_network& network) const IPADDRESS_NOEXCEPT {
         return network.hash();
     }
 };
 
-IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void swap(IPADDRESS_NAMESPACE::ip_network& net1, IPADDRESS_NAMESPACE::ip_network& net2) IPADDRESS_NOEXCEPT {
+IPADDRESS_EXPORT IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void swap(IPADDRESS_NAMESPACE::ip_network& net1, IPADDRESS_NAMESPACE::ip_network& net2) IPADDRESS_NOEXCEPT {
     return net1.swap(net2);
 }
 
-IPADDRESS_FORCE_INLINE std::string to_string(const IPADDRESS_NAMESPACE::ip_network& network) {
+IPADDRESS_EXPORT IPADDRESS_FORCE_INLINE std::string to_string(const IPADDRESS_NAMESPACE::ip_network& network) {
     return network.to_string();
 }
 
-IPADDRESS_FORCE_INLINE std::wstring to_wstring(const IPADDRESS_NAMESPACE::ip_network& network) {
+IPADDRESS_EXPORT IPADDRESS_FORCE_INLINE std::wstring to_wstring(const IPADDRESS_NAMESPACE::ip_network& network) {
     return network.to_wstring();
 }
 
-template <typename T>
+IPADDRESS_EXPORT template <typename T>
 IPADDRESS_FORCE_INLINE std::basic_ostream<T, std::char_traits<T>>& operator<<(std::basic_ostream<T, std::char_traits<T>>& stream, const IPADDRESS_NAMESPACE::ip_network& network) {
     auto& iword = stream.iword(IPADDRESS_NAMESPACE::stream_index());
     auto fmt = iword
@@ -1480,7 +1480,7 @@ IPADDRESS_FORCE_INLINE std::basic_ostream<T, std::char_traits<T>>& operator<<(st
     return stream << IPADDRESS_NAMESPACE::internal::string_converter<T>::convert(str);
 }
 
-template <typename T>
+IPADDRESS_EXPORT template <typename T>
 IPADDRESS_FORCE_INLINE std::basic_istream<T, std::char_traits<T>>& operator>>(std::basic_istream<T, std::char_traits<T>>& stream, IPADDRESS_NAMESPACE::ip_network& network) {
     auto& iword = stream.iword(IPADDRESS_NAMESPACE::network_strict_index());
     auto strict = iword == 0;

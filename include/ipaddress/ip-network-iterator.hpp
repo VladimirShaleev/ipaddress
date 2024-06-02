@@ -29,7 +29,7 @@ namespace IPADDRESS_NAMESPACE {
  * 
  * @tparam T The type of IPv4 or IPv6 network to iterate over.
  */
-template <typename T>
+IPADDRESS_EXPORT template <typename T>
 class ip_network_iterator {
 public:
     using iterator_category = std::random_access_iterator_tag; /**< The category of the iterator. */
@@ -458,7 +458,7 @@ private:
  * 
  * @tparam T The type of IPv4 or IPv6 network to iterate over, excluding specified subnets.
  */
-template <typename T>
+IPADDRESS_EXPORT template <typename T>
 class ip_exclude_network_iterator {
 public:
     using iterator_category = std::forward_iterator_tag; /**< The category of the iterator. */
@@ -674,7 +674,7 @@ private:
  * @tparam T The type of IP network to be divided into subnets.
  * @remark When iterating, obtaining networks occurs through lazy calculations.
  */
-template <typename T>
+IPADDRESS_EXPORT template <typename T>
 class subnets_sequence {
 public:
     using value_type      = T; /**< The type of subnet value. */
@@ -886,7 +886,7 @@ private:
  * @tparam T The type of IP network from which subnets are to be excluded.
  * @remark When iterating, obtaining networks occurs through lazy calculations.
  */
-template <typename T>
+IPADDRESS_EXPORT template <typename T>
 class exclude_network_sequence {
 public:
     using value_type      = T; /**< The type of network value. */

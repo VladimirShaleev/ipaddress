@@ -31,7 +31,7 @@ namespace IPADDRESS_NAMESPACE {
  * 
  * @tparam T The type of the value to manage initialization state for.
  */
-template <typename T>
+IPADDRESS_EXPORT template <typename T>
 class optional { // NOLINT(cppcoreguidelines-special-member-functions)
 public:
     using value_type = T; /**< The type of the value to manage initialization state for */

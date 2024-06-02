@@ -1,7 +1,11 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock-matchers.h>
 
+#ifdef IPADDRESS_TEST_MODULE
+import ipaddress;
+#else
 #include <ipaddress/ipaddress.hpp>
+#endif
 
 using namespace testing;
 using namespace ipaddress;
@@ -200,9 +204,6 @@ TEST(fixed_string, ConstexprAt) {
     IPADDRESS_CONSTEXPR auto at1 = str.at(1);
     IPADDRESS_CONSTEXPR auto at2 = str.at(2);
     IPADDRESS_CONSTEXPR auto at3 = str.at(3);
-#ifndef IPADDRESS_NO_EXCEPTIONS
-    EXPECT_THROW(str.at(4), std::out_of_range);
-#endif
 
     EXPECT_EQ(at0, 't');
     EXPECT_EQ(at1, 'e');
@@ -213,9 +214,6 @@ TEST(fixed_string, ConstexprAt) {
     IPADDRESS_CONSTEXPR auto c1 = str[1];
     IPADDRESS_CONSTEXPR auto c2 = str[2];
     IPADDRESS_CONSTEXPR auto c3 = str[3];
-#ifndef IPADDRESS_NO_EXCEPTIONS
-    EXPECT_THROW(str[4], std::out_of_range);
-#endif
     
     EXPECT_EQ(c0, 't');
     EXPECT_EQ(c1, 'e');

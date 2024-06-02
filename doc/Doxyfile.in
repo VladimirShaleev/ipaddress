@@ -953,6 +953,7 @@ INPUT                  = "@CMAKE_CURRENT_BINARY_DIR@/get-started.md" \
                          ./doc/tutorial.md \
                          ./doc/network-operations.md \
                          ./doc/error-handling.md \
+                         ./doc/cpp-module.md \
                          ./doc/benchmark.md \
                          ./doc/build-guide.md \
                          ./include/ipaddress

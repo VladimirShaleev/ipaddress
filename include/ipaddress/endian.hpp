@@ -33,7 +33,9 @@
 #if (IPADDRESS_CPP_VERSION >= 20) && defined(__has_include)
 #  if __has_include(<bit>)
 #    define IPADDRESS_HAS_STD_ENDIAN
-#    include <bit>
+#    ifndef IPADDRESS_MODULE
+#      include <bit>
+#    endif
 #  endif
 #endif
 
@@ -51,7 +53,7 @@
 #      error Unknown endianness detected. Needs to define IPADDRESS_ENDIAN
 #    endif
 // GLIBC
-#  elif defined(__GLIBC__)
+#  elif defined(__GLIBC__) && !defined(IPADDRESS_MODULE)
 #    include <endian.h>
 #    if (__BYTE_ORDER == __LITTLE_ENDIAN)
 #      define IPADDRESS_ENDIAN IPADDRESS_LITTLE_ENDIAN
@@ -105,7 +107,7 @@ namespace IPADDRESS_NAMESPACE {
  * 
  * @return `true` if the system is little-endian, `false` otherwise.
  */
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_little_endian() IPADDRESS_NOEXCEPT {
+IPADDRESS_EXPORT IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_little_endian() IPADDRESS_NOEXCEPT {
 #if defined(IPADDRESS_HAS_STD_ENDIAN)
     return std::endian::native == std::endian::little;
 #elif defined(IPADDRESS_ENDIAN)
@@ -121,7 +123,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_little_en
  * @param[in] value The integer value to swap bytes of.
  * @return The value with its bytes swapped.
  */
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint32_t swap_bytes(uint32_t value) IPADDRESS_NOEXCEPT {
+IPADDRESS_EXPORT IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint32_t swap_bytes(uint32_t value) IPADDRESS_NOEXCEPT {
     value = ((value << 8) & 0xFF00FF00) | ((value >> 8) & 0x00FF00FF);
     value = (value << 16) | (value >> 16);
     return value;

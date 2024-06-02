@@ -66,8 +66,7 @@ install(
 install(
   FILES 
     "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.pc"
-    DESTINATION "${CMAKE_INSTALL_DATADIR}/pkgconfig"
-)
+    DESTINATION "${CMAKE_INSTALL_DATADIR}/pkgconfig")
 install(DIRECTORY include/ DESTINATION include)
 
 cmake_dependent_option(IPADDRESS_ENABLE_CLANG_TIDY "Enable clang-tidy checks" ON
@@ -80,6 +79,8 @@ cmake_dependent_option(IPADDRESS_BUILD_DOC "Build doc" ON
   "CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR" OFF)
 cmake_dependent_option(IPADDRESS_BUILD_PACKAGES "Build packages" ON
   "CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR" OFF)
+cmake_dependent_option(IPADDRESS_BUILD_MODULE "Build Cpp module" OFF
+  "CMAKE_VERSION VERSION_GREATER_EQUAL 3.26.0;cxx_std_20 IN_LIST CMAKE_CXX_COMPILE_FEATURES;CMAKE_GENERATOR MATCHES Visual OR CMAKE_GENERATOR MATCHES Ninja" OFF)
 
 if(IPADDRESS_ENABLE_CLANG_TIDY)
   find_program(IPADDRESS_CLANG_TIDY NAMES clang-tidy-16 clang-tidy)
@@ -115,4 +116,8 @@ endif()
 
 if(IPADDRESS_BUILD_PACKAGES)
   add_subdirectory(package)
+endif()
+
+if(IPADDRESS_BUILD_MODULE)
+  add_subdirectory(src)
 endif()

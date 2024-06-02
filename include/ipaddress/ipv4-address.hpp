@@ -24,7 +24,7 @@ namespace IPADDRESS_NAMESPACE {
  * including conversion to and from numeric representations, access to the underlying bytes,
  * and utility functions that are common across different representations of IPv4 addresses.
  */
-class ipv4_address_base : public base_v4<ipv4_address_base> {
+IPADDRESS_EXPORT class ipv4_address_base : public base_v4<ipv4_address_base> {
 public:
     using base_type = typename base_v4<ipv4_address_base>::base_type; /**< The base type for the IPv4 address. */
     using uint_type = typename base_v4<ipv4_address_base>::uint_type; /**< The unsigned integer type for the IPv4 address. */
@@ -116,7 +116,7 @@ private:
  * class, allowing for operations such as conversion, comparison, and property querying
  * specific to IPv4 addresses.
  */
-using ipv4_address = ip_address_base<ipv4_address_base>;
+IPADDRESS_EXPORT using ipv4_address = ip_address_base<ipv4_address_base>;
 
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
@@ -126,7 +126,7 @@ using ipv4_address = ip_address_base<ipv4_address_base>;
      * @tparam FixedString A compile-time fixed string representing the IPv4 address.
      * @return An ipv4_address object parsed from the fixed string.
      */
-    template <fixed_string FixedString>
+    IPADDRESS_EXPORT template <fixed_string FixedString>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4() IPADDRESS_NOEXCEPT {
         return ipv4_address::parse<FixedString>();
     }
@@ -137,7 +137,7 @@ using ipv4_address = ip_address_base<ipv4_address_base>;
      * @param[in] value An unsigned long long integer representing the IPv4 address in *host byte order*.
      * @return An ipv4_address object created from the integer.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(unsigned long long value) IPADDRESS_NOEXCEPT {
+    IPADDRESS_EXPORT IPADDRESS_NODISCARD IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(unsigned long long value) IPADDRESS_NOEXCEPT {
         assert(value <= ipv4_address::base_all_ones && "literal integer is too long");
         return ipv4_address::from_uint(uint32_t(value));
     }
@@ -151,7 +151,7 @@ using ipv4_address = ip_address_base<ipv4_address_base>;
      * @param[in] size The size of the character array.
      * @return An ipv4_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(const char* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_EXPORT IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(const char* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return internal::parse_ip_from_literal<ipv4_address_base, char, ipv4_address::base_max_string_len>(address, size);
     }
 
@@ -162,7 +162,7 @@ using ipv4_address = ip_address_base<ipv4_address_base>;
      * @param[in] size The size of the character array.
      * @return An ipv4_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(const wchar_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_EXPORT IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(const wchar_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return internal::parse_ip_from_literal<ipv4_address_base, wchar_t, ipv4_address::base_max_string_len>(address, size);
     }
 
@@ -173,7 +173,7 @@ using ipv4_address = ip_address_base<ipv4_address_base>;
      * @param[in] size The size of the character array.
      * @return An ipv4_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(const char16_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_EXPORT IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(const char16_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return internal::parse_ip_from_literal<ipv4_address_base, char16_t, ipv4_address::base_max_string_len>(address, size);
     }
 
@@ -184,7 +184,7 @@ using ipv4_address = ip_address_base<ipv4_address_base>;
      * @param[in] size The size of the character array.
      * @return An ipv4_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(const char32_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_EXPORT IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(const char32_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return internal::parse_ip_from_literal<ipv4_address_base, char32_t, ipv4_address::base_max_string_len>(address, size);
     }
 
@@ -194,7 +194,7 @@ using ipv4_address = ip_address_base<ipv4_address_base>;
      * @param[in] value An unsigned long long integer representing the IPv4 address in host byte order.
      * @return An ipv4_address object created from the integer.
      */
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(unsigned long long value) IPADDRESS_NOEXCEPT {
+    IPADDRESS_EXPORT IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address operator""_ipv4(unsigned long long value) IPADDRESS_NOEXCEPT {
         return ipv4_address::from_uint(uint32_t(value));
     }
 

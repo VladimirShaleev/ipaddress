@@ -49,7 +49,7 @@ namespace IPADDRESS_NAMESPACE {
  * 
  * @see [UInt128](https://source.dot.net/#System.Private.CoreLib/src/libraries/System.Private.CoreLib/src/System/UInt128.cs) .NET Implementation.
  */
-class uint128_t final { // NOLINT(cppcoreguidelines-special-member-functions)
+IPADDRESS_EXPORT class uint128_t final { // NOLINT(cppcoreguidelines-special-member-functions)
 public:
     /**
      * Enumerates the string formats available for `uint128_t`.
@@ -1674,7 +1674,7 @@ private:
  * @param[in] value The uint128_t value to be added.
  * @return uint128_t the result of the addition.
  */
-template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
+IPADDRESS_EXPORT template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator+(T lower, const uint128_t& value) IPADDRESS_NOEXCEPT {
     return uint128_t(lower) + value;
 }
@@ -1687,7 +1687,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operato
  * @param[in] value The uint128_t value to be subtracted.
  * @return uint128_t the result of the subtraction.
  */
-template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
+IPADDRESS_EXPORT template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator-(T lower, const uint128_t& value) IPADDRESS_NOEXCEPT {
     return uint128_t(lower) - value;
 }
@@ -1700,7 +1700,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operato
  * @param[in] value The uint128_t value to be multiplied.
  * @return uint128_t the result of the multiplication.
  */
-template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
+IPADDRESS_EXPORT template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator*(T lower, const uint128_t& value) IPADDRESS_NOEXCEPT {
     return uint128_t(lower) * value;
 }
@@ -1713,7 +1713,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operato
  * @param[in] value The uint128_t value that divides the integer.
  * @return uint128_t the result of the division.
  */
-template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
+IPADDRESS_EXPORT template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator/(T lower, const uint128_t& value) IPADDRESS_NOEXCEPT {
     return uint128_t(lower) / value;
 }
@@ -1726,7 +1726,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operato
  * @param[in] value The uint128_t value that divides the integer.
  * @return uint128_t the remainder of the division.
  */
-template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
+IPADDRESS_EXPORT template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator%(T lower, const uint128_t& value) IPADDRESS_NOEXCEPT {
     return uint128_t(lower) % value;
 }
@@ -1739,7 +1739,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operato
  * @param[in] value The uint128_t value.
  * @return uint128_t the result of the bitwise AND operation.
  */
-template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
+IPADDRESS_EXPORT template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator&(T lower, const uint128_t& value) IPADDRESS_NOEXCEPT {
     return uint128_t(lower) & value;
 }
@@ -1752,7 +1752,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operato
  * @param[in] value The uint128_t value.
  * @return uint128_t the result of the bitwise OR operation.
  */
-template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
+IPADDRESS_EXPORT template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator|(T lower, const uint128_t& value) IPADDRESS_NOEXCEPT {
     return uint128_t(lower) | value;
 }
@@ -1765,7 +1765,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operato
  * @param[in] value The uint128_t value.
  * @return uint128_t the result of the bitwise XOR operation.
  */
-template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
+IPADDRESS_EXPORT template <typename T, typename = typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operator^(T lower, const uint128_t& value) IPADDRESS_NOEXCEPT {
     return uint128_t(lower) ^ value;
 }
@@ -1778,7 +1778,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE uint128_t operato
  * @param[in] other The uint128_t value to compare.
  * @return `true` if the integer value is equal to the uint128_t value, `false` otherwise.
  */
-template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
+IPADDRESS_EXPORT template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(T lower, const uint128_t& other) IPADDRESS_NOEXCEPT {
     return uint128_t(lower) == other;
 }
@@ -1791,7 +1791,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(T
  * @param[in] other The uint128_t value to compare.
  * @return `true` if the integer value is not equal to the uint128_t value, `false` otherwise.
  */
-template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
+IPADDRESS_EXPORT template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(T lower, const uint128_t& other) IPADDRESS_NOEXCEPT {
     return uint128_t(lower) != other;
 }
@@ -1810,7 +1810,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(T
  * @param[in] other The uint128_t value to be compared with.
  * @return The result of the comparison: less, equal, or greater.
  */
-template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
+IPADDRESS_EXPORT template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(T lower, const uint128_t& other) IPADDRESS_NOEXCEPT {
     return uint128_t(lower) <=> other;
 }
@@ -1828,7 +1828,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_order
  * @param[in] other The uint128_t value to compare against.
  * @return `true` if \a lower is less than \a other, `false` otherwise.
  */
-template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
+IPADDRESS_EXPORT template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(T lower, const uint128_t& other) IPADDRESS_NOEXCEPT {
     return uint128_t(lower) < other;
 }
@@ -1844,7 +1844,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(T 
  * @param[in] other The uint128_t value to compare against.
  * @return `true` if \a lower is greater than \a other, `false` otherwise.
  */
-template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
+IPADDRESS_EXPORT template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(T lower, const uint128_t& other) IPADDRESS_NOEXCEPT {
     return uint128_t(lower) > other;
 }
@@ -1860,7 +1860,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(T 
  * @param[in] other The uint128_t value to compare against.
  * @return `true` if \a lower is less than or equal to \a other, `false` otherwise.
  */
-template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
+IPADDRESS_EXPORT template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(T lower, const uint128_t& other) IPADDRESS_NOEXCEPT {
     return uint128_t(lower) <= other;
 }
@@ -1876,7 +1876,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(T
  * @param[in] other The uint128_t value to compare against.
  * @return `true` if \a lower is greater than or equal to \a other, `false` otherwise.
  */
-template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
+IPADDRESS_EXPORT template <typename T, typename = typename std::enable_if<std::is_integral<T>::value, T>::type>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(T lower, const uint128_t& other) IPADDRESS_NOEXCEPT {
     return uint128_t(lower) >= other;
 }
@@ -2041,36 +2041,36 @@ constexpr std::float_round_style _numeric_limits_uint128<T>::round_style;
 #endif
 #pragma warning(pop)
 
-template <>
+IPADDRESS_EXPORT template <>
 struct numeric_limits<IPADDRESS_NAMESPACE::uint128_t> : _numeric_limits_uint128<IPADDRESS_NAMESPACE::uint128_t> {
 };
 
-template <>
+IPADDRESS_EXPORT template <>
 struct hash<IPADDRESS_NAMESPACE::uint128_t> {
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t operator()(const IPADDRESS_NAMESPACE::uint128_t& value) const IPADDRESS_NOEXCEPT {
         return value.hash();
     }
 };
 
-IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void swap(IPADDRESS_NAMESPACE::uint128_t& value1, IPADDRESS_NAMESPACE::uint128_t& value2) IPADDRESS_NOEXCEPT {
+IPADDRESS_EXPORT IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void swap(IPADDRESS_NAMESPACE::uint128_t& value1, IPADDRESS_NAMESPACE::uint128_t& value2) IPADDRESS_NOEXCEPT {
     const auto tmp = value1;
     value1 = value2;
     value2 = tmp;
 }
 
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE IPADDRESS_NAMESPACE::uint128_t abs(const IPADDRESS_NAMESPACE::uint128_t& value) IPADDRESS_NOEXCEPT {
+IPADDRESS_EXPORT IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE IPADDRESS_NAMESPACE::uint128_t abs(const IPADDRESS_NAMESPACE::uint128_t& value) IPADDRESS_NOEXCEPT {
     return value;
 }
 
-IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string to_string(const IPADDRESS_NAMESPACE::uint128_t& value) {
+IPADDRESS_EXPORT IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::string to_string(const IPADDRESS_NAMESPACE::uint128_t& value) {
     return value.to_string();
 }
 
-IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::wstring to_wstring(const IPADDRESS_NAMESPACE::uint128_t& value) {
+IPADDRESS_EXPORT IPADDRESS_NODISCARD IPADDRESS_FORCE_INLINE std::wstring to_wstring(const IPADDRESS_NAMESPACE::uint128_t& value) {
     return value.to_wstring();
 }
 
-template <typename T>
+IPADDRESS_EXPORT template <typename T>
 IPADDRESS_FORCE_INLINE std::basic_ostream<T, std::char_traits<T>>& operator<<(std::basic_ostream<T, std::char_traits<T>>& stream, const IPADDRESS_NAMESPACE::uint128_t& value) {
     auto fmt = IPADDRESS_NAMESPACE::uint128_t::format::decimal;
     if (stream.flags() & ios_base::hex) {
@@ -2087,7 +2087,7 @@ IPADDRESS_FORCE_INLINE std::basic_ostream<T, std::char_traits<T>>& operator<<(st
     return stream << IPADDRESS_NAMESPACE::internal::string_converter<T>::convert(str);
 }
 
-template <typename T>
+IPADDRESS_EXPORT template <typename T>
 IPADDRESS_FORCE_INLINE std::basic_istream<T, std::char_traits<T>>& operator>>(std::basic_istream<T, std::char_traits<T>>& stream, IPADDRESS_NAMESPACE::uint128_t& value) {
     auto fmt = IPADDRESS_NAMESPACE::uint128_t::format::decimal;
     if (stream.flags() & ios_base::hex) {

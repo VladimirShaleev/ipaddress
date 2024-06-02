@@ -6,7 +6,7 @@ Here describes various ways to operate with networks and addresses, for example 
 
 @note All iteration operations in this library are implemented with lazy evaluation. That is, the list is not generated in advance; instead, each element is generated upon request.
 
-## Enumerating network addresses
+## Enumerating network addresses {#enumerate-addresses}
 
 Below is a demonstration of how to get all hosts on a given network
 
@@ -41,7 +41,7 @@ int main() {
 
 @note For ipv4 all the IP addresses that belong to the network, except the network address itself and the network broadcast address. For networks with a mask length of 31, the network address and network broadcast address are also included in the result. Networks with a mask of 32 will return a list containing the single host address. <br> For ipv6 all the IP addresses that belong to the network, except the Subnet-Router anycast address. For networks with a mask length of 127, the Subnet-Router anycast address is also included in the result. Networks with a mask of 128 will return a list containing the single host address.
 
-## Supernet and Subnets
+## Supernet and Subnets {#supernet-subnets}
 
 Get the subnets that are combined to create the current network definition.
 
@@ -67,7 +67,7 @@ int main() {
 }
 ```
 
-## Removing one network from another network
+## Removing one network from another network {#exclude-network}
 
 Calculates the network definitions that arise from subtracting the specified network from the current one.
 
@@ -94,7 +94,7 @@ int main() {
 }
 ```
 
-## Other operations
+## Other operations {#other-operations}
 
 This library does not overload arithmetic operators for IP addresses and networks. But what if they need address arithmetic to resolve your problems? You can use integer arithmetic for this.
 

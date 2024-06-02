@@ -86,7 +86,7 @@ struct ipv6_set_scope {
  * such as link-local or site-local scopes. This class provides methods to set, retrieve,
  * and compare scope identifiers in both string and numeric formats.
  */
-class scope final {
+IPADDRESS_EXPORT class scope final {
 public:
     /**
      * Constructs a scope object with a given scope identifier.
@@ -269,7 +269,7 @@ private:
  * including conversion to and from numeric representations, access to the underlying bytes,
  * and utility functions that are common across different representations of IPv6 addresses.
  */
-class ipv6_address_base : public base_v6<ipv6_address_base> {
+IPADDRESS_EXPORT class ipv6_address_base : public base_v6<ipv6_address_base> {
 public:
     using base_type = typename base_v6<ipv6_address_base>::base_type; /**< The base type for the IPv6 address. */
     using uint_type = typename base_v6<ipv6_address_base>::uint_type; /**< The unsigned integer type for the IPv6 address. */
@@ -876,7 +876,7 @@ private:
  * class, allowing for operations such as conversion, comparison, and property querying
  * specific to IPv6 addresses.
  */
-using ipv6_address = ip_address_base<ipv6_address_base>;
+IPADDRESS_EXPORT using ipv6_address = ip_address_base<ipv6_address_base>;
 
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
@@ -886,7 +886,7 @@ using ipv6_address = ip_address_base<ipv6_address_base>;
      * @tparam FixedString A compile-time fixed string representing the IPv6 address.
      * @return An ipv6_address object parsed from the fixed string.
      */
-    template <fixed_string FixedString>
+    IPADDRESS_EXPORT template <fixed_string FixedString>
     IPADDRESS_NODISCARD IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE ipv6_address operator""_ipv6() IPADDRESS_NOEXCEPT {
         return ipv6_address::parse<FixedString>();
     }
@@ -900,7 +900,7 @@ using ipv6_address = ip_address_base<ipv6_address_base>;
      * @param[in] size The size of the character array.
      * @return An ipv6_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_address operator""_ipv6(const char* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_EXPORT IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_address operator""_ipv6(const char* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return internal::parse_ip_from_literal<ipv6_address_base, char, ipv6_address::base_max_string_len>(address, size);
     }
 
@@ -911,7 +911,7 @@ using ipv6_address = ip_address_base<ipv6_address_base>;
      * @param[in] size The size of the character array.
      * @return An ipv6_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_address operator""_ipv6(const wchar_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_EXPORT IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_address operator""_ipv6(const wchar_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return internal::parse_ip_from_literal<ipv6_address_base, wchar_t, ipv6_address::base_max_string_len>(address, size);
     }
 
@@ -922,7 +922,7 @@ using ipv6_address = ip_address_base<ipv6_address_base>;
      * @param[in] size The size of the character array.
      * @return An ipv6_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_address operator""_ipv6(const char16_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_EXPORT IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_address operator""_ipv6(const char16_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return internal::parse_ip_from_literal<ipv6_address_base, char16_t, ipv6_address::base_max_string_len>(address, size);
     }
 
@@ -933,7 +933,7 @@ using ipv6_address = ip_address_base<ipv6_address_base>;
      * @param[in] size The size of the character array.
      * @return An ipv6_address object parsed from the string literal.
      */
-    IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_address operator""_ipv6(const char32_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
+    IPADDRESS_EXPORT IPADDRESS_NODISCARD_WHEN_NO_EXCEPTIONS IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_address operator""_ipv6(const char32_t* address, size_t size) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
         return internal::parse_ip_from_literal<ipv6_address_base, char32_t, ipv6_address::base_max_string_len>(address, size);
     }
 

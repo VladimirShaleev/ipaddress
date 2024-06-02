@@ -2,8 +2,10 @@ name: Tests
 on:
   push:
     branches: [ "main" ]
+    paths: [ "**.hpp", "**.cpp", "**.ixx", "**.txt", "!doc/**" ]
   pull_request:
     branches: [ "main" ]
+    paths: [ "**.hpp", "**.cpp", "**.ixx", "**.txt", "!doc/**" ]
 
 jobs:
 
@@ -16,6 +18,7 @@ jobs:
         stdlib: [ "libc++", "libstdc++" ]
         standard: [ 11, 14, 17, 20, 23 ]
         exception: [ "exceptions" ]
+        cppmodule: [ "OFF" ]
         exclude:
           - clang: 6
             stdlib: libc++
@@ -39,14 +42,26 @@ jobs:
             stdlib: libc++
         include:
           - clang: 14
-            stdlib: "libc++"
+            stdlib: libc++
             standard: 11
             exception: "no-exceptions"
+            cppmodule: "OFF"
           - clang: 17
-            stdlib: "libstdc++"
+            stdlib: libstdc++
             standard: 23
             exception: "no-exceptions"
-    name: "Clang ${{ matrix.clang }} [C++${{ matrix.standard }}, ${{ matrix.stdlib }}, ${{ matrix.exception }}]"
+            cppmodule: "OFF"
+          - clang: 17
+            stdlib: libc++
+            standard: 20
+            exception: "exceptions"
+            cppmodule: "ON"
+          - clang: 17
+            stdlib: libstdc++
+            standard: 23
+            exception: "exceptions"
+            cppmodule: "ON"
+    name: "Clang ${{ matrix.clang }} [C++${{ matrix.standard }}, ${{ matrix.stdlib }}, ${{ matrix.exception }}, cppmodule=${{ matrix.cppmodule }}]"
     runs-on: ubuntu-20.04
     steps:
       - name: "Install Clang"
@@ -76,6 +91,8 @@ jobs:
           -DIPADDRESS_BUILD_TESTS=ON
           -DIPADDRESS_BUILD_DOC=OFF
           -DIPADDRESS_BUILD_PACKAGES=OFF
+          -DIPADDRESS_BUILD_MODULE=${{ matrix.cppmodule }}
+          -DIPADDRESS_TEST_MODULE=${{ matrix.cppmodule }}
           -DIPADDRESS_NO_EXCEPTIONS=${{ matrix.exception == 'no-exceptions' }}
 
       - name: Build
@@ -189,14 +206,25 @@ jobs:
         version: [ "14.29", "14.39" ]
         standard: [ 14, 17, 20, 23 ]
         exception: [ "exceptions" ]
+        cppmodule: [ "OFF" ]
         include:
           - version: "14.29"
             standard: 14
             exception: "no-exceptions"
+            cppmodule: "OFF"
           - version: "14.29"
             standard: 23
             exception: "no-exceptions"
-    name: "MSVC ${{ matrix.version }} [C++${{ matrix.standard }}, ${{ matrix.exception }}]"
+            cppmodule: "OFF"
+          - version: "14.39"
+            standard: 20
+            exception: "exceptions"
+            cppmodule: "ON"
+          - version: "14.39"
+            standard: 23
+            exception: "exceptions"
+            cppmodule: "ON"
+    name: "MSVC ${{ matrix.version }} [C++${{ matrix.standard }}, ${{ matrix.exception }}, cppmodule=${{ matrix.cppmodule }}]"
     runs-on: windows-2022
     steps:
       - name: Add MSVC ${{ matrix.version }} to PATH
@@ -224,6 +252,8 @@ jobs:
           -DIPADDRESS_BUILD_TESTS=ON
           -DIPADDRESS_BUILD_DOC=OFF
           -DIPADDRESS_BUILD_PACKAGES=OFF
+          -DIPADDRESS_BUILD_MODULE=${{ matrix.cppmodule }}
+          -DIPADDRESS_TEST_MODULE=${{ matrix.cppmodule }}
           -DIPADDRESS_NO_EXCEPTIONS=${{ matrix.exception == 'no-exceptions' }}
 
       - name: Build

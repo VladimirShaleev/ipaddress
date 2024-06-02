@@ -2,7 +2,7 @@
 
 @tableofcontents
 
-## IP addresses
+## IP addresses {#ip-addresses}
 
 For working with IP addresses, the library provides three classes:
 
@@ -17,7 +17,7 @@ For working with IP addresses, the library provides three classes:
 @note All operations on addresses support compile-time computations. If an address is specified as a constant, during compilation, we get: errors if the address was entered incorrectly, the resulting IP address represented as bytes, and any other operations on addresses.
 @endparblock
 
-### Parsing ip strings
+### Parsing ip strings {#ip-parsing}
 
 Let's look at examples of obtaining IP addresses from string literals and strings.
 
@@ -115,7 +115,7 @@ int main() {
 
 @remark The library also supports working with Unicode C++ strings such as **UTF-8**, **UTF-16**, **UTF-32** and **wide-char** (`char8_t`, `char16_t`, `char32_t` and `wchar_t`). For strings with a base type of `char`, it is assumed that the input string consists of an **ASCII** character sequence and is not encoded with any encoding. If your application uses the Unicode encoding **UTF-8** for incoming strings with a base type of `char`, you can define the macro `IPADDRESS_CHAR_IS_UTF8`. In this case, all incoming strings with a base type of `char` will be interpreted as **UTF-8** encoding. Despite the support for Unicode, it's important to note that for successful parsing of IP addresses, the incoming string must contain valid symbols for IP addresses.
 
-### From uint/To uint
+### From uint/To uint {#uint-cast}
 
 Below is code demonstrating how to create IP addresses from unsigned integers and convert them back to unsigned integers.
 
@@ -149,7 +149,7 @@ int main() {
 
 @note `ipaddress` defines its type `uint128_t` to work with 128-bit unsigned integers. It is designed to fill the gap in the C++ standard, which does not natively support 128-bit integers across all platforms. Unlike compiler-specific extensions like `__int128`, `uint128_t` ensures compatibility and portability across different compilers and architectures. <br> The implementation is inspired by the algorithms used in the .NET framework's [UInt128](https://source.dot.net/#System.Private.CoreLib/src/libraries/System.Private.CoreLib/src/System/UInt128.cs), providing a reliable foundation for arithmetic operations and other integer-related functionalities.
 
-### Working with bytes
+### Working with bytes {#bytes}
 
 Below is an example of working with bytes and pointers to bytes directly.
 
@@ -206,7 +206,7 @@ int main() {
 }
 ```
 
-### Comparison
+### Comparison {#ip-compare}
 
 For classes for working with IP addresses, comparison operators and spaceship operator (for C++20 and newer) have been redefined.
 
@@ -247,7 +247,7 @@ int main() {
 }
 ```
 
-### Properties
+### Properties {#ip-properties}
 
 The library provides many properties for determining certain features of an IP address. Let's look at the example below (all possible properties are not presented here; for a more complete picture, see the [documentation for the code](classipaddress_1_1ip__address.html#pub-methods)).
 
@@ -273,7 +273,7 @@ int main() {
 }
 ```
 
-### Convert to string
+### Convert to string {#ip-to-string}
 
 There are three different formats for converting IP addresses to strings as you can see below.
 
@@ -302,7 +302,7 @@ int main() {
 }
 ```
 
-## IP networks
+## IP networks {#ip-networks}
 
 - **ipv4_network** — A class for working with IPv4 networks.
 - **ipv6_network** — A class for working with IPv6 networks.
@@ -312,7 +312,7 @@ Networks store two IP addresses (network address and netmask), as well as the pr
 
 Working with networks is similar to working with addresses. So let's get straight to the examples.
 
-### Parsing ip network strings
+### Parsing ip network strings {#network-parsing}
 
 Let's look at examples of obtaining networks from string literals and strings.
 
@@ -394,7 +394,7 @@ int main() {
 }
 ```
 
-### Create from address
+### Create from address {#network-from-address}
 
 A network can be created from an IP address and a prefixlen.
 
@@ -418,7 +418,7 @@ int main() {
 }
 ```
 
-### Comparison
+### Comparison {#network-compare}
 
 For classes for working with IP networks, comparison operators and spaceship operator (for C++20 and newer) have been redefined.
 
@@ -458,7 +458,7 @@ int main() {
 }
 ```
 
-### Properties
+### Properties {#network-properties}
 
 The library provides many properties for determining certain features of an IP network. Let's look at the example below (all possible properties are not presented here; for a more complete picture, see the [documentation for the code](classipaddress_1_1ip__network.html#pub-methods)).
 
@@ -480,7 +480,7 @@ int main() {
 }
 ```
 
-### Convert to string
+### Convert to string {#network-to-string}
 
 There are three different formats for converting IP networks to strings as you can see below.
 
@@ -504,7 +504,7 @@ int main() {
 }
 ```
 
-## Scope Id
+## Scope Id {#scope-id}
 
 The library supports **Scope Id** both as numeric values and as strings.
 
@@ -554,7 +554,7 @@ int main() {
 
 @remark By default, the use of whitespace characters in the scope id is not permitted. If a whitespace character is found in the incoming string within the scope id (for example, `fe80::1ff:fe23:4567:890a%et h2`), an error with the code `error_code::invalid_scope_id` will be generated. However, if for some reason you need to parse and save spaces in the scope id, you can define the macro `IPADDRESS_SCOPE_ID_SUPPORT_SPACES`.
 
-## Std overrides
+## Std overrides {#std-overrides}
 
 @note If, for some reason, you don't want the library to overload standard functions, you can define `IPADDRESS_NO_OVERLOAD_STD` during compilation.
 

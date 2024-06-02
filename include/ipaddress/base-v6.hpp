@@ -38,7 +38,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_invalid_s
  * 
  * @tparam Ext The extension type that provides additional functionality.
  */
-template <typename Ext>
+IPADDRESS_EXPORT template <typename Ext>
 class base_v6 {
 public:
     using base_type = byte_array<16>;

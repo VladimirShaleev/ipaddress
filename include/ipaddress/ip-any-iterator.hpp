@@ -40,7 +40,7 @@ namespace IPADDRESS_NAMESPACE {
  * @tparam Ipv4Iter The type of IPv4 iterator
  * @tparam Ipv6Iter The type of IPv6 iterator
  */
-template <typename T, typename Ipv4Iter, typename Ipv6Iter>
+IPADDRESS_EXPORT template <typename T, typename Ipv4Iter, typename Ipv6Iter>
 class ip_any_iterator {
 public:
     using iterator_category = std::random_access_iterator_tag; /**< Iterator category. */
@@ -476,7 +476,7 @@ private:
  * @tparam Base The base type from which the ip_address_base is derived, representing the underlying IP address type.
  * @remark When iterating, obtaining addresses occurs through lazy calculations.
  */
-class hosts_any_sequence {
+IPADDRESS_EXPORT class hosts_any_sequence {
 public:
     using value_type      = ip_address; /**< The type of the IP addresses in the sequence. */
     using size_type       = size_t; /**< The type used for representing the size of the sequence. */
@@ -654,7 +654,7 @@ private:
  * @tparam T The type of IP network to be divided into subnets.
  * @remark When iterating, obtaining networks occurs through lazy calculations.
  */
-template <typename T>
+IPADDRESS_EXPORT template <typename T>
 class subnets_any_sequence {
 public:
     using value_type      = T; /**< The type of subnet value. */
