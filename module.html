@@ -20,7 +20,7 @@
 <meta name="twitter:title" content="ipaddress" />
 <meta name="twitter:description" content="A library for working and manipulating IPv4/IPv6 addresses and networks in modern C++." />
 <!-- END twitter metadata -->
-<title>ipaddress: Class Members</title>
+<title>ipaddress: Cpp Module (C++20 and newer)</title>
 <link rel="icon" href="logo.svg" type="image/svg+xml" />
 <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 <link rel="icon" sizes="16x16" href="favicon-16x16.png" type="image/png">
@@ -126,7 +126,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(function(){initNavTree('functions_d.html',''); initResizable(); });
+$(function(){initNavTree('module.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -151,14 +151,104 @@ $(function(){initNavTree('functions_d.html',''); initResizable(); });
 </div>
 </div>
 
+<div><div class="header">
+  <div class="headertitle"><div class="title">Cpp Module (C++20 and newer)</div></div>
+</div><!--header-->
 <div class="contents">
-<div class="textblock">Here is a list of all documented class members with links to the class documentation for each member:</div>
-
-<h3><a id="index_d" name="index_d"></a>- d -</h3><ul>
-<li>data()&#160;:&#160;<a class="el" href="structipaddress_1_1byte__array.html#a23ec68b7af63ea5f07e792abb4c89c36">byte_array&lt; N &gt;</a>, <a class="el" href="structipaddress_1_1fixed__string.html#a693534e389ddda23aa0c78ce0c8be28c">fixed_string&lt; N &gt;</a>, <a class="el" href="classipaddress_1_1ip__address.html#a0d9a729be6a18d533666b5a9f317c6bd">ip_address</a>, <a class="el" href="classipaddress_1_1ip__address__base.html#a0d9a729be6a18d533666b5a9f317c6bd">ip_address_base&lt; Base &gt;</a></li>
-<li>difference_type&#160;:&#160;<a class="el" href="structipaddress_1_1byte__array.html#aec07e0ee98729a19bc41fe09e433f5d0">byte_array&lt; N &gt;</a>, <a class="el" href="classipaddress_1_1exclude__network__sequence.html#a9d3ed3472c1318c01ce6cd4e3479d88c">exclude_network_sequence&lt; T &gt;</a>, <a class="el" href="classipaddress_1_1hosts__any__sequence.html#a08d44d0ac366bd6b1a9df1c1161f28dd">hosts_any_sequence</a>, <a class="el" href="classipaddress_1_1hosts__sequence_3_01ip__address__base_3_01Base_01_4_01_4.html#a9d3ed3472c1318c01ce6cd4e3479d88c">hosts_sequence&lt; ip_address_base&lt; Base &gt; &gt;</a>, <a class="el" href="classipaddress_1_1ip__address__iterator_3_01ip__address__base_3_01Base_01_4_01_4.html#acc4e70b6c5f2e22e6051b6ec3bb523de">ip_address_iterator&lt; ip_address_base&lt; Base &gt; &gt;</a>, <a class="el" href="classipaddress_1_1ip__any__iterator.html#acc4e70b6c5f2e22e6051b6ec3bb523de">ip_any_iterator&lt; T, Ipv4Iter, Ipv6Iter &gt;</a>, <a class="el" href="classipaddress_1_1ip__exclude__network__iterator.html#acc4e70b6c5f2e22e6051b6ec3bb523de">ip_exclude_network_iterator&lt; T &gt;</a>, <a class="el" href="classipaddress_1_1ip__network__iterator.html#acc4e70b6c5f2e22e6051b6ec3bb523de">ip_network_iterator&lt; T &gt;</a>, <a class="el" href="classipaddress_1_1ip__reverse__iterator.html#ad050e8e82b0962bb9ebd0e7c23b436ac">ip_reverse_iterator&lt; Iterator &gt;</a>, <a class="el" href="classipaddress_1_1subnets__any__sequence.html#a08d44d0ac366bd6b1a9df1c1161f28dd">subnets_any_sequence&lt; T &gt;</a>, <a class="el" href="classipaddress_1_1subnets__sequence.html#a9d3ed3472c1318c01ce6cd4e3479d88c">subnets_sequence&lt; T &gt;</a></li>
+<div class="toc"><h3>Table of Contents</h3>
+<ul><ul><li class="level2"><a href="#import-module">Using the Module</a></li>
+<li class="level2"><a href="#restrictions">Restrictions on the use of modules</a></li>
+<li class="level2"><a href="#cpp-module-articles">Additional links</a></li>
 </ul>
-</div><!-- contents -->
+</ul>
+</div>
+<div class="textblock"><p>This library can be integrated as a C++ module. C++ modules, introduced in the C++20 standard, not only expedite the compilation process but also make the use of C++ more natural.</p>
+<p>To leverage these benefits, ensure you have the right toolset, which includes a modern compiler, a compatible build system, and CMake version 3.28 or later (or 3.26 with extensions).</p>
+<h2><a class="anchor" id="import-module"></a>
+Using the Module</h2>
+<p>By default, the target assembly for the C++ module is not enabled. To activate it, you need to set the <code>-DIPADDRESS_BUILD_MODULE=ON</code> flag in your configuration parameters or explicitly specify it in your CMake file.</p>
+<p>If your compiler is compatible with the <b>C++20</b> standard or newer, you can import the <code>ipaddress</code> module as shown below (there are many restrictions for using C++ modules, read about them <a class="el" href="#restrictions">in the next section</a>):</p>
+<div class="fragment"><div class="line">cmake_minimum_required(VERSION 3.28.0)</div>
+<div class="line"> </div>
+<div class="line">project(my-project LANGUAGES CXX)</div>
+<div class="line"> </div>
+<div class="line">set(CMAKE_CXX_STANDARD 23) # or: set(CMAKE_CXX_STANDARD 20)</div>
+<div class="line"> </div>
+<div class="line">option(IPADDRESS_BUILD_MODULE &quot;Build Cpp module&quot; ON)</div>
+<div class="line">add_subdirectory(third-party/ipaddress)</div>
+<div class="line"> </div>
+<div class="line">add_executable(my-project main.cpp)</div>
+<div class="line">target_link_libraries(my-project PRIVATE ipaddress::ipaddress-module) # add the module to your target </div>
+<div class="line">set_target_properties(my-project PROPERTIES CXX_SCAN_FOR_MODULES ON)</div>
+<div class="line">set_target_properties(my-project PROPERTIES CXX_EXTENSIONS OFF)</div>
+</div><!-- fragment --><p>After which you can import the module in your source files:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">import</span> ipaddress;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="keyword">auto</span> ip = <a class="code hl_function" href="classipaddress_1_1ip__address__base.html#a4b8772efdbcdd5c633c2aa31a97f3ed1">ipaddress::ipv4_address::parse</a>&lt;<span class="stringliteral">&quot;127.0.0.1&quot;</span>&gt;();</div>
+<div class="line">    std::cout &lt;&lt; ip &lt;&lt; std::endl;</div>
+<div class="line">    <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassipaddress_1_1ip__address__base_html_a4b8772efdbcdd5c633c2aa31a97f3ed1"><div class="ttname"><a href="classipaddress_1_1ip__address__base.html#a4b8772efdbcdd5c633c2aa31a97f3ed1">ipaddress::ip_address_base&lt; ipv4_address_base &gt;::parse</a></div><div class="ttdeci">static consteval inline ip_address_base&lt; ipv4_address_base &gt; parse() noexcept</div><div class="ttdoc">Static method template to parse an IP address from a fixed string at compile time.</div><div class="ttdef"><b>Definition</b> ip-address-base.hpp:123</div></div>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>Currently, the <code>ipaddress::ipaddress-module</code> is not available via package managers such as Vcpkg or Conan. This is primarily due to the absence of established best practices for integrating C++ modules into package distributions.</dd></dl>
+<h2><a class="anchor" id="restrictions"></a>
+Restrictions on the use of modules</h2>
+<p>Considerations for the use of C++ modules include compiler support and build system requirements. The following compilers are known to support C++ modules:</p>
+<ul>
+<li>Clang 16 or later;</li>
+<li>MSVC 17.4 or later;</li>
+<li>GCC 14 or later.</li>
+</ul>
+<p>CMake version 3.28 or higher is required, although version 3.26 may suffice if extensions are enabled. Currently, CMake offers support for C++ modules with these specific generators:</p>
+<ul>
+<li>Ninja and Ninja Multi-Config;</li>
+<li>Visual Studio.</li>
+</ul>
+<p>Additionally, there are notable considerations:</p>
+<ul>
+<li>CMake is presently capable of exporting targets with C++ modules for subsequent imports, but only with the Ninja and Ninja Multi-Config generators;</li>
+<li>On Windows, certain issues have been observed when utilizing modules with Clang;</li>
+<li>It is generally acknowledged that most editors lack comprehensive support for modules. Consequently, when using such editors, functionalities like IntelliSense may not perform reliably.</li>
+</ul>
+<dl class="section note"><dt>Note</dt><dd>In essence, it is crucial to recognize that the ecosystem for C++ modules and build systems is in a state of ongoing development. The structuring for their support is only beginning to take shape. Furthermore, the best practices for integrating these modules into distributable packages managed by package managers are still being formulating.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>The current landscape of C++ modules presents several challenges. It's crucial to assess their suitability for your project. If your product requires compilation across a broad range of platforms and toolsets, including older versions, modules might not be the optimal choice. Conversely, if your product is tailored for a specific platform and you have a consistent toolset, utilizing C++ modules, including those from the standard library, could greatly enhance compilation efficiency.</dd></dl>
+<h2><a class="anchor" id="cpp-module-articles"></a>
+Additional links</h2>
+<p>For more insights into integrating modules in your C++ projects, consider exploring these articles:</p><ul>
+<li><a href="https://crascit.com/2024/04/04/cxx-modules-cmake-shared-libraries/">https://crascit.com/2024/04/04/cxx-modules-cmake-shared-libraries/</a></li>
+<li><a href="https://www.kitware.com/import-cmake-the-experiment-is-over/">https://www.kitware.com/import-cmake-the-experiment-is-over/</a></li>
+</ul>
+<p> 
+
+<div class="cards">
+
+<div class="card">
+  <a href="errors.html">
+  <div class="card_container">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Arrow / Arrow_Circle_Left"> <path id="Vector" d="M11 9L8 12M8 12L11 15M8 12H16M21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21C16.9706 21 21 16.9706 21 12Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g></svg>
+    <h2>Error Handling</h2>
+    <p>Back to error handling.</p>
+  </div>
+  </a>
+</div>
+
+<div class="card">
+  <a href="benchmark.html">
+  <div class="card_container">
+    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Arrow / Arrow_Circle_Right"> <path id="Vector" d="M13 15L16 12M16 12L13 9M16 12H8M21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21C16.9706 21 21 16.9706 21 12Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g></svg>
+    <h2>Benchmark</h2>
+    <p>Comparison of IP address parsing performance with library boost asio and sockets API.</p>
+  </div>
+  </a>
+</div>
+
+</div>
+
+ </p>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.10.0-->
 <!-- start footer part -->

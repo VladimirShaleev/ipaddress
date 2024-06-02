@@ -156,29 +156,29 @@ $(function(){initNavTree('index.html',''); initResizable(); });
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
-<ul><ul><li class="level2"><a href="#autotoc_md0">Introduction</a></li>
-<li class="level2"><a href="#autotoc_md1">Compatibility</a></li>
-<li class="level2"><a href="#autotoc_md2">Installation</a><ul><li class="level3"><a href="#autotoc_md3">Use package managers</a><ul><li class="level4"><a href="#autotoc_md4">Conan</a></li>
-<li class="level4"><a href="#autotoc_md5">Vcpkg</a></li>
-<li class="level4"><a href="#autotoc_md6">Ubuntu PPA</a></li>
+<ul><ul><li class="level2"><a href="#introduction">Introduction</a></li>
+<li class="level2"><a href="#compatibility">Compatibility</a></li>
+<li class="level2"><a href="#installation">Installation</a><ul><li class="level3"><a href="#use-package-managers">Use package managers</a><ul><li class="level4"><a href="#conan">Conan</a></li>
+<li class="level4"><a href="#vcpkg">Vcpkg</a></li>
+<li class="level4"><a href="#ppa">Ubuntu PPA</a></li>
 </ul>
 </li>
-<li class="level3"><a href="#autotoc_md7">Use as a Submodule with CMake</a></li>
-<li class="level3"><a href="#autotoc_md8">Use CMake FetchContent</a></li>
+<li class="level3"><a href="#submodule">Use as a Submodule with CMake</a></li>
+<li class="level3"><a href="#fetch-content">Use CMake FetchContent</a></li>
 </ul>
 </li>
-<li class="level2"><a href="#autotoc_md9">Quick Start</a></li>
-<li class="level2"><a href="#autotoc_md10">Contributing</a><ul><li class="level3"><a href="#autotoc_md11">Issues</a></li>
-<li class="level3"><a href="#autotoc_md12">Pull Requests</a></li>
+<li class="level2"><a href="#quick-start">Quick Start</a></li>
+<li class="level2"><a href="#contributing">Contributing</a><ul><li class="level3"><a href="#issues">Issues</a></li>
+<li class="level3"><a href="#pull-requests">Pull Requests</a></li>
 </ul>
 </li>
-<li class="level2"><a href="#autotoc_md13">Licensing</a></li>
+<li class="level2"><a href="#licensing">Licensing</a></li>
 </ul>
 </ul>
 </div>
 <div class="textblock"><p><a href="https://github.com/VladimirShaleev/ipaddress/releases"><img src="https://img.shields.io/github/v/release/vladimirshaleev/ipaddress?sort=semver&amp;display_name=tag" alt="GitHub Release" class="inline"/></a> <a href="https://conan.io/center/recipes/ipaddress"><img src="https://img.shields.io/conan/v/ipaddress" alt="Conan Center" class="inline"/></a> <a href="https://vcpkgx.com/details.html?package=vladimirshaleev-ipaddress"><img src="https://img.shields.io/vcpkg/v/vladimirshaleev-ipaddress" alt="Vcpkg Version" class="inline"/></a> <a href="https://github.com/VladimirShaleev/ipaddress/blob/main/LICENSE"><img src="https://img.shields.io/github/license/vladimirshaleev/ipaddress" alt="GitHub License" class="inline"/></a> <a href="https://github.com/VladimirShaleev/ipaddress/actions/workflows/tests.yml"><img src="https://img.shields.io/github/actions/workflow/status/vladimirshaleev/ipaddress/tests.yml?branch=main&amp;logo=github&amp;label=tests" alt="GitHub Actions Workflow Status" class="inline"/></a></p>
 <p>A library for working and manipulating IPv4/IPv6 addresses and networks in modern C++.</p>
-<h2><a class="anchor" id="autotoc_md0"></a>
+<h2><a class="anchor" id="introduction"></a>
 Introduction</h2>
 <p>This cross-platfrom <b>header-only</b> library (for C++11 and newer) is inspired by the <a href="https://docs.python.org/3.12/library/ipaddress.html">ipaddress API in Python</a>, from which it derives its name. It aims to be simpler to use due to its familiar interface. However, the C++ implementation takes a different approach: it uses <b>static polymorphism</b> through the strategy pattern instead of dynamic polymorphism to handle differences between IP versions (IPv4 and IPv6). This design choice eliminates the overhead of dynamic calls and virtual tables. For instance, an instance of the <b>ipv4_address</b> class will be represented by 4 bytes.</p>
 <p>The library leverages modern C++ features, ensuring that all IP address and network operations support constant expressions.</p>
@@ -186,7 +186,7 @@ Introduction</h2>
 <img src="constexpr.png" alt=""/>
 <div class="caption">
 Errors are known at Compile Time</div></div>
-    <h2><a class="anchor" id="autotoc_md1"></a>
+    <h2><a class="anchor" id="compatibility"></a>
 Compatibility</h2>
 <p>The library has been tested on the following compilers:</p>
 <ul>
@@ -195,18 +195,18 @@ Compatibility</h2>
 <li>GCC 7.5.0 and newer;</li>
 <li>MSVC 14.29 (Visual Studio 16.11) and newer</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md2"></a>
+<h2><a class="anchor" id="installation"></a>
 Installation</h2>
 <p>You can install in one of the following ways</p>
-<h3><a class="anchor" id="autotoc_md3"></a>
+<h3><a class="anchor" id="use-package-managers"></a>
 Use package managers</h3>
-<h4><a class="anchor" id="autotoc_md4"></a>
+<h4><a class="anchor" id="conan"></a>
 Conan</h4>
 <p>Add <b>ipaddress</b> dependency to <code>conanfile.txt</code>:</p>
 <div class="fragment"><div class="line">[requires]</div>
 <div class="line">ipaddress/1.0.1</div>
 </div><!-- fragment --><p>More information and installation options can be found here <a href="https://conan.io/center/recipes/ipaddress">https://conan.io/center/recipes/ipaddress</a></p>
-<h4><a class="anchor" id="autotoc_md5"></a>
+<h4><a class="anchor" id="vcpkg"></a>
 Vcpkg</h4>
 <p>You can install <b>ipaddress</b> using <a href="https://github.com/microsoft/vcpkg#getting-started">vcpkg</a> dependency manager as follows:</p>
 <div class="fragment"><div class="line">./vcpkg install vladimirshaleev-ipaddress</div>
@@ -215,7 +215,7 @@ Vcpkg</h4>
 <div class="line">  &quot;name&quot;: &quot;my-project&quot;,</div>
 <div class="line">  &quot;dependencies&quot;: [ &quot;vladimirshaleev-ipaddress&quot; ]</div>
 <div class="line">}</div>
-</div><!-- fragment --><h4><a class="anchor" id="autotoc_md6"></a>
+</div><!-- fragment --><h4><a class="anchor" id="ppa"></a>
 Ubuntu PPA</h4>
 <div class="fragment"><div class="line">sudo add-apt-repository ppa:vladimirshaleev/ipaddress</div>
 <div class="line">sudo apt update</div>
@@ -230,7 +230,7 @@ Ubuntu PPA</h4>
 <div class="line"> </div>
 <div class="line">add_executable(my_project main.cpp)</div>
 <div class="line">target_link_libraries(my_project ipaddress::ipaddress) # add the library to your target</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md7"></a>
+</div><!-- fragment --><h3><a class="anchor" id="submodule"></a>
 Use as a Submodule with CMake</h3>
 <p>Go to your project directory and add a submodule:</p>
 <div class="fragment"><div class="line">cd my_project</div>
@@ -244,7 +244,7 @@ Use as a Submodule with CMake</h3>
 <div class="line"> </div>
 <div class="line">add_executable(my_project main.cpp)</div>
 <div class="line">target_link_libraries(my_project ipaddress::ipaddress) # add the library to your target</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md8"></a>
+</div><!-- fragment --><h3><a class="anchor" id="fetch-content"></a>
 Use CMake FetchContent</h3>
 <div class="fragment"><div class="line">cmake_minimum_required(VERSION 3.8.0)</div>
 <div class="line"> </div>
@@ -260,7 +260,7 @@ Use CMake FetchContent</h3>
 <div class="line"> </div>
 <div class="line">add_executable(my_project main.cpp)</div>
 <div class="line">target_link_libraries(my_project ipaddress::ipaddress) # add the library to your target</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md9"></a>
+</div><!-- fragment --><h2><a class="anchor" id="quick-start"></a>
 Quick Start</h2>
 <p>The library provides capabilities for creating, analyzing and managing IPv4 and IPv6 addresses and networks using classes such as <b>ipv4_address</b>, <b>ipv6_address</b>, <b>ip_address</b> (any IP version), <b>ipv4_network</b>, <b>ipv6_network</b> and <b>ip_network</b> (any IP version). It also offers error handling methods with or without exceptions if for some reason exceptions are not used or disabled in your project.</p>
 <p>To start using the library, simply include the header <code><a class="el" href="ipaddress_8hpp.html" title="The main include file for the ipaddress library.">ipaddress/ipaddress.hpp</a></code>, and you’re ready to begin your work!</p>
@@ -306,13 +306,13 @@ Quick Start</h2>
 <div class="line">}</div>
 <div class="ttc" id="aipaddress_8hpp_html"><div class="ttname"><a href="ipaddress_8hpp.html">ipaddress.hpp</a></div><div class="ttdoc">The main include file for the ipaddress library.</div></div>
 <div class="ttc" id="anamespaceipaddress_html"><div class="ttname"><a href="namespaceipaddress.html">ipaddress</a></div><div class="ttdoc">Namespace dedicated to IP addresses and networks operations.</div><div class="ttdef"><b>Definition</b> base-v4.hpp:18</div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md10"></a>
+</div><!-- fragment --><h2><a class="anchor" id="contributing"></a>
 Contributing</h2>
 <p>ipaddress welcomes contributions and appreciates contributions from the community. Please follow the code below.</p>
-<h3><a class="anchor" id="autotoc_md11"></a>
+<h3><a class="anchor" id="issues"></a>
 Issues</h3>
 <p>We welcome you to submit any issues or enhancement requests. When doing so, please provide minimal reproducible examples, as source code is often more effective in helping others understand the issue. If you encounter crash problems on specific platforms, please include operating system and compiler information.</p>
-<h3><a class="anchor" id="autotoc_md12"></a>
+<h3><a class="anchor" id="pull-requests"></a>
 Pull Requests</h3>
 <p>We welcome pull requests for fixes and features. To avoid any unnecessary time investment, we strongly recommend opening an issue to discuss whether the proposed PR aligns with our guidelines.</p>
 <p>To do this, follow these steps:</p>
@@ -326,7 +326,7 @@ Pull Requests</h3>
 </ol>
 <p>NOTE: Be sure to merge the latest from "upstream" before making a pull request!</p>
 <p>Currently, I am the sole maintainer of this project. Therefore, I will monitor questions, suggestions, as well as community activity and interest in this project to the best of my abilities.</p>
-<h2><a class="anchor" id="autotoc_md13"></a>
+<h2><a class="anchor" id="licensing"></a>
 Licensing</h2>
 <div class="fragment"><div class="line">MIT License</div>
 <div class="line"> </div>

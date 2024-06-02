@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['handling_0',['Handling',['../errors.html',1,'Error Handling'],['../errors.html#autotoc_md33',1,'Exception Handling']]],
-  ['handling_20error_20codes_1',['Handling Error Codes',['../errors.html#autotoc_md34',1,'']]],
+  ['handling_0',['Handling',['../errors.html',1,'Error Handling'],['../errors.html#exceptions',1,'Exception Handling']]],
+  ['handling_20error_20codes_1',['Handling Error Codes',['../errors.html#error-codes',1,'']]],
   ['has_5fhost_5fbits_5fset_2',['has_host_bits_set',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689dacc88bd2276818f5831768af64bf979c2',1,'ipaddress']]],
   ['has_5fstring_3',['has_string',['../classipaddress_1_1scope.html#a80338a97a8bc31b4523d3ec6db8fbc8c',1,'ipaddress::scope']]],
   ['has_5fuint32_4',['has_uint32',['../classipaddress_1_1scope.html#a3eacfbff9a710760b642ac9bc8668008',1,'ipaddress::scope']]],

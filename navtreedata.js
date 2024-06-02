@@ -29,6 +29,7 @@ var NAVTREE =
     [ "Tutorial", "tutorial.html", null ],
     [ "Network Operations", "operations.html", null ],
     [ "Error Handling", "errors.html", null ],
+    [ "Cpp Module (C++20 and newer)", "module.html", null ],
     [ "Benchmark", "benchmark.html", null ],
     [ "Build Guide", "build.html", null ],
     [ "Namespaces", "namespaces.html", [
@@ -66,7 +67,7 @@ var NAVTREEINDEX =
 "classipaddress_1_1ip__network__iterator.html#a713197158fdd4c910d9da97a8007e2a5",
 "classipaddress_1_1parse__error.html#a0a3e52ec175378c040619cbcb18226d5",
 "classipaddress_1_1uint128__t.html#a79ec2937b36a943af9e1c3619e7a2f75",
-"namespaceipaddress.html#a5185e4b81c8f00e79c354502b1c92b75"
+"namespaceipaddress.html#a4e653376242842495c4c74d56d5ecc95"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

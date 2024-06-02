@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['network_20operations_0',['Network Operations',['../operations.html',1,'']]]
+  ['error_20handling_0',['Error Handling',['../errors.html',1,'']]]
 ];

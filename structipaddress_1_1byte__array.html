@@ -175,10 +175,10 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>value_type</b> = uin
 using&#160;</td><td class="memItemRight" valign="bottom"><b>size_type</b> = size_t</td></tr>
 <tr class="memdesc:a8560ac5527cd0ed38d71e0e58acc8021"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type representing sizes and counts. <br /></td></tr>
 <tr class="separator:a8560ac5527cd0ed38d71e0e58acc8021"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace405568d0b2f3fad4990044252c7732" id="r_ace405568d0b2f3fad4990044252c7732"><td class="memItemLeft" align="right" valign="top"><a id="ace405568d0b2f3fad4990044252c7732" name="ace405568d0b2f3fad4990044252c7732"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>difference_type</b> = std::ptrdiff_t</td></tr>
-<tr class="memdesc:ace405568d0b2f3fad4990044252c7732"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type representing the difference between two pointers. <br /></td></tr>
-<tr class="separator:ace405568d0b2f3fad4990044252c7732"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec07e0ee98729a19bc41fe09e433f5d0" id="r_aec07e0ee98729a19bc41fe09e433f5d0"><td class="memItemLeft" align="right" valign="top"><a id="aec07e0ee98729a19bc41fe09e433f5d0" name="aec07e0ee98729a19bc41fe09e433f5d0"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>difference_type</b> = ptrdiff_t</td></tr>
+<tr class="memdesc:aec07e0ee98729a19bc41fe09e433f5d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The type representing the difference between two pointers. <br /></td></tr>
+<tr class="separator:aec07e0ee98729a19bc41fe09e433f5d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4738635aff9c2bb2c8ccc2875ae72496" id="r_a4738635aff9c2bb2c8ccc2875ae72496"><td class="memItemLeft" align="right" valign="top"><a id="a4738635aff9c2bb2c8ccc2875ae72496" name="a4738635aff9c2bb2c8ccc2875ae72496"></a>
 using&#160;</td><td class="memItemRight" valign="bottom"><b>pointer</b> = <a class="el" href="#a2da55ba73b4b8b1e2cdff3ca37d6696e">value_type</a>*</td></tr>
 <tr class="memdesc:a4738635aff9c2bb2c8ccc2875ae72496"><td class="mdescLeft">&#160;</td><td class="mdescRight">A pointer to an element in the <a class="el" href="structipaddress_1_1byte__array.html" title="A template class for creating and managing a fixed-size array of bytes.">byte_array</a>. <br /></td></tr>
@@ -247,18 +247,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:afb19ff73072244817f9aac33b3fbd2d7" id="r_afb19ff73072244817f9aac33b3fbd2d7"><td class="memItemLeft" align="right" valign="top">constexpr inline size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afb19ff73072244817f9aac33b3fbd2d7">max_size</a> () const noexcept</td></tr>
 <tr class="memdesc:afb19ff73072244817f9aac33b3fbd2d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the maximum size of the <a class="el" href="structipaddress_1_1byte__array.html" title="A template class for creating and managing a fixed-size array of bytes.">byte_array</a>.  <br /></td></tr>
 <tr class="separator:afb19ff73072244817f9aac33b3fbd2d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a083ee8293c66c31c9431f0d54e0d559b" id="r_a083ee8293c66c31c9431f0d54e0d559b"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="#a74202cdd96628bc49a756e5fc87d22de">reference</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a083ee8293c66c31c9431f0d54e0d559b">operator[]</a> (size_t n)</td></tr>
-<tr class="memdesc:a083ee8293c66c31c9431f0d54e0d559b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accesses the element at the specified index with bounds checking.  <br /></td></tr>
-<tr class="separator:a083ee8293c66c31c9431f0d54e0d559b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a78e6b01b27acb884792fd60663263358" id="r_a78e6b01b27acb884792fd60663263358"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="#ab1137da269e66589b98fce3416d40502">const_reference</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a78e6b01b27acb884792fd60663263358">operator[]</a> (size_t n) const</td></tr>
-<tr class="memdesc:a78e6b01b27acb884792fd60663263358"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accesses the element at the specified index with bounds checking (const version).  <br /></td></tr>
-<tr class="separator:a78e6b01b27acb884792fd60663263358"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace1802fffaa731cc338ec3f91167c818" id="r_ace1802fffaa731cc338ec3f91167c818"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="#a74202cdd96628bc49a756e5fc87d22de">reference</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ace1802fffaa731cc338ec3f91167c818">at</a> (size_t n)</td></tr>
-<tr class="memdesc:ace1802fffaa731cc338ec3f91167c818"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accesses the element at the specified index with bounds checking.  <br /></td></tr>
-<tr class="separator:ace1802fffaa731cc338ec3f91167c818"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9150c38a8a35fa520184ade29473e007" id="r_a9150c38a8a35fa520184ade29473e007"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="#ab1137da269e66589b98fce3416d40502">const_reference</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9150c38a8a35fa520184ade29473e007">at</a> (size_t n) const</td></tr>
-<tr class="memdesc:a9150c38a8a35fa520184ade29473e007"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accesses the element at the specified index with bounds checking (const version).  <br /></td></tr>
-<tr class="separator:a9150c38a8a35fa520184ade29473e007"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3095051949a6a9bcc00d3eea69f42e61" id="r_a3095051949a6a9bcc00d3eea69f42e61"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="#a74202cdd96628bc49a756e5fc87d22de">reference</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3095051949a6a9bcc00d3eea69f42e61">operator[]</a> (size_t n) noexcept</td></tr>
+<tr class="memdesc:a3095051949a6a9bcc00d3eea69f42e61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accesses the element at the specified index with bounds checking.  <br /></td></tr>
+<tr class="separator:a3095051949a6a9bcc00d3eea69f42e61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafba2835e76e2ca8539f81c56ffb390e" id="r_aafba2835e76e2ca8539f81c56ffb390e"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="#ab1137da269e66589b98fce3416d40502">const_reference</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aafba2835e76e2ca8539f81c56ffb390e">operator[]</a> (size_t n) const noexcept</td></tr>
+<tr class="memdesc:aafba2835e76e2ca8539f81c56ffb390e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accesses the element at the specified index with bounds checking (const version).  <br /></td></tr>
+<tr class="separator:aafba2835e76e2ca8539f81c56ffb390e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a441232469afdf76a19f617bf56ccee00" id="r_a441232469afdf76a19f617bf56ccee00"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="#a74202cdd96628bc49a756e5fc87d22de">reference</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a441232469afdf76a19f617bf56ccee00">at</a> (size_t n) noexcept</td></tr>
+<tr class="memdesc:a441232469afdf76a19f617bf56ccee00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accesses the element at the specified index with bounds checking.  <br /></td></tr>
+<tr class="separator:a441232469afdf76a19f617bf56ccee00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91cdc619f3559cc3ac3c6f626d647aaf" id="r_a91cdc619f3559cc3ac3c6f626d647aaf"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="#ab1137da269e66589b98fce3416d40502">const_reference</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a91cdc619f3559cc3ac3c6f626d647aaf">at</a> (size_t n) const noexcept</td></tr>
+<tr class="memdesc:a91cdc619f3559cc3ac3c6f626d647aaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accesses the element at the specified index with bounds checking (const version).  <br /></td></tr>
+<tr class="separator:a91cdc619f3559cc3ac3c6f626d647aaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2c11bbd65762091d1b70b8e055e05bc3" id="r_a2c11bbd65762091d1b70b8e055e05bc3"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="#a74202cdd96628bc49a756e5fc87d22de">reference</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2c11bbd65762091d1b70b8e055e05bc3">front</a> () noexcept</td></tr>
 <tr class="memdesc:a2c11bbd65762091d1b70b8e055e05bc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accesses the first element in the <a class="el" href="structipaddress_1_1byte__array.html" title="A template class for creating and managing a fixed-size array of bytes.">byte_array</a>.  <br /></td></tr>
 <tr class="separator:a2c11bbd65762091d1b70b8e055e05bc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -623,8 +623,8 @@ template&lt;size_t N&gt; </div>
 
 </div>
 </div>
-<a id="a083ee8293c66c31c9431f0d54e0d559b" name="a083ee8293c66c31c9431f0d54e0d559b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a083ee8293c66c31c9431f0d54e0d559b">&#9670;&#160;</a></span>operator[]() <span class="overload">[1/2]</span></h2>
+<a id="a3095051949a6a9bcc00d3eea69f42e61" name="a3095051949a6a9bcc00d3eea69f42e61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3095051949a6a9bcc00d3eea69f42e61">&#9670;&#160;</a></span>operator[]() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -643,7 +643,7 @@ template&lt;size_t N&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -665,8 +665,8 @@ template&lt;size_t N&gt; </div>
 
 </div>
 </div>
-<a id="a78e6b01b27acb884792fd60663263358" name="a78e6b01b27acb884792fd60663263358"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a78e6b01b27acb884792fd60663263358">&#9670;&#160;</a></span>operator[]() <span class="overload">[2/2]</span></h2>
+<a id="aafba2835e76e2ca8539f81c56ffb390e" name="aafba2835e76e2ca8539f81c56ffb390e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aafba2835e76e2ca8539f81c56ffb390e">&#9670;&#160;</a></span>operator[]() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -685,7 +685,7 @@ template&lt;size_t N&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -707,8 +707,8 @@ template&lt;size_t N&gt; </div>
 
 </div>
 </div>
-<a id="ace1802fffaa731cc338ec3f91167c818" name="ace1802fffaa731cc338ec3f91167c818"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ace1802fffaa731cc338ec3f91167c818">&#9670;&#160;</a></span>at() <span class="overload">[1/2]</span></h2>
+<a id="a441232469afdf76a19f617bf56ccee00" name="a441232469afdf76a19f617bf56ccee00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a441232469afdf76a19f617bf56ccee00">&#9670;&#160;</a></span>at() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -727,7 +727,7 @@ template&lt;size_t N&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -749,8 +749,8 @@ template&lt;size_t N&gt; </div>
 
 </div>
 </div>
-<a id="a9150c38a8a35fa520184ade29473e007" name="a9150c38a8a35fa520184ade29473e007"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9150c38a8a35fa520184ade29473e007">&#9670;&#160;</a></span>at() <span class="overload">[2/2]</span></h2>
+<a id="a91cdc619f3559cc3ac3c6f626d647aaf" name="a91cdc619f3559cc3ac3c6f626d647aaf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91cdc619f3559cc3ac3c6f626d647aaf">&#9670;&#160;</a></span>at() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -769,7 +769,7 @@ template&lt;size_t N&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

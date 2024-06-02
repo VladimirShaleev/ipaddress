@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['started_0',['Get Started',['../index.html',1,'']]]
+  ['handling_0',['Error Handling',['../errors.html',1,'']]]
 ];

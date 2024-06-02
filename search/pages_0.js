@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['benchmark_0',['Benchmark',['../benchmark.html',1,'']]],
-  ['build_20guide_1',['Build Guide',['../build.html',1,'']]]
+  ['20_20and_20newer_0',['Cpp Module (C++20 and newer)',['../module.html',1,'']]]
 ];

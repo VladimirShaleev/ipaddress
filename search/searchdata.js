@@ -9,7 +9,7 @@ var indexSectionsWithContent =
   6: "efi",
   7: "cdefhilmnopstuvw",
   8: "o",
-  9: "beghnost"
+  9: "2abceghmnost"
 };
 
 var indexSectionNames =
