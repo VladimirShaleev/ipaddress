@@ -166,7 +166,7 @@ $(function(){initNavTree('module.html',''); initResizable(); });
 <p>To leverage these benefits, ensure you have the right toolset, which includes a modern compiler, a compatible build system, and CMake version 3.28 or later (or 3.26 with extensions).</p>
 <h2><a class="anchor" id="import-module"></a>
 Using the Module</h2>
-<p>By default, the target assembly for the C++ module is not enabled. To activate it, you need to set the <code>-DIPADDRESS_BUILD_MODULE=ON</code> flag in your configuration parameters or explicitly specify it in your CMake file.</p>
+<p>By default, the target assembly for the C++ module is not enabled. To activate it, you need to set the <code style="white-space: nowrap;">-DIPADDRESS_BUILD_MODULE=ON</code> flag in your configuration parameters or explicitly specify it in your CMake file.</p>
 <p>If your compiler is compatible with the <b>C++20</b> standard or newer, you can import the <code>ipaddress</code> module as shown below (there are many restrictions for using C++ modules, read about them <a class="el" href="#restrictions">in the next section</a>):</p>
 <div class="fragment"><div class="line">cmake_minimum_required(VERSION 3.28.0)</div>
 <div class="line"> </div>
