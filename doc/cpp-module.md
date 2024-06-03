@@ -8,7 +8,7 @@ To leverage these benefits, ensure you have the right toolset, which includes a 
 
 ## Using the Module {#import-module}
 
-By default, the target assembly for the C++ module is not enabled. To activate it, you need to set the `-DIPADDRESS_BUILD_MODULE=ON` flag in your configuration parameters or explicitly specify it in your CMake file.
+By default, the target assembly for the C++ module is not enabled. To activate it, you need to set the <code style="white-space: nowrap;">-DIPADDRESS_BUILD_MODULE=ON</code> flag in your configuration parameters or explicitly specify it in your CMake file.
 
 If your compiler is compatible with the **C++20** standard or newer, you can import the `ipaddress` module as shown below (there are many restrictions for using C++ modules, read about them [in the next section](#restrictions)):
 
