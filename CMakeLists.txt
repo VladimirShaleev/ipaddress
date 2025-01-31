@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8.0)
+cmake_minimum_required(VERSION 3.11)
 
 option(IPADDRESS_NO_EXCEPTIONS "Disable handling cpp exception for" OFF)
 option(IPADDRESS_NO_IPV6_SCOPE "Disable scope id for IPv6 addresses" OFF)
