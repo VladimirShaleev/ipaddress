@@ -106,7 +106,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        macos: [ 11, 12, 13, 14, 15, 16 ]
+        macos: [ 13, 14, 15 ]
         standard: [ 11, 14, 17, 20, 23 ]
         exception: [ "exceptions" ]
         include:
@@ -153,7 +153,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        gcc: [ 7, 8, 9, 10, 11, 13, 14 ]
+        gcc: [ 7, 8, 9, 10, 11, 13 ]
         standard: [ 11, 14, 17, 20, 23 ]
         exception: [ "exceptions" ]
         include:
@@ -203,7 +203,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: [ "14.29", "14.39" ]
+        version: [ "14.29", "" ]
         standard: [ 14, 17, 20, 23 ]
         exception: [ "exceptions" ]
         cppmodule: [ "OFF" ]
@@ -216,11 +216,11 @@ jobs:
             standard: 23
             exception: "no-exceptions"
             cppmodule: "OFF"
-          - version: "14.39"
+          - version: ""
             standard: 20
             exception: "exceptions"
             cppmodule: "ON"
-          - version: "14.39"
+          - version: ""
             standard: 23
             exception: "exceptions"
             cppmodule: "ON"
