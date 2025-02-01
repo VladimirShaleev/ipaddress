@@ -110,10 +110,10 @@ jobs:
         standard: [ 11, 14, 17, 20, 23 ]
         exception: [ "exceptions" ]
         include:
-          - macos: 11
+          - macos: 13
             standard: 11
             exception: "no-exceptions"
-          - macos: 11
+          - macos: 13
             standard: 23
             exception: "no-exceptions"
 
