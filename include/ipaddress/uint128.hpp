@@ -25,6 +25,7 @@
 
 #include "config.hpp"
 #include "hash.hpp"
+#include "unicode.hpp"
 #include "optional.hpp"
 
 namespace IPADDRESS_NAMESPACE {

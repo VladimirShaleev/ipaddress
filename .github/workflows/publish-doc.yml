@@ -11,14 +11,14 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Install Doxygen
         run: |
           sudo apt-get install -y graphviz
-          wget https://github.com/doxygen/doxygen/releases/download/Release_1_10_0/doxygen-1.10.0.linux.bin.tar.gz
-          tar -xf doxygen-1.10.0.linux.bin.tar.gz
-          cd doxygen-1.10.0
+          wget https://github.com/doxygen/doxygen/releases/download/Release_1_12_0/doxygen-1.12.0.linux.bin.tar.gz
+          tar -xf doxygen-1.12.0.linux.bin.tar.gz
+          cd doxygen-1.12.0
           sudo make
           sudo make install
           doxygen --version
@@ -41,7 +41,7 @@ jobs:
         run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@373f7f263a76c20808c831209c920827a82a2847 # v3.9.3
+        uses: peaceiris/actions-gh-pages@4f9cc6602d3f66b9c108549d475ec49e8ef4d45e # v4.0.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ${{ steps.strings.outputs.build-output-dir }}/doc/html
