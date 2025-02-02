@@ -21,6 +21,5 @@ var searchData=
   ['build_20guide_18',['Build Guide',['../build.html',1,'']]],
   ['byte_2darray_2ehpp_19',['byte-array.hpp',['../byte-array_8hpp.html',1,'']]],
   ['byte_5farray_20',['byte_array',['../structipaddress_1_1byte__array.html',1,'ipaddress']]],
-  ['bytes_21',['bytes',['../classipaddress_1_1ipv4__address__base.html#a5f2cc8513329088b2a21f38b2f36fcc1',1,'ipaddress::ipv4_address_base::bytes()'],['../classipaddress_1_1ipv6__address__base.html#a5f2cc8513329088b2a21f38b2f36fcc1',1,'ipaddress::ipv6_address_base::bytes()']]],
-  ['bytes_22',['Working with bytes',['../tutorial.html#bytes',1,'']]]
+  ['bytes_21',['bytes',['../classipaddress_1_1ipv4__address__base.html#a5f2cc8513329088b2a21f38b2f36fcc1',1,'ipaddress::ipv4_address_base::bytes()'],['../classipaddress_1_1ipv6__address__base.html#a5f2cc8513329088b2a21f38b2f36fcc1',1,'ipaddress::ipv6_address_base::bytes()'],['../tutorial.html#bytes',1,'Working with bytes']]]
 ];

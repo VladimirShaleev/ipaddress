@@ -7,7 +7,7 @@ var searchData=
   ['additional_20links_4',['Additional links',['../module.html#cpp-module-articles',1,'']]],
   ['address_5',['Create from address',['../tutorial.html#network-from-address',1,'']]],
   ['address_5fexclude_6',['address_exclude',['../classipaddress_1_1ip__network.html#adfed79e42747c3a087a1e7e338895a4a',1,'ipaddress::ip_network::address_exclude(const ip_network &amp;other) const'],['../classipaddress_1_1ip__network.html#ad33b915d7fbd38b2811c3da45e2cd040',1,'ipaddress::ip_network::address_exclude(const ip_network &amp;other, error_code &amp;code) const noexcept'],['../classipaddress_1_1ip__network__base.html#a313860fe97d2b9d69424a19eccfd1e19',1,'ipaddress::ip_network_base::address_exclude(const ip_network_base &amp;other) const'],['../classipaddress_1_1ip__network__base.html#af6971f8b114c32d88fece634544858e1',1,'ipaddress::ip_network_base::address_exclude(const ip_network_base &amp;other, error_code &amp;code) const noexcept']]],
-  ['addresses_7',['Addresses',['../operations.html#enumerate-addresses',1,'Enumerating network addresses'],['../tutorial.html#ip-addresses',1,'IP addresses']]],
+  ['addresses_7',['addresses',['../operations.html#enumerate-addresses',1,'Enumerating network addresses'],['../tutorial.html#ip-addresses',1,'IP addresses']]],
   ['addresses_5fcount_8',['addresses_count',['../classipaddress_1_1ip__network.html#a44b884d1774efbbc648e13abc90efc43',1,'ipaddress::ip_network::addresses_count()'],['../classipaddress_1_1ip__network__base.html#a60ba25a33fe7de07c4fc1437697fc685',1,'ipaddress::ip_network_base::addresses_count()']]],
   ['and_20newer_9',['Cpp Module (C++20 and newer)',['../module.html',1,'']]],
   ['and_20subnets_10',['Supernet and Subnets',['../operations.html#supernet-subnets',1,'']]],
