@@ -160,6 +160,11 @@ TEST(ipv4_address, CompileTime) {
     ASSERT_TRUE(ip23);
     ASSERT_FALSE(ip24);
     
+    constexpr auto ip25 = ipv4_address::parse("192.168.1.1").ipv6_mapped();
+    constexpr auto ip26 = ipv4_address::parse("192.168.1.1").ipv6_mapped().ipv4_mapped().value();
+    ASSERT_EQ(ip25, ipv6_address::parse("::ffff:c0a8:101"));
+    ASSERT_EQ(ip26, ipv4_address::parse("192.168.1.1"));
+
     constexpr auto ip_wchar_2 = ipv4_address::parse(L"127.0.0.1");
     ASSERT_EQ(ip_wchar_2.to_uint(), 0x7F000001);
 
@@ -752,4 +757,18 @@ INSTANTIATE_TEST_SUITE_P(
     ipv4_address, IsUnspecifiedIpv4Params,
     testing::Values(
         std::make_tuple("0.0.0.0", true)
+    ));
+
+using Ipv6MappedIpv4Params = TestWithParam<std::tuple<const char*, const char*>>;
+TEST_P(Ipv6MappedIpv4Params, ipv6_mapped) {
+    const auto expected = ipv6_address::parse(std::get<1>(GetParam()));
+
+    const auto actual = ipv4_address::parse(std::get<0>(GetParam())).ipv6_mapped();
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_address, Ipv6MappedIpv4Params,
+    testing::Values(
+        std::make_tuple("192.168.1.1", "::ffff:c0a8:101")
     ));

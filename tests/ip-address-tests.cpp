@@ -793,6 +793,24 @@ TEST(ip_address, ipv4_mapped) {
     ASSERT_EQ(ipv4, ip_address::parse("192.168.1.1"));
 }
 
+TEST(ip_address, ipv6_mapped) {
+    IPADDRESS_CONSTEXPR auto ip1 = ip_address::parse("192.168.1.1");
+    IPADDRESS_CONSTEXPR auto ip2 = ip_address::parse("2001:db8::1");
+    
+    IPADDRESS_CONSTEXPR auto actual1 = ip1.ipv6_mapped();
+    IPADDRESS_CONSTEXPR auto actual2 = ip2.ipv6_mapped();
+    IPADDRESS_CONSTEXPR auto actual3 = actual1.ipv4_mapped();
+    IPADDRESS_CONSTEXPR auto actual4 = actual2.ipv4_mapped();
+
+    IPADDRESS_CONSTEXPR auto actual_has_value3 = actual3.has_value();
+    IPADDRESS_CONSTEXPR auto actual_has_value4 = actual4.has_value();
+
+    ASSERT_EQ(actual1, ipv6_address::parse("::ffff:c0a8:101"));
+    ASSERT_EQ(actual2, ipv6_address::parse("2001:db8::1"));
+    ASSERT_TRUE(actual_has_value3);
+    ASSERT_FALSE(actual_has_value4);
+}
+
 TEST(ip_address, sixtofour) {
     IPADDRESS_CONSTEXPR auto ip1 = ip_address::parse("127.0.0.1");
     IPADDRESS_CONSTEXPR auto ip2 = ip_address::parse("2002:ac1d:2d64::1");

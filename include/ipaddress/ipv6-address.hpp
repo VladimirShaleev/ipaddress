@@ -878,6 +878,12 @@ private:
  */
 IPADDRESS_EXPORT using ipv6_address = ip_address_base<ipv6_address_base>;
 
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_address ipv4_address_base::ipv6_mapped() const IPADDRESS_NOEXCEPT {
+    const ipv4_address::base_type b = bytes();
+    ipv6_address::base_type ipv6_bytes = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0xFF, 0xFF, b[0], b[1], b[2], b[3] };
+    return ipv6_address(ipv6_bytes);
+}
+
 #ifdef IPADDRESS_NONTYPE_TEMPLATE_PARAMETER
 
     /**

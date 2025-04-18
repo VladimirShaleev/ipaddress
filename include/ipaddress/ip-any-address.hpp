@@ -229,6 +229,22 @@ public:
     }
 
     /**
+     * Obtains the IPv6-mapped representation of the current IP address.
+     * 
+     * When the IP address holds an IPv4 value, this method converts it into its IPv6-mapped representation,
+     * following the convention (e.g. ::FFFF:IPv4). If the IP address already represents an IPv6 value,
+     * it returns the address as is.
+     * 
+     * @return An `ipv6_address` representing the IPv6-mapped version of the stored IP address.
+     * @remark Converting an IPv4 address to IPv6 through this method always produces a valid IPv6 address.
+     *         In contrast, the reverse operation via `ipv4_mapped()` succeeds only if the IPv6 address is indeed an IPv4-mapped address.
+     * @see [RFC 4291](https://datatracker.ietf.org/doc/html/rfc4291.html).
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_address ipv6_mapped() const IPADDRESS_NOEXCEPT {
+        return _version == ip_version::V4 ?  _ipv.ipv4.ipv6_mapped() : _ipv.ipv6;
+    }
+
+    /**
      * Determines if the IPv6 address is a 6to4 address.
      * 
      * If the IP address is an IPv6 address, this function returns the 6to4 address if available.

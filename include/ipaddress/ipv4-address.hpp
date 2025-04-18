@@ -17,6 +17,9 @@
 
 namespace IPADDRESS_NAMESPACE {
 
+class ipv6_address_base;
+using ipv6_address = ip_address_base<ipv6_address_base>;
+
 /**
  * Represents the base class for IPv4 address manipulation.
  * 
@@ -70,6 +73,14 @@ public:
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const base_type& bytes() const IPADDRESS_NOEXCEPT {
         return _bytes;
     }
+
+    /**
+     * Retrieves the IPv6-mapped IPv4 address.
+     * 
+     * @return An IPv6 address object representing the IPv6-mapped form of the original address.
+     * @see [RFC 4291](https://datatracker.ietf.org/doc/html/rfc4291.html).
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_address ipv6_mapped() const IPADDRESS_NOEXCEPT;
 
 protected:
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv4_address_base() IPADDRESS_NOEXCEPT = default;
