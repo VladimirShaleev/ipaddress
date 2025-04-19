@@ -39,6 +39,24 @@ public:
      * @return A boolean value indicating whether the network is site-local.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_site_local() const IPADDRESS_NOEXCEPT {
+        /**
+         * Safe downcast to ip_network_base<ipv6_network_base>*.
+         * 
+         * This is guaranteed to be correct because:
+         * 1. ipv6_network_base is exclusively used as a CRTP base class
+         * 2. All instances are created through ipv6_network (the ip_network_base<...> alias)
+         * 3. The inheritance relationship is strictly enforced by the template
+         * 
+         * Why static_cast is used:
+         * - Maintains constexpr compatibility (no RTTI needed)
+         * - Zero runtime overhead
+         * - Safety is verified at compile-time through template instantiation
+         * 
+         * The NOLINT suppression is justified because:
+         * - This is an intentional design pattern
+         * - Type safety is architecturally guaranteed
+         * - Alternatives (like dynamic_cast) would hurt performance
+         */
         const auto& network = *static_cast<const ip_network_base<ipv6_network_base>*>(this); // NOLINT(cppcoreguidelines-pro-type-static-cast-downcast)
         return network.network_address().is_site_local() && network.broadcast_address().is_site_local();
     }
