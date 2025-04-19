@@ -128,38 +128,40 @@ TEST(ipv6_network, CompileTime) {
 
     constexpr auto net12 = ipv6_network::parse("2001::1/128").is_private();
     constexpr auto net13 = ipv6_network::parse("::ff/128").is_private();
+    constexpr auto net14 = ipv6_network::parse("2001:20::/28").is_private();
     ASSERT_TRUE(net12);
     ASSERT_FALSE(net13);
+    ASSERT_FALSE(net14);
     
-    constexpr auto net14 = ipv6_network::parse("200::1/128").is_global();
-    constexpr auto net15 = ipv6_network::parse("2001::1/128").is_global();
-    ASSERT_TRUE(net14);
-    ASSERT_FALSE(net15);
+    constexpr auto net15 = ipv6_network::parse("200::1/128").is_global();
+    constexpr auto net16 = ipv6_network::parse("2001::1/128").is_global();
+    ASSERT_TRUE(net15);
+    ASSERT_FALSE(net16);
 
-    constexpr auto net16 = ipv6_network::parse("4000::1/128").is_reserved();
-    constexpr auto net17 = ipv6_network::parse("febf:ffff::").is_reserved();
-    ASSERT_TRUE(net16);
-    ASSERT_FALSE(net17);
+    constexpr auto net17 = ipv6_network::parse("4000::1/128").is_reserved();
+    constexpr auto net18 = ipv6_network::parse("febf:ffff::").is_reserved();
+    ASSERT_TRUE(net17);
+    ASSERT_FALSE(net18);
     
-    constexpr auto net18 = ipv6_network::parse("::1").is_loopback();
-    constexpr auto net19 = ipv6_network::parse("::2").is_loopback();
-    ASSERT_TRUE(net18);
-    ASSERT_FALSE(net19);
+    constexpr auto net19 = ipv6_network::parse("::1").is_loopback();
+    constexpr auto net20 = ipv6_network::parse("::2").is_loopback();
+    ASSERT_TRUE(net19);
+    ASSERT_FALSE(net20);
 
-    constexpr auto net20 = ipv6_network::parse("febf:ffff::").is_link_local();
-    constexpr auto net21 = ipv6_network::parse("fe7f:ffff::").is_link_local();
-    ASSERT_TRUE(net20);
-    ASSERT_FALSE(net21);
+    constexpr auto net21 = ipv6_network::parse("febf:ffff::").is_link_local();
+    constexpr auto net22 = ipv6_network::parse("fe7f:ffff::").is_link_local();
+    ASSERT_TRUE(net21);
+    ASSERT_FALSE(net22);
 
-    constexpr auto net22 = ipv6_network::parse("feff:ffff:ffff:ffff::").is_site_local();
-    constexpr auto net23 = ipv6_network::parse("ff00::").is_site_local();
-    ASSERT_TRUE(net22);
-    ASSERT_FALSE(net23);
+    constexpr auto net23 = ipv6_network::parse("feff:ffff:ffff:ffff::").is_site_local();
+    constexpr auto net24 = ipv6_network::parse("ff00::").is_site_local();
+    ASSERT_TRUE(net23);
+    ASSERT_FALSE(net24);
 
-    constexpr auto net24 = ipv6_network::parse("::").is_unspecified();
-    constexpr auto net25 = ipv6_network::parse("::/127").is_unspecified();
-    ASSERT_TRUE(net24);
-    ASSERT_FALSE(net25);
+    constexpr auto net25 = ipv6_network::parse("::").is_unspecified();
+    constexpr auto net26 = ipv6_network::parse("::/127").is_unspecified();
+    ASSERT_TRUE(net25);
+    ASSERT_FALSE(net26);
 
     constexpr auto contains = ipv6_network::parse("2001:db8::/32").contains(ipv6_address::parse("2001:db8::1"));
     ASSERT_TRUE(contains);
@@ -972,7 +974,15 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("2001:2::/48", true),
         std::make_tuple("2001:db8::/32", true),
         std::make_tuple("fc00::%test/7", true),
-        std::make_tuple("fe80::/10", true)
+        std::make_tuple("fe80::/10", true),
+        std::make_tuple("64:ff9b:1::/48", true),
+        std::make_tuple("64:ff9b::/48", false),
+        std::make_tuple("2002::/16", true),
+        std::make_tuple("2001::/16", false),
+        std::make_tuple("2001::/32", true),
+        std::make_tuple("2001:2::/32", true),
+        std::make_tuple("2001:20::/28", false),
+        std::make_tuple("fd12:3456:789a::/48", true)
     ));
 
 using IsGlobalIpv6NetworkParams = TestWithParam<std::tuple<const char*, bool>>;
@@ -986,7 +996,10 @@ TEST_P(IsGlobalIpv6NetworkParams, is_global) {
 INSTANTIATE_TEST_SUITE_P(
     ipv6_network, IsGlobalIpv6NetworkParams,
     Values(
-        std::make_tuple("200::1/128", true)
+        std::make_tuple("200::1/128", true),
+        std::make_tuple("2001::/23", false),
+        std::make_tuple("2001:1::1/128", true),
+        std::make_tuple("2606:4700:4700::/48", true)
     ));
 
 using IsReservedIpv6NetworkParams = TestWithParam<std::tuple<const char*, bool>>;

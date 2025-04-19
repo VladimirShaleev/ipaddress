@@ -131,33 +131,37 @@ TEST(ipv4_network, CompileTime) {
 
     constexpr auto net12 = ipv4_network::parse("0.0.0.0/8").is_private();
     constexpr auto net13 = ipv4_network::parse("0.0.0.0/0").is_private();
+    constexpr auto net14 = ipv4_network::parse("100.64.1.0/24").is_private();
     ASSERT_TRUE(net12);
     ASSERT_FALSE(net13);
+    ASSERT_FALSE(net14);
 
-    constexpr auto net14 = ipv4_network::parse("192.0.3.0/24").is_global();
-    constexpr auto net15 = ipv4_network::parse("100.64.0.0/10").is_global();
-    ASSERT_TRUE(net14);
-    ASSERT_FALSE(net15);
-
-    constexpr auto net16 = ipv4_network::parse("240.0.0.1").is_reserved();
-    constexpr auto net17 = ipv4_network::parse("239.255.255.255").is_reserved();
-    ASSERT_TRUE(net16);
+    constexpr auto net15 = ipv4_network::parse("192.0.3.0/24").is_global();
+    constexpr auto net16 = ipv4_network::parse("100.64.0.0/10").is_global();
+    constexpr auto net17 = ipv4_network::parse("100.64.1.0/24").is_global();
+    ASSERT_TRUE(net15);
+    ASSERT_FALSE(net16);
     ASSERT_FALSE(net17);
 
-    constexpr auto net18 = ipv4_network::parse("127.42.0.0/24").is_loopback();
-    constexpr auto net19 = ipv4_network::parse("128.0.0.0/8").is_loopback();
+    constexpr auto net18 = ipv4_network::parse("240.0.0.1").is_reserved();
+    constexpr auto net19 = ipv4_network::parse("239.255.255.255").is_reserved();
     ASSERT_TRUE(net18);
     ASSERT_FALSE(net19);
 
-    constexpr auto net20 = ipv4_network::parse("169.254.1.0/24").is_link_local();
-    constexpr auto net21 = ipv4_network::parse("169.255.100.200").is_link_local();
+    constexpr auto net20 = ipv4_network::parse("127.42.0.0/24").is_loopback();
+    constexpr auto net21 = ipv4_network::parse("128.0.0.0/8").is_loopback();
     ASSERT_TRUE(net20);
     ASSERT_FALSE(net21);
 
-    constexpr auto net22 = ipv4_network::parse("0.0.0.0/32").is_unspecified();
-    constexpr auto net23 = ipv4_network::parse("0.0.0.0/8").is_unspecified();
+    constexpr auto net22 = ipv4_network::parse("169.254.1.0/24").is_link_local();
+    constexpr auto net23 = ipv4_network::parse("169.255.100.200").is_link_local();
     ASSERT_TRUE(net22);
     ASSERT_FALSE(net23);
+
+    constexpr auto net24 = ipv4_network::parse("0.0.0.0/32").is_unspecified();
+    constexpr auto net25 = ipv4_network::parse("0.0.0.0/8").is_unspecified();
+    ASSERT_TRUE(net24);
+    ASSERT_FALSE(net25);
 
     constexpr auto contains = ipv4_network::parse("192.0.2.0/28").contains(ipv4_address::parse("192.0.2.6"));
     ASSERT_TRUE(contains);
@@ -933,7 +937,13 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("198.51.100.0/24", true),
         std::make_tuple("203.0.113.0/24", true),
         std::make_tuple("240.0.0.0/4", true),
-        std::make_tuple("255.255.255.255/32", true)
+        std::make_tuple("255.255.255.255/32", true),
+        std::make_tuple("192.0.0.0/24", true),
+        std::make_tuple("192.0.0.128/25", true),
+        std::make_tuple("192.0.0.9/32", false),
+        std::make_tuple("192.0.0.10/32", false),
+        std::make_tuple("100.64.0.0/10", false),
+        std::make_tuple("100.64.1.0/24", false)
     ));
 
 using IsGlobalIpv4NetworkParams = TestWithParam<std::tuple<const char*, bool>>;
@@ -948,7 +958,8 @@ INSTANTIATE_TEST_SUITE_P(
     ipv4_network, IsGlobalIpv4NetworkParams,
     Values(
         std::make_tuple("100.64.0.0/10", false),
-        std::make_tuple("192.0.3.0/24", true)
+        std::make_tuple("192.0.3.0/24", true),
+        std::make_tuple("100.64.1.0/24", false)
     ));
 
 using IsReservedIpv4NetworkParams = TestWithParam<std::tuple<const char*, bool>>;

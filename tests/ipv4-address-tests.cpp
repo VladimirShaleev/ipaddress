@@ -132,38 +132,44 @@ TEST(ipv4_address, CompileTime) {
 
     constexpr auto ip13 = ipv4_address::parse("192.168.1.1").is_private();
     constexpr auto ip14 = ipv4_address::parse("192.169.0.0").is_private();
+    constexpr auto ip15 = ipv4_address::parse("192.0.0.10").is_private();
     ASSERT_TRUE(ip13);
     ASSERT_FALSE(ip14);
+    ASSERT_FALSE(ip15);
 
-    constexpr auto ip15 = ipv4_address::parse("192.0.7.1").is_global();
-    constexpr auto ip16 = ipv4_address::parse("203.0.113.1").is_global();
-    ASSERT_TRUE(ip15);
-    ASSERT_FALSE(ip16);
-
-    constexpr auto ip17 = ipv4_address::parse("240.0.0.1").is_reserved();
-    constexpr auto ip18 = ipv4_address::parse("239.255.255.255").is_reserved();
-    ASSERT_TRUE(ip17);
+    constexpr auto ip16 = ipv4_address::parse("192.0.7.1").is_global();
+    constexpr auto ip17 = ipv4_address::parse("203.0.113.1").is_global();
+    constexpr auto ip18 = ipv4_address::parse("100.64.0.1").is_global();
+    constexpr auto ip19 = ipv4_address::parse("192.0.0.10").is_global();
+    ASSERT_TRUE(ip16);
+    ASSERT_FALSE(ip17);
     ASSERT_FALSE(ip18);
-
-    constexpr auto ip19 = ipv4_address::parse("127.100.200.254").is_loopback();
-    constexpr auto ip20 = ipv4_address::parse("128.0.0.0").is_loopback();
     ASSERT_TRUE(ip19);
-    ASSERT_FALSE(ip20);
 
-    constexpr auto ip21 = ipv4_address::parse("169.254.100.200").is_link_local();
-    constexpr auto ip22 = ipv4_address::parse("169.255.100.200").is_link_local();
-    ASSERT_TRUE(ip21);
-    ASSERT_FALSE(ip22);
+    constexpr auto ip20 = ipv4_address::parse("240.0.0.1").is_reserved();
+    constexpr auto ip21 = ipv4_address::parse("239.255.255.255").is_reserved();
+    ASSERT_TRUE(ip20);
+    ASSERT_FALSE(ip21);
 
-    constexpr auto ip23 = ipv4_address::parse("0.0.0.0").is_unspecified();
-    constexpr auto ip24 = ipv4_address::parse("169.255.100.200").is_unspecified();
-    ASSERT_TRUE(ip23);
-    ASSERT_FALSE(ip24);
+    constexpr auto ip22 = ipv4_address::parse("127.100.200.254").is_loopback();
+    constexpr auto ip23 = ipv4_address::parse("128.0.0.0").is_loopback();
+    ASSERT_TRUE(ip22);
+    ASSERT_FALSE(ip23);
+
+    constexpr auto ip24 = ipv4_address::parse("169.254.100.200").is_link_local();
+    constexpr auto ip25 = ipv4_address::parse("169.255.100.200").is_link_local();
+    ASSERT_TRUE(ip24);
+    ASSERT_FALSE(ip25);
+
+    constexpr auto ip26 = ipv4_address::parse("0.0.0.0").is_unspecified();
+    constexpr auto ip27 = ipv4_address::parse("169.255.100.200").is_unspecified();
+    ASSERT_TRUE(ip26);
+    ASSERT_FALSE(ip27);
     
-    constexpr auto ip25 = ipv4_address::parse("192.168.1.1").ipv6_mapped();
-    constexpr auto ip26 = ipv4_address::parse("192.168.1.1").ipv6_mapped().ipv4_mapped().value();
-    ASSERT_EQ(ip25, ipv6_address::parse("::ffff:c0a8:101"));
-    ASSERT_EQ(ip26, ipv4_address::parse("192.168.1.1"));
+    constexpr auto ip28 = ipv4_address::parse("192.168.1.1").ipv6_mapped();
+    constexpr auto ip29 = ipv4_address::parse("192.168.1.1").ipv6_mapped().ipv4_mapped().value();
+    ASSERT_EQ(ip28, ipv6_address::parse("::ffff:c0a8:101"));
+    ASSERT_EQ(ip29, ipv4_address::parse("192.168.1.1"));
 
     constexpr auto ip_wchar_2 = ipv4_address::parse(L"127.0.0.1");
     ASSERT_EQ(ip_wchar_2.to_uint(), 0x7F000001);
@@ -681,7 +687,14 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("10.255.255.255", true),
         std::make_tuple("11.0.0.0", false),
         std::make_tuple("172.31.255.255", true),
-        std::make_tuple("172.32.0.0", false)
+        std::make_tuple("172.32.0.0", false),
+        std::make_tuple("192.0.0.0", true),
+        std::make_tuple("192.0.0.1", true),
+        std::make_tuple("192.0.0.8", true),
+        std::make_tuple("192.0.0.255", true),
+        std::make_tuple("192.0.0.9", false),
+        std::make_tuple("192.0.0.10", false),
+        std::make_tuple("100.64.0.1", false)
     ));
 
 using IsGlobalIpv4Params = TestWithParam<std::tuple<const char*, bool>>;
@@ -696,7 +709,9 @@ INSTANTIATE_TEST_SUITE_P(
     ipv4_address, IsGlobalIpv4Params,
     testing::Values(
         std::make_tuple("192.0.7.1", true),
-        std::make_tuple("203.0.113.1", false)
+        std::make_tuple("203.0.113.1", false),
+        std::make_tuple("100.64.0.1", false),
+        std::make_tuple("192.0.0.10", true)
     ));
 
 using IsReservedIpv4Params = TestWithParam<std::tuple<const char*, bool>>;

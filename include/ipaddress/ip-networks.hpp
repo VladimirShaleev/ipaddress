@@ -26,6 +26,9 @@ struct networks {
     static const ipv4_network ipv4_private_networks[];
     static const ipv6_network ipv6_private_networks[];
 
+    static const ipv4_network ipv4_private_networks_exceptions[];
+    static const ipv6_network ipv6_private_networks_exceptions[];
+
     static const ipv4_network ipv4_is_public_network;
 
     static const ipv4_network ipv4_reserved_network;
@@ -56,7 +59,7 @@ template <typename T> const ipv4_network networks<T>::
         ipv4_network::parse("127.0.0.0/8"),
         ipv4_network::parse("169.254.0.0/16"),
         ipv4_network::parse("172.16.0.0/12"),
-        ipv4_network::parse("192.0.0.0/29"),
+        ipv4_network::parse("192.0.0.0/24"),
         ipv4_network::parse("192.0.0.170/31"),
         ipv4_network::parse("192.0.2.0/24"),
         ipv4_network::parse("192.168.0.0/16"),
@@ -77,13 +80,40 @@ template <typename T> const ipv6_network networks<T>::
         ipv6_network::parse("::1/128"),
         ipv6_network::parse("::/128"),
         ipv6_network::parse("::ffff:0:0/96"),
+        ipv6_network::parse("64:ff9b:1::/48"),
         ipv6_network::parse("100::/64"),
         ipv6_network::parse("2001::/23"),
-        ipv6_network::parse("2001:2::/48"),
         ipv6_network::parse("2001:db8::/32"),
-        ipv6_network::parse("2001:10::/28"),
+        ipv6_network::parse("2002::/16"),
         ipv6_network::parse("fc00::/7"),
         ipv6_network::parse("fe80::/10")
+    };
+
+// Private networks exceptions
+#if __cpp_constexpr >= 201304L
+static constexpr ipv4_network
+#else
+template <typename T> const ipv4_network networks<T>::
+#endif
+    // NOLINTNEXTLINE(cert-err58-cpp): for C++11
+    ipv4_private_networks_exceptions[] = {
+        ipv4_network::parse("192.0.0.9/32"),
+        ipv4_network::parse("192.0.0.10/32")
+    };
+
+#if __cpp_constexpr >= 201304L
+static constexpr ipv6_network
+#else
+template <typename T> const ipv6_network networks<T>::
+#endif
+    // NOLINTNEXTLINE(cert-err58-cpp): for C++11
+    ipv6_private_networks_exceptions[] = {
+        ipv6_network::parse("2001:1::1/128"),
+        ipv6_network::parse("2001:1::2/128"),
+        ipv6_network::parse("2001:3::/32"),
+        ipv6_network::parse("2001:4:112::/48"),
+        ipv6_network::parse("2001:20::/28"),
+        ipv6_network::parse("2001:30::/28")
     };
 
 // Global networks
@@ -190,6 +220,12 @@ template <typename T>
 constexpr ipv6_network networks<T>::ipv6_private_networks[];
 
 template <typename T>
+constexpr ipv4_network networks<T>::ipv4_private_networks_exceptions[];
+
+template <typename T>
+constexpr ipv6_network networks<T>::ipv6_private_networks_exceptions[];
+
+template <typename T>
 constexpr ipv4_network networks<T>::ipv4_is_public_network;
 
 template <typename T>
@@ -231,15 +267,26 @@ struct props;
 template <>
 struct props<ipv4_network> {
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_private(const ipv4_network& net) IPADDRESS_NOEXCEPT {
+        auto ip_private = false;
         const auto& address = net.network_address();
         const auto broadcast = net.broadcast_address();
         constexpr auto count = array_size(nets::ipv4_private_networks);
         for (int i = 0; i < count; ++i) {
             if (nets::ipv4_private_networks[i].contains(address) && nets::ipv4_private_networks[i].contains(broadcast)) {
-                return true;
+                ip_private = true;
+                break;
             }
         }
-        return false;
+        if (ip_private) {
+            constexpr auto countExceptions = array_size(nets::ipv4_private_networks_exceptions);
+            for (int i = 0; i < countExceptions; ++i) {
+                if (nets::ipv4_private_networks_exceptions[i].contains(address) || nets::ipv4_private_networks_exceptions[i].contains(broadcast)) {
+                    ip_private = false;
+                    break;
+                }
+            }
+        }
+        return ip_private;
     }
     
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_global(const ipv4_network& net) IPADDRESS_NOEXCEPT {
@@ -253,15 +300,26 @@ struct props<ipv4_network> {
 template <>
 struct props<ipv6_network> {
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_private(const ipv6_network& net) IPADDRESS_NOEXCEPT {
+        auto ip_private = false;
         const auto& address = net.network_address();
         const auto broadcast = net.broadcast_address();
         constexpr auto count = array_size(nets::ipv6_private_networks);
         for (int i = 0; i < count; ++i) {
             if (nets::ipv6_private_networks[i].contains(address) && nets::ipv6_private_networks[i].contains(broadcast)) {
-                return true;
+                ip_private = true;
+                break;
             }
         }
-        return false;
+        if (ip_private) {
+            constexpr auto countExceptions = array_size(nets::ipv6_private_networks_exceptions);
+            for (int i = 0; i < countExceptions; ++i) {
+                if (nets::ipv6_private_networks_exceptions[i].contains(address) || nets::ipv6_private_networks_exceptions[i].contains(broadcast)) {
+                    ip_private = false;
+                    break;
+                }
+            }
+        }
+        return ip_private;
     }
     
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_global(const ipv6_network& net) IPADDRESS_NOEXCEPT {
@@ -272,13 +330,24 @@ struct props<ipv6_network> {
 template <>
 struct props<ipv4_address> {
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_private(const ipv4_address& ip) IPADDRESS_NOEXCEPT {
+        auto ip_private = false;
         constexpr auto count = array_size(nets::ipv4_private_networks);
         for (int i = 0; i < count; ++i) {
             if (nets::ipv4_private_networks[i].contains(ip)) {
-                return true;
+                ip_private = true;
+                break;
             }
         }
-        return false;
+        if (ip_private) {
+            constexpr auto countExceptions = array_size(nets::ipv4_private_networks_exceptions);
+            for (int i = 0; i < countExceptions; ++i) {
+                if (nets::ipv4_private_networks_exceptions[i].contains(ip)) {
+                    ip_private = false;
+                    break;
+                }
+            }
+        }
+        return ip_private;
     }
 
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_global(const ipv4_address& ip) IPADDRESS_NOEXCEPT {
@@ -306,22 +375,35 @@ template <>
 struct props<ipv6_address> {
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_private(const ipv6_address& ip) IPADDRESS_NOEXCEPT {
         const auto ipv4 = ip.ipv4_mapped();
-
         if (ipv4) {
             return ipv4->is_private();
         }
 
+        auto ip_private = false;
         constexpr auto count = array_size(nets::ipv6_private_networks);
         for (int i = 0; i < count; ++i) {
             if (nets::ipv6_private_networks[i].contains(ip)) {
-                return true;
+                ip_private = true;
+                break;
             }
         }
-
-        return false;
+        if (ip_private) {
+            constexpr auto countExceptions = array_size(nets::ipv6_private_networks_exceptions);
+            for (int i = 0; i < countExceptions; ++i) {
+                if (nets::ipv6_private_networks_exceptions[i].contains(ip)) {
+                    ip_private = false;
+                    break;
+                }
+            }
+        }
+        return ip_private;
     }
 
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_global(const ipv6_address& ip) IPADDRESS_NOEXCEPT {
+        const auto ipv4 = ip.ipv4_mapped();
+        if (ipv4) {
+            return ipv4->is_global();
+        }
         return !is_private(ip);
     }
 
