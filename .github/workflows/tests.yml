@@ -63,15 +63,23 @@ jobs:
             cppmodule: "ON"
     name: "Clang ${{ matrix.clang }} [C++${{ matrix.standard }}, ${{ matrix.stdlib }}, ${{ matrix.exception }}, cppmodule=${{ matrix.cppmodule }}]"
     runs-on: ubuntu-22.04
-    container: ${{ matrix.clang <= 10 && 'ubuntu:20.04' || 'ubuntu:22.04' }}
     steps:
-      - name: "Install Clang"
+      - name: Install Clang
+        if: ${{ matrix.clang > 10 }}
         uses: egor-tensin/setup-clang@ef434b41eb33a70396fb336b1bae39c76d740c3d # v1.4
         with:
           version: ${{ matrix.clang }}
-      - name: "Install libc++"
+
+      - name: Install Clang (deprecated)
+        if: ${{ matrix.clang <= 10 }}
+        run: |
+          wget https://apt.llvm.org/llvm.sh
+          chmod +x llvm.sh
+          sudo ./llvm.sh ${{ matrix.clang }}
+
+      - name: Install libc++
         if: ${{ matrix.stdlib == 'libc++' }}
-        run: sudo apt-get install libc++abi-${{ matrix.clang }}-dev libc++1-${{ matrix.clang }} libc++-${{ matrix.clang }}-dev
+        run: sudo apt-get install -y libc++abi-${{ matrix.clang }}-dev libc++1-${{ matrix.clang }} libc++-${{ matrix.clang }}-dev
 
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - run: c++ -v
@@ -170,13 +178,13 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Install GCC
-        if: matrix.gcc > 8
+        if: ${{ matrix.gcc > 8 }}
         uses: egor-tensin/setup-gcc@eaa888eb19115a521fa72b65cd94fe1f25bbcaac # v1.3
         with:
           version: ${{ matrix.gcc }}
 
-      - name: Install GCC 7 and GCC 8
-        if: matrix.gcc <= 8
+      - name: Install GCC (deprecated)
+        if: ${{ matrix.gcc <= 8 }}
         run: |
           sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
           sudo apt-get update
