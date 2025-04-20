@@ -16,7 +16,7 @@ jobs:
         standard: [ 11, 20 ]
 
     name: "Linter [C++${{ matrix.standard }}]"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Install Clang
         uses: egor-tensin/setup-clang@ef434b41eb33a70396fb336b1bae39c76d740c3d # v1.4

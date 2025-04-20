@@ -62,7 +62,7 @@ jobs:
             exception: "exceptions"
             cppmodule: "ON"
     name: "Clang ${{ matrix.clang }} [C++${{ matrix.standard }}, ${{ matrix.stdlib }}, ${{ matrix.exception }}, cppmodule=${{ matrix.cppmodule }}]"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: "Install Clang"
         uses: egor-tensin/setup-clang@ef434b41eb33a70396fb336b1bae39c76d740c3d # v1.4
@@ -164,7 +164,7 @@ jobs:
             standard: 23
             exception: "no-exceptions"
     name: "GCC ${{ matrix.gcc }} [C++${{ matrix.standard }}, ${{ matrix.exception }}]"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: "Install GCC"
         uses: egor-tensin/setup-gcc@eaa888eb19115a521fa72b65cd94fe1f25bbcaac # v1.3
