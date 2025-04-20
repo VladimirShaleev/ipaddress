@@ -34,8 +34,11 @@ jobs:
           -DCMAKE_CXX_COMPILER=clang++
           -DCMAKE_C_COMPILER=clang
           -DCMAKE_BUILD_TYPE=Release
+          -DIPADDRESS_ENABLE_CLANG_TIDY=OFF
           -DIPADDRESS_BUILD_TESTS=OFF
+          -DIPADDRESS_BUILD_BENCHMARK=OFF
           -DIPADDRESS_BUILD_DOC=ON
+          -DIPADDRESS_BUILD_PACKAGES=OFF
 
       - name: Build
         run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release
