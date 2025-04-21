@@ -677,7 +677,7 @@ class ip_summarize_iterator {
 public:
     using iterator_category = std::forward_iterator_tag; /**< The category of the iterator. */
     using value_type        = T; /**< The type of value iterated over. */
-    using difference_type   = int64_t; /**< Type to represent the difference between two iterators. */
+    using difference_type   = typename value_type::uint_type; /**< Type to represent the difference between two iterators. */
     using pointer           = const value_type*; /**< Pointer to the value type. */
     using reference         = const value_type&; /**< Reference to the value type. */
 
@@ -693,8 +693,8 @@ public:
     /**
      * Constructs a ip_summarize_iterator for an address range.
      *
-     * @param current The starting IP address of the range.
-     * @param last The ending IP address of the range.
+     * @param[in] current The starting IP address of the range.
+     * @param[in] last The ending IP address of the range.
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_summarize_iterator(const ip_address_type& current, const ip_address_type& last) IPADDRESS_NOEXCEPT
         : _current((uint_type) current), _last((uint_type) last), _end(_current > _last) {
@@ -1148,14 +1148,17 @@ private:
  * A container class for iterating over a summarized range of networks.
  *
  * The iterator traverses the given IP range by summarizing it into the largest possible contiguous
- * IP networks
+ * IP networks.
+ * 
+ * @tparam T Represents the type of the IP network.
+ * @tparam It The iterator type used for traversing the summarized network range.
  */
-IPADDRESS_EXPORT template <typename T, template<typename> typename It = ip_summarize_iterator>
+IPADDRESS_EXPORT template <typename T, template<typename> class It = ip_summarize_iterator>
 class summarize_sequence {
 public:
     using value_type      = T; /**< The type of network value. */
     using size_type       = size_t; /**< An unsigned integral type. */
-    using difference_type = typename value_type::uint_type; /**< Unsigned integer type for differences. */
+    using difference_type = typename It<value_type>::difference_type; /**< Unsigned integer type for differences. */
     using pointer         = value_type*; /**< Pointer to the network type. */
     using const_pointer   = const value_type*; /**< Const pointer to the network type. */
     using reference       = value_type&; /**< Reference to the network type. */
@@ -1173,8 +1176,8 @@ public:
     /**
      * Constructs a summarize_sequence for a given IP address range.
      *
-     * @param first The first IP address of the range.
-     * @param last The last IP address of the range.
+     * @param[in] first The first IP address of the range.
+     * @param[in] last The last IP address of the range.
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE summarize_sequence(const ip_address_type& first, const ip_address_type& last) IPADDRESS_NOEXCEPT
         : _begin(const_iterator(first, last)) {

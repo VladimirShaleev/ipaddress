@@ -481,7 +481,7 @@ class ip_any_summarize_iterator {
 public:
     using iterator_category = std::forward_iterator_tag; /**< The category of the iterator. */
     using value_type        = T; /**< The type of value iterated over. */
-    using difference_type   = int64_t; /**< Type to represent the difference between two iterators. */
+    using difference_type   = uint128_t; /**< Type to represent the difference between two iterators. */
     using pointer           = const value_type*; /**< Pointer to the value type. */
     using reference         = const value_type&; /**< Reference to the value type. */
 
@@ -495,8 +495,8 @@ public:
     /**
      * Constructs a ip_any_summarize_iterator for an address range.
      *
-     * @param current The starting IP address of the range.
-     * @param last The ending IP address of the range.
+     * @param[in] current The starting IP address of the range.
+     * @param[in] last The ending IP address of the range.
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_summarize_iterator(const ip_address_type& current, const ip_address_type& last) IPADDRESS_NOEXCEPT
         : _version(current.version()) {
