@@ -799,8 +799,8 @@ TEST(ip_address, ipv6_mapped) {
     
     IPADDRESS_CONSTEXPR auto actual1 = ip1.ipv6_mapped();
     IPADDRESS_CONSTEXPR auto actual2 = ip2.ipv6_mapped();
-    IPADDRESS_CONSTEXPR auto actual3 = actual1.ipv4_mapped();
-    IPADDRESS_CONSTEXPR auto actual4 = actual2.ipv4_mapped();
+    IPADDRESS_CONSTEXPR auto actual3 = ip1.ipv6_mapped().ipv4_mapped();
+    IPADDRESS_CONSTEXPR auto actual4 = ip2.ipv6_mapped().ipv4_mapped();
 
     IPADDRESS_CONSTEXPR auto actual_has_value3 = actual3.has_value();
     IPADDRESS_CONSTEXPR auto actual_has_value4 = actual4.has_value();
