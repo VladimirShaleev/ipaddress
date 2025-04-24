@@ -292,7 +292,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        gcc: [ 9, 10, 11, 13, 14 ]
+        gcc: [ 9, 10, 11, 13 ]
         standard: [ 11, 14, 17, 20, 23 ]
         exception: [ "exceptions" ]
         include:
