@@ -787,3 +787,63 @@ INSTANTIATE_TEST_SUITE_P(
     testing::Values(
         std::make_tuple("192.168.1.1", "::ffff:c0a8:101")
     ));
+
+using SummarizeAddressRangeIpv4AddressParams = TestWithParam<std::tuple<const char*, const char*, std::vector<const char*>>>;
+TEST_P(SummarizeAddressRangeIpv4AddressParams, summarize_address_range) {
+    std::vector<ipv4_network> expected;
+    for (const auto& addr : std::get<2>(GetParam())) {
+        expected.push_back(ipv4_network::parse(addr));
+    }
+
+    std::vector<ipv4_network> actual;
+    const auto first = ipv4_address::parse(std::get<0>(GetParam()));
+    const auto last = ipv4_address::parse(std::get<1>(GetParam()));
+    for (const auto& net : summarize_address_range(first, last)) {
+        actual.push_back(net);
+    }
+    
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_address, SummarizeAddressRangeIpv4AddressParams,
+    Values(
+        std::make_tuple("0.0.0.0", "0.0.0.0", std::vector<const char*>{"0.0.0.0/32"}),
+        std::make_tuple("255.255.255.255", "255.255.255.255", std::vector<const char*>{"255.255.255.255/32"}),
+        std::make_tuple("10.0.0.0", "10.255.255.255", std::vector<const char*>{"10.0.0.0/8"}),
+        std::make_tuple("192.0.2.1", "192.0.2.1", std::vector<const char*>{"192.0.2.1/32"}),
+        std::make_tuple("192.0.2.0", "192.0.2.255", std::vector<const char*>{"192.0.2.0/24"}),
+        std::make_tuple("192.0.2.0", "192.0.3.255", std::vector<const char*>{"192.0.2.0/23"}),
+        std::make_tuple("192.0.2.0", "192.0.4.255", std::vector<const char*>{"192.0.2.0/23", "192.0.4.0/24"}),
+        std::make_tuple("192.0.2.0", "192.0.2.130", std::vector<const char*>{"192.0.2.0/25", "192.0.2.128/31", "192.0.2.130/32"})
+    ));
+
+using SummarizeAddressRangeErrorIpv4AddressParams = TestWithParam<std::tuple<const char*, const char*, error_code, const char*>>;
+TEST_P(SummarizeAddressRangeErrorIpv4AddressParams, summarize_address_range) {
+    const auto expected_error = std::get<2>(GetParam());
+
+    const auto first = ipv4_address::parse(std::get<0>(GetParam()));
+    const auto last = ip_address::parse(std::get<1>(GetParam()));
+
+    error_code err = error_code::no_error;
+    const auto actual = summarize_address_range(first, last, err);
+    ASSERT_EQ(err, expected_error);
+    ASSERT_EQ(actual.begin(), actual.end());
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    auto range = summarize_address_range(first, last);
+    ASSERT_EQ(range.begin(), range.end());
+#elif IPADDRESS_CPP_VERSION >= 14
+    const auto expected_error_str = std::get<3>(GetParam());
+    EXPECT_THAT(
+        ([&first, &last]() { summarize_address_range(first, last); }),
+        ThrowsMessage<logic_error>(StrEq(expected_error_str)));
+#else
+    ASSERT_THROW((summarize_address_range(first, last)), logic_error);
+#endif
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_address, SummarizeAddressRangeErrorIpv4AddressParams,
+    Values(
+        std::make_tuple("192.0.2.10", "192.0.2.1", error_code::last_address_must_be_greater_than_first, "last address must be greater than first"),
+        std::make_tuple("192.0.2.0", "2001:db8::", error_code::invalid_version, "versions don't match")
+    ));

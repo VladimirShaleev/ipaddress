@@ -137,11 +137,15 @@
 #  endif
 #endif
 
-#if __cpp_lib_is_constant_evaluated >= 201811L
+#if defined(__cpp_lib_is_constant_evaluated) && __cpp_lib_is_constant_evaluated >= 201811L
 #  define IPADDRESS_IS_CONST_EVALUATED(x) std::is_constant_evaluated()
-#elif __GNUC__ >= 9
+#elif (defined(__GNUC__) && !defined(__clang__) && __GNUC__ >= 9) || \
+      (defined(__clang__) && !defined(__apple_build_version__) && __clang_major__ >= 9) || \
+      (defined(__clang__) && defined(__apple_build_version__) && __clang_major__ >= 11) || \
+      (defined(__INTEL_COMPILER) && __INTEL_COMPILER >= 1910) || \
+      (defined(_MSC_VER) && _MSC_VER >= 1925)
 #  define IPADDRESS_IS_CONST_EVALUATED(x) __builtin_is_constant_evaluated()
-#elif __GNUC__ >= 6
+#elif defined(__GNUC__) || defined(__clang__)
 #  define IPADDRESS_IS_CONST_EVALUATED(x) __builtin_constant_p(x)
 #else
 #  define IPADDRESS_IS_CONST_EVALUATED(x) false
