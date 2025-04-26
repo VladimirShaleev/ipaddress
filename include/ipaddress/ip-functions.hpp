@@ -110,7 +110,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE typename summariz
  * @note This function performs an efficient summarization of IP ranges, but the computational 
  *       complexity may depend on the size of the range.
  */
-template <typename FirstIp, typename LastIp>
+IPADDRESS_EXPORT template <typename FirstIp, typename LastIp>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto summarize_address_range(const FirstIp& first, const LastIp& last, error_code& code) IPADDRESS_NOEXCEPT
     -> decltype(internal::summarize_address_range(
         typename internal::ip_address_type<FirstIp, LastIp>::type{first}, 
@@ -151,7 +151,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto summarize_ad
  * @note This function performs an efficient summarization of IP ranges, but the computational 
  *       complexity may depend on the size of the range.
  */
-template <typename FirstIp, typename LastIp>
+IPADDRESS_EXPORT template <typename FirstIp, typename LastIp>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto summarize_address_range(const FirstIp& first, const LastIp& last) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS
     -> decltype(summarize_address_range(first, last, *std::declval<error_code*>())) {
     error_code code = error_code::no_error;

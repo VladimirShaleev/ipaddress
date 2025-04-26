@@ -815,7 +815,7 @@ private:
 
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void advance() IPADDRESS_NOEXCEPT {
         if (!_end) {
-            const auto block = uint_type(_nbits != 0 ? 1 << (_nbits - 1) << 1 : 1);
+            const auto block = _nbits != 0 ? uint_type(1) << (_nbits - 1) << 1 : uint_type(1);
 
             constexpr auto all_ones = ~uint_type{};
             if (_current >= all_ones - block + 1) {

@@ -194,10 +194,14 @@ TEST(ipv4_address, CompileTime) {
     constexpr auto range_net_0 = *range_at_0;
     constexpr auto range_net_1 = *range_at_1;
     constexpr auto range_net_2 = *range_at_2;
-    ASSERT_NE(range_at_0, range_end);
-    ASSERT_NE(range_at_1, range_end);
-    ASSERT_NE(range_at_2, range_end);
-    ASSERT_EQ(range_at_3, range_end);
+    constexpr auto range_0_is_end = range_at_0 == range_end;
+    constexpr auto range_1_is_end = range_at_1 == range_end;
+    constexpr auto range_2_is_end = range_at_2 == range_end;
+    constexpr auto range_3_is_end = range_at_3 == range_end;
+    ASSERT_FALSE(range_0_is_end);
+    ASSERT_FALSE(range_1_is_end);
+    ASSERT_FALSE(range_2_is_end);
+    ASSERT_TRUE(range_3_is_end);
     ASSERT_EQ(range_net_0, ipv4_network::parse("192.0.2.0/25"));
     ASSERT_EQ(range_net_1, ipv4_network::parse("192.0.2.128/31"));
     ASSERT_EQ(range_net_2, ipv4_network::parse("192.0.2.130/32"));
@@ -825,6 +829,7 @@ INSTANTIATE_TEST_SUITE_P(
     ipv4_address, SummarizeAddressRangeIpv4AddressParams,
     Values(
         std::make_tuple("0.0.0.0", "0.0.0.0", std::vector<const char*>{"0.0.0.0/32"}),
+        std::make_tuple("0.0.0.0", "255.255.255.255", std::vector<const char*>{"0.0.0.0/0"}),
         std::make_tuple("255.255.255.255", "255.255.255.255", std::vector<const char*>{"255.255.255.255/32"}),
         std::make_tuple("10.0.0.0", "10.255.255.255", std::vector<const char*>{"10.0.0.0/8"}),
         std::make_tuple("192.0.2.1", "192.0.2.1", std::vector<const char*>{"192.0.2.1/32"}),

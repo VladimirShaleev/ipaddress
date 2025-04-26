@@ -287,6 +287,22 @@ TEST(ipv6_address, CompileTime) {
     constexpr auto ip_char8_2 = ipv6_address::parse(u8"2001:db8::1");
     ASSERT_EQ(ip_char8_2.bytes(), ip_bytes);
 #endif
+
+    constexpr auto range = summarize_address_range(ipv6_address::parse("2001:db8::"), ipv6_address::parse("2001:db8:0:2::ffff"));
+    constexpr auto range_at_0 = range.begin();
+    constexpr auto range_at_1 = ++range.begin();
+    constexpr auto range_at_2 = ++(++range.begin());
+    constexpr auto range_end = range.end();
+    constexpr auto range_net_0 = *range_at_0;
+    constexpr auto range_net_1 = *range_at_1;
+    constexpr auto range_0_is_end = range_at_0 == range_end;
+    constexpr auto range_1_is_end = range_at_1 == range_end;
+    constexpr auto range_2_is_end = range_at_2 == range_end;
+    ASSERT_FALSE(range_0_is_end);
+    ASSERT_FALSE(range_1_is_end);
+    ASSERT_TRUE(range_2_is_end);
+    ASSERT_EQ(range_net_0, ipv6_network::parse("2001:db8::/63"));
+    ASSERT_EQ(range_net_1, ipv6_network::parse("2001:db8:0:2::/112"));
 }
 
 #endif
@@ -1188,4 +1204,67 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("2000::4136:e378:8000:63bf:3fff:fdd2", "0.0.0.0", "0.0.0.0", false),
         std::make_tuple("2001:0001:4136:e378:8000:63bf:3fff:fdd2", "0.0.0.0", "0.0.0.0", false),
         std::make_tuple("2001:0:5ef5:79fd:0:59d:a0e5:ba1", "94.245.121.253", "95.26.244.94", true)
+    ));
+
+using SummarizeAddressRangeIpv6AddressParams = TestWithParam<std::tuple<const char*, const char*, std::vector<const char*>>>;
+TEST_P(SummarizeAddressRangeIpv6AddressParams, summarize_address_range) {
+    std::vector<ipv6_network> expected;
+    for (const auto& addr : std::get<2>(GetParam())) {
+        expected.push_back(ipv6_network::parse(addr));
+    }
+
+    std::vector<ipv6_network> actual;
+    const auto first = ipv6_address::parse(std::get<0>(GetParam()));
+    const auto last = ipv6_address::parse(std::get<1>(GetParam()));
+    std::cout << (uint128_t) first << std::endl;
+    std::cout << (uint128_t) last << std::endl;
+    for (const auto& net : summarize_address_range(first, last)) {
+        actual.push_back(net);
+        std::cout << (uint128_t) net.network_address() << std::endl;
+    }
+    
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_address, SummarizeAddressRangeIpv6AddressParams,
+    Values(
+        std::make_tuple("::", "::", std::vector<const char*>{"::/128"}),
+        std::make_tuple("::", "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff", std::vector<const char*>{"::/0"}),
+        std::make_tuple("ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff", "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff", std::vector<const char*>{"ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff/128"}),
+        std::make_tuple("2001:db8::1", "2001:db8::1", std::vector<const char*>{"2001:db8::1/128"}),
+        std::make_tuple("2001:db8::", "2001:db8::ffff", std::vector<const char*>{"2001:db8::/112"}),
+        std::make_tuple("2001:db8::", "2001:db8:ffff:ffff:ffff:ffff:ffff:ffff", std::vector<const char*>{"2001:db8::/32"}),
+        std::make_tuple("2001:db8::", "2001:db8:0:1::ffff", std::vector<const char*>{"2001:db8::/64", "2001:db8:0:1::/112"}),
+        std::make_tuple("2001:db8::", "2001:db8:0:2::ffff", std::vector<const char*>{"2001:db8::/63", "2001:db8:0:2::/112"})
+    ));
+
+using SummarizeAddressRangeErrorIpv6AddressParams = TestWithParam<std::tuple<const char*, const char*, error_code, const char*>>;
+TEST_P(SummarizeAddressRangeErrorIpv6AddressParams, summarize_address_range) {
+    const auto expected_error = std::get<2>(GetParam());
+
+    const auto first = ipv6_address::parse(std::get<0>(GetParam()));
+    const auto last = ip_address::parse(std::get<1>(GetParam()));
+
+    error_code err = error_code::no_error;
+    const auto actual = summarize_address_range(first, last, err);
+    ASSERT_EQ(err, expected_error);
+    ASSERT_EQ(actual.begin(), actual.end());
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    auto range = summarize_address_range(first, last);
+    ASSERT_EQ(range.begin(), range.end());
+#elif IPADDRESS_CPP_VERSION >= 14
+    const auto expected_error_str = std::get<3>(GetParam());
+    EXPECT_THAT(
+        ([&first, &last]() { auto _ = summarize_address_range(first, last); }),
+        ThrowsMessage<logic_error>(StrEq(expected_error_str)));
+#else
+    ASSERT_THROW((summarize_address_range(first, last)), logic_error);
+#endif
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_address, SummarizeAddressRangeErrorIpv6AddressParams,
+    Values(
+        std::make_tuple("2001:db8::10", "2001:db8::1", error_code::last_address_must_be_greater_than_first, "last address must be greater than first"),
+        std::make_tuple("2001:db8::", "192.0.2.0", error_code::invalid_version, "versions don't match")
     ));
