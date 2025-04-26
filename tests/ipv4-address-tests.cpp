@@ -184,6 +184,23 @@ TEST(ipv4_address, CompileTime) {
    constexpr auto ip_char8_2 = ipv4_address::parse(u8"127.0.0.1");
    ASSERT_EQ(ip_char8_2.to_uint(), 0x7F000001);
 #endif
+
+    constexpr auto range = summarize_address_range(ipv4_address::parse("192.0.2.0"), ipv4_address::parse("192.0.2.130"));
+    constexpr auto range_at_0 = range.begin();
+    constexpr auto range_at_1 = ++range.begin();
+    constexpr auto range_at_2 = ++(++range.begin());
+    constexpr auto range_at_3 = ++(++(++range.begin()));
+    constexpr auto range_end = range.end();
+    constexpr auto range_net_0 = *range_at_0;
+    constexpr auto range_net_1 = *range_at_1;
+    constexpr auto range_net_2 = *range_at_2;
+    ASSERT_NE(range_at_0, range_end);
+    ASSERT_NE(range_at_1, range_end);
+    ASSERT_NE(range_at_2, range_end);
+    ASSERT_EQ(range_at_3, range_end);
+    ASSERT_EQ(range_net_0, ipv4_network::parse("192.0.2.0/25"));
+    ASSERT_EQ(range_net_1, ipv4_network::parse("192.0.2.128/31"));
+    ASSERT_EQ(range_net_2, ipv4_network::parse("192.0.2.130/32"));
 }
 
 #endif
@@ -835,7 +852,7 @@ TEST_P(SummarizeAddressRangeErrorIpv4AddressParams, summarize_address_range) {
 #elif IPADDRESS_CPP_VERSION >= 14
     const auto expected_error_str = std::get<3>(GetParam());
     EXPECT_THAT(
-        ([&first, &last]() { summarize_address_range(first, last); }),
+        ([&first, &last]() { auto _ = summarize_address_range(first, last); }),
         ThrowsMessage<logic_error>(StrEq(expected_error_str)));
 #else
     ASSERT_THROW((summarize_address_range(first, last)), logic_error);
