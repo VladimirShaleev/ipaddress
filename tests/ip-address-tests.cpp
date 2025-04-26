@@ -971,3 +971,32 @@ TEST(ip_address, ScopeId) {
     ASSERT_EQ(ip1.to_string(), "127.128.128.255");
     ASSERT_EQ(ip2.to_string(), "2001:db8::1%eth1");
 }
+
+TEST(ip_address, summarize_address_range) {
+    IPADDRESS_CONSTEXPR auto range = summarize_address_range(ipv4_address::parse("192.0.2.0"), ip_address::parse("192.0.2.130"));
+    IPADDRESS_CONSTEXPR auto range_at_0 = range.begin();
+    IPADDRESS_CONSTEXPR auto range_at_1 = ++range.begin();
+    IPADDRESS_CONSTEXPR auto range_at_2 = ++(++range.begin());
+    IPADDRESS_CONSTEXPR auto range_at_3 = ++(++(++range.begin()));
+    IPADDRESS_CONSTEXPR auto range_end = range.end();
+    IPADDRESS_CONSTEXPR auto range_net_0 = *range_at_0;
+    IPADDRESS_CONSTEXPR auto range_net_1 = *range_at_1;
+    IPADDRESS_CONSTEXPR auto range_net_2 = *range_at_2;
+    IPADDRESS_CONSTEXPR auto range_net_0_is_ipv4 = range_net_0.version() == ip_version::V4;
+    IPADDRESS_CONSTEXPR auto range_net_1_is_ipv4 = range_net_1.version() == ip_version::V4;
+    IPADDRESS_CONSTEXPR auto range_net_2_is_ipv4 = range_net_2.version() == ip_version::V4;
+    IPADDRESS_CONSTEXPR auto range_0_is_end = range_at_0 == range_end;
+    IPADDRESS_CONSTEXPR auto range_1_is_end = range_at_1 == range_end;
+    IPADDRESS_CONSTEXPR auto range_2_is_end = range_at_2 == range_end;
+    IPADDRESS_CONSTEXPR auto range_3_is_end = range_at_3 == range_end;
+    ASSERT_TRUE(range_net_0_is_ipv4);
+    ASSERT_TRUE(range_net_1_is_ipv4);
+    ASSERT_TRUE(range_net_2_is_ipv4);
+    ASSERT_FALSE(range_0_is_end);
+    ASSERT_FALSE(range_1_is_end);
+    ASSERT_FALSE(range_2_is_end);
+    ASSERT_TRUE(range_3_is_end);
+    ASSERT_EQ(range_net_0, ip_network::parse("192.0.2.0/25"));
+    ASSERT_EQ(range_net_1, ip_network::parse("192.0.2.128/31"));
+    ASSERT_EQ(range_net_2, ip_network::parse("192.0.2.130/32"));
+}

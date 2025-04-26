@@ -1216,11 +1216,8 @@ TEST_P(SummarizeAddressRangeIpv6AddressParams, summarize_address_range) {
     std::vector<ipv6_network> actual;
     const auto first = ipv6_address::parse(std::get<0>(GetParam()));
     const auto last = ipv6_address::parse(std::get<1>(GetParam()));
-    std::cout << (uint128_t) first << std::endl;
-    std::cout << (uint128_t) last << std::endl;
     for (const auto& net : summarize_address_range(first, last)) {
         actual.push_back(net);
-        std::cout << (uint128_t) net.network_address() << std::endl;
     }
     
     ASSERT_EQ(actual, expected);
