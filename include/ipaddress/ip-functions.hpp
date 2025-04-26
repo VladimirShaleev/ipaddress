@@ -5,8 +5,8 @@
  * @copyright MIT License
  * 
  * This file contains functions for processing IP address ranges and networks.
- * It provides functionalities `summarize_address_range` and  `collapse_addresses`.
- * These utilities enable efficient handling and manipulation of IP address data.
+ * It provides functionalities `summarize_address_range`. These utilities
+ * enable efficient handling and manipulation of IP address data.
  */
 
 #ifndef IPADDRESS_IP_FUNCTIONS_HPP
@@ -148,6 +148,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto summarize_ad
  * @param[in] start The starting IP address of the range.
  * @param[in] end The ending IP address of the range.
  * @return A container of summarized network blocks.
+ * @throw logic_error Thrown with a message corresponding to the error code.
  * @note This function performs an efficient summarization of IP ranges, but the computational 
  *       complexity may depend on the size of the range.
  */
