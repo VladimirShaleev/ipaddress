@@ -89,10 +89,38 @@ int main() {
     // 192.0.2.4/30
     // 192.0.2.2/31
     // 192.0.2.0/32
- 
+
     return 0;
 }
 ```
+
+## Summarize address range {#summarize-address-range}
+
+If you need to aggregate a contiguous range of IP addresses into the smallest set of networks, use the `summarize_address_range()` function. It takes a starting IP address and an ending IP address, then returns an iterator over the optimized networks covering the entire range.
+
+```cpp
+#include <iostream>
+
+#include <ipaddress/ipaddress.hpp>
+
+using namespace ipaddress;
+
+int main() {
+    constexpr auto first = ipv4_address::parse("192.0.2.0");
+    constexpr auto last  =   ip_address::parse("192.0.2.130");
+
+    for (const auto& net : summarize_address_range(first, last)) {
+        std::cout << net << std::endl;
+    }
+    // 192.0.2.0/25
+    // 192.0.2.128/31
+    // 192.0.2.130/32
+
+    return 0;
+}
+```
+
+In this example, the range from `192.0.2.0` to `192.0.2.130` is compressed into the minimal set of networks. This function is great for use cases such as preparing routing tables or firewall rules, where managing a large list of individual IPs would be inefficient.
 
 ## Other operations {#other-operations}
 
