@@ -34,6 +34,55 @@ struct ip_address_type {
     >::type;
 };
 
+template <typename T1, typename T2>
+struct ip_network_type {
+    static_assert(
+        std::is_same<T1, ip_network>::value ||
+        std::is_same<T2, ip_network>::value ||
+        std::is_same<T1, T2>::value,
+        "The IP network versions must match or at least be ip_network."
+    );
+
+    using type = typename std::conditional<
+        std::is_same<T1, ip_network>::value || std::is_same<T2, ip_network>::value,
+        ip_network,
+        T1
+    >::type;
+};
+
+template <typename T>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto ip_network_type_extract(const T&) IPADDRESS_NOEXCEPT
+    -> typename ip_network_type<T, T>::type {
+    return typename ip_network_type<T, T>::type{};
+}
+
+template <typename T1, typename T2, typename... Args>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto ip_network_type_extract(const T1&, const T2&, const Args&... args) IPADDRESS_NOEXCEPT
+    -> decltype(ip_network_type_extract(typename ip_network_type<T1, T2>::type{}, args...)) {
+    return ip_network_type_extract(typename ip_network_type<T1, T2>::type{}, args...);
+}
+
+template <typename...>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE bool check_ip_network_types() IPADDRESS_NOEXCEPT {
+    return true;
+}
+
+template <typename T>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE bool check_ip_network_types(T) IPADDRESS_NOEXCEPT {
+    using type = typename std::remove_pointer<T>::type;
+    return std::is_same<type, ipv4_network>::value || std::is_same<type, ipv6_network>::value || std::is_same<type, ip_network>::value;
+}
+
+template <typename T, typename... Args>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE bool check_ip_network_types(T arg, Args... args) IPADDRESS_NOEXCEPT {
+    return check_ip_network_types(arg) && check_ip_network_types(args...);
+}
+
+template <typename... Args>
+struct is_ip_network_types {
+    static constexpr bool value = sizeof...(Args) == 0 ? false : check_ip_network_types<typename std::add_pointer<Args>::type...>(typename std::add_pointer<Args>::type{}...);
+};
+
 template <typename>
 struct summarize_sequence_type;
 
@@ -64,6 +113,267 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE typename summariz
         return {};
     }
     return { first, last };
+}
+
+template <typename It, typename T, typename Cmp = std::less<>>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE It find_lower_bound(It first, It last, const T& value, Cmp&& cmp = {}) IPADDRESS_NOEXCEPT {
+    auto size = last - first;
+    while (size > 0) {
+        auto half = size / 2;
+        auto middle = first;
+        middle += half;
+        if (cmp(*middle, value)) {
+            first = middle;
+            ++first;
+            size = size - half - 1;
+        } else {
+            size = half;
+        }
+    }
+    return first;
+}
+
+template <typename T, size_t N>
+struct constexpr_vector {
+    using value_type      = T;
+    using pointer         = value_type*;
+    using const_pointer   = const value_type*;
+    using reference       = value_type&;
+    using const_reference = const value_type&;
+    using size_type       = size_t;
+    using difference_type = ptrdiff_t;
+
+    static constexpr size_t capacity = N;
+    T _data[capacity];
+    size_t _size{};
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE constexpr_vector() IPADDRESS_NOEXCEPT = default;
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T& insert(T* it, const T& value) IPADDRESS_NOEXCEPT {
+        auto pos = ptrdiff_t(it - _data);
+        if (pos < _size) {
+            for (auto i = ptrdiff_t(_size - pos - 1); i >= pos; --i) {
+                _data[i + 1] = _data[i];
+            }
+        }
+        ++_size;
+        return _data[pos] = value;
+    }
+
+    template <typename... Args>
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T& emplace_back(Args&&... args) IPADDRESS_NOEXCEPT {
+        return _data[_size++] = T(std::forward<Args>(args)...);
+    }
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void pop_back() IPADDRESS_NOEXCEPT {
+        --_size;
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t size() const IPADDRESS_NOEXCEPT {
+        return _size;
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool empty() const IPADDRESS_NOEXCEPT {
+        return _size == 0;
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T& operator[](size_t pos) IPADDRESS_NOEXCEPT {
+        return _data[pos];
+    }
+
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const T& operator[](size_t pos) const IPADDRESS_NOEXCEPT {
+        return _data[pos];
+    }
+};
+
+template <size_t N, typename It>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE auto consteval_collapse_addresses(It first, It last, error_code& code) IPADDRESS_NOEXCEPT
+    -> collapsed_addresses_vector<typename std::iterator_traits<It>::value_type, N> {
+    using network_type = typename std::iterator_traits<It>::value_type;
+    using address_type = typename network_type::ip_address_type;
+
+    const auto version = first->version();
+    const auto max_prefixlen = version == ip_version::V4
+        ? ipv4_network::base_max_prefixlen
+        : ipv6_network::base_max_prefixlen;
+
+#if IPADDRESS_CPP_VERSION >= 20
+    std::vector<network_type> nets;
+    std::vector<address_type> ips;
+    std::vector<std::pair<network_type, network_type>> subnets;
+#else
+    collapsed_addresses_vector<network_type, N> nets;
+    collapsed_addresses_vector<address_type, N> ips;
+    collapsed_addresses_vector<std::pair<network_type, network_type>, N> subnets;
+#endif
+
+    for (auto it = first; it != last; ++it) {
+        const auto& net = *it;
+        if (net.prefixlen() != max_prefixlen) {
+            if (!nets.empty() && net.version() != version) {
+                code = error_code::invalid_version;
+                return {};
+            }
+            nets.emplace_back(net);
+        } else {
+            if (!ips.empty() && net.version() != version) {
+                code = error_code::invalid_version;
+                return {};
+            }
+            const auto network_address = net.network_address();
+            auto lower = find_lower_bound(ips.begin(), ips.end(), network_address);
+            if (lower == ips.end() || *lower != network_address) {
+                ips.insert(lower, network_address);
+            }
+        }
+    }
+    if (!ips.empty()) {
+        auto it = ips.begin();
+        auto first = *it;
+        auto last = *it++;
+        auto lastUint = (typename network_type::uint_type) last;
+        for (; it != ips.end(); ++it) {
+            const auto ipUint = (typename network_type::uint_type) *it;
+            if (ipUint != lastUint + 1) {
+                auto range = summarize_address_range(first, last, code);
+                if (code != error_code::no_error) {
+                    return {};
+                }
+                for (const auto& net : range) {
+                    nets.emplace_back(net);
+                }
+                first = *it;
+            }
+            last = *it;
+            lastUint = ipUint;
+        }
+        auto range = summarize_address_range(first, last, code);
+        if (code != error_code::no_error) {
+            return {};
+        }
+        for (const auto& net : range) {
+            nets.emplace_back(net);
+        }
+    }
+    while (!nets.empty()) {
+        const auto net = nets.back();
+        const auto supernet = net.supernet();
+        nets.pop_back();
+        auto it = find_lower_bound(subnets.begin(), subnets.end(), supernet, [](const auto& item, const auto& key) {
+            return item.first < key;
+        });
+        if (it != subnets.end() && it->first == supernet) {
+            if (it->second != net) {
+                subnets.erase(it);
+                nets.emplace_back(supernet);
+            }
+        } else {
+            subnets.emplace(it, supernet, net);
+        }
+    }
+    collapsed_addresses_vector<network_type, N> result;
+    if (!subnets.empty()) {
+        auto it = subnets.begin();
+        auto last = it->second;
+        result.emplace_back(last);
+        ++it;
+        for (; it != subnets.end(); ++it) {
+            if (last.broadcast_address() >= it->second.broadcast_address()) {
+                continue;
+            }
+            last = it->second;
+            result.emplace_back(last);
+        }
+    }
+    return result;
+}
+
+template <typename Result, typename It>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE Result collapse_addresses(It first, It last, error_code& code) IPADDRESS_NOEXCEPT {
+    using network_type = typename std::iterator_traits<It>::value_type;
+    using address_type = typename network_type::ip_address_type;
+
+    const auto version = first->version();
+    const auto max_prefixlen = version == ip_version::V4
+        ? ipv4_network::base_max_prefixlen
+        : ipv6_network::base_max_prefixlen;
+
+    std::vector<network_type> nets;
+    std::set<address_type> ips;
+    std::map<network_type, network_type> subnets;
+
+    for (auto it = first; it != last; ++it) {
+        const auto& net = *it;
+        if (net.prefixlen() != max_prefixlen) {
+            if (!nets.empty() && net.version() != version) {
+                code = error_code::invalid_version;
+                return {};
+            }
+            nets.emplace_back(net);
+        } else {
+            if (!ips.empty() && net.version() != version) {
+                code = error_code::invalid_version;
+                return {};
+            }
+            const auto network_address = net.network_address();
+            ips.insert(network_address);
+        }
+    }
+    if (!ips.empty()) {
+        auto it = ips.begin();
+        auto first = *it;
+        auto last = *it++;
+        auto lastUint = (typename network_type::uint_type) last;
+        for (; it != ips.end(); ++it) {
+            const auto ipUint = (typename network_type::uint_type) *it;
+            if (ipUint != lastUint + 1) {
+                auto range = summarize_address_range(first, last, code);
+                if (code != error_code::no_error) {
+                    return {};
+                }
+                for (const auto& net : range) {
+                    nets.emplace_back(net);
+                }
+                first = *it;
+            }
+            last = *it;
+            lastUint = ipUint;
+        }
+        auto range = summarize_address_range(first, last, code);
+        if (code != error_code::no_error) {
+            return {};
+        }
+        for (const auto& net : range) {
+            nets.emplace_back(net);
+        }
+    }
+    while (!nets.empty()) {
+        const auto net = nets.back();
+        const auto supernet = net.supernet();
+        nets.pop_back();
+        auto existing = subnets.find(supernet);
+        if (existing != subnets.end()) {
+            subnets.erase(existing);
+            nets.emplace_back(supernet);
+        } else {
+            subnets.emplace(std::make_pair(supernet, net));
+        }
+    }
+    Result result;
+    if (!subnets.empty()) {
+        auto it = subnets.begin();
+        auto last = it->second;
+        result.emplace_back(last);
+        ++it;
+        for (; it != subnets.end(); ++it) {
+            if (last.broadcast_address() >= it->second.broadcast_address()) {
+                continue;
+            }
+            last = it->second;
+            result.emplace_back(last);
+        }
+    }
+    return result;
 }
 
 } // namespace IPADDRESS_NAMESPACE::internal
@@ -157,6 +467,82 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto summarize_ad
     -> decltype(summarize_address_range(first, last, *std::declval<error_code*>())) {
     error_code code = error_code::no_error;
     const auto result = summarize_address_range(first, last, code);
+    if (code != error_code::no_error) {
+        raise_error(code, 0, "", 0);
+    }
+    return result;
+}
+
+template <typename Net, size_t N>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(const std::array<Net, N>& nets, error_code& code) IPADDRESS_NOEXCEPT
+    -> decltype(internal::consteval_collapse_addresses<N>(&nets[0], &nets[0] + nets.size(), code)) {
+    using result_type = decltype(internal::consteval_collapse_addresses<N>(&nets[0], &nets[0] + nets.size(), code));
+    return IPADDRESS_IS_CONST_EVALUATED(nets)
+        ? internal::consteval_collapse_addresses<N>(&nets[0], &nets[0] + nets.size(), code)
+        : internal::collapse_addresses<result_type>(&nets[0], &nets[0] + nets.size(), code);
+}
+
+template <typename Net, size_t N>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(const Net (&nets)[N], error_code& code) IPADDRESS_NOEXCEPT
+    -> decltype(internal::consteval_collapse_addresses<N>(&nets[0], &nets[0] + N, code)) {
+    using result_type = decltype(internal::consteval_collapse_addresses<N>(&nets[0], &nets[0] + N, code));
+    return IPADDRESS_IS_CONST_EVALUATED(nets)
+        ? internal::consteval_collapse_addresses<N>(&nets[0], &nets[0] + N, code)
+        : internal::collapse_addresses<result_type>(&nets[0], &nets[0] + N, code);
+}
+
+template <typename... Nets, typename std::enable_if<internal::is_ip_network_types<Nets...>::value, bool>::type = true>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(error_code& code, const Nets&... nets) IPADDRESS_NOEXCEPT
+    -> collapsed_addresses_vector<decltype(internal::ip_network_type_extract(nets...)), sizeof...(Nets)> {
+    using Net = decltype(internal::ip_network_type_extract(nets...));
+    const Net net_array[] = { Net(nets)... };
+    return collapse_addresses(net_array, code);
+}
+
+template <typename It>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(It first, It last, error_code& code) IPADDRESS_NOEXCEPT
+    -> std::vector<typename std::iterator_traits<It>::value_type> {
+    return internal::collapse_addresses<std::vector<typename std::iterator_traits<It>::value_type>>(first, last, code);;
+}
+
+template <typename Net, size_t N>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(const std::array<Net, N>& nets) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS
+    -> decltype(collapse_addresses(nets, *std::declval<error_code*>())) {
+    error_code code = error_code::no_error;
+    const auto result = collapse_addresses(nets, code);
+    if (code != error_code::no_error) {
+        raise_error(code, 0, "", 0);
+    }
+    return result;
+}
+
+template <typename Net, size_t N>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(const Net (&nets)[N]) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS
+    -> decltype(collapse_addresses(nets, *std::declval<error_code*>())) {
+    error_code code = error_code::no_error;
+    const auto result = collapse_addresses(nets, code);
+    if (code != error_code::no_error) {
+        raise_error(code, 0, "", 0);
+    }
+    return result;
+}
+
+template <typename... Nets, typename std::enable_if<internal::is_ip_network_types<Nets...>::value, bool>::type = true>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(const Nets&... nets) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS
+    -> collapsed_addresses_vector<decltype(internal::ip_network_type_extract(nets...)), sizeof...(Nets)> {
+    error_code code = error_code::no_error;
+    const auto result = collapse_addresses(code, nets...);
+    if (code != error_code::no_error) {
+        raise_error(code, 0, "", 0);
+    }
+    return result;
+}
+
+template <typename It>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(It first, It last) IPADDRESS_NOEXCEPT
+    -> std::vector<typename std::iterator_traits<It>::value_type> {
+    error_code code = error_code::no_error;
+    const auto result = collapse_addresses(first, last, code);
     if (code != error_code::no_error) {
         raise_error(code, 0, "", 0);
     }

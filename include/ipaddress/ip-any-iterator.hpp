@@ -588,7 +588,7 @@ private:
     ip_summarize_iterator<ipv4_network> _itv4{};
     ip_summarize_iterator<ipv6_network> _itv6{};
     T _network{};
-};
+}; // ip_any_summarize_iterator
 
 /**
  * A sequence of host IP addresses.
