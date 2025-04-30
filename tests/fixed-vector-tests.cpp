@@ -376,6 +376,23 @@ IPADDRESS_CONSTEXPR std::tuple<fixed_vector<int, 6>, int, int, int, int> test_in
     return { vec, *it1, *(it1 + 1), *it2, *(it2 + 1) };
 }
 
+IPADDRESS_CONSTEXPR std::pair<fixed_vector<int, 5>, bool> test_insert_none() {
+    constexpr int values[] { 3, 4 };
+    fixed_vector<int, 5> vec { 1, 2 };
+    auto pos_m = vec.begin() + 1;
+    auto pos_end = vec.end();
+    auto insert0 = vec.insert(pos_m, size_t(0), 7);
+    auto insert1 = vec.insert(pos_end, size_t(0), 7);
+    auto insert2 = vec.insert(pos_m, values, values);
+    auto insert3 = vec.insert(pos_end, values, values);
+    auto insert4 = vec.insert(pos_m, {});
+    auto insert5 = vec.insert(pos_end, {});
+    return { vec,
+        insert0 != pos_m || insert1 != pos_end ||
+        insert2 != pos_m || insert3 != pos_end || 
+        insert4 != pos_m || insert5 != pos_end };
+}
+
 TEST(fixed_vector, insert) {
     IPADDRESS_CONSTEXPR auto result0 = test_insert_value(4);
     IPADDRESS_CONSTEXPR auto vec0 = std::get<0>(result0);
@@ -451,6 +468,21 @@ TEST(fixed_vector, insert) {
     ASSERT_EQ(insert2_2, 5);
     ASSERT_EQ(insert2_3, 7);
     ASSERT_EQ(insert2_4, 8);
+
+    IPADDRESS_CONSTEXPR auto result3 = test_insert_none();
+    IPADDRESS_CONSTEXPR auto vec3 = std::get<0>(result3);
+    IPADDRESS_CONSTEXPR auto insert3 = std::get<1>(result3);
+    IPADDRESS_CONSTEXPR auto vec3_size = vec3.size();
+    IPADDRESS_CONSTEXPR auto vec3_max_size = vec3.max_size();
+    IPADDRESS_CONSTEXPR auto vec3_capacity = vec3.capacity();
+    IPADDRESS_CONSTEXPR auto vec3_0 = vec3[0];
+    IPADDRESS_CONSTEXPR auto vec3_1 = vec3[1];
+    ASSERT_EQ(vec3_size, 2);
+    ASSERT_EQ(vec3_max_size, 5);
+    ASSERT_EQ(vec3_capacity, 5);
+    ASSERT_EQ(vec3_0, 1);
+    ASSERT_EQ(vec3_1, 2);
+    ASSERT_FALSE(insert3);
 }
 
 IPADDRESS_CONSTEXPR std::tuple<fixed_vector<int, 5>, int, int> test_emplace() {
@@ -693,62 +725,68 @@ TEST(fixed_vector, clear) {
     ASSERT_EQ(vec_capacity, 5);
 }
 
-IPADDRESS_CONSTEXPR fixed_vector<int, 5> test_erase() {
+IPADDRESS_CONSTEXPR std::pair<fixed_vector<int, 5>, int> test_erase() {
     fixed_vector<int, 5> vec { 1, 2, 3 };
-    vec.erase(vec.begin() + 1);
-    return vec;
+    auto it = vec.erase(vec.begin() + 1);
+    return { vec, *it };
 }
 
-IPADDRESS_CONSTEXPR fixed_vector<int, 5> test_erase_none() {
+IPADDRESS_CONSTEXPR std::pair<fixed_vector<int, 5>, int> test_erase_none() {
     fixed_vector<int, 5> vec { 1, 2, 3 };
-    vec.erase(vec.begin() + 1, vec.begin() + 1);
-    return vec;
+    auto it = vec.erase(vec.begin() + 1, vec.begin() + 1);
+    return { vec, *it };
 }
 
-IPADDRESS_CONSTEXPR fixed_vector<int, 5> test_erase_begin() {
+IPADDRESS_CONSTEXPR std::pair<fixed_vector<int, 5>, int> test_erase_begin() {
     fixed_vector<int, 5> vec { 1, 2, 3 };
-    vec.erase(vec.begin());
-    return vec;
+    auto it = vec.erase(vec.begin());
+    return { vec, *it };
 }
 
-IPADDRESS_CONSTEXPR fixed_vector<int, 5> test_erase_last() {
+IPADDRESS_CONSTEXPR std::pair<fixed_vector<int, 5>, bool> test_erase_last() {
     fixed_vector<int, 5> vec { 1, 2, 3 };
-    vec.erase(vec.end() - 1);
-    return vec;
+    auto it = vec.erase(vec.end() - 1);
+    return { vec, !(it == vec.end()) };
 }
 
-IPADDRESS_CONSTEXPR fixed_vector<int, 5> test_erase_all() {
+IPADDRESS_CONSTEXPR std::pair<fixed_vector<int, 5>, bool> test_erase_all() {
     fixed_vector<int, 5> vec { 1, 2, 3 };
-    vec.erase(vec.begin(), vec.end());
-    return vec;
+    auto it = vec.erase(vec.begin(), vec.end());
+    return { vec, !(it == vec.end()) };
 }
 
-IPADDRESS_CONSTEXPR fixed_vector<int, 5> test_erase_range() {
+IPADDRESS_CONSTEXPR std::pair<fixed_vector<int, 5>, int> test_erase_range() {
     fixed_vector<int, 5> vec { 1, 2, 3 };
-    vec.erase(vec.begin(), vec.end() - 1);
-    return vec;
+    auto it = vec.erase(vec.begin(), vec.end() - 1);
+    return { vec, *it };
 }
 
 TEST(fixed_vector, erase) {
-    IPADDRESS_CONSTEXPR auto vec = test_erase();
+    IPADDRESS_CONSTEXPR auto vec_result = test_erase();
+    IPADDRESS_CONSTEXPR auto vec = std::get<0>(vec_result);
+    IPADDRESS_CONSTEXPR auto vec_next = std::get<1>(vec_result);
     IPADDRESS_CONSTEXPR auto vec_size = vec.size();
     IPADDRESS_CONSTEXPR auto vec_max_size = vec.max_size();
     IPADDRESS_CONSTEXPR auto vec_capacity = vec.capacity();
     IPADDRESS_CONSTEXPR auto vec_0 = vec[0];
     IPADDRESS_CONSTEXPR auto vec_1 = vec[1];
+    ASSERT_EQ(vec_next, 3);
     ASSERT_EQ(vec_size, 2);
     ASSERT_EQ(vec_max_size, 5);
     ASSERT_EQ(vec_capacity, 5);
     ASSERT_EQ(vec_0, 1);
     ASSERT_EQ(vec_1, 3);
 
-    IPADDRESS_CONSTEXPR auto vec_none = test_erase_none();
+    IPADDRESS_CONSTEXPR auto vec_none_result = test_erase_none();
+    IPADDRESS_CONSTEXPR auto vec_none = std::get<0>(vec_none_result);
+    IPADDRESS_CONSTEXPR auto vec_none_next = std::get<1>(vec_none_result);
     IPADDRESS_CONSTEXPR auto vec_none_size = vec_none.size();
     IPADDRESS_CONSTEXPR auto vec_none_max_size = vec_none.max_size();
     IPADDRESS_CONSTEXPR auto vec_none_capacity = vec_none.capacity();
     IPADDRESS_CONSTEXPR auto vec_none_0 = vec_none[0];
     IPADDRESS_CONSTEXPR auto vec_none_1 = vec_none[1];
     IPADDRESS_CONSTEXPR auto vec_none_2 = vec_none[2];
+    ASSERT_EQ(vec_none_next, 2);
     ASSERT_EQ(vec_none_size, 3);
     ASSERT_EQ(vec_none_max_size, 5);
     ASSERT_EQ(vec_none_capacity, 5);
@@ -756,43 +794,55 @@ TEST(fixed_vector, erase) {
     ASSERT_EQ(vec_none_1, 2);
     ASSERT_EQ(vec_none_2, 3);
 
-    IPADDRESS_CONSTEXPR auto vec_begin = test_erase_begin();
+    IPADDRESS_CONSTEXPR auto vec_begin_result = test_erase_begin();
+    IPADDRESS_CONSTEXPR auto vec_begin = std::get<0>(vec_begin_result);
+    IPADDRESS_CONSTEXPR auto vec_begin_next = std::get<1>(vec_begin_result);
     IPADDRESS_CONSTEXPR auto vec_begin_size = vec_begin.size();
     IPADDRESS_CONSTEXPR auto vec_begin_max_size = vec_begin.max_size();
     IPADDRESS_CONSTEXPR auto vec_begin_capacity = vec_begin.capacity();
     IPADDRESS_CONSTEXPR auto vec_begin_0 = vec_begin[0];
     IPADDRESS_CONSTEXPR auto vec_begin_1 = vec_begin[1];
+    ASSERT_EQ(vec_begin_next, 2);
     ASSERT_EQ(vec_begin_size, 2);
     ASSERT_EQ(vec_begin_max_size, 5);
     ASSERT_EQ(vec_begin_capacity, 5);
     ASSERT_EQ(vec_begin_0, 2);
     ASSERT_EQ(vec_begin_1, 3);
 
-    IPADDRESS_CONSTEXPR auto vec_last = test_erase_last();
+    IPADDRESS_CONSTEXPR auto vec_last_result = test_erase_last();
+    IPADDRESS_CONSTEXPR auto vec_last = std::get<0>(vec_last_result);
+    IPADDRESS_CONSTEXPR auto vec_last_has_next = std::get<1>(vec_last_result);
     IPADDRESS_CONSTEXPR auto vec_last_size = vec_last.size();
     IPADDRESS_CONSTEXPR auto vec_last_max_size = vec_last.max_size();
     IPADDRESS_CONSTEXPR auto vec_last_capacity = vec_last.capacity();
     IPADDRESS_CONSTEXPR auto vec_last_0 = vec_last[0];
     IPADDRESS_CONSTEXPR auto vec_last_1 = vec_last[1];
+    ASSERT_FALSE(vec_last_has_next);
     ASSERT_EQ(vec_last_size, 2);
     ASSERT_EQ(vec_last_max_size, 5);
     ASSERT_EQ(vec_last_capacity, 5);
     ASSERT_EQ(vec_last_0, 1);
     ASSERT_EQ(vec_last_1, 2);
 
-    IPADDRESS_CONSTEXPR auto vec_all = test_erase_all();
+    IPADDRESS_CONSTEXPR auto vec_all_result = test_erase_all();
+    IPADDRESS_CONSTEXPR auto vec_all = std::get<0>(vec_all_result);
+    IPADDRESS_CONSTEXPR auto vec_all_has_next = std::get<1>(vec_all_result);
     IPADDRESS_CONSTEXPR auto vec_all_size = vec_all.size();
     IPADDRESS_CONSTEXPR auto vec_all_max_size = vec_all.max_size();
     IPADDRESS_CONSTEXPR auto vec_all_capacity = vec_all.capacity();
+    ASSERT_FALSE(vec_all_has_next);
     ASSERT_EQ(vec_all_size, 0);
     ASSERT_EQ(vec_all_max_size, 5);
     ASSERT_EQ(vec_all_capacity, 5);
 
-    IPADDRESS_CONSTEXPR auto vec_range = test_erase_range();
+    IPADDRESS_CONSTEXPR auto vec_range_result = test_erase_range();
+    IPADDRESS_CONSTEXPR auto vec_range = std::get<0>(vec_range_result);
+    IPADDRESS_CONSTEXPR auto vec_range_next = std::get<1>(vec_range_result);
     IPADDRESS_CONSTEXPR auto vec_range_size = vec_range.size();
     IPADDRESS_CONSTEXPR auto vec_range_max_size = vec_range.max_size();
     IPADDRESS_CONSTEXPR auto vec_range_capacity = vec_range.capacity();
     IPADDRESS_CONSTEXPR auto vec_range_0 = vec_range[0];
+    ASSERT_EQ(vec_range_next, 3);
     ASSERT_EQ(vec_range_size, 1);
     ASSERT_EQ(vec_range_max_size, 5);
     ASSERT_EQ(vec_range_capacity, 5);

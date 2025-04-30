@@ -64,20 +64,6 @@ public:
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_vector_iterator() IPADDRESS_NOEXCEPT = default;
 
     /**
-     * Copy constructor.
-     * 
-     * @param[in] it The iterator to copy from.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_vector_iterator(const fixed_vector_iterator& it) IPADDRESS_NOEXCEPT = default;
-    
-    /**
-     * Copy assignment operator.
-     * 
-     * @param[in] it The iterator to copy from.
-     */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_vector_iterator& operator=(const fixed_vector_iterator& it) IPADDRESS_NOEXCEPT = default;
-
-    /**
      * Constructs a fixed_vector_iterator from a pointer.
      * 
      * @param[in] ptr The pointer to the element type.
@@ -356,7 +342,7 @@ public:
      * @param[in] value The value to initialize the elements with.
      * @remark The number of elements must not exceed the maximum size of the vector.
      */
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit fixed_vector(size_type n, const_reference value) IPADDRESS_NOEXCEPT {
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_vector(size_type n, const_reference value) IPADDRESS_NOEXCEPT {
         assign(n, value);
     }
 
@@ -414,6 +400,12 @@ public:
         }
     }
 
+    /**
+     * Replaces the contents with the elements in the specified initializer list.
+     * 
+     * @param[in] init_list The initializer list of elements.
+     * @remark The number of elements must not exceed the maximum size of the vector.
+     */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void assign(std::initializer_list<value_type> init_list) IPADDRESS_NOEXCEPT {
         assign(init_list.begin(), init_list.end());
     }
@@ -1063,34 +1055,34 @@ public:
 
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_vector() IPADDRESS_NOEXCEPT = default;
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_vector(size_type) IPADDRESS_NOEXCEPT {
-        assert(!"fixed_vector<T, 0> cannot be constructed with a size.");
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit fixed_vector(size_type n /* NOLINT(misc-unused-parameters) */) IPADDRESS_NOEXCEPT {
+        assert(n == 0 && "fixed_vector<T, 0> cannot be constructed with a size.");
     }
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_vector(size_type, const_reference) IPADDRESS_NOEXCEPT {
-        assert(!"fixed_vector<T, 0> cannot be constructed with a size and value.");
-    }
-
-    template <class It>
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_vector(It, It) IPADDRESS_NOEXCEPT {
-        assert(!"fixed_vector<T, 0> cannot be constructed with iterators.");
-    }
-
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_vector(std::initializer_list<value_type>) IPADDRESS_NOEXCEPT {
-        assert(!"fixed_vector<T, 0> cannot be constructed with an initializer list.");
-    }
-
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void assign(size_type, const_reference) IPADDRESS_NOEXCEPT {
-        assert(!"fixed_vector<T, 0> cannot be assigned a size and value.");
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_vector(size_type n /* NOLINT(misc-unused-parameters) */, const_reference /*value*/) IPADDRESS_NOEXCEPT {
+        assert(n == 0 && "fixed_vector<T, 0> cannot be constructed with a size and value.");
     }
 
     template <class It>
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void assign(It, It) IPADDRESS_NOEXCEPT {
-        assert(!"fixed_vector<T, 0> cannot be assigned iterators.");
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_vector(It first /* NOLINT(misc-unused-parameters) */, It last /* NOLINT(misc-unused-parameters) */) IPADDRESS_NOEXCEPT {
+        assert(first == last && "fixed_vector<T, 0> cannot be constructed with a iterators.");
     }
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void assign(std::initializer_list<value_type>) IPADDRESS_NOEXCEPT {
-        assert(!"fixed_vector<T, 0> cannot be assigned an initializer list.");
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_vector(std::initializer_list<value_type> init_list /* NOLINT(misc-unused-parameters) */) IPADDRESS_NOEXCEPT {
+        assert(init_list.size() == 0 && "fixed_vector<T, 0> cannot be constructed with an initializer list.");
+    }
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void assign(size_type n /* NOLINT(misc-unused-parameters) */, const_reference /*value*/) IPADDRESS_NOEXCEPT {
+        assert(n == 0 && "fixed_vector<T, 0> cannot assign a size.");
+    }
+
+    template <class It>
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void assign(It first /* NOLINT(misc-unused-parameters) */, It last /* NOLINT(misc-unused-parameters) */) IPADDRESS_NOEXCEPT {
+        assert(first == last && "fixed_vector<T, 0> cannot assign from iterators.");
+    }
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void assign(std::initializer_list<value_type> init_list /* NOLINT(misc-unused-parameters) */) IPADDRESS_NOEXCEPT {
+        assert(init_list.size() == 0 && "fixed_vector<T, 0> cannot assign from an initializer list.");
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference at(size_type) IPADDRESS_NOEXCEPT {
@@ -1205,52 +1197,51 @@ public:
         return 0;
     }
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void resize(size_type) IPADDRESS_NOEXCEPT {
-        assert(!"fixed_vector<T, 0> cannot be resized.");
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void resize(size_type n /* NOLINT(misc-unused-parameters) */) IPADDRESS_NOEXCEPT {
+        assert(n == 0 && "fixed_vector<T, 0> cannot resize.");
     }
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void resize(size_type, const_reference) IPADDRESS_NOEXCEPT {
-        assert(!"fixed_vector<T, 0> cannot be resized.");
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void resize(size_type n /* NOLINT(misc-unused-parameters) */, const_reference /*value*/) IPADDRESS_NOEXCEPT {
+        assert(n == 0 && "fixed_vector<T, 0> cannot resize.");
     }
 
-    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void reserve(size_type) IPADDRESS_NOEXCEPT {
-        assert(!"fixed_vector<T, 0> cannot reserve memory.");
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void reserve(size_type n /* NOLINT(misc-unused-parameters) */) IPADDRESS_NOEXCEPT {
+        assert(n == 0 && "fixed_vector<T, 0> cannot reserve.");
     }
 
     static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void shrink_to_fit() IPADDRESS_NOEXCEPT {
-        assert(!"fixed_vector<T, 0> cannot shrink to fit.");
     }
 
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE iterator insert(const_iterator, const_reference) IPADDRESS_NOEXCEPT {
         assert(!"fixed_vector<T, 0> cannot insert elements.");
-        return nullptr;
+        return iterator(nullptr);
     }
 
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE iterator insert(const_iterator, value_type&&) IPADDRESS_NOEXCEPT {
         assert(!"fixed_vector<T, 0> cannot insert elements.");
-        return nullptr;
+        return iterator(nullptr);
     }
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE iterator insert(const_iterator, size_type, const_reference) IPADDRESS_NOEXCEPT {
-        assert(!"fixed_vector<T, 0> cannot insert elements.");
-        return nullptr;
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE iterator insert(const_iterator, size_type n /* NOLINT(misc-unused-parameters) */, const_reference) IPADDRESS_NOEXCEPT {
+        assert(n == 0 && "fixed_vector<T, 0> cannot insert elements.");
+        return iterator(nullptr);
     }
 
     template <typename It>
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE iterator insert(const_iterator, It, It) IPADDRESS_NOEXCEPT {
-        assert(!"fixed_vector<T, 0> cannot insert elements.");
-        return nullptr;
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE iterator insert(const_iterator, It first /* NOLINT(misc-unused-parameters) */, It last /* NOLINT(misc-unused-parameters) */) IPADDRESS_NOEXCEPT {
+        assert(first == last && "fixed_vector<T, 0> cannot insert elements.");
+        return iterator(nullptr);
     }
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE iterator insert(const_iterator, std::initializer_list<value_type>) IPADDRESS_NOEXCEPT {
-        assert(!"fixed_vector<T, 0> cannot insert elements.");
-        return nullptr;
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE iterator insert(const_iterator, std::initializer_list<value_type> init_list /* NOLINT(misc-unused-parameters) */) IPADDRESS_NOEXCEPT {
+        assert(init_list.size() == 0 && "fixed_vector<T, 0> cannot insert elements.");
+        return iterator(nullptr);
     }
 
     template <typename... Args>
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE iterator emplace(const_iterator, Args&&...) IPADDRESS_NOEXCEPT {
         assert(!"fixed_vector<T, 0> cannot emplace elements.");
-        return nullptr;
+        return iterator(nullptr);
     }
 
     template <typename... Args>
@@ -1261,13 +1252,11 @@ public:
 
     template <typename... Args>
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE pointer try_emplace_back(Args&&...) IPADDRESS_NOEXCEPT {
-        assert(!"fixed_vector<T, 0> cannot emplace elements.");
         return nullptr;
     }
 
     template <typename... Args>
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference unchecked_emplace_back(Args&&...) IPADDRESS_NOEXCEPT {
-        assert(!"fixed_vector<T, 0> cannot emplace elements.");
         return *data();
     }
 
@@ -1282,22 +1271,18 @@ public:
     }
 
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE pointer try_push_back(const_reference) IPADDRESS_NOEXCEPT {
-        assert(!"fixed_vector<T, 0> cannot push back elements.");
         return nullptr;
     }
 
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE pointer try_push_back(value_type&&) IPADDRESS_NOEXCEPT {
-        assert(!"fixed_vector<T, 0> cannot push back elements.");
         return nullptr;
     }
 
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference unchecked_push_back(const_reference) IPADDRESS_NOEXCEPT {
-        assert(!"fixed_vector<T, 0> cannot push back elements.");
         return *data();
     }
     
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference unchecked_emplace_back(value_type&&) IPADDRESS_NOEXCEPT {
-        assert(!"fixed_vector<T, 0> cannot emplace elements.");
         return *data();
     }
 
@@ -1310,12 +1295,12 @@ public:
 
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE iterator erase(const_iterator) IPADDRESS_NOEXCEPT {
         assert(!"fixed_vector<T, 0> cannot erase elements.");
-        return nullptr;
+        return iterator(nullptr);
     }
 
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE iterator erase(const_iterator, const_iterator) IPADDRESS_NOEXCEPT {
-        assert(!"fixed_vector<T, 0> cannot erase elements.");
-        return nullptr;
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE iterator erase(const_iterator first /* NOLINT(misc-unused-parameters) */, const_iterator last /* NOLINT(misc-unused-parameters) */) IPADDRESS_NOEXCEPT {
+        assert(first == last && "fixed_vector<T, 0> cannot erase elements.");
+        return iterator(nullptr);
     }
 
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void swap(fixed_vector&) IPADDRESS_NOEXCEPT {
