@@ -42,6 +42,273 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE typename std::ite
 } // namespace IPADDRESS_NAMESPACE::internal
 
 /**
+ * A fixed-size vector iterator class template.
+ * 
+ * The fixed_vector_iterator class template provides an iterator for the fixed_vector class template.
+ * It allows for iteration over the elements in the fixed_vector.
+ * 
+ * @tparam T type of the elements in the vector.
+ */
+IPADDRESS_EXPORT template <typename T>
+class fixed_vector_iterator {
+public:
+    using iterator_category = std::random_access_iterator_tag; /**< The iterator category. */
+    using value_type        = T; /**< The type of the elements. */
+    using difference_type   = ptrdiff_t; /**< The type used for representing differences between iterators. */
+    using pointer           = T*; /**< Pointer to the element type. */
+    using reference         = T&; /**< Reference to the element type. */
+
+    /**
+     * Default constructor.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_vector_iterator() IPADDRESS_NOEXCEPT = default;
+
+    /**
+     * Copy constructor.
+     * 
+     * @param[in] it The iterator to copy from.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_vector_iterator(const fixed_vector_iterator& it) IPADDRESS_NOEXCEPT = default;
+    
+    /**
+     * Copy assignment operator.
+     * 
+     * @param[in] it The iterator to copy from.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_vector_iterator& operator=(const fixed_vector_iterator& it) IPADDRESS_NOEXCEPT = default;
+
+    /**
+     * Constructs a fixed_vector_iterator from a pointer.
+     * 
+     * @param[in] ptr The pointer to the element type.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE explicit fixed_vector_iterator(pointer ptr) IPADDRESS_NOEXCEPT : _ptr(ptr) {
+    }
+
+    /**
+     * Constructs a const-compatible fixed_vector_iterator from a non-const fixed_vector_iterator.
+     * 
+     * @param[in] it The iterator to convert.
+     */
+    template <typename U, typename = typename std::enable_if<std::is_convertible<U*, T*>::value>::type>  
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_vector_iterator(const fixed_vector_iterator<U>& it) IPADDRESS_NOEXCEPT : _ptr(it.operator->()) {
+    }
+
+    /**
+     * Dereference operator.
+     * 
+     * @return A reference to the element pointed to by the iterator.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference operator*() const IPADDRESS_NOEXCEPT {
+        return *_ptr;
+    }
+
+    /**
+     * Pointer access operator.
+     * 
+     * @return A pointer to the element pointed to by the iterator.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE pointer operator->() const IPADDRESS_NOEXCEPT {
+        return _ptr;
+    }
+
+    /**
+     * Access operator.
+     * 
+     * @param[in] n The index of the element to access.
+     * @return A reference to the element at index n.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference operator[](size_t n) const IPADDRESS_NOEXCEPT {
+        return *(_ptr + n);
+    }
+
+    /**
+     * Pre-increment operator.
+     * 
+     * @return A reference to the iterator after incrementing.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_vector_iterator& operator++() IPADDRESS_NOEXCEPT {
+        ++_ptr;
+        return *this;
+    }
+
+    /**
+     * Post-increment operator.
+     * 
+     * @return A copy of the iterator before incrementing.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_vector_iterator operator++(int) IPADDRESS_NOEXCEPT {
+        auto tmp = *this;
+        ++_ptr;
+        return tmp;
+    }
+
+    /**
+     * Pre-decrement operator.
+     * 
+     * @return A reference to the iterator after decrementing.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_vector_iterator& operator--() IPADDRESS_NOEXCEPT {
+        --_ptr;
+        return *this;
+    }
+
+    /**
+     * Post-decrement operator.
+     * 
+     * @return A copy of the iterator before decrementing.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_vector_iterator operator--(int) IPADDRESS_NOEXCEPT {
+        auto tmp = *this;
+        --_ptr;
+        return tmp;
+    }
+
+    /**
+     * Addition assignment operator.
+     * 
+     * @param[in] n The number of elements to add.
+     * @return A reference to the iterator after addition.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_vector_iterator& operator+=(difference_type n) IPADDRESS_NOEXCEPT {
+        _ptr += n;
+        return *this;
+    }
+
+    /**
+     * Subtraction assignment operator.
+     * 
+     * @param[in] n The number of elements to subtract.
+     * @return A reference to the iterator after subtraction.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_vector_iterator& operator-=(difference_type n) IPADDRESS_NOEXCEPT {
+        _ptr -= n;
+        return *this;
+    }
+
+    /**
+     * Addition operator.
+     * 
+     * @param[in] n The number of elements to add.
+     * @return A new fixed_vector_iterator instance after addition.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_vector_iterator operator+(difference_type n) const IPADDRESS_NOEXCEPT {
+        return fixed_vector_iterator(_ptr + n);
+    }
+    
+    /**
+     * Addition operator.
+     * 
+     * @param[in] n The number of elements to add.
+     * @param[in] it The iterator to add to.
+     * @return A new fixed_vector_iterator instance after addition.
+     */
+    IPADDRESS_NODISCARD friend IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_vector_iterator operator+(difference_type n, const fixed_vector_iterator& it) IPADDRESS_NOEXCEPT {
+        return it + n;
+    }
+
+    /**
+     * Subtraction operator.
+     * 
+     * @param[in] n The number of elements to subtract.
+     * @return A new fixed_vector_iterator instance after subtraction.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_vector_iterator operator-(difference_type n) const IPADDRESS_NOEXCEPT {
+        return fixed_vector_iterator(_ptr - n);
+    }
+
+    /**
+     * Subtraction operator.
+     * 
+     * @param[in] it The iterator to subtract from.
+     * @return The difference between the two iterators.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE difference_type operator-(const fixed_vector_iterator& it) const IPADDRESS_NOEXCEPT {
+        return _ptr - it._ptr;
+    }
+
+    /**
+     * Equality operator.
+     * 
+     * @param[in] it The iterator to compare with.
+     * @return true if this iterator is equal to the other iterator, false otherwise.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(const fixed_vector_iterator& it) const IPADDRESS_NOEXCEPT {
+        return _ptr == it._ptr;
+    }
+
+    /**
+     * Inequality operator.
+     * 
+     * @param[in] it The iterator to compare with.
+     * @return true if this iterator is not equal to the other iterator, false otherwise.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(const fixed_vector_iterator& it) const IPADDRESS_NOEXCEPT {
+        return !(*this == it);
+    }
+
+    
+#ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
+
+    /**
+     * Spaceship operator.
+     * 
+     * @param[in] it The iterator to compare with.
+     * @return A strong_ordering value representing the comparison result.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const fixed_vector_iterator& it) const IPADDRESS_NOEXCEPT {
+        return _ptr <=> it._ptr;
+    }
+
+#else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
+
+    /**
+     * Less than operator.
+     * 
+     * @param[in] it The iterator to compare with.
+     * @return true if this iterator is less than the other iterator, false otherwise.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(const fixed_vector_iterator& it) const IPADDRESS_NOEXCEPT {
+        return _ptr < it._ptr;
+    }
+    
+    /**
+     * Less than or equal to operator.
+     * 
+     * @param[in] it The iterator to compare with.
+     * @return true if this iterator is less than or equal to the other iterator, false otherwise.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(const fixed_vector_iterator& it) const IPADDRESS_NOEXCEPT {
+        return !(it < *this);
+    }
+    
+    /**
+     * Greater than operator.
+     * 
+     * @param[in] it The iterator to compare with.
+     * @return true if this iterator is greater than the other iterator, false otherwise.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(const fixed_vector_iterator& it) const IPADDRESS_NOEXCEPT {
+        return it < *this;
+    }
+    
+    /**
+     * Greater than or equal to operator.
+     * 
+     * @param[in] it The iterator to compare with.
+     * @return true if this iterator is greater than or equal to the other iterator, false otherwise.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(const fixed_vector_iterator& it) const IPADDRESS_NOEXCEPT {
+        return !(*this < it);
+    }
+
+#endif // !IPADDRESS_HAS_SPACESHIP_OPERATOR
+
+private:
+    pointer _ptr{};
+}; // fixed_vector_iterator;
+
+/**
  * A fixed-size vector class template.
  * 
  * The fixed_vector class template provides a simple fixed-size array wrapper that allows for compile-time operations.
@@ -61,8 +328,8 @@ public:
     using const_pointer          = const value_type*; /**< type used for pointer to constant elements. */
     using reference              = value_type&; /**< type used for reference to elements. */
     using const_reference        = const value_type&; /**< type used for reference to constant elements. */
-    using iterator               = value_type*; /**< type used for iterator to elements.  */
-    using const_iterator         = const value_type*; /**< type used for iterator to constant elements. */
+    using iterator               = fixed_vector_iterator<value_type>; /**< type used for iterator to elements.  */
+    using const_iterator         = fixed_vector_iterator<const value_type>; /**< type used for iterator to constant elements. */
     using reverse_iterator       = std::reverse_iterator<iterator>; /**< type used for reverse iterator. */
     using const_reverse_iterator = std::reverse_iterator<const_iterator>; /**< type used for reverse iterator to constant elements. */
 
@@ -261,7 +528,7 @@ public:
      * @return An iterator to the first element in the vector.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE iterator begin() IPADDRESS_NOEXCEPT {
-        return _data;
+        return iterator(_data);
     }
 
     /**
@@ -270,7 +537,7 @@ public:
      * @return A const iterator to the first element in the vector.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator begin() const IPADDRESS_NOEXCEPT {
-        return _data;
+        return const_iterator(_data);
     }
 
     /**
@@ -315,7 +582,7 @@ public:
      * @return An iterator to the element following the last element in the vector.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE iterator end() IPADDRESS_NOEXCEPT {
-        return _data + _size;
+        return iterator(_data + _size);
     }
 
     /**
@@ -324,7 +591,7 @@ public:
      * @return A const iterator to the element following the last element in the vector.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator end() const IPADDRESS_NOEXCEPT {
-        return _data + _size;
+        return const_iterator(_data + _size);
     }
 
     /**
@@ -731,10 +998,11 @@ private:
         assert(pos >= begin() && pos <= end());
         if (pos == end()) {
             assert(_size + n <= max_size());
+            auto result = end();
             for (size_type i = 0; i < n; ++i) {
                 _data[_size++] = value;
             }
-            return end() - 1;
+            return result;
         } else {
             const auto index = internal::distance(cbegin(), pos);
             assert(_size + n <= max_size());
@@ -745,7 +1013,7 @@ private:
                 _data[index + i] = value;
             }
             _size += n;
-            return begin() + index + n - 1;
+            return begin() + index;
         }
     }
 
@@ -753,11 +1021,12 @@ private:
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE iterator insert_iterators(const_iterator pos, It first, It last) IPADDRESS_NOEXCEPT {
         assert(pos >= begin() && pos <= end() && first <= last);
         if (pos == end()) {
+            auto result = end();
             for (auto it = first; it != last; ++it) {
                 assert(_size < max_size());
                 _data[_size++] = *it;
             }
-            return end() - 1;
+            return result;
         } else {
             const auto count = internal::distance(first, last);
             const auto index = internal::distance(cbegin(), pos);
@@ -769,7 +1038,7 @@ private:
                 _data[index + i] = *first++;
             }
             _size += count;
-            return begin() + index + count - 1;
+            return begin() + index;
         }
     }
 
@@ -787,8 +1056,8 @@ public:
     using const_pointer          = const value_type*;
     using reference              = value_type&;
     using const_reference        = const value_type&;
-    using iterator               = pointer;
-    using const_iterator         = const_pointer;
+    using iterator               = fixed_vector_iterator<value_type>;
+    using const_iterator         = fixed_vector_iterator<const value_type>;
     using reverse_iterator       = std::reverse_iterator<iterator>;
     using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
@@ -873,15 +1142,15 @@ public:
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE iterator begin() IPADDRESS_NOEXCEPT {
-        return nullptr;
+        return iterator(nullptr);
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator begin() const IPADDRESS_NOEXCEPT {
-        return nullptr;
+        return const_iterator(nullptr);
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator cbegin() const IPADDRESS_NOEXCEPT {
-        return nullptr;
+        return const_iterator(nullptr);
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reverse_iterator rbegin() IPADDRESS_NOEXCEPT {
@@ -897,15 +1166,15 @@ public:
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE iterator end() IPADDRESS_NOEXCEPT {
-        return nullptr;
+        return iterator(nullptr);
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator end() const IPADDRESS_NOEXCEPT {
-        return nullptr;
+        return const_iterator(nullptr);
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator cend() const IPADDRESS_NOEXCEPT {
-        return nullptr;
+        return const_iterator(nullptr);
     }
 
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reverse_iterator rend() IPADDRESS_NOEXCEPT {

@@ -71,9 +71,9 @@ TEST(fixed_vector, ConstexprCtorNValue) {
 }
 
 TEST(fixed_vector, ConstexprCtorIterators) {
-    IPADDRESS_CONSTEXPR std::array<int, 3> inits {1, 3, 5};
+    IPADDRESS_CONSTEXPR int inits[] {1, 3, 5};
 
-    IPADDRESS_CONSTEXPR fixed_vector<int, 5> vec5(inits.begin(), inits.end());
+    IPADDRESS_CONSTEXPR fixed_vector<int, 5> vec5(inits, inits + sizeof(inits) / sizeof(inits[0]));
     IPADDRESS_CONSTEXPR auto vec5_is_empty = vec5.empty();
     IPADDRESS_CONSTEXPR auto vec5_size = vec5.size();
     IPADDRESS_CONSTEXPR auto vec5_max_size = vec5.max_size();
@@ -373,7 +373,7 @@ IPADDRESS_CONSTEXPR std::tuple<fixed_vector<int, 6>, int, int, int, int> test_in
     fixed_vector<int, 6> vec {1, 2};
     const auto it1 = vec.insert(vec.begin() + 1, {4, 5});
     const auto it2 = vec.insert(vec.end(), {7, 8});
-    return { vec, 0, 0, 0, 0 }; // *it1, *(it1 + 1), *it2, *(it2 + 1) };
+    return { vec, *it1, *(it1 + 1), *it2, *(it2 + 1) };
 }
 
 TEST(fixed_vector, insert) {
