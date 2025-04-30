@@ -135,7 +135,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE It find_lower_bou
 }
 
 template <size_t N, typename It>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE auto consteval_collapse_addresses(It first, It last, error_code& code) IPADDRESS_NOEXCEPT
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto consteval_collapse_addresses(It first, It last, error_code& code) IPADDRESS_NOEXCEPT
     -> fixed_vector<typename std::iterator_traits<It>::value_type, N> {
     using network_type = typename std::iterator_traits<It>::value_type;
     using address_type = typename network_type::ip_address_type;
@@ -207,7 +207,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE auto consteval_co
         const auto net = nets.back();
         const auto supernet = net.supernet();
         nets.pop_back();
-        auto it = find_lower_bound(subnets.begin(), subnets.end(), supernet, [](const auto& item, const auto& key) {
+        auto it = find_lower_bound(subnets.begin(), subnets.end(), supernet, [](const std::pair<network_type, network_type>& item, const network_type& key) {
             return item.first < key;
         });
         if (it != subnets.end() && it->first == supernet) {
@@ -216,9 +216,13 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE auto consteval_co
                 nets.emplace_back(supernet);
             }
         } else {
+        #if IPADDRESS_CPP_VERSION >= 20
+            subnets.emplace(it, supernet, net);
+        #else
             auto inserted = subnets.insert(it, {});
             inserted->first = supernet;
             inserted->second = net;
+        #endif
         }
     }
     fixed_vector<network_type, N> result;
@@ -423,7 +427,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto summarize_ad
     return result;
 }
 
-template <typename Net, size_t N>
+IPADDRESS_EXPORT template <typename Net, size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(const std::array<Net, N>& nets, error_code& code) IPADDRESS_NOEXCEPT
     -> decltype(internal::consteval_collapse_addresses<N>(&nets[0], &nets[0] + nets.size(), code)) {
     using result_type = decltype(internal::consteval_collapse_addresses<N>(&nets[0], &nets[0] + nets.size(), code));
@@ -432,7 +436,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_add
         : internal::collapse_addresses<result_type>(&nets[0], &nets[0] + nets.size(), code);
 }
 
-template <typename Net, size_t N>
+IPADDRESS_EXPORT template <typename Net, size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(const Net (&nets)[N], error_code& code) IPADDRESS_NOEXCEPT
     -> decltype(internal::consteval_collapse_addresses<N>(&nets[0], &nets[0] + N, code)) {
     using result_type = decltype(internal::consteval_collapse_addresses<N>(&nets[0], &nets[0] + N, code));
@@ -441,7 +445,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_add
         : internal::collapse_addresses<result_type>(&nets[0], &nets[0] + N, code);
 }
 
-template <typename... Nets, typename std::enable_if<internal::is_ip_network_types<Nets...>::value, bool>::type = true>
+IPADDRESS_EXPORT template <typename... Nets, typename std::enable_if<internal::is_ip_network_types<Nets...>::value, bool>::type = true>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(error_code& code, const Nets&... nets) IPADDRESS_NOEXCEPT
     -> fixed_vector<decltype(internal::ip_network_type_extract(nets...)), sizeof...(Nets)> {
     using Net = decltype(internal::ip_network_type_extract(nets...));
@@ -449,13 +453,13 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_add
     return collapse_addresses(net_array, code);
 }
 
-template <typename It>
+IPADDRESS_EXPORT template <typename It>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(It first, It last, error_code& code) IPADDRESS_NOEXCEPT
     -> std::vector<typename std::iterator_traits<It>::value_type> {
-    return internal::collapse_addresses<std::vector<typename std::iterator_traits<It>::value_type>>(first, last, code);;
+    return internal::collapse_addresses<std::vector<typename std::iterator_traits<It>::value_type>>(first, last, code);
 }
 
-template <typename Net, size_t N>
+IPADDRESS_EXPORT template <typename Net, size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(const std::array<Net, N>& nets) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS
     -> decltype(collapse_addresses(nets, *std::declval<error_code*>())) {
     error_code code = error_code::no_error;
@@ -466,7 +470,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_add
     return result;
 }
 
-template <typename Net, size_t N>
+IPADDRESS_EXPORT template <typename Net, size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(const Net (&nets)[N]) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS
     -> decltype(collapse_addresses(nets, *std::declval<error_code*>())) {
     error_code code = error_code::no_error;
@@ -477,7 +481,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_add
     return result;
 }
 
-template <typename... Nets, typename std::enable_if<internal::is_ip_network_types<Nets...>::value, bool>::type = true>
+IPADDRESS_EXPORT template <typename... Nets, typename std::enable_if<internal::is_ip_network_types<Nets...>::value, bool>::type = true>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(const Nets&... nets) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS
     -> fixed_vector<decltype(internal::ip_network_type_extract(nets...)), sizeof...(Nets)> {
     error_code code = error_code::no_error;
@@ -488,7 +492,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_add
     return result;
 }
 
-template <typename It>
+IPADDRESS_EXPORT template <typename It>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(It first, It last) IPADDRESS_NOEXCEPT
     -> std::vector<typename std::iterator_traits<It>::value_type> {
     error_code code = error_code::no_error;

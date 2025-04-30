@@ -25,8 +25,8 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE typename std::ite
     return last - first;
 }
 
-template <typename It>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE typename std::iterator_traits<It>::difference_type get_distance(It first, It last, ...) IPADDRESS_NOEXCEPT {
+template <typename It, typename Tag>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE typename std::iterator_traits<It>::difference_type get_distance(It first, It last, Tag) IPADDRESS_NOEXCEPT {
     typename std::iterator_traits<It>::difference_type count = 0;
     for (auto it = first; it != last; ++it) {
         ++count;
@@ -710,7 +710,7 @@ public:
      *       The function is provided for compatibility with std::vector.
      * @remark n must not exceed the maximum size.
      */
-    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void reserve(size_type n) IPADDRESS_NOEXCEPT {
+    static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void reserve(size_type n /* NOLINT(misc-unused-parameters) */) IPADDRESS_NOEXCEPT {
         assert(n < max_size());
     }
 
@@ -1007,9 +1007,9 @@ private:
             const auto index = internal::distance(cbegin(), pos);
             assert(_size + n <= max_size());
             for (auto i = difference_type(_size) - 1; i >= index; --i) {
-                _data[i + n] = _data[i];
+                _data[i + difference_type(n)] = _data[i];
             }
-            for (auto i = 0; i < n; ++i) {
+            for (auto i = 0; i < difference_type(n); ++i) {
                 _data[index + i] = value;
             }
             _size += n;

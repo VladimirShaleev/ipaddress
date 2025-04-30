@@ -17,7 +17,7 @@
 
 namespace IPADDRESS_NAMESPACE {
 
-class ipv6_address_base;
+IPADDRESS_EXPORT class ipv6_address_base;
 using ipv6_address = ip_address_base<ipv6_address_base>;
 
 /**
