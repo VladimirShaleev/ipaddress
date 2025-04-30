@@ -13,6 +13,7 @@
 #define IPADDRESS_IP_FUNCTIONS_HPP
  
 #include "ip-any-network.hpp"
+#include "fixed-vector.hpp"
  
 namespace IPADDRESS_NAMESPACE {
 
@@ -115,7 +116,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE typename summariz
     return { first, last };
 }
 
-template <typename It, typename T, typename Cmp = std::less<>>
+template <typename It, typename T, typename Cmp = std::less<T>>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE It find_lower_bound(It first, It last, const T& value, Cmp&& cmp = {}) IPADDRESS_NOEXCEPT {
     auto size = last - first;
     while (size > 0) {
@@ -132,59 +133,6 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE It find_lower_bou
     }
     return first;
 }
-
-template <typename T, size_t N>
-struct constexpr_vector {
-    using value_type      = T;
-    using pointer         = value_type*;
-    using const_pointer   = const value_type*;
-    using reference       = value_type&;
-    using const_reference = const value_type&;
-    using size_type       = size_t;
-    using difference_type = ptrdiff_t;
-
-    static constexpr size_t capacity = N;
-    T _data[capacity];
-    size_t _size{};
-
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE constexpr_vector() IPADDRESS_NOEXCEPT = default;
-
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T& insert(T* it, const T& value) IPADDRESS_NOEXCEPT {
-        auto pos = ptrdiff_t(it - _data);
-        if (pos < _size) {
-            for (auto i = ptrdiff_t(_size - pos - 1); i >= pos; --i) {
-                _data[i + 1] = _data[i];
-            }
-        }
-        ++_size;
-        return _data[pos] = value;
-    }
-
-    template <typename... Args>
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T& emplace_back(Args&&... args) IPADDRESS_NOEXCEPT {
-        return _data[_size++] = T(std::forward<Args>(args)...);
-    }
-
-    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void pop_back() IPADDRESS_NOEXCEPT {
-        --_size;
-    }
-
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t size() const IPADDRESS_NOEXCEPT {
-        return _size;
-    }
-
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool empty() const IPADDRESS_NOEXCEPT {
-        return _size == 0;
-    }
-
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T& operator[](size_t pos) IPADDRESS_NOEXCEPT {
-        return _data[pos];
-    }
-
-    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const T& operator[](size_t pos) const IPADDRESS_NOEXCEPT {
-        return _data[pos];
-    }
-};
 
 template <size_t N, typename It>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE auto consteval_collapse_addresses(It first, It last, error_code& code) IPADDRESS_NOEXCEPT
@@ -289,7 +237,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE auto consteval_co
 }
 
 template <typename Result, typename It>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE Result collapse_addresses(It first, It last, error_code& code) IPADDRESS_NOEXCEPT {
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE Result collapse_addresses(It first, It last, error_code& code) IPADDRESS_NOEXCEPT {
     using network_type = typename std::iterator_traits<It>::value_type;
     using address_type = typename network_type::ip_address_type;
 

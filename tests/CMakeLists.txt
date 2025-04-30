@@ -19,6 +19,7 @@ enable_testing()
 add_executable(ipaddress-tests 
   "uint128-tests.cpp"
   "fixed-string-tests.cpp" 
+  "fixed-vector-tests.cpp" 
   "ipv4-address-tests.cpp" 
   "ipv6-address-tests.cpp" 
   "ipv4-network-tests.cpp" 
