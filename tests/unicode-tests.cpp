@@ -12,7 +12,7 @@ using namespace ipaddress;
 using ipaddress::internal::char_reader;
 
 template <typename T, size_t N>
-IPADDRESS_CONSTEXPR bool constexpr_test_error(const T (&str)[N]) noexcept {
+static IPADDRESS_CONSTEXPR bool constexpr_test_error(const T (&str)[N]) noexcept {
     const T* it = str;
     const T* end = it + N;
     while (it != end) {
@@ -30,7 +30,7 @@ IPADDRESS_CONSTEXPR bool constexpr_test_error(const T (&str)[N]) noexcept {
 }
 
 template <typename T, size_t N>
-IPADDRESS_CONSTEXPR bool constexpr_test(const T (&str)[N]) {
+static IPADDRESS_CONSTEXPR bool constexpr_test(const T (&str)[N]) {
     const T* it = str;
     const T* begin = str;
     const T* end = it + N;

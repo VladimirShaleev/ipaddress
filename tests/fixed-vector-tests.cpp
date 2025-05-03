@@ -108,20 +108,20 @@ TEST(fixed_vector, ConstexprCtorInitializerList) {
     ASSERT_EQ(vec5_2, 5);
 }
 
-IPADDRESS_CONSTEXPR fixed_vector<int, 5> test_assign_n_value(size_t n, int value) {
+static IPADDRESS_CONSTEXPR fixed_vector<int, 5> test_assign_n_value(size_t n, int value) {
     fixed_vector<int, 5> vec {2};
     vec.assign(n, value);
     return vec;
 }
 
 template <size_t N>
-IPADDRESS_CONSTEXPR fixed_vector<int, 5> test_assign_iterators(const int(&values)[N]) {
+static IPADDRESS_CONSTEXPR fixed_vector<int, 5> test_assign_iterators(const int(&values)[N]) {
     fixed_vector<int, 5> vec {2};
     vec.assign(values, values + N);
     return vec;
 }
 
-IPADDRESS_CONSTEXPR fixed_vector<int, 5> test_assign_initializer_list(std::initializer_list<int> init_list) {
+static IPADDRESS_CONSTEXPR fixed_vector<int, 5> test_assign_initializer_list(std::initializer_list<int> init_list) {
     fixed_vector<int, 5> vec {2};
     vec.assign(init_list);
     return vec;
@@ -201,6 +201,28 @@ TEST(fixed_vector, data) {
     ASSERT_EQ(data_2, 5);
 }
 
+template <typename Iter>
+static IPADDRESS_CONSTEXPR bool test_iterators(Iter begin, Iter end) {
+    auto start = begin;
+    if (begin == end || *begin++ != 1) { return false; }
+    if (begin == end || *begin != 3) { return false; }
+    if ((begin + 1) == end || *(begin + 1) != 5) { return false; }
+    begin += 2;
+    return begin == end && end - 3 == start && end - start == 3 && start[1] == 3 && *start < *(--end);
+}
+
+TEST(fixed_vector, iterators) {
+    IPADDRESS_CONSTEXPR fixed_vector<int, 5> vec {1, 3, 5};
+    IPADDRESS_CONSTEXPR auto result1 = test_iterators(vec.begin(), vec.end());
+    IPADDRESS_CONSTEXPR auto result2 = test_iterators(vec.cbegin(), vec.cend());
+    IPADDRESS_CONSTEXPR_17 auto result3 = test_iterators(vec.rbegin(), vec.rend());
+    IPADDRESS_CONSTEXPR_17 auto result4 = test_iterators(vec.crbegin(), vec.crend());
+    ASSERT_TRUE(result1);
+    ASSERT_TRUE(result2);
+    ASSERT_FALSE(result3);
+    ASSERT_FALSE(result4);
+}
+
 TEST(fixed_vector, empty) {
     IPADDRESS_CONSTEXPR fixed_vector<int, 0> vec0;
     IPADDRESS_CONSTEXPR auto vec0_is_empty = vec0.empty();
@@ -257,19 +279,19 @@ TEST(fixed_vector, capacity) {
     ASSERT_EQ(vec2_capacity, 5);
 }
 
-IPADDRESS_CONSTEXPR fixed_vector<int, 5> test_resize_n(size_t n) {
+static IPADDRESS_CONSTEXPR fixed_vector<int, 5> test_resize_n(size_t n) {
     fixed_vector<int, 5> vec {2};
     vec.resize(n);
     return vec;
 }
 
-IPADDRESS_CONSTEXPR fixed_vector<int, 5> test_resize_n_value(size_t n, int value) {
+static IPADDRESS_CONSTEXPR fixed_vector<int, 5> test_resize_n_value(size_t n, int value) {
     fixed_vector<int, 5> vec {2};
     vec.resize(n, value);
     return vec;
 }
 
-IPADDRESS_CONSTEXPR fixed_vector<int, 5> test_resize_truncate(size_t n) {
+static IPADDRESS_CONSTEXPR fixed_vector<int, 5> test_resize_truncate(size_t n) {
     fixed_vector<int, 5> vec { 1, 2, 3, 4, 5 };
     vec.resize(n);
     return vec;
@@ -319,7 +341,7 @@ TEST(fixed_vector, resize) {
     ASSERT_EQ(vec2_2, 3);
 }
 
-IPADDRESS_CONSTEXPR fixed_vector<int, 5> test_reserve(size_t n) {
+static IPADDRESS_CONSTEXPR fixed_vector<int, 5> test_reserve(size_t n) {
     fixed_vector<int, 5> vec {2};
     vec.reserve(n);
     return vec;
@@ -337,7 +359,7 @@ TEST(fixed_vector, reserve) {
     ASSERT_EQ(vec_0, 2);
 }
 
-IPADDRESS_CONSTEXPR fixed_vector<int, 5> test_shrink_to_fit() {
+static IPADDRESS_CONSTEXPR fixed_vector<int, 5> test_shrink_to_fit() {
     fixed_vector<int, 5> vec {2};
     vec.shrink_to_fit();
     return vec;
@@ -355,28 +377,28 @@ TEST(fixed_vector, shrink_to_fit) {
     ASSERT_EQ(vec_0, 2);
 }
 
-IPADDRESS_CONSTEXPR std::tuple<fixed_vector<int, 5>, int, int> test_insert_value(const int& value) {
+static IPADDRESS_CONSTEXPR std::tuple<fixed_vector<int, 5>, int, int> test_insert_value(const int& value) {
     fixed_vector<int, 5> vec {1, 2};
     const auto insert1 = *vec.insert(vec.begin() + 1, value);
     const auto insert2 = *vec.insert(vec.end(), 7);
     return { vec, insert1, insert2 };
 }
 
-IPADDRESS_CONSTEXPR std::tuple<fixed_vector<int, 6>, int, int> test_insert_n_value(const int& value) {
+static IPADDRESS_CONSTEXPR std::tuple<fixed_vector<int, 6>, int, int> test_insert_n_value(const int& value) {
     fixed_vector<int, 6> vec {1, 2};
     const auto insert1 = *vec.insert(vec.begin() + 1, size_t(2), value);
     const auto insert2 = *vec.insert(vec.end(), size_t(2), 7);
     return { vec, insert1, insert2 };
 }
 
-IPADDRESS_CONSTEXPR std::tuple<fixed_vector<int, 6>, int, int, int, int> test_insert_initializer_list() {
+static IPADDRESS_CONSTEXPR std::tuple<fixed_vector<int, 6>, int, int, int, int> test_insert_initializer_list() {
     fixed_vector<int, 6> vec {1, 2};
     const auto it1 = vec.insert(vec.begin() + 1, {4, 5});
     const auto it2 = vec.insert(vec.end(), {7, 8});
     return { vec, *it1, *(it1 + 1), *it2, *(it2 + 1) };
 }
 
-IPADDRESS_CONSTEXPR std::pair<fixed_vector<int, 5>, bool> test_insert_none() {
+static IPADDRESS_CONSTEXPR std::pair<fixed_vector<int, 5>, bool> test_insert_none() {
     constexpr int values[] { 3, 4 };
     fixed_vector<int, 5> vec { 1, 2 };
     auto pos_m = vec.begin() + 1;
@@ -485,7 +507,7 @@ TEST(fixed_vector, insert) {
     ASSERT_FALSE(insert3);
 }
 
-IPADDRESS_CONSTEXPR std::tuple<fixed_vector<int, 5>, int, int> test_emplace() {
+static IPADDRESS_CONSTEXPR std::tuple<fixed_vector<int, 5>, int, int> test_emplace() {
     fixed_vector<int, 5> vec { 1, 2 };
     const auto insert1 = *vec.emplace(vec.begin() + 1, 5);
     const auto insert2 = *vec.emplace(vec.end(), 7);
@@ -515,7 +537,7 @@ TEST(fixed_vector, emplace) {
     ASSERT_EQ(insert2, 7);
 }
 
-IPADDRESS_CONSTEXPR std::pair<fixed_vector<int, 5>, int> test_emplace_back() {
+static IPADDRESS_CONSTEXPR std::pair<fixed_vector<int, 5>, int> test_emplace_back() {
     fixed_vector<int, 5> vec { 1, 2 };
     const auto& insert = vec.emplace_back(7);
     return { vec, insert };
@@ -540,7 +562,7 @@ TEST(fixed_vector, emplace_back) {
     ASSERT_EQ(insert, 7);
 }
 
-IPADDRESS_CONSTEXPR std::tuple<fixed_vector<int, 3>, int, int*> test_try_emplace_back() {
+static IPADDRESS_CONSTEXPR std::tuple<fixed_vector<int, 3>, int, int*> test_try_emplace_back() {
     fixed_vector<int, 3> vec { 1, 2 };
     const auto insert1 = *vec.try_emplace_back(7);
     const auto insert2 = vec.try_emplace_back(5);
@@ -568,7 +590,7 @@ TEST(fixed_vector, try_emplace_back) {
     ASSERT_EQ(insert2, nullptr);
 }
 
-IPADDRESS_CONSTEXPR std::pair<fixed_vector<int, 3>, int> test_unchecked_emplace_back() {
+static IPADDRESS_CONSTEXPR std::pair<fixed_vector<int, 3>, int> test_unchecked_emplace_back() {
     fixed_vector<int, 3> vec { 1, 2 };
     const auto& insert = vec.unchecked_emplace_back(7);
     return { vec, insert };
@@ -593,7 +615,7 @@ TEST(fixed_vector, unchecked_emplace_back) {
     ASSERT_EQ(insert, 7);
 }
 
-IPADDRESS_CONSTEXPR std::tuple<fixed_vector<int, 5>, int, int> test_push_back(const int& value) {
+static IPADDRESS_CONSTEXPR std::tuple<fixed_vector<int, 5>, int, int> test_push_back(const int& value) {
     fixed_vector<int, 5> vec { 1, 2 };
     const auto& insert1 = vec.push_back(7);
     const auto& insert2 = vec.push_back(value);
@@ -623,7 +645,7 @@ TEST(fixed_vector, push_back) {
     ASSERT_EQ(insert2, 5);
 }
 
-IPADDRESS_CONSTEXPR std::tuple<fixed_vector<int, 4>, int, int, int*, int*> test_try_push_back(const int& value) {
+static IPADDRESS_CONSTEXPR std::tuple<fixed_vector<int, 4>, int, int, int*, int*> test_try_push_back(const int& value) {
     fixed_vector<int, 4> vec { 1, 2 };
     const auto insert1 = *vec.try_push_back(7);
     const auto insert2 = *vec.try_push_back(value);
@@ -659,7 +681,7 @@ TEST(fixed_vector, try_push_back) {
     ASSERT_EQ(insert4, nullptr);
 }
 
-IPADDRESS_CONSTEXPR std::tuple<fixed_vector<int, 4>, int, int> test_unchecked_push_back(const int& value) {
+static IPADDRESS_CONSTEXPR std::tuple<fixed_vector<int, 4>, int, int> test_unchecked_push_back(const int& value) {
     fixed_vector<int, 4> vec { 1, 2 };
     const auto& insert1 = vec.unchecked_push_back(7);
     const auto& insert2 = vec.unchecked_push_back(value);
@@ -689,7 +711,7 @@ TEST(fixed_vector, unchecked_push_back) {
     ASSERT_EQ(insert2, 5);
 }
 
-IPADDRESS_CONSTEXPR fixed_vector<int, 5> test_pop_back() {
+static IPADDRESS_CONSTEXPR fixed_vector<int, 5> test_pop_back() {
     fixed_vector<int, 5> vec { 1, 2, 3 };
     vec.pop_back();
     return vec;
@@ -709,7 +731,7 @@ TEST(fixed_vector, pop_back) {
     ASSERT_EQ(vec_1, 2);
 }
 
-IPADDRESS_CONSTEXPR fixed_vector<int, 5> test_clear() {
+static IPADDRESS_CONSTEXPR fixed_vector<int, 5> test_clear() {
     fixed_vector<int, 5> vec { 1, 2, 3 };
     vec.clear();
     return vec;
@@ -725,37 +747,37 @@ TEST(fixed_vector, clear) {
     ASSERT_EQ(vec_capacity, 5);
 }
 
-IPADDRESS_CONSTEXPR std::pair<fixed_vector<int, 5>, int> test_erase() {
+static IPADDRESS_CONSTEXPR std::pair<fixed_vector<int, 5>, int> test_erase() {
     fixed_vector<int, 5> vec { 1, 2, 3 };
     auto it = vec.erase(vec.begin() + 1);
     return { vec, *it };
 }
 
-IPADDRESS_CONSTEXPR std::pair<fixed_vector<int, 5>, int> test_erase_none() {
+static IPADDRESS_CONSTEXPR std::pair<fixed_vector<int, 5>, int> test_erase_none() {
     fixed_vector<int, 5> vec { 1, 2, 3 };
     auto it = vec.erase(vec.begin() + 1, vec.begin() + 1);
     return { vec, *it };
 }
 
-IPADDRESS_CONSTEXPR std::pair<fixed_vector<int, 5>, int> test_erase_begin() {
+static IPADDRESS_CONSTEXPR std::pair<fixed_vector<int, 5>, int> test_erase_begin() {
     fixed_vector<int, 5> vec { 1, 2, 3 };
     auto it = vec.erase(vec.begin());
     return { vec, *it };
 }
 
-IPADDRESS_CONSTEXPR std::pair<fixed_vector<int, 5>, bool> test_erase_last() {
+static IPADDRESS_CONSTEXPR std::pair<fixed_vector<int, 5>, bool> test_erase_last() {
     fixed_vector<int, 5> vec { 1, 2, 3 };
     auto it = vec.erase(vec.end() - 1);
     return { vec, !(it == vec.end()) };
 }
 
-IPADDRESS_CONSTEXPR std::pair<fixed_vector<int, 5>, bool> test_erase_all() {
+static IPADDRESS_CONSTEXPR std::pair<fixed_vector<int, 5>, bool> test_erase_all() {
     fixed_vector<int, 5> vec { 1, 2, 3 };
     auto it = vec.erase(vec.begin(), vec.end());
     return { vec, !(it == vec.end()) };
 }
 
-IPADDRESS_CONSTEXPR std::pair<fixed_vector<int, 5>, int> test_erase_range() {
+static IPADDRESS_CONSTEXPR std::pair<fixed_vector<int, 5>, int> test_erase_range() {
     fixed_vector<int, 5> vec { 1, 2, 3 };
     auto it = vec.erase(vec.begin(), vec.end() - 1);
     return { vec, *it };
@@ -849,7 +871,7 @@ TEST(fixed_vector, erase) {
     ASSERT_EQ(vec_range_0, 3);
 }
 
-IPADDRESS_CONSTEXPR std::pair<fixed_vector<int, 5>, fixed_vector<int, 5>> test_swap() {
+static IPADDRESS_CONSTEXPR std::pair<fixed_vector<int, 5>, fixed_vector<int, 5>> test_swap() {
     fixed_vector<int, 5> vec1 { 1, 2, 3 };
     fixed_vector<int, 5> vec2 { 4, 5 };
     vec1.swap(vec2);
@@ -867,4 +889,60 @@ TEST(fixed_vector, swap) {
     ASSERT_EQ(vec2[0], 1);
     ASSERT_EQ(vec2[1], 2);
     ASSERT_EQ(vec2[2], 3);
+}
+
+TEST(fixed_vector, compare) {
+    IPADDRESS_CONSTEXPR fixed_vector<int, 3> vec1 { 1, 2, 3 };
+    IPADDRESS_CONSTEXPR fixed_vector<int, 5> vec2 { 1, 2, 3 };
+    IPADDRESS_CONSTEXPR fixed_vector<int, 4> vec3 { 4, 5 };
+    IPADDRESS_CONSTEXPR fixed_vector<int, 7> vec4 {};
+    IPADDRESS_CONSTEXPR auto b1 = vec1 == vec2;
+    IPADDRESS_CONSTEXPR auto b2 = vec1 != vec3;
+    IPADDRESS_CONSTEXPR auto b3 = vec3 != vec1;
+    IPADDRESS_CONSTEXPR auto b4 = vec1 != vec4;
+    IPADDRESS_CONSTEXPR auto b5 = vec1 == vec3;
+    IPADDRESS_CONSTEXPR auto b6 = vec1 != vec2;
+    IPADDRESS_CONSTEXPR auto b7 = vec3 == vec1;
+    IPADDRESS_CONSTEXPR auto b8 = vec1 == vec4;
+    ASSERT_TRUE(b1);
+    ASSERT_TRUE(b2);
+    ASSERT_TRUE(b3);
+    ASSERT_TRUE(b4);
+    ASSERT_FALSE(b5);
+    ASSERT_FALSE(b6);
+    ASSERT_FALSE(b7);
+    ASSERT_FALSE(b8);
+
+    IPADDRESS_CONSTEXPR auto b9 = vec1 < vec2;
+    IPADDRESS_CONSTEXPR auto b10 = vec1 <= vec2;
+    IPADDRESS_CONSTEXPR auto b11 = vec1 > vec2;
+    IPADDRESS_CONSTEXPR auto b12 = vec1 >= vec2;
+    IPADDRESS_CONSTEXPR auto b13 = vec1 < vec3;
+    IPADDRESS_CONSTEXPR auto b14 = vec1 <= vec3;
+    IPADDRESS_CONSTEXPR auto b15 = vec1 > vec3;
+    IPADDRESS_CONSTEXPR auto b16 = vec1 >= vec3;
+    IPADDRESS_CONSTEXPR auto b17 = vec3 < vec1;
+    IPADDRESS_CONSTEXPR auto b18 = vec3 <= vec1;
+    IPADDRESS_CONSTEXPR auto b19 = vec3 > vec1;
+    IPADDRESS_CONSTEXPR auto b20 = vec3 >= vec1;
+    IPADDRESS_CONSTEXPR auto b21 = vec1 < vec4;
+    IPADDRESS_CONSTEXPR auto b22 = vec1 <= vec4;
+    IPADDRESS_CONSTEXPR auto b23 = vec1 > vec4;
+    IPADDRESS_CONSTEXPR auto b24 = vec1 >= vec4;
+    ASSERT_FALSE(b9);
+    ASSERT_TRUE(b10);
+    ASSERT_FALSE(b11);
+    ASSERT_TRUE(b12);
+    ASSERT_TRUE(b13);
+    ASSERT_TRUE(b14);
+    ASSERT_FALSE(b15);
+    ASSERT_FALSE(b16);
+    ASSERT_FALSE(b17);
+    ASSERT_FALSE(b18);
+    ASSERT_TRUE(b19);
+    ASSERT_TRUE(b20);
+    ASSERT_FALSE(b21);
+    ASSERT_FALSE(b22);
+    ASSERT_TRUE(b23);
+    ASSERT_TRUE(b24);
 }

@@ -1307,6 +1307,155 @@ public:
     }
 }; // fixed_vector<T, 0>
 
+/**
+ * Compares two fixed_vector objects for equality.
+ * 
+ * Checks if the contents of \a lhs and \a rhs are equal, meaning they have the same 
+ * number of elements and each element in \a lhs compares equal with the element in \a rhs at the same position.
+ * 
+ * @tparam T The type of the elements in the vector.
+ * @tparam N1 The size of the first vector.
+ * @tparam N2 The size of the second vector.
+ * @param[in] lhs The first vector to compare.
+ * @param[in] rhs The second vector to compare.
+ * @return `true` if the vectors are equal; otherwise, `false`.
+ */
+IPADDRESS_EXPORT template <typename T, size_t N1, size_t N2>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(const fixed_vector<T, N1>& lhs, const fixed_vector<T, N2>& rhs) IPADDRESS_NOEXCEPT {
+    if (lhs.size() != rhs.size()) {
+        return false;
+    }
+    for (size_t i = 0; i < lhs.size(); ++i) {
+        if (lhs[i] != rhs[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+/**
+ * Compares two fixed_vector objects for inequality.
+ * 
+ * Checks if the contents of \a lhs and \a rhs are not equal, meaning they do not have the same 
+ * number of elements or there is at least one position at which the elements in \a lhs and \a rhs differ.
+ * 
+ * @tparam T The type of the elements in the vector.
+ * @tparam N1 The size of the first vector.
+ * @tparam N2 The size of the second vector.
+ * @param[in] lhs The first vector to compare.
+ * @param[in] rhs The second vector to compare.
+ * @return `true` if the vectors are not equal; otherwise, `false`.
+ */
+IPADDRESS_EXPORT template <typename T, size_t N1, size_t N2>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(const fixed_vector<T, N1>& lhs, const fixed_vector<T, N2>& rhs) IPADDRESS_NOEXCEPT {
+    return !(lhs == rhs);
+}
+
+#ifdef IPADDRESS_HAS_SPACESHIP_OPERATOR
+    
+    /**
+     * Compares the contents of two fixed vector lexicographically.
+     * 
+     * Uses the three-way comparison operator (spaceship operator) to compare the contents of \a lhs and \a rhs.
+     * 
+     * @tparam T The type of the elements in the vector.
+     * @tparam N1 The size of the first vector.
+     * @tparam N2 The size of the second vector.
+     * @param[in] lhs The first vector to compare.
+     * @param[in] rhs The second vector to compare.
+     * @return A strong ordering result indicating the comparison result.
+     */
+    IPADDRESS_EXPORT template <typename T, size_t N1, size_t N2>
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE std::strong_ordering operator<=>(const fixed_vector<T, N1>& lhs, const fixed_vector<T, N2>& rhs) IPADDRESS_NOEXCEPT {
+        auto size = lhs.size() < rhs.size() ? lhs.size() : rhs.size();
+        for (size_t i = 0; i < size; ++i) {
+            if (auto cmp = lhs[i] <=> rhs[i]; cmp != std::strong_ordering::equivalent) {
+                return cmp;
+            }
+        }
+        return lhs.size() <=> rhs.size();
+    }
+
+#else // !IPADDRESS_HAS_SPACESHIP_OPERATOR
+
+    /**
+     * Compares the contents of two fixed vector lexicographically.
+     * 
+     * Checks if the contents of \a lhs are lexicographically less than the contents of \a rhs.
+     * 
+     * @tparam T The type of the elements in the vector.
+     * @tparam N1 The size of the first vector.
+     * @tparam N2 The size of the second vector.
+     * @param[in] lhs The first vector to compare.
+     * @param[in] rhs The second vector to compare.
+     * @return `true` if \a lhs is lexicographically less than \a rhs; otherwise, `false`.
+     */
+    IPADDRESS_EXPORT template <typename T, size_t N1, size_t N2>
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<(const fixed_vector<T, N1>& lhs, const fixed_vector<T, N2>& rhs) IPADDRESS_NOEXCEPT {
+        auto size = lhs.size() < rhs.size() ? lhs.size() : rhs.size();
+        for (size_t i = 0; i < size; ++i) {
+            if (lhs[i] < rhs[i]) {
+                return true;
+            } else if (lhs[i] > rhs[i]) {
+                return false;
+            }
+        }
+        return lhs.size() < rhs.size();
+    }
+
+    /**
+     * Compares the contents of two fixed vector lexicographically.
+     * 
+     * Checks if the contents of \a lhs are lexicographically greater than the contents of \a rhs.
+     * 
+     * @tparam T The type of the elements in the vector.
+     * @tparam N1 The size of the first vector.
+     * @tparam N2 The size of the second vector.
+     * @param[in] lhs The first vector to compare.
+     * @param[in] rhs The second vector to compare.
+     * @return `true` if \a lhs is lexicographically greater than \a rhs; otherwise, `false`.
+     */
+    IPADDRESS_EXPORT template <typename T, size_t N1, size_t N2>
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>(const fixed_vector<T, N1>& lhs, const fixed_vector<T, N2>& rhs) IPADDRESS_NOEXCEPT {
+        return rhs < lhs;
+    }
+
+    /**
+     * Compares the contents of two fixed vector lexicographically.
+     * 
+     * Checks if the contents of \a lhs are lexicographically less than or equal to the contents of \a rhs.
+     * 
+     * @tparam T The type of the elements in the vector.
+     * @tparam N1 The size of the first vector.
+     * @tparam N2 The size of the second vector.
+     * @param[in] lhs The first vector to compare.
+     * @param[in] rhs The second vector to compare.
+     * @return `true` if \a lhs is lexicographically less than or equal to \a rhs; otherwise, `false`.
+     */
+    IPADDRESS_EXPORT template <typename T, size_t N1, size_t N2>
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator<=(const fixed_vector<T, N1>& lhs, const fixed_vector<T, N2>& rhs) IPADDRESS_NOEXCEPT {
+        return !(rhs < lhs);
+    }
+
+    /**
+     * Compares the contents of two fixed vector lexicographically.
+     * 
+     * Checks if the contents of \a lhs are lexicographically greater than or equal to the contents of \a rhs.
+     * 
+     * @tparam T The type of the elements in the vector.
+     * @tparam N1 The size of the first vector.
+     * @tparam N2 The size of the second vector.
+     * @param[in] lhs The first vector to compare.
+     * @param[in] rhs The second vector to compare.
+     * @return `true` if \a lhs is lexicographically greater than or equal to \a rhs; otherwise, `false`.
+     */
+    IPADDRESS_EXPORT template <typename T, size_t N1, size_t N2>
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator>=(const fixed_vector<T, N1>& lhs, const fixed_vector<T, N2>& rhs) IPADDRESS_NOEXCEPT {
+        return !(lhs < rhs);
+    }
+
+#endif // !IPADDRESS_HAS_SPACESHIP_OPERATOR
+
 } // namespace IPADDRESS_NAMESPACE
 
 #endif // IPADDRESS_FIXED_VECTOR_HPP
