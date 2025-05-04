@@ -1432,6 +1432,34 @@ INSTANTIATE_TEST_SUITE_P(
         std::make_tuple("192.168.1.128/30", "192.168.1.0/24", error_code::not_contained_network, "network is not a subnet of other")
     ));
 
+TEST(ipv4_network, CollapseAddressesOverloads) {
+    std::array<ipv4_network, 2> arr = { ipv4_network::parse("192.0.2.0/25"), ipv4_network::parse("192.0.2.128/25") };
+    auto collapsed_arr = collapse_addresses(arr);
+    auto collapsed_arr_size = collapsed_arr.size();
+    auto collapsed_arr_0 = collapsed_arr[0];
+    ASSERT_EQ(collapsed_arr_size, 1);
+    ASSERT_EQ(collapsed_arr_0, ipv4_network::parse("192.0.2.0/24"));
+
+    ipv4_network nets[] = { ipv4_network::parse("192.168.1.1/32"), ipv4_network::parse("192.168.1.0/32") };
+    auto collapsed_nets = collapse_addresses(nets);
+    auto collapsed_nets_size = collapsed_nets.size();
+    auto collapsed_nets_0 = collapsed_nets[0];
+    ASSERT_EQ(collapsed_nets_size, 1);
+    ASSERT_EQ(collapsed_nets_0, ipv4_network::parse("192.168.1.0/31"));
+
+    auto collapsed_0 = collapse_addresses(ipv4_network::parse("192.0.2.0/25"));
+    auto collapsed_0_size = collapsed_0.size();
+    auto collapsed_0_0 = collapsed_0[0];
+    ASSERT_EQ(collapsed_0_size, 1);
+    ASSERT_EQ(collapsed_0_0, ipv4_network::parse("192.0.2.0/25"));
+
+    auto collapsed_1 = collapse_addresses(ipv4_network::parse("192.0.2.0/25"), ipv4_network::parse("192.0.2.128/25"));
+    auto collapsed_1_size = collapsed_1.size();
+    auto collapsed_1_0 = collapsed_1[0];
+    ASSERT_EQ(collapsed_1_size, 1);
+    ASSERT_EQ(collapsed_1_0, ipv4_network::parse("192.0.2.0/24"));
+}
+
 using CollapseAddressesIpv4NetworkParams = TestWithParam<std::tuple<std::vector<const char*>, std::vector<const char*>>>;
 TEST_P(CollapseAddressesIpv4NetworkParams, collapse_addresses) {
     std::vector<ipv4_network> expected;
