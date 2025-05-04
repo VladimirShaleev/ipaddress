@@ -158,15 +158,9 @@
          ? ipv4_network::base_max_prefixlen
          : ipv6_network::base_max_prefixlen;
  
- #if IPADDRESS_CPP_VERSION >= 20
-     std::vector<network_type> nets;
-     std::vector<address_type> ips;
-     std::vector<key_value<network_type, network_type>> subnets;
- #else
      fixed_vector<network_type, N> nets;
      fixed_vector<address_type, N> ips;
      fixed_vector<key_value<network_type, network_type>, N> subnets;
- #endif
  
      for (auto it = first; it != last; ++it) {
          const auto& net = *it;
