@@ -102,6 +102,13 @@ struct summarize_sequence_type<ip_address> {
     using type = summarize_sequence<ip_network, ip_any_summarize_iterator>;
 };
 
+template <typename Key, typename Value>
+struct less_pair {
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator()(const std::pair<Key, Value>& item, const Key& key) const IPADDRESS_NOEXCEPT {
+        return item.first < key;
+    }
+};
+
 template <typename It, typename T, typename Cmp = std::less<T>>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE It find_lower_bound(It first, It last, const T& value, Cmp&& cmp = {}) IPADDRESS_NOEXCEPT {
     auto size = last - first;
@@ -207,9 +214,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto consteval_co
         const auto net = nets.back();
         const auto supernet = net.supernet();
         nets.pop_back();
-        auto it = find_lower_bound(subnets.begin(), subnets.end(), supernet, [](const std::pair<network_type, network_type>& item, const network_type& key) {
-            return item.first < key;
-        });
+        auto it = find_lower_bound(subnets.begin(), subnets.end(), supernet, less_pair<network_type, network_type>{});
         if (it != subnets.end() && it->first == supernet) {
             if (it->second != net) {
                 subnets.erase(it);
@@ -322,8 +327,8 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE Result collapse_a
     if (!subnets.empty()) {
         std::vector<network_type> subnet_values;
         subnet_values.reserve(subnets.size());
-        for (const auto& [_, net] : subnets) {
-            subnet_values.emplace_back(net);
+        for (auto it = subnets.begin(); it != subnets.end(); ++it) {
+            subnet_values.emplace_back(it->second);
         }
         std::sort(subnet_values.begin(), subnet_values.end());
         auto it = subnet_values.begin();
