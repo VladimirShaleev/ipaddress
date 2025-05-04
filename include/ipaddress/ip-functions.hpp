@@ -51,37 +51,37 @@ struct ip_network_type {
     >::type;
 };
 
-template <typename T>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto ip_network_type_extract(const T&) IPADDRESS_NOEXCEPT
-    -> typename ip_network_type<T, T>::type {
-    return typename ip_network_type<T, T>::type{};
-}
-
-template <typename T1, typename T2, typename... Args>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto ip_network_type_extract(const T1&, const T2&, const Args&... args) IPADDRESS_NOEXCEPT
-    -> decltype(ip_network_type_extract(typename ip_network_type<T1, T2>::type{}, args...)) {
-    return ip_network_type_extract(typename ip_network_type<T1, T2>::type{}, args...);
-}
-
-template <typename...>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE bool check_ip_network_types() IPADDRESS_NOEXCEPT {
-    return true;
-}
-
-template <typename T>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE bool check_ip_network_types(T) IPADDRESS_NOEXCEPT {
-    using type = typename std::remove_pointer<T>::type;
-    return std::is_same<type, ipv4_network>::value || std::is_same<type, ipv6_network>::value || std::is_same<type, ip_network>::value;
-}
-
-template <typename T, typename... Args>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEVAL IPADDRESS_FORCE_INLINE bool check_ip_network_types(T arg, Args... args) IPADDRESS_NOEXCEPT {
-    return check_ip_network_types(arg) && check_ip_network_types(args...);
-}
-
 template <typename... Args>
 struct is_ip_network_types {
-    static constexpr bool value = sizeof...(Args) == 0 ? false : check_ip_network_types<typename std::add_pointer<Args>::type...>(typename std::add_pointer<Args>::type{}...);
+    static constexpr bool value = false;
+};
+
+template <typename T, typename... Args>
+struct is_ip_network_types<T, Args...> {
+    static constexpr bool value = is_ip_network_types<T>::value && (sizeof...(Args) > 0 ? is_ip_network_types<Args...>::value : true);
+};
+
+template <typename T>
+struct is_ip_network_types<T> {
+    static constexpr bool value = std::is_same<T, ipv4_network>::value || std::is_same<T, ipv6_network>::value || std::is_same<T, ip_network>::value;
+};
+
+template <typename... Args>
+struct ip_network_type_extract;
+
+template <typename T1, typename T2, typename... Args>
+struct ip_network_type_extract<T1, T2, Args...> {
+    using type = typename ip_network_type<typename ip_network_type<T1, T2>::type, typename ip_network_type_extract<Args...>::type>::type;
+};
+
+template <typename T1, typename T2>
+struct ip_network_type_extract<T1, T2> {
+    using type = typename ip_network_type<T1, T2>::type;
+};
+
+template <typename T>
+struct ip_network_type_extract<T> {
+    using type = typename ip_network_type<T, T>::type;
 };
 
 template <typename>
@@ -102,20 +102,6 @@ struct summarize_sequence_type<ip_address> {
     using type = summarize_sequence<ip_network, ip_any_summarize_iterator>;
 };
 
-template <typename Ip>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE typename summarize_sequence_type<Ip>::type summarize_address_range(const Ip& first, const Ip& last, error_code& code) IPADDRESS_NOEXCEPT {
-    code = error_code::no_error;
-    if (first.version() != last.version()) {
-        code = error_code::invalid_version;
-        return {};
-    }
-    if (first > last) {
-        code = error_code::last_address_must_be_greater_than_first;
-        return {};
-    }
-    return { first, last };
-}
-
 template <typename It, typename T, typename Cmp = std::less<T>>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE It find_lower_bound(It first, It last, const T& value, Cmp&& cmp = {}) IPADDRESS_NOEXCEPT {
     auto size = last - first;
@@ -132,6 +118,20 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE It find_lower_bou
         }
     }
     return first;
+}
+
+template <typename Ip>
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE typename summarize_sequence_type<Ip>::type summarize_address_range(const Ip& first, const Ip& last, error_code& code) IPADDRESS_NOEXCEPT {
+    code = error_code::no_error;
+    if (first.version() != last.version()) {
+        code = error_code::invalid_version;
+        return {};
+    }
+    if (first > last) {
+        code = error_code::last_address_must_be_greater_than_first;
+        return {};
+    }
+    return { first, last };
 }
 
 template <size_t N, typename It>
@@ -227,15 +227,20 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto consteval_co
     }
     fixed_vector<network_type, N> result;
     if (!subnets.empty()) {
-        auto it = subnets.begin();
-        auto last = it->second;
+        fixed_vector<network_type, N> subnet_values;
+        for (auto it = subnets.begin(); it != subnets.end(); ++it) {
+            auto lower = find_lower_bound(subnet_values.begin(), subnet_values.end(), it->first);
+            subnet_values.insert(lower, it->second);
+        }
+        auto it = subnet_values.begin();
+        auto last = *it;
         result.emplace_back(last);
         ++it;
-        for (; it != subnets.end(); ++it) {
-            if (last.broadcast_address() >= it->second.broadcast_address()) {
+        for (; it != subnet_values.end(); ++it) {
+            if (last.broadcast_address() >= it->broadcast_address()) {
                 continue;
             }
-            last = it->second;
+            last = *it;
             result.emplace_back(last);
         }
     }
@@ -315,15 +320,21 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE Result collapse_a
     }
     Result result;
     if (!subnets.empty()) {
-        auto it = subnets.begin();
-        auto last = it->second;
+        std::vector<network_type> subnet_values;
+        subnet_values.reserve(subnets.size());
+        for (const auto& [_, net] : subnets) {
+            subnet_values.emplace_back(net);
+        }
+        std::sort(subnet_values.begin(), subnet_values.end());
+        auto it = subnet_values.begin();
+        auto last = *it;
         result.emplace_back(last);
         ++it;
-        for (; it != subnets.end(); ++it) {
-            if (last.broadcast_address() >= it->second.broadcast_address()) {
+        for (; it != subnet_values.end(); ++it) {
+            if (last.broadcast_address() >= it->broadcast_address()) {
                 continue;
             }
-            last = it->second;
+            last = *it;
             result.emplace_back(last);
         }
     }
@@ -427,6 +438,38 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto summarize_ad
     return result;
 }
 
+/**
+ * Collapses a collection of IP networks into the smallest set of contiguous networks.
+ * 
+ * This function is designed to take a collection of IP networks and reduce them into the
+ * smallest number of contiguous networks. This is useful for optimizing routing tables or
+ * enhancing network efficiency.
+ * 
+ * Example:
+ * @code{.cpp}
+ *   constexpr std::array<ipv4_network, 2> nets = {
+ *      ipv4_network::parse("192.0.2.0/25"),
+ *      ipv4_network::parse("192.0.2.128/25")
+ *   };
+ * 
+ *   error_code code{};
+ *   constexpr auto collapsed = collapse_addresses(nets, code);
+ *   if (code == error_code::no_error) {
+ *       for (const auto& net : collapsed) {
+ *           std::cout << net << std::endl;
+ *       }
+ *   }
+ * 
+ *   // out:
+ *   // 192.0.2.0/24
+ * @endcode
+ * 
+ * @tparam Net The type of the IP network.
+ * @tparam N The number of networks in the collection.
+ * @param[in] nets The collection of IP networks to be collapsed.
+ * @param[out] code A reference to an `error_code` object that will be set if the operation is not possible.
+ * @return A container of collapsed networks.
+ */
 IPADDRESS_EXPORT template <typename Net, size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(const std::array<Net, N>& nets, error_code& code) IPADDRESS_NOEXCEPT
     -> decltype(internal::consteval_collapse_addresses<N>(&nets[0], &nets[0] + nets.size(), code)) {
@@ -436,6 +479,38 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_add
         : internal::collapse_addresses<result_type>(&nets[0], &nets[0] + nets.size(), code);
 }
 
+/**
+ * Collapses a collection of IP networks into the smallest set of contiguous networks.
+ * 
+ * This function is designed to take a collection of IP networks and reduce them into the
+ * smallest number of contiguous networks. This is useful for optimizing routing tables or
+ * enhancing network efficiency.
+ * 
+ * Example:
+ * @code{.cpp}
+ *   constexpr ip_network nets[] = {
+ *       ip_network::parse("192.0.2.0/25"),
+ *       ip_network::parse("192.0.2.128/25")
+ *   };
+ * 
+ *   error_code code{};
+ *   constexpr auto collapsed = collapse_addresses(nets, code);
+ *   if (code == error_code::no_error) {
+ *       for (const auto& net : collapsed) {
+ *           std::cout << net << std::endl;
+ *       }
+ *   }
+ * 
+ *   // out:
+ *   // 192.0.2.0/24
+ * @endcode
+ * 
+ * @tparam Net The type of the IP network.
+ * @tparam N The number of networks in the collection.
+ * @param[in] nets The collection of IP networks to be collapsed.
+ * @param[out] code A reference to an `error_code` object that will be set if the operation is not possible.
+ * @return A container of collapsed networks.
+ */
 IPADDRESS_EXPORT template <typename Net, size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(const Net (&nets)[N], error_code& code) IPADDRESS_NOEXCEPT
     -> decltype(internal::consteval_collapse_addresses<N>(&nets[0], &nets[0] + N, code)) {
@@ -445,20 +520,98 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_add
         : internal::collapse_addresses<result_type>(&nets[0], &nets[0] + N, code);
 }
 
+/**
+ * Collapses a collection of IP networks into the smallest set of contiguous networks.
+ * 
+ * This function is designed to take a collection of IP networks and reduce them into the
+ * smallest number of contiguous networks. This is useful for optimizing routing tables or
+ * enhancing network efficiency.
+ * 
+ * Example:
+ * @code{.cpp}
+ *   constexpr ip_network get_collapsed_net() {
+ *       error_code code{};
+ *       auto collapsed = collapse_addresses(code,
+ *           ipv4_network::parse("192.0.2.0/25"), 
+ *           ip_network::parse("192.0.2.128/25"), 
+ *           ip_network::parse("192.0.2.255/32"), 
+ *           ip_network::parse("192.0.2.255/32"));
+ *       return code == error_code::no_error ? collapsed.back() : ip_network{};
+ *   }
+ *
+ *   int main() {
+ *       constexpr auto net = get_collapsed_net();
+ *       std::cout << net << std::endl;
+ *       // out:
+ *       // 192.0.2.0/24
+ *       return 0;
+ *   }
+ * @endcode
+ * 
+ * @tparam... Nets The types of the IP networks.
+ * @param[out] code A reference to an `error_code` object that will be set if the operation is not possible.
+ * @param[in] nets The collection of IP networks to be collapsed.
+ * @return A container of collapsed networks.
+ */
 IPADDRESS_EXPORT template <typename... Nets, typename std::enable_if<internal::is_ip_network_types<Nets...>::value, bool>::type = true>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(error_code& code, const Nets&... nets) IPADDRESS_NOEXCEPT
-    -> fixed_vector<decltype(internal::ip_network_type_extract(nets...)), sizeof...(Nets)> {
-    using Net = decltype(internal::ip_network_type_extract(nets...));
+    -> fixed_vector<typename internal::ip_network_type_extract<Nets...>::type, sizeof...(Nets)> {
+    using Net = typename internal::ip_network_type_extract<Nets...>::type;
     const Net net_array[] = { Net(nets)... };
     return collapse_addresses(net_array, code);
 }
 
+/**
+ * Collapses a collection of IP networks into the smallest set of contiguous networks.
+ * 
+ * This function is designed to take a collection of IP networks and reduce them into the
+ * smallest number of contiguous networks. This is useful for optimizing routing tables or
+ * enhancing network efficiency.
+ * 
+ * Example:
+ * @code{.cpp}
+ * @endcode
+ * 
+ * @tparam It The type of the iterator.
+ * @param[in] first The beginning of the range of IP networks to be collapsed.
+ * @param[in] last The end of the range of IP networks to be collapsed.
+ * @param[out] code A reference to an `error_code` object that will be set if the operation is not possible.
+ * @return A container of collapsed networks.
+ */
 IPADDRESS_EXPORT template <typename It>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(It first, It last, error_code& code) IPADDRESS_NOEXCEPT
     -> std::vector<typename std::iterator_traits<It>::value_type> {
     return internal::collapse_addresses<std::vector<typename std::iterator_traits<It>::value_type>>(first, last, code);
 }
 
+/**
+ * Collapses a collection of IP networks into the smallest set of contiguous networks.
+ * 
+ * This function is designed to take a collection of IP networks and reduce them into the
+ * smallest number of contiguous networks. This is useful for optimizing routing tables or
+ * enhancing network efficiency.
+ * 
+ * Example:
+ * @code{.cpp}
+ *   constexpr std::array<ipv4_network, 2> nets = {
+ *      ipv4_network::parse("192.0.2.0/25"),
+ *      ipv4_network::parse("192.0.2.128/25")
+ *   };
+ * 
+ *   constexpr auto collapsed = collapse_addresses(nets);
+ *   for (const auto& net : collapsed) {
+ *       std::cout << net << std::endl;
+ *   }
+ * 
+ *   // out:
+ *   // 192.0.2.0/24
+ * @endcode
+ * 
+ * @tparam Net The type of the IP network.
+ * @tparam N The number of networks in the collection.
+ * @param[in] nets The collection of IP networks to be collapsed.
+ * @return A container of collapsed networks.
+ */
 IPADDRESS_EXPORT template <typename Net, size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(const std::array<Net, N>& nets) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS
     -> decltype(collapse_addresses(nets, *std::declval<error_code*>())) {
@@ -470,6 +623,34 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_add
     return result;
 }
 
+/**
+ * Collapses a collection of IP networks into the smallest set of contiguous networks.
+ * 
+ * This function is designed to take a collection of IP networks and reduce them into the
+ * smallest number of contiguous networks. This is useful for optimizing routing tables or
+ * enhancing network efficiency.
+ * 
+ * Example:
+ * @code{.cpp}
+ *   constexpr ip_network nets[] = {
+ *       ip_network::parse("192.0.2.0/25"),
+ *       ip_network::parse("192.0.2.128/25")
+ *   };
+ * 
+ *   constexpr auto collapsed = collapse_addresses(nets);
+ *   for (const auto& net : collapsed) {
+ *       std::cout << net << std::endl;
+ *   }
+ * 
+ *   // out:
+ *   // 192.0.2.0/24
+ * @endcode
+ * 
+ * @tparam Net The type of the IP network.
+ * @tparam N The number of networks in the collection.
+ * @param[in] nets The collection of IP networks to be collapsed.
+ * @return A container of collapsed networks.
+ */
 IPADDRESS_EXPORT template <typename Net, size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(const Net (&nets)[N]) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS
     -> decltype(collapse_addresses(nets, *std::declval<error_code*>())) {
@@ -481,9 +662,36 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_add
     return result;
 }
 
+/**
+ * Collapses a collection of IP networks into the smallest set of contiguous networks.
+ * 
+ * This function is designed to take a collection of IP networks and reduce them into the
+ * smallest number of contiguous networks. This is useful for optimizing routing tables or
+ * enhancing network efficiency.
+ * 
+ * Example:
+ * @code{.cpp}
+ *   constexpr auto collapsed = collapse_addresses(
+ *       ipv4_network::parse("192.0.2.0/25"), 
+ *       ip_network::parse("192.0.2.128/25"), 
+ *       ip_network::parse("192.0.2.255/32"), 
+ *       ip_network::parse("192.0.2.255/32"));
+ *
+ *   for (const auto& net : collapsed) {
+ *       std::cout << net << std::endl;
+ *   }
+ * 
+ *   // out:
+ *   // 192.0.2.0/24
+ * @endcode
+ * 
+ * @tparam... Nets The types of the IP networks.
+ * @param[in] nets The collection of IP networks to be collapsed.
+ * @return A container of collapsed networks.
+ */
 IPADDRESS_EXPORT template <typename... Nets, typename std::enable_if<internal::is_ip_network_types<Nets...>::value, bool>::type = true>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(const Nets&... nets) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS
-    -> fixed_vector<decltype(internal::ip_network_type_extract(nets...)), sizeof...(Nets)> {
+    -> fixed_vector<typename internal::ip_network_type_extract<Nets...>::type, sizeof...(Nets)> {
     error_code code = error_code::no_error;
     const auto result = collapse_addresses(code, nets...);
     if (code != error_code::no_error) {
@@ -492,6 +700,22 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_add
     return result;
 }
 
+/**
+ * Collapses a collection of IP networks into the smallest set of contiguous networks.
+ * 
+ * This function is designed to take a collection of IP networks and reduce them into the
+ * smallest number of contiguous networks. This is useful for optimizing routing tables or
+ * enhancing network efficiency.
+ * 
+ * Example:
+ * @code{.cpp}
+ * @endcode
+ * 
+ * @tparam It The type of the iterator.
+ * @param[in] first The beginning of the range of IP networks to be collapsed.
+ * @param[in] last The end of the range of IP networks to be collapsed.
+ * @return A container of collapsed networks.
+ */
 IPADDRESS_EXPORT template <typename It>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(It first, It last) IPADDRESS_NOEXCEPT
     -> std::vector<typename std::iterator_traits<It>::value_type> {

@@ -361,6 +361,50 @@ TEST(ipv4_network, CompileTime) {
     ASSERT_FALSE(exclude_it_gt);
     ASSERT_FALSE(exclude_it_ge);
 
+    constexpr std::array<ipv4_network, 2> arr = { ipv4_network::parse("192.0.2.0/25"), ipv4_network::parse("192.0.2.128/25") };
+    constexpr auto collapsed_arr = collapse_addresses(arr);
+    constexpr auto collapsed_arr_size = collapsed_arr.size();
+    constexpr auto collapsed_arr_0 = collapsed_arr[0];
+    ASSERT_EQ(collapsed_arr_size, 1);
+    ASSERT_EQ(collapsed_arr_0, ipv4_network::parse("192.0.2.0/24"));
+
+    constexpr ipv4_network nets[] = { ipv4_network::parse("192.168.1.1/32"), ipv4_network::parse("192.168.1.0/32") };
+    constexpr auto collapsed_nets = collapse_addresses(nets);
+    constexpr auto collapsed_nets_size = collapsed_nets.size();
+    constexpr auto collapsed_nets_0 = collapsed_nets[0];
+    ASSERT_EQ(collapsed_nets_size, 1);
+    ASSERT_EQ(collapsed_nets_0, ipv4_network::parse("192.168.1.0/31"));
+
+    constexpr auto collapsed_0 = collapse_addresses(ipv4_network::parse("192.0.2.0/25"));
+    constexpr auto collapsed_0_size = collapsed_0.size();
+    constexpr auto collapsed_0_0 = collapsed_0[0];
+    ASSERT_EQ(collapsed_0_size, 1);
+    ASSERT_EQ(collapsed_0_0, ipv4_network::parse("192.0.2.0/25"));
+
+    constexpr auto collapsed_1 = collapse_addresses(ipv4_network::parse("192.0.2.0/25"), ipv4_network::parse("192.0.2.128/25"));
+    constexpr auto collapsed_1_size = collapsed_1.size();
+    constexpr auto collapsed_1_0 = collapsed_1[0];
+    ASSERT_EQ(collapsed_1_size, 1);
+    ASSERT_EQ(collapsed_1_0, ipv4_network::parse("192.0.2.0/24"));
+
+    constexpr auto collapsed_2 = collapse_addresses(ipv4_network::parse("192.168.1.3/32"), ipv4_network::parse("192.168.1.0/32"), ipv4_network::parse("192.168.1.1/32"));
+    constexpr auto collapsed_2_size = collapsed_2.size();
+    constexpr auto collapsed_2_0 = collapsed_2[0];
+    constexpr auto collapsed_2_1 = collapsed_2[1];
+    ASSERT_EQ(collapsed_2_size, 2);
+    ASSERT_EQ(collapsed_2_0, ipv4_network::parse("192.168.1.0/31"));
+    ASSERT_EQ(collapsed_2_1, ipv4_network::parse("192.168.1.3/32"));
+
+    constexpr auto collapsed_3 = collapse_addresses(ipv4_network::parse("10.0.0.2/32"), ipv4_network::parse("10.0.0.1/32"), ipv4_network::parse("10.0.0.3/32"), ipv4_network::parse("10.0.0.5/32"));
+    constexpr auto collapsed_3_size = collapsed_3.size();
+    constexpr auto collapsed_3_0 = collapsed_3[0];
+    constexpr auto collapsed_3_1 = collapsed_3[1];
+    constexpr auto collapsed_3_2 = collapsed_3[2];
+    ASSERT_EQ(collapsed_3_size, 3);
+    ASSERT_EQ(collapsed_3_0, ipv4_network::parse("10.0.0.1/32"));
+    ASSERT_EQ(collapsed_3_1, ipv4_network::parse("10.0.0.2/31"));
+    ASSERT_EQ(collapsed_3_2, ipv4_network::parse("10.0.0.5/32"));
+
     constexpr auto net_wchar_2 = ipv4_network::parse(L"127.0.0.1");
     ASSERT_EQ(net_wchar_2.network_address().to_uint(), 0x7F000001);
 
@@ -1386,4 +1430,60 @@ INSTANTIATE_TEST_SUITE_P(
     ipv4_network, AddressExcludeErrorIpv4NetworkParams,
     Values(
         std::make_tuple("192.168.1.128/30", "192.168.1.0/24", error_code::not_contained_network, "network is not a subnet of other")
+    ));
+
+using CollapseAddressesIpv4NetworkParams = TestWithParam<std::tuple<std::vector<const char*>, std::vector<const char*>>>;
+TEST_P(CollapseAddressesIpv4NetworkParams, collapse_addresses) {
+    std::vector<ipv4_network> expected;
+    for (const auto& net : std::get<1>(GetParam())) {
+        expected.push_back(ipv4_network::parse(net));
+    }
+    
+    std::vector<ipv4_network> nets;
+    for (const auto& net : std::get<0>(GetParam())) {
+        nets.push_back(ipv4_network::parse(net));
+    }
+    auto actual = collapse_addresses(nets.begin(), nets.end());
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv4_network, CollapseAddressesIpv4NetworkParams,
+    Values(
+        std::make_tuple(
+            std::vector<const char*>{"192.0.2.0/25", "192.0.2.128/25"},
+            std::vector<const char*>{"192.0.2.0/24"}),
+        std::make_tuple(
+            std::vector<const char*>{"192.168.1.1/32", "192.168.1.0/32"},
+            std::vector<const char*>{"192.168.1.0/31"}),
+        std::make_tuple(
+            std::vector<const char*>{"192.168.1.3/32", "192.168.1.0/32", "192.168.1.1/32"},
+            std::vector<const char*>{"192.168.1.0/31", "192.168.1.3/32"}),
+        std::make_tuple(
+            std::vector<const char*>{"10.0.0.2/32", "10.0.0.1/32", "10.0.0.3/32", "10.0.0.5/32"},
+            std::vector<const char*>{"10.0.0.1/32", "10.0.0.2/31", "10.0.0.5/32"}),
+        std::make_tuple(
+            std::vector<const char*>{
+                "10.0.0.1/32", "10.0.0.2/32", "10.0.0.3/32", "10.0.0.4/32", "10.0.0.5/32", "10.0.0.6/32", "10.0.0.7/32", "10.0.0.8/32",
+                "10.0.0.9/32", "10.0.0.10/32"},
+            std::vector<const char*>{
+                "10.0.0.1/32", "10.0.0.2/31", "10.0.0.4/30", "10.0.0.8/31", "10.0.0.10/32"}),
+        std::make_tuple(
+            std::vector<const char*>{
+                "192.168.1.0/32", "192.168.1.1/32", "192.168.1.2/32", "192.168.1.3/32", "192.168.1.4/32", "192.168.1.5/32", "192.168.1.6/32", "192.168.1.7/32",
+                "192.168.1.8/32", "192.168.1.9/32", "192.168.1.10/32", "192.168.1.11/32", "192.168.1.12/32", "192.168.1.13/32", "192.168.1.14/32", "192.168.1.15/32",
+                "192.168.1.16/32", "192.168.1.17/32", "192.168.1.18/32", "192.168.1.19/32", "192.168.1.20/32", "192.168.1.21/32", "192.168.1.22/32", "192.168.1.23/32",
+                "192.168.1.24/32", "192.168.1.25/32", "192.168.1.26/32", "192.168.1.27/32", "192.168.1.28/32", "192.168.1.29/32", "192.168.1.30/32", "192.168.1.31/32"},
+            std::vector<const char*>{
+                "192.168.1.0/27"}),
+        std::make_tuple(
+            std::vector<const char*>{
+                "192.0.19.0/24", "192.0.20.0/24", "192.0.13.0/32", "192.0.14.0/32", "192.0.15.0/32", "192.0.16.0/32", "192.0.17.0/32", "192.0.18.0/32",
+                "192.0.21.0/24", "192.0.22.0/24", "192.0.23.0/24", "192.0.42.0/32", "192.0.24.0/24", "192.0.25.0/24", "192.0.26.0/24", "192.0.27.0/24",
+                "192.0.28.0/24", "192.0.29.0/24", "192.0.35.0/32", "192.0.30.0/24", "192.0.31.0/24", "192.0.32.0/24", "192.0.33.0/24", "192.0.34.0/24",
+                "192.0.36.0/32", "192.0.37.0/32", "192.0.38.0/32", "192.0.39.0/32", "192.0.40.0/32", "192.0.41.0/32", "192.0.43.0/32", "192.0.44.0/32"},
+            std::vector<const char*>{
+                "192.0.13.0/32", "192.0.14.0/32", "192.0.15.0/32", "192.0.16.0/32", "192.0.17.0/32", "192.0.18.0/32", "192.0.19.0/24", "192.0.20.0/22",
+                "192.0.24.0/21", "192.0.32.0/23", "192.0.34.0/24", "192.0.35.0/32", "192.0.36.0/32", "192.0.37.0/32", "192.0.38.0/32", "192.0.39.0/32",
+                "192.0.40.0/32", "192.0.41.0/32", "192.0.42.0/32", "192.0.43.0/32", "192.0.44.0/32"})
     ));
