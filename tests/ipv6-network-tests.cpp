@@ -361,6 +361,55 @@ TEST(ipv6_network, CompileTime) {
     ASSERT_FALSE(exclude_it_gt);
     ASSERT_FALSE(exclude_it_ge);
 
+    constexpr std::array<ipv6_network, 0> arr_empty{};
+    constexpr auto collapsed_arr_empty = collapse_addresses(arr_empty);
+    constexpr auto collapsed_arr_empty_size = collapsed_arr_empty.size();
+    ASSERT_EQ(collapsed_arr_empty_size, 0);
+
+    constexpr std::array<ipv6_network, 2> arr = { ipv6_network::parse("2001:db8::1/128"), ipv6_network::parse("2001:db8::2/128") };
+    constexpr auto collapsed_arr = collapse_addresses(arr);
+    constexpr auto collapsed_arr_size = collapsed_arr.size();
+    constexpr auto collapsed_arr_0 = collapsed_arr[0];
+    constexpr auto collapsed_arr_1 = collapsed_arr[1];
+    ASSERT_EQ(collapsed_arr_size, 2);
+    ASSERT_EQ(collapsed_arr_0, ipv6_network::parse("2001:db8::1/128"));
+    ASSERT_EQ(collapsed_arr_1, ipv6_network::parse("2001:db8::2/128"));
+
+    constexpr ipv6_network nets[] = { 
+        ipv6_network::parse("2001:db8::1/128"), ipv6_network::parse("2001:db8::2/128"),
+        ipv6_network::parse("2001:db8::3/128"), ipv6_network::parse("2001:db8::5/128") };
+    constexpr auto collapsed_nets = collapse_addresses(nets);
+    constexpr auto collapsed_nets_size = collapsed_nets.size();
+    constexpr auto collapsed_nets_0 = collapsed_nets[0];
+    constexpr auto collapsed_nets_1 = collapsed_nets[1];
+    constexpr auto collapsed_nets_2 = collapsed_nets[2];
+    ASSERT_EQ(collapsed_nets_size, 3);
+    ASSERT_EQ(collapsed_nets_0, ipv6_network::parse("2001:db8::1/128"));
+    ASSERT_EQ(collapsed_nets_1, ipv6_network::parse("2001:db8::2/127"));
+    ASSERT_EQ(collapsed_nets_2, ipv6_network::parse("2001:db8::5/128"));
+
+    constexpr auto collapsed_0 = collapse_addresses(ipv6_network::parse("2001:db8::1/128"));
+    constexpr auto collapsed_0_size = collapsed_0.size();
+    constexpr auto collapsed_0_0 = collapsed_0[0];
+    ASSERT_EQ(collapsed_0_size, 1);
+    ASSERT_EQ(collapsed_0_0, ipv6_network::parse("2001:db8::1/128"));
+
+    constexpr auto collapsed_1 = collapse_addresses(ipv6_network::parse("2001:db8::1/128"), ipv6_network::parse("2001:db8::2/128"));
+    constexpr auto collapsed_1_size = collapsed_1.size();
+    constexpr auto collapsed_1_0 = collapsed_1[0];
+    constexpr auto collapsed_1_1 = collapsed_1[1];
+    ASSERT_EQ(collapsed_1_size, 2);
+    ASSERT_EQ(collapsed_1_0, ipv6_network::parse("2001:db8::1/128"));
+    ASSERT_EQ(collapsed_1_1, ipv6_network::parse("2001:db8::2/128"));
+
+    constexpr auto collapsed_2 = collapse_addresses(ipv6_network::parse("2001:db8::1/128"), ipv6_network::parse("2001:db8::2/128"), ipv6_network::parse("2001:db8::3/128"));
+    constexpr auto collapsed_2_size = collapsed_2.size();
+    constexpr auto collapsed_2_0 = collapsed_2[0];
+    constexpr auto collapsed_2_1 = collapsed_2[1];
+    ASSERT_EQ(collapsed_2_size, 2);
+    ASSERT_EQ(collapsed_2_0, ipv6_network::parse("2001:db8::1/128"));
+    ASSERT_EQ(collapsed_2_1, ipv6_network::parse("2001:db8::2/127"));
+
     constexpr auto net_wchar_2 = ipv6_network::parse(L"2001:db8::/96");
     ASSERT_EQ(net_wchar_2.network_address(), ipv6_address::parse("2001:db8::"));
 
@@ -1457,4 +1506,125 @@ INSTANTIATE_TEST_SUITE_P(
     ipv6_network, AddressExcludeErrorIpv6NetworkParams,
     Values(
         std::make_tuple("2001:658:22a:caff::/120", "2001:658:22a:cafe::/122", error_code::not_contained_network, "network is not a subnet of other")
+    ));
+
+TEST(ipv6_network, CollapseAddressesOverloads) {
+    std::array<ipv6_network, 2> arr = { ipv6_network::parse("2001:db8::1/128"), ipv6_network::parse("2001:db8::2/128") };
+    auto collapsed_arr = collapse_addresses(arr);
+    auto collapsed_arr_size = collapsed_arr.size();
+    auto collapsed_arr_0 = collapsed_arr[0];
+    auto collapsed_arr_1 = collapsed_arr[1];
+    ASSERT_EQ(collapsed_arr_size, 2);
+    ASSERT_EQ(collapsed_arr_0, ipv6_network::parse("2001:db8::1/128"));
+    ASSERT_EQ(collapsed_arr_1, ipv6_network::parse("2001:db8::2/128"));
+    
+    ipv6_network nets[] = { 
+        ipv6_network::parse("2001:db8::1/128"), ipv6_network::parse("2001:db8::2/128"),
+        ipv6_network::parse("2001:db8::3/128"), ipv6_network::parse("2001:db8::5/128") };
+    auto collapsed_nets = collapse_addresses(nets);
+    auto collapsed_nets_size = collapsed_nets.size();
+    auto collapsed_nets_0 = collapsed_nets[0];
+    auto collapsed_nets_1 = collapsed_nets[1];
+    auto collapsed_nets_2 = collapsed_nets[2];
+    ASSERT_EQ(collapsed_nets_size, 3);
+    ASSERT_EQ(collapsed_nets_0, ipv6_network::parse("2001:db8::1/128"));
+    ASSERT_EQ(collapsed_nets_1, ipv6_network::parse("2001:db8::2/127"));
+    ASSERT_EQ(collapsed_nets_2, ipv6_network::parse("2001:db8::5/128"));
+
+    auto collapsed_0 = collapse_addresses(ipv6_network::parse("2001:db8::1/128"));
+    auto collapsed_0_size = collapsed_0.size();
+    auto collapsed_0_0 = collapsed_0[0];
+    ASSERT_EQ(collapsed_0_size, 1);
+    ASSERT_EQ(collapsed_0_0, ipv6_network::parse("2001:db8::1/128"));
+
+    auto collapsed_1 = collapse_addresses(ipv6_network::parse("2001:db8::1/128"), ipv6_network::parse("2001:db8::2/128"));
+    auto collapsed_1_size = collapsed_1.size();
+    auto collapsed_1_0 = collapsed_1[0];
+    auto collapsed_1_1 = collapsed_1[1];
+    ASSERT_EQ(collapsed_1_size, 2);
+    ASSERT_EQ(collapsed_1_0, ipv6_network::parse("2001:db8::1/128"));
+    ASSERT_EQ(collapsed_1_1, ipv6_network::parse("2001:db8::2/128"));
+
+    ipv6_network nets2[] = {
+        ipv6_network::parse("2001:db8::0/128"), ipv6_network::parse("2001:db8::1/128"), ipv6_network::parse("2001:db8::2/128"), ipv6_network::parse("2001:db8::3/128"),
+        ipv6_network::parse("2001:db8::4/128"), ipv6_network::parse("2001:db8::5/128"), ipv6_network::parse("2001:db8::6/128"), ipv6_network::parse("2001:db8::7/128"),
+        ipv6_network::parse("2001:db8::8/128"), ipv6_network::parse("2001:db8::9/128"), ipv6_network::parse("2001:db8::10/128"), ipv6_network::parse("2001:db8::11/128"),
+        ipv6_network::parse("2001:db8::12/128"), ipv6_network::parse("2001:db8::13/128"), ipv6_network::parse("2001:db8::14/128"), ipv6_network::parse("2001:db8::15/128"),
+        ipv6_network::parse("2001:db8::16/128"), ipv6_network::parse("2001:db8::17/128"), ipv6_network::parse("2001:db8::18/128"), ipv6_network::parse("2001:db8::19/128"),
+        ipv6_network::parse("2001:db8::20/128"), ipv6_network::parse("2001:db8::21/128"), ipv6_network::parse("2001:db8::22/128"), ipv6_network::parse("2001:db8::23/128")    
+    };
+    auto collapsed_nets2 = collapse_addresses(nets2);
+    auto collapsed_nets2_size = collapsed_nets2.size();
+    auto collapsed_nets2_0 = collapsed_nets2[0];
+    auto collapsed_nets2_1 = collapsed_nets2[1];
+    auto collapsed_nets2_2 = collapsed_nets2[2];
+    auto collapsed_nets2_3 = collapsed_nets2[3];
+    auto collapsed_nets2_4 = collapsed_nets2[4];
+    ASSERT_EQ(collapsed_nets2_size, 5);
+    ASSERT_EQ(collapsed_nets2_0, ipv6_network::parse("2001:db8::/125"));
+    ASSERT_EQ(collapsed_nets2_1, ipv6_network::parse("2001:db8::8/127"));
+    ASSERT_EQ(collapsed_nets2_2, ipv6_network::parse("2001:db8::10/125"));
+    ASSERT_EQ(collapsed_nets2_3, ipv6_network::parse("2001:db8::18/127"));
+    ASSERT_EQ(collapsed_nets2_4, ipv6_network::parse("2001:db8::20/126"));
+}
+
+using CollapseAddressesIpv6NetworkParams = TestWithParam<std::tuple<std::vector<const char*>, std::vector<const char*>>>;
+TEST_P(CollapseAddressesIpv6NetworkParams, collapse_addresses) {
+    std::vector<ipv6_network> expected;
+    for (const auto& net : std::get<1>(GetParam())) {
+        expected.push_back(ipv6_network::parse(net));
+    }
+    
+    std::vector<ipv6_network> nets;
+    for (const auto& net : std::get<0>(GetParam())) {
+        nets.push_back(ipv6_network::parse(net));
+    }
+    auto actual = collapse_addresses(nets.begin(), nets.end());
+
+    ASSERT_EQ(actual, expected);
+}
+INSTANTIATE_TEST_SUITE_P(
+    ipv6_network, CollapseAddressesIpv6NetworkParams,
+    Values(
+        std::make_tuple(
+            std::vector<const char*>{},
+            std::vector<const char*>{}),
+        std::make_tuple(
+            std::vector<const char*>{"2001:db8::1/128", "2001:db8::2/128"},
+            std::vector<const char*>{"2001:db8::1/128", "2001:db8::2/128"}),
+        std::make_tuple(
+            std::vector<const char*>{"2001:db8::1/128", "2001:db8::2/128", "2001:db8::4/128"},
+            std::vector<const char*>{"2001:db8::1/128", "2001:db8::2/128", "2001:db8::4/128"}),
+        std::make_tuple(
+            std::vector<const char*>{"2001:db8::1/128", "2001:db8::2/128", "2001:db8::3/128", "2001:db8::5/128"},
+            std::vector<const char*>{"2001:db8::1/128", "2001:db8::2/127", "2001:db8::5/128"}),
+        std::make_tuple(
+            std::vector<const char*>{
+                "2001:db8::19/128", "2001:db8::a/128", "2001:db8::b/128", "2001:db8::16/128", "2001:db8::c/128", "2001:db8::d/128", "2001:db8::10/128", "2001:db8::11/128",
+                "2001:db8::12/128", "2001:db8::13/128", "2001:db8::e/128", "2001:db8::f/128", "2001:db8::14/128", "2001:db8::15/128", "2001:db8::17/128", "2001:db8::18/128"},
+            std::vector<const char*>{
+                "2001:db8::a/127", "2001:db8::c/126", "2001:db8::10/125", "2001:db8::18/127"}),
+        std::make_tuple(
+            std::vector<const char*>{
+                "2001:db8::0/128", "2001:db8::1/128", "2001:db8::2/128", "2001:db8::3/128", "2001:db8::4/128", "2001:db8::5/128", "2001:db8::6/128", "2001:db8::7/128",
+                "2001:db8::8/128", "2001:db8::9/128", "2001:db8::10/128", "2001:db8::11/128", "2001:db8::12/128", "2001:db8::13/128", "2001:db8::14/128", "2001:db8::15/128",
+                "2001:db8::16/128", "2001:db8::17/128", "2001:db8::18/128", "2001:db8::19/128", "2001:db8::20/128", "2001:db8::21/128", "2001:db8::22/128", "2001:db8::23/128",
+                "2001:db8::24/128", "2001:db8::25/128", "2001:db8::26/128", "2001:db8::27/128", "2001:db8::28/128", "2001:db8::29/128", "2001:db8::30/128", "2001:db8::31/128",
+                "2001:db8::32/128", "2001:db8::33/128", "2001:db8::34/128", "2001:db8::35/128", "2001:db8::36/128", "2001:db8::37/128", "2001:db8::38/128", "2001:db8::39/128",
+                "2001:db8::40/128", "2001:db8::41/128", "2001:db8::42/128", "2001:db8::43/128", "2001:db8::44/128", "2001:db8::45/128", "2001:db8::46/128", "2001:db8::47/128",
+                "2001:db8::48/128", "2001:db8::49/128", "2001:db8::50/128", "2001:db8::51/128", "2001:db8::52/128", "2001:db8::53/128", "2001:db8::54/128", "2001:db8::55/128",
+                "2001:db8::56/128", "2001:db8::57/128", "2001:db8::58/128", "2001:db8::59/128", "2001:db8::60/128", "2001:db8::61/128", "2001:db8::62/128", "2001:db8::63/128",
+                "2001:db8::64/128", "2001:db8::65/128", "2001:db8::66/128", "2001:db8::67/128", "2001:db8::68/128", "2001:db8::69/128", "2001:db8::70/128", "2001:db8::71/128",
+                "2001:db8::72/128", "2001:db8::73/128", "2001:db8::74/128", "2001:db8::75/128", "2001:db8::76/128", "2001:db8::77/128", "2001:db8::78/128", "2001:db8::79/128",
+                "2001:db8::80/128", "2001:db8::81/128", "2001:db8::82/128", "2001:db8::83/128", "2001:db8::84/128", "2001:db8::85/128", "2001:db8::86/128", "2001:db8::87/128",
+                "2001:db8::88/128", "2001:db8::89/128", "2001:db8::90/128", "2001:db8::91/128", "2001:db8::92/128", "2001:db8::93/128", "2001:db8::94/128", "2001:db8::95/128",
+                "2001:db8::96/128", "2001:db8::97/128", "2001:db8::98/128", "2001:db8::99/128", "2001:db8::100/128", "2001:db8::101/128", "2001:db8::102/128", "2001:db8::103/128",
+                "2001:db8::104/128", "2001:db8::105/128", "2001:db8::106/128", "2001:db8::107/128", "2001:db8::108/128", "2001:db8::109/128", "2001:db8::110/128", "2001:db8::111/128",
+                "2001:db8::112/128", "2001:db8::113/128", "2001:db8::114/128", "2001:db8::115/128", "2001:db8::116/128", "2001:db8::117/128", "2001:db8::118/128", "2001:db8::119/128",
+                "2001:db8::120/128", "2001:db8::121/128", "2001:db8::122/128", "2001:db8::123/128", "2001:db8::124/128", "2001:db8::125/128", "2001:db8::126/128", "2001:db8::127/128"},
+            std::vector<const char*>{
+                "2001:db8::/125", "2001:db8::8/127", "2001:db8::10/125", "2001:db8::18/127", "2001:db8::20/125", "2001:db8::28/127", "2001:db8::30/125", "2001:db8::38/127",
+                "2001:db8::40/125", "2001:db8::48/127", "2001:db8::50/125", "2001:db8::58/127", "2001:db8::60/125", "2001:db8::68/127", "2001:db8::70/125", "2001:db8::78/127",
+                "2001:db8::80/125", "2001:db8::88/127", "2001:db8::90/125", "2001:db8::98/127", "2001:db8::100/125", "2001:db8::108/127", "2001:db8::110/125", "2001:db8::118/127",
+                "2001:db8::120/125"})
     ));
