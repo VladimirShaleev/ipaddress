@@ -467,21 +467,25 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto summarize_ad
  * 
  * Example:
  * @code{.cpp}
- *   constexpr std::array<ipv4_network, 2> nets = {
- *      ipv4_network::parse("192.0.2.0/25"),
- *      ipv4_network::parse("192.0.2.128/25")
- *   };
- * 
- *   error_code code{};
- *   constexpr auto collapsed = collapse_addresses(nets, code);
- *   if (code == error_code::no_error) {
- *       for (const auto& net : collapsed) {
- *           std::cout << net << std::endl;
- *       }
+ *   consteval ipv4_network get_last_collapsed() {
+ *       constexpr std::array nets = {
+ *           ipv4_network::parse("192.0.2.0/25"),
+ *           ipv4_network::parse("192.0.2.128/25")
+ *       };
+ *  
+ *       error_code code{};
+ *       constexpr auto collapsed = collapse_addresses(nets, code);
+ *       return code == error_code::no_error ? collapsed.back() : ipv4_network{};
  *   }
+ *   
+ *   int main() {
+ *       constexpr auto net = get_last_collapsed();
+ *       std::cout << net << std::endl;
  * 
- *   // out:
- *   // 192.0.2.0/24
+ *       // out:
+ *       // 192.0.2.0/24
+ *       return 0;
+ *   }
  * @endcode
  * 
  * @tparam Net The type of the IP network.
@@ -505,21 +509,25 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_add
  * 
  * Example:
  * @code{.cpp}
- *   constexpr ip_network nets[] = {
- *       ip_network::parse("192.0.2.0/25"),
- *       ip_network::parse("192.0.2.128/25")
- *   };
- * 
- *   error_code code{};
- *   constexpr auto collapsed = collapse_addresses(nets, code);
- *   if (code == error_code::no_error) {
- *       for (const auto& net : collapsed) {
- *           std::cout << net << std::endl;
- *       }
+ *   consteval ip_network get_last_collapsed() {
+ *       constexpr ip_network nets[] = {
+ *           ip_network::parse("192.0.2.0/25"),
+ *           ip_network::parse("192.0.2.128/25")
+ *       };
+ *   
+ *       error_code code{};
+ *       constexpr auto collapsed = collapse_addresses(nets, code);
+ *       return code == error_code::no_error ? collapsed.back() : ip_network{};
  *   }
- * 
- *   // out:
- *   // 192.0.2.0/24
+ *   
+ *   int main() {
+ *       constexpr auto net = get_last_collapsed();
+ *       std::cout << net << std::endl;
+ *   
+ *       // out:
+ *       // 192.0.2.0/24
+ *       return 0;
+ *   }
  * @endcode
  * 
  * @tparam Net The type of the IP network.
@@ -543,9 +551,10 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_add
  * 
  * Example:
  * @code{.cpp}
- *   constexpr ip_network get_collapsed_net() {
+ *   consteval ip_network get_last_collapsed() {
  *       error_code code{};
- *       auto collapsed = collapse_addresses(code,
+ *       auto collapsed = collapse_addresses(
+ *           code,
  *           ipv4_network::parse("192.0.2.0/25"), 
  *           ip_network::parse("192.0.2.128/25"), 
  *           ip_network::parse("192.0.2.255/32"), 
@@ -556,6 +565,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_add
  *   int main() {
  *       constexpr auto net = get_collapsed_net();
  *       std::cout << net << std::endl;
+ *
  *       // out:
  *       // 192.0.2.0/24
  *       return 0;
@@ -584,6 +594,24 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_add
  * 
  * Example:
  * @code{.cpp}
+ *   std::vector<ip_network> nets = {
+ *       ip_network::parse("2001:db8::1/128"),
+ *       ip_network::parse("2001:db8::2/128"),
+ *       ip_network::parse("2001:db8::3/128"),
+ *       ip_network::parse("2001:db8::5/128") };
+ *       
+ *   error_code code{};
+ *   const auto collapsed = collapse_addresses(nets.begin(), nets.end(), code);
+ *   if (code == error_code::no_error) {
+ *       for (const auto& net : collapsed) {
+ *           std::cout << net << std::endl;
+ *       }
+ *   }
+ *   
+ *   // out:
+ *   // 2001:db8::1/128
+ *   // 2001:db8::2/127
+ *   // 2001:db8::5/128
  * @endcode
  * 
  * @tparam It The type of the iterator.
@@ -625,6 +653,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_add
  * @tparam N The number of networks in the collection.
  * @param[in] nets The collection of IP networks to be collapsed.
  * @return A container of collapsed networks.
+ * @throw logic_error Thrown with a message corresponding to the error code.
  */
 IPADDRESS_EXPORT template <typename Net, size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(const std::array<Net, N>& nets) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS
@@ -664,6 +693,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_add
  * @tparam N The number of networks in the collection.
  * @param[in] nets The collection of IP networks to be collapsed.
  * @return A container of collapsed networks.
+ * @throw logic_error Thrown with a message corresponding to the error code.
  */
 IPADDRESS_EXPORT template <typename Net, size_t N>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(const Net (&nets)[N]) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS
@@ -685,12 +715,11 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_add
  * 
  * Example:
  * @code{.cpp}
- *   constexpr auto collapsed = collapse_addresses(
+ *   constexpr auto collapsed = collapse_addresses( 
+ *       ip_network::parse("192.0.2.255/32"),
  *       ipv4_network::parse("192.0.2.0/25"), 
- *       ip_network::parse("192.0.2.128/25"), 
- *       ip_network::parse("192.0.2.255/32"), 
- *       ip_network::parse("192.0.2.255/32"));
- *
+ *       ipv4_network::parse("192.0.2.128/25"));
+ *   
  *   for (const auto& net : collapsed) {
  *       std::cout << net << std::endl;
  *   }
@@ -702,6 +731,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_add
  * @tparam... Nets The types of the IP networks.
  * @param[in] nets The collection of IP networks to be collapsed.
  * @return A container of collapsed networks.
+ * @throw logic_error Thrown with a message corresponding to the error code.
  */
 IPADDRESS_EXPORT template <typename... Nets, typename std::enable_if<internal::is_ip_network_types<Nets...>::value, bool>::type = true>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(const Nets&... nets) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS
@@ -723,12 +753,28 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_add
  * 
  * Example:
  * @code{.cpp}
+ *   std::vector<ip_network> nets = {
+ *       ip_network::parse("2001:db8::1/128"),
+ *       ip_network::parse("2001:db8::2/128"),
+ *       ip_network::parse("2001:db8::3/128"),
+ *       ip_network::parse("2001:db8::5/128") };
+ *   
+ *   const auto collapsed = collapse_addresses(nets.begin(), nets.end());
+ *   for (const auto& net : collapsed) {
+ *       std::cout << net << std::endl;
+ *   }
+ *   
+ *   // out:
+ *   // 2001:db8::1/128
+ *   // 2001:db8::2/127
+ *   // 2001:db8::5/128
  * @endcode
- * 
+ *
  * @tparam It The type of the iterator.
  * @param[in] first The beginning of the range of IP networks to be collapsed.
  * @param[in] last The end of the range of IP networks to be collapsed.
  * @return A container of collapsed networks.
+ * @throw logic_error Thrown with a message corresponding to the error code.
  */
 IPADDRESS_EXPORT template <typename It>
 IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(It first, It last) IPADDRESS_NOEXCEPT
