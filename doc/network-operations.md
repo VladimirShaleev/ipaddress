@@ -124,9 +124,9 @@ In this example, the range from `192.0.2.0` to `192.0.2.130` is compressed into 
 
 ## Collapse addresses {#collapse-addresses}
 
-The collapse_addresses function is a handy utility that takes a collection (or range) of IP network objects and condenses them into the smallest possible set of non-overlapping networks. In other words, if you have a list of networks that are adjacent or overlapping, this function will merge them into the minimal set of contiguous networks while preserving the complete address space information.
+The `collapse_addresses` function is a handy utility that takes a collection (or range) of IP network objects and condenses them into the smallest possible set of non-overlapping networks. In other words, if you have a list of networks that are adjacent or overlapping, this function will merge them into the minimal set of contiguous networks while preserving the complete address space information.
 
-For example, imagine you have several individual host addresses defined as /32 networks. If some of those addresses are contiguous, collapse_addresses will automatically merge them into a broader subnet such as a /31 or higher-order network when the situation allows. In the code snippet below, three separate IPv4 networks (192.168.1.0/32, 192.168.1.1/32, and 192.168.1.3/32) are collapsed into two networks: one covering the contiguous range (192.168.1.0/31) and one remaining as a single host (192.168.1.3/32).
+For example, imagine you have several individual host addresses defined as `/32` networks. If some of those addresses are contiguous, `collapse_addresses` will automatically merge them into a broader subnet such as a `/31` or higher-order network when the situation allows. In the code snippet below, three separate IPv4 networks (`192.168.1.0/32`, `192.168.1.1/32`, and `192.168.1.3/32`) are collapsed into two networks: one covering the contiguous range (`192.168.1.0/31`) and one remaining as a single host (`192.168.1.3/32`).
 
 This function is useful for tasks like preparing routing tables or configuring firewall rules, where handling a long list of individual entries can be both inefficient and error prone. By collapsing addresses into the minimal set of networks, you create cleaner, more maintainable configurations while also potentially improving lookup performance.
 

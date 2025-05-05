@@ -495,8 +495,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto summarize_ad
  * @return A container of collapsed networks.
  */
 IPADDRESS_EXPORT template <typename Net, size_t N>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(const std::array<Net, N>& nets, error_code& code) IPADDRESS_NOEXCEPT
-    -> decltype(N != 0 ? internal::collapse_addresses<N>(&nets[0], &nets[0] + nets.size(), code) : fixed_vector<Net, N>{}) {
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_vector<Net, N> collapse_addresses(const std::array<Net, N>& nets, error_code& code) IPADDRESS_NOEXCEPT {
     return N != 0 ? internal::collapse_addresses<N>(&nets[0], &nets[0] + nets.size(), code) : fixed_vector<Net, N>{};
 }
 
@@ -537,8 +536,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_add
  * @return A container of collapsed networks.
  */
 IPADDRESS_EXPORT template <typename Net, size_t N>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(const Net (&nets)[N], error_code& code) IPADDRESS_NOEXCEPT
-    -> decltype(internal::collapse_addresses<N>(&nets[0], &nets[0] + N, code)) {
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_vector<Net, N> collapse_addresses(const Net (&nets)[N], error_code& code) IPADDRESS_NOEXCEPT {
     return internal::collapse_addresses<N>(&nets[0], &nets[0] + N, code);
 }
 
@@ -572,7 +570,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_add
  *   }
  * @endcode
  * 
- * @tparam... Nets The types of the IP networks.
+ * @tparam Nets The types of the IP networks.
  * @param[out] code A reference to an `error_code` object that will be set if the operation is not possible.
  * @param[in] nets The collection of IP networks to be collapsed.
  * @return A container of collapsed networks.
@@ -656,8 +654,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_add
  * @throw logic_error Thrown with a message corresponding to the error code.
  */
 IPADDRESS_EXPORT template <typename Net, size_t N>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(const std::array<Net, N>& nets) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS
-    -> decltype(collapse_addresses(nets, *std::declval<error_code*>())) {
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_vector<Net, N> collapse_addresses(const std::array<Net, N>& nets) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
     error_code code = error_code::no_error;
     const auto result = collapse_addresses(nets, code);
     if (code != error_code::no_error) {
@@ -696,8 +693,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_add
  * @throw logic_error Thrown with a message corresponding to the error code.
  */
 IPADDRESS_EXPORT template <typename Net, size_t N>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(const Net (&nets)[N]) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS
-    -> decltype(collapse_addresses(nets, *std::declval<error_code*>())) {
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE fixed_vector<Net, N> collapse_addresses(const Net (&nets)[N]) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
     error_code code = error_code::no_error;
     const auto result = collapse_addresses(nets, code);
     if (code != error_code::no_error) {
@@ -728,7 +724,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_add
  *   // 192.0.2.0/24
  * @endcode
  * 
- * @tparam... Nets The types of the IP networks.
+ * @tparam Nets The types of the IP networks.
  * @param[in] nets The collection of IP networks to be collapsed.
  * @return A container of collapsed networks.
  * @throw logic_error Thrown with a message corresponding to the error code.
