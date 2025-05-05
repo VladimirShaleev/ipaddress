@@ -777,7 +777,7 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_add
  * @throw logic_error Thrown with a message corresponding to the error code.
  */
 IPADDRESS_EXPORT template <typename It>
-IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(It first, It last) IPADDRESS_NOEXCEPT
+IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_addresses(It first, It last) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS
     -> std::vector<typename std::iterator_traits<It>::value_type> {
     error_code code = error_code::no_error;
     const auto result = collapse_addresses(first, last, code);

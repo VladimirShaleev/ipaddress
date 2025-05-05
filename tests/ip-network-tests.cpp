@@ -1056,10 +1056,12 @@ TEST_P(CollapseAddressesErrorNetworkParams, collapse_addresses) {
     auto error_collapse_addresses = collapse_addresses(vec.begin(), vec.end());
     ASSERT_TRUE(error_collapse_addresses.empty());
 #elif IPADDRESS_CPP_VERSION >= 14
-    const auto expected_error_str = std::get<2>(GetParam());
     EXPECT_THAT(
-        ([&vec]() { auto _ = collapse_addresses(vec.begin(), vec.end()); }),
-        ThrowsMessage<logic_error>(StrEq(expected_error_str)));
+        [&vec]() { auto _ = collapse_addresses(vec.begin(), vec.end()); },
+        ThrowsMessage<logic_error>(StrEq(get<2>(GetParam()))));
+    EXPECT_THAT(
+        [&vec]() { auto _ = collapse_addresses(vec.begin(), vec.end()); },
+        Throws<logic_error>(Property(&parse_error::code, Eq(expected_error_code))));
 #else
     ASSERT_THROW(collapse_addresses(vec.begin(), vec.end()), logic_error);
 #endif
