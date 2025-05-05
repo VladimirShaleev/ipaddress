@@ -978,45 +978,45 @@ TEST(ip_network, address_exclude) {
 }
 
 TEST(ip_network, collapse_addresses) {
-    constexpr std::array<ip_network, 0> arr_empty{};
-    constexpr auto collapsed_arr_empty = collapse_addresses(arr_empty);
-    constexpr auto collapsed_arr_empty_size = collapsed_arr_empty.size();
+    IPADDRESS_CONSTEXPR std::array<ip_network, 0> arr_empty{};
+    IPADDRESS_CONSTEXPR auto collapsed_arr_empty = collapse_addresses(arr_empty);
+    IPADDRESS_CONSTEXPR auto collapsed_arr_empty_size = collapsed_arr_empty.size();
     ASSERT_EQ(collapsed_arr_empty_size, 0);
-    
-    constexpr std::array<ip_network, 2> arr = { ip_network::parse("2001:db8::1/128"), ip_network::parse("2001:db8::2/128") };
-    constexpr auto collapsed_arr = collapse_addresses(arr);
-    constexpr auto collapsed_arr_size = collapsed_arr.size();
-    constexpr auto collapsed_arr_0 = collapsed_arr[0];
-    constexpr auto collapsed_arr_1 = collapsed_arr[1];
+
+    IPADDRESS_CONSTEXPR std::array<ip_network, 2> arr = { ip_network::parse("2001:db8::1/128"), ip_network::parse("2001:db8::2/128") };
+    IPADDRESS_CONSTEXPR auto collapsed_arr = collapse_addresses(arr);
+    IPADDRESS_CONSTEXPR auto collapsed_arr_size = collapsed_arr.size();
+    IPADDRESS_CONSTEXPR auto collapsed_arr_0 = collapsed_arr[0];
+    IPADDRESS_CONSTEXPR auto collapsed_arr_1 = collapsed_arr[1];
     ASSERT_EQ(collapsed_arr_size, 2);
     ASSERT_EQ(collapsed_arr_0, ip_network::parse("2001:db8::1/128"));
     ASSERT_EQ(collapsed_arr_1, ip_network::parse("2001:db8::2/128"));
-    
-    constexpr ip_network nets[] = { ip_network::parse("192.168.1.1/32"), ip_network::parse("192.168.1.0/32") };
-    constexpr auto collapsed_nets = collapse_addresses(nets);
-    constexpr auto collapsed_nets_size = collapsed_nets.size();
-    constexpr auto collapsed_nets_0 = collapsed_nets[0];
+
+    IPADDRESS_CONSTEXPR ip_network nets[] = { ip_network::parse("192.168.1.1/32"), ip_network::parse("192.168.1.0/32") };
+    IPADDRESS_CONSTEXPR auto collapsed_nets = collapse_addresses(nets);
+    IPADDRESS_CONSTEXPR auto collapsed_nets_size = collapsed_nets.size();
+    IPADDRESS_CONSTEXPR auto collapsed_nets_0 = collapsed_nets[0];
     ASSERT_EQ(collapsed_nets_size, 1);
     ASSERT_EQ(collapsed_nets_0, ip_network::parse("192.168.1.0/31"));
-    
-    constexpr auto collapsed_0 = collapse_addresses(ip_network::parse("2001:db8::1/128"));
-    constexpr auto collapsed_0_size = collapsed_0.size();
-    constexpr auto collapsed_0_0 = collapsed_0[0];
+
+    IPADDRESS_CONSTEXPR auto collapsed_0 = collapse_addresses(ip_network::parse("2001:db8::1/128"));
+    IPADDRESS_CONSTEXPR auto collapsed_0_size = collapsed_0.size();
+    IPADDRESS_CONSTEXPR auto collapsed_0_0 = collapsed_0[0];
     ASSERT_EQ(collapsed_0_size, 1);
     ASSERT_EQ(collapsed_0_0, ip_network::parse("2001:db8::1/128"));
 
-    constexpr auto collapsed_1 = collapse_addresses(ipv6_network::parse("2001:db8::1/128"), ip_network::parse("2001:db8::2/128"));
-    constexpr auto collapsed_1_size = collapsed_1.size();
-    constexpr auto collapsed_1_0 = collapsed_1[0];
-    constexpr auto collapsed_1_1 = collapsed_1[1];
+    IPADDRESS_CONSTEXPR auto collapsed_1 = collapse_addresses(ipv6_network::parse("2001:db8::1/128"), ip_network::parse("2001:db8::2/128"));
+    IPADDRESS_CONSTEXPR auto collapsed_1_size = collapsed_1.size();
+    IPADDRESS_CONSTEXPR auto collapsed_1_0 = collapsed_1[0];
+    IPADDRESS_CONSTEXPR auto collapsed_1_1 = collapsed_1[1];
     ASSERT_EQ(collapsed_1_size, 2);
     ASSERT_EQ(collapsed_1_0, ip_network::parse("2001:db8::1/128"));
     ASSERT_EQ(collapsed_1_1, ip_network::parse("2001:db8::2/128"));
-    
-    constexpr auto collapsed_2 = collapse_addresses(ip_network::parse("192.168.1.3/32"), ipv4_network::parse("192.168.1.0/32"), ip_network::parse("192.168.1.1/32"));
-    constexpr auto collapsed_2_size = collapsed_2.size();
-    constexpr auto collapsed_2_0 = collapsed_2[0];
-    constexpr auto collapsed_2_1 = collapsed_2[1];
+
+    IPADDRESS_CONSTEXPR auto collapsed_2 = collapse_addresses(ip_network::parse("192.168.1.3/32"), ipv4_network::parse("192.168.1.0/32"), ip_network::parse("192.168.1.1/32"));
+    IPADDRESS_CONSTEXPR auto collapsed_2_size = collapsed_2.size();
+    IPADDRESS_CONSTEXPR auto collapsed_2_0 = collapsed_2[0];
+    IPADDRESS_CONSTEXPR auto collapsed_2_1 = collapsed_2[1];
     ASSERT_EQ(collapsed_2_size, 2);
     ASSERT_EQ(collapsed_2_0, ip_network::parse("192.168.1.0/31"));
     ASSERT_EQ(collapsed_2_1, ip_network::parse("192.168.1.3/32"));
