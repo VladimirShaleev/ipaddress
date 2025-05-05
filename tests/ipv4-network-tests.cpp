@@ -361,7 +361,7 @@ TEST(ipv4_network, CompileTime) {
     ASSERT_FALSE(exclude_it_gt);
     ASSERT_FALSE(exclude_it_ge);
 
-    constexpr std::array<ipv4_network, 0> arr_empty;
+    constexpr std::array<ipv4_network, 0> arr_empty{};
     constexpr auto collapsed_arr_empty = collapse_addresses(arr_empty);
     constexpr auto collapsed_arr_empty_size = collapsed_arr_empty.size();
     ASSERT_EQ(collapsed_arr_empty_size, 0);
