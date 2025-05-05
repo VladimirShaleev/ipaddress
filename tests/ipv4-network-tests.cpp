@@ -361,6 +361,11 @@ TEST(ipv4_network, CompileTime) {
     ASSERT_FALSE(exclude_it_gt);
     ASSERT_FALSE(exclude_it_ge);
 
+    constexpr std::array<ipv4_network, 0> arr_empty;
+    constexpr auto collapsed_arr_empty = collapse_addresses(arr_empty);
+    constexpr auto collapsed_arr_empty_size = collapsed_arr_empty.size();
+    ASSERT_EQ(collapsed_arr_empty_size, 0);
+
     constexpr std::array<ipv4_network, 2> arr = { ipv4_network::parse("192.0.2.0/25"), ipv4_network::parse("192.0.2.128/25") };
     constexpr auto collapsed_arr = collapse_addresses(arr);
     constexpr auto collapsed_arr_size = collapsed_arr.size();
@@ -1458,6 +1463,22 @@ TEST(ipv4_network, CollapseAddressesOverloads) {
     auto collapsed_1_0 = collapsed_1[0];
     ASSERT_EQ(collapsed_1_size, 1);
     ASSERT_EQ(collapsed_1_0, ipv4_network::parse("192.0.2.0/24"));
+
+    ipv4_network nets2[] = {
+        ipv4_network::parse("192.168.1.0/32"), ipv4_network::parse("192.168.1.1/32"), ipv4_network::parse("192.168.1.2/32"), ipv4_network::parse("192.168.1.3/32"),
+        ipv4_network::parse("192.168.1.4/32"), ipv4_network::parse("192.168.1.5/32"), ipv4_network::parse("192.168.1.6/32"), ipv4_network::parse("192.168.1.7/32"),
+        ipv4_network::parse("192.168.1.8/32"), ipv4_network::parse("192.168.1.9/32"), ipv4_network::parse("192.168.1.10/32"), ipv4_network::parse("192.168.1.11/32"),
+        ipv4_network::parse("192.168.1.12/32"), ipv4_network::parse("192.168.1.13/32"), ipv4_network::parse("192.168.1.14/32"), ipv4_network::parse("192.168.1.15/32"),
+        ipv4_network::parse("192.168.1.16/32"), ipv4_network::parse("192.168.1.17/32"), ipv4_network::parse("192.168.1.18/32"), ipv4_network::parse("192.168.1.19/32"),
+        ipv4_network::parse("192.168.1.20/32"), ipv4_network::parse("192.168.1.21/32"), ipv4_network::parse("192.168.1.22/32"), ipv4_network::parse("192.168.1.23/32"),
+        ipv4_network::parse("192.168.1.24/32"), ipv4_network::parse("192.168.1.25/32"), ipv4_network::parse("192.168.1.26/32"), ipv4_network::parse("192.168.1.27/32"),
+        ipv4_network::parse("192.168.1.28/32"), ipv4_network::parse("192.168.1.29/32"), ipv4_network::parse("192.168.1.30/32"), ipv4_network::parse("192.168.1.31/32")
+    };
+    auto collapsed_nets2 = collapse_addresses(nets2);
+    auto collapsed_nets2_size = collapsed_nets2.size();
+    auto collapsed_nets2_0 = collapsed_nets2[0];
+    ASSERT_EQ(collapsed_nets2_size, 1);
+    ASSERT_EQ(collapsed_nets2_0, ipv4_network::parse("192.168.1.0/27"));
 }
 
 using CollapseAddressesIpv4NetworkParams = TestWithParam<std::tuple<std::vector<const char*>, std::vector<const char*>>>;
@@ -1478,6 +1499,9 @@ TEST_P(CollapseAddressesIpv4NetworkParams, collapse_addresses) {
 INSTANTIATE_TEST_SUITE_P(
     ipv4_network, CollapseAddressesIpv4NetworkParams,
     Values(
+        std::make_tuple(
+            std::vector<const char*>{},
+            std::vector<const char*>{}),
         std::make_tuple(
             std::vector<const char*>{"192.0.2.0/25", "192.0.2.128/25"},
             std::vector<const char*>{"192.0.2.0/24"}),
