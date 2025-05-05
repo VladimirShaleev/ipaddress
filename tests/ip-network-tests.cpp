@@ -977,6 +977,100 @@ TEST(ip_network, address_exclude) {
     ASSERT_FALSE(exclude_it_ge);
 }
 
+TEST(ip_network, collapse_addresses) {
+    constexpr std::array<ip_network, 0> arr_empty{};
+    constexpr auto collapsed_arr_empty = collapse_addresses(arr_empty);
+    constexpr auto collapsed_arr_empty_size = collapsed_arr_empty.size();
+    ASSERT_EQ(collapsed_arr_empty_size, 0);
+    
+    constexpr std::array<ip_network, 2> arr = { ip_network::parse("2001:db8::1/128"), ip_network::parse("2001:db8::2/128") };
+    constexpr auto collapsed_arr = collapse_addresses(arr);
+    constexpr auto collapsed_arr_size = collapsed_arr.size();
+    constexpr auto collapsed_arr_0 = collapsed_arr[0];
+    constexpr auto collapsed_arr_1 = collapsed_arr[1];
+    ASSERT_EQ(collapsed_arr_size, 2);
+    ASSERT_EQ(collapsed_arr_0, ip_network::parse("2001:db8::1/128"));
+    ASSERT_EQ(collapsed_arr_1, ip_network::parse("2001:db8::2/128"));
+    
+    constexpr ip_network nets[] = { ip_network::parse("192.168.1.1/32"), ip_network::parse("192.168.1.0/32") };
+    constexpr auto collapsed_nets = collapse_addresses(nets);
+    constexpr auto collapsed_nets_size = collapsed_nets.size();
+    constexpr auto collapsed_nets_0 = collapsed_nets[0];
+    ASSERT_EQ(collapsed_nets_size, 1);
+    ASSERT_EQ(collapsed_nets_0, ip_network::parse("192.168.1.0/31"));
+    
+    constexpr auto collapsed_0 = collapse_addresses(ip_network::parse("2001:db8::1/128"));
+    constexpr auto collapsed_0_size = collapsed_0.size();
+    constexpr auto collapsed_0_0 = collapsed_0[0];
+    ASSERT_EQ(collapsed_0_size, 1);
+    ASSERT_EQ(collapsed_0_0, ip_network::parse("2001:db8::1/128"));
+
+    constexpr auto collapsed_1 = collapse_addresses(ipv6_network::parse("2001:db8::1/128"), ip_network::parse("2001:db8::2/128"));
+    constexpr auto collapsed_1_size = collapsed_1.size();
+    constexpr auto collapsed_1_0 = collapsed_1[0];
+    constexpr auto collapsed_1_1 = collapsed_1[1];
+    ASSERT_EQ(collapsed_1_size, 2);
+    ASSERT_EQ(collapsed_1_0, ip_network::parse("2001:db8::1/128"));
+    ASSERT_EQ(collapsed_1_1, ip_network::parse("2001:db8::2/128"));
+    
+    constexpr auto collapsed_2 = collapse_addresses(ip_network::parse("192.168.1.3/32"), ipv4_network::parse("192.168.1.0/32"), ip_network::parse("192.168.1.1/32"));
+    constexpr auto collapsed_2_size = collapsed_2.size();
+    constexpr auto collapsed_2_0 = collapsed_2[0];
+    constexpr auto collapsed_2_1 = collapsed_2[1];
+    ASSERT_EQ(collapsed_2_size, 2);
+    ASSERT_EQ(collapsed_2_0, ip_network::parse("192.168.1.0/31"));
+    ASSERT_EQ(collapsed_2_1, ip_network::parse("192.168.1.3/32"));
+
+    std::vector<ip_network> vec = {
+        ip_network::parse("2001:db8::19/128"), ip_network::parse("2001:db8::a/128"), ip_network::parse("2001:db8::b/128"), ip_network::parse("2001:db8::16/128"),
+        ip_network::parse("2001:db8::c/128"), ip_network::parse("2001:db8::d/128"), ip_network::parse("2001:db8::10/128"), ip_network::parse("2001:db8::11/128"),
+        ip_network::parse("2001:db8::12/128"), ip_network::parse("2001:db8::13/128"), ip_network::parse("2001:db8::e/128"), ip_network::parse("2001:db8::f/128"),
+        ip_network::parse("2001:db8::14/128"), ip_network::parse("2001:db8::15/128"), ip_network::parse("2001:db8::17/128"), ip_network::parse("2001:db8::18/128") };
+    auto collapsed_3 = collapse_addresses(vec.begin(), vec.end());
+    auto collapsed_3_size = collapsed_3.size();
+    auto collapsed_3_0 = collapsed_3[0];
+    auto collapsed_3_1 = collapsed_3[1];
+    auto collapsed_3_2 = collapsed_3[2];
+    auto collapsed_3_3 = collapsed_3[3];
+    ASSERT_EQ(collapsed_3_size, 4);
+    ASSERT_EQ(collapsed_3_0, ip_network::parse("2001:db8::a/127"));
+    ASSERT_EQ(collapsed_3_1, ip_network::parse("2001:db8::c/126"));
+    ASSERT_EQ(collapsed_3_2, ip_network::parse("2001:db8::10/125"));
+    ASSERT_EQ(collapsed_3_3, ip_network::parse("2001:db8::18/127"));
+}
+
+using CollapseAddressesErrorNetworkParams = TestWithParam<std::tuple<std::vector<const char*>, error_code, const char*>>;
+TEST_P(CollapseAddressesErrorNetworkParams, collapse_addresses) {
+    std::vector<ip_network> vec;
+    for (const auto& addr : get<0>(GetParam())) {
+        vec.push_back(ip_network::parse(addr));
+    }
+    auto expected_error_code = get<1>(GetParam());
+
+    error_code err = error_code::no_error;
+    const auto actual = collapse_addresses(vec.begin(), vec.end(), err);
+    ASSERT_EQ(err, expected_error_code);
+    ASSERT_TRUE(actual.empty());
+
+#ifdef IPADDRESS_NO_EXCEPTIONS
+    auto error_collapse_addresses = collapse_addresses(vec.begin(), vec.end());
+    ASSERT_TRUE(error_collapse_addresses.empty());
+#elif IPADDRESS_CPP_VERSION >= 14
+    const auto expected_error_str = std::get<2>(GetParam());
+    EXPECT_THAT(
+        ([&vec]() { auto _ = collapse_addresses(vec.begin(), vec.end()); }),
+        ThrowsMessage<logic_error>(StrEq(expected_error_str)));
+#else
+    ASSERT_THROW(collapse_addresses(vec.begin(), vec.end()), logic_error);
+#endif
+}
+INSTANTIATE_TEST_SUITE_P(
+    ip_network, CollapseAddressesErrorNetworkParams,
+    testing::Values(
+        std::make_tuple(std::vector<const char*>{"2001:db8::1/128", "192.0.2.0/28"}, error_code::invalid_version, "versions don't match"),
+        std::make_tuple(std::vector<const char*>{"192.0.2.0/28", "2001:db8::1/128"}, error_code::invalid_version, "versions don't match")
+    ));
+
 TEST(ip_network, literals) {
     IPADDRESS_CONSTEXPR auto net1 = "127.128.128.255"_net;
     IPADDRESS_CONSTEXPR auto net2 = "2001:db8::1"_net;

@@ -172,17 +172,13 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto fixed_collap
 
     for (auto it = first; it != last; ++it) {
         const auto& net = *it;
+        if (net.version() != version) {
+            code = error_code::invalid_version;
+            return {};
+        }
         if (net.prefixlen() != max_prefixlen) {
-            if (net.version() != version) {
-                code = error_code::invalid_version;
-                return {};
-            }
             nets.emplace_back(net);
         } else {
-            if (net.version() != version) {
-                code = error_code::invalid_version;
-                return {};
-            }
             const auto network_address = net.network_address();
             auto lower = find_lower_bound(ips.begin(), ips.end(), network_address);
             if (lower == ips.end() || *lower != network_address) {
@@ -275,17 +271,13 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE Result runtime_co
 
     for (auto it = first; it != last; ++it) {
         const auto& net = *it;
+        if (net.version() != version) {
+            code = error_code::invalid_version;
+            return {};
+        }
         if (net.prefixlen() != max_prefixlen) {
-            if (net.version() != version) {
-                code = error_code::invalid_version;
-                return {};
-            }
             nets.emplace_back(net);
         } else {
-            if (net.version() != version) {
-                code = error_code::invalid_version;
-                return {};
-            }
             const auto network_address = net.network_address();
             ips.insert(network_address);
         }
