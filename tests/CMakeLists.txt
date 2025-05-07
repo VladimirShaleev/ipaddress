@@ -31,6 +31,9 @@ if(IPADDRESS_TEST_MODULE)
   target_link_libraries(ipaddress-tests PRIVATE ipaddress-module)
   set_target_properties(ipaddress-tests PROPERTIES CXX_SCAN_FOR_MODULES ON)
   set_target_properties(ipaddress-tests PROPERTIES CXX_EXTENSIONS OFF)
+  if(MSVC)
+    target_compile_options(ipaddress-tests PRIVATE /bigobj)
+  endif()
 
   # These macros are used in unit tests, so let's add them
   target_compile_definitions(ipaddress-tests PRIVATE IPADDRESS_TEST_MODULE)

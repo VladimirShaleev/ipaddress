@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+    <Type Name="ipaddress::byte_array&lt;*&gt;">
+        <DisplayString>{{ size={$T1} }}</DisplayString>
+        <Expand HideRawView="true">
+            <ArrayItems>
+                <Size>$T1</Size>
+                <ValuePointer>_data</ValuePointer>
+            </ArrayItems>
+        </Expand>
+    </Type>
+    <Type Name="ipaddress::fixed_vector&lt;*,0&gt;">
+        <DisplayString>{{ size=0 }}</DisplayString>
+        <Expand HideRawView="true">
+            <Item Name="[capacity]" ExcludeView="simple">0</Item>
+        </Expand>
+    </Type>
+    <Type Name="ipaddress::fixed_vector&lt;*,*&gt;">
+        <DisplayString>{{ size={_size} }}</DisplayString>
+        <Expand HideRawView="true">
+            <Item Name="[capacity]" ExcludeView="simple">$T2</Item>
+            <ArrayItems>
+                <Size>_size</Size>
+                <ValuePointer>_data</ValuePointer>
+            </ArrayItems>
+        </Expand>
+    </Type>
+    <Type Name="ipaddress::optional&lt;*&gt;">
+        <DisplayString Condition="!_has_value">null</DisplayString>
+        <DisplayString Condition="_has_value">{_value}</DisplayString>
+        <Expand HideRawView="true">
+            <Item Name="value" Condition="_has_value">_value</Item>
+        </Expand>
+    </Type>
+    <Type Name="ipaddress::ip_address_base&lt;ipaddress::ipv4_address_base&gt;">
+        <Intrinsic Name="b" ReturnType="int" Expression="(int)_bytes._data[i]">
+            <Parameter Name="i" Type="unsigned int" />
+        </Intrinsic>
+        <DisplayString IncludeView="noparens">{b(0),d}.{b(1),d}.{b(2),d}.{b(3),d}</DisplayString>
+        <DisplayString ExcludeView="noparens">{{ ipv4={b(0),d}.{b(1),d}.{b(2),d}.{b(3),d} }}</DisplayString>
+        <Expand HideRawView="true">
+            <Item Name="[version]" ExcludeView="simple">(ipaddress::ip_version)((int)base_version),en</Item>
+            <Item Name="[bytes]">_bytes</Item>
+        </Expand>
+    </Type>
+    <Type Name="ipaddress::ip_address_base&lt;ipaddress::ipv6_address_base&gt;">
+        <Intrinsic Name="h" ReturnType="unsigned short" Expression="(unsigned short)(_data.bytes._data[i*2] &lt;&lt; 8 | _data.bytes._data[i*2+1]),xb">
+            <Parameter Name="i" Type="unsigned int" />
+        </Intrinsic>
+        <Intrinsic Name="scope" ReturnType="const char*" Expression="(const char*)((size_t*)(((unsigned char*)_data.bytes._data)+16)+1)">
+        </Intrinsic>
+        <DisplayString Condition="sizeof(_data)==16 || strlen(scope()) == 0" IncludeView="noparens">{h(0),xb}:{h(1),xb}:{h(2),xb}:{h(3),xb}:{h(4),xb}:{h(5),xb}:{h(6),xb}:{h(7),xb}</DisplayString>
+        <DisplayString Condition="sizeof(_data)>16 &amp;&amp; strlen(scope()) > 0" IncludeView="noparens">{h(0),xb}:{h(1),xb}:{h(2),xb}:{h(3),xb}:{h(4),xb}:{h(5),xb}:{h(6),xb}:{h(7),xb}%{scope(),sb}</DisplayString>
+        <DisplayString Condition="sizeof(_data)==16 || strlen(scope()) == 0" ExcludeView="noparens">{{ ipv6={h(0),xb}:{h(1),xb}:{h(2),xb}:{h(3),xb}:{h(4),xb}:{h(5),xb}:{h(6),xb}:{h(7),xb} }}</DisplayString>
+        <DisplayString Condition="sizeof(_data)>16 &amp;&amp; strlen(scope()) > 0" ExcludeView="noparens">{{ ipv6={h(0),xb}:{h(1),xb}:{h(2),xb}:{h(3),xb}:{h(4),xb}:{h(5),xb}:{h(6),xb}:{h(7),xb}%{scope(),sb} }}</DisplayString>
+        <Expand HideRawView="true">
+            <Item Name="[version]" ExcludeView="simple">(ipaddress::ip_version)((int)base_version),en</Item>
+            <Item Name="[bytes]">_data.bytes</Item>
+            <Item Name="[scope id]" Optional="true">_data.scope_id._data,sb</Item>
+        </Expand>
+    </Type>
+    <Type Name="ipaddress::ip_address">
+        <DisplayString Condition="_version==ipaddress::ip_version::V4">{_ipv.ipv4}</DisplayString>
+        <DisplayString Condition="_version==ipaddress::ip_version::V6">{_ipv.ipv6}</DisplayString>
+        <Expand HideRawView="true">
+            <Item Name="[version]" ExcludeView="simple">(ipaddress::ip_version)((int)_version),en</Item>
+            <Item Name="[bytes]" Condition="_version==ipaddress::ip_version::V4">_ipv.ipv4._bytes</Item>
+            <Item Name="[bytes]" Condition="_version==ipaddress::ip_version::V6">_ipv.ipv6._data.bytes</Item>
+            <Item Name="[scope id]" Condition="_version==ipaddress::ip_version::V6" Optional="true">_ipv.ipv6._data.scope_id._data,sb</Item>
+            <Synthetic Name="[info]">
+                <DisplayString>ip_address is a union structure that encapsulates ipv4_address and ipv6_address</DisplayString>
+            </Synthetic>
+        </Expand>
+    </Type>
+    <Type Name="ipaddress::ip_network_base&lt;*&gt;">
+        <DisplayString>{{ net={_network_address,view(noparens)}/{_prefixlen} mask={_netmask,view(noparens)} }}</DisplayString>
+        <Expand HideRawView="true">
+            <Item Name="[version]" ExcludeView="simple">(ipaddress::ip_version)((int)base_version),en</Item>
+            <Item Name="[network address]">_network_address</Item>
+            <Item Name="[netmask]" ExcludeView="simple">_netmask</Item>
+            <Item Name="[prefixlen]">_prefixlen</Item>
+        </Expand>
+    </Type>
+    <Type Name="ipaddress::ip_network">
+        <DisplayString Condition="_version==ipaddress::ip_version::V4">{_ipv_net.ipv4}</DisplayString>
+        <DisplayString Condition="_version==ipaddress::ip_version::V6">{_ipv_net.ipv6}</DisplayString>
+        <Expand HideRawView="true">
+            <Item Name="[version]" ExcludeView="simple">(ipaddress::ip_version)((int)_version),en</Item>
+            <Item Name="[network address]" Condition="_version==ipaddress::ip_version::V4">_ipv_net.ipv4._network_address</Item>
+            <Item Name="[network address]" Condition="_version==ipaddress::ip_version::V6">_ipv_net.ipv6._network_address</Item>
+            <Item Name="[netmask]" Condition="_version==ipaddress::ip_version::V4" ExcludeView="simple">_ipv_net.ipv4._netmask</Item>
+            <Item Name="[netmask]" Condition="_version==ipaddress::ip_version::V6" ExcludeView="simple">_ipv_net.ipv6._netmask</Item>
+            <Item Name="[prefixlen]" Condition="_version==ipaddress::ip_version::V4">_ipv_net.ipv4._prefixlen</Item>
+            <Item Name="[prefixlen]" Condition="_version==ipaddress::ip_version::V6">_ipv_net.ipv6._prefixlen</Item>
+            <Synthetic Name="[info]">
+                <DisplayString>ip_network is a union structure that encapsulates ipv4_network and ipv6_network</DisplayString>
+            </Synthetic>
+        </Expand>
+    </Type>
+</AutoVisualizer>
