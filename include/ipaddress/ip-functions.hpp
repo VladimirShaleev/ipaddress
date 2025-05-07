@@ -398,8 +398,8 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto collapse_add
  * 
  * @tparam FirstIp The type representing an IP address.
  * @tparam LastIp The type representing an IP address.
- * @param[in] start The starting IP address of the range.
- * @param[in] end The ending IP address of the range.
+ * @param[in] first The starting IP address of the range.
+ * @param[in] last The ending IP address of the range.
  * @param[out] code A reference to an `error_code` object that will be set if the operation is not possible.
  * @return A container of summarized network blocks.
  * @note This function performs an efficient summarization of IP ranges, but the computational 
@@ -440,8 +440,8 @@ IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE auto summarize_ad
  * 
  * @tparam FirstIp The type representing an IP address.
  * @tparam LastIp The type representing an IP address.
- * @param[in] start The starting IP address of the range.
- * @param[in] end The ending IP address of the range.
+ * @param[in] first The starting IP address of the range.
+ * @param[in] last The ending IP address of the range.
  * @return A container of summarized network blocks.
  * @throw logic_error Thrown with a message corresponding to the error code.
  * @note This function performs an efficient summarization of IP ranges, but the computational 
