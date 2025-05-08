@@ -54,7 +54,6 @@ Below is a list of all parameters supported by the configuration:
 * `IPADDRESS_BUILD_PACKAGES` — Create targets for building packages deb, rpm, etc. (`ON` by default).
 * `IPADDRESS_BUILD_MODULE` — Build cpp module (`OFF` by default).
 * `IPADDRESS_TEST_MODULE` — Will use the C++ module to build tests if available (`OFF` by default).
-* `IPADDRESS_INCLUDE_NATVIS` — Includes a natvis file in the targets for debugging. (`ON` by default).
 * `IPADDRESS_NO_EXCEPTIONS` — Disable exceptions throwing (`OFF` by default).
 * `IPADDRESS_NO_IPV6_SCOPE` — Disable scope id for ipv6 (`OFF` by default).
 * `IPADDRESS_IPV6_SCOPE_MAX_LENGTH` — scope id max length (`16` by default).

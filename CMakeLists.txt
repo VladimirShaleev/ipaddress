@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.11)
 option(IPADDRESS_NO_EXCEPTIONS "Disable handling cpp exception for" OFF)
 option(IPADDRESS_NO_IPV6_SCOPE "Disable scope id for IPv6 addresses" OFF)
 option(IPADDRESS_NO_OVERLOAD_STD "Do not overload std functions such as to_string, hash etc" OFF)
-option(IPADDRESS_INCLUDE_NATVIS "Add natvis file to targets" ON)
 set(IPADDRESS_IPV6_SCOPE_MAX_LENGTH "16" CACHE STRING "Maximum scope-id length for IPv6 addresses")
 
 project(ipaddress 
@@ -39,12 +38,8 @@ else()
   target_compile_definitions(${PROJECT_NAME} INTERFACE $<BUILD_INTERFACE:IPADDRESS_IPV6_SCOPE_MAX_LENGTH=${IPADDRESS_IPV6_SCOPE_MAX_LENGTH}>)
 endif()
 target_compile_definitions(${PROJECT_NAME} INTERFACE $<BUILD_INTERFACE:IPADDRESS_ENDIAN=${IPADDRESS_BIG_ENDIAN}>)
-
-if(IPADDRESS_INCLUDE_NATVIS AND MSVC)
-  set(IPADDRESS_NATVIS_FILE "ipaddress.natvis")
-  target_sources(${PROJECT_NAME} INTERFACE
-    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src/${IPADDRESS_NATVIS_FILE}>
-    $<INSTALL_INTERFACE:${CMAKE_INSTALL_DATADIR}/cmake/${PROJECT_NAME}/${IPADDRESS_NATVIS_FILE}>)
+if(MSVC)
+  target_sources(${PROJECT_NAME} INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/${PROJECT_NAME}.natvis>)
 endif()
 
 configure_package_config_file(
@@ -70,16 +65,12 @@ install(
   FILES
     "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake"
     "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
+    "${PROJECT_SOURCE_DIR}/${PROJECT_NAME}.natvis"
   DESTINATION ${CMAKE_INSTALL_DATADIR}/cmake/${PROJECT_NAME})
 install(
   FILES "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.pc"
   DESTINATION "${CMAKE_INSTALL_DATADIR}/pkgconfig")
 install(DIRECTORY include/ DESTINATION include)
-if(IPADDRESS_NATVIS_FILE)
-  install(
-    FILES "${PROJECT_SOURCE_DIR}/src/${IPADDRESS_NATVIS_FILE}"
-    DESTINATION "${CMAKE_INSTALL_DATADIR}/cmake/${PROJECT_NAME}")
-endif()
 
 cmake_dependent_option(IPADDRESS_ENABLE_CLANG_TIDY "Enable clang-tidy checks" OFF
   "CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR" OFF)

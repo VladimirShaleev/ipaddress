@@ -51,12 +51,6 @@ if(IPADDRESS_MODULE_PURVIEW_FOUND)
   target_compile_options(${PROJECT_NAME}-module PRIVATE "-Wno-include-angled-in-module-purview")
 endif()
 
-if(IPADDRESS_NATVIS_FILE)
-  target_sources(${PROJECT_NAME}-module INTERFACE
-    $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/src/${IPADDRESS_NATVIS_FILE}>
-    $<INSTALL_INTERFACE:${CMAKE_INSTALL_DATADIR}/cmake/${PROJECT_NAME}/${IPADDRESS_NATVIS_FILE}>)
-endif()
-
 # Currently, only Ninja and Ninja Multi-Config generators support export of targets with C++ modules
 if(CMAKE_GENERATOR MATCHES Ninja AND CMAKE_VERSION VERSION_GREATER_EQUAL 3.28.2)
   install(TARGETS ${PROJECT_NAME}-module
