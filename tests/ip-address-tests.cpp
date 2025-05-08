@@ -793,6 +793,24 @@ TEST(ip_address, ipv4_mapped) {
     ASSERT_EQ(ipv4, ip_address::parse("192.168.1.1"));
 }
 
+TEST(ip_address, ipv6_mapped) {
+    IPADDRESS_CONSTEXPR auto ip1 = ip_address::parse("192.168.1.1");
+    IPADDRESS_CONSTEXPR auto ip2 = ip_address::parse("2001:db8::1");
+    
+    IPADDRESS_CONSTEXPR auto actual1 = ip1.ipv6_mapped();
+    IPADDRESS_CONSTEXPR auto actual2 = ip2.ipv6_mapped();
+    IPADDRESS_CONSTEXPR auto actual3 = ip1.ipv6_mapped().ipv4_mapped();
+    IPADDRESS_CONSTEXPR auto actual4 = ip2.ipv6_mapped().ipv4_mapped();
+
+    IPADDRESS_CONSTEXPR auto actual_has_value3 = actual3.has_value();
+    IPADDRESS_CONSTEXPR auto actual_has_value4 = actual4.has_value();
+
+    ASSERT_EQ(actual1, ipv6_address::parse("::ffff:c0a8:101"));
+    ASSERT_EQ(actual2, ipv6_address::parse("2001:db8::1"));
+    ASSERT_TRUE(actual_has_value3);
+    ASSERT_FALSE(actual_has_value4);
+}
+
 TEST(ip_address, sixtofour) {
     IPADDRESS_CONSTEXPR auto ip1 = ip_address::parse("127.0.0.1");
     IPADDRESS_CONSTEXPR auto ip2 = ip_address::parse("2002:ac1d:2d64::1");
@@ -844,30 +862,34 @@ TEST(ip_address, is_prop) {
     IPADDRESS_CONSTEXPR auto ip6 = ip_address::parse("192.169.0.0").is_private();
     IPADDRESS_CONSTEXPR auto ip7 = ip_address::parse("fc00::").is_private();
     IPADDRESS_CONSTEXPR auto ip8 = ip_address::parse("fbff:ffff::").is_private();
-    IPADDRESS_CONSTEXPR auto ip9 = ip_address::parse("192.0.7.1").is_global();
-    IPADDRESS_CONSTEXPR auto ip10 = ip_address::parse("203.0.113.1").is_global();
-    IPADDRESS_CONSTEXPR auto ip11 = ip_address::parse("200::1").is_global();
-    IPADDRESS_CONSTEXPR auto ip12 = ip_address::parse("fc00::").is_global();
-    IPADDRESS_CONSTEXPR auto ip13 = ip_address::parse("240.0.0.1").is_reserved();
-    IPADDRESS_CONSTEXPR auto ip14 = ip_address::parse("239.255.255.255").is_reserved();
-    IPADDRESS_CONSTEXPR auto ip15 = ip_address::parse("100::").is_reserved();
-    IPADDRESS_CONSTEXPR auto ip16 = ip_address::parse("ffff::").is_reserved();
-    IPADDRESS_CONSTEXPR auto ip17 = ip_address::parse("127.42.0.0").is_loopback();
-    IPADDRESS_CONSTEXPR auto ip18 = ip_address::parse("128.0.0.0").is_loopback();
-    IPADDRESS_CONSTEXPR auto ip19 = ip_address::parse("::1").is_loopback();
-    IPADDRESS_CONSTEXPR auto ip20 = ip_address::parse("::2").is_loopback();
-    IPADDRESS_CONSTEXPR auto ip21 = ip_address::parse("169.254.100.200").is_link_local();
-    IPADDRESS_CONSTEXPR auto ip22 = ip_address::parse("169.255.100.200").is_link_local();
-    IPADDRESS_CONSTEXPR auto ip23 = ip_address::parse("fea0::").is_link_local();
-    IPADDRESS_CONSTEXPR auto ip24 = ip_address::parse("fe7f:ffff::").is_link_local();
-    IPADDRESS_CONSTEXPR auto ip25 = ip_address::parse("0.0.0.0").is_unspecified();
-    IPADDRESS_CONSTEXPR auto ip26 = ip_address::parse("127.0.0.1").is_unspecified();
-    IPADDRESS_CONSTEXPR auto ip27 = ip_address::parse("::").is_unspecified();
-    IPADDRESS_CONSTEXPR auto ip28 = ip_address::parse("::1").is_unspecified();
-    IPADDRESS_CONSTEXPR auto ip29 = ip_address::parse("127.0.0.1").is_site_local();
-    IPADDRESS_CONSTEXPR auto ip30 = ip_address::parse("0.0.0.0").is_site_local();
-    IPADDRESS_CONSTEXPR auto ip31 = ip_address::parse("fecf::").is_site_local();
-    IPADDRESS_CONSTEXPR auto ip32 = ip_address::parse("fbf:ffff::").is_site_local();
+    IPADDRESS_CONSTEXPR auto ip9 = ip_address::parse("192.0.0.10").is_private();
+    IPADDRESS_CONSTEXPR auto ip10 = ip_address::parse("64:ff9b::1").is_private();
+    IPADDRESS_CONSTEXPR auto ip11 = ip_address::parse("192.0.7.1").is_global();
+    IPADDRESS_CONSTEXPR auto ip12 = ip_address::parse("203.0.113.1").is_global();
+    IPADDRESS_CONSTEXPR auto ip13 = ip_address::parse("200::1").is_global();
+    IPADDRESS_CONSTEXPR auto ip14 = ip_address::parse("fc00::").is_global();
+    IPADDRESS_CONSTEXPR auto ip15 = ip_address::parse("192.0.0.10").is_global();
+    IPADDRESS_CONSTEXPR auto ip16 = ip_address::parse("2a00:1450:4001::1").is_global();
+    IPADDRESS_CONSTEXPR auto ip17 = ip_address::parse("240.0.0.1").is_reserved();
+    IPADDRESS_CONSTEXPR auto ip18 = ip_address::parse("239.255.255.255").is_reserved();
+    IPADDRESS_CONSTEXPR auto ip19 = ip_address::parse("100::").is_reserved();
+    IPADDRESS_CONSTEXPR auto ip20 = ip_address::parse("ffff::").is_reserved();
+    IPADDRESS_CONSTEXPR auto ip21 = ip_address::parse("127.42.0.0").is_loopback();
+    IPADDRESS_CONSTEXPR auto ip22 = ip_address::parse("128.0.0.0").is_loopback();
+    IPADDRESS_CONSTEXPR auto ip23 = ip_address::parse("::1").is_loopback();
+    IPADDRESS_CONSTEXPR auto ip24 = ip_address::parse("::2").is_loopback();
+    IPADDRESS_CONSTEXPR auto ip25 = ip_address::parse("169.254.100.200").is_link_local();
+    IPADDRESS_CONSTEXPR auto ip26 = ip_address::parse("169.255.100.200").is_link_local();
+    IPADDRESS_CONSTEXPR auto ip27 = ip_address::parse("fea0::").is_link_local();
+    IPADDRESS_CONSTEXPR auto ip28 = ip_address::parse("fe7f:ffff::").is_link_local();
+    IPADDRESS_CONSTEXPR auto ip29 = ip_address::parse("0.0.0.0").is_unspecified();
+    IPADDRESS_CONSTEXPR auto ip30 = ip_address::parse("127.0.0.1").is_unspecified();
+    IPADDRESS_CONSTEXPR auto ip31 = ip_address::parse("::").is_unspecified();
+    IPADDRESS_CONSTEXPR auto ip32 = ip_address::parse("::1").is_unspecified();
+    IPADDRESS_CONSTEXPR auto ip33 = ip_address::parse("127.0.0.1").is_site_local();
+    IPADDRESS_CONSTEXPR auto ip34 = ip_address::parse("0.0.0.0").is_site_local();
+    IPADDRESS_CONSTEXPR auto ip35 = ip_address::parse("fecf::").is_site_local();
+    IPADDRESS_CONSTEXPR auto ip36 = ip_address::parse("fbf:ffff::").is_site_local();
     
     ASSERT_TRUE(ip1);
     ASSERT_FALSE(ip2);
@@ -877,14 +899,14 @@ TEST(ip_address, is_prop) {
     ASSERT_FALSE(ip6);
     ASSERT_TRUE(ip7);
     ASSERT_FALSE(ip8);
-    ASSERT_TRUE(ip9);
+    ASSERT_FALSE(ip9);
     ASSERT_FALSE(ip10);
     ASSERT_TRUE(ip11);
     ASSERT_FALSE(ip12);
     ASSERT_TRUE(ip13);
     ASSERT_FALSE(ip14);
     ASSERT_TRUE(ip15);
-    ASSERT_FALSE(ip16);
+    ASSERT_TRUE(ip16);
     ASSERT_TRUE(ip17);
     ASSERT_FALSE(ip18);
     ASSERT_TRUE(ip19);
@@ -897,10 +919,14 @@ TEST(ip_address, is_prop) {
     ASSERT_FALSE(ip26);
     ASSERT_TRUE(ip27);
     ASSERT_FALSE(ip28);
-    ASSERT_FALSE(ip29);
+    ASSERT_TRUE(ip29);
     ASSERT_FALSE(ip30);
     ASSERT_TRUE(ip31);
     ASSERT_FALSE(ip32);
+    ASSERT_FALSE(ip33);
+    ASSERT_FALSE(ip34);
+    ASSERT_TRUE(ip35);
+    ASSERT_FALSE(ip36);
 }
 
 TEST(ip_address, literals) {
@@ -944,4 +970,33 @@ TEST(ip_address, ScopeId) {
 
     ASSERT_EQ(ip1.to_string(), "127.128.128.255");
     ASSERT_EQ(ip2.to_string(), "2001:db8::1%eth1");
+}
+
+TEST(ip_address, summarize_address_range) {
+    IPADDRESS_CONSTEXPR auto range = summarize_address_range(ipv4_address::parse("192.0.2.0"), ip_address::parse("192.0.2.130"));
+    IPADDRESS_CONSTEXPR auto range_at_0 = range.begin();
+    IPADDRESS_CONSTEXPR auto range_at_1 = ++range.begin();
+    IPADDRESS_CONSTEXPR auto range_at_2 = ++(++range.begin());
+    IPADDRESS_CONSTEXPR auto range_at_3 = ++(++(++range.begin()));
+    IPADDRESS_CONSTEXPR auto range_end = range.end();
+    IPADDRESS_CONSTEXPR auto range_net_0 = *range_at_0;
+    IPADDRESS_CONSTEXPR auto range_net_1 = *range_at_1;
+    IPADDRESS_CONSTEXPR auto range_net_2 = *range_at_2;
+    IPADDRESS_CONSTEXPR auto range_net_0_is_ipv4 = range_net_0.version() == ip_version::V4;
+    IPADDRESS_CONSTEXPR auto range_net_1_is_ipv4 = range_net_1.version() == ip_version::V4;
+    IPADDRESS_CONSTEXPR auto range_net_2_is_ipv4 = range_net_2.version() == ip_version::V4;
+    IPADDRESS_CONSTEXPR auto range_0_is_end = range_at_0 == range_end;
+    IPADDRESS_CONSTEXPR auto range_1_is_end = range_at_1 == range_end;
+    IPADDRESS_CONSTEXPR auto range_2_is_end = range_at_2 == range_end;
+    IPADDRESS_CONSTEXPR auto range_3_is_end = range_at_3 == range_end;
+    ASSERT_TRUE(range_net_0_is_ipv4);
+    ASSERT_TRUE(range_net_1_is_ipv4);
+    ASSERT_TRUE(range_net_2_is_ipv4);
+    ASSERT_FALSE(range_0_is_end);
+    ASSERT_FALSE(range_1_is_end);
+    ASSERT_FALSE(range_2_is_end);
+    ASSERT_TRUE(range_3_is_end);
+    ASSERT_EQ(range_net_0, ip_network::parse("192.0.2.0/25"));
+    ASSERT_EQ(range_net_1, ip_network::parse("192.0.2.128/31"));
+    ASSERT_EQ(range_net_2, ip_network::parse("192.0.2.130/32"));
 }

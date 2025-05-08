@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     environment: launchpad
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -32,6 +32,7 @@ jobs:
           -DCMAKE_C_COMPILER=clang
           -DCMAKE_BUILD_TYPE=Release
           -DIPADDRESS_BUILD_TESTS=OFF
+          -DIPADDRESS_BUILD_BENCHMARK=OFF
           -DIPADDRESS_BUILD_DOC=OFF
           -DIPADDRESS_BUILD_PACKAGES=ON
           -DIPADDRESS_BUILD_DEB_PACKAGE=ON

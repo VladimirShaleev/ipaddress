@@ -2,9 +2,12 @@ module;
 
 #include <cstdint>
 #include <cstddef>
+#include <set>
+#include <map>
 #include <array>
 #include <tuple>
 #include <cmath>
+#include <vector>
 #include <cassert>
 #include <sstream>
 #include <iomanip>

@@ -20,9 +20,6 @@
 #ifndef IPADDRESS_IP_ANY_NETWORK_HPP
 #define IPADDRESS_IP_ANY_NETWORK_HPP
 
-#include "ipv4-network.hpp"
-#include "ipv6-network.hpp"
-#include "ip-any-address.hpp"
 #include "ip-any-iterator.hpp"
 
 namespace IPADDRESS_NAMESPACE {

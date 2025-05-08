@@ -168,7 +168,13 @@ public:
      * Checks if the IPv6 address is a site-local address.
      * 
      * @return `true` if the address is site-local, `false` otherwise.
+     * @parblock
      * @note Site-local addresses are equivalent to private addresses in IPv4 and are not routable on the global internet.
+     * @endparblock
+     * @parblock
+     * @note The site-local address space is no longer recommended (per [RFC 3879](https://datatracker.ietf.org/doc/html/rfc3879.html)).
+     *       Instead, use is_private to verify if the address is a unique local address ([RFC 4193](https://datatracker.ietf.org/doc/html/rfc4193.html)).
+     * @endparblock
      * @remark These attribute is true for the network as a whole if it is true for both the network address and the broadcast address.
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool is_site_local() const IPADDRESS_NOEXCEPT {
@@ -226,6 +232,22 @@ public:
      */
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE optional<ipv4_address> ipv4_mapped() const IPADDRESS_NOEXCEPT {
         return _version == ip_version::V4 ? optional<ipv4_address>() : _ipv.ipv6.ipv4_mapped();
+    }
+
+    /**
+     * Obtains the IPv6-mapped representation of the current IP address.
+     * 
+     * When the IP address holds an IPv4 value, this method converts it into its IPv6-mapped representation,
+     * following the convention (e.g. ::FFFF:IPv4). If the IP address already represents an IPv6 value,
+     * it returns the address as is.
+     * 
+     * @return An `ipv6_address` representing the IPv6-mapped version of the stored IP address.
+     * @remark Converting an IPv4 address to IPv6 through this method always produces a valid IPv6 address.
+     *         In contrast, the reverse operation via `ipv4_mapped()` succeeds only if the IPv6 address is indeed an IPv4-mapped address.
+     * @see [RFC 4291](https://datatracker.ietf.org/doc/html/rfc4291.html).
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ipv6_address ipv6_mapped() const IPADDRESS_NOEXCEPT {
+        return _version == ip_version::V4 ?  _ipv.ipv4.ipv6_mapped() : _ipv.ipv6;
     }
 
     /**
@@ -737,7 +759,12 @@ public:
      * 
      * @param[in] scope_id The string view representing the scope identifier.
      * @throw parse_error Exception caused by invalid input string.
+     * @parblock
      * @note This method is available for C++17 and later versions.
+     * @endparblock
+     * @parblock
+     * @note According to [RFC 4007](https://datatracker.ietf.org/doc/html/rfc4007.html), the string identifies the specific scope zone of the address.
+     * @endparblock
      * @parblock
      * @remark For C++ versions prior to C++17, member functions with `std::string` and C-strings will be used instead.
      * @endparblock
@@ -759,7 +786,12 @@ public:
      * 
      * @param[in] scope_id The wide string view representing the scope identifier.
      * @throw parse_error Exception caused by invalid input string.
+     * @parblock
      * @note This method is available for C++17 and later versions.
+     * @endparblock
+     * @parblock
+     * @note According to [RFC 4007](https://datatracker.ietf.org/doc/html/rfc4007.html), the string identifies the specific scope zone of the address.
+     * @endparblock
      * @parblock
      * @remark For C++ versions prior to C++17, member functions with `std::wstring` and C-strings will be used instead.
      * @endparblock
@@ -783,7 +815,12 @@ public:
      * 
      * @param[in] scope_id The UTF-8 string view representing the scope identifier.
      * @throw parse_error Exception caused by invalid input string.
+     * @parblock
      * @note This method is available for C++20 and later versions where `char8_t` is supported.
+     * @endparblock
+     * @parblock
+     * @note According to [RFC 4007](https://datatracker.ietf.org/doc/html/rfc4007.html), the string identifies the specific scope zone of the address.
+     * @endparblock
      * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect.
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u8string_view scope_id) IPADDRESS_NOEXCEPT_WHEN_NO_EXCEPTIONS {
@@ -802,7 +839,12 @@ public:
      * 
      * @param[in] scope_id The UTF-16 string view representing the scope identifier.
      * @throw parse_error Exception caused by invalid input string.
+     * @parblock
      * @note This method is available for C++17 and later versions.
+     * @endparblock
+     * @parblock
+     * @note According to [RFC 4007](https://datatracker.ietf.org/doc/html/rfc4007.html), the string identifies the specific scope zone of the address.
+     * @endparblock
      * @parblock
      * @remark For C++ versions prior to C++17, member functions with `std::u16string` and C-strings will be used instead.
      * @endparblock
@@ -824,7 +866,12 @@ public:
      * 
      * @param[in] scope_id The UTF-32 string view representing the scope identifier.
      * @throw parse_error Exception caused by invalid input string.
+     * @parblock
      * @note This method is available for C++17 and later versions.
+     * @endparblock
+     * @parblock
+     * @note According to [RFC 4007](https://datatracker.ietf.org/doc/html/rfc4007.html), the string identifies the specific scope zone of the address.
+     * @endparblock
      * @parblock
      * @remark For C++ versions prior to C++17, member functions with `std::u32string` and C-strings will be used instead.
      * @endparblock
@@ -845,7 +892,12 @@ public:
      * 
      * @param[in] scope_id The string view representing the scope identifier.
      * @param[out] code An error_code object that will be set to the error that occurred, if any.
+     * @parblock
      * @note This method is available for C++17 and later versions.
+     * @endparblock
+     * @parblock
+     * @note According to [RFC 4007](https://datatracker.ietf.org/doc/html/rfc4007.html), the string identifies the specific scope zone of the address.
+     * @endparblock
      * @parblock
      * @remark For C++ versions prior to C++17, member functions with `std::string` and C-strings will be used instead.
      * @endparblock
@@ -866,7 +918,12 @@ public:
      * 
      * @param[in] scope_id The wide string view representing the scope identifier.
      * @param[out] code An error_code object that will be set to the error that occurred, if any.
+     * @parblock
      * @note This method is available for C++17 and later versions.
+     * @endparblock
+     * @parblock
+     * @note According to [RFC 4007](https://datatracker.ietf.org/doc/html/rfc4007.html), the string identifies the specific scope zone of the address.
+     * @endparblock
      * @parblock
      * @remark For C++ versions prior to C++17, member functions with `std::wstring` and C-strings will be used instead.
      * @endparblock
@@ -889,7 +946,12 @@ public:
      * 
      * @param[in] scope_id The UTF-8 string view representing the scope identifier.
      * @param[out] code An error_code object that will be set to the error that occurred, if any.
+     * @parblock
      * @note This method is available for C++20 and later versions.
+     * @endparblock
+     * @parblock
+     * @note According to [RFC 4007](https://datatracker.ietf.org/doc/html/rfc4007.html), the string identifies the specific scope zone of the address.
+     * @endparblock
      * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect.
      */
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void set_scope_id(std::u8string_view scope_id, error_code& code) IPADDRESS_NOEXCEPT {
@@ -907,7 +969,12 @@ public:
      * 
      * @param[in] scope_id The UTF-16 string view representing the scope identifier.
      * @param[out] code An error_code object that will be set to the error that occurred, if any.
+     * @parblock
      * @note This method is available for C++17 and later versions.
+     * @endparblock
+     * @parblock
+     * @note According to [RFC 4007](https://datatracker.ietf.org/doc/html/rfc4007.html), the string identifies the specific scope zone of the address.
+     * @endparblock
      * @parblock
      * @remark For C++ versions prior to C++17, member functions with `std::u16string` and C-strings will be used instead.
      * @endparblock
@@ -928,7 +995,12 @@ public:
      * 
      * @param[in] scope_id The UTF-32 string view representing the scope identifier.
      * @param[out] code An error_code object that will be set to the error that occurred, if any.
+     * @parblock
      * @note This method is available for C++17 and later versions.
+     * @endparblock
+     * @parblock
+     * @note According to [RFC 4007](https://datatracker.ietf.org/doc/html/rfc4007.html), the string identifies the specific scope zone of the address.
+     * @endparblock
      * @parblock
      * @remark For C++ versions prior to C++17, member functions with `std::u32string` and C-strings will be used instead.
      * @endparblock
@@ -1172,6 +1244,7 @@ public:
      * @tparam T The character type of the scope identifier.
      * @tparam N The size of the scope identifier array.
      * @param[in] scope_id The character array representing the scope identifier.
+     * @note According to [RFC 4007](https://datatracker.ietf.org/doc/html/rfc4007.html), the string identifies the specific scope zone of the address.
      * @remark If scope is disabled in settings (`IPADDRESS_IPV6_SCOPE_MAX_LENGTH == 0`) then this call will have no effect.
      */
     template <typename T, size_t N>

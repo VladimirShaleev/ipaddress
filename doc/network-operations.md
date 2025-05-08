@@ -89,7 +89,80 @@ int main() {
     // 192.0.2.4/30
     // 192.0.2.2/31
     // 192.0.2.0/32
- 
+
+    return 0;
+}
+```
+
+## Summarize address range {#summarize-address-range}
+
+If you need to aggregate a contiguous range of IP addresses into the smallest set of networks, use the `summarize_address_range()` function. It takes a starting IP address and an ending IP address, then returns an iterator over the optimized networks covering the entire range.
+
+```cpp
+#include <iostream>
+
+#include <ipaddress/ipaddress.hpp>
+
+using namespace ipaddress;
+
+int main() {
+    constexpr auto first = ipv4_address::parse("192.0.2.0");
+    constexpr auto last  =   ip_address::parse("192.0.2.130");
+
+    for (const auto& net : summarize_address_range(first, last)) {
+        std::cout << net << std::endl;
+    }
+    // 192.0.2.0/25
+    // 192.0.2.128/31
+    // 192.0.2.130/32
+
+    return 0;
+}
+```
+
+In this example, the range from `192.0.2.0` to `192.0.2.130` is compressed into the minimal set of networks. This function is great for use cases such as preparing routing tables or firewall rules, where managing a large list of individual IPs would be inefficient.
+
+## Collapse addresses {#collapse-addresses}
+
+The `collapse_addresses` function is a handy utility that takes a collection (or range) of IP network objects and condenses them into the smallest possible set of non-overlapping networks. In other words, if you have a list of networks that are adjacent or overlapping, this function will merge them into the minimal set of contiguous networks while preserving the complete address space information.
+
+For example, imagine you have several individual host addresses defined as `/32` networks. If some of those addresses are contiguous, `collapse_addresses` will automatically merge them into a broader subnet such as a `/31` or higher-order network when the situation allows. In the code snippet below, three separate IPv4 networks (`192.168.1.0/32`, `192.168.1.1/32`, and `192.168.1.3/32`) are collapsed into two networks: one covering the contiguous range (`192.168.1.0/31`) and one remaining as a single host (`192.168.1.3/32`).
+
+This function is useful for tasks like preparing routing tables or configuring firewall rules, where handling a long list of individual entries can be both inefficient and error prone. By collapsing addresses into the minimal set of networks, you create cleaner, more maintainable configurations while also potentially improving lookup performance.
+
+```cpp
+#include <iostream>
+
+#include <ipaddress/ipaddress.hpp>
+
+using namespace ipaddress;
+
+int main() {
+    // std::vector<ipv4_network> networks = {
+    //     ipv4_network::parse("192.168.1.3/32"),
+    //     ipv4_network::parse("192.168.1.0/32"),
+    //     ipv4_network::parse("192.168.1.1/32") };
+    //
+    // You can also collapse addresses using a range of iterators, for example:
+    // const auto collapsed = collapse_addresses(networks.begin(), networks.end());
+    // for (const auto& net : collapsed) {
+    //     std::cout << net.to_string() << std::endl;
+    // }
+
+    constexpr auto collapsed = collapse_addresses(
+        ipv4_network::parse("192.168.1.3/32"),
+        ip_network::parse("192.168.1.0/32"),
+        ipv4_network::parse("192.168.1.1/32"));
+
+    for (const auto& net : collapsed) {
+        std::cout << net.to_string() << std::endl;
+    }
+    // 192.168.1.0/31
+    // 192.168.1.3/32
+
+    constexpr auto last_net = collapsed.back();
+    std::cout << last_net << std::endl; // 192.168.1.3/32
+
     return 0;
 }
 ```

@@ -1,6 +1,9 @@
 source:
 - changed-files:
-  - any-glob-to-any-file: include/ipaddress/**
+  - any-glob-to-any-file:
+    - include/ipaddress/**
+    - src/**
+    - CMakeLists.txt
 
 tests:
 - changed-files:

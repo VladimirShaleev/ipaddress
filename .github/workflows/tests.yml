@@ -10,15 +10,14 @@ on:
 jobs:
 
   # Clang tests
-  clang:
+  clang_legacy:
     strategy:
       fail-fast: false
       matrix:
-        clang: [ 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 ]
+        clang: [ 6, 7, 8, 9, 10 ]
         stdlib: [ "libc++", "libstdc++" ]
         standard: [ 11, 14, 17, 20, 23 ]
         exception: [ "exceptions" ]
-        cppmodule: [ "OFF" ]
         exclude:
           - clang: 6
             stdlib: libc++
@@ -38,6 +37,83 @@ jobs:
           - clang: 8
             stdlib: libstdc++
             standard: 23
+        include:
+          - clang: 6
+            stdlib: libstdc++
+            standard: 11
+            exception: "no-exceptions"
+    name: "Clang ${{ matrix.clang }} [C++${{ matrix.standard }}, ${{ matrix.stdlib }}, ${{ matrix.exception }}]"
+    runs-on: ubuntu-22.04
+    container:
+      image: ubuntu:20.04
+      env:
+        DEBIAN_FRONTEND: noninteractive
+        TZ: Etc/UTC
+      volumes:
+        - ${{ github.workspace }}:/workspace
+    steps:
+      - name: Install Clang
+        run: |
+          apt-get update
+          apt-get install -y wget software-properties-common gnupg git
+          wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null
+          echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ focal main' | tee /etc/apt/sources.list.d/kitware.list >/dev/null
+          apt-get update
+          apt-get install -y cmake
+          apt-get install -y clang-${{ matrix.clang == 6 && '6.0' || matrix.clang }}
+          update-alternatives --install /usr/bin/clang clang /usr/bin/clang-${{ matrix.clang == 6 && '6.0' || matrix.clang }} 100
+          update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-${{ matrix.clang == 6 && '6.0' || matrix.clang }} 100
+          update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-${{ matrix.clang == 6 && '6.0' || matrix.clang }} 100
+          c++ -v
+
+      - name: Install libstdc++
+        if: ${{ matrix.clang >= 7 }}
+        run: apt-get install -y libstdc++-${{ matrix.clang }}-dev
+
+      - name: Install libc++
+        if: ${{ matrix.stdlib == 'libc++' }}
+        run: apt-get install -y libc++abi-${{ matrix.clang }}-dev libc++1-${{ matrix.clang }} libc++-${{ matrix.clang }}-dev
+
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+  
+      - name: Configure CMake
+        run: |
+          EXTRA_CXX_FLAGS=""
+          if [ "${{ matrix.clang }}" = "8" ] && [ "${{ matrix.stdlib }}" = "libstdc++" ]; then
+            EXTRA_CXX_FLAGS="-L/usr/lib/gcc/x86_64-linux-gnu/8 -isystem /usr/include/c++/8 -isystem /usr/include/x86_64-linux-gnu/c++/8"
+          fi
+          cmake -B build -S . \
+            -DCMAKE_CXX_STANDARD=${{ matrix.standard }} \
+            -DCMAKE_CXX_FLAGS="-stdlib=${{ matrix.stdlib }} -f${{ matrix.exception }} $EXTRA_CXX_FLAGS" \
+            -DCMAKE_CXX_COMPILER=c++ \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DIPADDRESS_ENABLE_CLANG_TIDY=OFF \
+            -DIPADDRESS_BUILD_TESTS=ON \
+            -DIPADDRESS_BUILD_BENCHMARK=OFF \
+            -DIPADDRESS_BUILD_DOC=OFF \
+            -DIPADDRESS_BUILD_PACKAGES=OFF \
+            -DIPADDRESS_BUILD_MODULE=OFF \
+            -DIPADDRESS_TEST_MODULE=OFF \
+            -DIPADDRESS_NO_EXCEPTIONS=${{ matrix.exception == 'no-exceptions' }}
+
+      - name: Build
+        run: cmake --build build --config Release -j2
+      
+      - name: Run tests
+        run: |
+          cd build
+          ctest --output-on-failure --test-dir .
+  
+  clang:
+    strategy:
+      fail-fast: false
+      matrix:
+        clang: [ 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 ]
+        stdlib: [ "libc++", "libstdc++" ]
+        standard: [ 11, 14, 17, 20, 23 ]
+        exception: [ "exceptions" ]
+        cppmodule: [ "OFF" ]
+        exclude:
           - clang: 12
             stdlib: libc++
         include:
@@ -62,15 +138,15 @@ jobs:
             exception: "exceptions"
             cppmodule: "ON"
     name: "Clang ${{ matrix.clang }} [C++${{ matrix.standard }}, ${{ matrix.stdlib }}, ${{ matrix.exception }}, cppmodule=${{ matrix.cppmodule }}]"
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
-      - name: "Install Clang"
+      - name: Install Clang
         uses: egor-tensin/setup-clang@ef434b41eb33a70396fb336b1bae39c76d740c3d # v1.4
         with:
           version: ${{ matrix.clang }}
-      - name: "Install libc++"
+      - name: Install libc++
         if: ${{ matrix.stdlib == 'libc++' }}
-        run: sudo apt-get install libc++abi-${{ matrix.clang }}-dev libc++1-${{ matrix.clang }} libc++-${{ matrix.clang }}-dev
+        run: sudo apt-get install -y libc++abi-${{ matrix.clang }}-dev libc++1-${{ matrix.clang }} libc++-${{ matrix.clang }}-dev
 
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - run: c++ -v
@@ -79,7 +155,7 @@ jobs:
         shell: bash
         run: |
           echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
-  
+
       - name: Configure CMake
         run: >
           cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }}
@@ -89,6 +165,7 @@ jobs:
           -DCMAKE_BUILD_TYPE=Release
           -DIPADDRESS_ENABLE_CLANG_TIDY=OFF
           -DIPADDRESS_BUILD_TESTS=ON
+          -DIPADDRESS_BUILD_BENCHMARK=OFF
           -DIPADDRESS_BUILD_DOC=OFF
           -DIPADDRESS_BUILD_PACKAGES=OFF
           -DIPADDRESS_BUILD_MODULE=${{ matrix.cppmodule }}
@@ -97,10 +174,10 @@ jobs:
 
       - name: Build
         run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release -j2
-      
+
       - name: Run tests
         run: ctest --output-on-failure --test-dir ${{ steps.strings.outputs.build-output-dir }}
-  
+
   # Apple Clang tests
   appleclang:
     strategy:
@@ -122,7 +199,7 @@ jobs:
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - run: c++ -v
-      
+
       - name: Set reusable strings
         id: strings
         shell: bash
@@ -138,39 +215,98 @@ jobs:
           -DCMAKE_BUILD_TYPE=Release
           -DIPADDRESS_ENABLE_CLANG_TIDY=OFF
           -DIPADDRESS_BUILD_TESTS=ON
+          -DIPADDRESS_BUILD_BENCHMARK=OFF
           -DIPADDRESS_BUILD_DOC=OFF
           -DIPADDRESS_BUILD_PACKAGES=OFF
           -DIPADDRESS_NO_EXCEPTIONS=${{ matrix.exception == 'no-exceptions' }}
 
       - name: Build
         run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release -j2
-      
+
       - name: Run tests
         run: ctest --output-on-failure --test-dir ${{ steps.strings.outputs.build-output-dir }}
-  
+
   # GCC tests
-  gcc:
+  gcc_legacy:
     strategy:
       fail-fast: false
       matrix:
-        gcc: [ 7, 8, 9, 10, 11, 13 ]
+        gcc: [ 7 , 8 ]
         standard: [ 11, 14, 17, 20, 23 ]
         exception: [ "exceptions" ]
         include:
           - gcc: 7
             standard: 11
             exception: "no-exceptions"
+    name: "GCC ${{ matrix.gcc }} [C++${{ matrix.standard }}, ${{ matrix.exception }}]"
+    runs-on: ubuntu-22.04
+    container:
+      image: ubuntu:20.04
+      env:
+        DEBIAN_FRONTEND: noninteractive
+        TZ: Etc/UTC
+      volumes:
+        - ${{ github.workspace }}:/workspace
+    steps:
+      - name: Install GCC
+        run: |
+          apt-get update
+          apt-get install -y wget software-properties-common gnupg git
+          wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null
+          echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ focal main' | tee /etc/apt/sources.list.d/kitware.list >/dev/null
+          apt-get update
+          apt-get install -y cmake
+          add-apt-repository -y ppa:ubuntu-toolchain-r/test
+          apt-get update
+          apt-get install -y gcc-${{ matrix.gcc }} g++-${{ matrix.gcc }}
+          update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-${{ matrix.gcc }} 100
+          update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-${{ matrix.gcc }} 100
+          update-alternatives --install /usr/bin/c++ c++ /usr/bin/g++-${{ matrix.gcc }} 100
+          c++ -v
+
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Configure CMake
+        run: >
+          cmake -B build -S .
+          -DCMAKE_CXX_STANDARD=${{ matrix.standard }}
+          -DCMAKE_CXX_COMPILER=c++
+          -DCMAKE_CXX_FLAGS=-f${{ matrix.exception }}
+          -DCMAKE_BUILD_TYPE=Release
+          -DIPADDRESS_ENABLE_CLANG_TIDY=OFF
+          -DIPADDRESS_BUILD_TESTS=ON
+          -DIPADDRESS_BUILD_BENCHMARK=OFF
+          -DIPADDRESS_BUILD_DOC=OFF
+          -DIPADDRESS_BUILD_PACKAGES=OFF
+          -DIPADDRESS_NO_EXCEPTIONS=${{ matrix.exception == 'no-exceptions' }}
+  
+      - name: Build
+        run: cmake --build build --config Release -j2
+      
+      - name: Run tests
+        run: |
+          cd build
+          ctest --output-on-failure --test-dir .
+
+  gcc:
+    strategy:
+      fail-fast: false
+      matrix:
+        gcc: [ 9, 10, 11, 13 ]
+        standard: [ 11, 14, 17, 20, 23 ]
+        exception: [ "exceptions" ]
+        include:
           - gcc: 13
             standard: 23
             exception: "no-exceptions"
     name: "GCC ${{ matrix.gcc }} [C++${{ matrix.standard }}, ${{ matrix.exception }}]"
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
-      - name: "Install GCC"
+      - name: Install GCC
         uses: egor-tensin/setup-gcc@eaa888eb19115a521fa72b65cd94fe1f25bbcaac # v1.3
         with:
           version: ${{ matrix.gcc }}
-      
+
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - run: c++ -v
       - name: Set reusable strings
@@ -178,7 +314,7 @@ jobs:
         shell: bash
         run: |
           echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
-      
+
       - name: Configure CMake
         run: >
           cmake -B ${{ steps.strings.outputs.build-output-dir }} -S ${{ github.workspace }}
@@ -188,13 +324,14 @@ jobs:
           -DCMAKE_BUILD_TYPE=Release
           -DIPADDRESS_ENABLE_CLANG_TIDY=OFF
           -DIPADDRESS_BUILD_TESTS=ON
+          -DIPADDRESS_BUILD_BENCHMARK=OFF
           -DIPADDRESS_BUILD_DOC=OFF
           -DIPADDRESS_BUILD_PACKAGES=OFF
           -DIPADDRESS_NO_EXCEPTIONS=${{ matrix.exception == 'no-exceptions' }}
-  
+
       - name: Build
         run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release -j2
-      
+
       - name: Run tests
         run: ctest --output-on-failure --test-dir ${{ steps.strings.outputs.build-output-dir }}
 
@@ -250,6 +387,7 @@ jobs:
           -DCMAKE_BUILD_TYPE=Release
           -DIPADDRESS_ENABLE_CLANG_TIDY=OFF
           -DIPADDRESS_BUILD_TESTS=ON
+          -DIPADDRESS_BUILD_BENCHMARK=OFF
           -DIPADDRESS_BUILD_DOC=OFF
           -DIPADDRESS_BUILD_PACKAGES=OFF
           -DIPADDRESS_BUILD_MODULE=${{ matrix.cppmodule }}
@@ -258,6 +396,6 @@ jobs:
 
       - name: Build
         run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config Release -j2
-      
+
       - name: Run tests
         run: ctest --output-on-failure --test-dir ${{ steps.strings.outputs.build-output-dir }}

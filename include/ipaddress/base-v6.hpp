@@ -285,7 +285,15 @@ protected:
                 code = error_code::has_host_bits_set;
                 return ip_address_base<Ext>();
             } else {
+            #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH > 0
+                auto ip = ip_address_base<Ext>(bytes);
+                if (address._data.scope_id[0] != '\0') {
+                    ip._data.scope_id = address._data.scope_id;
+                }
+                return ip;
+            #else // IPADDRESS_IPV6_SCOPE_MAX_LENGTH
                 return ip_address_base<Ext>(bytes);
+            #endif // IPADDRESS_IPV6_SCOPE_MAX_LENGTH
             }
         }
         return address;
@@ -300,7 +308,9 @@ private:
 
     template <typename Iter>
     IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_and_scope<Iter> split_scope_id(Iter begin, Iter end, error_code& error, uint32_t& error_value) IPADDRESS_NOEXCEPT {
+    #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH > 0
         auto index = 0;
+    #endif // IPADDRESS_IPV6_SCOPE_MAX_LENGTH
         auto it = begin;
         auto scope = false;
         ip_and_scope<Iter> result{};
@@ -312,23 +322,29 @@ private:
             if (!scope && c != '%') {
                 result.end_ip = it;
             } else if (scope) {
+            #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH > 0
                 if (index > IPADDRESS_IPV6_SCOPE_MAX_LENGTH - 1) {
                     error = error_code::scope_id_is_too_long;
                     return result;
                 }
+            #endif // IPADDRESS_IPV6_SCOPE_MAX_LENGTH
                 if (internal::is_invalid_scope_id_symbol(c)) {
                     error = error_code::invalid_scope_id;
                     return result;
                 }
+            #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH > 0
                 result.scope_id[index++] = c;
+            #endif // IPADDRESS_IPV6_SCOPE_MAX_LENGTH
             } else {
                 scope = true;
             }
         }
+    #if IPADDRESS_IPV6_SCOPE_MAX_LENGTH > 0
         if (scope && result.scope_id[0] == '\0') {
             error = error_code::invalid_scope_id;
             return result;
         }
+    #endif // IPADDRESS_IPV6_SCOPE_MAX_LENGTH
         return result;
     }
 

@@ -16,7 +16,7 @@ jobs:
         standard: [ 11, 20 ]
 
     name: "Linter [C++${{ matrix.standard }}]"
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Install Clang
         uses: egor-tensin/setup-clang@ef434b41eb33a70396fb336b1bae39c76d740c3d # v1.4
@@ -48,6 +48,7 @@ jobs:
           -DCMAKE_BUILD_TYPE=Release
           -DIPADDRESS_ENABLE_CLANG_TIDY=ON
           -DIPADDRESS_BUILD_TESTS=ON
+          -DIPADDRESS_BUILD_BENCHMARK=OFF
           -DIPADDRESS_BUILD_DOC=OFF
           -DIPADDRESS_BUILD_PACKAGES=OFF
 

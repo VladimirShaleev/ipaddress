@@ -58,6 +58,8 @@ IPADDRESS_EXPORT enum class error_code {
     has_host_bits_set, /**< The address has host bits set when they are expected to be clear. */
     only_one_slash_permitted, /**< Only one slash character is permitted, used to separate the address from the netmask. */
     string_is_too_long, /**< Input string is too long. */
+    unexpected_symbol, /**< The input string contains an unexpected character. */
+    wrong_encoding_sequence, /**< Incorrect byte sequence in Unicode encoding. */
 
     // ipv4 errors
     empty_octet, /**< An octet in the IPv4 address is empty when it should contain a numeric value. */
@@ -87,10 +89,7 @@ IPADDRESS_EXPORT enum class error_code {
     new_prefix_must_be_longer, /**< The new prefix length must be longer for the operation being performed. */
     cannot_set_prefixlen_diff_and_new_prefix, /**< Both prefix length difference and new prefix cannot be set simultaneously. */
     not_contained_network, /**< The network is not a subnet of the other network as expected. */
-    
-    // input string errors
-    unexpected_symbol, /**< The input string contains an unexpected character. */
-    wrong_encoding_sequence /**< Incorrect byte sequence in Unicode encoding. */
+    last_address_must_be_greater_than_first /**< The last IP address in the range must be greater than the first IP address. */
 };
 
 /**
@@ -327,6 +326,10 @@ IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void raise_error(error_code code, uin
             throw parse_error(code, "only one '/' permitted in address", str);
         case error_code::string_is_too_long:
             throw parse_error(code, "input string is too long", str);
+        case error_code::unexpected_symbol:
+            throw parse_error(code, "unexpected next unicode symbol", error::symbol { value }, "in string", str);
+        case error_code::wrong_encoding_sequence:
+            throw parse_error(code, "incorrect sequence of bytes in unicode encoding for string", str);
         case error_code::empty_octet:
             throw parse_error(code, "empty octet", value, "in address", str);
         case error_code::expected_4_octets:
@@ -373,10 +376,8 @@ IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void raise_error(error_code code, uin
             throw logic_error(code, "cannot set prefixlen_diff and new_prefix");
         case error_code::not_contained_network:
             throw logic_error(code, "network is not a subnet of other");
-        case error_code::unexpected_symbol:
-            throw parse_error(code, "unexpected next unicode symbol", error::symbol { value }, "in string", str);
-        case error_code::wrong_encoding_sequence:
-            throw parse_error(code, "incorrect sequence of bytes in unicode encoding for string", str);
+        case error_code::last_address_must_be_greater_than_first:
+            throw logic_error(code, "last address must be greater than first");
         default:
             throw error(code, "unknown error");
     }

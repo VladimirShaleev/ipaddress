@@ -123,7 +123,7 @@ TEST(fixed_string, ConstexprCopyCtor) {
 }
 
 template <typename Iter>
-IPADDRESS_CONSTEXPR bool test_iterator(Iter begin, Iter end) {
+static IPADDRESS_CONSTEXPR bool test_iterator(Iter begin, Iter end) {
     if (begin == end || *begin++ != 't') { return false; }
     if (begin == end || *begin++ != 'e') { return false; }
     if (begin == end || *begin++ != 's') { return false; }
@@ -142,7 +142,7 @@ IPADDRESS_CONSTEXPR bool test_iterator(Iter begin, Iter end) {
 }
 
 template <typename Iter>
-IPADDRESS_CONSTEXPR bool test_reverse_iterator(Iter begin, Iter end) {
+static IPADDRESS_CONSTEXPR bool test_reverse_iterator(Iter begin, Iter end) {
     if (begin == end || *begin++ != 'r') { return false; }
     if (begin == end || *begin++ != 'o') { return false; }
     if (begin == end || *begin++ != 't') { return false; }
@@ -469,7 +469,7 @@ TEST(fixed_string, InvalidUnicodeString) {
 }
 
 template <typename T, size_t N>
-IPADDRESS_CONSTEXPR auto make_fixed_string_and_code(const T (&str)[N]) noexcept -> decltype(std::make_pair(make_fixed_string(str), error_code::no_error)) {
+static IPADDRESS_CONSTEXPR auto make_fixed_string_and_code(const T (&str)[N]) noexcept -> decltype(std::make_pair(make_fixed_string(str), error_code::no_error)) {
     auto code = error_code::no_error;
     auto result = make_fixed_string(str, code);
     return std::make_pair(result, code);

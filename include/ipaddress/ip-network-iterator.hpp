@@ -418,7 +418,7 @@ private:
         const auto old = result._it._offset;
         result._it._offset -= _step;
         if (result._it._offset > old) {
-        result._it._carry = 1 - result._it._carry;
+            result._it._carry = 1 - result._it._carry;
         }
         result._it._current = ip_address_type::from_uint(result._it._offset);
         result._current = value_type::from_address(*result._it, result._prefixlen);
@@ -664,6 +664,181 @@ private:
 }; // ip_exclude_network_iterator
 
 /**
+ * Forward iterator for summarizing an IP address range.
+ *
+ * This iterator traverses a contiguous range of IP addresses by computing and yielding the
+ * largest possible network (IP subnet) that begins at the current IP and does not extend beyond
+ * the specified upper bound. On each iteration emits an ip network object representing the summarized subnet.
+ * 
+ * @tparam T The type of IPv4 or IPv6 network to iterate over.
+ */
+IPADDRESS_EXPORT template <typename T>
+class ip_summarize_iterator {
+public:
+    using iterator_category = std::forward_iterator_tag; /**< The category of the iterator. */
+    using value_type        = T; /**< The type of value iterated over. */
+    using difference_type   = typename value_type::uint_type; /**< Type to represent the difference between two iterators. */
+    using pointer           = const value_type*; /**< Pointer to the value type. */
+    using reference         = const value_type&; /**< Reference to the value type. */
+
+    using ip_address_type   = typename value_type::ip_address_type; /**< The underlying IP address type. */
+    using uint_type         = typename value_type::uint_type; /**< Unsigned integer type used for addressing. */
+    
+    /**
+     * Default constructor.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_summarize_iterator() IPADDRESS_NOEXCEPT : _end(true) {
+    }
+
+    /**
+     * Constructs a ip_summarize_iterator for an address range.
+     *
+     * @param[in] current The starting IP address of the range.
+     * @param[in] last The ending IP address of the range.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_summarize_iterator(const ip_address_type& current, const ip_address_type& last) IPADDRESS_NOEXCEPT
+        : _current((uint_type) current), _last((uint_type) last), _end(_current > _last) {
+        if (!_end) {
+            compute_network();
+        }
+    }
+
+    /**
+     * Returns a reference to the current element.
+     * 
+     * @return A reference to the element pointed to by the iterator.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference operator*() const IPADDRESS_NOEXCEPT {
+        return _network;
+    }
+
+    /**
+     * Returns a pointer to the current element.
+     * 
+     * @return A pointer to the element pointed to by the iterator.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE pointer operator->() const IPADDRESS_NOEXCEPT {
+        return &_network;
+    }
+
+    /**
+     * Pre-increment operator.
+     * 
+     * Increments the iterator to the next element.
+     * 
+     * @return A reference to the incremented iterator.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_summarize_iterator& operator++() IPADDRESS_NOEXCEPT {
+        advance();
+        return *this;
+    }
+
+    /**
+     * Post-increment operator.
+     * 
+     * Increments the iterator to the next element and returns the iterator before the increment.
+     * 
+     * @return The iterator before the increment.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_summarize_iterator operator++(int) IPADDRESS_NOEXCEPT {
+        auto tmp = *this;
+        ++(*this);
+        return tmp;
+    }
+
+    /**
+     * Equality operator.
+     * 
+     * Compares two ip_summarize_iterator for equality.
+     * 
+     * @param[in] other The ip_summarize_iterator to compare with.
+     * @return `true` if the iterators are equal, `false` otherwise.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(const ip_summarize_iterator& other) const IPADDRESS_NOEXCEPT {
+        if (_end && other._end) {
+            return true;
+        }
+        return _current == other._current && _last == other._last && _end == other._end;
+    }
+
+    /**
+     * Inequality operator.
+     * 
+     * Compares two ip_summarize_iterator for inequality.
+     * 
+     * @param[in] other The ip_summarize_iterator to compare with.
+     * @return `true` if the iterators are not equal, `false` otherwise.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(const ip_summarize_iterator& other) const IPADDRESS_NOEXCEPT {
+        return !(*this == other);
+    }
+
+private:
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t bit_length(uint_type bits) IPADDRESS_NOEXCEPT {
+        size_t count = 0;
+        while (bits != 0) {
+            ++count;
+            bits >>= 1;
+        }
+        return count;
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t count_righthand_zero_bits(uint_type number, size_t bits) IPADDRESS_NOEXCEPT {
+        if (number == 0) {
+            return bits;
+        } else {
+            number = (~number & (number - 1));
+            size_t count = 0;
+            while (number != 0) {
+                count += size_t(number & 0x1);
+                number >>= 1;
+            }
+            if (bits < count) {
+                return bits;
+            } else {
+                return count;
+            }
+        }
+    }
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void compute_network() IPADDRESS_NOEXCEPT {
+        constexpr auto max_prefixlen = ip_address_type::base_max_prefixlen;
+
+        auto nbits = count_righthand_zero_bits(_current, max_prefixlen);
+        auto nbits_max = bit_length(_last - _current + 1) - 1;
+        _nbits = nbits < nbits_max ? nbits : nbits_max;
+
+        const auto prefixlen = max_prefixlen - _nbits;
+        const auto address = ip_address_type::from_uint(_current);
+        _network = value_type::from_address(address, prefixlen);
+    }
+
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE void advance() IPADDRESS_NOEXCEPT {
+        if (!_end) {
+            const auto block = _nbits != 0 ? uint_type(1) << (_nbits - 1) << 1 : uint_type(1);
+
+            IPADDRESS_CONSTEXPR auto all_ones = ~uint_type{};
+            if (_current >= all_ones - block + 1) {
+                _end = true;
+            } else {
+                _current += block;
+                if (_current > _last) {
+                    _end = true;
+                } else {
+                    compute_network();
+                }
+            }
+        }
+    }
+
+    uint_type _current{};
+    uint_type _last{};
+    bool _end{};
+    size_t _nbits{};
+    value_type _network{};
+}; // ip_summarize_iterator
+
+/**
  * A sequence container for subnet ranges within a network.
  * 
  * This class template represents a sequence of subnets within a network.
@@ -896,8 +1071,8 @@ public:
     using const_pointer   = const value_type*; /**< Const pointer to the network type. */
     using reference       = value_type&; /**< Reference to the network type. */
     using const_reference = const value_type&; /**< Const reference to the network type. */
-    using iterator       = ip_exclude_network_iterator<value_type>; /**< Iterator for excluded network traversal. */
-    using const_iterator = ip_exclude_network_iterator<value_type>; /**< Const iterator for excluded network traversal. */
+    using iterator        = ip_exclude_network_iterator<value_type>; /**< Iterator for excluded network traversal. */
+    using const_iterator  = ip_exclude_network_iterator<value_type>; /**< Const iterator for excluded network traversal. */
 
     /**
      * Default constructor.
@@ -968,6 +1143,91 @@ private:
     const_iterator _begin{};
     const_iterator _end{};
 }; // exclude_network_sequence
+
+/**
+ * A container class for iterating over a summarized range of networks.
+ *
+ * The iterator traverses the given IP range by summarizing it into the largest possible contiguous
+ * IP networks.
+ * 
+ * @tparam T Represents the type of the IP network.
+ * @tparam It The iterator type used for traversing the summarized network range.
+ */
+IPADDRESS_EXPORT template <typename T, template <typename> class It = ip_summarize_iterator>
+class summarize_sequence {
+public:
+    using value_type      = T; /**< The type of network value. */
+    using size_type       = size_t; /**< An unsigned integral type. */
+    using difference_type = typename It<value_type>::difference_type; /**< Unsigned integer type for differences. */
+    using pointer         = value_type*; /**< Pointer to the network type. */
+    using const_pointer   = const value_type*; /**< Const pointer to the network type. */
+    using reference       = value_type&; /**< Reference to the network type. */
+    using const_reference = const value_type&; /**< Const reference to the network type. */
+    using iterator        = It<value_type>; /**< Iterator for summarize network range. */
+    using const_iterator  = It<value_type>; /**< Const iterator for summarize network range. */
+
+    using ip_address_type = typename value_type::ip_address_type; /**< The underlying IP address type. */
+
+    /**
+     * Default constructor.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE summarize_sequence() IPADDRESS_NOEXCEPT = default;
+
+    /**
+     * Constructs a summarize_sequence for a given IP address range.
+     *
+     * @param[in] first The first IP address of the range.
+     * @param[in] last The last IP address of the range.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE summarize_sequence(const ip_address_type& first, const ip_address_type& last) IPADDRESS_NOEXCEPT
+        : _begin(const_iterator(first, last)) {
+    }
+
+    /**
+     * Returns an iterator to the beginning of the summarized IP networks.
+     *
+     * @return A constant iterator to the first summarized IP network.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator begin() const IPADDRESS_NOEXCEPT {
+        return _begin;
+    }
+
+    /**
+     * @brief Returns an iterator representing the end of the summarized IP networks.
+     *
+     * The returned iterator acts as a sentinel marking the completion of the iteration.
+     *
+     * @return A constant iterator representing one-past-the-end of the range.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator end() const IPADDRESS_NOEXCEPT {
+        return const_iterator();
+    }
+
+    /**
+     * @brief Returns a constant iterator to the beginning of the summarized IP networks.
+     *
+     * This is equivalent to `begin()` and provided for STL compatibility.
+     *
+     * @return A constant iterator to the first summarized IP network.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator cbegin() const IPADDRESS_NOEXCEPT {
+        return begin();
+    }
+
+    /**
+     * @brief Returns a constant iterator to the end of the summarized IP networks.
+     *
+     * This is equivalent to `end()` and provided for STL compatibility.
+     *
+     * @return A constant iterator representing the end-of-range.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE const_iterator cend() const IPADDRESS_NOEXCEPT {
+        return end();
+    }
+    
+private:
+    const_iterator _begin{};
+}; // summarize_sequence
 
 } // namespace IPADDRESS_NAMESPACE
 

@@ -47,7 +47,7 @@ ctest --output-on-failure
 
 Below is a list of all parameters supported by the configuration:
 
-* `IPADDRESS_ENABLE_CLANG_TIDY` — Enable clang-tidy checks (`ON` by default).
+* `IPADDRESS_ENABLE_CLANG_TIDY` — Enable clang-tidy checks (`OFF` by default).
 * `IPADDRESS_BUILD_TESTS` — Build unit tests (`ON` by default).
 * `IPADDRESS_BUILD_BENCHMARK` — Build benchmark (`OFF` by default).
 * `IPADDRESS_BUILD_DOC` — Build doc (`ON` by default).

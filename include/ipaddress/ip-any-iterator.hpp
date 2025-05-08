@@ -23,6 +23,7 @@
 #include "ipv6-network.hpp"
 
 namespace IPADDRESS_NAMESPACE {
+
 /**
  * An iterator for unified traversal over IPv4 and IPv6 address spaces.
  * 
@@ -465,6 +466,129 @@ private:
     ip_version _version = ip_version::V4;
     value_type _current {};
 }; // ip_any_iterator
+
+/**
+ * Forward iterator for summarizing an IP address range.
+ *
+ * This iterator traverses a contiguous range of IP addresses by computing and yielding the
+ * largest possible network (IP subnet) that begins at the current IP and does not extend beyond
+ * the specified upper bound. On each iteration emits an ip network object representing the summarized subnet.
+ * 
+ * @tparam T The type of IP network to iterate over.
+ */
+IPADDRESS_EXPORT template <typename T>
+class ip_any_summarize_iterator {
+public:
+    using iterator_category = std::forward_iterator_tag; /**< The category of the iterator. */
+    using value_type        = T; /**< The type of value iterated over. */
+    using difference_type   = uint128_t; /**< Type to represent the difference between two iterators. */
+    using pointer           = const value_type*; /**< Pointer to the value type. */
+    using reference         = const value_type&; /**< Reference to the value type. */
+
+    using ip_address_type   = typename value_type::ip_address_type; /**< The underlying IP address type. */
+    
+    /**
+     * Default constructor.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_summarize_iterator() IPADDRESS_NOEXCEPT = default;
+
+    /**
+     * Constructs a ip_any_summarize_iterator for an address range.
+     *
+     * @param[in] current The starting IP address of the range.
+     * @param[in] last The ending IP address of the range.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_summarize_iterator(const ip_address_type& current, const ip_address_type& last) IPADDRESS_NOEXCEPT
+        : _version(current.version()) {
+        assert(current.version() == last.version());
+        if (_version == ip_version::V4) {
+            _itv4 = { current.v4().value(), last.v4().value() };
+            _network = *_itv4;
+        } else {
+            _itv6 = { current.v6().value(), last.v6().value() };
+            _network = *_itv6;
+        }
+    }
+
+    /**
+     * Returns a reference to the current element.
+     * 
+     * @return A reference to the element pointed to by the iterator.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE reference operator*() const IPADDRESS_NOEXCEPT {
+        return _network;
+    }
+
+    /**
+     * Returns a pointer to the current element.
+     * 
+     * @return A pointer to the element pointed to by the iterator.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE pointer operator->() const IPADDRESS_NOEXCEPT {
+        return &_network;
+    }
+
+    /**
+     * Pre-increment operator.
+     * 
+     * Increments the iterator to the next element.
+     * 
+     * @return A reference to the incremented iterator.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_summarize_iterator& operator++() IPADDRESS_NOEXCEPT {
+        if (_version == ip_version::V4) {
+            ++_itv4;
+            _network = *_itv4;
+        } else {
+            ++_itv6;
+            _network = *_itv6;
+        }
+        return *this;
+    }
+
+    /**
+     * Post-increment operator.
+     * 
+     * Increments the iterator to the next element and returns the iterator before the increment.
+     * 
+     * @return The iterator before the increment.
+     */
+    IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE ip_any_summarize_iterator operator++(int) IPADDRESS_NOEXCEPT {
+        auto tmp = *this;
+        ++(*this);
+        return tmp;
+    }
+
+    /**
+     * Equality operator.
+     * 
+     * Compares two ip_any_summarize_iterator for equality.
+     * 
+     * @param[in] other The ip_any_summarize_iterator to compare with.
+     * @return `true` if the iterators are equal, `false` otherwise.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator==(const ip_any_summarize_iterator& other) const IPADDRESS_NOEXCEPT {
+        return _version == other._version && _version == ip_version::V4 ? _itv4 == other._itv4 : _itv6 == other._itv6;
+    }
+
+    /**
+     * Inequality operator.
+     * 
+     * Compares two ip_any_summarize_iterator for inequality.
+     * 
+     * @param[in] other The ip_any_summarize_iterator to compare with.
+     * @return `true` if the iterators are not equal, `false` otherwise.
+     */
+    IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE bool operator!=(const ip_any_summarize_iterator& other) const IPADDRESS_NOEXCEPT {
+        return !(*this == other);
+    }
+
+private:
+    ip_version _version = ip_version::V4;
+    ip_summarize_iterator<ipv4_network> _itv4{};
+    ip_summarize_iterator<ipv6_network> _itv6{};
+    T _network{};
+}; // ip_any_summarize_iterator
 
 /**
  * A sequence of host IP addresses.

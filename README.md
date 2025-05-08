@@ -55,7 +55,7 @@ You can install **ipaddress** using [vcpkg](https://github.com/microsoft/vcpkg#g
 ./vcpkg install vladimirshaleev-ipaddress
 ```
 
-or via `vcpkg.json` if your project uses **manifest mode** [[1]](https://learn.microsoft.com/vcpkg/consume/manifest-mode) [[2]](https://learn.microsoft.com/vcpkg/concepts/manifest-mode):
+or via `vcpkg.json` if your project uses **manifest mode** [[1]](https://learn.microsoft.com/vcpkg/consume/manifest-mode) [[2]](https://learn.microsoft.com/vcpkg/concepts/manifest-mode) [[3]](https://learn.microsoft.com/vcpkg/get_started/get-started#3---add-dependencies-and-project-files):
 
 ```json
 {
@@ -73,10 +73,10 @@ sudo apt update
 sudo apt install libipaddress-dev
 ```
 
-Then, if you use **CMake** for build, you need to link the target (**regardless of how you installed the package**):
+Then, if you use **CMake** for build, you need to link the target (regardless of how you installed the package):
 
 ```cmake
-cmake_minimum_required(VERSION 3.8.0)
+cmake_minimum_required(VERSION 3.10.0)
 
 project(my_project LANGUAGES CXX)
 
@@ -97,7 +97,7 @@ git submodule add https://github.com/VladimirShaleev/ipaddress.git third-party/i
 then in the CMake project add it to the directory:
 
 ```cmake
-cmake_minimum_required(VERSION 3.8.0)
+cmake_minimum_required(VERSION 3.10.0)
 
 project(my_project LANGUAGES CXX)
 
@@ -110,7 +110,7 @@ target_link_libraries(my_project ipaddress::ipaddress) # add the library to your
 ### Use CMake FetchContent
 
 ```cmake
-cmake_minimum_required(VERSION 3.8.0)
+cmake_minimum_required(VERSION 3.10.0)
 
 project(my_project LANGUAGES CXX)
 

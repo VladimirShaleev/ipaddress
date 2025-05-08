@@ -8,7 +8,7 @@ set(IPADDRESS_IPV6_SCOPE_MAX_LENGTH "16" CACHE STRING "Maximum scope-id length f
 project(ipaddress 
   HOMEPAGE_URL "https://github.com/VladimirShaleev/ipaddress"
   DESCRIPTION "A library for working and manipulating IPv4/IPv6 addresses and networks"
-  VERSION 1.1.0
+  VERSION 1.2.0
   LANGUAGES CXX)
 
 include(CMakePackageConfigHelpers)
@@ -38,6 +38,9 @@ else()
   target_compile_definitions(${PROJECT_NAME} INTERFACE $<BUILD_INTERFACE:IPADDRESS_IPV6_SCOPE_MAX_LENGTH=${IPADDRESS_IPV6_SCOPE_MAX_LENGTH}>)
 endif()
 target_compile_definitions(${PROJECT_NAME} INTERFACE $<BUILD_INTERFACE:IPADDRESS_ENDIAN=${IPADDRESS_BIG_ENDIAN}>)
+if(MSVC)
+  target_sources(${PROJECT_NAME} INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/${PROJECT_NAME}.natvis>)
+endif()
 
 configure_package_config_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/package/ipaddress-config.cmake.in" 
@@ -62,14 +65,14 @@ install(
   FILES
     "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake"
     "${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
+    "${PROJECT_SOURCE_DIR}/${PROJECT_NAME}.natvis"
   DESTINATION ${CMAKE_INSTALL_DATADIR}/cmake/${PROJECT_NAME})
 install(
-  FILES 
-    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.pc"
-    DESTINATION "${CMAKE_INSTALL_DATADIR}/pkgconfig")
+  FILES "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.pc"
+  DESTINATION "${CMAKE_INSTALL_DATADIR}/pkgconfig")
 install(DIRECTORY include/ DESTINATION include)
 
-cmake_dependent_option(IPADDRESS_ENABLE_CLANG_TIDY "Enable clang-tidy checks" ON
+cmake_dependent_option(IPADDRESS_ENABLE_CLANG_TIDY "Enable clang-tidy checks" OFF
   "CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR" OFF)
 cmake_dependent_option(IPADDRESS_BUILD_TESTS "Build tests" ON
   "BUILD_TESTING;CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR" OFF)
