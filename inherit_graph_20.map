@@ -1,3 +1,3 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$classipaddress_1_1ip__network__base.html" title="Template base class for representing a network of IP addresses." alt="" coords="5,5,200,31"/>
+<area shape="rect" id="Node000000" href="$classipaddress_1_1ip__exclude__network__iterator.html" title="An iterator to traverse IP addresses within a network, excluding specified subnets." alt="" coords="5,5,157,45"/>
 </map>

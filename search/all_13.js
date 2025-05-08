@@ -15,5 +15,7 @@ var searchData=
   ['to_5fuint32_12',['to_uint32',['../classipaddress_1_1ip__address.html#a5db02fa21102e9ef485ad6d91311dd9d',1,'ipaddress::ip_address']]],
   ['to_5fwstring_13',['to_wstring',['../classipaddress_1_1ip__address__base.html#acb4dfc899d2b3306020528190f503d12',1,'ipaddress::ip_address_base::to_wstring()'],['../classipaddress_1_1ip__address.html#acb4dfc899d2b3306020528190f503d12',1,'ipaddress::ip_address::to_wstring()'],['../classipaddress_1_1ip__network.html#acb4dfc899d2b3306020528190f503d12',1,'ipaddress::ip_network::to_wstring()'],['../classipaddress_1_1ip__network__base.html#acb4dfc899d2b3306020528190f503d12',1,'ipaddress::ip_network_base::to_wstring()'],['../classipaddress_1_1uint128__t.html#aeffb3f90f6601204246b966282a028f2',1,'ipaddress::uint128_t::to_wstring()']]],
   ['trailing_5fcolon_5fonly_5fpermitted_5fas_5fpart_5fof_5fdouble_5fcolon_14',['trailing_colon_only_permitted_as_part_of_double_colon',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689da0679361c95164fb70eff578fcbb4dbb8',1,'ipaddress']]],
-  ['tutorial_15',['Tutorial',['../tutorial.html',1,'']]]
+  ['try_5femplace_5fback_15',['try_emplace_back',['../classipaddress_1_1fixed__vector.html#a9d5ac66e2173a3d3ca83941002991033',1,'ipaddress::fixed_vector']]],
+  ['try_5fpush_5fback_16',['try_push_back',['../classipaddress_1_1fixed__vector.html#ac58ad7db836f29166f11a9748d7d6868',1,'ipaddress::fixed_vector::try_push_back(const_reference value) noexcept'],['../classipaddress_1_1fixed__vector.html#a82f5eb59a3619a9309e99f9926b2691a',1,'ipaddress::fixed_vector::try_push_back(value_type &amp;&amp;value) noexcept']]],
+  ['tutorial_17',['Tutorial',['../tutorial.html',1,'']]]
 ];

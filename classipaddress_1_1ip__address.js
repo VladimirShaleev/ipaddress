@@ -23,6 +23,7 @@ var classipaddress_1_1ip__address =
     [ "size", "classipaddress_1_1ip__address.html#ad8890d890b4f300bbfa21071f23760b4", null ],
     [ "hash", "classipaddress_1_1ip__address.html#ab4ea6c821fe871e802647d69810a470d", null ],
     [ "ipv4_mapped", "classipaddress_1_1ip__address.html#abf08c8003387d0e9ff8bc42365008fef", null ],
+    [ "ipv6_mapped", "classipaddress_1_1ip__address.html#a9364a1478b2da1a543315dc73a17825a", null ],
     [ "sixtofour", "classipaddress_1_1ip__address.html#acdca5e1cd5080342ad0034ed04502187", null ],
     [ "teredo", "classipaddress_1_1ip__address.html#abe43e8ef7087f065c640525865c83c9c", null ],
     [ "v4", "classipaddress_1_1ip__address.html#a913ec0e90e5c359ae371df2aa25e4630", null ],

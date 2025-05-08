@@ -88,7 +88,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="logo.svg"/></td>
   <td id="projectalign">
-   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.1.0</span>
+   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.2.0</span>
    </div>
   </td>
  </tr>
@@ -174,6 +174,12 @@ $(function(){initNavTree('operations.html',''); initResizable(true); });
         <a href="#exclude-network">Removing one network from another network</a>
       </li>
       <li class="level2">
+        <a href="#summarize-address-range">Summarize address range</a>
+      </li>
+      <li class="level2">
+        <a href="#collapse-addresses">Collapse addresses</a>
+      </li>
+      <li class="level2">
         <a href="#other-operations">Other operations</a>
       </li>
     </ul>
@@ -256,6 +262,68 @@ Removing one network from another network</h2>
 <div class="line">    <span class="comment">// 192.0.2.4/30</span></div>
 <div class="line">    <span class="comment">// 192.0.2.2/31</span></div>
 <div class="line">    <span class="comment">// 192.0.2.0/32</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+</div><!-- fragment --><h2><a class="anchor" id="summarize-address-range"></a>
+Summarize address range</h2>
+<p>If you need to aggregate a contiguous range of IP addresses into the smallest set of networks, use the <code>summarize_address_range()</code> function. It takes a starting IP address and an ending IP address, then returns an iterator over the optimized networks covering the entire range.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="ipaddress_8hpp.html">ipaddress/ipaddress.hpp</a>&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using namespace </span><a class="code hl_namespace" href="namespaceipaddress.html">ipaddress</a>;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> first = ipv4_address::parse(<span class="stringliteral">&quot;192.0.2.0&quot;</span>);</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> last  =   ip_address::parse(<span class="stringliteral">&quot;192.0.2.130&quot;</span>);</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; net : summarize_address_range(first, last)) {</div>
+<div class="line">        std::cout &lt;&lt; net &lt;&lt; std::endl;</div>
+<div class="line">    }</div>
+<div class="line">    <span class="comment">// 192.0.2.0/25</span></div>
+<div class="line">    <span class="comment">// 192.0.2.128/31</span></div>
+<div class="line">    <span class="comment">// 192.0.2.130/32</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>In this example, the range from <code>192.0.2.0</code> to <code>192.0.2.130</code> is compressed into the minimal set of networks. This function is great for use cases such as preparing routing tables or firewall rules, where managing a large list of individual IPs would be inefficient.</p>
+<h2><a class="anchor" id="collapse-addresses"></a>
+Collapse addresses</h2>
+<p>The <code>collapse_addresses</code> function is a handy utility that takes a collection (or range) of IP network objects and condenses them into the smallest possible set of non-overlapping networks. In other words, if you have a list of networks that are adjacent or overlapping, this function will merge them into the minimal set of contiguous networks while preserving the complete address space information.</p>
+<p>For example, imagine you have several individual host addresses defined as <code>/32</code> networks. If some of those addresses are contiguous, <code>collapse_addresses</code> will automatically merge them into a broader subnet such as a <code>/31</code> or higher-order network when the situation allows. In the code snippet below, three separate IPv4 networks (<code>192.168.1.0/32</code>, <code>192.168.1.1/32</code>, and <code>192.168.1.3/32</code>) are collapsed into two networks: one covering the contiguous range (<code>192.168.1.0/31</code>) and one remaining as a single host (<code>192.168.1.3/32</code>).</p>
+<p>This function is useful for tasks like preparing routing tables or configuring firewall rules, where handling a long list of individual entries can be both inefficient and error prone. By collapsing addresses into the minimal set of networks, you create cleaner, more maintainable configurations while also potentially improving lookup performance.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="ipaddress_8hpp.html">ipaddress/ipaddress.hpp</a>&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">using namespace </span><a class="code hl_namespace" href="namespaceipaddress.html">ipaddress</a>;</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="comment">// std::vector&lt;ipv4_network&gt; networks = {</span></div>
+<div class="line">    <span class="comment">//     ipv4_network::parse(&quot;192.168.1.3/32&quot;),</span></div>
+<div class="line">    <span class="comment">//     ipv4_network::parse(&quot;192.168.1.0/32&quot;),</span></div>
+<div class="line">    <span class="comment">//     ipv4_network::parse(&quot;192.168.1.1/32&quot;) };</span></div>
+<div class="line">    <span class="comment">//</span></div>
+<div class="line">    <span class="comment">// You can also collapse addresses using a range of iterators, for example:</span></div>
+<div class="line">    <span class="comment">// const auto collapsed = collapse_addresses(networks.begin(), networks.end());</span></div>
+<div class="line">    <span class="comment">// for (const auto&amp; net : collapsed) {</span></div>
+<div class="line">    <span class="comment">//     std::cout &lt;&lt; net.to_string() &lt;&lt; std::endl;</span></div>
+<div class="line">    <span class="comment">// }</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> collapsed = collapse_addresses(</div>
+<div class="line">        ipv4_network::parse(<span class="stringliteral">&quot;192.168.1.3/32&quot;</span>),</div>
+<div class="line">        ip_network::parse(<span class="stringliteral">&quot;192.168.1.0/32&quot;</span>),</div>
+<div class="line">        ipv4_network::parse(<span class="stringliteral">&quot;192.168.1.1/32&quot;</span>));</div>
+<div class="line"> </div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; net : collapsed) {</div>
+<div class="line">        std::cout &lt;&lt; net.to_string() &lt;&lt; std::endl;</div>
+<div class="line">    }</div>
+<div class="line">    <span class="comment">// 192.168.1.0/31</span></div>
+<div class="line">    <span class="comment">// 192.168.1.3/32</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> last_net = collapsed.back();</div>
+<div class="line">    std::cout &lt;&lt; last_net &lt;&lt; std::endl; <span class="comment">// 192.168.1.3/32</span></div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>

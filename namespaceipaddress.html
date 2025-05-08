@@ -88,7 +88,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="logo.svg"/></td>
   <td id="projectalign">
-   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.1.0</span>
+   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.2.0</span>
    </div>
   </td>
  </tr>
@@ -189,6 +189,12 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fixed size string class.  <a href="structipaddress_1_1fixed__string.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A fixed-size vector class template.  <a href="classipaddress_1_1fixed__vector.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1fixed__vector__iterator.html">fixed_vector_iterator</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A fixed-size vector iterator class template.  <a href="classipaddress_1_1fixed__vector__iterator.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1hosts__any__sequence.html">hosts_any_sequence</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A sequence of host IP addresses.  <a href="classipaddress_1_1hosts__any__sequence.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -207,6 +213,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1ip__any__iterator.html">ip_any_iterator</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">An iterator for unified traversal over IPv4 and IPv6 address spaces.  <a href="classipaddress_1_1ip__any__iterator.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1ip__any__summarize__iterator.html">ip_any_summarize_iterator</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forward iterator for summarizing an IP address range.  <a href="classipaddress_1_1ip__any__summarize__iterator.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1ip__exclude__network__iterator.html">ip_exclude_network_iterator</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">An iterator to traverse IP addresses within a network, excluding specified subnets.  <a href="classipaddress_1_1ip__exclude__network__iterator.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -221,6 +230,9 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1ip__reverse__iterator.html">ip_reverse_iterator</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A reverse iterator template class for IP addresses.  <a href="classipaddress_1_1ip__reverse__iterator.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1ip__summarize__iterator.html">ip_summarize_iterator</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forward iterator for summarizing an IP address range.  <a href="classipaddress_1_1ip__summarize__iterator.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1ipv4__address__base.html">ipv4_address_base</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents the base class for IPv4 address manipulation.  <a href="classipaddress_1_1ipv4__address__base.html#details">More...</a><br /></td></tr>
@@ -252,21 +264,24 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1subnets__sequence.html">subnets_sequence</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A sequence container for subnet ranges within a network.  <a href="classipaddress_1_1subnets__sequence.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1summarize__sequence.html">summarize_sequence</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A container class for iterating over a summarized range of networks.  <a href="classipaddress_1_1summarize__sequence.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1uint128__t.html">uint128_t</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class for representing a 128-bit unsigned integer.  <a href="classipaddress_1_1uint128__t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
+<tr class="memitem:a9f1c351976869c5836820511e01fb848" id="r_a9f1c351976869c5836820511e01fb848"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9f1c351976869c5836820511e01fb848">ipv6_address</a> = <a class="el" href="classipaddress_1_1ip__address__base.html">ip_address_base</a>&lt;<a class="el" href="classipaddress_1_1ipv6__address__base.html">ipv6_address_base</a>&gt;</td></tr>
+<tr class="memdesc:a9f1c351976869c5836820511e01fb848"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias for the base class specialized for IPv6 address manipulation.  <br /></td></tr>
+<tr class="separator:a9f1c351976869c5836820511e01fb848"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2314d590d36b6c502b50f1a5d0cf5bcf" id="r_a2314d590d36b6c502b50f1a5d0cf5bcf"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2314d590d36b6c502b50f1a5d0cf5bcf">ipv4_address</a> = <a class="el" href="classipaddress_1_1ip__address__base.html">ip_address_base</a>&lt;<a class="el" href="classipaddress_1_1ipv4__address__base.html">ipv4_address_base</a>&gt;</td></tr>
 <tr class="memdesc:a2314d590d36b6c502b50f1a5d0cf5bcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias for the base class specialized for IPv4 address manipulation.  <br /></td></tr>
 <tr class="separator:a2314d590d36b6c502b50f1a5d0cf5bcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af4392299d63b6ffd13f12fe528f397a3" id="r_af4392299d63b6ffd13f12fe528f397a3"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af4392299d63b6ffd13f12fe528f397a3">ipv4_network</a> = <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&lt;<a class="el" href="classipaddress_1_1ipv4__network__base.html">ipv4_network_base</a>&gt;</td></tr>
 <tr class="memdesc:af4392299d63b6ffd13f12fe528f397a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias for the specialized <a class="el" href="classipaddress_1_1ip__network__base.html" title="Template base class for representing a network of IP addresses.">ip_network_base</a> class for IPv4.  <br /></td></tr>
 <tr class="separator:af4392299d63b6ffd13f12fe528f397a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e072776d657e0e660e387cd493b343f" id="r_a2e072776d657e0e660e387cd493b343f"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2e072776d657e0e660e387cd493b343f">ipv6_address</a> = <a class="el" href="classipaddress_1_1ip__address__base.html">ip_address_base</a>&lt;<a class="el" href="classipaddress_1_1ipv6__address__base.html">ipv6_address_base</a>&gt;</td></tr>
-<tr class="memdesc:a2e072776d657e0e660e387cd493b343f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias for the base class specialized for IPv6 address manipulation.  <br /></td></tr>
-<tr class="separator:a2e072776d657e0e660e387cd493b343f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac01850d9afb3ea15e8abd25747f61f68" id="r_ac01850d9afb3ea15e8abd25747f61f68"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac01850d9afb3ea15e8abd25747f61f68">ipv6_network</a> = <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base</a>&lt;<a class="el" href="classipaddress_1_1ipv6__network__base.html">ipv6_network_base</a>&gt;</td></tr>
 <tr class="memdesc:ac01850d9afb3ea15e8abd25747f61f68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias for the specialized <a class="el" href="classipaddress_1_1ip__network__base.html" title="Template base class for representing a network of IP addresses.">ip_network_base</a> class for IPv6.  <br /></td></tr>
 <tr class="separator:ac01850d9afb3ea15e8abd25747f61f68"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -289,6 +304,10 @@ Enumerations</h2></td></tr>
 &#160;&#160;<a class="el" href="#a88a76ee847c844cc47b94caac600689dade2be6b66bbe04586587ced567e9ce9c">only_one_slash_permitted</a>
 , <br />
 &#160;&#160;<a class="el" href="#a88a76ee847c844cc47b94caac600689da2c71c9a3b159d3b65b5de62d0574f6ee">string_is_too_long</a>
+, <br />
+&#160;&#160;<a class="el" href="#a88a76ee847c844cc47b94caac600689da16be2b382276049a300d4a34fa77df9c">unexpected_symbol</a>
+, <br />
+&#160;&#160;<a class="el" href="#a88a76ee847c844cc47b94caac600689da487b22b520c6961ac3ec30cb755e3068">wrong_encoding_sequence</a>
 , <br />
 &#160;&#160;<a class="el" href="#a88a76ee847c844cc47b94caac600689da75b745a738d07373e8d61d7417fe5d8f">empty_octet</a>
 , <br />
@@ -336,9 +355,7 @@ Enumerations</h2></td></tr>
 , <br />
 &#160;&#160;<a class="el" href="#a88a76ee847c844cc47b94caac600689da35bc33b7007d4d326726e135148c3dc5">not_contained_network</a>
 , <br />
-&#160;&#160;<a class="el" href="#a88a76ee847c844cc47b94caac600689da16be2b382276049a300d4a34fa77df9c">unexpected_symbol</a>
-, <br />
-&#160;&#160;<a class="el" href="#a88a76ee847c844cc47b94caac600689da487b22b520c6961ac3ec30cb755e3068">wrong_encoding_sequence</a>
+&#160;&#160;<a class="el" href="#a88a76ee847c844cc47b94caac600689da0955bed0f6946fd21f2f0af0189d4a6e">last_address_must_be_greater_than_first</a>
 <br />
  }</td></tr>
 <tr class="memdesc:a88a76ee847c844cc47b94caac600689d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration of error codes for IP address parsing and validation.  <a href="#a88a76ee847c844cc47b94caac600689d">More...</a><br /></td></tr>
@@ -430,6 +447,30 @@ Functions</h2></td></tr>
 <tr class="memitem:aaedfc9655c225009a575a5aaeceedf0f"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline <a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a>&lt; N - 1 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aaedfc9655c225009a575a5aaeceedf0f">make_fixed_string</a> (const T(&amp;data)[N], <a class="el" href="#a88a76ee847c844cc47b94caac600689d">error_code</a> &amp;code) noexcept</td></tr>
 <tr class="memdesc:aaedfc9655c225009a575a5aaeceedf0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a fixed-length string from a character array.  <br /></td></tr>
 <tr class="separator:aaedfc9655c225009a575a5aaeceedf0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14a4d202006af0e8c575b250af5f814b" id="r_a14a4d202006af0e8c575b250af5f814b"><td class="memTemplParams" colspan="2">template&lt;typename T , size_t N1, size_t N2&gt; </td></tr>
+<tr class="memitem:a14a4d202006af0e8c575b250af5f814b"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a14a4d202006af0e8c575b250af5f814b">operator==</a> (const <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; T, N1 &gt; &amp;lhs, const <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; T, N2 &gt; &amp;rhs) noexcept</td></tr>
+<tr class="memdesc:a14a4d202006af0e8c575b250af5f814b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares two <a class="el" href="classipaddress_1_1fixed__vector.html" title="A fixed-size vector class template.">fixed_vector</a> objects for equality.  <br /></td></tr>
+<tr class="separator:a14a4d202006af0e8c575b250af5f814b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17f814a4fe3e628e1de2c264f697931c" id="r_a17f814a4fe3e628e1de2c264f697931c"><td class="memTemplParams" colspan="2">template&lt;typename T , size_t N1, size_t N2&gt; </td></tr>
+<tr class="memitem:a17f814a4fe3e628e1de2c264f697931c"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a17f814a4fe3e628e1de2c264f697931c">operator!=</a> (const <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; T, N1 &gt; &amp;lhs, const <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; T, N2 &gt; &amp;rhs) noexcept</td></tr>
+<tr class="memdesc:a17f814a4fe3e628e1de2c264f697931c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares two <a class="el" href="classipaddress_1_1fixed__vector.html" title="A fixed-size vector class template.">fixed_vector</a> objects for inequality.  <br /></td></tr>
+<tr class="separator:a17f814a4fe3e628e1de2c264f697931c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acca9303eb38dedae5e458590b7435cc8" id="r_acca9303eb38dedae5e458590b7435cc8"><td class="memTemplParams" colspan="2">template&lt;typename T , size_t N1, size_t N2&gt; </td></tr>
+<tr class="memitem:acca9303eb38dedae5e458590b7435cc8"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#acca9303eb38dedae5e458590b7435cc8">operator&lt;</a> (const <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; T, N1 &gt; &amp;lhs, const <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; T, N2 &gt; &amp;rhs) noexcept</td></tr>
+<tr class="memdesc:acca9303eb38dedae5e458590b7435cc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares the contents of two fixed vector lexicographically.  <br /></td></tr>
+<tr class="separator:acca9303eb38dedae5e458590b7435cc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a294296bb52a3fbdd9ce7b3b89ac05b5c" id="r_a294296bb52a3fbdd9ce7b3b89ac05b5c"><td class="memTemplParams" colspan="2">template&lt;typename T , size_t N1, size_t N2&gt; </td></tr>
+<tr class="memitem:a294296bb52a3fbdd9ce7b3b89ac05b5c"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a294296bb52a3fbdd9ce7b3b89ac05b5c">operator&gt;</a> (const <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; T, N1 &gt; &amp;lhs, const <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; T, N2 &gt; &amp;rhs) noexcept</td></tr>
+<tr class="memdesc:a294296bb52a3fbdd9ce7b3b89ac05b5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares the contents of two fixed vector lexicographically.  <br /></td></tr>
+<tr class="separator:a294296bb52a3fbdd9ce7b3b89ac05b5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac278faddd927a99b7215d8fcf84f9af9" id="r_ac278faddd927a99b7215d8fcf84f9af9"><td class="memTemplParams" colspan="2">template&lt;typename T , size_t N1, size_t N2&gt; </td></tr>
+<tr class="memitem:ac278faddd927a99b7215d8fcf84f9af9"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ac278faddd927a99b7215d8fcf84f9af9">operator&lt;=</a> (const <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; T, N1 &gt; &amp;lhs, const <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; T, N2 &gt; &amp;rhs) noexcept</td></tr>
+<tr class="memdesc:ac278faddd927a99b7215d8fcf84f9af9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares the contents of two fixed vector lexicographically.  <br /></td></tr>
+<tr class="separator:ac278faddd927a99b7215d8fcf84f9af9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a757521fe6eebfc4aad973e865f89d6" id="r_a6a757521fe6eebfc4aad973e865f89d6"><td class="memTemplParams" colspan="2">template&lt;typename T , size_t N1, size_t N2&gt; </td></tr>
+<tr class="memitem:a6a757521fe6eebfc4aad973e865f89d6"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a6a757521fe6eebfc4aad973e865f89d6">operator&gt;=</a> (const <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; T, N1 &gt; &amp;lhs, const <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; T, N2 &gt; &amp;rhs) noexcept</td></tr>
+<tr class="memdesc:a6a757521fe6eebfc4aad973e865f89d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares the contents of two fixed vector lexicographically.  <br /></td></tr>
+<tr class="separator:a6a757521fe6eebfc4aad973e865f89d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd586286b0af2efef1fabf74378195d1" id="r_abd586286b0af2efef1fabf74378195d1"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a> FixedString&gt; </td></tr>
 <tr class="memitem:abd586286b0af2efef1fabf74378195d1"><td class="memTemplItemLeft" align="right" valign="top">consteval inline <a class="el" href="classipaddress_1_1ip__address.html">ip_address</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#abd586286b0af2efef1fabf74378195d1">operator&quot;&quot;_ip</a> () noexcept</td></tr>
 <tr class="memdesc:abd586286b0af2efef1fabf74378195d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">User-defined literal for creating an <a class="el" href="classipaddress_1_1ip__address.html" title="A class that represents an IP address, supporting both IPv4 and IPv6 formats.">ip_address</a> from a fixed string at compile time.  <br /></td></tr>
@@ -438,6 +479,46 @@ Functions</h2></td></tr>
 <tr class="memitem:a56d70e54be5cc16f330aa4d508d11600"><td class="memTemplItemLeft" align="right" valign="top">consteval inline <a class="el" href="classipaddress_1_1ip__network.html">ip_network</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a56d70e54be5cc16f330aa4d508d11600">operator&quot;&quot;_net</a> () noexcept</td></tr>
 <tr class="memdesc:a56d70e54be5cc16f330aa4d508d11600"><td class="mdescLeft">&#160;</td><td class="mdescRight">User-defined literal operator for creating an <a class="el" href="classipaddress_1_1ip__network.html" title="A class that encapsulates both IPv4 and IPv6 network functionalities.">ip_network</a> object from a string literal.  <br /></td></tr>
 <tr class="separator:a56d70e54be5cc16f330aa4d508d11600"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a870e07c8cfa0cd2fb42c7e0990d7a2e3" id="r_a870e07c8cfa0cd2fb42c7e0990d7a2e3"><td class="memTemplParams" colspan="2">template&lt;typename FirstIp , typename LastIp &gt; </td></tr>
+<tr class="memitem:a870e07c8cfa0cd2fb42c7e0990d7a2e3"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a870e07c8cfa0cd2fb42c7e0990d7a2e3">summarize_address_range</a> (const FirstIp &amp;first, const LastIp &amp;last, <a class="el" href="#a88a76ee847c844cc47b94caac600689d">error_code</a> &amp;code) noexcept -&gt; decltype(internal::summarize_address_range(typename internal::ip_address_type&lt; FirstIp, LastIp &gt;::type{first}, typename internal::ip_address_type&lt; FirstIp, LastIp &gt;::type{last}, code))</td></tr>
+<tr class="memdesc:a870e07c8cfa0cd2fb42c7e0990d7a2e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Summarizes an IP address range into the smallest set of contiguous network blocks.  <br /></td></tr>
+<tr class="separator:a870e07c8cfa0cd2fb42c7e0990d7a2e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f979fa6e709fb5a66e0c6f201a09640" id="r_a5f979fa6e709fb5a66e0c6f201a09640"><td class="memTemplParams" colspan="2">template&lt;typename FirstIp , typename LastIp &gt; </td></tr>
+<tr class="memitem:a5f979fa6e709fb5a66e0c6f201a09640"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a5f979fa6e709fb5a66e0c6f201a09640">summarize_address_range</a> (const FirstIp &amp;first, const LastIp &amp;last) -&gt; decltype(summarize_address_range(first, last, *std::declval&lt; <a class="el" href="#a88a76ee847c844cc47b94caac600689d">error_code</a> * &gt;()))</td></tr>
+<tr class="memdesc:a5f979fa6e709fb5a66e0c6f201a09640"><td class="mdescLeft">&#160;</td><td class="mdescRight">Summarizes an IP address range into the smallest set of contiguous network blocks.  <br /></td></tr>
+<tr class="separator:a5f979fa6e709fb5a66e0c6f201a09640"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad0301b799f3a8046b0326408a7bda72" id="r_aad0301b799f3a8046b0326408a7bda72"><td class="memTemplParams" colspan="2">template&lt;typename Net , size_t N&gt; </td></tr>
+<tr class="memitem:aad0301b799f3a8046b0326408a7bda72"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; Net, N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#aad0301b799f3a8046b0326408a7bda72">collapse_addresses</a> (const std::array&lt; Net, N &gt; &amp;nets, <a class="el" href="#a88a76ee847c844cc47b94caac600689d">error_code</a> &amp;code) noexcept</td></tr>
+<tr class="memdesc:aad0301b799f3a8046b0326408a7bda72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Collapses a collection of IP networks into the smallest set of contiguous networks.  <br /></td></tr>
+<tr class="separator:aad0301b799f3a8046b0326408a7bda72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af566f7c7037eae3c3a05f07925556ec1" id="r_af566f7c7037eae3c3a05f07925556ec1"><td class="memTemplParams" colspan="2">template&lt;typename Net , size_t N&gt; </td></tr>
+<tr class="memitem:af566f7c7037eae3c3a05f07925556ec1"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; Net, N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#af566f7c7037eae3c3a05f07925556ec1">collapse_addresses</a> (const Net(&amp;nets)[N], <a class="el" href="#a88a76ee847c844cc47b94caac600689d">error_code</a> &amp;code) noexcept</td></tr>
+<tr class="memdesc:af566f7c7037eae3c3a05f07925556ec1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Collapses a collection of IP networks into the smallest set of contiguous networks.  <br /></td></tr>
+<tr class="separator:af566f7c7037eae3c3a05f07925556ec1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0f27901cf40cabb6c1f47f818a5493f" id="r_ad0f27901cf40cabb6c1f47f818a5493f"><td class="memTemplParams" colspan="2">template&lt;typename... Nets, typename std::enable_if&lt; internal::is_ip_network_types&lt; Nets... &gt;::value, bool &gt;::type  = true&gt; </td></tr>
+<tr class="memitem:ad0f27901cf40cabb6c1f47f818a5493f"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ad0f27901cf40cabb6c1f47f818a5493f">collapse_addresses</a> (<a class="el" href="#a88a76ee847c844cc47b94caac600689d">error_code</a> &amp;code, const Nets &amp;... nets) noexcept -&gt; <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; typename internal::ip_network_type_extract&lt; Nets... &gt;::type, sizeof...(Nets)&gt;</td></tr>
+<tr class="memdesc:ad0f27901cf40cabb6c1f47f818a5493f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Collapses a collection of IP networks into the smallest set of contiguous networks.  <br /></td></tr>
+<tr class="separator:ad0f27901cf40cabb6c1f47f818a5493f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a859defed306b2060201085c7c37bbe3c" id="r_a859defed306b2060201085c7c37bbe3c"><td class="memTemplParams" colspan="2">template&lt;typename It &gt; </td></tr>
+<tr class="memitem:a859defed306b2060201085c7c37bbe3c"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a859defed306b2060201085c7c37bbe3c">collapse_addresses</a> (It first, It last, <a class="el" href="#a88a76ee847c844cc47b94caac600689d">error_code</a> &amp;code) noexcept -&gt; std::vector&lt; typename std::iterator_traits&lt; It &gt;::value_type &gt;</td></tr>
+<tr class="memdesc:a859defed306b2060201085c7c37bbe3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Collapses a collection of IP networks into the smallest set of contiguous networks.  <br /></td></tr>
+<tr class="separator:a859defed306b2060201085c7c37bbe3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a803d9fc3285b6ebfe352298ad2812a79" id="r_a803d9fc3285b6ebfe352298ad2812a79"><td class="memTemplParams" colspan="2">template&lt;typename Net , size_t N&gt; </td></tr>
+<tr class="memitem:a803d9fc3285b6ebfe352298ad2812a79"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; Net, N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a803d9fc3285b6ebfe352298ad2812a79">collapse_addresses</a> (const std::array&lt; Net, N &gt; &amp;nets)</td></tr>
+<tr class="memdesc:a803d9fc3285b6ebfe352298ad2812a79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Collapses a collection of IP networks into the smallest set of contiguous networks.  <br /></td></tr>
+<tr class="separator:a803d9fc3285b6ebfe352298ad2812a79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8c2dbc92568add25012a9af17a23dbe" id="r_ac8c2dbc92568add25012a9af17a23dbe"><td class="memTemplParams" colspan="2">template&lt;typename Net , size_t N&gt; </td></tr>
+<tr class="memitem:ac8c2dbc92568add25012a9af17a23dbe"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; Net, N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ac8c2dbc92568add25012a9af17a23dbe">collapse_addresses</a> (const Net(&amp;nets)[N])</td></tr>
+<tr class="memdesc:ac8c2dbc92568add25012a9af17a23dbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Collapses a collection of IP networks into the smallest set of contiguous networks.  <br /></td></tr>
+<tr class="separator:ac8c2dbc92568add25012a9af17a23dbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d91848d11e638be1333ab628636194b" id="r_a4d91848d11e638be1333ab628636194b"><td class="memTemplParams" colspan="2">template&lt;typename... Nets, typename std::enable_if&lt; internal::is_ip_network_types&lt; Nets... &gt;::value, bool &gt;::type  = true&gt; </td></tr>
+<tr class="memitem:a4d91848d11e638be1333ab628636194b"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a4d91848d11e638be1333ab628636194b">collapse_addresses</a> (const Nets &amp;... nets) -&gt; <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; typename internal::ip_network_type_extract&lt; Nets... &gt;::type, sizeof...(Nets)&gt;</td></tr>
+<tr class="memdesc:a4d91848d11e638be1333ab628636194b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Collapses a collection of IP networks into the smallest set of contiguous networks.  <br /></td></tr>
+<tr class="separator:a4d91848d11e638be1333ab628636194b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07dcb2a39135385feb3f2e174551a7b6" id="r_a07dcb2a39135385feb3f2e174551a7b6"><td class="memTemplParams" colspan="2">template&lt;typename It &gt; </td></tr>
+<tr class="memitem:a07dcb2a39135385feb3f2e174551a7b6"><td class="memTemplItemLeft" align="right" valign="top">constexpr inline auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a07dcb2a39135385feb3f2e174551a7b6">collapse_addresses</a> (It first, It last) -&gt; std::vector&lt; typename std::iterator_traits&lt; It &gt;::value_type &gt;</td></tr>
+<tr class="memdesc:a07dcb2a39135385feb3f2e174551a7b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Collapses a collection of IP networks into the smallest set of contiguous networks.  <br /></td></tr>
+<tr class="separator:a07dcb2a39135385feb3f2e174551a7b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2402f2fe67431aa1c900c1602b791b5" id="r_ad2402f2fe67431aa1c900c1602b791b5"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a> FixedString&gt; </td></tr>
 <tr class="memitem:ad2402f2fe67431aa1c900c1602b791b5"><td class="memTemplItemLeft" align="right" valign="top">consteval inline <a class="el" href="#a2314d590d36b6c502b50f1a5d0cf5bcf">ipv4_address</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#ad2402f2fe67431aa1c900c1602b791b5">operator&quot;&quot;_ipv4</a> () noexcept</td></tr>
 <tr class="memdesc:ad2402f2fe67431aa1c900c1602b791b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">User-defined literal for creating an ipv4_address from a fixed string at compile time.  <br /></td></tr>
@@ -450,7 +531,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:a4c8a4e9db4ee847c92376a7108fa576c"><td class="mdescLeft">&#160;</td><td class="mdescRight">User-defined literal operator for creating an ipv4_network object from a string literal.  <br /></td></tr>
 <tr class="separator:a4c8a4e9db4ee847c92376a7108fa576c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a745a7ca990af72b116c12f6b5e4a0537" id="r_a745a7ca990af72b116c12f6b5e4a0537"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a> FixedString&gt; </td></tr>
-<tr class="memitem:a745a7ca990af72b116c12f6b5e4a0537"><td class="memTemplItemLeft" align="right" valign="top">consteval inline <a class="el" href="#a2e072776d657e0e660e387cd493b343f">ipv6_address</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a745a7ca990af72b116c12f6b5e4a0537">operator&quot;&quot;_ipv6</a> () noexcept</td></tr>
+<tr class="memitem:a745a7ca990af72b116c12f6b5e4a0537"><td class="memTemplItemLeft" align="right" valign="top">consteval inline <a class="el" href="#a9f1c351976869c5836820511e01fb848">ipv6_address</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a745a7ca990af72b116c12f6b5e4a0537">operator&quot;&quot;_ipv6</a> () noexcept</td></tr>
 <tr class="memdesc:a745a7ca990af72b116c12f6b5e4a0537"><td class="mdescLeft">&#160;</td><td class="mdescRight">User-defined literal for creating an ipv6_address from a fixed string at compile time.  <br /></td></tr>
 <tr class="separator:a745a7ca990af72b116c12f6b5e4a0537"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4e653376242842495c4c74d56d5ecc95" id="r_a4e653376242842495c4c74d56d5ecc95"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="structipaddress_1_1fixed__string.html">fixed_string</a> FixedString&gt; </td></tr>
@@ -518,6 +599,23 @@ Functions</h2></td></tr>
 <div class="textblock"><p>Namespace dedicated to IP addresses and networks operations. </p>
 <p>This namespace contains all the classes, functions, and utilities necessary for handling both IPv4 and IPv6 addresses and networks. It provides a comprehensive suite of tools for various operations such as parsing, constructing, and manipulating IP addresses and networks. </p>
 </div><h2 class="groupheader">Typedef Documentation</h2>
+<a id="a9f1c351976869c5836820511e01fb848" name="a9f1c351976869c5836820511e01fb848"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f1c351976869c5836820511e01fb848">&#9670;&#160;</a></span>ipv6_address</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef <a class="el" href="classipaddress_1_1ip__address__base.html">ip_address_base</a>&lt; <a class="el" href="classipaddress_1_1ipv6__address__base.html">ipv6_address_base</a> &gt; <a class="el" href="#a9f1c351976869c5836820511e01fb848">ipv6_address</a> = <a class="el" href="classipaddress_1_1ip__address__base.html">ip_address_base</a>&lt;<a class="el" href="classipaddress_1_1ipv6__address__base.html">ipv6_address_base</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Alias for the base class specialized for IPv6 address manipulation. </p>
+<p>This alias provides a convenient shorthand for the specialized <code><a class="el" href="classipaddress_1_1ip__address__base.html" title="A template base class for IP address representations.">ip_address_base</a></code> class tailored for IPv6 address handling. It inherits all functionalities from the <code><a class="el" href="classipaddress_1_1ipv6__address__base.html" title="Represents the base class for IPv6 address manipulation.">ipv6_address_base</a></code> class, allowing for operations such as conversion, comparison, and property querying specific to IPv6 addresses. </p>
+
+</div>
+</div>
 <a id="a2314d590d36b6c502b50f1a5d0cf5bcf" name="a2314d590d36b6c502b50f1a5d0cf5bcf"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2314d590d36b6c502b50f1a5d0cf5bcf">&#9670;&#160;</a></span>ipv4_address</h2>
 
@@ -549,23 +647,6 @@ Functions</h2></td></tr>
 
 <p>Alias for the specialized <a class="el" href="classipaddress_1_1ip__network__base.html" title="Template base class for representing a network of IP addresses.">ip_network_base</a> class for IPv4. </p>
 <p>The ipv4_network is a convenient alias for the <a class="el" href="classipaddress_1_1ip__network__base.html" title="Template base class for representing a network of IP addresses.">ip_network_base</a> class specialized with <a class="el" href="classipaddress_1_1ipv4__network__base.html" title="Base class for IPv4 network address manipulation.">ipv4_network_base</a>. It allows users to work with IPv4 network addresses using a type that is specifically designed for IPv4, simplifying the interface and usage in code that deals with IPv4 networks. </p>
-
-</div>
-</div>
-<a id="a2e072776d657e0e660e387cd493b343f" name="a2e072776d657e0e660e387cd493b343f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2e072776d657e0e660e387cd493b343f">&#9670;&#160;</a></span>ipv6_address</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="#a2e072776d657e0e660e387cd493b343f">ipv6_address</a> = <a class="el" href="classipaddress_1_1ip__address__base.html">ip_address_base</a>&lt;<a class="el" href="classipaddress_1_1ipv6__address__base.html">ipv6_address_base</a>&gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Alias for the base class specialized for IPv6 address manipulation. </p>
-<p>This alias provides a convenient shorthand for the specialized <code><a class="el" href="classipaddress_1_1ip__address__base.html" title="A template base class for IP address representations.">ip_address_base</a></code> class tailored for IPv6 address handling. It inherits all functionalities from the <code><a class="el" href="classipaddress_1_1ipv6__address__base.html" title="Represents the base class for IPv6 address manipulation.">ipv6_address_base</a></code> class, allowing for operations such as conversion, comparison, and property querying specific to IPv6 addresses. </p>
 
 </div>
 </div>
@@ -633,6 +714,10 @@ Functions</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="a88a76ee847c844cc47b94caac600689da2c71c9a3b159d3b65b5de62d0574f6ee" name="a88a76ee847c844cc47b94caac600689da2c71c9a3b159d3b65b5de62d0574f6ee"></a>string_is_too_long&#160;</td><td class="fielddoc"><p>Input string is too long. </p>
 </td></tr>
+<tr><td class="fieldname"><a id="a88a76ee847c844cc47b94caac600689da16be2b382276049a300d4a34fa77df9c" name="a88a76ee847c844cc47b94caac600689da16be2b382276049a300d4a34fa77df9c"></a>unexpected_symbol&#160;</td><td class="fielddoc"><p>The input string contains an unexpected character. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a88a76ee847c844cc47b94caac600689da487b22b520c6961ac3ec30cb755e3068" name="a88a76ee847c844cc47b94caac600689da487b22b520c6961ac3ec30cb755e3068"></a>wrong_encoding_sequence&#160;</td><td class="fielddoc"><p>Incorrect byte sequence in Unicode encoding. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="a88a76ee847c844cc47b94caac600689da75b745a738d07373e8d61d7417fe5d8f" name="a88a76ee847c844cc47b94caac600689da75b745a738d07373e8d61d7417fe5d8f"></a>empty_octet&#160;</td><td class="fielddoc"><p>An octet in the IPv4 address is empty when it should contain a numeric value. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a88a76ee847c844cc47b94caac600689daef9982bb6f794f6d20d3a390be58ad72" name="a88a76ee847c844cc47b94caac600689daef9982bb6f794f6d20d3a390be58ad72"></a>expected_4_octets&#160;</td><td class="fielddoc"><p>The IPv4 address does not contain the expected four octets. </p>
@@ -680,9 +765,7 @@ Functions</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="a88a76ee847c844cc47b94caac600689da35bc33b7007d4d326726e135148c3dc5" name="a88a76ee847c844cc47b94caac600689da35bc33b7007d4d326726e135148c3dc5"></a>not_contained_network&#160;</td><td class="fielddoc"><p>The network is not a subnet of the other network as expected. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a88a76ee847c844cc47b94caac600689da16be2b382276049a300d4a34fa77df9c" name="a88a76ee847c844cc47b94caac600689da16be2b382276049a300d4a34fa77df9c"></a>unexpected_symbol&#160;</td><td class="fielddoc"><p>The input string contains an unexpected character. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a88a76ee847c844cc47b94caac600689da487b22b520c6961ac3ec30cb755e3068" name="a88a76ee847c844cc47b94caac600689da487b22b520c6961ac3ec30cb755e3068"></a>wrong_encoding_sequence&#160;</td><td class="fielddoc"><p>Incorrect byte sequence in Unicode encoding. </p>
+<tr><td class="fieldname"><a id="a88a76ee847c844cc47b94caac600689da0955bed0f6946fd21f2f0af0189d4a6e" name="a88a76ee847c844cc47b94caac600689da0955bed0f6946fd21f2f0af0189d4a6e"></a>last_address_must_be_greater_than_first&#160;</td><td class="fielddoc"><p>The last IP address in the range must be greater than the first IP address. </p>
 </td></tr>
 </table>
 
@@ -754,7 +837,7 @@ Functions</h2></td></tr>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ae152906605a801e881781467fbc0ef27" name="ae152906605a801e881781467fbc0ef27"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae152906605a801e881781467fbc0ef27">&#9670;&#160;</a></span>operator==() <span class="overload">[1/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae152906605a801e881781467fbc0ef27">&#9670;&#160;</a></span>operator==() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -809,7 +892,7 @@ template&lt;size_t N&gt; </div>
 </div>
 </div>
 <a id="a18c5dec8ed16e157eab5a1417d70b190" name="a18c5dec8ed16e157eab5a1417d70b190"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a18c5dec8ed16e157eab5a1417d70b190">&#9670;&#160;</a></span>operator!=() <span class="overload">[1/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a18c5dec8ed16e157eab5a1417d70b190">&#9670;&#160;</a></span>operator!=() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -864,7 +947,7 @@ template&lt;size_t N&gt; </div>
 </div>
 </div>
 <a id="ac0fe7cf9a5b3dd7d5ecd303b05e7a74e" name="ac0fe7cf9a5b3dd7d5ecd303b05e7a74e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac0fe7cf9a5b3dd7d5ecd303b05e7a74e">&#9670;&#160;</a></span>operator&lt;() <span class="overload">[1/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0fe7cf9a5b3dd7d5ecd303b05e7a74e">&#9670;&#160;</a></span>operator&lt;() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -912,7 +995,7 @@ template&lt;size_t N&gt; </div>
 </div>
 </div>
 <a id="a1a0d2145a802a73bfbc2348f1e19a9f5" name="a1a0d2145a802a73bfbc2348f1e19a9f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1a0d2145a802a73bfbc2348f1e19a9f5">&#9670;&#160;</a></span>operator&gt;() <span class="overload">[1/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a0d2145a802a73bfbc2348f1e19a9f5">&#9670;&#160;</a></span>operator&gt;() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -959,7 +1042,7 @@ template&lt;size_t N&gt; </div>
 </div>
 </div>
 <a id="a88391db8f21b65518e89fb131a3b9e7e" name="a88391db8f21b65518e89fb131a3b9e7e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a88391db8f21b65518e89fb131a3b9e7e">&#9670;&#160;</a></span>operator&lt;=() <span class="overload">[1/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a88391db8f21b65518e89fb131a3b9e7e">&#9670;&#160;</a></span>operator&lt;=() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1006,7 +1089,7 @@ template&lt;size_t N&gt; </div>
 </div>
 </div>
 <a id="a40459ce900575e6fcd3575109f519e42" name="a40459ce900575e6fcd3575109f519e42"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a40459ce900575e6fcd3575109f519e42">&#9670;&#160;</a></span>operator&gt;=() <span class="overload">[1/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a40459ce900575e6fcd3575109f519e42">&#9670;&#160;</a></span>operator&gt;=() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1174,7 +1257,7 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <a id="af01042455e8ed031c0612794c3aef4df" name="af01042455e8ed031c0612794c3aef4df"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af01042455e8ed031c0612794c3aef4df">&#9670;&#160;</a></span>operator==() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af01042455e8ed031c0612794c3aef4df">&#9670;&#160;</a></span>operator==() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1223,7 +1306,7 @@ template&lt;size_t N1, size_t N2&gt; </div>
 </div>
 </div>
 <a id="af4da60b88e6ad823cbb3393eddf2ecc4" name="af4da60b88e6ad823cbb3393eddf2ecc4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af4da60b88e6ad823cbb3393eddf2ecc4">&#9670;&#160;</a></span>operator!=() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af4da60b88e6ad823cbb3393eddf2ecc4">&#9670;&#160;</a></span>operator!=() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1272,7 +1355,7 @@ template&lt;size_t N1, size_t N2&gt; </div>
 </div>
 </div>
 <a id="a8b755fa3e4a0e6578cab8394b6363243" name="a8b755fa3e4a0e6578cab8394b6363243"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8b755fa3e4a0e6578cab8394b6363243">&#9670;&#160;</a></span>operator&lt;() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b755fa3e4a0e6578cab8394b6363243">&#9670;&#160;</a></span>operator&lt;() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1321,7 +1404,7 @@ template&lt;size_t N1, size_t N2&gt; </div>
 </div>
 </div>
 <a id="a374f69580e0ce86fb820fe3317cecae2" name="a374f69580e0ce86fb820fe3317cecae2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a374f69580e0ce86fb820fe3317cecae2">&#9670;&#160;</a></span>operator&gt;() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a374f69580e0ce86fb820fe3317cecae2">&#9670;&#160;</a></span>operator&gt;() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1370,7 +1453,7 @@ template&lt;size_t N1, size_t N2&gt; </div>
 </div>
 </div>
 <a id="ace73f059f10698e321bdfd42d87eabe1" name="ace73f059f10698e321bdfd42d87eabe1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ace73f059f10698e321bdfd42d87eabe1">&#9670;&#160;</a></span>operator&lt;=() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ace73f059f10698e321bdfd42d87eabe1">&#9670;&#160;</a></span>operator&lt;=() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1419,7 +1502,7 @@ template&lt;size_t N1, size_t N2&gt; </div>
 </div>
 </div>
 <a id="a360bfae1b01e3c0766bf24bcda9a6044" name="a360bfae1b01e3c0766bf24bcda9a6044"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a360bfae1b01e3c0766bf24bcda9a6044">&#9670;&#160;</a></span>operator&gt;=() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a360bfae1b01e3c0766bf24bcda9a6044">&#9670;&#160;</a></span>operator&gt;=() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1560,6 +1643,306 @@ template&lt;typename T , size_t N&gt; </div>
 
 </div>
 </div>
+<a id="a14a4d202006af0e8c575b250af5f814b" name="a14a4d202006af0e8c575b250af5f814b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14a4d202006af0e8c575b250af5f814b">&#9670;&#160;</a></span>operator==() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t N1, size_t N2&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">inline bool operator== </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; T, N1 &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>lhs</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; T, N2 &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">nodiscard</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compares two <a class="el" href="classipaddress_1_1fixed__vector.html" title="A fixed-size vector class template.">fixed_vector</a> objects for equality. </p>
+<p>Checks if the contents of <em>lhs</em> and <em>rhs</em> are equal, meaning they have the same number of elements and each element in <em>lhs</em> compares equal with the element in <em>rhs</em> at the same position.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>The type of the elements in the vector. </td></tr>
+    <tr><td class="paramname">N1</td><td>The size of the first vector. </td></tr>
+    <tr><td class="paramname">N2</td><td>The size of the second vector. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lhs</td><td>The first vector to compare. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rhs</td><td>The second vector to compare. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the vectors are equal; otherwise, <code>false</code>. </dd></dl>
+
+</div>
+</div>
+<a id="a17f814a4fe3e628e1de2c264f697931c" name="a17f814a4fe3e628e1de2c264f697931c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17f814a4fe3e628e1de2c264f697931c">&#9670;&#160;</a></span>operator!=() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t N1, size_t N2&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">inline bool operator!= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; T, N1 &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>lhs</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; T, N2 &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">nodiscard</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compares two <a class="el" href="classipaddress_1_1fixed__vector.html" title="A fixed-size vector class template.">fixed_vector</a> objects for inequality. </p>
+<p>Checks if the contents of <em>lhs</em> and <em>rhs</em> are not equal, meaning they do not have the same number of elements or there is at least one position at which the elements in <em>lhs</em> and <em>rhs</em> differ.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>The type of the elements in the vector. </td></tr>
+    <tr><td class="paramname">N1</td><td>The size of the first vector. </td></tr>
+    <tr><td class="paramname">N2</td><td>The size of the second vector. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lhs</td><td>The first vector to compare. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rhs</td><td>The second vector to compare. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if the vectors are not equal; otherwise, <code>false</code>. </dd></dl>
+
+</div>
+</div>
+<a id="acca9303eb38dedae5e458590b7435cc8" name="acca9303eb38dedae5e458590b7435cc8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acca9303eb38dedae5e458590b7435cc8">&#9670;&#160;</a></span>operator&lt;() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t N1, size_t N2&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">inline bool operator&lt; </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; T, N1 &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>lhs</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; T, N2 &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">nodiscard</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compares the contents of two fixed vector lexicographically. </p>
+<p>Checks if the contents of <em>lhs</em> are lexicographically less than the contents of <em>rhs</em>.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>The type of the elements in the vector. </td></tr>
+    <tr><td class="paramname">N1</td><td>The size of the first vector. </td></tr>
+    <tr><td class="paramname">N2</td><td>The size of the second vector. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lhs</td><td>The first vector to compare. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rhs</td><td>The second vector to compare. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if <em>lhs</em> is lexicographically less than <em>rhs</em>; otherwise, <code>false</code>. </dd></dl>
+
+</div>
+</div>
+<a id="a294296bb52a3fbdd9ce7b3b89ac05b5c" name="a294296bb52a3fbdd9ce7b3b89ac05b5c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a294296bb52a3fbdd9ce7b3b89ac05b5c">&#9670;&#160;</a></span>operator&gt;() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t N1, size_t N2&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">inline bool operator&gt; </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; T, N1 &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>lhs</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; T, N2 &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">nodiscard</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compares the contents of two fixed vector lexicographically. </p>
+<p>Checks if the contents of <em>lhs</em> are lexicographically greater than the contents of <em>rhs</em>.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>The type of the elements in the vector. </td></tr>
+    <tr><td class="paramname">N1</td><td>The size of the first vector. </td></tr>
+    <tr><td class="paramname">N2</td><td>The size of the second vector. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lhs</td><td>The first vector to compare. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rhs</td><td>The second vector to compare. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if <em>lhs</em> is lexicographically greater than <em>rhs</em>; otherwise, <code>false</code>. </dd></dl>
+
+</div>
+</div>
+<a id="ac278faddd927a99b7215d8fcf84f9af9" name="ac278faddd927a99b7215d8fcf84f9af9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac278faddd927a99b7215d8fcf84f9af9">&#9670;&#160;</a></span>operator&lt;=() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t N1, size_t N2&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">inline bool operator&lt;= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; T, N1 &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>lhs</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; T, N2 &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">nodiscard</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compares the contents of two fixed vector lexicographically. </p>
+<p>Checks if the contents of <em>lhs</em> are lexicographically less than or equal to the contents of <em>rhs</em>.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>The type of the elements in the vector. </td></tr>
+    <tr><td class="paramname">N1</td><td>The size of the first vector. </td></tr>
+    <tr><td class="paramname">N2</td><td>The size of the second vector. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lhs</td><td>The first vector to compare. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rhs</td><td>The second vector to compare. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if <em>lhs</em> is lexicographically less than or equal to <em>rhs</em>; otherwise, <code>false</code>. </dd></dl>
+
+</div>
+</div>
+<a id="a6a757521fe6eebfc4aad973e865f89d6" name="a6a757521fe6eebfc4aad973e865f89d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a757521fe6eebfc4aad973e865f89d6">&#9670;&#160;</a></span>operator&gt;=() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t N1, size_t N2&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">inline bool operator&gt;= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; T, N1 &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>lhs</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; T, N2 &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">nodiscard</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Compares the contents of two fixed vector lexicographically. </p>
+<p>Checks if the contents of <em>lhs</em> are lexicographically greater than or equal to the contents of <em>rhs</em>.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>The type of the elements in the vector. </td></tr>
+    <tr><td class="paramname">N1</td><td>The size of the first vector. </td></tr>
+    <tr><td class="paramname">N2</td><td>The size of the second vector. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">lhs</td><td>The first vector to compare. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rhs</td><td>The second vector to compare. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><code>true</code> if <em>lhs</em> is lexicographically greater than or equal to <em>rhs</em>; otherwise, <code>false</code>. </dd></dl>
+
+</div>
+</div>
 <a id="abd586286b0af2efef1fabf74378195d1" name="abd586286b0af2efef1fabf74378195d1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abd586286b0af2efef1fabf74378195d1">&#9670;&#160;</a></span>operator&quot;&quot;_ip()</h2>
 
@@ -1630,6 +2013,692 @@ template&lt;<a class="el" href="structipaddress_1_1fixed__string.html">fixed_str
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>An <a class="el" href="classipaddress_1_1ip__network.html" title="A class that encapsulates both IPv4 and IPv6 network functionalities.">ip_network</a> object representing the network specified by the string literal. </dd></dl>
+
+</div>
+</div>
+<a id="a870e07c8cfa0cd2fb42c7e0990d7a2e3" name="a870e07c8cfa0cd2fb42c7e0990d7a2e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a870e07c8cfa0cd2fb42c7e0990d7a2e3">&#9670;&#160;</a></span>summarize_address_range() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename FirstIp , typename LastIp &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">inline auto summarize_address_range </td>
+          <td>(</td>
+          <td class="paramtype">const FirstIp &amp;</td>          <td class="paramname"><span class="paramname"><em>first</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const LastIp &amp;</td>          <td class="paramname"><span class="paramname"><em>last</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a88a76ee847c844cc47b94caac600689d">error_code</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>code</em></span>&#160;) -&gt; decltype(internal::summarize_address_range(
+        typename internal::ip_address_type&lt;FirstIp, LastIp&gt;::type{first}, 
+        typename internal::ip_address_type&lt;FirstIp, LastIp&gt;::type{last}, 
+        code)) </td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">nodiscard</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Summarizes an IP address range into the smallest set of contiguous network blocks. </p>
+<p>This function is designed specifically for iterating over the minimal number of contiguous network blocks that fully cover a given IP address range. By summarizing the range, it reduces redundancy and enhances efficiency, making it ideal for scenarios like routing table generation or network optimization tasks.</p>
+<p>Example: </p><div class="fragment"><div class="line"><a class="code hl_enumeration" href="#a88a76ee847c844cc47b94caac600689d">error_code</a> code{};</div>
+<div class="line"><span class="keyword">auto</span> summarized = <a class="code hl_function" href="#a870e07c8cfa0cd2fb42c7e0990d7a2e3">summarize_address_range</a>(</div>
+<div class="line">    <a class="code hl_function" href="classipaddress_1_1ip__address__base.html#a4b8772efdbcdd5c633c2aa31a97f3ed1">ipv6_address::parse</a>(<span class="stringliteral">&quot;2001:db8::1&quot;</span>), </div>
+<div class="line">    <a class="code hl_function" href="classipaddress_1_1ip__address__base.html#a4b8772efdbcdd5c633c2aa31a97f3ed1">ipv6_address::parse</a>(<span class="stringliteral">&quot;2001:db8::8&quot;</span>), </div>
+<div class="line">    code</div>
+<div class="line">);</div>
+<div class="line"><span class="keywordflow">if</span> (code == <a class="code hl_enumvalue" href="#a88a76ee847c844cc47b94caac600689da7fa49f1a086c46bfc9e5f5fe279a82c0">error_code::no_error</a>) {</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; net : summarized) {</div>
+<div class="line">        std::cout &lt;&lt; net &lt;&lt; std::endl;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// out:</span></div>
+<div class="line"><span class="comment">// 2001:db8::1/128</span></div>
+<div class="line"><span class="comment">// 2001:db8::2/127</span></div>
+<div class="line"><span class="comment">// 2001:db8::4/126</span></div>
+<div class="line"><span class="comment">// 2001:db8::8/128</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// When working with ip_address, you can also use ipv4_address or ipv6_address as one of the arguments.</span></div>
+<div class="line"><span class="comment">// In this case, this address will be interpreted as ip_address, and iteration will occur for ip_network</span></div>
+<div class="line"><span class="comment">// summarize_address_range(ipv6_address::parse(&quot;2001:db8::1&quot;), ip_address::parse(&quot;2001:db8::8&quot;), code); // OK</span></div>
+<div class="ttc" id="aclassipaddress_1_1ip__address__base_html_a4b8772efdbcdd5c633c2aa31a97f3ed1"><div class="ttname"><a href="classipaddress_1_1ip__address__base.html#a4b8772efdbcdd5c633c2aa31a97f3ed1">ipaddress::ip_address_base&lt; ipv6_address_base &gt;::parse</a></div><div class="ttdeci">static consteval inline ip_address_base&lt; ipv6_address_base &gt; parse() noexcept</div><div class="ttdef"><b>Definition</b> ip-address-base.hpp:123</div></div>
+<div class="ttc" id="anamespaceipaddress_html_a870e07c8cfa0cd2fb42c7e0990d7a2e3"><div class="ttname"><a href="#a870e07c8cfa0cd2fb42c7e0990d7a2e3">ipaddress::summarize_address_range</a></div><div class="ttdeci">constexpr inline auto summarize_address_range(const FirstIp &amp;first, const LastIp &amp;last, error_code &amp;code) noexcept -&gt; decltype(internal::summarize_address_range(typename internal::ip_address_type&lt; FirstIp, LastIp &gt;::type{first}, typename internal::ip_address_type&lt; FirstIp, LastIp &gt;::type{last}, code))</div><div class="ttdoc">Summarizes an IP address range into the smallest set of contiguous network blocks.</div><div class="ttdef"><b>Definition</b> ip-functions.hpp:409</div></div>
+<div class="ttc" id="anamespaceipaddress_html_a88a76ee847c844cc47b94caac600689d"><div class="ttname"><a href="#a88a76ee847c844cc47b94caac600689d">ipaddress::error_code</a></div><div class="ttdeci">error_code</div><div class="ttdoc">Enumeration of error codes for IP address parsing and validation.</div><div class="ttdef"><b>Definition</b> errors.hpp:52</div></div>
+<div class="ttc" id="anamespaceipaddress_html_a88a76ee847c844cc47b94caac600689da7fa49f1a086c46bfc9e5f5fe279a82c0"><div class="ttname"><a href="#a88a76ee847c844cc47b94caac600689da7fa49f1a086c46bfc9e5f5fe279a82c0">ipaddress::error_code::no_error</a></div><div class="ttdeci">@ no_error</div><div class="ttdoc">Indicates the absence of any errors.</div></div>
+</div><!-- fragment --><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">FirstIp</td><td>The type representing an IP address. </td></tr>
+    <tr><td class="paramname">LastIp</td><td>The type representing an IP address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">first</td><td>The starting IP address of the range. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">last</td><td>The ending IP address of the range. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>A reference to an <code>error_code</code> object that will be set if the operation is not possible. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A container of summarized network blocks. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function performs an efficient summarization of IP ranges, but the computational complexity may depend on the size of the range. </dd></dl>
+
+</div>
+</div>
+<a id="a5f979fa6e709fb5a66e0c6f201a09640" name="a5f979fa6e709fb5a66e0c6f201a09640"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f979fa6e709fb5a66e0c6f201a09640">&#9670;&#160;</a></span>summarize_address_range() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename FirstIp , typename LastIp &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">inline auto summarize_address_range </td>
+          <td>(</td>
+          <td class="paramtype">const FirstIp &amp;</td>          <td class="paramname"><span class="paramname"><em>first</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const LastIp &amp;</td>          <td class="paramname"><span class="paramname"><em>last</em></span>&#160;) -&gt; decltype(summarize_address_range(first, last, *std::declval&lt;<a class="el" href="#a88a76ee847c844cc47b94caac600689d">error_code</a>*&gt;())) </td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Summarizes an IP address range into the smallest set of contiguous network blocks. </p>
+<p>This function is designed specifically for iterating over the minimal number of contiguous network blocks that fully cover a given IP address range. By summarizing the range, it reduces redundancy and enhances efficiency, making it ideal for scenarios like routing table generation or network optimization tasks.</p>
+<p>Example: </p><div class="fragment"><div class="line"><span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; net : <a class="code hl_function" href="#a870e07c8cfa0cd2fb42c7e0990d7a2e3">summarize_address_range</a>(<a class="code hl_function" href="classipaddress_1_1ip__address__base.html#a4b8772efdbcdd5c633c2aa31a97f3ed1">ipv4_address::parse</a>(<span class="stringliteral">&quot;192.0.2.0&quot;</span>), <a class="code hl_function" href="classipaddress_1_1ip__address__base.html#a4b8772efdbcdd5c633c2aa31a97f3ed1">ipv4_address::parse</a>(<span class="stringliteral">&quot;192.0.2.130&quot;</span>))) {</div>
+<div class="line">    std::cout &lt;&lt; net &lt;&lt; std::endl;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// out:</span></div>
+<div class="line"><span class="comment">// 192.0.2.0/25</span></div>
+<div class="line"><span class="comment">// 192.0.2.128/31</span></div>
+<div class="line"><span class="comment">// 192.0.2.130/32</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// When working with ip_address, you can also use ipv4_address or ipv6_address as one of the arguments.</span></div>
+<div class="line"><span class="comment">// In this case, this address will be interpreted as ip_address, and iteration will occur for ip_network</span></div>
+<div class="line"><span class="comment">// summarize_address_range(ipv4_address::parse(&quot;192.0.2.0&quot;), ip_address::parse(&quot;192.0.2.130&quot;)); // OK</span></div>
+</div><!-- fragment --><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">FirstIp</td><td>The type representing an IP address. </td></tr>
+    <tr><td class="paramname">LastIp</td><td>The type representing an IP address. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">first</td><td>The starting IP address of the range. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">last</td><td>The ending IP address of the range. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A container of summarized network blocks. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classipaddress_1_1logic__error.html" title="Exception for logical errors in IP address operations.">logic_error</a></td><td>Thrown with a message corresponding to the error code. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This function performs an efficient summarization of IP ranges, but the computational complexity may depend on the size of the range. </dd></dl>
+
+</div>
+</div>
+<a id="aad0301b799f3a8046b0326408a7bda72" name="aad0301b799f3a8046b0326408a7bda72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad0301b799f3a8046b0326408a7bda72">&#9670;&#160;</a></span>collapse_addresses() <span class="overload">[1/8]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Net , size_t N&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">inline <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; Net, N &gt; collapse_addresses </td>
+          <td>(</td>
+          <td class="paramtype">const std::array&lt; Net, N &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>nets</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a88a76ee847c844cc47b94caac600689d">error_code</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>code</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">nodiscard</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Collapses a collection of IP networks into the smallest set of contiguous networks. </p>
+<p>This function is designed to take a collection of IP networks and reduce them into the smallest number of contiguous networks. This is useful for optimizing routing tables or enhancing network efficiency.</p>
+<p>Example: </p><div class="fragment"><div class="line"><span class="keyword">consteval</span> <a class="code hl_class" href="classipaddress_1_1ip__network__base.html">ipv4_network</a> get_last_collapsed() {</div>
+<div class="line">    <span class="keyword">constexpr</span> std::array nets = {</div>
+<div class="line">        <a class="code hl_function" href="classipaddress_1_1ip__network__base.html#a1ff563ad415ed4e9179472b3ec80caee">ipv4_network::parse</a>(<span class="stringliteral">&quot;192.0.2.0/25&quot;</span>),</div>
+<div class="line">        <a class="code hl_function" href="classipaddress_1_1ip__network__base.html#a1ff563ad415ed4e9179472b3ec80caee">ipv4_network::parse</a>(<span class="stringliteral">&quot;192.0.2.128/25&quot;</span>)</div>
+<div class="line">    };</div>
+<div class="line"> </div>
+<div class="line">    <a class="code hl_enumeration" href="#a88a76ee847c844cc47b94caac600689d">error_code</a> code{};</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> collapsed = <a class="code hl_function" href="#aad0301b799f3a8046b0326408a7bda72">collapse_addresses</a>(nets, code);</div>
+<div class="line">    <span class="keywordflow">return</span> code == <a class="code hl_enumvalue" href="#a88a76ee847c844cc47b94caac600689da7fa49f1a086c46bfc9e5f5fe279a82c0">error_code::no_error</a> ? collapsed.back() : <a class="code hl_typedef" href="#af4392299d63b6ffd13f12fe528f397a3">ipv4_network</a>{};</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> net = get_last_collapsed();</div>
+<div class="line">    std::cout &lt;&lt; net &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// out:</span></div>
+<div class="line">    <span class="comment">// 192.0.2.0/24</span></div>
+<div class="line">    <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassipaddress_1_1ip__network__base_html"><div class="ttname"><a href="classipaddress_1_1ip__network__base.html">ipaddress::ip_network_base&lt; ipv4_network_base &gt;</a></div></div>
+<div class="ttc" id="aclassipaddress_1_1ip__network__base_html_a1ff563ad415ed4e9179472b3ec80caee"><div class="ttname"><a href="classipaddress_1_1ip__network__base.html#a1ff563ad415ed4e9179472b3ec80caee">ipaddress::ip_network_base&lt; ipv4_network_base &gt;::parse</a></div><div class="ttdeci">static consteval ip_network_base parse() noexcept</div><div class="ttdef"><b>Definition</b> ip-network-base.hpp:65</div></div>
+<div class="ttc" id="anamespaceipaddress_html_aad0301b799f3a8046b0326408a7bda72"><div class="ttname"><a href="#aad0301b799f3a8046b0326408a7bda72">ipaddress::collapse_addresses</a></div><div class="ttdeci">constexpr inline fixed_vector&lt; Net, N &gt; collapse_addresses(const std::array&lt; Net, N &gt; &amp;nets, error_code &amp;code) noexcept</div><div class="ttdoc">Collapses a collection of IP networks into the smallest set of contiguous networks.</div><div class="ttdef"><b>Definition</b> ip-functions.hpp:498</div></div>
+<div class="ttc" id="anamespaceipaddress_html_af4392299d63b6ffd13f12fe528f397a3"><div class="ttname"><a href="#af4392299d63b6ffd13f12fe528f397a3">ipaddress::ipv4_network</a></div><div class="ttdeci">ip_network_base&lt; ipv4_network_base &gt; ipv4_network</div><div class="ttdoc">Alias for the specialized ip_network_base class for IPv4.</div><div class="ttdef"><b>Definition</b> ipv4-network.hpp:50</div></div>
+</div><!-- fragment --><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Net</td><td>The type of the IP network. </td></tr>
+    <tr><td class="paramname">N</td><td>The number of networks in the collection. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">nets</td><td>The collection of IP networks to be collapsed. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>A reference to an <code>error_code</code> object that will be set if the operation is not possible. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A container of collapsed networks. </dd></dl>
+
+</div>
+</div>
+<a id="af566f7c7037eae3c3a05f07925556ec1" name="af566f7c7037eae3c3a05f07925556ec1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af566f7c7037eae3c3a05f07925556ec1">&#9670;&#160;</a></span>collapse_addresses() <span class="overload">[2/8]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Net , size_t N&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">inline <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; Net, N &gt; collapse_addresses </td>
+          <td>(</td>
+          <td class="paramtype">const Net(&amp;)</td>          <td class="paramname"><span class="paramname"><em>nets</em></span>[N], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a88a76ee847c844cc47b94caac600689d">error_code</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>code</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">nodiscard</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Collapses a collection of IP networks into the smallest set of contiguous networks. </p>
+<p>This function is designed to take a collection of IP networks and reduce them into the smallest number of contiguous networks. This is useful for optimizing routing tables or enhancing network efficiency.</p>
+<p>Example: </p><div class="fragment"><div class="line"><span class="keyword">consteval</span> <a class="code hl_class" href="classipaddress_1_1ip__network.html">ip_network</a> get_last_collapsed() {</div>
+<div class="line">    <span class="keyword">constexpr</span> <a class="code hl_class" href="classipaddress_1_1ip__network.html">ip_network</a> nets[] = {</div>
+<div class="line">        <a class="code hl_function" href="classipaddress_1_1ip__network.html#a1680eeca5814f1e58ee81fc3de5d20df">ip_network::parse</a>(<span class="stringliteral">&quot;192.0.2.0/25&quot;</span>),</div>
+<div class="line">        <a class="code hl_function" href="classipaddress_1_1ip__network.html#a1680eeca5814f1e58ee81fc3de5d20df">ip_network::parse</a>(<span class="stringliteral">&quot;192.0.2.128/25&quot;</span>)</div>
+<div class="line">    };</div>
+<div class="line"> </div>
+<div class="line">    <a class="code hl_enumeration" href="#a88a76ee847c844cc47b94caac600689d">error_code</a> code{};</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> collapsed = <a class="code hl_function" href="#aad0301b799f3a8046b0326408a7bda72">collapse_addresses</a>(nets, code);</div>
+<div class="line">    <span class="keywordflow">return</span> code == <a class="code hl_enumvalue" href="#a88a76ee847c844cc47b94caac600689da7fa49f1a086c46bfc9e5f5fe279a82c0">error_code::no_error</a> ? collapsed.back() : ip_network{};</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> net = get_last_collapsed();</div>
+<div class="line">    std::cout &lt;&lt; net &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// out:</span></div>
+<div class="line">    <span class="comment">// 192.0.2.0/24</span></div>
+<div class="line">    <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="ttc" id="aclassipaddress_1_1ip__network_html"><div class="ttname"><a href="classipaddress_1_1ip__network.html">ipaddress::ip_network</a></div><div class="ttdoc">A class that encapsulates both IPv4 and IPv6 network functionalities.</div><div class="ttdef"><b>Definition</b> ip-any-network.hpp:67</div></div>
+<div class="ttc" id="aclassipaddress_1_1ip__network_html_a1680eeca5814f1e58ee81fc3de5d20df"><div class="ttname"><a href="classipaddress_1_1ip__network.html#a1680eeca5814f1e58ee81fc3de5d20df">ipaddress::ip_network::parse</a></div><div class="ttdeci">static consteval inline ip_network parse() noexcept</div><div class="ttdoc">Parses a network address and prefix from a fixed string at compile time.</div><div class="ttdef"><b>Definition</b> ip-any-network.hpp:867</div></div>
+</div><!-- fragment --><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Net</td><td>The type of the IP network. </td></tr>
+    <tr><td class="paramname">N</td><td>The number of networks in the collection. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">nets</td><td>The collection of IP networks to be collapsed. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>A reference to an <code>error_code</code> object that will be set if the operation is not possible. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A container of collapsed networks. </dd></dl>
+
+</div>
+</div>
+<a id="ad0f27901cf40cabb6c1f47f818a5493f" name="ad0f27901cf40cabb6c1f47f818a5493f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0f27901cf40cabb6c1f47f818a5493f">&#9670;&#160;</a></span>collapse_addresses() <span class="overload">[3/8]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Nets, typename std::enable_if&lt; internal::is_ip_network_types&lt; Nets... &gt;::value, bool &gt;::type  = true&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">inline auto collapse_addresses </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a88a76ee847c844cc47b94caac600689d">error_code</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>code</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const Nets &amp;...</td>          <td class="paramname"><span class="paramname"><em>nets</em></span>&#160;) -&gt; <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt;typename internal::ip_network_type_extract&lt;Nets...&gt;::type, sizeof...(Nets)&gt; </td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">nodiscard</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Collapses a collection of IP networks into the smallest set of contiguous networks. </p>
+<p>This function is designed to take a collection of IP networks and reduce them into the smallest number of contiguous networks. This is useful for optimizing routing tables or enhancing network efficiency.</p>
+<p>Example: </p><div class="fragment"><div class="line"><span class="keyword">consteval</span> <a class="code hl_class" href="classipaddress_1_1ip__network.html">ip_network</a> get_last_collapsed() {</div>
+<div class="line">    <a class="code hl_enumeration" href="#a88a76ee847c844cc47b94caac600689d">error_code</a> code{};</div>
+<div class="line">    <span class="keyword">auto</span> collapsed = <a class="code hl_function" href="#aad0301b799f3a8046b0326408a7bda72">collapse_addresses</a>(</div>
+<div class="line">        code,</div>
+<div class="line">        <a class="code hl_function" href="classipaddress_1_1ip__network__base.html#a1ff563ad415ed4e9179472b3ec80caee">ipv4_network::parse</a>(<span class="stringliteral">&quot;192.0.2.0/25&quot;</span>), </div>
+<div class="line">        <a class="code hl_function" href="classipaddress_1_1ip__network.html#a1680eeca5814f1e58ee81fc3de5d20df">ip_network::parse</a>(<span class="stringliteral">&quot;192.0.2.128/25&quot;</span>), </div>
+<div class="line">        <a class="code hl_function" href="classipaddress_1_1ip__network.html#a1680eeca5814f1e58ee81fc3de5d20df">ip_network::parse</a>(<span class="stringliteral">&quot;192.0.2.255/32&quot;</span>), </div>
+<div class="line">        <a class="code hl_function" href="classipaddress_1_1ip__network.html#a1680eeca5814f1e58ee81fc3de5d20df">ip_network::parse</a>(<span class="stringliteral">&quot;192.0.2.255/32&quot;</span>));</div>
+<div class="line">    <span class="keywordflow">return</span> code == <a class="code hl_enumvalue" href="#a88a76ee847c844cc47b94caac600689da7fa49f1a086c46bfc9e5f5fe279a82c0">error_code::no_error</a> ? collapsed.back() : ip_network{};</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> net = get_collapsed_net();</div>
+<div class="line">    std::cout &lt;&lt; net &lt;&lt; std::endl;</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// out:</span></div>
+<div class="line">    <span class="comment">// 192.0.2.0/24</span></div>
+<div class="line">    <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+</div><!-- fragment --><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Nets</td><td>The types of the IP networks. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>A reference to an <code>error_code</code> object that will be set if the operation is not possible. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">nets</td><td>The collection of IP networks to be collapsed. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A container of collapsed networks. </dd></dl>
+
+</div>
+</div>
+<a id="a859defed306b2060201085c7c37bbe3c" name="a859defed306b2060201085c7c37bbe3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a859defed306b2060201085c7c37bbe3c">&#9670;&#160;</a></span>collapse_addresses() <span class="overload">[4/8]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename It &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">inline auto collapse_addresses </td>
+          <td>(</td>
+          <td class="paramtype">It</td>          <td class="paramname"><span class="paramname"><em>first</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">It</td>          <td class="paramname"><span class="paramname"><em>last</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a88a76ee847c844cc47b94caac600689d">error_code</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>code</em></span>&#160;) -&gt; std::vector&lt;typename std::iterator_traits&lt;It&gt;::value_type&gt; </td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">nodiscard</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Collapses a collection of IP networks into the smallest set of contiguous networks. </p>
+<p>This function is designed to take a collection of IP networks and reduce them into the smallest number of contiguous networks. This is useful for optimizing routing tables or enhancing network efficiency.</p>
+<p>Example: </p><div class="fragment"><div class="line">std::vector&lt;ip_network&gt; nets = {</div>
+<div class="line">    <a class="code hl_function" href="classipaddress_1_1ip__network.html#a1680eeca5814f1e58ee81fc3de5d20df">ip_network::parse</a>(<span class="stringliteral">&quot;2001:db8::1/128&quot;</span>),</div>
+<div class="line">    <a class="code hl_function" href="classipaddress_1_1ip__network.html#a1680eeca5814f1e58ee81fc3de5d20df">ip_network::parse</a>(<span class="stringliteral">&quot;2001:db8::2/128&quot;</span>),</div>
+<div class="line">    <a class="code hl_function" href="classipaddress_1_1ip__network.html#a1680eeca5814f1e58ee81fc3de5d20df">ip_network::parse</a>(<span class="stringliteral">&quot;2001:db8::3/128&quot;</span>),</div>
+<div class="line">    <a class="code hl_function" href="classipaddress_1_1ip__network.html#a1680eeca5814f1e58ee81fc3de5d20df">ip_network::parse</a>(<span class="stringliteral">&quot;2001:db8::5/128&quot;</span>) };</div>
+<div class="line">    </div>
+<div class="line"><a class="code hl_enumeration" href="#a88a76ee847c844cc47b94caac600689d">error_code</a> code{};</div>
+<div class="line"><span class="keyword">const</span> <span class="keyword">auto</span> collapsed = <a class="code hl_function" href="#aad0301b799f3a8046b0326408a7bda72">collapse_addresses</a>(nets.begin(), nets.end(), code);</div>
+<div class="line"><span class="keywordflow">if</span> (code == <a class="code hl_enumvalue" href="#a88a76ee847c844cc47b94caac600689da7fa49f1a086c46bfc9e5f5fe279a82c0">error_code::no_error</a>) {</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; net : collapsed) {</div>
+<div class="line">        std::cout &lt;&lt; net &lt;&lt; std::endl;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// out:</span></div>
+<div class="line"><span class="comment">// 2001:db8::1/128</span></div>
+<div class="line"><span class="comment">// 2001:db8::2/127</span></div>
+<div class="line"><span class="comment">// 2001:db8::5/128</span></div>
+</div><!-- fragment --><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">It</td><td>The type of the iterator. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">first</td><td>The beginning of the range of IP networks to be collapsed. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">last</td><td>The end of the range of IP networks to be collapsed. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">code</td><td>A reference to an <code>error_code</code> object that will be set if the operation is not possible. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A container of collapsed networks. </dd></dl>
+
+</div>
+</div>
+<a id="a803d9fc3285b6ebfe352298ad2812a79" name="a803d9fc3285b6ebfe352298ad2812a79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a803d9fc3285b6ebfe352298ad2812a79">&#9670;&#160;</a></span>collapse_addresses() <span class="overload">[5/8]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Net , size_t N&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">inline <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; Net, N &gt; collapse_addresses </td>
+          <td>(</td>
+          <td class="paramtype">const std::array&lt; Net, N &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>nets</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Collapses a collection of IP networks into the smallest set of contiguous networks. </p>
+<p>This function is designed to take a collection of IP networks and reduce them into the smallest number of contiguous networks. This is useful for optimizing routing tables or enhancing network efficiency.</p>
+<p>Example: </p><div class="fragment"><div class="line"><span class="keyword">constexpr</span> std::array&lt;ipv4_network, 2&gt; nets = {</div>
+<div class="line">   <a class="code hl_function" href="classipaddress_1_1ip__network__base.html#a1ff563ad415ed4e9179472b3ec80caee">ipv4_network::parse</a>(<span class="stringliteral">&quot;192.0.2.0/25&quot;</span>),</div>
+<div class="line">   <a class="code hl_function" href="classipaddress_1_1ip__network__base.html#a1ff563ad415ed4e9179472b3ec80caee">ipv4_network::parse</a>(<span class="stringliteral">&quot;192.0.2.128/25&quot;</span>)</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">constexpr</span> <span class="keyword">auto</span> collapsed = <a class="code hl_function" href="#aad0301b799f3a8046b0326408a7bda72">collapse_addresses</a>(nets);</div>
+<div class="line"><span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; net : collapsed) {</div>
+<div class="line">    std::cout &lt;&lt; net &lt;&lt; std::endl;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// out:</span></div>
+<div class="line"><span class="comment">// 192.0.2.0/24</span></div>
+</div><!-- fragment --><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Net</td><td>The type of the IP network. </td></tr>
+    <tr><td class="paramname">N</td><td>The number of networks in the collection. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">nets</td><td>The collection of IP networks to be collapsed. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A container of collapsed networks. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classipaddress_1_1logic__error.html" title="Exception for logical errors in IP address operations.">logic_error</a></td><td>Thrown with a message corresponding to the error code. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac8c2dbc92568add25012a9af17a23dbe" name="ac8c2dbc92568add25012a9af17a23dbe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8c2dbc92568add25012a9af17a23dbe">&#9670;&#160;</a></span>collapse_addresses() <span class="overload">[6/8]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Net , size_t N&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">inline <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt; Net, N &gt; collapse_addresses </td>
+          <td>(</td>
+          <td class="paramtype">const Net(&amp;)</td>          <td class="paramname"><span class="paramname"><em>nets</em></span>[N]</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Collapses a collection of IP networks into the smallest set of contiguous networks. </p>
+<p>This function is designed to take a collection of IP networks and reduce them into the smallest number of contiguous networks. This is useful for optimizing routing tables or enhancing network efficiency.</p>
+<p>Example: </p><div class="fragment"><div class="line"><span class="keyword">constexpr</span> <a class="code hl_class" href="classipaddress_1_1ip__network.html">ip_network</a> nets[] = {</div>
+<div class="line">    <a class="code hl_function" href="classipaddress_1_1ip__network.html#a1680eeca5814f1e58ee81fc3de5d20df">ip_network::parse</a>(<span class="stringliteral">&quot;192.0.2.0/25&quot;</span>),</div>
+<div class="line">    <a class="code hl_function" href="classipaddress_1_1ip__network.html#a1680eeca5814f1e58ee81fc3de5d20df">ip_network::parse</a>(<span class="stringliteral">&quot;192.0.2.128/25&quot;</span>)</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">constexpr</span> <span class="keyword">auto</span> collapsed = <a class="code hl_function" href="#aad0301b799f3a8046b0326408a7bda72">collapse_addresses</a>(nets);</div>
+<div class="line"><span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; net : collapsed) {</div>
+<div class="line">    std::cout &lt;&lt; net &lt;&lt; std::endl;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// out:</span></div>
+<div class="line"><span class="comment">// 192.0.2.0/24</span></div>
+</div><!-- fragment --><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Net</td><td>The type of the IP network. </td></tr>
+    <tr><td class="paramname">N</td><td>The number of networks in the collection. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">nets</td><td>The collection of IP networks to be collapsed. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A container of collapsed networks. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classipaddress_1_1logic__error.html" title="Exception for logical errors in IP address operations.">logic_error</a></td><td>Thrown with a message corresponding to the error code. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4d91848d11e638be1333ab628636194b" name="a4d91848d11e638be1333ab628636194b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d91848d11e638be1333ab628636194b">&#9670;&#160;</a></span>collapse_addresses() <span class="overload">[7/8]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename... Nets, typename std::enable_if&lt; internal::is_ip_network_types&lt; Nets... &gt;::value, bool &gt;::type  = true&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">inline auto collapse_addresses </td>
+          <td>(</td>
+          <td class="paramtype">const Nets &amp;...</td>          <td class="paramname"><span class="paramname"><em>nets</em></span></td><td>)</td>
+          <td> -&gt; <a class="el" href="classipaddress_1_1fixed__vector.html">fixed_vector</a>&lt;typename internal::ip_network_type_extract&lt;Nets...&gt;::type, sizeof...(Nets)&gt; </td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Collapses a collection of IP networks into the smallest set of contiguous networks. </p>
+<p>This function is designed to take a collection of IP networks and reduce them into the smallest number of contiguous networks. This is useful for optimizing routing tables or enhancing network efficiency.</p>
+<p>Example: </p><div class="fragment"><div class="line"><span class="keyword">constexpr</span> <span class="keyword">auto</span> collapsed = <a class="code hl_function" href="#aad0301b799f3a8046b0326408a7bda72">collapse_addresses</a>( </div>
+<div class="line">    <a class="code hl_function" href="classipaddress_1_1ip__network.html#a1680eeca5814f1e58ee81fc3de5d20df">ip_network::parse</a>(<span class="stringliteral">&quot;192.0.2.255/32&quot;</span>),</div>
+<div class="line">    <a class="code hl_function" href="classipaddress_1_1ip__network__base.html#a1ff563ad415ed4e9179472b3ec80caee">ipv4_network::parse</a>(<span class="stringliteral">&quot;192.0.2.0/25&quot;</span>), </div>
+<div class="line">    <a class="code hl_function" href="classipaddress_1_1ip__network__base.html#a1ff563ad415ed4e9179472b3ec80caee">ipv4_network::parse</a>(<span class="stringliteral">&quot;192.0.2.128/25&quot;</span>));</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; net : collapsed) {</div>
+<div class="line">    std::cout &lt;&lt; net &lt;&lt; std::endl;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// out:</span></div>
+<div class="line"><span class="comment">// 192.0.2.0/24</span></div>
+</div><!-- fragment --><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Nets</td><td>The types of the IP networks. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">nets</td><td>The collection of IP networks to be collapsed. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A container of collapsed networks. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classipaddress_1_1logic__error.html" title="Exception for logical errors in IP address operations.">logic_error</a></td><td>Thrown with a message corresponding to the error code. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a07dcb2a39135385feb3f2e174551a7b6" name="a07dcb2a39135385feb3f2e174551a7b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07dcb2a39135385feb3f2e174551a7b6">&#9670;&#160;</a></span>collapse_addresses() <span class="overload">[8/8]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename It &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">inline auto collapse_addresses </td>
+          <td>(</td>
+          <td class="paramtype">It</td>          <td class="paramname"><span class="paramname"><em>first</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">It</td>          <td class="paramname"><span class="paramname"><em>last</em></span>&#160;) -&gt; std::vector&lt;typename std::iterator_traits&lt;It&gt;::value_type&gt; </td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Collapses a collection of IP networks into the smallest set of contiguous networks. </p>
+<p>This function is designed to take a collection of IP networks and reduce them into the smallest number of contiguous networks. This is useful for optimizing routing tables or enhancing network efficiency.</p>
+<p>Example: </p><div class="fragment"><div class="line">std::vector&lt;ip_network&gt; nets = {</div>
+<div class="line">    <a class="code hl_function" href="classipaddress_1_1ip__network.html#a1680eeca5814f1e58ee81fc3de5d20df">ip_network::parse</a>(<span class="stringliteral">&quot;2001:db8::1/128&quot;</span>),</div>
+<div class="line">    <a class="code hl_function" href="classipaddress_1_1ip__network.html#a1680eeca5814f1e58ee81fc3de5d20df">ip_network::parse</a>(<span class="stringliteral">&quot;2001:db8::2/128&quot;</span>),</div>
+<div class="line">    <a class="code hl_function" href="classipaddress_1_1ip__network.html#a1680eeca5814f1e58ee81fc3de5d20df">ip_network::parse</a>(<span class="stringliteral">&quot;2001:db8::3/128&quot;</span>),</div>
+<div class="line">    <a class="code hl_function" href="classipaddress_1_1ip__network.html#a1680eeca5814f1e58ee81fc3de5d20df">ip_network::parse</a>(<span class="stringliteral">&quot;2001:db8::5/128&quot;</span>) };</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">const</span> <span class="keyword">auto</span> collapsed = <a class="code hl_function" href="#aad0301b799f3a8046b0326408a7bda72">collapse_addresses</a>(nets.begin(), nets.end());</div>
+<div class="line"><span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; net : collapsed) {</div>
+<div class="line">    std::cout &lt;&lt; net &lt;&lt; std::endl;</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// out:</span></div>
+<div class="line"><span class="comment">// 2001:db8::1/128</span></div>
+<div class="line"><span class="comment">// 2001:db8::2/127</span></div>
+<div class="line"><span class="comment">// 2001:db8::5/128</span></div>
+</div><!-- fragment --><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">It</td><td>The type of the iterator. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">first</td><td>The beginning of the range of IP networks to be collapsed. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">last</td><td>The end of the range of IP networks to be collapsed. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A container of collapsed networks. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="classipaddress_1_1logic__error.html" title="Exception for logical errors in IP address operations.">logic_error</a></td><td>Thrown with a message corresponding to the error code. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -1752,7 +2821,7 @@ template&lt;<a class="el" href="structipaddress_1_1fixed__string.html">fixed_str
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">inline <a class="el" href="#a2e072776d657e0e660e387cd493b343f">ipv6_address</a> operator&quot;&quot;_ipv6 </td>
+          <td class="memname">inline <a class="el" href="#a9f1c351976869c5836820511e01fb848">ipv6_address</a> operator&quot;&quot;_ipv6 </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -2190,7 +3259,7 @@ template&lt;typename T , typename  = typename std::enable_if&lt;std::is_arithmet
 </div>
 </div>
 <a id="aa765d67f1454052197cc20778b5ea728" name="aa765d67f1454052197cc20778b5ea728"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa765d67f1454052197cc20778b5ea728">&#9670;&#160;</a></span>operator==() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aa765d67f1454052197cc20778b5ea728">&#9670;&#160;</a></span>operator==() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2237,7 +3306,7 @@ template&lt;typename T , typename  = typename std::enable_if&lt;std::is_integral
 </div>
 </div>
 <a id="ac739f2b09aa55e6f9767566b23d67e13" name="ac739f2b09aa55e6f9767566b23d67e13"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac739f2b09aa55e6f9767566b23d67e13">&#9670;&#160;</a></span>operator!=() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac739f2b09aa55e6f9767566b23d67e13">&#9670;&#160;</a></span>operator!=() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2284,7 +3353,7 @@ template&lt;typename T , typename  = typename std::enable_if&lt;std::is_integral
 </div>
 </div>
 <a id="a5185e4b81c8f00e79c354502b1c92b75" name="a5185e4b81c8f00e79c354502b1c92b75"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5185e4b81c8f00e79c354502b1c92b75">&#9670;&#160;</a></span>operator&lt;() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5185e4b81c8f00e79c354502b1c92b75">&#9670;&#160;</a></span>operator&lt;() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2332,7 +3401,7 @@ template&lt;typename T , typename  = typename std::enable_if&lt;std::is_integral
 </div>
 </div>
 <a id="a43d4cd3d6307d647b18de0538950f4c3" name="a43d4cd3d6307d647b18de0538950f4c3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a43d4cd3d6307d647b18de0538950f4c3">&#9670;&#160;</a></span>operator&gt;() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a43d4cd3d6307d647b18de0538950f4c3">&#9670;&#160;</a></span>operator&gt;() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2380,7 +3449,7 @@ template&lt;typename T , typename  = typename std::enable_if&lt;std::is_integral
 </div>
 </div>
 <a id="ae0e3ec3726faa86909427c11bc162e89" name="ae0e3ec3726faa86909427c11bc162e89"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae0e3ec3726faa86909427c11bc162e89">&#9670;&#160;</a></span>operator&lt;=() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0e3ec3726faa86909427c11bc162e89">&#9670;&#160;</a></span>operator&lt;=() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2428,7 +3497,7 @@ template&lt;typename T , typename  = typename std::enable_if&lt;std::is_integral
 </div>
 </div>
 <a id="ac4eed2f03da4df1da93e93b309abb596" name="ac4eed2f03da4df1da93e93b309abb596"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac4eed2f03da4df1da93e93b309abb596">&#9670;&#160;</a></span>operator&gt;=() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4eed2f03da4df1da93e93b309abb596">&#9670;&#160;</a></span>operator&gt;=() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">

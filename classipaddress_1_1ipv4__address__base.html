@@ -88,7 +88,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="logo.svg"/></td>
   <td id="projectalign">
-   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.1.0</span>
+   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.2.0</span>
    </div>
   </td>
  </tr>
@@ -195,6 +195,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5f2cc8513329088b2a21f38b2f36fcc1" id="r_a5f2cc8513329088b2a21f38b2f36fcc1"><td class="memItemLeft" align="right" valign="top">constexpr inline const <a class="el" href="#a2379477ee0d070084e34ca595fbc9560">base_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5f2cc8513329088b2a21f38b2f36fcc1">bytes</a> () const noexcept</td></tr>
 <tr class="memdesc:a5f2cc8513329088b2a21f38b2f36fcc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides access to the underlying bytes of the IPv4 address.  <br /></td></tr>
 <tr class="separator:a5f2cc8513329088b2a21f38b2f36fcc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9364a1478b2da1a543315dc73a17825a" id="r_a9364a1478b2da1a543315dc73a17825a"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="namespaceipaddress.html#a9f1c351976869c5836820511e01fb848">ipv6_address</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9364a1478b2da1a543315dc73a17825a">ipv6_mapped</a> () const noexcept</td></tr>
+<tr class="memdesc:a9364a1478b2da1a543315dc73a17825a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the IPv6-mapped IPv4 address.  <br /></td></tr>
+<tr class="separator:a9364a1478b2da1a543315dc73a17825a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a841fbbfe98aa27a875d1e408bfaa461e" id="r_a841fbbfe98aa27a875d1e408bfaa461e"><td class="memItemLeft" align="right" valign="top">constexpr inline <a class="el" href="namespaceipaddress.html#a34b83b8852b7ca0e7e93cbf0034ed69d">ip_version</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classipaddress_1_1base__v4.html#a841fbbfe98aa27a875d1e408bfaa461e">version</a> () const noexcept</td></tr>
 <tr class="memdesc:a841fbbfe98aa27a875d1e408bfaa461e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the IP version of the address.  <br /></td></tr>
 <tr class="separator:a841fbbfe98aa27a875d1e408bfaa461e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -345,6 +348,35 @@ template&lt;<a class="el" href="#a82a74ba86ce4fb8e55f721f25e0bf7f0">uint_type</a
 
 </div>
 </div>
+<a id="a9364a1478b2da1a543315dc73a17825a" name="a9364a1478b2da1a543315dc73a17825a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9364a1478b2da1a543315dc73a17825a">&#9670;&#160;</a></span>ipv6_mapped()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">inline <a class="el" href="namespaceipaddress.html#a9f1c351976869c5836820511e01fb848">ipv6_address</a> ipv6_mapped </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">nodiscard</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Retrieves the IPv6-mapped IPv4 address. </p>
+<dl class="section return"><dt>Returns</dt><dd>An IPv6 address object representing the IPv6-mapped form of the original address. </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://datatracker.ietf.org/doc/html/rfc4291.html">RFC 4291</a>. </dd></dl>
+
+</div>
+</div>
 <a id="a841fbbfe98aa27a875d1e408bfaa461e" name="a841fbbfe98aa27a875d1e408bfaa461e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a841fbbfe98aa27a875d1e408bfaa461e">&#9670;&#160;</a></span>version()</h2>
 
@@ -401,8 +433,9 @@ template&lt;<a class="el" href="#a82a74ba86ce4fb8e55f721f25e0bf7f0">uint_type</a
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/ipaddress/<a class="el" href="ipv4-address_8hpp_source.html">ipv4-address.hpp</a></li>
+<li>include/ipaddress/<a class="el" href="ipv6-address_8hpp_source.html">ipv6-address.hpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

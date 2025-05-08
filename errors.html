@@ -88,7 +88,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="logo.svg"/></td>
   <td id="projectalign">
-   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.1.0</span>
+   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.2.0</span>
    </div>
   </td>
  </tr>
@@ -196,7 +196,7 @@ Exception Handling</h2>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-<div class="ttc" id="aclassipaddress_1_1parse__error_html"><div class="ttname"><a href="classipaddress_1_1parse__error.html">ipaddress::parse_error</a></div><div class="ttdoc">Exception for errors encountered during IP address parsing.</div><div class="ttdef"><b>Definition</b> errors.hpp:203</div></div>
+<div class="ttc" id="aclassipaddress_1_1parse__error_html"><div class="ttname"><a href="classipaddress_1_1parse__error.html">ipaddress::parse_error</a></div><div class="ttdoc">Exception for errors encountered during IP address parsing.</div><div class="ttdef"><b>Definition</b> errors.hpp:202</div></div>
 <div class="ttc" id="aipaddress_8hpp_html"><div class="ttname"><a href="ipaddress_8hpp.html">ipaddress.hpp</a></div><div class="ttdoc">The main include file for the ipaddress library.</div></div>
 <div class="ttc" id="anamespaceipaddress_html"><div class="ttname"><a href="namespaceipaddress.html">ipaddress</a></div><div class="ttdoc">Namespace dedicated to IP addresses and networks operations.</div><div class="ttdef"><b>Definition</b> base-v4.hpp:18</div></div>
 </div><!-- fragment --><p>That's basically all you need to know about exception handling. The only thing I’ll clarify is that universal classes for addresses and networks (with union IPv4 and IPv6) first attempt to parse for IPv4, and then IPv6, which is why the error will contain information about the non-corect IPv6 (in case of exception).</p>

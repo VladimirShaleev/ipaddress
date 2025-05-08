@@ -11,9 +11,9 @@
 <!-- Node0 -->
 <g id="Node000000" class="node">
 <title>Node0</title>
-<g id="a_Node000000"><a xlink:href="classipaddress_1_1hosts__any__sequence.html" target="_top" xlink:title="A sequence of host IP addresses.">
+<g id="a_Node000000"><a xlink:href="classipaddress_1_1fixed__vector.html" target="_top" xlink:title="A fixed&#45;size vector class template.">
 <polygon fill="white" stroke="#666666" points="118,-19 0,-19 0,0 118,0 118,-19"/>
-<text text-anchor="middle" x="59" y="-7" font-family="Helvetica,sans-Serif" font-size="10.00">hosts_any_sequence</text>
+<text text-anchor="middle" x="59" y="-7" font-family="Helvetica,sans-Serif" font-size="10.00">fixed_vector&lt; T, N &gt;</text>
 </a>
 </g>
 </g>

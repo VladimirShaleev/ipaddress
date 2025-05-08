@@ -88,7 +88,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="logo.svg"/></td>
   <td id="projectalign">
-   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.1.0</span>
+   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.2.0</span>
    </div>
   </td>
  </tr>
@@ -178,7 +178,7 @@ Inheritance diagram for ipv6_network_base:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:a9ec0588b50112c8efc0adcc8501aeb45" id="r_a9ec0588b50112c8efc0adcc8501aeb45"><td class="memItemLeft" align="right" valign="top"><a id="a9ec0588b50112c8efc0adcc8501aeb45" name="a9ec0588b50112c8efc0adcc8501aeb45"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>ip_address_type</b> = <a class="el" href="namespaceipaddress.html#a2e072776d657e0e660e387cd493b343f">ipv6_address</a></td></tr>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>ip_address_type</b> = <a class="el" href="namespaceipaddress.html#a9f1c351976869c5836820511e01fb848">ipv6_address</a></td></tr>
 <tr class="memdesc:a9ec0588b50112c8efc0adcc8501aeb45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias for the IPv6 address type used within the class. <br /></td></tr>
 <tr class="separator:a9ec0588b50112c8efc0adcc8501aeb45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -224,6 +224,22 @@ Public Member Functions</h2></td></tr>
 <p>Checks if the IPv6 network is site-local. </p>
 <p>This method determines if both the network address and the broadcast address of the IPv6 network are site-local, which are addresses used within a particular organization's intranet and are not routable on the global internet.</p>
 <dl class="section return"><dt>Returns</dt><dd>A boolean value indicating whether the network is site-local. </dd></dl>
+<p>Safe downcast to <a class="el" href="classipaddress_1_1ip__network__base.html">ip_network_base&lt;ipv6_network_base&gt;</a>*.</p>
+<p>This is guaranteed to be correct because:</p><ol type="1">
+<li><a class="el" href="classipaddress_1_1ipv6__network__base.html" title="Base class for IPv6 network address manipulation.">ipv6_network_base</a> is exclusively used as a CRTP base class</li>
+<li>All instances are created through ipv6_network (the ip_network_base&lt;...&gt; alias)</li>
+<li>The inheritance relationship is strictly enforced by the template</li>
+</ol>
+<p>Why static_cast is used:</p><ul>
+<li>Maintains constexpr compatibility (no RTTI needed)</li>
+<li>Zero runtime overhead</li>
+<li>Safety is verified at compile-time through template instantiation</li>
+</ul>
+<p>The NOLINT suppression is justified because:</p><ul>
+<li>This is an intentional design pattern</li>
+<li>Type safety is architecturally guaranteed</li>
+<li>Alternatives (like dynamic_cast) would hurt performance</li>
+</ul>
 
 </div>
 </div>

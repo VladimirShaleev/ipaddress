@@ -88,7 +88,7 @@
  <tr id="projectrow">
   <td id="projectlogo"><img alt="Logo" src="logo.svg"/></td>
   <td id="projectalign">
-   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.1.0</span>
+   <div id="projectname">ipaddress<span id="projectnumber">&#160;1.2.0</span>
    </div>
   </td>
  </tr>
@@ -250,7 +250,7 @@ Conan</h4>
 Vcpkg</h4>
 <p>You can install <b>ipaddress</b> using <a href="https://github.com/microsoft/vcpkg#getting-started">vcpkg</a> dependency manager as follows:</p>
 <div class="fragment"><div class="line">./vcpkg install vladimirshaleev-ipaddress</div>
-</div><!-- fragment --><p>or via <code>vcpkg.json</code> if your project uses <b>manifest mode</b> <a href="https://learn.microsoft.com/vcpkg/consume/manifest-mode">[1]</a> <a href="https://learn.microsoft.com/vcpkg/concepts/manifest-mode">[2]</a>:</p>
+</div><!-- fragment --><p>or via <code>vcpkg.json</code> if your project uses <b>manifest mode</b> <a href="https://learn.microsoft.com/vcpkg/consume/manifest-mode">[1]</a> <a href="https://learn.microsoft.com/vcpkg/concepts/manifest-mode">[2]</a> <a href="https://learn.microsoft.com/vcpkg/get_started/get-started#3---add-dependencies-and-project-files">[3]</a>:</p>
 <div class="fragment"><div class="line">{</div>
 <div class="line">  &quot;name&quot;: &quot;my-project&quot;,</div>
 <div class="line">  &quot;dependencies&quot;: [ &quot;vladimirshaleev-ipaddress&quot; ]</div>
@@ -261,8 +261,8 @@ Ubuntu PPA</h4>
 <div class="line">sudo apt update</div>
 <div class="line"> </div>
 <div class="line">sudo apt install libipaddress-dev</div>
-</div><!-- fragment --><p>Then, if you use <b>CMake</b> for build, you need to link the target (<b>regardless of how you installed the package</b>):</p>
-<div class="fragment"><div class="line">cmake_minimum_required(VERSION 3.8.0)</div>
+</div><!-- fragment --><p>Then, if you use <b>CMake</b> for build, you need to link the target (regardless of how you installed the package):</p>
+<div class="fragment"><div class="line">cmake_minimum_required(VERSION 3.10.0)</div>
 <div class="line"> </div>
 <div class="line">project(my_project LANGUAGES CXX)</div>
 <div class="line"> </div>
@@ -276,7 +276,7 @@ Use as a Submodule with CMake</h3>
 <div class="fragment"><div class="line">cd my_project</div>
 <div class="line">git submodule add https://github.com/VladimirShaleev/ipaddress.git third-party/ipaddress/</div>
 </div><!-- fragment --><p> then in the CMake project add it to the directory:</p>
-<div class="fragment"><div class="line">cmake_minimum_required(VERSION 3.8.0)</div>
+<div class="fragment"><div class="line">cmake_minimum_required(VERSION 3.10.0)</div>
 <div class="line"> </div>
 <div class="line">project(my_project LANGUAGES CXX)</div>
 <div class="line"> </div>
@@ -286,7 +286,7 @@ Use as a Submodule with CMake</h3>
 <div class="line">target_link_libraries(my_project ipaddress::ipaddress) # add the library to your target</div>
 </div><!-- fragment --><h3><a class="anchor" id="fetch-content"></a>
 Use CMake FetchContent</h3>
-<div class="fragment"><div class="line">cmake_minimum_required(VERSION 3.8.0)</div>
+<div class="fragment"><div class="line">cmake_minimum_required(VERSION 3.10.0)</div>
 <div class="line"> </div>
 <div class="line">project(my_project LANGUAGES CXX)</div>
 <div class="line"> </div>
@@ -370,7 +370,7 @@ Pull Requests</h3>
 Licensing</h2>
 <div class="fragment"><div class="line">MIT License</div>
 <div class="line"> </div>
-<div class="line">Copyright (c) 2024 Vladimir Shaleev</div>
+<div class="line">Copyright (c) 2024-2025 Vladimir Shaleev</div>
 <div class="line"> </div>
 <div class="line">Permission is hereby granted, free of charge, to any person obtaining a copy</div>
 <div class="line">of this software and associated documentation files (the &quot;Software&quot;), to deal</div>

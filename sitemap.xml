@@ -26,6 +26,9 @@
     <loc>https://vladimirshaleev.github.io/ipaddress/fixed-string_8hpp_source.html</loc>
   </url>
   <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/fixed-vector_8hpp_source.html</loc>
+  </url>
+  <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/hash_8hpp_source.html</loc>
   </url>
   <url>
@@ -42,6 +45,9 @@
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/ip-any-network_8hpp_source.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/ip-functions_8hpp_source.html</loc>
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/ip-network-base_8hpp_source.html</loc>
@@ -98,6 +104,9 @@
     <loc>https://vladimirshaleev.github.io/ipaddress/fixed-string_8hpp.html</loc>
   </url>
   <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/fixed-vector_8hpp.html</loc>
+  </url>
+  <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/hash_8hpp.html</loc>
   </url>
   <url>
@@ -114,6 +123,9 @@
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/ip-any-network_8hpp.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/ip-functions_8hpp.html</loc>
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/ip-network-base_8hpp.html</loc>
@@ -206,6 +218,18 @@
     <loc>https://vladimirshaleev.github.io/ipaddress/structipaddress_1_1fixed__string-members.html</loc>
   </url>
   <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1fixed__vector.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1fixed__vector-members.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1fixed__vector__iterator.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1fixed__vector__iterator-members.html</loc>
+  </url>
+  <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1hosts__any__sequence.html</loc>
   </url>
   <url>
@@ -242,6 +266,12 @@
     <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1ip__any__iterator-members.html</loc>
   </url>
   <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1ip__any__summarize__iterator.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1ip__any__summarize__iterator-members.html</loc>
+  </url>
+  <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1ip__exclude__network__iterator.html</loc>
   </url>
   <url>
@@ -270,6 +300,12 @@
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1ip__reverse__iterator-members.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1ip__summarize__iterator.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1ip__summarize__iterator-members.html</loc>
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1ipv4__address__base.html</loc>
@@ -332,6 +368,12 @@
     <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1subnets__sequence-members.html</loc>
   </url>
   <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1summarize__sequence.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1summarize__sequence-members.html</loc>
+  </url>
+  <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/classipaddress_1_1uint128__t.html</loc>
   </url>
   <url>
@@ -384,6 +426,12 @@
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/namespacemembers.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/namespacemembers.html</loc>
+  </url>
+  <url>
+    <loc>https://vladimirshaleev.github.io/ipaddress/namespacemembers_func.html</loc>
   </url>
   <url>
     <loc>https://vladimirshaleev.github.io/ipaddress/namespacemembers_func.html</loc>

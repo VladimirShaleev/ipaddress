@@ -12,6 +12,8 @@ var errors_8hpp =
       [ "has_host_bits_set", "errors_8hpp.html#a88a76ee847c844cc47b94caac600689dacc88bd2276818f5831768af64bf979c2", null ],
       [ "only_one_slash_permitted", "errors_8hpp.html#a88a76ee847c844cc47b94caac600689dade2be6b66bbe04586587ced567e9ce9c", null ],
       [ "string_is_too_long", "errors_8hpp.html#a88a76ee847c844cc47b94caac600689da2c71c9a3b159d3b65b5de62d0574f6ee", null ],
+      [ "unexpected_symbol", "errors_8hpp.html#a88a76ee847c844cc47b94caac600689da16be2b382276049a300d4a34fa77df9c", null ],
+      [ "wrong_encoding_sequence", "errors_8hpp.html#a88a76ee847c844cc47b94caac600689da487b22b520c6961ac3ec30cb755e3068", null ],
       [ "empty_octet", "errors_8hpp.html#a88a76ee847c844cc47b94caac600689da75b745a738d07373e8d61d7417fe5d8f", null ],
       [ "expected_4_octets", "errors_8hpp.html#a88a76ee847c844cc47b94caac600689daef9982bb6f794f6d20d3a390be58ad72", null ],
       [ "leading_0_are_not_permitted", "errors_8hpp.html#a88a76ee847c844cc47b94caac600689da4a6e1e5e372f05f3be01e16d0af4414a", null ],
@@ -35,8 +37,7 @@ var errors_8hpp =
       [ "new_prefix_must_be_longer", "errors_8hpp.html#a88a76ee847c844cc47b94caac600689dabfb471bc18a0a6a9d1bad370acb68794", null ],
       [ "cannot_set_prefixlen_diff_and_new_prefix", "errors_8hpp.html#a88a76ee847c844cc47b94caac600689da04b003d0c2f566d949a16c0d95caecdb", null ],
       [ "not_contained_network", "errors_8hpp.html#a88a76ee847c844cc47b94caac600689da35bc33b7007d4d326726e135148c3dc5", null ],
-      [ "unexpected_symbol", "errors_8hpp.html#a88a76ee847c844cc47b94caac600689da16be2b382276049a300d4a34fa77df9c", null ],
-      [ "wrong_encoding_sequence", "errors_8hpp.html#a88a76ee847c844cc47b94caac600689da487b22b520c6961ac3ec30cb755e3068", null ]
+      [ "last_address_must_be_greater_than_first", "errors_8hpp.html#a88a76ee847c844cc47b94caac600689da0955bed0f6946fd21f2f0af0189d4a6e", null ]
     ] ],
     [ "raise_error", "errors_8hpp.html#a66a9b2b6d984adbbdf712917e818fc4c", null ]
 ];
