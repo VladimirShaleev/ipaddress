@@ -244,7 +244,7 @@ Use package managers</h3>
 Conan</h4>
 <p>Add <b>ipaddress</b> dependency to <code>conanfile.txt</code>:</p>
 <div class="fragment"><div class="line">[requires]</div>
-<div class="line">ipaddress/1.1.0</div>
+<div class="line">ipaddress/1.2.0</div>
 </div><!-- fragment --><p>More information and installation options can be found here <a href="https://conan.io/center/recipes/ipaddress">https://conan.io/center/recipes/ipaddress</a></p>
 <h4><a class="anchor" id="vcpkg"></a>
 Vcpkg</h4>
@@ -294,7 +294,7 @@ Use CMake FetchContent</h3>
 <div class="line">FetchContent_Declare(</div>
 <div class="line">  ipaddress</div>
 <div class="line">  GIT_REPOSITORY https://github.com/VladimirShaleev/ipaddress</div>
-<div class="line">  GIT_TAG v1.1.0</div>
+<div class="line">  GIT_TAG v1.2.0</div>
 <div class="line">)</div>
 <div class="line">FetchContent_MakeAvailable(ipaddress)</div>
 <div class="line"> </div>
@@ -311,7 +311,7 @@ Quick Start</h2>
 <div class="line"> </div>
 <div class="line"><span class="keyword">using namespace </span><a class="code hl_namespace" href="namespaceipaddress.html">ipaddress</a>;</div>
 <div class="line"> </div>
-<div class="line"><span class="keywordtype">void</span> parse_ip_sample() {</div>
+<div class="line"><span class="keywordtype">void</span> parse_sample() {</div>
 <div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip = ipv6_address::parse(<span class="stringliteral">&quot;fec0::1ff:fe23:4567:890a%eth2&quot;</span>);</div>
 <div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> is_site_local = ip.is_site_local();</div>
 <div class="line"> </div>
@@ -320,10 +320,10 @@ Quick Start</h2>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> teredo_sample() {</div>
-<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> teredo_ip = <span class="stringliteral">&quot;2001:0000:4136:e378:8000:63bf:3fff:fdd2&quot;</span>_ipv6;</div>
-<div class="line">    <span class="keyword">auto</span> [server, client] = teredo_ip.teredo().value();</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> ip = <span class="stringliteral">&quot;2001:0000:4136:e378:8000:63bf:3fff:fdd2&quot;</span>_ipv6;</div>
+<div class="line">    <span class="keyword">auto</span> [server, client] = ip.teredo().value();</div>
 <div class="line"> </div>
-<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;server: &quot;</span> &lt;&lt; server &lt;&lt; <span class="stringliteral">&quot; and client: &quot;</span> &lt;&lt; client &lt;&lt; <span class="stringliteral">&quot; for &quot;</span> &lt;&lt; teredo_ip &lt;&lt; std::endl &lt;&lt; std::endl;</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;server: &quot;</span> &lt;&lt; server &lt;&lt; <span class="stringliteral">&quot; and client: &quot;</span> &lt;&lt; client &lt;&lt; <span class="stringliteral">&quot; for &quot;</span> &lt;&lt; ip &lt;&lt; std::endl &lt;&lt; std::endl;</div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">void</span> subnets_sample() {</div>
@@ -339,7 +339,7 @@ Quick Start</h2>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="keywordtype">int</span> main() {</div>
-<div class="line">    parse_ip_sample();</div>
+<div class="line">    parse_sample();</div>
 <div class="line">    teredo_sample();</div>
 <div class="line">    subnets_sample();</div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
