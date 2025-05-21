@@ -2,8 +2,7 @@ name: Publish to Launchpad PPA
 
 on:
   push:
-    tags:
-      - v*
+    branches: [ "main" ]
 
 jobs:
   deploy:
@@ -16,12 +15,12 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y devscripts debhelper
-     
+
       - name: Set build output dir
         id: strings
         shell: bash
         run: |
-          TAG=${{ github.ref_name }}
+          TAG=v1.2.0
           echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
           echo "version=${TAG#v}" >> "$GITHUB_OUTPUT"
 
@@ -61,7 +60,7 @@ jobs:
           echo 9 >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/compat
           echo "3.0 (quilt)" >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/source/format
           printf "Source: ipaddress\nSection: devel\nPriority: optional\nMaintainer: Vladimir Shaleev <vladimirshaleev@gmail.com>\nStandards-Version: 4.5.0\nBuild-Depends: debhelper (>= 9)\n\nPackage: libipaddress-dev\nDepends: \${misc:Depends}\nArchitecture: all\nHomepage: https://github.com/VladimirShaleev/ipaddress\nDescription: A library for working and manipulating IPv4/IPv6 addresses and networks\n\n" >  ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/control
-          printf "usr/include/ipaddress/*.hpp\nusr/share/cmake/ipaddress/*.cmake\nusr/share/pkgconfig/ipaddress.pc\n" > ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/libipaddress-dev.install
+          printf "usr/include/ipaddress/*.hpp\nusr/share/cmake/ipaddress/*.cmake\nusr/share/cmake/ipaddress/ipaddress.natvis\nusr/share/pkgconfig/ipaddress.pc\n" > ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/libipaddress-dev.install
           printf "Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
           Upstream-Name: ipaddress
           Upstream-Contact: Vladimir Shaleev <vladimirshaleev@gmail.com>
@@ -72,7 +71,7 @@ jobs:
           License: MIT
            MIT License
            
-           Copyright (c) %d Vladimir Shaleev
+           Copyright (c) 2024-%d Vladimir Shaleev
            
            Permission is hereby granted, free of charge, to any person obtaining a copy
            of this software and associated documentation files (the \"Software\"), to deal
@@ -178,23 +177,6 @@ jobs:
           debsign -p'gpg --passphrase ${{ secrets.LAUNCHPAD_PASSWORD }} --batch --pinentry-mode loopback' -S -k$PUBLIC_KEY ipaddress_${{ steps.strings.outputs.version }}-${PPA_BUILD}~jammy1_source.changes
           dput ppa:vladimirshaleev/ipaddress ipaddress_${{ steps.strings.outputs.version }}-${PPA_BUILD}~jammy1_source.changes
 
-      - name: Debuild, Sign and Publish (mantic)
-        env:
-          PPA_BUILD: ${{ vars.PPA_BUILD }}
-          PUBLIC_KEY: ${{ vars.PUBLIC_KEY }}
-          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-        run: |
-          printf "ipaddress (${{ steps.strings.outputs.version }}-${PPA_BUILD}~mantic1) mantic; urgency=low\n\n  * Release ${{ steps.strings.outputs.version }}\n\n -- Vladimir Shaleev <vladimirshaleev@gmail.com>  " > ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
-          date +"%a, %d %b %Y %H:%M:%S %z" >> ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
-          cd ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}
-          EDITOR=/bin/true dpkg-source -q --commit . changes
-          debuild -S -sa -us -uc
-          cd ${{ steps.strings.outputs.build-output-dir }}/ppa
-          export GPG_TTY=$(tty)
-          echo -n "$PRIVATE_KEY" | base64 --decode | gpg --batch --import
-          debsign -p'gpg --passphrase ${{ secrets.LAUNCHPAD_PASSWORD }} --batch --pinentry-mode loopback' -S -k$PUBLIC_KEY ipaddress_${{ steps.strings.outputs.version }}-${PPA_BUILD}~mantic1_source.changes
-          dput ppa:vladimirshaleev/ipaddress ipaddress_${{ steps.strings.outputs.version }}-${PPA_BUILD}~mantic1_source.changes
-
       - name: Debuild, Sign and Publish (noble)
         env:
           PPA_BUILD: ${{ vars.PPA_BUILD }}
@@ -211,3 +193,37 @@ jobs:
           echo -n "$PRIVATE_KEY" | base64 --decode | gpg --batch --import
           debsign -p'gpg --passphrase ${{ secrets.LAUNCHPAD_PASSWORD }} --batch --pinentry-mode loopback' -S -k$PUBLIC_KEY ipaddress_${{ steps.strings.outputs.version }}-${PPA_BUILD}~noble1_source.changes
           dput ppa:vladimirshaleev/ipaddress ipaddress_${{ steps.strings.outputs.version }}-${PPA_BUILD}~noble1_source.changes
+
+      - name: Debuild, Sign and Publish (oracular)
+        env:
+          PPA_BUILD: ${{ vars.PPA_BUILD }}
+          PUBLIC_KEY: ${{ vars.PUBLIC_KEY }}
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+        run: |
+          printf "ipaddress (${{ steps.strings.outputs.version }}-${PPA_BUILD}~oracular1) oracular; urgency=low\n\n  * Release ${{ steps.strings.outputs.version }}\n\n -- Vladimir Shaleev <vladimirshaleev@gmail.com>  " > ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
+          date +"%a, %d %b %Y %H:%M:%S %z" >> ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
+          cd ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}
+          EDITOR=/bin/true dpkg-source -q --commit . changes
+          debuild -S -sa -us -uc
+          cd ${{ steps.strings.outputs.build-output-dir }}/ppa
+          export GPG_TTY=$(tty)
+          echo -n "$PRIVATE_KEY" | base64 --decode | gpg --batch --import
+          debsign -p'gpg --passphrase ${{ secrets.LAUNCHPAD_PASSWORD }} --batch --pinentry-mode loopback' -S -k$PUBLIC_KEY ipaddress_${{ steps.strings.outputs.version }}-${PPA_BUILD}~oracular1_source.changes
+          dput ppa:vladimirshaleev/ipaddress ipaddress_${{ steps.strings.outputs.version }}-${PPA_BUILD}~oracular1_source.changes
+
+      - name: Debuild, Sign and Publish (plucky)
+        env:
+          PPA_BUILD: ${{ vars.PPA_BUILD }}
+          PUBLIC_KEY: ${{ vars.PUBLIC_KEY }}
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+        run: |
+          printf "ipaddress (${{ steps.strings.outputs.version }}-${PPA_BUILD}~plucky1) plucky; urgency=low\n\n  * Release ${{ steps.strings.outputs.version }}\n\n -- Vladimir Shaleev <vladimirshaleev@gmail.com>  " > ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
+          date +"%a, %d %b %Y %H:%M:%S %z" >> ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}/debian/changelog
+          cd ${{ steps.strings.outputs.build-output-dir }}/ppa/ipaddress-${{ steps.strings.outputs.version }}
+          EDITOR=/bin/true dpkg-source -q --commit . changes
+          debuild -S -sa -us -uc
+          cd ${{ steps.strings.outputs.build-output-dir }}/ppa
+          export GPG_TTY=$(tty)
+          echo -n "$PRIVATE_KEY" | base64 --decode | gpg --batch --import
+          debsign -p'gpg --passphrase ${{ secrets.LAUNCHPAD_PASSWORD }} --batch --pinentry-mode loopback' -S -k$PUBLIC_KEY ipaddress_${{ steps.strings.outputs.version }}-${PPA_BUILD}~plucky1_source.changes
+          dput ppa:vladimirshaleev/ipaddress ipaddress_${{ steps.strings.outputs.version }}-${PPA_BUILD}~plucky1_source.changes
