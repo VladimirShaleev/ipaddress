@@ -2,7 +2,8 @@ name: Publish to Launchpad PPA
 
 on:
   push:
-    branches: [ "main" ]
+    tags:
+      - v*
 
 jobs:
   deploy:
@@ -20,7 +21,7 @@ jobs:
         id: strings
         shell: bash
         run: |
-          TAG=v1.2.0
+          TAG=${{ github.ref_name }}
           echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
           echo "version=${TAG#v}" >> "$GITHUB_OUTPUT"
 

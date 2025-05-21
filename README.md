@@ -42,7 +42,7 @@ Add **ipaddress** dependency to `conanfile.txt`:
 
 ```ini
 [requires]
-ipaddress/1.1.0
+ipaddress/1.2.0
 ```
 
 More information and installation options can be found here https://conan.io/center/recipes/ipaddress
@@ -118,7 +118,7 @@ include(FetchContent)
 FetchContent_Declare(
   ipaddress
   GIT_REPOSITORY https://github.com/VladimirShaleev/ipaddress
-  GIT_TAG v1.1.0
+  GIT_TAG v1.2.0
 )
 FetchContent_MakeAvailable(ipaddress)
 
@@ -144,7 +144,7 @@ Here is an example demonstrating some of the library's features (this example ca
 
 using namespace ipaddress;
 
-void parse_ip_sample() {
+void parse_sample() {
     constexpr auto ip = ipv6_address::parse("fec0::1ff:fe23:4567:890a%eth2");
     constexpr auto is_site_local = ip.is_site_local();
 
@@ -153,10 +153,10 @@ void parse_ip_sample() {
 }
 
 void teredo_sample() {
-    constexpr auto teredo_ip = "2001:0000:4136:e378:8000:63bf:3fff:fdd2"_ipv6;
-    auto [server, client] = teredo_ip.teredo().value();
+    constexpr auto ip = "2001:0000:4136:e378:8000:63bf:3fff:fdd2"_ipv6;
+    auto [server, client] = ip.teredo().value();
 
-    std::cout << "server: " << server << " and client: " << client << " for " << teredo_ip << std::endl << std::endl;
+    std::cout << "server: " << server << " and client: " << client << " for " << ip << std::endl << std::endl;
 }
 
 void subnets_sample() {
@@ -172,7 +172,7 @@ void subnets_sample() {
 }
 
 int main() {
-    parse_ip_sample();
+    parse_sample();
     teredo_sample();
     subnets_sample();
     return 0;
