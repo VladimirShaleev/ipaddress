@@ -269,7 +269,7 @@ Ubuntu PPA</h4>
 <div class="line">find_package(ipaddress CONFIG REQUIRED)</div>
 <div class="line"> </div>
 <div class="line">add_executable(my_project main.cpp)</div>
-<div class="line">target_link_libraries(my_project ipaddress::ipaddress) # add the library to your target</div>
+<div class="line">target_link_libraries(my_project PRIVATE ipaddress::ipaddress) # add the library to your target</div>
 </div><!-- fragment --><h3><a class="anchor" id="submodule"></a>
 Use as a Submodule with CMake</h3>
 <p>Go to your project directory and add a submodule:</p>
@@ -283,7 +283,7 @@ Use as a Submodule with CMake</h3>
 <div class="line">add_subdirectory(third-party/ipaddress)</div>
 <div class="line"> </div>
 <div class="line">add_executable(my_project main.cpp)</div>
-<div class="line">target_link_libraries(my_project ipaddress::ipaddress) # add the library to your target</div>
+<div class="line">target_link_libraries(my_project PRIVATE ipaddress::ipaddress) # add the library to your target</div>
 </div><!-- fragment --><h3><a class="anchor" id="fetch-content"></a>
 Use CMake FetchContent</h3>
 <div class="fragment"><div class="line">cmake_minimum_required(VERSION 3.10.0)</div>
@@ -299,7 +299,7 @@ Use CMake FetchContent</h3>
 <div class="line">FetchContent_MakeAvailable(ipaddress)</div>
 <div class="line"> </div>
 <div class="line">add_executable(my_project main.cpp)</div>
-<div class="line">target_link_libraries(my_project ipaddress::ipaddress) # add the library to your target</div>
+<div class="line">target_link_libraries(my_project PRIVATE ipaddress::ipaddress) # add the library to your target</div>
 </div><!-- fragment --><h2><a class="anchor" id="quick-start"></a>
 Quick Start</h2>
 <p>The library provides capabilities for creating, analyzing and managing IPv4 and IPv6 addresses and networks using classes such as <b>ipv4_address</b>, <b>ipv6_address</b>, <b>ip_address</b> (any IP version), <b>ipv4_network</b>, <b>ipv6_network</b> and <b>ip_network</b> (any IP version). It also offers error handling methods with or without exceptions if for some reason exceptions are not used or disabled in your project.</p>

@@ -166,17 +166,6 @@ $(function(){initNavTree('benchmark.html',''); initResizable(true); });
     <ul>
       <li class="level2">
         <a href="#comparison-tables">Comparison tables</a>
-        <ul>
-          <li class="level3">
-            <a href="#linux">Linux (Ubuntu 20.04)</a>
-          </li>
-          <li class="level3">
-            <a href="#macos">MacOS</a>
-          </li>
-          <li class="level3">
-            <a href="#windows">Windows</a>
-          </li>
-        </ul>
       </li>
     </ul>
   </li>
@@ -188,35 +177,21 @@ Comparison tables</h2>
 <p> 
 
 <style type="text/css">
-  .details_class > summary:first-of-type {
-    list-style: inside disclosure-closed;
+
+@media screen and (min-width: 1193px) {
+  .custom_full_width_table table:not(.memberdecls):not(.mlabels):not(.fieldtable):not(.memname) {
+      display: block;
   }
-  .details_class[open] > summary:first-of-type {
-    list-style: inside disclosure-open;
+  .custom_full_width_table table:not(.memberdecls):not(.mlabels):not(.fieldtable):not(.memname) tbody {
+      display: table;
+      width: 100%;
   }
-  .details_class > summary::before {
-    content: none;
-  }
-  .details_class[open] > summary::before {
-    content: none;
-  }
+}
 </style>
 
 </p>
-<h3><a class="anchor" id="linux"></a>
-Linux (Ubuntu 20.04)</h3>
-<details  class="details_class" open="true">
-<summary >
-<b> Table </b></summary>
-<p></p>
-<dl class="section note"><dt>Note</dt><dd>Run on (16 X 3110 MHz CPU s) <br  />
- CPU Caches: <br  />
- &#160;&#160;&#160;&#160;L1 Data 48 KiB (x8) <br  />
- &#160;&#160;&#160;&#160;L1 Instruction 32 KiB (x8) <br  />
- &#160;&#160;&#160;&#160;L2 Unified 1280 KiB (x8) <br  />
- &#160;&#160;&#160;&#160;L3 Unified 18432 KiB (x1) <br  />
- Load Average: 2.22, 2.16, 1.02</dd></dl>
-<table class="markdownTable">
+<div class="tabbed"></div><div class="tabbed"><ul>
+<li><b class="tab-title">Linux (Ubuntu 20.04)</b> <div class="custom_full_width_table"> <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadLeft">input string   </th><th class="markdownTableHeadRight">ipaddress   </th><th class="markdownTableHeadRight">socket API   </th><th class="markdownTableHeadRight">boost asio    </th></tr>
 <tr class="markdownTableRowOdd">
@@ -252,22 +227,15 @@ Linux (Ubuntu 20.04)</h3>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyLeft"><code>fe80::1ff:fe23:4567:890a%31</code>   </td><td class="markdownTableBodyRight">69.5 ns   </td><td class="markdownTableBodyRight">-   </td><td class="markdownTableBodyRight">1115 ns   </td></tr>
 </table>
-<p></p>
-</details>
-<h3><a class="anchor" id="macos"></a>
-MacOS</h3>
-<details  class="details_class">
-<summary >
-<b> Table </b></summary>
-<p></p>
-<dl class="section note"><dt>Note</dt><dd>Run on (8 X 2000 MHz CPU s) <br  />
+</div> <dl class="section note"><dt>Note</dt><dd>Run on (16 X 3110 MHz CPU s) <br  />
  CPU Caches: <br  />
- &#160;&#160;&#160;&#160;L1 Data 48 KiB <br  />
- &#160;&#160;&#160;&#160;L1 Instruction 32 KiB <br  />
- &#160;&#160;&#160;&#160;L2 Unified 512 KiB (x4) <br  />
- &#160;&#160;&#160;&#160;L3 Unified 6144 KiB <br  />
- Load Average: 2.70, 4.59, 7.36</dd></dl>
-<table class="markdownTable">
+ &#160;&#160;&#160;&#160;L1 Data 48 KiB (x8) <br  />
+ &#160;&#160;&#160;&#160;L1 Instruction 32 KiB (x8) <br  />
+ &#160;&#160;&#160;&#160;L2 Unified 1280 KiB (x8) <br  />
+ &#160;&#160;&#160;&#160;L3 Unified 18432 KiB (x1) <br  />
+ Load Average: 2.22, 2.16, 1.02</dd></dl>
+</li>
+<li><b class="tab-title">macOS</b> <div class="custom_full_width_table"> <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadLeft">input string   </th><th class="markdownTableHeadRight">ipaddress   </th><th class="markdownTableHeadRight">socket API   </th><th class="markdownTableHeadRight">boost asio    </th></tr>
 <tr class="markdownTableRowOdd">
@@ -303,21 +271,15 @@ MacOS</h3>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyLeft"><code>fe80::1ff:fe23:4567:890a%31</code>   </td><td class="markdownTableBodyRight">118 ns   </td><td class="markdownTableBodyRight">40403 ns   </td><td class="markdownTableBodyRight">41033 ns   </td></tr>
 </table>
-<p></p>
-</details>
-<h3><a class="anchor" id="windows"></a>
-Windows</h3>
-<details  class="details_class">
-<summary >
-<b> Table </b></summary>
-<p></p>
-<dl class="section note"><dt>Note</dt><dd>Run on (16 X 3110 MHz CPU s) <br  />
+<dl class="section note"><dt>Note</dt><dd>Run on (8 X 2000 MHz CPU s) <br  />
  CPU Caches: <br  />
- &#160;&#160;&#160;&#160;L1 Data 48 KiB (x8) <br  />
- &#160;&#160;&#160;&#160;L1 Instruction 32 KiB (x8) <br  />
- &#160;&#160;&#160;&#160;L2 Unified 1280 KiB (x8) <br  />
- &#160;&#160;&#160;&#160;L3 Unified 18432 KiB (x1)</dd></dl>
-<table class="markdownTable">
+ &#160;&#160;&#160;&#160;L1 Data 48 KiB <br  />
+ &#160;&#160;&#160;&#160;L1 Instruction 32 KiB <br  />
+ &#160;&#160;&#160;&#160;L2 Unified 512 KiB (x4) <br  />
+ &#160;&#160;&#160;&#160;L3 Unified 6144 KiB <br  />
+ Load Average: 2.70, 4.59, 7.36 </dd></dl>
+</div></li>
+<li><div class="custom_full_width_table"><b class="tab-title">Windows</b> <div class="custom_full_width_table"> <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadLeft">input string   </th><th class="markdownTableHeadRight">ipaddress   </th><th class="markdownTableHeadRight">socket API   </th><th class="markdownTableHeadRight">boost asio    </th></tr>
 <tr class="markdownTableRowOdd">
@@ -353,9 +315,15 @@ Windows</h3>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyLeft"><code>fe80::1ff:fe23:4567:890a%31</code>   </td><td class="markdownTableBodyRight">69.6 ns   </td><td class="markdownTableBodyRight">-   </td><td class="markdownTableBodyRight">367 ns   </td></tr>
 </table>
-<p></p>
-</details>
-<p> 
+<dl class="section note"><dt>Note</dt><dd>Run on (16 X 3110 MHz CPU s) <br  />
+ CPU Caches: <br  />
+ &#160;&#160;&#160;&#160;L1 Data 48 KiB (x8) <br  />
+ &#160;&#160;&#160;&#160;L1 Instruction 32 KiB (x8) <br  />
+ &#160;&#160;&#160;&#160;L2 Unified 1280 KiB (x8) <br  />
+ &#160;&#160;&#160;&#160;L3 Unified 18432 KiB (x1) </dd></dl>
+</div></div></li>
+</ul>
+</div><div class="tabbed"><div class="custom_full_width_table"> 
 
 <div class="cards">
 
@@ -381,8 +349,7 @@ Windows</h3>
 
 </div>
 
- </p>
-</div></div><!-- contents -->
+ </div></div></div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.12.0-->

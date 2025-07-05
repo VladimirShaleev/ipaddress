@@ -222,7 +222,7 @@ IP addresses</h2>
 <p>For working with IP addresses, the library provides three classes:</p>
 <ul>
 <li><b>ipv4_address</b> — A class for working with IPv4 addresses, where the instance size is always 4 bytes.</li>
-<li><b>ipv6_address</b> — A class for working with IPv6 addresses, where the instance size includes both the space allocated for the IPv6 address itself and the scope id (zone index). As a result, the instance size will be 16 bytes plus the maximum length of the scope id (plus aligned bytes if any). Read about scope ids below.</li>
+<li><b>ipv6_address</b> — A class for working with IPv6 addresses, where the instance size includes both the space allocated for the IPv6 address itself and the scope id (zone index). As a result, the instance size will be 16 bytes plus the maximum length of the scope id (plus aligned bytes if any). Read about <a class="el" href="#scope-id">scope ids below</a>.</li>
 <li><b>ip_address</b> — Combines the <code>ipv4_address</code> and <code>ipv6_address</code> classes via a union. This ensures version-independent IP address manipulation. It has implicit constructors for converting from <code>ipv4_address</code> and <code>ipv6_address</code>. The instance size is the same as that of <code>ipv6_address</code> plus IP address version (and data alignment).</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>Regardless of which class you use, the internal address is stored as an array of bytes, not as an unsigned integer. This design choice ensures that the address is stored in network byte order (big-endian) regardless of the platform. This is convenient because ultimately, this address can be used in sockets or similar libraries that require passing addresses in network byte order. </dd></dl>
@@ -274,8 +274,9 @@ Parsing ip strings</h3>
 <div class="line">}</div>
 <div class="ttc" id="aipaddress_8hpp_html"><div class="ttname"><a href="ipaddress_8hpp.html">ipaddress.hpp</a></div><div class="ttdoc">The main include file for the ipaddress library.</div></div>
 <div class="ttc" id="anamespaceipaddress_html"><div class="ttname"><a href="namespaceipaddress.html">ipaddress</a></div><div class="ttdoc">Namespace dedicated to IP addresses and networks operations.</div><div class="ttdef"><b>Definition</b> base-v4.hpp:18</div></div>
-</div><!-- fragment --><dl class="section remark"><dt>Remarks</dt><dd>For compile-time computations, the <b>ipaddress</b> library uses relaxed <code>constexpr</code>, which was introduced only in C++14. Therefore, for C++11, the <b>ipaddress</b> library does not support constant expressions. It is recommended to use the C++14 language standard or newer versions.</dd></dl>
-<p>Access to specific versions of IP addresses for ip_address is demonstrated below.</p>
+</div><!-- fragment --><dl class="section remark"><dt>Remarks</dt><dd>For compile-time computations, the <b>ipaddress</b> library uses <b>relaxed</b> <code>constexpr</code>, which was introduced only in C++14. Therefore, for C++11, the <b>ipaddress</b> library does not support constant expressions. It is recommended to use the C++14 language standard or newer versions. </dd></dl>
+<dl class="section remark"><dt>Remarks</dt><dd>The library also supports working with Unicode C++ strings such as <b>UTF-8</b>, <b>UTF-16</b>, <b>UTF-32</b> and <b>wide-char</b> (<code>char8_t</code>, <code>char16_t</code>, <code>char32_t</code> and <code>wchar_t</code>). For strings with a base type of <code>char</code>, it is assumed that the input string consists of an <b>ASCII</b> character sequence and is not encoded with any encoding. If your application uses the Unicode encoding <b>UTF-8</b> for incoming strings with a base type of <code>char</code>, you can define the macro <code>IPADDRESS_CHAR_IS_UTF8</code>. In this case, all incoming strings with a base type of <code>char</code> will be interpreted as <b>UTF-8</b> encoding. </dd></dl>
+<p>Access to specific versions of IP addresses for <b>ip_address</b> is demonstrated below.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="ipaddress_8hpp.html">ipaddress/ipaddress.hpp</a>&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">using namespace </span><a class="code hl_namespace" href="namespaceipaddress.html">ipaddress</a>;</div>
@@ -316,8 +317,7 @@ Parsing ip strings</h3>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
-</div><!-- fragment --><dl class="section remark"><dt>Remarks</dt><dd>The library also supports working with Unicode C++ strings such as <b>UTF-8</b>, <b>UTF-16</b>, <b>UTF-32</b> and <b>wide-char</b> (<code>char8_t</code>, <code>char16_t</code>, <code>char32_t</code> and <code>wchar_t</code>). For strings with a base type of <code>char</code>, it is assumed that the input string consists of an <b>ASCII</b> character sequence and is not encoded with any encoding. If your application uses the Unicode encoding <b>UTF-8</b> for incoming strings with a base type of <code>char</code>, you can define the macro <code>IPADDRESS_CHAR_IS_UTF8</code>. In this case, all incoming strings with a base type of <code>char</code> will be interpreted as <b>UTF-8</b> encoding. Despite the support for Unicode, it's important to note that for successful parsing of IP addresses, the incoming string must contain valid symbols for IP addresses.</dd></dl>
-<h3><a class="anchor" id="uint-cast"></a>
+</div><!-- fragment --><h3><a class="anchor" id="uint-cast"></a>
 From uint/To uint</h3>
 <p>Below is code demonstrating how to create IP addresses from unsigned integers and convert them back to unsigned integers.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="ipaddress_8hpp.html">ipaddress/ipaddress.hpp</a>&gt;</span></div>
@@ -404,7 +404,7 @@ Working with bytes</h3>
 <div class="ttc" id="aclassipaddress_1_1ip__address__base_html_a1be7cee0334a10989321732568ff4e23"><div class="ttname"><a href="classipaddress_1_1ip__address__base.html#a1be7cee0334a10989321732568ff4e23">ipaddress::ip_address_base&lt; ipv6_address_base &gt;::base_type</a></div><div class="ttdeci">typename ipv6_address_base::base_type base_type</div><div class="ttdef"><b>Definition</b> ip-address-base.hpp:58</div></div>
 </div><!-- fragment --><h3><a class="anchor" id="ip-compare"></a>
 Comparison</h3>
-<p>For classes for working with IP addresses, comparison operators and spaceship operator (for C++20 and newer) have been redefined.</p>
+<p>The IP address classes have custom comparison operators, including support for the spaceship operator (<code>&lt;=&gt;</code>) in C++20 and later.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="ipaddress_8hpp.html">ipaddress/ipaddress.hpp</a>&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">using namespace </span><a class="code hl_namespace" href="namespaceipaddress.html">ipaddress</a>;</div>
@@ -491,9 +491,9 @@ IP networks</h2>
 <ul>
 <li><b>ipv4_network</b> — A class for working with IPv4 networks.</li>
 <li><b>ipv6_network</b> — A class for working with IPv6 networks.</li>
-<li><b>ip_network</b> — Combines the <code>ipv4_network</code> and <code>ipv6_network</code> classes via a union. This ensures version-independent IP address manipulation. It has implicit constructors for converting from <code>ipv4_network</code> and <code>ipv6_network</code>. The instance size is the same as that of <code>ipv6_network</code>.</li>
+<li><b>ip_network</b> — Combines the <code>ipv4_network</code> and <code>ipv6_network</code> classes via a union. This ensures version-independent IP address manipulation. It has implicit constructors for converting from <code>ipv4_network</code> and <code>ipv6_network</code>. The instance size is the same as that of <code>ipv6_network</code> plus IP address version (and data alignment).</li>
 </ul>
-<p>Networks store two IP addresses (network address and netmask), as well as the prefix length. This means that the size of a network instance will be <code>2 * sizeof(&lt;ip_type&gt;) + sizeof(size_t)</code>.</p>
+<p>Networks store two IP addresses (network address and netmask) and a prefix length. This means that the network instance size for <b>ipv4_network</b> and <b>ipv6_network</b> is calculated as <code>2 * sizeof(&lt;ip_type&gt;) + sizeof(size_t)</code>.</p>
 <p>Working with networks is similar to working with addresses. So let's get straight to the examples.</p>
 <h3><a class="anchor" id="network-parsing"></a>
 Parsing ip network strings</h3>
@@ -592,7 +592,7 @@ Create from address</h3>
 <div class="ttc" id="aclassipaddress_1_1ip__network_html"><div class="ttname"><a href="classipaddress_1_1ip__network.html">ipaddress::ip_network</a></div><div class="ttdoc">A class that encapsulates both IPv4 and IPv6 network functionalities.</div><div class="ttdef"><b>Definition</b> ip-any-network.hpp:67</div></div>
 </div><!-- fragment --><h3><a class="anchor" id="network-compare"></a>
 Comparison</h3>
-<p>For classes for working with IP networks, comparison operators and spaceship operator (for C++20 and newer) have been redefined.</p>
+<p>The IP networks classes have custom comparison operators, including support for the spaceship operator (<code>&lt;=&gt;</code>) in C++20 and later.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="ipaddress_8hpp.html">ipaddress/ipaddress.hpp</a>&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">using namespace </span><a class="code hl_namespace" href="namespaceipaddress.html">ipaddress</a>;</div>
@@ -667,7 +667,7 @@ Convert to string</h3>
 Scope Id</h2>
 <p>The library supports <b>Scope Id</b> both as numeric values and as strings.</p>
 <p>By default, <b>Scope Id</b> are enabled, and their maximum size is 16 characters (defined by <code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH</code> during compilation). Yes, the <b>scope id</b> is internally represented as a fixed-size array, and its maximum size cannot be changed dynamically. This means that you cannot store a <b>scope id</b> longer than <code>IPADDRESS_IPV6_SCOPE_MAX_LENGTH</code>. There are several reasons for this design choice: simplicity in storing <b>scope id</b>, avoiding additional allocations (all data for the IP address will be as local as possible in memory), and enabling working with <b>scope id</b> in a <b>constexpr</b> manner.</p>
-<dl class="section note"><dt>Note</dt><dd>If you are certain that you don't need <b>Scope Id</b>, you can completely disable them to avoid any overhead related to their maintenance. This can be done by defining <code>IPADDRESS_NO_IPV6_SCOPE</code> during compilation. In this case, the instance size of <code>ipv6_address</code> and <code>ip_address</code> will be 16 bytes, and all operations related to retrieving or modifying the <b>scope id</b> will have no effect.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If you are certain that you don't need <b>Scope Id</b>, you can completely disable them to avoid any overhead related to their maintenance. This can be done by defining <code>IPADDRESS_NO_IPV6_SCOPE</code> during compilation. In this case, the instance size of <code>ipv6_address</code> will be 16 bytes, and all operations related to retrieving or modifying the <b>scope id</b> will have no effect.</dd></dl>
 <p>For IP addresses <code>ipv6_address</code> and <code>ip_address</code>, functionality is supported for obtaining and changing scope id.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"> </div>
@@ -687,7 +687,6 @@ Scope Id</h2>
 <div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;scope id for ip1: &quot;</span> &lt;&lt; scope_id.get_string() &lt;&lt; std::endl;</div>
 <div class="line">    }</div>
 <div class="line"> </div>
-<div class="line">    <span class="comment">// If IPv4 is stored in ip_address, then methods for working with the scope id have no effect</span></div>
 <div class="line">    <span class="keyword">auto</span> ip2 = ip_address::parse(<span class="stringliteral">&quot;fe80::1ff:fe23:4567:890a&quot;</span>);</div>
 <div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;has scope id for ip2: &quot;</span> &lt;&lt; std::boolalpha &lt;&lt; (bool) ip2.get_scope_id() &lt;&lt; std::endl;</div>
 <div class="line"> </div>
@@ -702,6 +701,11 @@ Scope Id</h2>
 <div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;scope id for ip2: &quot;</span> &lt;&lt; test_scope_id.get_uint32() &lt;&lt; std::endl;</div>
 <div class="line">    }</div>
 <div class="line"> </div>
+<div class="line">    <span class="comment">// If IPv4 is stored in ip_address, then methods for working with the scope id have no effect</span></div>
+<div class="line">    <span class="keyword">auto</span> ip3 = ip_address::parse(<span class="stringliteral">&quot;127.0.0.1&quot;</span>);</div>
+<div class="line">    ip3.set_scope_id(<span class="stringliteral">&quot;123&quot;</span>);</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;has scope id for ip3: &quot;</span> &lt;&lt; std::boolalpha &lt;&lt; (bool)ip3.get_scope_id() &lt;&lt; std::endl;</div>
+<div class="line">    </div>
 <div class="line">    <span class="keywordflow">return</span> 0;</div>
 <div class="line">}</div>
 </div><!-- fragment --><dl class="section remark"><dt>Remarks</dt><dd>By default, the use of whitespace characters in the scope id is not permitted. If a whitespace character is found in the incoming string within the scope id (for example, <code>fe80::1ff:fe23:4567:890aet h2</code>), an error with the code <code>error_code::invalid_scope_id</code> will be generated. However, if for some reason you need to parse and save spaces in the scope id, you can define the macro <code>IPADDRESS_SCOPE_ID_SUPPORT_SPACES</code>.</dd></dl>

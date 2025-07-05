@@ -1,12 +1,11 @@
 var searchData=
 [
-  ['last_5faddress_5fmust_5fbe_5fgreater_5fthan_5ffirst_0',['last_address_must_be_greater_than_first',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689da0955bed0f6946fd21f2f0af0189d4a6e',1,'ipaddress']]],
-  ['leading_5f0_5fare_5fnot_5fpermitted_1',['leading_0_are_not_permitted',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689da4a6e1e5e372f05f3be01e16d0af4414a',1,'ipaddress']]],
-  ['leading_5fcolon_5fonly_5fpermitted_5fas_5fpart_5fof_5fdouble_5fcolon_2',['leading_colon_only_permitted_as_part_of_double_colon',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689da1f1b12e93a0fb97480a27c1dcff5f515',1,'ipaddress']]],
-  ['least_5f3_5fparts_3',['least_3_parts',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689daee762d060f4b6e9d95cbef49e377a594',1,'ipaddress']]],
-  ['licensing_4',['Licensing',['../index.html#licensing',1,'']]],
-  ['links_5',['Additional links',['../module.html#cpp-module-articles',1,'']]],
-  ['linux_20ubuntu_2020_2004_6',['Linux (Ubuntu 20.04)',['../benchmark.html#linux',1,'']]],
-  ['logic_5ferror_7',['logic_error',['../classipaddress_1_1logic__error.html',1,'logic_error'],['../classipaddress_1_1logic__error.html#af9cb321a672a2c741e1442ec7f0fa131',1,'ipaddress::logic_error::logic_error(error_code code, const FirstArg &amp;arg, const Args &amp;... args)'],['../classipaddress_1_1logic__error.html#a88d4b462fdf573f6fdc4c2c48b371607',1,'ipaddress::logic_error::logic_error(error_code code, const std::string &amp;message)'],['../classipaddress_1_1logic__error.html#ac7c4119ba6540fc13e5b85da29bfaaad',1,'ipaddress::logic_error::logic_error(error_code code, const char *message)']]],
-  ['lower_8',['lower',['../classipaddress_1_1uint128__t.html#a14c0f16a519119e8e89fd6000888cdc2',1,'ipaddress::uint128_t']]]
+  ['make_5ffixed_5fstring_0',['make_fixed_string',['../namespaceipaddress.html#ae53bf066ef8cb4819cf01a905cf0ddf0',1,'ipaddress::make_fixed_string(const T(&amp;data)[N]) noexcept(noexcept(fixed_string&lt; N - 1 &gt;(data)))'],['../namespaceipaddress.html#aaedfc9655c225009a575a5aaeceedf0f',1,'ipaddress::make_fixed_string(const T(&amp;data)[N], error_code &amp;code) noexcept']]],
+  ['managers_1',['Use package managers',['../index.html#use-package-managers',1,'']]],
+  ['max_5fsize_2',['max_size',['../structipaddress_1_1byte__array.html#afb19ff73072244817f9aac33b3fbd2d7',1,'ipaddress::byte_array::max_size()'],['../classipaddress_1_1fixed__vector.html#a082a2cc1767f19eb39686d5bfa96f683',1,'ipaddress::fixed_vector::max_size()']]],
+  ['module_3',['Using the Module',['../module.html#import-module',1,'']]],
+  ['module_20c_2020_20and_20newer_4',['Cpp Module (C++20 and newer)',['../module.html',1,'']]],
+  ['modules_5',['Restrictions on the use of modules',['../module.html#restrictions',1,'']]],
+  ['most_5f8_5fcolons_5fpermitted_6',['most_8_colons_permitted',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689dae7364425650025b6d22e645a4958ab6d',1,'ipaddress']]],
+  ['most_5fone_5fdouble_5fcolon_5fpermitted_7',['most_one_double_colon_permitted',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689da47ba930ba33c850cdeb94bcbba06cc7f',1,'ipaddress']]]
 ];

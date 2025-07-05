@@ -1,12 +1,17 @@
 var searchData=
 [
-  ['macos_0',['MacOS',['../benchmark.html#macos',1,'']]],
-  ['make_5ffixed_5fstring_1',['make_fixed_string',['../namespaceipaddress.html#ae53bf066ef8cb4819cf01a905cf0ddf0',1,'ipaddress::make_fixed_string(const T(&amp;data)[N]) noexcept(noexcept(fixed_string&lt; N - 1 &gt;(data)))'],['../namespaceipaddress.html#aaedfc9655c225009a575a5aaeceedf0f',1,'ipaddress::make_fixed_string(const T(&amp;data)[N], error_code &amp;code) noexcept']]],
-  ['managers_2',['Use package managers',['../index.html#use-package-managers',1,'']]],
-  ['max_5fsize_3',['max_size',['../structipaddress_1_1byte__array.html#afb19ff73072244817f9aac33b3fbd2d7',1,'ipaddress::byte_array::max_size()'],['../classipaddress_1_1fixed__vector.html#a082a2cc1767f19eb39686d5bfa96f683',1,'ipaddress::fixed_vector::max_size()']]],
-  ['module_4',['Using the Module',['../module.html#import-module',1,'']]],
-  ['module_20c_2020_20and_20newer_5',['Cpp Module (C++20 and newer)',['../module.html',1,'']]],
-  ['modules_6',['Restrictions on the use of modules',['../module.html#restrictions',1,'']]],
-  ['most_5f8_5fcolons_5fpermitted_7',['most_8_colons_permitted',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689dae7364425650025b6d22e645a4958ab6d',1,'ipaddress']]],
-  ['most_5fone_5fdouble_5fcolon_5fpermitted_8',['most_one_double_colon_permitted',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689da47ba930ba33c850cdeb94bcbba06cc7f',1,'ipaddress']]]
+  ['netmask_0',['netmask',['../classipaddress_1_1ip__network.html#a359d9dd848ad160c0cda59cd1eebb416',1,'ipaddress::ip_network::netmask()'],['../classipaddress_1_1ip__network__base.html#a7814fc154e2054cc8caea2f97996bc9a',1,'ipaddress::ip_network_base::netmask()']]],
+  ['netmask_5fpattern_5fmixes_5fzeroes_5fand_5fones_1',['netmask_pattern_mixes_zeroes_and_ones',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689dafff488a86b73f1908fc4143f54436f10',1,'ipaddress']]],
+  ['network_2',['Removing one network from another network',['../operations.html#exclude-network',1,'']]],
+  ['network_20addresses_3',['Enumerating network addresses',['../operations.html#enumerate-addresses',1,'']]],
+  ['network_20from_20another_20network_4',['Removing one network from another network',['../operations.html#exclude-network',1,'']]],
+  ['network_20operations_5',['Network Operations',['../operations.html',1,'']]],
+  ['network_20strings_6',['Parsing ip network strings',['../tutorial.html#network-parsing',1,'']]],
+  ['network_5faddress_7',['network_address',['../classipaddress_1_1ip__network.html#a5427d434a57be5e6ec7b3f46fff02851',1,'ipaddress::ip_network::network_address()'],['../classipaddress_1_1ip__network__base.html#aedf7228c6640584542c7f113cda4c73b',1,'ipaddress::ip_network_base::network_address()']]],
+  ['networks_8',['IP networks',['../tutorial.html#ip-networks',1,'']]],
+  ['new_5fprefix_5fmust_5fbe_5flonger_9',['new_prefix_must_be_longer',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689dabfb471bc18a0a6a9d1bad370acb68794',1,'ipaddress']]],
+  ['new_5fprefix_5fmust_5fbe_5fshorter_10',['new_prefix_must_be_shorter',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689da7ddc6d5596873b7ea5bb70a46603c6b1',1,'ipaddress']]],
+  ['newer_11',['Cpp Module (C++20 and newer)',['../module.html',1,'']]],
+  ['no_5ferror_12',['no_error',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689da7fa49f1a086c46bfc9e5f5fe279a82c0',1,'ipaddress']]],
+  ['not_5fcontained_5fnetwork_13',['not_contained_network',['../namespaceipaddress.html#a88a76ee847c844cc47b94caac600689da35bc33b7007d4d326726e135148c3dc5',1,'ipaddress']]]
 ];
