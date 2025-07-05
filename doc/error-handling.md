@@ -27,7 +27,7 @@ int main() {
 }
 ```
 
-That's basically all you need to know about exception handling. The only thing I’ll clarify is that universal classes for addresses and networks (with union IPv4 and IPv6) first attempt to parse for IPv4, and then IPv6, which is why the error will contain information about the non-corect IPv6 (in case of exception).
+That's basically all you need to know about exception handling. The only thing I’ll clarify is that universal classes for addresses and networks (`ip_address` and `ip_network`) first attempt to parse for IPv4, and then IPv6, which is why the error will contain information about the non-corect IPv6 (in case of exception).
 
 ## Handling Error Codes {#error-codes}
 

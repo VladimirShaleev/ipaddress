@@ -7,7 +7,7 @@
 For working with IP addresses, the library provides three classes:
 
 - **ipv4_address** — A class for working with IPv4 addresses, where the instance size is always 4 bytes.
-- **ipv6_address** — A class for working with IPv6 addresses, where the instance size includes both the space allocated for the IPv6 address itself and the scope id (zone index). As a result, the instance size will be 16 bytes plus the maximum length of the scope id (plus aligned bytes if any). Read about scope ids below.
+- **ipv6_address** — A class for working with IPv6 addresses, where the instance size includes both the space allocated for the IPv6 address itself and the scope id (zone index). As a result, the instance size will be 16 bytes plus the maximum length of the scope id (plus aligned bytes if any). Read about [scope ids below](#scope-id).
 - **ip_address** — Combines the `ipv4_address` and `ipv6_address` classes via a union. This ensures version-independent IP address manipulation. It has implicit constructors for converting from `ipv4_address` and `ipv6_address`. The instance size is the same as that of `ipv6_address` plus IP address version (and data alignment).
 
 @parblock
@@ -66,9 +66,15 @@ int main() {
 }
 ```
 
-@remark For compile-time computations, the **ipaddress** library uses relaxed `constexpr`, which was introduced only in C++14. Therefore, for C++11, the **ipaddress** library does not support constant expressions. It is recommended to use the C++14 language standard or newer versions.
+@parblock
+@remark For compile-time computations, the **ipaddress** library uses **relaxed** `constexpr`, which was introduced only in C++14. Therefore, for C++11, the **ipaddress** library does not support constant expressions. It is recommended to use the C++14 language standard or newer versions.
+@endparblock
 
-Access to specific versions of IP addresses for ip_address is demonstrated below.
+@parblock
+@remark The library also supports working with Unicode C++ strings such as **UTF-8**, **UTF-16**, **UTF-32** and **wide-char** (`char8_t`, `char16_t`, `char32_t` and `wchar_t`). For strings with a base type of `char`, it is assumed that the input string consists of an **ASCII** character sequence and is not encoded with any encoding. If your application uses the Unicode encoding **UTF-8** for incoming strings with a base type of `char`, you can define the macro `IPADDRESS_CHAR_IS_UTF8`. In this case, all incoming strings with a base type of `char` will be interpreted as **UTF-8** encoding.
+@endparblock
+
+Access to specific versions of IP addresses for **ip_address** is demonstrated below.
 
 ```cpp
 #include <ipaddress/ipaddress.hpp>
@@ -112,8 +118,6 @@ int main() {
     return 0;
 }
 ```
-
-@remark The library also supports working with Unicode C++ strings such as **UTF-8**, **UTF-16**, **UTF-32** and **wide-char** (`char8_t`, `char16_t`, `char32_t` and `wchar_t`). For strings with a base type of `char`, it is assumed that the input string consists of an **ASCII** character sequence and is not encoded with any encoding. If your application uses the Unicode encoding **UTF-8** for incoming strings with a base type of `char`, you can define the macro `IPADDRESS_CHAR_IS_UTF8`. In this case, all incoming strings with a base type of `char` will be interpreted as **UTF-8** encoding. Despite the support for Unicode, it's important to note that for successful parsing of IP addresses, the incoming string must contain valid symbols for IP addresses.
 
 ### From uint/To uint {#uint-cast}
 
@@ -208,7 +212,7 @@ int main() {
 
 ### Comparison {#ip-compare}
 
-For classes for working with IP addresses, comparison operators and spaceship operator (for C++20 and newer) have been redefined.
+The IP address classes have custom comparison operators, including support for the spaceship operator (`<=>`) in C++20 and later.
 
 ```cpp
 #include <ipaddress/ipaddress.hpp>
@@ -306,9 +310,9 @@ int main() {
 
 - **ipv4_network** — A class for working with IPv4 networks.
 - **ipv6_network** — A class for working with IPv6 networks.
-- **ip_network** — Combines the `ipv4_network` and `ipv6_network` classes via a union. This ensures version-independent IP address manipulation. It has implicit constructors for converting from `ipv4_network` and `ipv6_network`. The instance size is the same as that of `ipv6_network`.
+- **ip_network** — Combines the `ipv4_network` and `ipv6_network` classes via a union. This ensures version-independent IP address manipulation. It has implicit constructors for converting from `ipv4_network` and `ipv6_network`. The instance size is the same as that of `ipv6_network` plus IP address version (and data alignment).
 
-Networks store two IP addresses (network address and netmask), as well as the prefix length. This means that the size of a network instance will be `2 * sizeof(<ip_type>) + sizeof(size_t)`.
+Networks store two IP addresses (network address and netmask) and a prefix length. This means that the network instance size for **ipv4_network** and **ipv6_network** is calculated as `2 * sizeof(<ip_type>) + sizeof(size_t)`.
 
 Working with networks is similar to working with addresses. So let's get straight to the examples.
 
@@ -420,7 +424,7 @@ int main() {
 
 ### Comparison {#network-compare}
 
-For classes for working with IP networks, comparison operators and spaceship operator (for C++20 and newer) have been redefined.
+The IP networks classes have custom comparison operators, including support for the spaceship operator (`<=>`) in C++20 and later.
 
 ```cpp
 #include <ipaddress/ipaddress.hpp>
@@ -510,7 +514,7 @@ The library supports **Scope Id** both as numeric values and as strings.
 
 By default, **Scope Id** are enabled, and their maximum size is 16 characters (defined by `IPADDRESS_IPV6_SCOPE_MAX_LENGTH` during compilation). Yes, the **scope id** is internally represented as a fixed-size array, and its maximum size cannot be changed dynamically. This means that you cannot store a **scope id** longer than `IPADDRESS_IPV6_SCOPE_MAX_LENGTH`. There are several reasons for this design choice: simplicity in storing **scope id**, avoiding additional allocations (all data for the IP address will be as local as possible in memory), and enabling working with **scope id** in a **constexpr** manner.
 
-@note If you are certain that you don't need **Scope Id**, you can completely disable them to avoid any overhead related to their maintenance. This can be done by defining `IPADDRESS_NO_IPV6_SCOPE` during compilation. In this case, the instance size of `ipv6_address` and `ip_address` will be 16 bytes, and all operations related to retrieving or modifying the **scope id** will have no effect.
+@note If you are certain that you don't need **Scope Id**, you can completely disable them to avoid any overhead related to their maintenance. This can be done by defining `IPADDRESS_NO_IPV6_SCOPE` during compilation. In this case, the instance size of `ipv6_address` will be 16 bytes, and all operations related to retrieving or modifying the **scope id** will have no effect.
 
 For IP addresses `ipv6_address` and `ip_address`, functionality is supported for obtaining and changing scope id.
 
@@ -533,7 +537,6 @@ int main() {
         std::cout << "scope id for ip1: " << scope_id.get_string() << std::endl;
     }
 
-    // If IPv4 is stored in ip_address, then methods for working with the scope id have no effect
     auto ip2 = ip_address::parse("fe80::1ff:fe23:4567:890a");
     std::cout << "has scope id for ip2: " << std::boolalpha << (bool) ip2.get_scope_id() << std::endl;
 
@@ -548,6 +551,11 @@ int main() {
         std::cout << "scope id for ip2: " << test_scope_id.get_uint32() << std::endl;
     }
 
+    // If IPv4 is stored in ip_address, then methods for working with the scope id have no effect
+    auto ip3 = ip_address::parse("127.0.0.1");
+    ip3.set_scope_id("123");
+    std::cout << "has scope id for ip3: " << std::boolalpha << (bool)ip3.get_scope_id() << std::endl;
+    
     return 0;
 }
 ```

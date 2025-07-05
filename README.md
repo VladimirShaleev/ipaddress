@@ -83,7 +83,7 @@ project(my_project LANGUAGES CXX)
 find_package(ipaddress CONFIG REQUIRED)
 
 add_executable(my_project main.cpp)
-target_link_libraries(my_project ipaddress::ipaddress) # add the library to your target
+target_link_libraries(my_project PRIVATE ipaddress::ipaddress) # add the library to your target
 ```
 
 ### Use as a Submodule with CMake
@@ -104,7 +104,7 @@ project(my_project LANGUAGES CXX)
 add_subdirectory(third-party/ipaddress)
 
 add_executable(my_project main.cpp)
-target_link_libraries(my_project ipaddress::ipaddress) # add the library to your target
+target_link_libraries(my_project PRIVATE ipaddress::ipaddress) # add the library to your target
 ```
 
 ### Use CMake FetchContent
@@ -123,7 +123,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(ipaddress)
 
 add_executable(my_project main.cpp)
-target_link_libraries(my_project ipaddress::ipaddress) # add the library to your target
+target_link_libraries(my_project PRIVATE ipaddress::ipaddress) # add the library to your target
 ```
 
 ## Quick Start
