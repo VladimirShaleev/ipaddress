@@ -9,7 +9,6 @@ Below are tables comparing this library with the boost asio library and the sock
 @htmlonly
 
 <style type="text/css">
-
 @media screen and (min-width: 1193px) {
   .custom_full_width_table table:not(.memberdecls):not(.mlabels):not(.fieldtable):not(.memname) {
       display: block;
@@ -115,6 +114,15 @@ Below are tables comparing this library with the boost asio library and the sock
 </div>
 
 @htmlonly
+
+<style type="text/css">
+.cards {
+  grid-gap: 0rem !important;
+}
+.card:not(:last-child) {
+  margin-right: 2rem;
+}
+</style>
 
 <div class="cards">
 

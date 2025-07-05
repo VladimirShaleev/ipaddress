@@ -75,6 +75,15 @@ For more insights into integrating modules in your C++ projects, consider explor
 
 @htmlonly
 
+<style type="text/css">
+.cards {
+  grid-gap: 0rem !important;
+}
+.card:not(:last-child) {
+  margin-right: 2rem;
+}
+</style>
+
 <div class="cards">
 
 <div class="card">
