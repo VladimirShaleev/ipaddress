@@ -415,7 +415,7 @@ class ip_address_iterator;
  * 
  * @tparam Base The base type from which the ip_address_base is derived, representing the underlying IP address type.
  */
-IPADDRESS_EXPORT template <typename Base>
+template <typename Base>
 class ip_address_iterator<ip_address_base<Base>> {
 public:
     using iterator_category = std::random_access_iterator_tag; /**< The category of the iterator. */
@@ -858,7 +858,7 @@ class hosts_sequence;
  * @tparam Base The base type from which the ip_address_base is derived, representing the underlying IP address type.
  * @remark When iterating, obtaining addresses occurs through lazy calculations.
  */
-IPADDRESS_EXPORT template <typename Base>
+template <typename Base>
 class hosts_sequence<ip_address_base<Base>> {
 public:
     using value_type      = ip_address_base<Base>; /**< The type of the IP addresses in the sequence. */

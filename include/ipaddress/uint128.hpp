@@ -1901,7 +1901,9 @@ namespace std {
   _Pragma("clang diagnostic ignored \"-Wdeprecated\"")
 #endif
 
-template <typename T>
+#if IPADDRESS_CPP_VERSION < 14
+template <typename>
+#endif
 struct _numeric_limits_uint128 {
     static constexpr bool is_bounded                    = true;
     static constexpr bool is_exact                      = true;
@@ -1926,43 +1928,9 @@ struct _numeric_limits_uint128 {
     static constexpr int radix                          = 2;
     static constexpr std::float_denorm_style has_denorm = std::denorm_absent;
     static constexpr std::float_round_style round_style = std::round_toward_zero;
-
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T (min)() IPADDRESS_NOEXCEPT {
-        return 0;
-    }
-
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T (max)() IPADDRESS_NOEXCEPT {
-        return T(0xFFFFFFFFFFFFFFFF, 0xFFFFFFFFFFFFFFFF);
-    }
-
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T lowest() IPADDRESS_NOEXCEPT {
-        return (min)();
-    }
-
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T epsilon() IPADDRESS_NOEXCEPT {
-        return 0;
-    }
-
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T round_error() IPADDRESS_NOEXCEPT {
-        return 0;
-    }
-
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T denorm_min() IPADDRESS_NOEXCEPT {
-        return 0;
-    }
-
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T infinity() IPADDRESS_NOEXCEPT {
-        return 0;
-    }
-
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T quiet_NaN() IPADDRESS_NOEXCEPT {
-        return 0;
-    }
-
-    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE T signaling_NaN() IPADDRESS_NOEXCEPT {
-        return 0;
-    }
 };
+
+#if IPADDRESS_CPP_VERSION < 14
 
 template <typename T>
 constexpr bool _numeric_limits_uint128<T>::is_bounded;
@@ -2033,6 +2001,8 @@ constexpr std::float_denorm_style _numeric_limits_uint128<T>::has_denorm;
 template <typename T>
 constexpr std::float_round_style _numeric_limits_uint128<T>::round_style;
 
+#endif // IPADDRESS_CPP_VERSION < 14
+
 #if defined(_MSC_VER)
 #  pragma warning(default:4996)
 #elif defined(__GNUC__)
@@ -2042,11 +2012,50 @@ constexpr std::float_round_style _numeric_limits_uint128<T>::round_style;
 #endif
 #pragma warning(pop)
 
-IPADDRESS_EXPORT template <>
-struct numeric_limits<IPADDRESS_NAMESPACE::uint128_t> : _numeric_limits_uint128<IPADDRESS_NAMESPACE::uint128_t> {
+template <>
+struct numeric_limits<IPADDRESS_NAMESPACE::uint128_t> : _numeric_limits_uint128
+#if IPADDRESS_CPP_VERSION < 14
+    <IPADDRESS_NAMESPACE::uint128_t>
+#endif
+{
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE IPADDRESS_NAMESPACE::uint128_t (min)() IPADDRESS_NOEXCEPT {
+        return 0;
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE IPADDRESS_NAMESPACE::uint128_t (max)() IPADDRESS_NOEXCEPT {
+        return IPADDRESS_NAMESPACE::uint128_t(0xFFFFFFFFFFFFFFFF, 0xFFFFFFFFFFFFFFFF);
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE IPADDRESS_NAMESPACE::uint128_t lowest() IPADDRESS_NOEXCEPT {
+        return (min)();
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE IPADDRESS_NAMESPACE::uint128_t epsilon() IPADDRESS_NOEXCEPT {
+        return 0;
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE IPADDRESS_NAMESPACE::uint128_t round_error() IPADDRESS_NOEXCEPT {
+        return 0;
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE IPADDRESS_NAMESPACE::uint128_t denorm_min() IPADDRESS_NOEXCEPT {
+        return 0;
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE IPADDRESS_NAMESPACE::uint128_t infinity() IPADDRESS_NOEXCEPT {
+        return 0;
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE IPADDRESS_NAMESPACE::uint128_t quiet_NaN() IPADDRESS_NOEXCEPT {
+        return 0;
+    }
+
+    IPADDRESS_NODISCARD static IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE IPADDRESS_NAMESPACE::uint128_t signaling_NaN() IPADDRESS_NOEXCEPT {
+        return 0;
+    }
 };
 
-IPADDRESS_EXPORT template <>
+template <>
 struct hash<IPADDRESS_NAMESPACE::uint128_t> {
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t operator()(const IPADDRESS_NAMESPACE::uint128_t& value) const IPADDRESS_NOEXCEPT {
         return value.hash();

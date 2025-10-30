@@ -1367,7 +1367,7 @@ IPADDRESS_FORCE_INLINE std::basic_istream<T, std::char_traits<T>>& non_strict(st
 
 namespace std {
 
-IPADDRESS_EXPORT template <typename Base>
+template <typename Base>
 struct hash<IPADDRESS_NAMESPACE::ip_network_base<Base>> {
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t operator()(const IPADDRESS_NAMESPACE::ip_network_base<Base>& network) const IPADDRESS_NOEXCEPT {
         return network.hash();

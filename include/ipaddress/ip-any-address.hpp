@@ -1530,7 +1530,7 @@ private:
 
 namespace std {
 
-IPADDRESS_EXPORT template <>
+template <>
 struct hash<IPADDRESS_NAMESPACE::ip_address> {
     IPADDRESS_NODISCARD IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t operator()(const IPADDRESS_NAMESPACE::ip_address& ip) const IPADDRESS_NOEXCEPT {
         return ip.hash();

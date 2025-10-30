@@ -1441,7 +1441,7 @@ private:
 
 namespace std {
 
-IPADDRESS_EXPORT template <>
+template <>
 struct hash<IPADDRESS_NAMESPACE::ip_network> {
     IPADDRESS_CONSTEXPR IPADDRESS_FORCE_INLINE size_t operator()(const IPADDRESS_NAMESPACE::ip_network& network) const IPADDRESS_NOEXCEPT {
         return network.hash();

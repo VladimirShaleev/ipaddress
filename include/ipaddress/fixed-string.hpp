@@ -376,7 +376,7 @@ struct fixed_string {
     }
 }; // fixed_string<N>
 
-IPADDRESS_EXPORT template <>
+template <>
 struct fixed_string<0> {
     using value_type             = char;
     using const_pointer          = const char*;

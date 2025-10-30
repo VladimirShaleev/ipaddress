@@ -258,7 +258,7 @@ struct byte_array {
     }
 }; // byte_array<N>
 
-IPADDRESS_EXPORT template <>
+template <>
 class byte_array<0> {
 public:
     using value_type      = uint8_t;
