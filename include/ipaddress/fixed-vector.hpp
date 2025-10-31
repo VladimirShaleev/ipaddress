@@ -1038,7 +1038,7 @@
      size_type _size{};
  }; // fixed_vector
  
- IPADDRESS_EXPORT template <typename T>
+ template <typename T>
  class fixed_vector<T, 0> {
  public:
      using value_type             = T;

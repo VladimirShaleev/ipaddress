@@ -28,6 +28,11 @@ add_executable(ipaddress-tests
   "ip-network-tests.cpp")
 target_link_libraries(ipaddress-tests PRIVATE GTest::gtest GTest::gtest_main GTest::gmock_main)
 if(IPADDRESS_TEST_MODULE)
+  if(NOT CMAKE_CXX_STANDARD)
+    message(FATAL_ERROR
+      "CMAKE_CXX_STANDARD must be explicitly set when building tests with C++ modules.\n"
+      "For example: -DCMAKE_CXX_STANDARD=20")
+  endif()
   target_link_libraries(ipaddress-tests PRIVATE ipaddress-module)
   set_target_properties(ipaddress-tests PROPERTIES CXX_SCAN_FOR_MODULES ON)
   set_target_properties(ipaddress-tests PROPERTIES CXX_EXTENSIONS OFF)
