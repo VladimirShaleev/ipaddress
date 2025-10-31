@@ -146,7 +146,7 @@ jobs:
           version: ${{ matrix.clang }}
       - name: Install libc++
         if: ${{ matrix.stdlib == 'libc++' }}
-        run: sudo apt-get install -y libc++abi-${{ matrix.clang }}-dev libc++1-${{ matrix.clang }} libc++-${{ matrix.clang }}-dev
+        run: sudo apt-get install -y libc++abi-${{ matrix.clang }}-dev libc++-${{ matrix.clang }}-dev
 
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - run: c++ -v
