@@ -42,7 +42,7 @@ Add **ipaddress** dependency to `conanfile.txt`:
 
 ```ini
 [requires]
-ipaddress/1.2.0
+ipaddress/1.2.1
 ```
 
 More information and installation options can be found here https://conan.io/center/recipes/ipaddress
